@@ -1,12 +1,12 @@
 
 ----------------------------------------------------------------------
-REL 04.09.00 - LA_OPT_NXP_Software_License
+REL 04.10.00 - LA_OPT_NXP_Software_License
 ----------------------------------------------------------------------
 VIT integrating LP_VAD, WakeWordEngine Text2Model and Voice Commands Text2Model features.
 Core supported : FusionF1
 Platform supported : RT500
 
-Languages supported by the VIT library: English, Mandarin, Spanish, German, Japanese, Korean, Turkish, Italian, French
+Languages supported by the VIT library: English, Mandarin, Spanish, German, Japanese, Korean, Turkish, Italian, French, Portuguese
 1 model example is provided per language.
 
 See VIT_Model_x.h for the list of wakewords and commands supported by the different models.
@@ -19,18 +19,17 @@ VIT_Model_ko.h : Korean
 VIT_Model_tr.h : Turkish
 VIT_Model_it.h : Italian
 VIT_Model_fr.h : French
-
+VIT_Model_pt.h : Portuguese
 
 Dependencies : 
     - Fusion naturedsp lib : libfusion_library
     - Cadence DSP NN lib
 
 New features :
+    - New language support : Portuguese
     
 Main changes :
-    - Memory footprint reduction
-    - Only input frame of 30ms supported
-    - VIT_v4.9.0 lib not backward compatible with previous model versions
+    - VIT_v4.10.0 lib not backward compatible with previous model versions
   
 
 Notes : VIT lib is supporting 1 MIC only

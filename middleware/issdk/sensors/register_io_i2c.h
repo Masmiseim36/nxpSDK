@@ -130,6 +130,22 @@ void I2C6_SignalEvent_t(uint32_t event);
 void I2C7_SignalEvent_t(uint32_t event);
 #endif
 
+#ifdef CPU_MIMXRT798SGFOA_cm33_core0
+#if defined(I2C8)
+/*! @brief The I2C7 device index. */
+#define I2C8_INDEX 8
+
+/*! @brief       Defines the I2C signal event handler.
+ *  @details     The Signal Event Handler function required by register_io_i2c.c.
+ *  @param[in]   event The I2C event that occured.
+ *  @Constraints None
+ *  @Reentrant   Yes
+ *  @return      void
+ */
+void I2C8_SignalEvent_t(uint32_t event);
+#endif
+#endif
+
 #ifdef MIMXRT500_AGM01
 #if defined(I2C11)
 /*! @brief The I2C11 device index. */

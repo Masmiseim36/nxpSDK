@@ -11,6 +11,7 @@
 
 #include <zephyr/types.h>
 #include <bluetooth/audio/tbs.h>
+#include <bluetooth/att.h>
 
 #define BT_TBS_MAX_UCI_SIZE                        6
 #define BT_TBS_MIN_URI_LEN                         3 /* a:b */
@@ -172,18 +173,16 @@ static inline const char *bt_tbs_term_reason_str(uint8_t reason)
  * character. Minimal uri is "a:b".
  *
  * @param uri The uri "scheme:id"
+ * @param len The length of uri
  * @return true If the above is true
  * @return false If the above is not true
  */
-static inline bool bt_tbs_valid_uri(const char *uri)
+static inline bool bt_tbs_valid_uri(const char *uri, size_t len)
 {
-	size_t len;
-
 	if (!uri) {
 		return false;
 	}
 
-	len = strlen(uri);
 	if (len > CONFIG_BT_TBS_MAX_URI_LENGTH ||
 	    len < BT_TBS_MIN_URI_LEN) {
 		return false;
@@ -299,16 +298,16 @@ struct bt_tbs_in_uri {
 	char uri[CONFIG_BT_TBS_MAX_URI_LENGTH + 1];
 } STRUCT_PACKED_POST;
 
-#if (defined(CONFIG_BT_TBS_CLIENT) && (CONFIG_BT_TBS_CLIENT > 0))
+#if defined(CONFIG_BT_TBS_CLIENT) && (CONFIG_BT_TBS_CLIENT > 0)
 
 /* Features which may require long string reads */
-#if defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) || \
-	defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) || \
-	defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) || \
-	defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) || \
-	defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) || \
-	defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) || \
-	defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS)
+#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) && (CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME > 0)) || \
+    (defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) && (CONFIG_BT_TBS_CLIENT_BEARER_UCI > 0)) || \
+    (defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) && (CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST > 0)) || \
+    (defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) && (CONFIG_BT_TBS_CLIENT_INCOMING_URI > 0)) || \
+    (defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) && (CONFIG_BT_TBS_CLIENT_INCOMING_CALL > 0)) || \
+    (defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) && (CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME > 0)) || \
+    (defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS) && (CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS > 0))
 #define BT_TBS_CLIENT_INST_READ_BUF_SIZE (BT_ATT_MAX_ATTRIBUTE_LEN)
 #else
 /* Need only be the size of call state reads which is the largest of the
@@ -325,10 +324,10 @@ struct bt_tbs_instance {
 
 	uint16_t start_handle;
 	uint16_t end_handle;
-#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) && (CONFIG_BT_TBS_CLIENT_BEARER_UCI > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) && (CONFIG_BT_TBS_CLIENT_BEARER_UCI > 0)
 	uint16_t bearer_uci_handle;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_UCI) */
-#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) && (CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) && (CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST > 0)
 	uint16_t uri_list_handle;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_URI_SCHEMES_SUPPORTED_LIST) */
 #if (defined(CONFIG_BT_TBS_CLIENT_READ_BEARER_SIGNAL_INTERVAL) && (CONFIG_BT_TBS_CLIENT_READ_BEARER_SIGNAL_INTERVAL > 0)) || \
@@ -336,52 +335,52 @@ struct bt_tbs_instance {
 	uint16_t signal_interval_handle;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_READ_BEARER_SIGNAL_INTERVAL) */
 /* || defined(CONFIG_BT_TBS_CLIENT_SET_BEARER_SIGNAL_INTERVAL) */
-#if (defined(CONFIG_BT_TBS_CLIENT_CCID) && (CONFIG_BT_TBS_CLIENT_CCID > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_CCID) && (CONFIG_BT_TBS_CLIENT_CCID > 0)
 	uint16_t ccid_handle;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_CCID) */
-#if (defined(CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES) && (CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES) && (CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES > 0)
 	uint16_t optional_opcodes_handle;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES) */
 	uint16_t termination_reason_handle;
 
 	bool busy;
-#if (defined(CONFIG_BT_TBS_CLIENT_CCID) && (CONFIG_BT_TBS_CLIENT_CCID > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_CCID) && (CONFIG_BT_TBS_CLIENT_CCID > 0)
 	uint8_t ccid;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_CCID) */
 
-#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) && (CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) && (CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME > 0)
 	struct bt_gatt_subscribe_params name_sub_params;
 	struct bt_gatt_discover_params name_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_PROVIDER_NAME) */
-#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY) && (CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY) && (CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY > 0)
 	struct bt_gatt_subscribe_params technology_sub_params;
 	struct bt_gatt_discover_params technology_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_TECHNOLOGY) */
-#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH) && (CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH) && (CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH > 0)
 	struct bt_gatt_subscribe_params signal_strength_sub_params;
 	struct bt_gatt_discover_params signal_strength_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_SIGNAL_STRENGTH) */
-#if (defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS) && (CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS) && (CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS > 0)
 	struct bt_gatt_subscribe_params current_calls_sub_params;
 	struct bt_gatt_discover_params current_calls_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_BEARER_LIST_CURRENT_CALLS) */
-#if (defined(CONFIG_BT_TBS_CLIENT_STATUS_FLAGS) && (CONFIG_BT_TBS_CLIENT_STATUS_FLAGS > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_STATUS_FLAGS) && (CONFIG_BT_TBS_CLIENT_STATUS_FLAGS > 0)
 	struct bt_gatt_subscribe_params status_flags_sub_params;
 	struct bt_gatt_discover_params status_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_STATUS_FLAGS) */
-#if (defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) && (CONFIG_BT_TBS_CLIENT_INCOMING_URI > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) && (CONFIG_BT_TBS_CLIENT_INCOMING_URI > 0)
 	struct bt_gatt_subscribe_params in_target_uri_sub_params;
 	struct bt_gatt_discover_params in_target_uri_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_INCOMING_URI) */
-#if (defined(CONFIG_BT_TBS_CLIENT_CP_PROCEDURES) && (CONFIG_BT_TBS_CLIENT_CP_PROCEDURES > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_CP_PROCEDURES) && (CONFIG_BT_TBS_CLIENT_CP_PROCEDURES > 0)
 	struct bt_gatt_subscribe_params call_cp_sub_params;
 	struct bt_gatt_discover_params call_cp_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_OPTIONAL_OPCODES) */
-#if (defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) && (CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) && (CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME > 0)
 	struct bt_gatt_subscribe_params friendly_name_sub_params;
 	struct bt_gatt_discover_params friendly_name_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_CALL_FRIENDLY_NAME) */
-#if (defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) && (CONFIG_BT_TBS_CLIENT_INCOMING_CALL > 0))
+#if defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) && (CONFIG_BT_TBS_CLIENT_INCOMING_CALL > 0)
 	struct bt_gatt_subscribe_params incoming_call_sub_params;
 	struct bt_gatt_discover_params incoming_call_sub_disc_params;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_INCOMING_CALL) */

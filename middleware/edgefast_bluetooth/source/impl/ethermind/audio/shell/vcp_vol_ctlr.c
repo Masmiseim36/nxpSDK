@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2020 Bose Corporation
  * Copyright (c) 2020-2022 Nordic Semiconductor ASA
- * Copyright (C) 2022-2023 NXP
+ * Copyright (C) 2022-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -27,7 +27,7 @@ static void vcs_discover_cb(struct bt_vcp_vol_ctlr *vol_ctlr, int err,
 	if (err != 0) {
 		shell_error(ctx_shell, "VCP discover failed (%d)", err);
 	} else {
-		shell_print(ctx_shell, "VCP discover done with %u AICS",
+		shell_print(ctx_shell, "VCP discover done with %u VOCS and %u AICS", vocs_count,
 			    aics_count);
 
 		if (bt_vcp_vol_ctlr_included_get(vol_ctlr, &vcp_included)) {
@@ -328,16 +328,21 @@ static struct bt_vcp_vol_ctlr_cb vcp_cbs = {
 
 static shell_status_t cmd_vcp_vol_ctlr_discover(shell_handle_t sh, int32_t argc, char *argv[])
 {
+	static bool cb_registered;
 	int result;
 
 	if (!ctx_shell) {
 		ctx_shell = sh;
 	}
 
-	result = bt_vcp_vol_ctlr_cb_register(&vcp_cbs);
-	if (result != 0) {
-		shell_print(sh, "CB register failed: %d", result);
-		return (shell_status_t)result;
+	if (!cb_registered) {
+		result = bt_vcp_vol_ctlr_cb_register(&vcp_cbs);
+		if (result != 0) {
+			shell_print(sh, "CB register failed: %d", result);
+			return (shell_status_t)result;
+		}
+
+		cb_registered = true;
 	}
 
 	if (default_conn == NULL) {

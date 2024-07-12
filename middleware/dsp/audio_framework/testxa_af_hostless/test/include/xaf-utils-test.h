@@ -332,7 +332,7 @@ void xa_app_free_event_list(void);
     	    _adev_config.paudio_framework_buffer[k] = mem_malloc(audio_frmwk_buf_size, k);\
         }\
         _adev_config.paudio_component_buffer[XAF_MEM_ID_COMP] = mem_malloc(audio_comp_buf_size, XAF_MEM_ID_COMP);\
-        for(k=XAF_MEM_ID_COMP_FAST;k<=XAF_MEM_ID_COMP_MAX;k++){\
+        for(k=XAF_MEM_ID_COMP+1;k<=XAF_MEM_ID_COMP_MAX;k++){\
             _adev_config.audio_component_buffer_size[k] = AUDIO_COMP_FAST_BUF_SIZE;\
     	    _adev_config.paudio_component_buffer[k] = mem_malloc(AUDIO_COMP_FAST_BUF_SIZE, k);\
         }\

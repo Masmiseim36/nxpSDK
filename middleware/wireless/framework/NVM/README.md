@@ -103,13 +103,30 @@ This functionality is not supported if gNvUseExtendedFeatureSet_d is not set to 
 
 ## ECC Fault detection
 
-- During the programming of the flash errors may accidentally happen when writing a flash phrase (16 bytes), thus causing ECC errors.
-The FMC provides a mechanism to compnsate for one single ECC error but raises a fault whenever a second error occurs in the same phrase.
-The NVM module has an optional behaviour with which, after every flash programing operation, written contents gets read back for verification.
-In this mode, during the verification procedure, the cache gets disabled and the ECC fault exceptions are disabled, so that we can tread in the flash and detect potential errors. ECC Errors may happen due to programmatic errors such as attempting to write bits from 0b to 1b. However, it may also happen when power drops or glitches occurs during a programming operation.
-To cope with such situations gracefully, the NVM module may be compiled with the gNvSalvageFromEccFault_d compilation option defined.
-In this case on NVM initialization, it checks for the presence of ECC faults in both virtual pages. Faults should be detected, either at the top of the meta data or at the bottom of the record area within the previous active page. If this condition occurs, then the other page must be erased and reprogrammed with the valid contents of the faulty page.
-During NvCopyPage, when 'garbage collecting' occurs or whenever the current virtual active page needs to be transferred to the other virtual page, ECC errors are intercepted so that the operation can be attempted again in case of error. 
+The KW45/K32W1 internal flash is organized in 16 byte phrases and 8kB sectors (minimal erase unit).
+Its flash controller is synthesized so that it generates ECC information and an ECC generator / checker.
+During the programming of internal flash, errors may accidentally happen and cause ECC errors as a flash phrase is being written.
+These may happen due to multiple reasons:
+  - programmatic errors such as overwriting an already programmed phrase (transitioning bits from 0b to 1b).
+    These are evitable by performing a blank check verification over phrase to be programmed, at the expense of processing power.
+  - occurrence of power drop or glitches during a programming operation.
+  - excessive wear of flash sector.
+The flash controller is capable of correcting one single ECC error but raises a bud fault whenever reading a phrase containing more than one ECC fault.
+Once an ECC error has 'infected' a flash phrase, the fault will remain and raise again at each read operation over the same phrase including blank check and prefetch.
+It can only be rid of by erasing the whole flash sector that contained the faulty phrase.
+In order to recover from situations where an ECC fault has occurred a gNvSalvageFromEccFault_d option has been added, which forces gNvVerifyReadBackAfterProgram_d to be defined to TRUE.
+If defined, the gNvVerifyReadBackAfterProgram_d option of the NVM module, causes the program to read back the programmed area after every flash programming operation.
+The verification is performed in safe mode if gNvSalvageFromEccFault_d is also defined. This is so as to detect ECC faults as early as possible as they appear, indeed when verifying a programming operation, one cannot be certain of the absence of ECC fault and avoid the bus fault. The safe API is thence used to perform the read back operation is performed using this safe API, so that we can tread in the flash and detect potential errors.
+The defects are detected on the fly whereas in the absence of safe read back, the error would cause a fault, potentially much later.
+During normal operation, assuming that no chip reset was provoked, this will consist in a single ECC fault either in the last record data or its meta information. Detecting such a fault calls for an immediate page copy to the other virtual page, so that the currently active page gets erased and the error gets cleared.
+Should the ECC fault occurs in the middle of a page copy operation, the switch of active page is postponed so that the fault page can be erased again and the copy can be restarted.
+
+If the system underwent a power drop during a flash programming operation, sufficient to provoke a reset, at the ensuing reboot, ECC fault(s) may be present in the NVM area at the location that was being written. The detection is performed by an NVM sweeping mechanism, using the safe read API. That marks the faulty virtual page so that all  subsequent reads within this virtual page are done with the safe API. If this case arises, a copy of the valid contents of the faulty page is attempted to the other virtual page.
+At NVM initialization, faults should be detected, either at the top of the meta data or at the bottom of the record area within the previous active page. This should guarantee that only the latest record write operation may be impaired. When the page copy has taken place, the faulty page is erased and the execution may resume.
+During NvCopyPage, when 'garbage collecting' occurs or whenever the current virtual active page needs to be transferred to the other virtual page, ECC errors are intercepted so that the operation can be attempted again in case of error. In case of NVM contents clobbering by programming errors, the salvage operation does its best to rescue as many records as possible but data will inevitably be lost.
+
+An additional option -namely *gInterceptEccBusFaults_d* - was introduced in order to catch and correct ECC faults at Bus Fault handler level. Indeed, should an ECC bus fault fire, in spite of the precautions taken with NVM's gNvSalvageFromEccFault_d, we verify if the fault belongs to the NV storage. If so, a drastic policy can be adopted consisting in an erasure of the faulty sector. The corresponding Bus Fault handling is not part of the NVM, but dwells in the framework platform specific sources. Alternative handling could be implemented by the customer.
+
 
 ## Constant macro definition
 
@@ -137,5 +154,7 @@ During NvCopyPage, when 'garbage collecting' occurs or whenever the current virt
 - *gNvTableMarker_c* : Macro used to define the table marker value. The table marker is used to indicate the start and the end of the flash copy of the NV table. It is set to 0x4254U by default.
 - *gNvFlashTableVersion_c* : Macro used to define the flash table version. It is used to determine if the NVM table was updated. It is set to 1 by default. The application should modify this every time the NVM table is updated and the data from NVM is still required.
 - *gNvTableKeptInRam_d* : Set gNvTableKeptInRam_d to FALSE, if the NVM table is stored in FLASH memory (default). If the NVM table is stored in RAM memory, set the macro to TRUE.
+- *gNvVerifyReadBackAfterProgram_d* : set by default force verification of NVM programming operations. Is forced implicitly when gNvSalvageFromEccFault_d is defined.
+- *gNvSalvageFromEccFault_d* : use safe flash API to read from flash, and provide corrective action when ECC fault is met.
 
 

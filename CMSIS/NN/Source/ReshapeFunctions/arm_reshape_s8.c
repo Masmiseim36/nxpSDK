@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,17 +21,18 @@
  * Title:        arm_reshape_s8.c
  * Description:  Reshape a s8 vector
  *
- * $Date:        September 2019
- * $Revision:    V.1.0.0
+ * $Date:        26 October 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
- *  @ingroup groupNN
+ *  @ingroup Public
  */
 
 /**
@@ -39,7 +40,7 @@
  * @{
  */
 
-/**
+/*
  * Basic s8 reshape function.
  *
  * Refer header file for details.
@@ -48,7 +49,7 @@
 
 void arm_reshape_s8(const int8_t *input, int8_t *output, const uint32_t total_size)
 {
-    memcpy(output, input, total_size);
+    arm_memcpy_s8(output, input, total_size);
 }
 
 /**

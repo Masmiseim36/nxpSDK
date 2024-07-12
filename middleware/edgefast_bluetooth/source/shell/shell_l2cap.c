@@ -65,6 +65,13 @@ struct l2ch {
 
 static bool metrics;
 
+#if (defined(CONFIG_BT_L2CAP_UNBLOCK_SEND) && (CONFIG_BT_L2CAP_UNBLOCK_SEND > 0))
+static bool unblock_send_timer_initialized = false;
+static uint32_t unblock_send_count;
+static uint8_t unblock_send_length;
+static struct k_work_delayable unblock_send_timer;
+#endif
+
 static void l2cap_channel_free(struct l2ch *chan);
 
 static int l2cap_recv_metrics(struct bt_l2cap_chan *chan, struct net_buf *buf)
@@ -326,7 +333,7 @@ static shell_status_t cmd_register(shell_handle_t shell, int32_t argc, char *arg
 #if (defined(CONFIG_BT_L2CAP_ECRED) && (CONFIG_BT_L2CAP_ECRED> 0))
 static shell_status_t cmd_ecred_reconfigure(shell_handle_t shell, int32_t argc, char *argv[])
 {
-	struct bt_l2cap_chan *l2cap_ecred_chans[] = { &l2ch_chan.ch.chan, NULL };
+	struct bt_l2cap_chan *l2cap_ecred_chans[] = { &l2ch_chan[0].ch.chan, NULL };
 	uint16_t mtu;
 	int err = 0;
 
@@ -335,7 +342,7 @@ static shell_status_t cmd_ecred_reconfigure(shell_handle_t shell, int32_t argc, 
 		return kStatus_SHELL_Error;
 	}
 
-	if (!l2ch_chan.ch.chan.conn) {
+	if (!l2ch_chan[0].ch.chan.conn) {
 		shell_error(shell, "Channel not connected");
 		return kStatus_SHELL_Error;
 	}
@@ -354,12 +361,12 @@ static shell_status_t cmd_ecred_reconfigure(shell_handle_t shell, int32_t argc, 
 		shell_print(shell, "L2CAP reconfiguration pending");
 	}
 
-	return err;
+	return (shell_status_t)err;
 }
 
 static shell_status_t cmd_ecred_connect(shell_handle_t shell, int32_t argc, char *argv[])
 {
-	struct bt_l2cap_chan *l2cap_ecred_chans[] = { &l2ch_chan.ch.chan, NULL };
+	struct bt_l2cap_chan *l2cap_ecred_chans[] = { &l2ch_chan[0].ch.chan, NULL };
 	uint16_t psm;
 	int err = 0;
 
@@ -369,7 +376,7 @@ static shell_status_t cmd_ecred_connect(shell_handle_t shell, int32_t argc, char
 		return kStatus_SHELL_Error;
 	}
 
-	if (l2ch_chan.ch.chan.conn) {
+	if (l2ch_chan[0].ch.chan.conn) {
 		shell_error(shell, "Channel already in use");
 
 		return kStatus_SHELL_Error;
@@ -379,7 +386,7 @@ static shell_status_t cmd_ecred_connect(shell_handle_t shell, int32_t argc, char
 	if (err) {
 		shell_error(shell, "Unable to parse PSM (err %d)", err);
 
-		return err;
+		return (shell_status_t)err;
 	}
 
 	if (argc > 2) {
@@ -389,11 +396,11 @@ static shell_status_t cmd_ecred_connect(shell_handle_t shell, int32_t argc, char
 		if (err) {
 			shell_error(shell, "Unable to parse security level (err %d)", err);
 
-			return err;
+			return (shell_status_t)err;
 		}
 
 
-		l2ch_chan.ch.required_sec_level = sec;
+		l2ch_chan[0].ch.required_sec_level = (bt_security_t)sec;
 	}
 
 	err = bt_l2cap_ecred_chan_connect(default_conn, l2cap_ecred_chans, psm);
@@ -404,7 +411,7 @@ static shell_status_t cmd_ecred_connect(shell_handle_t shell, int32_t argc, char
 		shell_print(shell, "L2CAP connection pending");
 	}
 
-	return err;
+	return (shell_status_t)err;
 }
 #endif /* CONFIG_BT_L2CAP_ECRED */
 
@@ -465,6 +472,60 @@ static shell_status_t cmd_disconnect(shell_handle_t shell, int32_t argc, char *a
 
 	return (shell_status_t)err;
 }
+
+#if (defined(CONFIG_BT_L2CAP_UNBLOCK_SEND) && (CONFIG_BT_L2CAP_UNBLOCK_SEND > 0))
+static void unblock_send_timer_cb(struct k_work *work)
+{
+    struct l2ch *l2cap_channel;
+	static uint8_t buf_data[DATA_MTU] = { [0 ... (DATA_MTU - 1)] = 0xff };
+	int ret, len = DATA_MTU;
+	struct net_buf *buf;
+        
+	l2cap_channel = l2cap_channel_lookup_conn(default_conn);
+	len = MIN(l2cap_channel->ch.tx.mtu, unblock_send_length);
+	buf = net_buf_alloc(&data_tx_pool, K_NO_WAIT);
+	if (buf) {
+		net_buf_reserve(buf, BT_L2CAP_SDU_CHAN_SEND_RESERVE);
+		net_buf_add_mem(buf, buf_data, len);
+
+		ret = bt_l2cap_chan_send(&l2cap_channel->ch.chan, buf);
+		if (ret >= 0) {
+			unblock_send_count--;
+		}
+        else {
+			net_buf_unref(buf);     
+		}
+	}
+
+    k_work_reschedule(&unblock_send_timer,30);
+    if (unblock_send_count == 0) {
+		k_work_cancel_delayable(&unblock_send_timer);
+	}
+}
+
+static shell_status_t cmd_unblock_send(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	if (argc > 1) {
+		unblock_send_count = strtoul(argv[1], NULL, 10);
+	}
+	if (argc > 2) {
+		unblock_send_length = strtoul(argv[2], NULL, 10);
+		if (unblock_send_length > DATA_MTU) {
+			shell_print(shell,
+			"Length exceeds TX MTU for the channel");
+			return kStatus_SHELL_Error;
+		}
+	}
+    if(!unblock_send_timer_initialized)
+    {
+        k_work_init_delayable(&unblock_send_timer, unblock_send_timer_cb);
+        unblock_send_timer_initialized = true;
+    }
+
+    k_work_schedule(&unblock_send_timer, 30);
+	return kStatus_SHELL_Success;
+}
+#endif
 
 static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
 {
@@ -603,6 +664,10 @@ SHELL_STATIC_SUBCMD_SET_CREATE(l2cap_cmds,
 	SHELL_CMD_ARG(ecred-reconfigure, NULL, "<mtu (dec)>",
 		cmd_ecred_reconfigure, 1, 1),
 #endif /* CONFIG_BT_L2CAP_ECRED */
+#if (defined(CONFIG_BT_L2CAP_UNBLOCK_SEND) && (CONFIG_BT_L2CAP_UNBLOCK_SEND > 0))
+    SHELL_CMD_ARG(unblock_send, NULL, "<number of packets> <length of packet(s)>",
+		cmd_unblock_send, 3, 0),
+#endif /* CONFIG_BT_L2CAP_UNBLOCK_SEND */
 	SHELL_SUBCMD_SET_END
 );
 

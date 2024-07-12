@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -164,11 +164,7 @@ Attention : Do not modify this file ! If you do, you will not
 
 /* In order to avoid warnings for undefined parameters */
 #ifndef GUI_USE_PARA
-  #if defined (__BORLANDC__) || defined(NC30) || defined(NC308)
-    #define GUI_USE_PARA(para)
-  #else
-    #define GUI_USE_PARA(para) (void)para
-  #endif
+  #define GUI_USE_PARA(para) (void)para
 #endif
 
 /* Default for types */
@@ -208,11 +204,6 @@ Attention : Do not modify this file ! If you do, you will not
 /* Optional custom drawing of memory devices */
 #ifndef   GUI_MEMDEV_SUPPORT_CUSTOMDRAW
   #define GUI_MEMDEV_SUPPORT_CUSTOMDRAW 0
-#endif
-
-/* Clip static memory devices to parent borders */
-#ifndef   GUI_MEMDEV_CLIP_AT_PARENT
-  #define GUI_MEMDEV_CLIP_AT_PARENT 0
 #endif
 
 #endif   /* ifdef GUI_CONFDEFAULTS_H */

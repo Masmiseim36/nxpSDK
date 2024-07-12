@@ -166,8 +166,19 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, LBA_t sector, UINT count)
 
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
     (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
-    transferBuf = s_UsbTransferBuffer;
-    sectorCount = 1;
+#if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
+    if (((uint32_t)buff % USB_CACHE_LINESIZE == 0U) && (count * s_FatfsSectorSize % USB_CACHE_LINESIZE == 0U))
+    {
+        transferBuf = buff;
+        sectorCount = count;
+        count       = 1;
+    }
+    else
+#endif
+    {
+        transferBuf = &s_UsbTransferBuffer[0];
+        sectorCount = 1;
+    }
     for (index = 0; index < count; ++index)
     {
         sectorIndex = sector + index;
@@ -208,7 +219,12 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, LBA_t sector, UINT count)
         }
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
     (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
-        memcpy(buff + index * s_FatfsSectorSize, s_UsbTransferBuffer, s_FatfsSectorSize);
+#if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
+        if ((uint32_t)transferBuf == (uint32_t)&s_UsbTransferBuffer[0])
+#endif
+        {
+            memcpy(buff + index * s_FatfsSectorSize, s_UsbTransferBuffer, s_FatfsSectorSize);
+        }
     }
 #endif
     return fatfs_code;
@@ -234,12 +250,28 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, LBA_t sector, UINT cou
 
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
     (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
-    transferBuf = (const uint8_t *)s_UsbTransferBuffer;
-    sectorCount = 1;
+#if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
+    if (((uint32_t)buff % USB_CACHE_LINESIZE == 0U) && (count * s_FatfsSectorSize % USB_CACHE_LINESIZE == 0U))
+    {
+        transferBuf = buff;
+        sectorCount = count;
+        count       = 1;
+    }
+    else
+#endif
+    {
+        transferBuf = (const uint8_t *)&s_UsbTransferBuffer[0];
+        sectorCount = 1;
+    }
     for (index = 0; index < count; ++index)
     {
         sectorIndex = sector + index;
-        memcpy(s_UsbTransferBuffer, buff + index * s_FatfsSectorSize, s_FatfsSectorSize);
+#if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
+        if ((uint32_t)transferBuf == (uint32_t)&s_UsbTransferBuffer[0])
+#endif
+        {
+            memcpy(s_UsbTransferBuffer, buff + index * s_FatfsSectorSize, s_FatfsSectorSize);
+        }
 #else
         transferBuf = buff;
         sectorCount = count;

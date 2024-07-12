@@ -317,7 +317,11 @@ static shell_status_t hci_cmd_interface(shell_handle_t shell, int32_t argc, char
         	bt_hci_cmd_params[i] = strtol(argv[i+3],NULL, 16);
         }
 
-    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
+        err = bt_hci_cmd_send_sync(command_buffer.opcode, buf, &rsp);
+        if (command_buffer.opcode == BT_HCI_OP_LE_TEST_TX_COUNT)
+        {
+            shell_dump(shell, "LE TX pkt number: %d\r\n", sys_get_le16(&rsp->data[1]));
+        }
     }
     else
     {
@@ -328,7 +332,10 @@ static shell_status_t hci_cmd_interface(shell_handle_t shell, int32_t argc, char
     if (err)
     {
         shell_print(shell, "HCI command failed (err %d)\n", err);
-        net_buf_unref(rsp);
+        if(rsp)
+        {
+          net_buf_unref(rsp);
+        }
         return kStatus_SHELL_Error;
     }
     else
@@ -358,8 +365,14 @@ static shell_status_t le_set_tx_power(shell_handle_t shell, int32_t argc, char *
     	cp = net_buf_add(buf, sizeof(*cp));
 
     	cp->tx_power = strtol(argv[1],NULL,16);
+        cp->feloss= strtol(argv[2],NULL,16);
+        if(cp->feloss >= 1)
+        {
+            cp->feloss = 1;
+        }
 
     	shell_print(shell, "tx_power= %x\n", cp->tx_power);
+        shell_print(shell, "feloss= %x\n", cp->feloss);
 
     	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
     }
@@ -499,6 +512,8 @@ static shell_status_t le_rx_test(shell_handle_t shell, int32_t argc, char **argv
 static shell_status_t le_end_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
+    struct net_buf *rsp;
+    struct bt_hci_rp_le_test_end *rp;
 
     if (argc < 1)
     {
@@ -506,7 +521,7 @@ static shell_status_t le_end_test(shell_handle_t shell, int32_t argc, char **arg
         return kStatus_SHELL_Error;
     }
 
-    err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_TEST_END, NULL, NULL);
+    err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_TEST_END, NULL, &rsp);
     if (err)
     {
         shell_print(shell, "LE test end command failed (err %d)\n", err);
@@ -514,6 +529,9 @@ static shell_status_t le_end_test(shell_handle_t shell, int32_t argc, char **arg
     }
     else
     {
+        rp = (void *)rsp->data;
+        shell_print(shell, "Number of packets received: %d\n", (int)rp->rx_pkt_count);
+        net_buf_unref(rsp);
         shell_print(shell, "API returned success...\n");
     	return kStatus_SHELL_Success;
     }

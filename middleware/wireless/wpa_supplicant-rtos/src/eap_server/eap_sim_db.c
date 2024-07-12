@@ -18,7 +18,7 @@
 #include "includes.h"
 #include "fsl_os_abstraction.h"
 
-#ifndef CONFIG_FREERTOS
+#if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
 #include <sys/un.h>
 #endif
 #ifdef CONFIG_SQLITE
@@ -635,7 +635,7 @@ parse_fail:
     eap_sim_db_free_pending(data, entry);
 }
 
-#ifndef CONFIG_FREERTOS
+#if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
 
 static void eap_sim_db_receive(int sock, void *eloop_ctx, void *sock_ctx)
 {
@@ -692,16 +692,35 @@ parse_fail:
 }
 
 #endif
+#ifdef __ZEPHYR__
+static void eap_sim_db_main_task(void *arg, void *arg1, void *arg2);
+#else
+static void eap_sim_db_main_task(osa_task_param_t arg);
+#endif
+#ifdef __ZEPHYR__
+const int EAP_SIM_DB_TASK_PRIO       = OS_PRIO_2;
+#define CONFIG_EAP_SIM_DB_THREAD_STACK_SIZE 2048
 
-const int EAP_SIM_DB_TASK_PRIO       = 2; //OS_PRIO_2;
-
-#define CONFIG_EAP_SIM_DB_THREAD_STACK_SIZE 256
+struct k_thread eapSimdbTask;
+k_tid_t eap_sim_db_thread = NULL;
+K_THREAD_STACK_DEFINE(eapSimdbTaskStack, CONFIG_EAP_SIM_DB_THREAD_STACK_SIZE);
 
 #define ESD_NUM_MESSAGES (20)
+K_MSGQ_DEFINE(eap_sim_db_event_queue, sizeof(void *), ESD_NUM_MESSAGES, 4);
+K_EVENT_DEFINE(eapSimdbTaskEvent);
 
-static sys_mbox_t event_queue;
+#else
+#define CONFIG_EAP_SIM_DB_THREAD_STACK_SIZE 1024
 
-sys_thread_t eap_sim_db_thread = NULL;
+#define ESD_NUM_MESSAGES (20)
+static sys_mbox_t eap_sim_db_event_queue;
+
+OSA_TASK_HANDLE_DEFINE(eap_sim_db_thread);
+OSA_EVENT_HANDLE_DEFINE(eap_sim_db_event_Handle);
+
+/* OSA_TASKS: name, priority, instances, stackSz, useFloat */
+static OSA_TASK_DEFINE(eap_sim_db_main_task, PRIORITY_RTOS_TO_OSA(2), 1, CONFIG_EAP_SIM_DB_THREAD_STACK_SIZE, 0);
+#endif
 
 typedef enum __eap_sim_db_event
 {
@@ -715,9 +734,13 @@ static void process_eap_sim_db_event(struct eap_sim_db_data *data)
     char *pos, *cmd, *imsi;
     int res;
 
-    if (sys_mbox_valid(&event_queue))
+#ifdef __ZEPHYR__
+    while (k_msgq_get(&eap_sim_db_event_queue, &mem, K_NO_WAIT) == 0)
+#else
+    if (sys_mbox_valid(&eap_sim_db_event_queue))
     {
-        while (sys_mbox_tryfetch(&event_queue, &mem) != SYS_MBOX_EMPTY)
+        while (sys_mbox_tryfetch(&eap_sim_db_event_queue, &mem) != SYS_MBOX_EMPTY)
+#endif
         {
             if (mem != NULL)
             {
@@ -770,60 +793,72 @@ parse_fail:
                 os_free(buf);
             }
         }
+#ifndef __ZEPHYR__
     }
+#endif
 }
 
 static void notify_eap_sim_db_event(eap_sim_db_event_t event)
 {
-    if (__get_IPSR())
+#ifdef __ZEPHYR__
+    k_event_post(&eapSimdbTaskEvent, (1U << event));
+    k_yield();
+    k_sleep(K_MSEC(10));
+#else
+    (void)OSA_EventSet((osa_event_handle_t)eap_sim_db_event_Handle, (1U << event));
+    if (!__get_IPSR())
     {
-        portBASE_TYPE taskToWake = pdFALSE;
-
-        if (pdPASS == xTaskNotifyFromISR(eap_sim_db_thread, (1U << event), eSetBits, &taskToWake))
-        {
-                portYIELD();
-                os_thread_sleep(10);
-        }
+        OSA_TaskYield();
+        OSA_TimeDelay(10);
     }
-    else
-    {
-        xTaskNotify(eap_sim_db_thread, (1U << event), eSetBits);
-        portYIELD();
-        os_thread_sleep(10);
-    }
+#endif
 }
 
 int send_eap_sim_db_event(char *msg)
 {
-    if (event_queue)
-    {
+#ifdef __ZEPHYR__
+    k_msgq_put(&eap_sim_db_event_queue, (void *)(&msg), K_FOREVER);
+#else
+    sys_mbox_post(&eap_sim_db_event_queue, (void *)msg);
+#endif
+    notify_eap_sim_db_event(EVENT);
 
-        sys_mbox_post(&event_queue, (void *)msg);
-
-        notify_eap_sim_db_event(EVENT);
-
-        return 0;
-    }
-
-    return -1;
+    return 0;
 }
 
+#ifdef __ZEPHYR__
+static void eap_sim_db_main_task(void *arg, void *arg1, void *arg2)
+#else
 static void eap_sim_db_main_task(osa_task_param_t arg)
+#endif
 {
     struct eap_sim_db_data *data = (struct eap_sim_db_data *)arg;
+#ifdef __ZEPHYR__
     uint32_t taskNotification = 0U;
+#else
+    osa_event_flags_t taskNotification;
+#endif
 
-    if (sys_mbox_new(&event_queue, ESD_NUM_MESSAGES) != ERR_OK)
+#ifndef __ZEPHYR__
+    if (sys_mbox_new(&eap_sim_db_event_queue, ESD_NUM_MESSAGES) != ERR_OK)
     {
         wpa_printf(MSG_ERROR, "Failed to create msg queue");
         return;
     }
+#endif
 
     for (;;)
     {
         taskNotification = 0U;
 
-        xTaskNotifyWait(0U, ULONG_MAX, &taskNotification, portMAX_DELAY);
+#ifdef __ZEPHYR__
+        taskNotification = k_event_wait(&eapSimdbTaskEvent, (1U << EVENT), 0, K_FOREVER);
+        k_event_clear(&eapSimdbTaskEvent, 0xFF);
+#else
+        /* Wait till we receive eap event */
+        (void)OSA_EventWait((osa_event_handle_t)eap_sim_db_event_Handle, (1U << EVENT), false, osaWaitForever_c,
+                            &taskNotification);
+#endif
 
         if (taskNotification == 0)
         {
@@ -839,7 +874,7 @@ static void eap_sim_db_main_task(osa_task_param_t arg)
 
 static int eap_sim_db_open_socket(struct eap_sim_db_data *data)
 {
-#ifndef CONFIG_FREERTOS
+#if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
     struct sockaddr_un addr;
     static int counter = 0;
 
@@ -889,17 +924,33 @@ static int eap_sim_db_open_socket(struct eap_sim_db_data *data)
 
     eloop_register_read_sock(data->sock, eap_sim_db_receive, data, NULL);
 
-#else
-    eap_sim_db_thread = sys_thread_new("eap_sim_db", eap_sim_db_main_task, data,
-                                       CONFIG_EAP_SIM_DB_THREAD_STACK_SIZE, EAP_SIM_DB_TASK_PRIO);
+#elif defined(__ZEPHYR__)
+    eap_sim_db_thread = k_thread_create(&eapSimdbTask, eapSimdbTaskStack,
+        K_THREAD_STACK_SIZEOF(eapSimdbTaskStack), eap_sim_db_main_task, data, NULL, NULL,
+        EAP_SIM_DB_TASK_PRIO, 0, K_NO_WAIT);
+    k_thread_name_set(eap_sim_db_thread, "eap_sim_db");
+        
+#elif defined(CONFIG_FREERTOS)
+    int status;
 
+    status = OSA_EventCreate((osa_event_handle_t)eap_sim_db_event_Handle, 1);
+    if (status != KOSA_StatusSuccess)
+    {
+        return -WM_FAIL;
+    }
+
+    status = OSA_TaskCreate((osa_task_handle_t)eap_sim_db_thread, OSA_TASK(eap_sim_db_main_task), data);
+    if (status != KOSA_StatusSuccess)
+    {
+        return -WM_FAIL;
+    }
 #endif
     return 0;
 }
 
 static void eap_sim_db_close_socket(struct eap_sim_db_data *data)
 {
-#ifndef CONFIG_FREERTOS
+#if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
     if (data->sock >= 0)
     {
         eloop_unregister_read_sock(data->sock);
@@ -912,18 +963,18 @@ static void eap_sim_db_close_socket(struct eap_sim_db_data *data)
         os_free(data->local_sock);
         data->local_sock = NULL;
     }
-#else
+#elif defined(__ZEPHYR__)
     if (eap_sim_db_thread)
     {
-        vTaskDelete(eap_sim_db_thread);
+        k_thread_abort(eap_sim_db_thread);
         eap_sim_db_thread = NULL;
-
-        if (event_queue)
-        {
-            sys_mbox_free(&event_queue);
-            event_queue = NULL;
-        }
+        k_msgq_purge(&eap_sim_db_event_queue);
     }
+#elif defined(CONFIG_FREERTOS)
+    OSA_EventDestroy((osa_event_handle_t)eap_sim_db_event_Handle);
+    OSA_TaskDestroy((osa_task_handle_t)eap_sim_db_thread);
+
+    sys_mbox_free(&eap_sim_db_event_queue);
 #endif
 }
 
@@ -1053,7 +1104,7 @@ extern int send_hlr_event(char *msg);
 
 static int eap_sim_db_send(struct eap_sim_db_data *data, const char *msg, size_t len)
 {
-#ifndef CONFIG_FREERTOS
+#if !defined(CONFIG_FREERTOS) && !defined(__ZEPHYR__)
     int _errno = 0;
 
     if (send(data->sock, msg, len, 0) < 0)

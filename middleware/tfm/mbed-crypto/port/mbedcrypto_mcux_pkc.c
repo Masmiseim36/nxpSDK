@@ -10,6 +10,7 @@
 
 #if defined(PKC) && MBEDTLS_MCUX_PKC
 #include <mcuxClPkc.h>
+#include <internal/mcuxClPkc_Macros.h>
 #include <mcuxClEcc.h>
 #include <mcuxClMemory.h>
 #include <mcuxClHash_MemoryConsumption.h>
@@ -61,7 +62,7 @@ EAR2*/
 #define MCUX_PKC_SIGN_BY_ALT_WACPU_SIZE_MAX                                                       \
     MCUX_PKC_MAX(MCUXCLRANDOMMODES_INIT_WACPU_SIZE,                                               \
           MCUX_PKC_MAX(MCUX_PKC_MAX(MCUX_PKC_SIGN_BY_ALT_RSA_WACPU_SIZE_MAX,                      \
-                                            MCUXCLECC_SIGN_WACPU_SIZE(MCUX_PKC_ECC_N_SIZE_MAX)),  \
+                                            MCUXCLECC_SIGN_WACPU_SIZE),  \
                         MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX))
 
 /* Macro determining maximum size of CPU workarea size for MCUX_PKC verify */
@@ -1113,7 +1114,7 @@ int mbedtls_rsa_public( mbedtls_rsa_context *ctx,
 
     /* PKC buffer and size */
     uint8_t *pPkcRam = (uint8_t *) MCUXCLPKC_RAM_START_ADDRESS;
-    const uint32_t pkcWaSize = MCUXCLPKC_ROUNDUP_SIZE(nByteLength /* modulus */
+    const uint32_t pkcWaSize = MCUXCLPKC_ALIGN_TO_PKC_WORDSIZE(nByteLength /* modulus */
                                                    + nByteLength /* exponent */
                                                    + nByteLength /* result buffer */);
 

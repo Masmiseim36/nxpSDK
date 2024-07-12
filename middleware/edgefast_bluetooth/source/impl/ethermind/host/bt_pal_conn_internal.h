@@ -61,19 +61,19 @@ enum {
 };
 
 struct bt_conn_le {
-	bt_addr_le_t		dst;
+	bt_addr_le_t dst;
 
-	bt_addr_le_t		init_addr;
-	bt_addr_le_t		resp_addr;
+	bt_addr_le_t init_addr;
+	bt_addr_le_t resp_addr;
 
-	uint16_t			interval;
-	uint16_t			interval_min;
-	uint16_t			interval_max;
+	uint16_t interval;
+	uint16_t interval_min;
+	uint16_t interval_max;
 
-	uint16_t			latency;
-	uint16_t			timeout;
-	uint16_t			pending_latency;
-	uint16_t			pending_timeout;
+	uint16_t latency;
+	uint16_t timeout;
+	uint16_t pending_latency;
+	uint16_t pending_timeout;
 
 #if (defined(CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS) && (CONFIG_BT_GAP_AUTO_UPDATE_CONN_PARAMS > 0U))
 	uint8_t  conn_param_retry_countdown;
@@ -104,6 +104,8 @@ struct bt_conn_br {
 	uint8_t			features[LMP_MAX_PAGES][8];
 
 	struct bt_keys_link_key	*link_key;
+
+    struct net_buf *pending_l2cap_ecbfc_req;
 };
 
 struct bt_conn_sco {
@@ -151,6 +153,7 @@ struct bt_conn_tx {
 	uint32_t pending_no_cb;
 };
 
+
 struct bt_conn {
 	uint16_t			handle;
 	enum bt_conn_type	type;
@@ -162,9 +165,13 @@ struct bt_conn {
 	uint8_t                    id;
 
 #if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
-	bt_security_t		sec_level;
-	bt_security_t		required_sec_level;
-	uint8_t			encrypt;
+	bt_security_t		 sec_level;
+	bt_security_t		 required_sec_level;
+	uint8_t			     encrypt;
+    uint8_t              key_size;
+    uint8_t              hci_err;
+    enum bt_security_err sec_err;
+    struct k_work        sec_changed_work;
 #endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
 
 #if (defined(CONFIG_BT_DF_CONNECTION_CTE_RX) && ((CONFIG_BT_DF_CONNECTION_CTE_RX) > 0U))
@@ -371,6 +378,9 @@ void notify_le_data_len_updated(struct bt_conn *conn);
 void notify_le_phy_updated(struct bt_conn *conn);
 
 bool le_param_req(struct bt_conn *conn, struct bt_le_conn_param *param);
+
+void notify_tx_power_report(struct bt_conn *conn,
+			    struct bt_conn_le_tx_power_report report);
 
 #if (defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U))
 /* If role specific LTK is present */

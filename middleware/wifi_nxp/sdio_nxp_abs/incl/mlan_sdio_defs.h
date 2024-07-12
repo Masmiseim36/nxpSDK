@@ -14,6 +14,8 @@ Change log:
 #ifndef _MLAN_SDIO_DEFS_H
 #define _MLAN_SDIO_DEFS_H
 
+#include <wifi_config_default.h>
+
 /** Block mode */
 #define BLOCK_MODE 1
 /** Fixed address mode */
@@ -161,9 +163,9 @@ Change log:
 #define DATA_PORT_MASK 0xfffe
 #endif /* SD8801 */
 /** Ctrl port mask */
-//#define CTRL_PORT_MASK			0x00000001
+// #define CTRL_PORT_MASK			0x00000001
 /** Data port mask */
-//#define DATA_PORT_MASK			0xfffffffe
+// #define DATA_PORT_MASK			0xfffffffe
 /** Misc. Config Register : Auto Re-enable interrupts */
 #define AUTO_RE_ENABLE_INT (0x1U << 4)
 
@@ -278,7 +280,7 @@ Change log:
 /** Rx unit register (SCRATCH0_3) */
 #define CARD_RX_UNIT_REG 0xeb
 
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
 #if defined(SD8978) || defined(SD8987) || defined(SD9177)
 /** Firmware reset register */
 #define CARD_FW_RESET_REG 0xEE
@@ -351,7 +353,7 @@ Change log:
 /** Rx unit register (SCRATCH0_3) */
 #define CARD_RX_UNIT_REG    0x63
 
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
 /** Firmware reset register */
 #define CARD_FW_RESET_REG 0x64
 /** Firmware reset register */

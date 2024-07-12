@@ -1,84 +1,97 @@
 var a00039 =
 [
-    [ "_i2c_slave_address", "a00039.html#a00368", [
-      [ "address", "a00039.html#aac0aeb8b419b1312b7f873549541be45", null ],
-      [ "addressDisable", "a00039.html#a554d799403bbf3b7a43ba535f77036de", null ]
+    [ "_i2s_config", "a00039.html#a00368", [
+      [ "masterSlave", "a00039.html#a1c5e1132f4c7132d5b9406c686ccf0cb", null ],
+      [ "mode", "a00039.html#a12ec668a6228f392a06560c8e8274726", null ],
+      [ "rightLow", "a00039.html#a5503468829bb449771c8496dacfe6fb6", null ],
+      [ "leftJust", "a00039.html#a75a8cbc12136ef74916f71209e21113b", null ],
+      [ "pdmData", "a00039.html#abf999dde0ddcb448058d5ceda907d4ed", null ],
+      [ "sckPol", "a00039.html#aee2971273bdc7d60a8d07a84d5b0f314", null ],
+      [ "wsPol", "a00039.html#a3cc74d91fe51abeae7a5bbb77fd83920", null ],
+      [ "divider", "a00039.html#ae54489ab2f0a78b1271d04f69c64494d", null ],
+      [ "oneChannel", "a00039.html#a08c393f7fb7985c1469fc27eece2f444", null ],
+      [ "dataLength", "a00039.html#a7804296c524c18b636be8af8e627cc8a", null ],
+      [ "frameLength", "a00039.html#ae26048f5d1121ab49a35fd47035fce12", null ],
+      [ "position", "a00039.html#a3ac2cff50b7b6cf4009c8285c7cc5894", null ],
+      [ "watermark", "a00039.html#a1838b2325574097b2b83ceb531a04561", null ],
+      [ "txEmptyZero", "a00039.html#ac5248d3e8f8f464f85d13695e5b51450", null ],
+      [ "pack48", "a00039.html#a81806913aaa20f7a6204d215c9510fdf", null ]
     ] ],
-    [ "_i2c_slave_config", "a00039.html#a00369", [
-      [ "address0", "a00039.html#a5203e2e0d3d7e4f33aae8ced4df94778", null ],
-      [ "address1", "a00039.html#ad750f43edf4fce1b7d46aa567fbef65e", null ],
-      [ "address2", "a00039.html#adc043a79268cdf3f2f9bb82f486f25ef", null ],
-      [ "address3", "a00039.html#aa8bf7ada2ce9d9b2fd3fe94c7cae63f2", null ],
-      [ "qualMode", "a00039.html#a98fcd913b880ce599149066d0cd1f431", null ],
-      [ "qualAddress", "a00039.html#a0b7ba3bb25c3bc531ade96ab283b8a5b", null ],
-      [ "busSpeed", "a00039.html#a27793bbbe385b9446a1e10e1d109dbbd", null ],
-      [ "enableSlave", "a00039.html#ad720331a891010209a1209585056a2b7", null ]
+    [ "_i2s_transfer", "a00039.html#a00371", [
+      [ "data", "a00039.html#a7e1639769facb3330f554448901824c7", null ],
+      [ "dataSize", "a00039.html#a20eea1329988a3a572c92b630cd3c589", null ]
     ] ],
-    [ "_i2c_slave_transfer", "a00039.html#a00371", [
-      [ "handle", "a00039.html#a5138a6295a93e877a8de83980095b8ab", null ],
-      [ "event", "a00039.html#a461d482d4a91765e8820b55b17e7e53c", null ],
-      [ "receivedAddress", "a00039.html#a521a410193f5184aaea5ab42b8bafac7", null ],
-      [ "eventMask", "a00039.html#a26fb4094fa78037240e2dd1d71637026", null ],
-      [ "rxData", "a00039.html#a93589ac311615c53149c70f87cc85220", null ],
-      [ "txData", "a00039.html#ab269c32e68b47ebecbdf6dc99694dc1f", null ],
-      [ "txSize", "a00039.html#a8d96f5ea7d8287ae770a43aeba051765", null ],
-      [ "rxSize", "a00039.html#a97340f3d81fba5c6f687f51ea68793c3", null ],
-      [ "transferredCount", "a00039.html#aae53c04dd44495a5f8cf8813e715a53e", null ],
-      [ "completionStatus", "a00039.html#a5c09cb680bd188a4176823b6dfa21335", null ]
+    [ "_i2s_handle", "a00039.html#a00370", [
+      [ "state", "a00039.html#a2b6ba4838ea585a669d8e9ab6f63fc36", null ],
+      [ "completionCallback", "a00039.html#a78f7fa243f3c5be356c346bd975abdaa", null ],
+      [ "userData", "a00039.html#a45a62e2e9f73d1eecb7d502f7f10c120", null ],
+      [ "oneChannel", "a00039.html#a8f1bd07030d0e210ff1e6f6ad6d719bf", null ],
+      [ "dataLength", "a00039.html#a68dc6d1db2522cb65afc39aee85d8d05", null ],
+      [ "pack48", "a00039.html#a891c81c9139910e7cbe6f4e00f4ff4ef", null ],
+      [ "watermark", "a00039.html#ab65e366698b7ce5ec4143521d67ed864", null ],
+      [ "useFifo48H", "a00039.html#ad7d2ae4a2d1b017d66bc187519a5950a", null ],
+      [ "i2sQueue", "a00039.html#a18d68d3f43b4fb681e93b0b8ef9461e9", null ],
+      [ "queueUser", "a00039.html#aa981d5d76a9c81a37200b0dfa72cf11b", null ],
+      [ "queueDriver", "a00039.html#a62800d42eef97ffcd6faafa8bd30ade0", null ],
+      [ "errorCount", "a00039.html#ad01a19333ff3f3409990b09d808aa927", null ],
+      [ "transferCount", "a00039.html#a03fb54228cba22c367cee351c4d871e1", null ]
     ] ],
-    [ "_i2c_slave_handle", "a00039.html#a00370", [
-      [ "transfer", "a00039.html#ad590d3719153a8cd99d22f10ee7bf859", null ],
-      [ "isBusy", "a00039.html#af6d7a3aa8f16a2ddacb9cf58977fd67c", null ],
-      [ "slaveFsm", "a00039.html#a8cc8b98baef51cb985c227d65e5f75f1", null ],
-      [ "callback", "a00039.html#aa1a2ab536368e7b2e8981879f1a3f5ca", null ],
-      [ "userData", "a00039.html#a0c21a56aa399763f1969a28fbea35054", null ]
+    [ "FSL_I2S_DRIVER_VERSION", "a00039.html#gaf19f85eb3c13d6b8b839a62c30009710", null ],
+    [ "I2S_NUM_BUFFERS", "a00039.html#gae17f5f49178cc3ab239917f6454792d0", null ],
+    [ "i2s_flags_t", "a00039.html#ga159bdb39995b1e978edbeffd7a419989", null ],
+    [ "i2s_master_slave_t", "a00039.html#ga71cbcb2a1e42b043163f90e8fd81d8e4", null ],
+    [ "i2s_mode_t", "a00039.html#ga3d4817f257ec38092ef6f33c0e095a94", null ],
+    [ "i2s_config_t", "a00039.html#ga04840f13f39a77aa775d4cd83cfd896d", null ],
+    [ "i2s_transfer_t", "a00039.html#ga954fbb10efcf6b2993c1d91706835605", null ],
+    [ "i2s_handle_t", "a00039.html#gaf0c2f3939e61c1d862a90d9e42712c6e", null ],
+    [ "i2s_transfer_callback_t", "a00039.html#gaf04bcafbb89c4d0a47ac0acfcc958faf", [
+      [ "kStatus_I2S_BufferComplete", "a00039.html#gga726ca809ffd3d67ab4b8476646f26635a634ef87c7515bb4037dfaaea2d75b6e1", null ],
+      [ "kStatus_I2S_Done", "a00039.html#gga726ca809ffd3d67ab4b8476646f26635af123c761ef2616e6f48031b3f1103e48", null ],
+      [ "kStatus_I2S_Busy", "a00039.html#gga726ca809ffd3d67ab4b8476646f26635af73f348e9a8fe5cdf3c1ad097378d5b2", null ]
     ] ],
-    [ "i2c_slave_address_register_t", "a00039.html#ga5011aa3cf4340912b0a54c5fd2ccc881", null ],
-    [ "i2c_slave_address_t", "a00039.html#ga4952975f11796f57c1dbc8c9352ee496", null ],
-    [ "i2c_slave_address_qual_mode_t", "a00039.html#ga02d133f25b39ab4842c870de2d66179f", null ],
-    [ "i2c_slave_bus_speed_t", "a00039.html#ga222f565dee8428d8f882203a4a6c22ff", null ],
-    [ "i2c_slave_config_t", "a00039.html#gaa70dd0ec9815617269569190efd2de5d", null ],
-    [ "i2c_slave_transfer_event_t", "a00039.html#ga95f120f6a73af41648364538cf9a6eca", null ],
-    [ "i2c_slave_handle_t", "a00039.html#ga394e5278816efe62815de9d25be84752", null ],
-    [ "i2c_slave_transfer_t", "a00039.html#ga69e696cb21165bc58176475879a471cf", null ],
-    [ "i2c_slave_transfer_callback_t", "a00039.html#ga0704c8f14da38feb11555e4127d86a18", null ],
-    [ "i2c_slave_fsm_t", "a00039.html#gace8044962fd3c872ae2d7952de85525a", null ],
-    [ "flexcomm_i2c_master_irq_handler_t", "a00039.html#gac86dc9a3b232a90765a2eb7df0eb9217", null ],
-    [ "flexcomm_i2c_slave_irq_handler_t", "a00039.html#gad3e88bbb01efa34d7df40e87734aa4f1", null ],
-    [ "_i2c_slave_address_register", "a00039.html#gaa4d64624a394b298aeb74188f932406a", [
-      [ "kI2C_SlaveAddressRegister0", "a00039.html#ggaa4d64624a394b298aeb74188f932406aa39e0e158674bd8a6e254a6a42b5ce50f", null ],
-      [ "kI2C_SlaveAddressRegister1", "a00039.html#ggaa4d64624a394b298aeb74188f932406aa42a589b5e31f29ddc41088c3fb4bfcf1", null ],
-      [ "kI2C_SlaveAddressRegister2", "a00039.html#ggaa4d64624a394b298aeb74188f932406aa8381dd229f545df5e6a32ee5f0aac871", null ],
-      [ "kI2C_SlaveAddressRegister3", "a00039.html#ggaa4d64624a394b298aeb74188f932406aa9e73a2b09fe3943d51849a7d87fbe8a3", null ]
+    [ "_i2s_flags", "a00039.html#gadd818f4b96aee77ebab7fb143598061e", [
+      [ "kI2S_TxErrorFlag", "a00039.html#ggadd818f4b96aee77ebab7fb143598061ea4de8d6343bcebc3f15243732806fc564", null ],
+      [ "kI2S_TxLevelFlag", "a00039.html#ggadd818f4b96aee77ebab7fb143598061eac3daa0c88fabb995e62e7f2803db4155", null ],
+      [ "kI2S_RxErrorFlag", "a00039.html#ggadd818f4b96aee77ebab7fb143598061eaf26884847511b34b0197bb70c7c36989", null ],
+      [ "kI2S_RxLevelFlag", "a00039.html#ggadd818f4b96aee77ebab7fb143598061eac29fb67960b694a776c8159a7b4487db", null ]
     ] ],
-    [ "_i2c_slave_address_qual_mode", "a00039.html#gadbb0ae033785e1ad024c953e24cc2f36", [
-      [ "kI2C_QualModeMask", "a00039.html#ggadbb0ae033785e1ad024c953e24cc2f36af542f0269c83549e7b492911e281a902", null ],
-      [ "kI2C_QualModeExtend", "a00039.html#ggadbb0ae033785e1ad024c953e24cc2f36a6b755a1d30a626380730ce947d09335f", null ]
+    [ "_i2s_master_slave", "a00039.html#ga58fcc3bdc4a785b22d7a8f397e91911b", [
+      [ "kI2S_MasterSlaveNormalSlave", "a00039.html#gga58fcc3bdc4a785b22d7a8f397e91911ba84bedf24f43a46b87a774e479da5b82b", null ],
+      [ "kI2S_MasterSlaveWsSyncMaster", "a00039.html#gga58fcc3bdc4a785b22d7a8f397e91911ba2d7515b2fc53986d17636f3e16412b08", null ],
+      [ "kI2S_MasterSlaveExtSckMaster", "a00039.html#gga58fcc3bdc4a785b22d7a8f397e91911bad0b9c4656a3d40c936a7369d75c8d346", null ],
+      [ "kI2S_MasterSlaveNormalMaster", "a00039.html#gga58fcc3bdc4a785b22d7a8f397e91911ba13ab2820eda5d509bb3ceff6fb28758b", null ]
     ] ],
-    [ "_i2c_slave_bus_speed", "a00039.html#ga6c18ce95502d66818793c44df9029eae", null ],
-    [ "_i2c_slave_transfer_event", "a00039.html#ga87e42e170b60f17f657ef3c06a918133", [
-      [ "kI2C_SlaveAddressMatchEvent", "a00039.html#gga87e42e170b60f17f657ef3c06a918133acb1ae174dd6798a6fd79800a9e39a3c6", null ],
-      [ "kI2C_SlaveTransmitEvent", "a00039.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa", null ],
-      [ "kI2C_SlaveReceiveEvent", "a00039.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de", null ],
-      [ "kI2C_SlaveCompletionEvent", "a00039.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df", null ],
-      [ "kI2C_SlaveDeselectedEvent", "a00039.html#gga87e42e170b60f17f657ef3c06a918133a5e765c1c316a51908b68f1f32a7b524d", null ],
-      [ "kI2C_SlaveAllEvents", "a00039.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc", null ]
+    [ "_i2s_mode", "a00039.html#ga5dd588fbfde93f136f6d27e71166f692", [
+      [ "kI2S_ModeI2sClassic", "a00039.html#gga5dd588fbfde93f136f6d27e71166f692ac0e4769e50d6318229c2dc31cd99bae3", null ],
+      [ "kI2S_ModeDspWs50", "a00039.html#gga5dd588fbfde93f136f6d27e71166f692a11364b25e57662ef4d1fc288ab12ddb1", null ],
+      [ "kI2S_ModeDspWsShort", "a00039.html#gga5dd588fbfde93f136f6d27e71166f692a6a42cbdc569ac3c30706fb6ba61db9d9", null ],
+      [ "kI2S_ModeDspWsLong", "a00039.html#gga5dd588fbfde93f136f6d27e71166f692a3bb54e6d9b9d1793637e1b82e323e829", null ],
+      [ "kI2S_SecondaryChannel1", "a00039.html#gga0411cd49bb5b71852cecd93bcbf0ca2da61732beb4a722233e97ee814f949eb1d", null ],
+      [ "kI2S_SecondaryChannel2", "a00039.html#gga0411cd49bb5b71852cecd93bcbf0ca2da916a9db0c16edbddbe7dc96f578948b0", null ],
+      [ "kI2S_SecondaryChannel3", "a00039.html#gga0411cd49bb5b71852cecd93bcbf0ca2da1e1a62b1c4e0ab9966f18d1a81c2362a", null ]
     ] ],
-    [ "_i2c_slave_fsm", "a00039.html#ga41bf767e5abf573149dd68e87fc45276", null ],
-    [ "I2C_SlaveGetDefaultConfig", "a00039.html#ga7115f80e28b62bbbd3be1a2a918529ba", null ],
-    [ "I2C_SlaveInit", "a00039.html#ga175a81b5ab74dd78469d6cdea690d8cc", null ],
-    [ "I2C_SlaveSetAddress", "a00039.html#gacf721065f83982e3df651111183bf7b2", null ],
-    [ "I2C_SlaveDeinit", "a00039.html#gadb50014db29dd75ea2001fb7bc837e77", null ],
-    [ "I2C_SlaveEnable", "a00039.html#gacbb93d5ea4f4b40038f41e0e942a9ee1", null ],
-    [ "I2C_SlaveClearStatusFlags", "a00039.html#ga545c1a43d8d49c4675de493d45a4063a", null ],
-    [ "I2C_SlaveWriteBlocking", "a00039.html#ga280404c6b1ede542f2c1c20bd382869c", null ],
-    [ "I2C_SlaveReadBlocking", "a00039.html#ga89baaf8bc82b19c837032665e89a1707", null ],
-    [ "I2C_SlaveTransferCreateHandle", "a00039.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9", null ],
-    [ "I2C_SlaveTransferNonBlocking", "a00039.html#gaa387d81ea08a9d4b39cfeb3dfec505f7", null ],
-    [ "I2C_SlaveSetSendBuffer", "a00039.html#gac7602b6897596348fe190e4fc63f1381", null ],
-    [ "I2C_SlaveSetReceiveBuffer", "a00039.html#ga25b9c35089f0fc966facec3bf874c840", null ],
-    [ "I2C_SlaveGetReceivedAddress", "a00039.html#ga4c9fc06eeb8a3beb024f6525e4d99a0b", null ],
-    [ "I2C_SlaveTransferAbort", "a00039.html#ga5ae9f5e6e854d14d33ba3029128bd6f0", null ],
-    [ "I2C_SlaveTransferGetCount", "a00039.html#gabf38a498bd3527ea0b7cc947ae71e17e", null ],
-    [ "I2C_SlaveTransferHandleIRQ", "a00039.html#ga3bc939e5dbdc165169f58b8d47d1742d", null ]
+    [ "I2S_TxInit", "a00039.html#ga5d68b2f69b625a753d498dab6758c5b9", null ],
+    [ "I2S_RxInit", "a00039.html#gaa71e9b55c275d5469c1e3f723dc55213", null ],
+    [ "I2S_TxGetDefaultConfig", "a00039.html#ga905cb886175d4a1f9ac2fbf8d2722cf6", null ],
+    [ "I2S_RxGetDefaultConfig", "a00039.html#ga8356de62fea66f67a9803ee89a78805a", null ],
+    [ "I2S_Deinit", "a00039.html#ga68e9243ae7345a144668c7e04f1f52ac", null ],
+    [ "I2S_SetBitClockRate", "a00039.html#ga06dba1e2ecbb367719f60c9470ddd1fa", null ],
+    [ "I2S_TxTransferCreateHandle", "a00039.html#ga0e630bdd0adb5a39b52e374ede7bc07f", null ],
+    [ "I2S_TxTransferNonBlocking", "a00039.html#ga8e341c9ce48e5be03e120ea332758048", null ],
+    [ "I2S_TxTransferAbort", "a00039.html#ga25659519f70757bf2db3831f7e807bd8", null ],
+    [ "I2S_RxTransferCreateHandle", "a00039.html#gabd8c54c9689fd89024c83bb883693c16", null ],
+    [ "I2S_RxTransferNonBlocking", "a00039.html#ga454cba72bec3ebeecf865570ce6ed900", null ],
+    [ "I2S_RxTransferAbort", "a00039.html#ga32eb018b43745a695ef26cec1ff73a73", null ],
+    [ "I2S_TransferGetCount", "a00039.html#ga14ef749f4300fe7b1fd38277f0ef167f", null ],
+    [ "I2S_TransferGetErrorCount", "a00039.html#gae3d210a830859e93103931b4baf83586", null ],
+    [ "I2S_Enable", "a00039.html#gac109aadc23d6f31e6f8420fa3f4018fd", null ],
+    [ "I2S_EnableSecondaryChannel", "a00039.html#gaaafe5120f26fc467a96aad194f783530", null ],
+    [ "I2S_DisableSecondaryChannel", "a00039.html#ga605944b5c7cca125fbd7fdeb2b969f2e", null ],
+    [ "I2S_Disable", "a00039.html#ga4b393781ae83a07d4d3e99972429cfa1", null ],
+    [ "I2S_EnableInterrupts", "a00039.html#ga435263725c056eccaa82eb1947e162aa", null ],
+    [ "I2S_DisableInterrupts", "a00039.html#gaa6f8ed52f3cd5c63b3a3716a70c77223", null ],
+    [ "I2S_GetEnabledInterrupts", "a00039.html#ga2d96a8f63e454de7225a98541b6461b9", null ],
+    [ "I2S_EmptyTxFifo", "a00039.html#ga8d8c443026cca28ef0c8f9890a894829", null ],
+    [ "I2S_TxHandleIRQ", "a00039.html#ga2423f95dc2c00bce6a9de6d868d1fde2", null ],
+    [ "I2S_RxHandleIRQ", "a00039.html#gaeff61f8cbd780c881c593ad059f98338", null ]
 ];

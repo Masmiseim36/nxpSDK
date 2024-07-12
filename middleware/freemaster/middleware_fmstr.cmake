@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_fmstr_platform_gen32le)
+if(CONFIG_USE_middleware_fmstr_platform_gen32le OR CONFIG_USE_middleware_fmstr_platform_56f800e)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/common/freemaster_appcmd.c

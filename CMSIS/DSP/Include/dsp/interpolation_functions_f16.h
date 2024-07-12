@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     interpolation_functions_f16.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -45,7 +45,7 @@ typedef struct
     uint32_t  nValues;        /**< nValues */
     float16_t x1;             /**< x1 */
     float16_t xSpacing;       /**< xSpacing */
-    float16_t *pYData;        /**< pointer to the table of Y values */
+    const float16_t *pYData;        /**< pointer to the table of Y values */
 } arm_linear_interp_instance_f16;
 
 /**
@@ -55,7 +55,7 @@ typedef struct
 {
     uint16_t  numRows;/**< number of rows in the data table. */
     uint16_t  numCols;/**< number of columns in the data table. */
-    float16_t *pData; /**< points to the data table. */
+    const float16_t *pData; /**< points to the data table. */
 } arm_bilinear_interp_instance_f16;
 
   /**

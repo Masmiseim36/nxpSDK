@@ -25,7 +25,7 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #include "BT_common.h"
 #include "bt_pal_hci_core.h"
 #include "bt_pal_conn_internal.h"
-#include "bt_pal_l2cap_internal.h"
+#include "bt_pal_l2cap_br_internal.h"
 #include "bt_pal_sdp_internal.h"
 #include "BT_hci_api.h"
 #include "BT_sdp_api.h"
@@ -89,7 +89,7 @@ static uint8_t appl_sdp_attrib_data[SDP_ATTRIB_DATALEN];
 
 #define SDP_BUFF_RESERVE_FOR_HEAD_LEN (9U)
 
-#if (CONFIG_BT_MAX_CONN == 1U)
+#if (CONFIG_BT_MAX_CONN >= 1U)
 static void ethermind_sdp_callback0
 	 (
 		 uint8_t command,
@@ -97,7 +97,8 @@ static void ethermind_sdp_callback0
 		 uint16_t length,
 		 uint16_t status
 	 );
-#elif (CONFIG_BT_MAX_CONN == 2U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 2U)
 static void ethermind_sdp_callback1
 	 (
 		 uint8_t command,
@@ -105,7 +106,8 @@ static void ethermind_sdp_callback1
 		 uint16_t length,
 		 uint16_t status
 	 );
-#elif (CONFIG_BT_MAX_CONN == 3U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 3U)
 static void ethermind_sdp_callback2
 	 (
 		 uint8_t command,
@@ -113,7 +115,8 @@ static void ethermind_sdp_callback2
 		 uint16_t length,
 		 uint16_t status
 	 );
-#elif (CONFIG_BT_MAX_CONN == 4U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 4U)
 static void ethermind_sdp_callback3
 	 (
 		 uint8_t command,
@@ -121,7 +124,8 @@ static void ethermind_sdp_callback3
 		 uint16_t length,
 		 uint16_t status
 	 );
-#elif (CONFIG_BT_MAX_CONN == 5U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 5U)
 static void ethermind_sdp_callback4
 	 (
 		 uint8_t command,
@@ -129,7 +133,8 @@ static void ethermind_sdp_callback4
 		 uint16_t length,
 		 uint16_t status
 	 );
-#elif (CONFIG_BT_MAX_CONN == 6U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 6U)
 static void ethermind_sdp_callback5
 	 (
 		 uint8_t command,
@@ -137,7 +142,8 @@ static void ethermind_sdp_callback5
 		 uint16_t length,
 		 uint16_t status
 	 );
-#elif (CONFIG_BT_MAX_CONN == 7U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 7U)
 static void ethermind_sdp_callback6
 	 (
 		 uint8_t command,
@@ -145,7 +151,8 @@ static void ethermind_sdp_callback6
 		 uint16_t length,
 		 uint16_t status
 	 );
-#else
+#endif
+#if (CONFIG_BT_MAX_CONN > 7U)
 #error "please add the callback instances"
 #endif
 
@@ -160,21 +167,28 @@ static void sdp_client_notify_result(struct bt_sdp_client *session, enum uuid_st
 
 void bt_sdp_init(void)
 {
-#if (CONFIG_BT_MAX_CONN == 1U)
+#if (CONFIG_BT_MAX_CONN >= 1U)
 		bt_sdp_client_pool[0].sdb_cb = ethermind_sdp_callback0;
-#elif (CONFIG_BT_MAX_CONN == 2U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 2U)
 		bt_sdp_client_pool[1].sdb_cb = ethermind_sdp_callback1;
-#elif (CONFIG_BT_MAX_CONN == 3U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 3U)
 		bt_sdp_client_pool[2].sdb_cb = ethermind_sdp_callback2;
-#elif (CONFIG_BT_MAX_CONN == 4U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 4U)
 		bt_sdp_client_pool[3].sdb_cb = ethermind_sdp_callback3;
-#elif (CONFIG_BT_MAX_CONN == 5U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 5U)
 		bt_sdp_client_pool[4].sdb_cb = ethermind_sdp_callback4;
-#elif (CONFIG_BT_MAX_CONN == 6U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 6U)
 		bt_sdp_client_pool[5].sdb_cb = ethermind_sdp_callback5;
-#elif (CONFIG_BT_MAX_CONN == 7U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 7U)
 		bt_sdp_client_pool[6].sdb_cb = ethermind_sdp_callback6;
-#else
+#endif
+#if (CONFIG_BT_MAX_CONN > 7U)
 #error "please add the callback instances"
 #endif
 }
@@ -366,6 +380,9 @@ int bt_sdp_register_service(struct bt_sdp_record *service)
 				break;
 			}
 #endif
+			case 0xBDDB:
+				BT_dbase_get_record_handle(DB_RECORD_BQB_PTS_TEST_SDDB, 0,&record_handle);
+				break;
 			default:
 			  /* MISRA 16.4 : The switch statement does not have a non-empty default clause. */
 				break;
@@ -1578,7 +1595,7 @@ static void ethermind_sdp_callback
 	return;
 }
 
-#if (CONFIG_BT_MAX_CONN == 1U)
+#if (CONFIG_BT_MAX_CONN >= 1U)
 static void ethermind_sdp_callback0
 	 (
 		 uint8_t command,
@@ -1589,7 +1606,8 @@ static void ethermind_sdp_callback0
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[0], command, data, length, status);
 }
-#elif (CONFIG_BT_MAX_CONN == 2U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 2U)
 static void ethermind_sdp_callback1
 	 (
 		 uint8_t command,
@@ -1600,7 +1618,8 @@ static void ethermind_sdp_callback1
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[1], command, data, length, status);
 }
-#elif (CONFIG_BT_MAX_CONN == 3U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 3U)
 static void ethermind_sdp_callback2
 	 (
 		 uint8_t command,
@@ -1611,7 +1630,8 @@ static void ethermind_sdp_callback2
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[2], command, data, length, status);
 }
-#elif (CONFIG_BT_MAX_CONN == 4U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 4U)
 static void ethermind_sdp_callback3
 	 (
 		 uint8_t command,
@@ -1622,7 +1642,8 @@ static void ethermind_sdp_callback3
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[3], command, data, length, status);
 }
-#elif (CONFIG_BT_MAX_CONN == 5U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 5U)
 static void ethermind_sdp_callback4
 	 (
 		 uint8_t command,
@@ -1633,7 +1654,8 @@ static void ethermind_sdp_callback4
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[4], command, data, length, status);
 }
-#elif (CONFIG_BT_MAX_CONN == 6U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 6U)
 static void ethermind_sdp_callback5
 	 (
 		 uint8_t command,
@@ -1644,7 +1666,8 @@ static void ethermind_sdp_callback5
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[5], command, data, length, status);
 }
-#elif (CONFIG_BT_MAX_CONN == 7U)
+#endif
+#if (CONFIG_BT_MAX_CONN >= 7U)
 static void ethermind_sdp_callback6
 	 (
 		 uint8_t command,
@@ -1655,7 +1678,8 @@ static void ethermind_sdp_callback6
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[6], command, data, length, status);
 }
-#else
+#endif
+#if (CONFIG_BT_MAX_CONN > 7U)
 #error "please add the callback instances"
 #endif
 

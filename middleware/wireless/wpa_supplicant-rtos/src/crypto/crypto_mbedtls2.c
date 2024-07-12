@@ -8,7 +8,7 @@
 #include "utils/includes.h"
 #include "utils/common.h"
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO
+#if CONFIG_WPA_SUPP_CRYPTO
 
 #include <mbedtls/version.h>
 #include <mbedtls/entropy.h>
@@ -22,6 +22,10 @@
 #include <mbedtls/sha1.h>
 #include <mbedtls/sha256.h>
 #include <mbedtls/sha512.h>
+
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+#include "supp_psa_api.h"
+#endif
 
 #ifndef MBEDTLS_PRIVATE
 #define MBEDTLS_PRIVATE(x) x
@@ -37,7 +41,7 @@
 #define IANA_SECP384R1        20
 #define IANA_SECP521R1        21
 
-#ifdef CONFIG_MBEDTLS_ECDH_LEGACY_CONTEXT
+#ifdef MBEDTLS_ECDH_LEGACY_CONTEXT
 #define ACCESS_ECDH(S, var) S->MBEDTLS_PRIVATE(var)
 #else
 #define ACCESS_ECDH(S, var) S->MBEDTLS_PRIVATE(ctx).MBEDTLS_PRIVATE(mbed_ecdh).MBEDTLS_PRIVATE(var)
@@ -84,7 +88,7 @@
  * setting preprocessor defines for named groups of functionality
  */
 
-#if defined(CONFIG_FIPS)
+#ifdef CONFIG_FIPS
 #undef MBEDTLS_MD4_C     /* omit md4_vector() */
 #undef MBEDTLS_MD5_C     /* omit md5_vector() hmac_md5_vector() hmac_md5() */
 #undef MBEDTLS_DES_C     /* omit des_encrypt() */
@@ -92,7 +96,7 @@
 #define CRYPTO_MBEDTLS_CONFIG_FIPS
 #endif
 
-#if !defined(CONFIG_FIPS)
+#ifndef CONFIG_FIPS
 #if defined(EAP_PWD) || defined(EAP_LEAP) || defined(EAP_LEAP_DYNAMIC) || defined(EAP_TTLS) || \
     defined(EAP_TTLS_DYNAMIC) || defined(EAP_MSCHAPv2) || defined(EAP_MSCHAPv2_DYNAMIC) ||     \
     defined(EAP_SERVER_MSCHAPV2)
@@ -104,7 +108,7 @@
 #endif
 #endif
 
-#if !defined(CONFIG_NO_RC4) && !defined(CONFIG_NO_WPA)
+#if !(CONFIG_NO_RC4) && !(CONFIG_NO_WPA)
 #ifndef MBEDTLS_ARC4_C /* (RC4 not in mbedtls 3.x) */
 //#include "rc4.c"       /* pull in hostap local implementation */
 #endif                 /* rc4_skip() */
@@ -112,28 +116,28 @@
 //#undef MBEDTLS_ARC4_C /* omit rc4_skip() */
 #endif
 
-#if defined(CONFIG_MACSEC) || defined(CONFIG_NO_RADIUS) || defined(CONFIG_IEEE80211R) || defined(EAP_SERVER_FAST) || \
-    defined(EAP_SERVER_TEAP) || !defined(CONFIG_NO_WPA)
+#if (CONFIG_MACSEC) || (CONFIG_NO_RADIUS) || (CONFIG_IEEE80211R) || defined(EAP_SERVER_FAST) || \
+    defined(EAP_SERVER_TEAP) || !(CONFIG_NO_WPA)
 /* aes_wrap() aes_unwrap() */
 #else
 //#undef MBEDTLS_NIST_KW_C /* omit aes_wrap() aes_unwrap() */
 #endif
 
-#if !defined(CONFIG_SHA256)
+#if !(CONFIG_SHA256)
 #undef MBEDTLS_SHA256_C
 #endif
 
-#if !defined(CONFIG_SHA384) && !defined(CONFIG_SHA512)
+#if !(CONFIG_SHA384) && !(CONFIG_SHA512)
 #undef MBEDTLS_SHA512_C
 #endif
 
-#if defined(CONFIG_HMAC_SHA256_KDF)
+#if (CONFIG_HMAC_SHA256_KDF)
 #define CRYPTO_MBEDTLS_HMAC_KDF_SHA256
 #endif
-#if defined(CONFIG_HMAC_SHA384_KDF)
+#if (CONFIG_HMAC_SHA384_KDF)
 #define CRYPTO_MBEDTLS_HMAC_KDF_SHA384
 #endif
-#if defined(CONFIG_HMAC_SHA512_KDF)
+#if (CONFIG_HMAC_SHA512_KDF)
 #define CRYPTO_MBEDTLS_HMAC_KDF_SHA512
 #endif
 
@@ -148,15 +152,15 @@
 #define CRYPTO_MBEDTLS_SHA1_T_PRF
 #endif
 
-#if defined(CONFIG_AES)
+#if (CONFIG_AES)
 #define CRYPTO_MBEDTLS_AES
 #endif /* des_encrypt() */
 
-#if defined(CONFIG_DES)
+#if (CONFIG_DES)
 #define CRYPTO_MBEDTLS_DES_ENCRYPT
 #endif /* des_encrypt() */
 
-#if !defined(CONFIG_NO_PBKDF2)
+#if !(CONFIG_NO_PBKDF2)
 #define CRYPTO_MBEDTLS_PBKDF2_SHA1
 #endif /* pbkdf2_sha1() */
 
@@ -165,7 +169,7 @@
 #endif /* crypto_cipher_*() */
 
 #if defined(EAP_PWD) || defined(EAP_SERVER_PWD) /* CONFIG_EAP_PWD=y */ \
-    || defined(CONFIG_SAE)                      /* CONFIG_SAE=y */
+    || (CONFIG_SAE)                      /* CONFIG_SAE=y */
 #define CRYPTO_MBEDTLS_CRYPTO_BIGNUM
 #endif /* crypto_bignum_*() */
 
@@ -176,15 +180,15 @@
     || defined(EAP_IKEV2)         /* CONFIG_EAP_IKEV2y */  \
     || defined(EAP_IKEV2_DYNAMIC) /* CONFIG_EAP_IKEV2=y */ \
     || defined(EAP_SERVER_IKEV2)  /* CONFIG_EAP_IKEV2=y */ \
-    || defined(CONFIG_SAE)        /* CONFIG_SAE=y */       \
-    || defined(CONFIG_WPS)        /* CONFIG_WPS=y */
+    || (CONFIG_SAE)        /* CONFIG_SAE=y */       \
+    || (CONFIG_WPS)        /* CONFIG_WPS=y */
 #define CRYPTO_MBEDTLS_CRYPTO_DH
-#if defined(CONFIG_WPS_NFC)
+#if (CONFIG_WPS_NFC)
 #define CRYPTO_MBEDTLS_DH5_INIT_FIXED
 #endif /* dh5_init_fixed() */
 #endif /* crypto_dh_*() */
 
-#if !defined(CONFIG_NO_WPA) /* CONFIG_NO_WPA= */
+#if !(CONFIG_NO_WPA) /* CONFIG_NO_WPA= */
 #define CRYPTO_MBEDTLS_CRYPTO_ECDH
 #endif /* crypto_ecdh_*() */
 
@@ -205,7 +209,7 @@
 #endif /* crypto_pkcs7_*() */
 
 #if defined(EAP_SIM) || defined(EAP_SIM_DYNAMIC) || defined(EAP_SERVER_SIM) || defined(EAP_AKA) || \
-    defined(EAP_AKA_DYNAMIC) || defined(EAP_SERVER_AKA) || defined(CONFIG_AP) || defined(HOSTAPD)
+    defined(EAP_AKA_DYNAMIC) || defined(EAP_SERVER_AKA) || (CONFIG_AP) || defined(HOSTAPD)
 /* CONFIG_EAP_SIM=y CONFIG_EAP_AKA=y CONFIG_AP=y HOSTAPD */
 #if defined(CRYPTO_RSA_OAEP_SHA256)
 #define CRYPTO_MBEDTLS_CRYPTO_RSA
@@ -289,6 +293,9 @@ int crypto_get_random(void *buf, size_t len)
 __attribute_noinline__ static int md_vector(
     size_t num_elem, const u8 *addr[], const size_t *len, u8 *mac, mbedtls_md_type_t md_type)
 {
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    return md_vector_psa(num_elem, addr, len, mac, md_type);
+#else
     if (TEST_FAIL())
         return -1;
 
@@ -305,6 +312,7 @@ __attribute_noinline__ static int md_vector(
     mbedtls_md_finish(&ctx, mac);
     mbedtls_md_free(&ctx);
     return 0;
+#endif
 }
 
 #ifdef MBEDTLS_SHA512_C
@@ -575,6 +583,9 @@ __attribute_noinline__ static int hmac_vector(const u8 *key,
                                               u8 *mac,
                                               mbedtls_md_type_t md_type)
 {
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    return hmac_vector_psa(key, key_len, num_elem, addr, len, mac, md_type);
+#else
     if (TEST_FAIL())
         return -1;
 
@@ -591,6 +602,7 @@ __attribute_noinline__ static int hmac_vector(const u8 *key,
     mbedtls_md_hmac_finish(&ctx, mac);
     mbedtls_md_free(&ctx);
     return 0;
+#endif
 }
 
 #ifdef MBEDTLS_SHA512_C
@@ -1146,6 +1158,9 @@ int aes_unwrap(const u8 *kek, size_t kek_len, int n, const u8 *cipher, u8 *plain
 
 int omac1_aes_vector(const u8 *key, size_t key_len, size_t num_elem, const u8 *addr[], const size_t *len, u8 *mac)
 {
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    return omac1_aes_vector_psa(key, key_len, num_elem, addr, len, mac);
+#else
     if (TEST_FAIL())
         return -1;
 
@@ -1182,6 +1197,7 @@ int omac1_aes_vector(const u8 *key, size_t key_len, size_t num_elem, const u8 *a
         ret = mbedtls_cipher_cmac_finish(&ctx, mac);
     mbedtls_cipher_free(&ctx);
     return ret ? -1 : 0;
+#endif
 }
 
 int omac1_aes_128_vector(const u8 *key, size_t num_elem, const u8 *addr[], const size_t *len, u8 *mac)
@@ -1218,6 +1234,9 @@ int omac1_aes_256(const u8 *key, const u8 *data, size_t data_len, u8 *mac)
 /* aes-encblock.c */
 int aes_128_encrypt_block(const u8 *key, const u8 *in, u8 *out)
 {
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    return aes_128_encrypt_block_psa(key, in, out);
+#else
     if (TEST_FAIL())
         return -1;
 
@@ -1227,11 +1246,15 @@ int aes_128_encrypt_block(const u8 *key, const u8 *in, u8 *out)
         mbedtls_aes_setkey_enc(&aes, key, 128) || mbedtls_aes_crypt_ecb(&aes, MBEDTLS_AES_ENCRYPT, in, out) ? -1 : 0;
     mbedtls_aes_free(&aes);
     return ret;
+#endif
 }
 
 /* aes-ctr.c */
 int aes_ctr_encrypt(const u8 *key, size_t key_len, const u8 *nonce, u8 *data, size_t data_len)
 {
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    return aes_ctr_encrypt_psa(key, key_len, nonce, data, data_len);
+#else
     if (TEST_FAIL())
         return -1;
 
@@ -1249,6 +1272,7 @@ int aes_ctr_encrypt(const u8 *key, size_t key_len, const u8 *nonce, u8 *data, si
     forced_memzero(stream_block, sizeof(stream_block));
     mbedtls_aes_free(&ctx);
     return ret;
+#endif
 }
 
 int aes_128_ctr_encrypt(const u8 *key, const u8 *nonce, u8 *data, size_t data_len)
@@ -1259,6 +1283,12 @@ int aes_128_ctr_encrypt(const u8 *key, const u8 *nonce, u8 *data, size_t data_le
 /* aes-cbc.c */
 static int aes_128_cbc_oper(const u8 *key, const u8 *iv, u8 *data, size_t data_len, int mode)
 {
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    if (mode == MBEDTLS_AES_ENCRYPT)
+        return aes_128_cbc_encrypt_psa(key, iv, data, data_len);
+    else
+        return aes_128_cbc_decrypt_psa(key, iv, data, data_len);
+#else
     unsigned char ivec[MBEDTLS_AES_BLOCK_SIZE];
     os_memcpy(ivec, iv, MBEDTLS_AES_BLOCK_SIZE); /*(must be writable)*/
 
@@ -1269,6 +1299,7 @@ static int aes_128_cbc_oper(const u8 *key, const u8 *iv, u8 *data, size_t data_l
               mbedtls_aes_crypt_cbc(&ctx, mode, data_len, ivec, data, data);
     mbedtls_aes_free(&ctx);
     return ret ? -1 : 0;
+#endif
 }
 
 int aes_128_cbc_encrypt(const u8 *key, const u8 *iv, u8 *data, size_t data_len)
@@ -2322,6 +2353,14 @@ struct crypto_ecdh *crypto_ecdh_init_owe(int group)
     mbedtls_ctr_drbg_context ctr_drbg;
     mbedtls_entropy_context entropy;
     mbedtls_ecdh_context *ctx;
+    /* Initialize CTR_DRBG context */
+    mbedtls_ctr_drbg_init(&ctr_drbg);
+    mbedtls_entropy_init(&entropy);
+
+#ifdef __ZEPHYR__
+    mbedtls_entropy_add_source(&entropy, wm_wrap_entropy_poll, NULL, ENTROPY_MIN_PLATFORM,
+                               MBEDTLS_ENTROPY_SOURCE_STRONG);
+#endif
 
     /* Initialize CTR_DRBG context */
     mbedtls_ctr_drbg_init(&ctr_drbg);
@@ -2334,7 +2373,7 @@ struct crypto_ecdh *crypto_ecdh_init_owe(int group)
         goto fail;
     }
     mbedtls_ecdh_init(ctx);
-#ifndef CONFIG_MBEDTLS_ECDH_LEGACY_CONTEXT
+#if !defined(MBEDTLS_ECDH_LEGACY_CONTEXT)
     ctx->MBEDTLS_PRIVATE(var) = MBEDTLS_ECDH_VARIANT_MBEDTLS_2_0;
 #endif
 
@@ -2516,6 +2555,10 @@ struct wpabuf *crypto_ecdh_set_peerkey_owe(struct crypto_ecdh *ecdh, int inc_y, 
     /* Initialize CTR_DRBG context */
     mbedtls_ctr_drbg_init(&ctr_drbg);
     mbedtls_entropy_init(&entropy);
+#ifdef __ZEPHYR__
+    mbedtls_entropy_add_source(&entropy, wm_wrap_entropy_poll, NULL, ENTROPY_MIN_PLATFORM,
+                               MBEDTLS_ENTROPY_SOURCE_STRONG);
+#endif
 
     /* Seed and setup CTR_DRBG entropy source for future reseeds */
     if (mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, NULL, 0) != 0)
@@ -2569,7 +2612,7 @@ struct wpabuf *crypto_ecdh_set_peerkey_owe(struct crypto_ecdh *ecdh, int inc_y, 
     if (ctx != NULL && peer != NULL)
     {
         mbedtls_ecp_copy(ACCESS_ECDH(&ctx, Qp), &(mbedtls_pk_ec(*peer))->MBEDTLS_PRIVATE(Q));
-#ifndef CONFIG_MBEDTLS_ECDH_LEGACY_CONTEXT
+#if !defined(MBEDTLS_ECDH_LEGACY_CONTEXT)
         ctx->MBEDTLS_PRIVATE(var) = MBEDTLS_ECDH_VARIANT_MBEDTLS_2_0;
 #endif
     }
@@ -3194,7 +3237,7 @@ int crypto_ec_point_cmp(const struct crypto_ec *e, const struct crypto_ec_point 
     return mbedtls_ecp_point_cmp((const mbedtls_ecp_point *)a, (const mbedtls_ecp_point *)b);
 }
 
-#if !defined(CONFIG_NO_STDOUT_DEBUG)
+#if !(CONFIG_NO_STDOUT_DEBUG)
 void crypto_ec_point_debug_print(const struct crypto_ec *e, const struct crypto_ec_point *p, const char *title)
 {
     u8 x[MBEDTLS_MPI_MAX_SIZE];
@@ -3237,7 +3280,7 @@ struct crypto_ec_key *crypto_ec_key_parse_priv(const u8 *der, size_t der_len)
 }
 
 #ifdef CRYPTO_MBEDTLS_CRYPTO_HPKE
-#ifdef CONFIG_MODULE_TESTS
+#if CONFIG_MODULE_TESTS
 /*(for crypto_module_tests.c)*/
 struct crypto_ec_key *crypto_ec_key_set_priv(int group, const u8 *raw, size_t raw_len)
 {

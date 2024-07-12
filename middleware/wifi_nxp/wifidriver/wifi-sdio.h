@@ -17,7 +17,7 @@
 #define wifi_io_e(...) wmlog_e("wifi_io", ##__VA_ARGS__)
 #define wifi_io_w(...) wmlog_w("wifi_io", ##__VA_ARGS__)
 
-#ifdef CONFIG_WIFI_IO_DEBUG
+#if CONFIG_WIFI_IO_DEBUG
 #define wifi_io_d(...) wmlog("wifi_io", ##__VA_ARGS__)
 #else
 #define wifi_io_d(...)
@@ -26,7 +26,7 @@
 #define wifi_io_info_e(...) wmlog_e("wpkt", ##__VA_ARGS__)
 #define wifi_io_info_w(...) wmlog_w("wpkt", ##__VA_ARGS__)
 
-#ifdef CONFIG_WIFI_IO_INFO_DUMP
+#if CONFIG_WIFI_IO_INFO_DUMP
 #define wifi_io_info_d(...) wmlog("wpkt", ##__VA_ARGS__)
 #else
 #define wifi_io_info_d(...)
@@ -34,7 +34,12 @@
 
 #define WLAN_MAGIC_NUM (('W' << 0) | ('L' << 8) | ('F' << 16) | ('W' << 24))
 
+#if CONFIG_RF_TEST_MODE
+/* sizeof(HostCmd_DS_COMMAND) in worst case is 2828 where HostCmd_DS_MFG_CMD_OTP_CAL_DATA_T size is 2820 */
+#define WIFI_FW_CMDBUF_SIZE 2832U
+#else
 #define WIFI_FW_CMDBUF_SIZE 2100U
+#endif
 
 #define WIFI_RESP_WAIT_TIME 10
 
@@ -55,7 +60,11 @@
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (4U)
 /*! @brief Data buffer size. */
+#ifndef __ZEPHYR__
 #define DATA_BUFFER_SIZE (FSL_SDMMC_DEFAULT_BLOCK_SIZE * DATA_BLOCK_COUNT)
+#else
+#define DATA_BUFFER_SIZE (SDMMC_DEFAULT_BLOCK_SIZE * DATA_BLOCK_COUNT)
+#endif
 
 /* Duplicated in wlan.c. keep in sync till we can be included directly */
 typedef struct __nvram_backup_struct
@@ -70,7 +79,6 @@ typedef struct __nvram_backup_struct
     t_u32 wifi_state;
 } nvram_backup_t;
 
-extern os_thread_t wifi_core_thread;
 extern bool g_txrx_flag;
 #ifdef WLAN_LOW_POWER_ENABLE
 extern bool low_power_mode;
@@ -80,7 +88,7 @@ extern bool mac_addr_valid;
 
 mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size);
 
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
 mlan_status sd_wifi_reinit(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size, uint8_t fw_reload);
 #endif
 
@@ -110,7 +118,7 @@ int wifi_send_cmdbuffer(t_u32 tx_blocks, t_u32 len);
  *
  */
 HostCmd_DS_COMMAND *wifi_get_command_buffer(void);
-#ifdef CONFIG_FW_VDLL
+#if CONFIG_FW_VDLL
 int wifi_send_vdllcmdbuffer(t_u32 tx_blocks, t_u32 len);
 HostCmd_DS_COMMAND *wifi_get_vdllcommand_buffer(void);
 int wlan_send_sdio_vdllcmd(t_u8 *buf, t_u32 tx_blocks, t_u32 buflen);
@@ -121,12 +129,12 @@ mlan_status wlan_xmit_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface, t_u32 tx_co
 int raw_process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
 uint32_t wifi_get_device_value1(void);
 
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
 uint8_t *wifi_wmm_get_sdio_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
 mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf);
 mlan_status wlan_flush_wmm_pkt(t_u8 pkt_cnt);
 mlan_status wlan_xmit_bypass_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface);
-#ifdef AMSDU_IN_AMPDU
+#if CONFIG_AMSDU_IN_AMPDU
 uint8_t *wifi_get_amsdu_outbuf(uint32_t offset);
 mlan_status wlan_xmit_wmm_amsdu_pkt(mlan_wmm_ac_e ac, t_u8 interface, t_u32 txlen, t_u8 *tx_buf, t_u8 amsdu_cnt);
 #endif
@@ -138,7 +146,7 @@ void sdio_disable_interrupt(void);
 
 void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface, t_u8 tid, t_u32 tx_control);
 
-#ifdef CONFIG_WIFI_FW_DEBUG
+#if CONFIG_WIFI_FW_DEBUG
 extern void wifi_dump_firmware_info();
 extern void wifi_sdio_reg_dbg();
 #endif /* CONFIG_WIFI_FW_DEBUG */

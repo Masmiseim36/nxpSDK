@@ -11,12 +11,12 @@
 #ifndef __WLAN_TESTS_H__
 #define __WLAN_TESTS_H__
 
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
 /* index enum of cfgs */
 enum
 {
     TEST_WLAN_11AX_CFG,
-#ifdef CONFIG_11AX_TWT
+#if CONFIG_11AX_TWT
     TEST_WLAN_BCAST_TWT,
     TEST_WLAN_TWT_SETUP,
     TEST_WLAN_TWT_TEARDOWN,

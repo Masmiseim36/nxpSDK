@@ -10,7 +10,7 @@
 #include "utils/includes.h"
 
 #ifdef CONFIG_DPP
-#ifdef CONFIG_CTRL_IFACE_UNIX
+#if defined(CONFIG_CTRL_IFACE_UNIX) || defined(__ZEPHYR__)
 #include <fcntl.h>
 #endif /* CONFIG_CTRL_IFACE_UNIX */
 
@@ -563,7 +563,7 @@ int dpp_relay_rx_action(struct dpp_global *dpp,
 int dpp_relay_rx_gas_req(struct dpp_global *dpp, const u8 *src, const u8 *data, size_t data_len)
 {
     struct dpp_relay_controller *ctrl;
-    struct dpp_connection *conn, *found = NULL;
+    struct dpp_connection *conn = NULL, *found = NULL;
     struct wpabuf *msg;
 
     /* Check if there is a successfully completed authentication for this

@@ -3,6 +3,8 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
+if((CONFIG_CORE STREQUAL dsp) AND ((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S)))
+
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/algo/common/src/xa_nnlib_common_api.c
   ${CMAKE_CURRENT_LIST_DIR}/algo/kernels/activations/hifi4/xa_nn_activations_16_16.c
@@ -190,3 +192,8 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
+else()
+
+message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()

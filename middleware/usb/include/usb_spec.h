@@ -195,7 +195,7 @@ typedef struct _usb_descriptor_common
 {
     uint8_t bLength;         /* Size of this descriptor in bytes */
     uint8_t bDescriptorType; /* DEVICE Descriptor Type */
-    uint8_t bData[1];        /* Data */
+    uint8_t bData[7];        /* Data */
 } usb_descriptor_common_t;
 
 typedef struct _usb_descriptor_device

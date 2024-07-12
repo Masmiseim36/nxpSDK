@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../bin/generator/sdk_generator/data/sdk_data_schema/v3/software_set_and_project_schema.json
 
 __variable__:
-  mbedtls_version: 2.28.5
+  mbedtls_version: 2.28.8
 middleware.mbedtls.template:
   section-type: component
   contents:
@@ -118,7 +118,7 @@ middleware.mbedtls.port.ele_s400_ecc_opaque:
     user_visible: always
     full_name: MbedTLS MCUX SDK port layer via ELE S400
     taxonomy:
-      csub: ele_s400
+      csub: ele_s400_opaque
       belong_to: mbedtls
     display_name: mbedtls_ele_s400_ecc_opaque
   dependency:
@@ -178,15 +178,15 @@ middleware.mbedtls.port.els_pkc:
         MBEDTLS_CONFIG_FILE: '"els_pkc_mbedtls_config.h"'
   belong_to: set.middleware.mbedtls
   section_info:
-    description: mbedTLS port library for PKC
+    description: mbedTLS port library for ELS and PKC
     type: middleware
     version: "${mbedtls_version}"
     user_visible: always
-    full_name: MbedTLS MCUX SDK port layer via PKC
+    full_name: MbedTLS MCUX SDK port layer via ELS_PKC
     taxonomy:
       csub: els_pkc
       belong_to: mbedtls
-    display_name: mbedtls_pkc
+    display_name: mbedtls_els_pkc
   dependency:
     allOf:
     - middleware.mbedtls.port.els
@@ -198,15 +198,15 @@ middleware.mbedtls.port.els_pkc:
           - device:
             - RW610
             - RW612
-            - MCXN546
-            - MCXN547
-            - MCXN946
-            - MCXN947
         - allOf:
           - device:
             - LPC55S36
             - MCXN235
             - MCXN236
+            - MCXN546
+            - MCXN547
+            - MCXN946
+            - MCXN947
 
 middleware.mbedtls.port.els:
   section-type: component
@@ -246,7 +246,7 @@ middleware.mbedtls.port.els:
     description: mbedTLS port library for ELS
     type: middleware
     version: "${mbedtls_version}"
-    user_visible: always
+    user_visible: never
     full_name: MbedTLS MCUX SDK port layer via ELS
     taxonomy:
       csub: els
@@ -282,6 +282,7 @@ middleware.mbedtls.port.sssapi:
     - source: port/sssapi/ecdsa_alt.h
     - source: port/sssapi/ecdsa_alt.c
     - source: port/sssapi/entropy_poll_alt.c
+    - source: port/sssapi/threading_alt.h
     configuration:
       cc-define:
         MBEDTLS_NXP_SSSAPI: 
@@ -314,6 +315,8 @@ middleware.mbedtls.port.sssapi:
       - KW45Z41083
       - KW45B41Z83_NBU
       - K32L4A
+      - MCXW716A
+      - MCXW716C
 middleware.mbedtls.port.ksdk:
   section-type: component
   contents:
@@ -619,6 +622,7 @@ middleware.mbedtls:
     - source: library/asn1parse.c
     - source: library/asn1write.c
     - source: library/base64.c
+    - source: library/bignum_internal.h
     - source: library/bignum.c
     - source: library/blowfish.c
     - source: library/camellia.c
@@ -745,7 +749,9 @@ middleware.mbedtls:
     display_name: mbedtls
   dependency:
     allOf:
-    - utility.debug_console
+    - anyOf:
+      - utility.debug_console
+      - utility.debug_console_lite
     - anyOf:
       - middleware.mbedtls.port.ksdk
       - middleware.mbedtls.port.sssapi
@@ -834,7 +840,10 @@ container.middleware.mbedtls.unused_files:
     - source: library/Makefile
       hidden: true
       exclude: true
-    - source: programs/*
+    - source: pkgconfig/*.*
+      hidden: true
+      exclude: true
+    - source: programs/*.*
       hidden: true
       exclude: true
     - source: programs/aes/*.*
@@ -1057,3 +1066,68 @@ scr.board.${board}.mbedtls:
       integrate middleware.
     Origin: NXP (BSD-3-Clause)
     Location: "./boards/${board}/mbedtls_examples"
+
+middleware.mbedtls.tests:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls
+    project_base_path: mbedtls
+    cc-include:
+    - repo_relative_path: tests/include/test
+    - repo_relative_path: tests/include
+    files:
+    - source: tests/src/asn1_helpers.c
+    - source: tests/src/helpers.c
+    - source: tests/src/psa_crypto_helpers.c
+    - source: tests/src/psa_exercise_key.c
+    - source: tests/src/random.c
+    - source: tests/src/threading_helpers.c
+    - source: tests/src/fake_external_rng_for_test.c
+    - source: tests/src/test_helpers/ssl_helpers.c
+    - source: tests/include/test/arguments.h
+    - source: tests/include/test/asn1_helpers.h
+    - source: tests/include/test/constant_flow.h
+    - source: tests/include/test/fake_external_rng_for_test.h
+    - source: tests/include/test/helpers.h
+    - source: tests/include/test/macros.h
+    - source: tests/include/test/psa_crypto_helpers.h
+    - source: tests/include/test/psa_exercise_key.h
+    - source: tests/include/test/psa_helpers.h
+    - source: tests/include/test/random.h
+    - source: tests/include/test/ssl_helpers.h
+  belong_to: set.middleware.mbedtls
+  section_info:
+    description: mbedTLS test suite
+    type: middleware
+    version: "${mbedtls_version}"
+    user_visible: never
+    full_name: MbedTLS open source Crypto library
+    taxonomy:
+      csub: tests
+      belong_to: mbedtls
+    display_name: mbedtls_tests
+middleware.mbedtls.3rdparty:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls
+    project_base_path: mbedtls
+    cc-include:
+    - repo_relative_path: 3rdparty/everest/include
+    - repo_relative_path: 3rdparty/everest/include/everest
+    - repo_relative_path: 3rdparty/everest/include/everest/kremlib
+    - repo_relative_path: 3rdparty/everest/include/everest/kremlin
+    - repo_relative_path: 3rdparty/everest/include/everest/kremlin/internal
+    files:
+    - source: 3rdparty/*.*
+    - source: 3rdparty/everest/**
+  belong_to: set.middleware.mbedtls
+  section_info:
+    description: mbedTLS 3rdparty code
+    type: middleware
+    version: "${mbedtls_version}"
+    user_visible: never
+    full_name: MbedTLS open source Crypto library 3rdparty
+    taxonomy:
+      csub: 3rdparty
+      belong_to: mbedtls
+    display_name: mbedtls_3rdparty

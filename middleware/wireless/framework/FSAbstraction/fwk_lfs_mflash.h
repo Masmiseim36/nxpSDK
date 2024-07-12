@@ -79,6 +79,7 @@ int lfs_mflash_erase(const struct lfs_config *lfsc, lfs_block_t block);
  */
 int lfs_mflash_sync(const struct lfs_config *lfsc);
 
+#ifdef LFS_THREADSAFE
 /**
  * @brief
  *
@@ -92,6 +93,7 @@ int lfs_mutex_lock(const struct lfs_config *lfsc);
  *
  */
 int lfs_mutex_unlock(const struct lfs_config *lfsc);
+#endif
 
 #if defined(__cplusplus)
 }

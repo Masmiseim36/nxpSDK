@@ -232,6 +232,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_MRT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -354,7 +355,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
@@ -367,6 +367,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
         </option>
@@ -1325,6 +1326,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_MRT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1447,7 +1449,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
@@ -1460,6 +1461,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
         </option>
@@ -2418,6 +2420,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_MRT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2540,7 +2543,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
@@ -2553,6 +2555,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
         </option>
@@ -3511,6 +3514,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_MRT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3633,7 +3637,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
@@ -3646,6 +3649,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
         </option>
@@ -4450,16 +4454,16 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

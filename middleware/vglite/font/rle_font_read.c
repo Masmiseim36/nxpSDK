@@ -28,7 +28,6 @@
 *****************************************************************************/
 
 /** Include Files */
-#include <mcufont.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -38,6 +37,7 @@
 #include "vg_lite_text.h"
 #include "vft_draw.h"
 #include "vft_debug.h"
+#include <mcufont.h>
 
 /** Macros */
 #define __COUNTOF(x) (sizeof(x)/sizeof(x[0]))
@@ -91,6 +91,7 @@ int read_rle_font_header(bufferred_reader_t *f, struct mf_font_s* font);
 int read_rle_font_from_buffer(char *buf, int size, struct mf_font_s* font);
 int load_raster_font(char *data, int data_len, struct mf_font_s** font);
 
+int read_char(bufferred_reader_t *f, char* pdata);
 int read_8b(bufferred_reader_t *f, uint8_t* pdata);
 int read_16b(bufferred_reader_t *f, uint16_t* pword);
 int read_32b(bufferred_reader_t *f, uint32_t* pword);
@@ -393,6 +394,15 @@ void vg_lite_text_init(void)
     font_table_ready = 1;
 }
 
+/* Read-Write char data */
+int read_char(bufferred_reader_t * f, char* pdata)
+{
+    bufferred_fread(pdata, 1, 1, f);
+    TRACE_DBG(("%d) 8b: fp=%08x %d %d\r\n", DBG_INC_ID(),
+               bufferred_ftell(f) - 1, 1, *pdata));
+    return 1;
+}
+
 /* Read-Write 8-bit unsigned int data */
 int read_8b(bufferred_reader_t * f, uint8_t* pdata)
 {
@@ -482,6 +492,19 @@ int read_8b_blob(bufferred_reader_t * f, uint8_t** ary, uint32_t *ary_len)
 
 #define EXIT_IF_NEGATIVE(param) if ((ret = param) < 0) return ret;
 
+/* Type used to represent characters internally. */
+#if MF_ENCODING == MF_ENCODING_ASCII
+#define read_mfb read_char
+#elif MF_ENCODING == MF_ENCODING_UTF8
+#define read_mfb read_char
+#elif MF_ENCODING == MF_ENCODING_UTF16
+#define read_mfb read_16b
+#elif MF_ENCODING == MF_ENCODING_UTF32
+#define read_mfb read_32b
+#elif MF_ENCODING == MF_ENCODING_WCHAR
+#define read_mfb read_32b
+#endif
+
 int read_rle_font_header(bufferred_reader_t * f, struct mf_font_s* font)
 {
     int raw_header_offset = 0;
@@ -522,7 +545,7 @@ int read_rle_font_header(bufferred_reader_t * f, struct mf_font_s* font)
     EXIT_IF_NEGATIVE(read_8b(f, &font->flags));
     raw_header_offset += 1;                       /* font.flags */
 
-    EXIT_IF_NEGATIVE(read_16b(f, &font->fallback_character));
+    EXIT_IF_NEGATIVE(read_mfb(f, &font->fallback_character));
     raw_header_offset += 2;                       /* font.fallback_character */
 
     EXIT_IF_NEGATIVE(read_8b(f, &(mfont->version)));
@@ -665,10 +688,10 @@ int load_raster_font(char *data, int data_len, struct mf_font_s** font)
 
     /* Update generic char width pointers of mculib */
     uint8_t mf_rlefont_character_width(const struct mf_font_s* font,
-        uint16_t character);
+        mf_char character);
     uint8_t mf_rlefont_render_character(const struct mf_font_s* font,
         int16_t x0, int16_t y0,
-        uint16_t character,
+        mf_char character,
         mf_pixel_callback_t callback,
         void* state);
 

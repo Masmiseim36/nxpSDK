@@ -240,6 +240,12 @@ struct bt_l2cap_br_endpoint {
 	uint16_t				cid;
 	/** Endpoint Maximum Transmission Unit */
 	uint16_t				mtu;
+	/** Endpoint Maximum PDU payload Size */
+	uint16_t				mps;
+	/** Endpoint initial credits */
+	uint16_t				init_credits;
+	/** Endpoint credits */
+	atomic_t				credits;
 };
 
 /** @brief BREDR L2CAP Channel structure. */
@@ -250,9 +256,12 @@ struct bt_l2cap_br_chan {
 	struct bt_l2cap_br_endpoint	rx;
 	/** Channel Transmission Endpoint */
 	struct bt_l2cap_br_endpoint	tx;
+	/** Pending RX MTU on ECFC reconfigure, used internally by stack */
+	uint16_t pending_rx_mtu;
+	/** Pending RX MPS on ECFC reconfigure, used internally by stack */
+	uint16_t pending_rx_mps;
 	/* For internal use only */
 	atomic_t			flags[1];
-
 	bt_l2cap_chan_state_t		state;
 	/** Remote PSM to be connected */
 	uint16_t			psm;
@@ -607,6 +616,11 @@ int bt_l2cap_server_register(struct bt_l2cap_server *server);
  *  @return 0 in case of success or negative value in case of error.
  */
 int bt_l2cap_br_server_register(struct bt_l2cap_server *server);
+   
+
+#if (defined(CONFIG_BT_L2CAP_ECRED) && (CONFIG_BT_L2CAP_ECRED > 0U))
+int bt_l2cap_ecbfc_server_register(struct bt_l2cap_server *server);
+#endif
 
 /** @brief Connect Enhanced Credit Based L2CAP channels
  *
@@ -632,10 +646,11 @@ int bt_l2cap_ecred_chan_connect(struct bt_conn *conn,
  *  @param chans Array of channel objects. Null-terminated. Elements after the
  *               first 5 are silently ignored.
  *  @param mtu Channel MTU to reconfigure to.
+ *  @param mps Channel MPS to reconfigure to
  *
  *  @return 0 in case of success or negative value in case of error.
  */
-int bt_l2cap_ecred_chan_reconfigure(struct bt_l2cap_chan **chans, uint16_t mtu);
+int bt_l2cap_ecred_chan_reconfigure(struct bt_l2cap_chan **chans, uint16_t mtu, uint16_t mps);
 
 /** @brief Connect L2CAP channel
  *
@@ -685,22 +700,28 @@ int bt_l2cap_chan_disconnect(struct bt_l2cap_chan *chan);
  *  size the buffers for the for the outgoing buffer pool.
  *
  *  When sending L2CAP data over an LE connection the application is sending
- *  L2CAP SDUs. The application can optionally reserve
+ *  L2CAP SDUs. The application shall reserve
  *  @ref BT_L2CAP_SDU_CHAN_SEND_RESERVE bytes in the buffer before sending.
- *  By reserving bytes in the buffer the stack can use this buffer as a segment
- *  directly, otherwise it will have to allocate a new segment for the first
- *  segment.
- *  If the application is reserving the bytes it should use the
- *  BT_L2CAP_BUF_SIZE() helper to correctly size the buffers for the for the
- *  outgoing buffer pool.
- *  When segmenting an L2CAP SDU into L2CAP PDUs the stack will first attempt
- *  to allocate buffers from the original buffer pool of the L2CAP SDU before
- *  using the stacks own buffer pool.
+ *
+ *  The application can use the BT_L2CAP_SDU_BUF_SIZE() helper to correctly size
+ *  the buffer to account for the reserved headroom.
+ *
+ *  When segmenting an L2CAP SDU into L2CAP PDUs the stack will first attempt to
+ *  allocate buffers from the channel's `alloc_seg` callback and will fallback
+ *  on the stack's global buffer pool (sized
+ *  @kconfig{CONFIG_BT_L2CAP_TX_BUF_COUNT}).
  *
  *  @note Buffer ownership is transferred to the stack in case of success, in
  *  case of an error the caller retains the ownership of the buffer.
  *
- *  @return Bytes sent in case of success or negative value in case of error.
+ *  @return 0 in case of success or negative value in case of error.
+ *  @return -EINVAL if `buf` or `chan` is NULL.
+ *  @return -EINVAL if `chan` is not either BR/EDR or LE credit-based.
+ *  @return -EINVAL if buffer doesn't have enough bytes reserved to fit header.
+ *  @return -EMSGSIZE if `buf` is larger than `chan`'s MTU.
+ *  @return -ENOTCONN if underlying conn is disconnected.
+ *  @return -ESHUTDOWN if L2CAP channel is disconnected.
+ *  @return -other (from lower layers) if chan is BR/EDR.
  */
 int bt_l2cap_chan_send(struct bt_l2cap_chan *chan, struct net_buf *buf);
 

@@ -3,12 +3,12 @@
  * @brief Shell APIs for Bluetooth CAP acceptor
  *
  * Copyright (c) 2022 Nordic Semiconductor ASA
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#if (defined(CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER) && (CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER > 0))
+#if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0))
 
 #include <porting.h>
 #include <zephyr/types.h>
@@ -341,4 +341,4 @@ size_t cap_acceptor_ad_data_add(struct bt_data data[], size_t data_size, bool di
 
 #endif /* CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER */
 
-#endif /* CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER */
+#endif /* CONFIG_BT_CAP_ACCEPTOR */

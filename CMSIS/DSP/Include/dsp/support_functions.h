@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     support_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.1
+ * @date     18 August 2022
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -44,6 +44,63 @@ extern "C"
 
 
 /**
+   * @brief Converts the elements of the 64 bit floating-point vector to floating-point vector.
+   * @param[in]  pSrc       points to the floating-point 64 input vector
+   * @param[out] pDst       points to the floating-point output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+  void arm_f64_to_float(
+  const float64_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize);
+
+/**
+   * @brief Converts the elements of the 64 bit floating-point vector to Q31 vector.
+   * @param[in]  pSrc       points to the floating-point 64 input vector
+   * @param[out] pDst       points to the Q31 output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+  void arm_f64_to_q31(
+  const float64_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize);
+
+/**
+   * @brief Converts the elements of the 64 bit floating-point vector to Q15 vector.
+   * @param[in]  pSrc       points to the floating-point 64 input vector
+   * @param[out] pDst       points to the Q15 output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+  void arm_f64_to_q15(
+  const float64_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize);
+
+/**
+   * @brief Converts the elements of the 64 bit floating-point vector to Q7 vector.
+   * @param[in]  pSrc       points to the floating-point 64 input vector
+   * @param[out] pDst       points to the Q7 output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+  void arm_f64_to_q7(
+  const float64_t * pSrc,
+        q7_t * pDst,
+        uint32_t blockSize);
+
+
+
+/**
+   * @brief Converts the elements of the floating-point  vector to 64 bit floating-point  vector.
+   * @param[in]  pSrc       points to the floating-point input vector
+   * @param[out] pDst       points to the 64 bit floating-point output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+  void arm_float_to_f64(
+  const float32_t * pSrc,
+        float64_t * pDst,
+        uint32_t blockSize);
+
+/**
    * @brief Converts the elements of the floating-point vector to Q31 vector.
    * @param[in]  pSrc       points to the floating-point input vector
    * @param[out] pDst       points to the Q31 output vector
@@ -78,6 +135,16 @@ extern "C"
         q7_t * pDst,
         uint32_t blockSize);
 
+/**
+ * @brief  Converts the elements of the Q31 vector to 64 bit floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[out] pDst       is output pointer
+ * @param[in]  blockSize  is the number of samples to process
+ */
+void arm_q31_to_f64(
+const q31_t * pSrc,
+      float64_t * pDst,
+      uint32_t blockSize);
 
   /**
    * @brief  Converts the elements of the Q31 vector to floating-point vector.
@@ -114,6 +181,16 @@ extern "C"
         q7_t * pDst,
         uint32_t blockSize);
 
+/**
+ * @brief  Converts the elements of the Q15 vector to 64 bit floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[out] pDst       is output pointer
+ * @param[in]  blockSize  is the number of samples to process
+ */
+void arm_q15_to_f64(
+const q15_t * pSrc,
+      float64_t * pDst,
+      uint32_t blockSize);
 
   /**
    * @brief  Converts the elements of the Q15 vector to floating-point vector.
@@ -150,6 +227,16 @@ extern "C"
         q7_t * pDst,
         uint32_t blockSize);
 
+/**
+ * @brief  Converts the elements of the Q7 vector to 64 bit floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[out] pDst       is output pointer
+ * @param[in]  blockSize  is the number of samples to process
+ */
+void arm_q7_to_f64(
+const q7_t * pSrc,
+      float64_t * pDst,
+      uint32_t blockSize);
 
   /**
    * @brief  Converts the elements of the Q7 vector to floating-point vector.
@@ -295,6 +382,20 @@ extern "C"
         float32_t * pDst,
         uint32_t blockSize);
 
+ 
+ 
+  /**
+   * @brief  Copies the elements of a floating-point vector.
+   * @param[in]  pSrc       input pointer
+   * @param[out] pDst       output pointer
+   * @param[in]  blockSize  number of samples to process
+   */
+  void arm_copy_f64(
+  const float64_t * pSrc,
+        float64_t * pDst,
+        uint32_t blockSize);
+
+
 
   /**
    * @brief  Copies the elements of a Q7 vector.
@@ -341,6 +442,18 @@ extern "C"
   void arm_fill_f32(
         float32_t value,
         float32_t * pDst,
+        uint32_t blockSize);
+
+
+  /**
+   * @brief  Fills a constant value into a floating-point vector.
+   * @param[in]  value      input value to be filled
+   * @param[out] pDst       output pointer
+   * @param[in]  blockSize  number of samples to process
+   */
+  void arm_fill_f64(
+        float64_t value,
+        float64_t * pDst,
         uint32_t blockSize);
 
 

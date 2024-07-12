@@ -2,7 +2,25 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.15.0
+  The current version of Multicore SDK is 2.16.0
+  - 2.16.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.13.0
+      - eRPC generator (erpcgen) v.1.13.0
+      - Multicore Manager (MCMgr) v4.1.5
+      - RPMsg-Lite v5.1.2
+    - New features:
+      - eRPC,erpcgen: Fixing/improving markdown files, GitHub PR #395.
+      - eRPC: Fix Python client TCPTransports not being able to close, GitHub PR #390.
+      - eRPC,erpcgen: Align switch brackets, GitHub PR #396.
+      - eRPC,erpcgen: Remove cstbool library, GitHub PR #403.
+      - erpc: Fix zephyr uart transport, GitHub PR #410.
+      - erpc: Add BSD-3 license to endianness agnostic files, GitHub PR #417.
+      - erpc: UART ZEPHYR Transport stop to work after a few transactions when using USB-CDC resolved, GitHub PR #420.
+      - eRPC: Add new Zephyr-related transports (zephyr_uart, zephyr_mbox).
+      - eRPC: Add new Zephyr-related examples.
+      - RPMsg-Lite: Zephyr-related changes.
+      - RPMsg-Lite: Minor Misra corrections.
   - 2.15.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.12.0

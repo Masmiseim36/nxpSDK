@@ -22,6 +22,11 @@ if(${CMAKE_BUILD_TYPE} MATCHES "Coverage")
         --cs-hit
         --cs-no-execution-time
     )
+    target_include_directories(connfwk-FunctionLib-coverage
+        PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    target_link_libraries(connfwk-FunctionLib-coverage PRIVATE connfwk-config)
 
     target_compile_options(connfwk-FunctionLib-coverage PRIVATE
         $<$<COMPILE_LANGUAGE:C>:${COVERAGE_COMPILE_OPTIONS}>

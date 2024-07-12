@@ -2,6 +2,7 @@ if(WIN32)
     set(EXE ".exe")
 endif()
 
+message(STATUS "Setting TOOLCHAIN_DIR to ICCARM_DIR...")
 set(TOOLCHAIN_DIR $ENV{ICCARM_DIR})
 string(REGEX REPLACE "\\\\" "/" TOOLCHAIN_DIR "${TOOLCHAIN_DIR}")
 

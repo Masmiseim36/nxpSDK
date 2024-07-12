@@ -161,9 +161,13 @@ static int notify_lock_value(const struct bt_csip_set_member_svc_inst *svc_inst,
 			      struct bt_conn *conn)
 {
 	LOG_DBG("");
-	return csip_gatt_notify_set_lock(conn, svc_inst->service_p->attrs,
-					 &svc_inst->set_lock,
-					 sizeof(svc_inst->set_lock));
+
+	if (svc_inst->service_p != NULL) {
+		return csip_gatt_notify_set_lock(conn, svc_inst->service_p->attrs,
+						 &svc_inst->set_lock, sizeof(svc_inst->set_lock));
+	} else {
+		return -EINVAL;
+	}
 }
 
 static void notify_client(struct bt_conn *conn, void *data)
@@ -252,6 +256,10 @@ static int sirk_encrypt(struct bt_conn *conn,
 		LOG_DBG("Encrypting test SIRK");
 		k = test_k;
 	} else {
+		if (conn == NULL) {
+			return -EINVAL;
+		}
+
 		k = conn->le.keys->ltk.val;
 	}
 
@@ -740,6 +748,10 @@ BT_GATT_SERVICE_INSTANCE_DEFINE(csip_set_member_service_list, svc_insts,
 /****************************** Public API ******************************/
 void *bt_csip_set_member_svc_decl_get(const struct bt_csip_set_member_svc_inst *svc_inst)
 {
+	if (svc_inst == NULL || svc_inst->service_p == NULL) {
+		return NULL;
+	}
+
 	return svc_inst->service_p->attrs;
 }
 
@@ -954,6 +966,27 @@ int bt_csip_set_member_register(const struct bt_csip_set_member_register_param *
 	}
 
 	*svc_inst = inst;
+	return 0;
+}
+
+int bt_csip_set_member_unregister(struct bt_csip_set_member_svc_inst *svc_inst)
+{
+	int err;
+
+	CHECKIF(svc_inst == NULL) {
+		LOG_DBG("NULL svc_inst");
+		return -EINVAL;
+	}
+
+	err = bt_gatt_service_unregister(svc_inst->service_p);
+	if (err != 0) {
+		LOG_DBG("CSIS service unregister failed: %d", err);
+		return err;
+	}
+
+	(void)k_work_cancel_delayable(&svc_inst->set_lock_timer);
+	memset(svc_inst, 0, sizeof(*svc_inst));
+
 	return 0;
 }
 

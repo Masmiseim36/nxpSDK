@@ -95,6 +95,7 @@ static struct wpabuf *sme_auth_build_sae_commit(struct wpa_supplicant *wpa_s,
     int use_pt    = 0;
     bool use_pk   = false;
     u8 rsnxe_capa = 0;
+    int key_mgmt = external ? wpa_s->sme.ext_auth_key_mgmt : wpa_s->key_mgmt;
 
     if (ret_use_pt)
         *ret_use_pt = 0;
@@ -157,6 +158,8 @@ static struct wpabuf *sme_auth_build_sae_commit(struct wpa_supplicant *wpa_s,
     }
 
     if (ssid->sae_password_id && wpa_s->conf->sae_pwe != 3)
+        use_pt = 1;
+    if (wpa_key_mgmt_sae_ext_key(key_mgmt) && wpa_s->conf->sae_pwe != 3)
         use_pt = 1;
 #ifdef CONFIG_SAE_PK
     if ((rsnxe_capa & BIT(WLAN_RSNX_CAPAB_SAE_PK)) && ssid->sae_pk != SAE_PK_MODE_DISABLED &&
@@ -1143,9 +1146,38 @@ static void sme_external_auth_send_sae_confirm(struct wpa_supplicant *wpa_s, con
     wpabuf_free(buf);
 }
 
+static bool is_sae_key_mgmt_suite(struct wpa_supplicant *wpa_s, u32 suite)
+{
+    /* suite is supposed to be the selector value in host byte order with
+     * the OUI in three most significant octets. However, the initial
+     * implementation swapped that byte order and did not work with drivers
+     * that followed the expected byte order. Keep a workaround here to
+     * match that initial implementation so that already deployed use cases
+     * remain functional. */
+    if (RSN_SELECTOR_GET(&suite) == RSN_AUTH_KEY_MGMT_SAE)
+    {
+        /* Old drivers which follow initial implementation send SAE AKM
+         * for both SAE and FT-SAE connections. In that case, determine
+         * the actual AKM from wpa_s->key_mgmt. */
+        wpa_s->sme.ext_auth_key_mgmt = wpa_s->key_mgmt;
+        return true;
+    }
+
+    if (suite == RSN_AUTH_KEY_MGMT_SAE)
+        wpa_s->sme.ext_auth_key_mgmt = WPA_KEY_MGMT_SAE;
+    else if (suite == RSN_AUTH_KEY_MGMT_FT_SAE)
+        wpa_s->sme.ext_auth_key_mgmt = WPA_KEY_MGMT_FT_SAE;
+    else if (suite == RSN_AUTH_KEY_MGMT_SAE_EXT_KEY)
+        wpa_s->sme.ext_auth_key_mgmt = WPA_KEY_MGMT_SAE_EXT_KEY;
+    else
+        return false;
+
+    return true;
+}
+
 void sme_external_auth_trigger(struct wpa_supplicant *wpa_s, union wpa_event_data *data)
 {
-    if (RSN_SELECTOR_GET(&data->external_auth.key_mgmt_suite) != RSN_AUTH_KEY_MGMT_SAE)
+    if (!is_sae_key_mgmt_suite(wpa_s, data->external_auth.key_mgmt_suite))
         return;
 
     if (data->external_auth.action == EXT_AUTH_START)

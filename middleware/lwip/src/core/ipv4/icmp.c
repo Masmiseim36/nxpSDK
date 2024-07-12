@@ -6,6 +6,7 @@
 
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -213,6 +214,7 @@ icmp_input(struct pbuf *p, struct netif *inp)
         ip4_addr_copy(iphdr->src, *src);
         ip4_addr_copy(iphdr->dest, *ip4_current_src_addr());
         ICMPH_TYPE_SET(iecho, ICMP_ER);
+        p->if_idx = NETIF_NO_INDEX; /* we're reusing this pbuf, so reset its if_idx */
 #if CHECKSUM_GEN_ICMP
         IF__NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_ICMP) {
           /* adjust the checksum */

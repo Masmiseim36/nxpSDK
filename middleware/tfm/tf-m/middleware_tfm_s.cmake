@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(((CONFIG_USE_middleware_tfm_s_lpcxpresso55s69 AND (CONFIG_BOARD STREQUAL lpcxpresso55s69)) OR (CONFIG_USE_middleware_tfm_s_lpcxpresso55s36 AND (CONFIG_BOARD STREQUAL lpcxpresso55s36)) OR (CONFIG_USE_middleware_tfm_s_lpcxpresso55s16 AND (CONFIG_BOARD STREQUAL lpcxpresso55s16)) OR (CONFIG_USE_middleware_tfm_s_lpcxpresso55s06 AND (CONFIG_BOARD STREQUAL lpcxpresso55s06)) OR (CONFIG_USE_middleware_tfm_s_evkmimxrt685 AND (CONFIG_BOARD STREQUAL evkmimxrt685)) OR (CONFIG_USE_middleware_tfm_s_mimxrt685audevk AND (CONFIG_BOARD STREQUAL mimxrt685audevk)) OR (CONFIG_USE_middleware_tfm_s_evkmimxrt595 AND (CONFIG_BOARD STREQUAL evkmimxrt595))) AND (CONFIG_USE_middleware_tfm_s_profile_large OR CONFIG_USE_middleware_tfm_s_profile_medium OR CONFIG_USE_middleware_tfm_s_profile_small))
+if(((CONFIG_USE_middleware_tfm_s_lpcxpresso55s69 AND (CONFIG_BOARD STREQUAL lpcxpresso55s69)) OR (CONFIG_USE_middleware_tfm_s_lpcxpresso55s36 AND (CONFIG_BOARD STREQUAL lpcxpresso55s36)) OR (CONFIG_USE_middleware_tfm_s_lpcxpresso55s16 AND (CONFIG_BOARD STREQUAL lpcxpresso55s16)) OR (CONFIG_USE_middleware_tfm_s_lpcxpresso55s06 AND (CONFIG_BOARD STREQUAL lpcxpresso55s06)) OR (CONFIG_USE_middleware_tfm_s_evkmimxrt685 AND (CONFIG_BOARD STREQUAL evkmimxrt685)) OR (CONFIG_USE_middleware_tfm_s_mimxrt685audevk AND (CONFIG_BOARD STREQUAL mimxrt685audevk)) OR (CONFIG_USE_middleware_tfm_s_evkmimxrt595 AND (CONFIG_BOARD STREQUAL evkmimxrt595)) OR (CONFIG_USE_middleware_tfm_s_kw45b41zevk AND (CONFIG_BOARD STREQUAL kw45b41zevk)) OR (CONFIG_USE_middleware_tfm_s_k32w148evk AND (CONFIG_BOARD STREQUAL k32w148evk)) OR (CONFIG_USE_middleware_tfm_s_frdmrw612 AND (CONFIG_BOARD STREQUAL frdmrw612)) OR (CONFIG_USE_middleware_tfm_s_rdrw612bga AND (CONFIG_BOARD STREQUAL rdrw612bga)) OR (CONFIG_USE_middleware_tfm_s_mcxn9xxevk AND (CONFIG_BOARD STREQUAL mcxn9xxevk)) OR (CONFIG_USE_middleware_tfm_s_mcxn5xxevk AND (CONFIG_BOARD STREQUAL mcxn5xxevk)) OR (CONFIG_USE_middleware_tfm_s_frdmmcxw71 AND (CONFIG_BOARD STREQUAL frdmmcxw71))) AND (CONFIG_USE_middleware_tfm_s_profile_large OR CONFIG_USE_middleware_tfm_s_profile_medium OR CONFIG_USE_middleware_tfm_s_profile_small) AND ((CONFIG_USE_middleware_tfm_s_platform_common AND (NOT (CONFIG_NOT STREQUAL RW610 OR CONFIG_NOT STREQUAL RW612))) OR (CONFIG_USE_middleware_tfm_s_platform_rw61x AND (CONFIG_DEVICE_ID STREQUAL RW610 OR CONFIG_DEVICE_ID STREQUAL RW612))))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/lib/fih/src/fih.c
@@ -19,9 +19,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/tfm_interrupts.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/uart_stdout.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/attest_hal.c
-  ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/crypto_keys.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/flash_otp_nv_counters_backend.c
-  ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/nv_counters.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/otp_flash.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/tfm_fih_rng.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/arm/drivers/mpu/armv8m/mpu_armv8m_drv.c
@@ -81,9 +79,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/arm/drivers/mpu/armv8m
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/accelerator/interface
-  ${CMAKE_CURRENT_LIST_DIR}/platform/include
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/Device/Config
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/Device/Include
+  ${CMAKE_CURRENT_LIST_DIR}/platform/include
   ${CMAKE_CURRENT_LIST_DIR}/interface/include/psa
   ${CMAKE_CURRENT_LIST_DIR}/interface/include
   ${CMAKE_CURRENT_LIST_DIR}/interface/include/crypto_keys
@@ -115,7 +113,6 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
     -DCONFIG_TFM_ENABLE_MEMORY_PROTECT
     -DTFM_PARTITION_NS_AGENT_TZ
     -DTFM_PARTITION_IDLE
-    -DPLATFORM_DEFAULT_NV_COUNTERS
     -DPLATFORM_DEFAULT_OTP
     -DPLATFORM_DEFAULT_PROVISIONING
     -DOTP_WRITEABLE

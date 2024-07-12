@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     basic_math_functions_f16.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -27,17 +27,16 @@
 #ifndef _BASIC_MATH_FUNCTIONS_F16_H_
 #define _BASIC_MATH_FUNCTIONS_F16_H_
 
-#ifdef   __cplusplus
-extern "C"
-{
-#endif
-
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
 
 #include "dsp/none.h"
 #include "dsp/utils.h"
 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 

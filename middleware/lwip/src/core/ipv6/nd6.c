@@ -9,6 +9,7 @@
 
 /*
  * Copyright (c) 2010 Inico Technologies Ltd.
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -749,8 +750,7 @@ nd6_input(struct pbuf *p, struct netif *inp)
       case ND6_OPTION_TYPE_SOURCE_LLADDR:
       {
         struct lladdr_option *lladdr_opt;
-        /* Option must accommodate its header and lladdr */
-        if (option_len < (inp->hwaddr_len + 2)) {
+        if (option_len < (ND6_LLADDR_OPTION_MIN_LENGTH + inp->hwaddr_len)) {
           goto lenerr_drop_free_return;
         }
         lladdr_opt = (struct lladdr_option *)buffer;
@@ -1349,7 +1349,7 @@ nd6_tmr(void)
 
 /** Send a neighbor solicitation message for a specific neighbor cache entry
  *
- * @param entry the neightbor cache entry for which to send the message
+ * @param entry the neighbor cache entry for which to send the message
  * @param flags one of ND6_SEND_FLAG_*
  */
 static void
@@ -2146,6 +2146,7 @@ static s8_t nd6_better_route(s8_t route1, s8_t route2)
         (route_list[route2].preference != ND6_RA_PREFERENCE_HIGH)) {
       return route1;
     } else if ((route_list[route1].preference == ND6_RA_PREFERENCE_MEDIUM) &&
+    /* Is the router netif both set and appropriate? */
                (route_list[route2].preference == ND6_RA_PREFERENCE_LOW)) {
       return route1;
     } else if (route_list[route1].preference == route_list[route2].preference) {

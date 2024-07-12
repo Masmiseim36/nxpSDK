@@ -49,11 +49,7 @@ void arm_bitreversal_q15(
   const uint16_t * pBitRevTab);
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -70,8 +66,21 @@ void arm_bitreversal_q15(
                  Hence the output format is different for different FFT sizes.
                  The input and output formats for different FFT sizes and number of bits to upscale are mentioned in the tables below for CFFT and CIFFT:
   @par
-                 \image html CFFTQ15.gif "Input and Output Formats for Q15 CFFT"
-                 \image html CIFFTQ15.gif "Input and Output Formats for Q15 CIFFT"
+                
+| CFFT Size | Input format  | Output format | Number of bits to upscale |
+| --------: | ------------: | ------------: | ------------------------: |
+| 16        | 1.15          | 5.11          | 4                         |
+| 64        | 1.15          | 7.9           | 6                         |
+| 256       | 1.15          | 9.7           | 8                         |
+| 1024      | 1.15          | 11.5          | 10                        |
+
+| CIFFT Size | Input format  | Output format | Number of bits to upscale |
+| ---------: | ------------: | ------------: | ------------------------: |
+| 16         | 1.15          | 5.11          | 0                         |
+| 64         | 1.15          | 7.9           | 0                         |
+| 256        | 1.15          | 9.7           | 0                         |
+| 1024       | 1.15          | 11.5          | 0                         |
+
  */
 
 void arm_cfft_radix4_q15(
@@ -98,7 +107,7 @@ void arm_cfft_radix4_q15(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */
 
 /*
@@ -495,16 +504,16 @@ void arm_radix4_butterfly_q15(
   do
   {
     /* Read xa (real), ya(imag) input */
-    xaya = read_q15x2_ia ((q15_t **) &ptr1);
+    xaya = read_q15x2_ia (&ptr1);
 
     /* Read xb (real), yb(imag) input */
-    xbyb = read_q15x2_ia ((q15_t **) &ptr1);
+    xbyb = read_q15x2_ia (&ptr1);
 
     /* Read xc (real), yc(imag) input */
-    xcyc = read_q15x2_ia ((q15_t **) &ptr1);
+    xcyc = read_q15x2_ia (&ptr1);
 
     /* Read xd (real), yd(imag) input */
-    xdyd = read_q15x2_ia ((q15_t **) &ptr1);
+    xdyd = read_q15x2_ia (&ptr1);
 
     /* R = packed((ya + yc), (xa + xc)) */
     R = __QADD16(xaya, xcyc);
@@ -1358,16 +1367,16 @@ void arm_radix4_butterfly_inverse_q15(
   do
   {
     /* Read xa (real), ya(imag) input */
-    xaya = read_q15x2_ia ((q15_t **) &ptr1);
+    xaya = read_q15x2_ia (&ptr1);
 
     /* Read xb (real), yb(imag) input */
-    xbyb = read_q15x2_ia ((q15_t **) &ptr1);
+    xbyb = read_q15x2_ia (&ptr1);
 
     /* Read xc (real), yc(imag) input */
-    xcyc = read_q15x2_ia ((q15_t **) &ptr1);
+    xcyc = read_q15x2_ia (&ptr1);
 
     /* Read xd (real), yd(imag) input */
-    xdyd = read_q15x2_ia ((q15_t **) &ptr1);
+    xdyd = read_q15x2_ia (&ptr1);
 
     /* R = packed((ya + yc), (xa + xc)) */
     R = __QADD16(xaya, xcyc);

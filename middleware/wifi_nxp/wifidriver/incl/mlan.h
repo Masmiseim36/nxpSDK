@@ -18,26 +18,51 @@ Change log:
 #ifndef _MLAN_H_
 #define _MLAN_H_
 
+#include <wifi_config_default.h>
 
-
-
-#if !defined(SD8801)
-#define CONFIG_GTK_REKEY_OFFLOAD       1
+#ifdef __ZEPHYR__
+#include "nxp_wifi.h"
 #endif
+
+
+
+#ifndef __ZEPHYR__
+#if !CONFIG_STA_AUTO_DHCPV4
+#define CONFIG_STA_AUTO_DHCPV4 1
+#endif
+#endif
+
+#ifndef __ZEPHYR__
+#if !CONFIG_WIFI_STA_RECONNECT
+#define CONFIG_WIFI_STA_RECONNECT 1
+#endif
+#endif
+
+#ifndef __ZEPHYR__
+#if !CONFIG_WIFI_AUTO_POWER_SAVE
+#define CONFIG_WIFI_AUTO_POWER_SAVE 1
+#endif
+#endif
+
+
+#define CONFIG_GTK_REKEY_OFFLOAD 0
+
 
 #if defined(SD9177)
 #define CONFIG_TCP_ACK_ENH 1
 #define CONFIG_FW_VDLL     1
-#define CONFIG_WIFI_CAPA   1
+
+#if CONFIG_11AX
+#if !CONFIG_11K
+#define CONFIG_11K 1
+#endif
+#if !CONFIG_11V
+#define CONFIG_11V 1
+#endif
+#endif
 #endif
 
-#ifdef CONFIG_11AX
-#define CONFIG_11K 1
-#define CONFIG_11V 1
-#ifndef CONFIG_WPA_SUPP
-#define CONFIG_DRIVER_MBO 1
-#endif
-#endif
+#include <osa.h>
 
 #include "mlan_decl.h"
 #include "mlan_ioctl.h"

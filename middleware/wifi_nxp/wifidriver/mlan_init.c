@@ -17,15 +17,23 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 #include "fsl_common.h"
+#ifndef __ZEPHYR__
+#ifndef RW610
 #include "sdmmc_config.h"
+#endif
+#endif
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
 /********************************************************
         Global Variables
 ********************************************************/
+
+#ifdef __ZEPHYR__
+#define BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE 32
+#endif
 
 //_IOBUFS_ALIGNED(SDIO_DMA_ALIGNMENT)
 #if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
@@ -36,6 +44,14 @@ SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZ
 
 /* We are allocating BSS list globally as we need heap for other purposes */
 SDK_ALIGN(BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST], 32);
+
+
+#if !CONFIG_5GHz_SUPPORT
+static ChanStatistics_t Chan_Stats[14];
+#else
+static ChanStatistics_t Chan_Stats[48];
+#endif
+
 
 /********************************************************
         Local Functions
@@ -55,35 +71,16 @@ SDK_ALIGN(BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST], 32);
  */
 mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
 {
-    int ret = -WM_FAIL;
-    // fixme: this function will need during migration of legacy code.
-    t_u8 chan_2g_size = 14;
-#ifdef CONFIG_5GHz_SUPPORT
-#ifdef CONFIG_UNII4_BAND_SUPPORT
-    t_u8 chan_5g_size = 34;
-#else
-    t_u8 chan_5g_size    = 31;
-#endif
-#endif
-
-    t_u32 buf_size;
-
     (void)__memset(MNULL, &BSS_List, 0x00, sizeof(BSS_List));
 
     pmadapter->pscan_table = BSS_List;
-    pmadapter->num_in_chan_stats = chan_2g_size;
-#ifdef CONFIG_5GHz_SUPPORT
-    pmadapter->num_in_chan_stats += chan_5g_size;
+
+#if !CONFIG_5GHz_SUPPORT
+    pmadapter->num_in_chan_stats = 14;
+#else
+    pmadapter->num_in_chan_stats = 48;
 #endif
-    buf_size = sizeof(ChanStatistics_t) * pmadapter->num_in_chan_stats;
-    ret      = pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, buf_size, MLAN_MEM_DEF,
-                                           (t_u8 **)&pmadapter->pchan_stats);
-    if (ret != MLAN_STATUS_SUCCESS || !pmadapter->pchan_stats)
-    {
-        PRINTM(MERROR, "Failed to allocate channel statistics\n");
-        LEAVE();
-        return MLAN_STATUS_FAILURE;
-    }
+    pmadapter->pchan_stats = Chan_Stats;
 
        /* wmsdk: Use a statically allocated DMA aligned buffer */
 #if defined(SD8801)
@@ -98,6 +95,19 @@ mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
 
 void wlan_clear_scan_bss(void)
 {
+#if CONFIG_WPA_SUPP
+    BSSDescriptor_t *bss_entry = NULL;
+    int i;
+
+    for (i = 0; i < mlan_adap->num_in_scan_table; i++)
+    {
+        bss_entry = &mlan_adap->pscan_table[i];
+        if (bss_entry && bss_entry->ies != NULL)
+        {
+            OSA_MemoryFree(bss_entry->ies);
+        }
+    }
+#endif
     (void)__memset(MNULL, &BSS_List, 0x00, sizeof(BSS_List));
 }
 
@@ -140,13 +150,13 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->ewpa_query         = MFALSE;
     priv->adhoc_aes_enabled  = MFALSE;
     priv->curr_pkt_filter =
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
         HostCmd_ACT_MAC_STATIC_DYNAMIC_BW_ENABLE |
 #endif
         HostCmd_ACT_MAC_RTS_CTS_ENABLE | HostCmd_ACT_MAC_RX_ON | HostCmd_ACT_MAC_TX_ON |
         HostCmd_ACT_MAC_ETHERNETII_ENABLE;
 
-#ifdef CONFIG_GTK_REKEY_OFFLOAD
+#if CONFIG_GTK_REKEY_OFFLOAD
     (void)__memset(pmadapter, &priv->gtk_rekey, 0, sizeof(priv->gtk_rekey));
 #endif
     (void)__memset(pmadapter, &priv->curr_bss_params, 0, sizeof(priv->curr_bss_params));
@@ -160,21 +170,25 @@ mlan_status wlan_init_priv(pmlan_private priv)
 
     priv->wpa_is_gtk_set = MFALSE;
 
+#ifdef RW610
+    priv->tx_bf_cap = DEFAULT_11N_TX_BF_CAP;
+#else
     priv->tx_bf_cap = 0;
+#endif
     priv->wmm_required = MTRUE;
     priv->wmm_enabled  = MFALSE;
     priv->wmm_qosinfo  = 0;
     priv->pmfcfg.mfpc = 0;
     priv->pmfcfg.mfpr = 0;
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
     priv->enable_host_11k = (t_u8)MFALSE;
 #endif
-#ifdef CONFIG_11K
+#if CONFIG_11K
     priv->neighbor_rep_token    = (t_u8)1U;
     priv->rrm_mgmt_bitmap_index = -1;
 #endif
-#ifdef CONFIG_11V
+#if CONFIG_11V
     priv->bss_trans_query_token = (t_u8)1U;
 #endif
     for (i = 0; i < MAX_NUM_TID; i++)
@@ -194,18 +208,21 @@ mlan_status wlan_init_priv(pmlan_private priv)
         priv->port_ctrl_mode = MFALSE;
     }
     priv->port_open = MFALSE;
-#ifdef CONFIG_ROAMING
+#if CONFIG_ROAMING
     priv->roaming_enabled = MFALSE;
 #endif
 
     priv->uap_bss_started = MFALSE;
     priv->uap_host_based  = MFALSE;
 
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
     reset_ie_index();
     priv->default_scan_ies_len = 0;
     priv->probe_req_index      = -1;
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_WPS
+    priv->wps.wps_mgmt_bitmap_index = -1;
+#endif
+#if CONFIG_WPA_SUPP_AP
     priv->beacon_vendor_index = -1;
     priv->beacon_index        = 0;
     priv->proberesp_index     = 1;
@@ -213,9 +230,11 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->beacon_wps_index    = 3;
 #endif
 #endif
+#if CONFIG_TCP_ACK_ENH
     priv->enable_tcp_ack_enh = MTRUE;
+#endif
 
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
     priv->is_dpp_connect = MFALSE;
 #endif
 
@@ -241,14 +260,16 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
      * priority.
      */
     pmadapter->mp_wr_bitmap = 0;
+#ifndef RW610
 #if defined(SD8801)
     pmadapter->curr_rd_port = 1;
     pmadapter->curr_wr_port = 1;
 #elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
-    pmadapter->curr_rd_port = 0;
-    pmadapter->curr_wr_port = 0;
+    pmadapter->curr_rd_port      = 0;
+    pmadapter->curr_wr_port      = 0;
 #endif
     pmadapter->mp_data_port_mask = DATA_PORT_MASK;
+#endif
 
     /* Scan type */
     pmadapter->scan_type = MLAN_SCAN_TYPE_ACTIVE;
@@ -263,14 +284,15 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
 
     pmadapter->ecsa_enable = MFALSE;
 
-    pmadapter->scan_chan_gap = 0;
-
     /* fixme: enable this later when required */
-#ifdef CONFIG_EXT_SCAN_SUPPORT
+#if CONFIG_EXT_SCAN_SUPPORT
     pmadapter->ext_scan = 1;
 #endif
     pmadapter->scan_probes = DEFAULT_PROBES;
 
+#if CONFIG_SCAN_WITH_RSSIFILTER
+    pmadapter->rssi_threshold = 0;
+#endif
 
     /* fixme: enable this later when required */
     pmadapter->multiple_dtim         = MRVDRV_DEFAULT_MULTIPLE_DTIM;
@@ -281,23 +303,27 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->enhanced_ps_mode  = PS_MODE_AUTO;
     pmadapter->bcn_miss_time_out = DEFAULT_BCN_MISS_TIMEOUT;
 
-#ifdef CONFIG_HOST_SLEEP
+#if CONFIG_WMM_UAPSD
+    pmadapter->gen_null_pkt   = MFALSE; /* Disable NULL Pkt generation-default */
+    pmadapter->pps_uapsd_mode = MFALSE; /* Disable pps/uapsd mode -default */
+#endif
+#if CONFIG_HOST_SLEEP
     pmadapter->is_hs_configured          = MFALSE;
-    pmadapter->mgmt_filter[0].action     = 0;        /* discard and not wakeup host */
-    pmadapter->mgmt_filter[0].type       = 0xff;     /* management frames */
-    pmadapter->mgmt_filter[0].frame_mask = 0x1400;   /* Frame-Mask bits :
-                                                        : Bit 0 - Association Request
-                                                        : Bit 1 - Association Response
-                                                        : Bit 2 - Re-Association Request
-                                                        : Bit 3 - Re-Association Response
-                                                        : Bit 4 - Probe Request
-                                                        : Bit 5 - Probe Response
-                                                        : Bit 8 - Beacon Frames
-                                                        : Bit 10 - Disassociation
-                                                        : Bit 11 - Authentication
-                                                        : Bit 12 - Deauthentication
-                                                        : Bit 13 - Action Frames
-                                                     */
+    pmadapter->mgmt_filter[0].action     = 0;      /* discard and not wakeup host */
+    pmadapter->mgmt_filter[0].type       = 0xff;   /* management frames */
+    pmadapter->mgmt_filter[0].frame_mask = 0x1400; /* Frame-Mask bits :
+                                                      : Bit 0 - Association Request
+                                                      : Bit 1 - Association Response
+                                                      : Bit 2 - Re-Association Request
+                                                      : Bit 3 - Re-Association Response
+                                                      : Bit 4 - Probe Request
+                                                      : Bit 5 - Probe Response
+                                                      : Bit 8 - Beacon Frames
+                                                      : Bit 10 - Disassociation
+                                                      : Bit 11 - Authentication
+                                                      : Bit 12 - Deauthentication
+                                                      : Bit 13 - Action Frames
+                                                   */
 #endif
 
     pmadapter->hw_dot_11n_dev_cap     = 0;
@@ -313,10 +339,10 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->usr_dot_11ac_opermode_bw  = 0;
     pmadapter->usr_dot_11ac_opermode_nss = 0;
     pmadapter->usr_dot_11n_enable = MFALSE;
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
     pmadapter->usr_dot_11ac_enable = MFALSE;
 #endif
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
     pmadapter->usr_dot_11ax_enable = MFALSE;
 #endif
 
@@ -326,6 +352,12 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
 
     wlan_wmm_init(pmadapter);
     wlan_init_wmm_param(pmadapter);
+#if CONFIG_WMM_UAPSD
+    (void)__memset(pmadapter, &pmadapter->sleep_params, 0, sizeof(pmadapter->sleep_params));
+    (void)__memset(pmadapter, &pmadapter->sleep_period, 0, sizeof(pmadapter->sleep_period));
+
+    pmadapter->tx_lock_flag = MFALSE;
+#endif /* CONFIG_WMM_UAPSD */
     pmadapter->null_pkt_interval = 0;
     pmadapter->fw_bands          = 0U;
     pmadapter->config_bands      = 0U;
@@ -371,30 +403,46 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
                                     priv->adapter->callbacks.moal_init_lock);
             }
 
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
             /* wmm enhanced reuses 4 ac xmit queues */
             for (j = 0; j < MAX_AC_QUEUES; ++j)
             {
                 if (priv->adapter->callbacks.moal_init_semaphore(pmadapter->pmoal_handle, "ra_list_sem",
                                                                  &priv->wmm.tid_tbl_ptr[j].ra_list.plock) !=
                     MLAN_STATUS_SUCCESS)
-                    return MLAN_STATUS_FAILURE;
-#ifdef CONFIG_WMM_DEBUG
+                {
+                    wifi_e("Create ra_list_sem failed");
+                    ret = MLAN_STATUS_FAILURE;
+                    goto done;
+                }
+#if CONFIG_WMM_DEBUG
                 util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->wmm.hist_ra[j], MFALSE, MNULL);
 #endif
             }
 #endif
 
-            util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, MTRUE,
-                                pmadapter->callbacks.moal_init_lock);
-            ret = (mlan_status)os_mutex_create(&priv->tx_ba_stream_tbl_lock, "Tx BA tbl lock", OS_MUTEX_INHERIT);
+            ret = (mlan_status)OSA_MutexCreate((osa_mutex_handle_t)priv->tx_ba_stream_tbl_lock);
             if (ret != MLAN_STATUS_SUCCESS)
             {
                 wifi_e("Create Tx BA tbl sem failed");
-                return ret;
+                ret = MLAN_STATUS_FAILURE;
+                goto done;
             }
+
+            util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, MTRUE,
+                                pmadapter->callbacks.moal_init_lock);
+
+            ret = (mlan_status)OSA_SemaphoreCreateBinary((osa_semaphore_handle_t)priv->rx_reorder_tbl_lock);
+            if (ret != MLAN_STATUS_SUCCESS)
+            {
+                wifi_e("Create Rx Reorder tbl lock failed");
+                ret = MLAN_STATUS_FAILURE;
+                goto done;
+            }
+            OSA_SemaphorePost((osa_semaphore_handle_t)priv->rx_reorder_tbl_lock);
             util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->rx_reorder_tbl_ptr, MTRUE,
                                 pmadapter->callbacks.moal_init_lock);
+
             util_scalar_init((t_void *)pmadapter->pmoal_handle, &priv->wmm.tx_pkts_queued, 0,
                              priv->wmm.ra_list_spinlock, pmadapter->callbacks.moal_init_lock);
             util_scalar_init((t_void *)pmadapter->pmoal_handle, &priv->wmm.highest_queued_prio, HIGH_PRIO_TID,
@@ -404,7 +452,27 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
         }
     }
 
+done:
     /* error: */
+    if (ret != MLAN_STATUS_SUCCESS)
+    {
+        for (i = 0; i < pmadapter->priv_num; i++)
+        {
+            priv = pmadapter->priv[i];
+#if CONFIG_WMM
+            for (j = 0; j < MAX_AC_QUEUES; ++j)
+            {
+                if ((uint32_t *)(*(uint32_t *)priv->wmm.tid_tbl_ptr[j].ra_list.plock) != NULL)
+                    priv->adapter->callbacks.moal_free_semaphore(
+                        pmadapter->pmoal_handle, &priv->wmm.tid_tbl_ptr[j].ra_list.plock);
+            }
+#endif
+            if ((uint32_t *)(*(uint32_t *)priv->tx_ba_stream_tbl_lock) != NULL)
+                OSA_MutexDestroy((osa_mutex_handle_t)priv->tx_ba_stream_tbl_lock);
+            if ((uint32_t *)(*(uint32_t *)priv->rx_reorder_tbl_lock) != NULL)
+                OSA_SemaphoreDestroy((osa_semaphore_handle_t)priv->rx_reorder_tbl_lock);
+        }
+    }
     LEAVE();
     return ret;
 }
@@ -458,8 +526,6 @@ done:
  */
 t_void wlan_free_adapter(pmlan_adapter pmadapter)
 {
-    mlan_callbacks *pcb = (mlan_callbacks *)&pmadapter->callbacks;
-
     ENTER();
 
     if (!pmadapter)
@@ -467,12 +533,6 @@ t_void wlan_free_adapter(pmlan_adapter pmadapter)
         PRINTM(MERROR, "The adapter is NULL\n");
         LEAVE();
         return;
-    }
-
-    if (pmadapter->pchan_stats)
-    {
-        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->pchan_stats);
-        pmadapter->pchan_stats = MNULL;
     }
 
 

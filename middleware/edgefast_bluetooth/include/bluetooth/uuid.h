@@ -5144,6 +5144,59 @@ struct bt_uuid_128 {
  */
 #define BT_UUID_NDTS_TIME_WITH_DTS \
 	BT_UUID_DECLARE_16(BT_UUID_NDTS_TIME_WITH_DTS_VAL)
+/**
+ *  @brief Gaming Service UUID value
+ */
+#define BT_UUID_GMAS_VAL 0x1858
+/**
+ *  @brief Common Audio Service
+ */
+#define BT_UUID_GMAS	 BT_UUID_DECLARE_16(BT_UUID_GMAS_VAL)
+
+/**
+ *  @brief Gaming Audio Profile Role UUID value
+ */
+#define BT_UUID_GMAP_ROLE_VAL 0x2C00
+/**
+ *  @brief Gaming Audio Profile Role
+ */
+#define BT_UUID_GMAP_ROLE     BT_UUID_DECLARE_16(BT_UUID_GMAP_ROLE_VAL)
+
+/**
+ *  @brief Gaming Audio Profile Unicast Game Gateway Features UUID value
+ */
+#define BT_UUID_GMAP_UGG_FEAT_VAL 0x2C01
+/**
+ *  @brief Gaming Audio Profile Unicast Game Gateway Features
+ */
+#define BT_UUID_GMAP_UGG_FEAT	  BT_UUID_DECLARE_16(BT_UUID_GMAP_UGG_FEAT_VAL)
+
+/**
+ *  @brief Gaming Audio Profile Unicast Game Terminal Features UUID value
+ */
+#define BT_UUID_GMAP_UGT_FEAT_VAL 0x2C02
+/**
+ *  @brief Gaming Audio Profile Unicast Game Terminal Features
+ */
+#define BT_UUID_GMAP_UGT_FEAT	  BT_UUID_DECLARE_16(BT_UUID_GMAP_UGT_FEAT_VAL)
+
+/**
+ *  @brief Gaming Audio Profile Broadcast Game Sender Features UUID value
+ */
+#define BT_UUID_GMAP_BGS_FEAT_VAL 0x2C03
+/**
+ *  @brief Gaming Audio Profile Broadcast Game Sender Features
+ */
+#define BT_UUID_GMAP_BGS_FEAT	  BT_UUID_DECLARE_16(BT_UUID_GMAP_BGS_FEAT_VAL)
+
+/**
+ *  @brief Gaming Audio Profile Broadcast Game Receiver Features UUID value
+ */
+#define BT_UUID_GMAP_BGR_FEAT_VAL 0x2C04
+/**
+ *  @brief Gaming Audio Profile Broadcast Game Receiver Features
+ */
+#define BT_UUID_GMAP_BGR_FEAT	  BT_UUID_DECLARE_16(BT_UUID_GMAP_BGR_FEAT_VAL)
 
 /*
  * Protocol UUIDs

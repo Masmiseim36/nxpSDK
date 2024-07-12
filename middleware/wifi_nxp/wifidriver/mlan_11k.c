@@ -15,7 +15,7 @@ Change log:
 
 #include <mlan_api.h>
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
 #define LINK_MSR_REPORT_BUF_SIZE  64U
 #define NEIGHBOR_REQUEST_BUF_SIZE 64U
 #define rrm_bits_max              255U
@@ -221,7 +221,12 @@ static void wlan_process_rm_beacon_report_table(
     bool match_ap_found       = false;
     int meas_rep_len          = 0;
 
-    rep_buf = (t_u8 *)os_mem_alloc(BEACON_REPORT_BUF_SIZE);
+#if !CONFIG_MEM_POOLS
+    rep_buf = (t_u8 *)OSA_MemoryAllocate(BEACON_REPORT_BUF_SIZE);
+#else
+    rep_buf = (t_u8 *)OSA_MemoryPoolAllocate(buf_1536_MemoryPool);
+#endif
+
     if (rep_buf == NULL)
     {
         wifi_e("Cannot allocate memory for report buffer");
@@ -280,7 +285,11 @@ static void wlan_process_rm_beacon_report_table(
         /* send beacon report */
         wlan_send_mgmt_rm_beacon_report(dialog_tok, dest_addr, src_addr, rep_buf, (t_u32)(meas_rep_len), protect);
     }
-    os_mem_free(rep_buf);
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(rep_buf);
+#else
+    OSA_MemoryPoolFree(buf_1536_MemoryPool, rep_buf);
+#endif
 }
 
 bool wlan_rrm_matched_ap_found(wlan_rrm_beacon_report_data *rep_data, BSSDescriptor_t *bss_entry)
@@ -326,7 +335,11 @@ static void wlan_process_rm_beacon_req(t_u8 *req,
     sub_element = beacon_req->variable;
     element_len = (int)len - ((int)sizeof(mgmt_rrm_meas_beacon_request) - 1);
 
-    param = (wlan_rrm_scan_cb_param *)os_mem_alloc(sizeof(wlan_rrm_scan_cb_param));
+#if !CONFIG_MEM_POOLS
+    param = (wlan_rrm_scan_cb_param *)OSA_MemoryAllocate(sizeof(wlan_rrm_scan_cb_param));
+#else
+    param = (wlan_rrm_scan_cb_param *)OSA_MemoryPoolAllocate(buf_256_MemoryPool);
+#endif
     if (param == NULL)
     {
         wifi_e("Cannot allocate memory for rm scan param");
@@ -417,7 +430,12 @@ static void wlan_process_rm_beacon_req(t_u8 *req,
     /* After scanning done, will send beacon report */
     wlan_rrm_request_scan(&wlan_scan_param, param);
 output:
-    os_mem_free(param);
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(param);
+#else
+    OSA_MemoryPoolFree(buf_256_MemoryPool, param);
+#endif
+
     return;
 }
 
@@ -676,7 +694,11 @@ void wlan_send_mgmt_rm_beacon_report(
 
     /* Send packet */
     (void)wifi_inject_frame(WLAN_BSS_TYPE_STA, (t_u8 *)pmgmt_pkt_hdr, pkt_len);
-    os_mem_free(pmgmt_pkt_hdr);
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(pmgmt_pkt_hdr);
+#else
+    OSA_MemoryPoolFree(buf_1536_MemoryPool, pmgmt_pkt_hdr);
+#endif
 }
 
 void wlan_process_radio_measurement_request(t_u8 *frame, t_u32 len, t_u8 *dest_addr, t_u8 *src_addr, bool protect)
@@ -770,7 +792,11 @@ static void wlan_send_mgmt_link_measurement_report(
 
     /* Send packet */
     (void)wifi_inject_frame(WLAN_BSS_TYPE_STA, (t_u8 *)pmgmt_pkt_hdr, pkt_len);
-    os_mem_free(pmgmt_pkt_hdr);
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(pmgmt_pkt_hdr);
+#else
+    OSA_MemoryPoolFree(buf_1536_MemoryPool, pmgmt_pkt_hdr);
+#endif
 }
 
 void wlan_process_link_measurement_request(
@@ -822,7 +848,12 @@ void wlan_process_link_measurement_request(
         subband = SubBand_5_GHz_3;
     }
 
-    txpwrlimit = os_mem_alloc(sizeof(wlan_txpwrlimit_t));
+#if !CONFIG_MEM_POOLS
+    txpwrlimit = OSA_MemoryAllocate(sizeof(wlan_txpwrlimit_t));
+#else
+    txpwrlimit = OSA_MemoryPoolAllocate(buf_2048_MemoryPool);
+#endif
+
     if (txpwrlimit == NULL)
     {
         wifi_e("Cannot allocate memory for txpwrlimit");
@@ -838,7 +869,12 @@ void wlan_process_link_measurement_request(
     {
         report.tpc_report.tx_power = (t_s8)wlan_link_measurement_get_tx_power(txpwrlimit, ModulationGroup, channel);
     }
-    os_mem_free(txpwrlimit);
+
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(txpwrlimit);
+#else
+    OSA_MemoryPoolFree(buf_2048_MemoryPool, txpwrlimit);
+#endif
 
     /* Default use CCK5_5Mbps */
     meas_link_margin              = 78 - (int)report.rsni;
@@ -867,11 +903,15 @@ void wlan_process_neighbor_report_response(t_u8 *frame, t_u32 len, t_u8 *dest_ad
 {
     t_u8 *pos      = frame;
     t_u8 entry_num = 0, chan;
+#if !CONFIG_MEM_POOLS
     wlan_nlist_report_param *pnlist_rep_param =
-        (wlan_nlist_report_param *)os_mem_calloc(sizeof(wlan_nlist_report_param));
+        (wlan_nlist_report_param *)OSA_MemoryAllocate(sizeof(wlan_nlist_report_param));
+#else
+    wlan_nlist_report_param *pnlist_rep_param = (wlan_nlist_report_param *)OSA_MemoryPoolAllocate(buf_128_MemoryPool);
+#endif
 
     wifi_d("Neighbor report event");
-#ifdef CONFIG_WIFI_EXTRA_DEBUG
+#if CONFIG_WIFI_EXTRA_DEBUG
     dump_hex(frame, len);
 #endif
     if (pnlist_rep_param == MNULL)
@@ -883,10 +923,15 @@ void wlan_process_neighbor_report_response(t_u8 *frame, t_u32 len, t_u8 *dest_ad
     if (len < 3U)
     {
         wifi_d("Ignoring too short radio measurement request");
-        os_mem_free((void *)pnlist_rep_param);
+#if !CONFIG_MEM_POOLS
+        OSA_MemoryFree((void *)pnlist_rep_param);
+#else
+        OSA_MemoryPoolFree(buf_128_MemoryPool, pnlist_rep_param);
+#endif
         return;
     }
 
+    memset(pnlist_rep_param, 0, sizeof(wlan_nlist_report_param));
     /* Bypass dialog token */
     pos += 1;
     len -= 1U;
@@ -937,12 +982,20 @@ void wlan_process_neighbor_report_response(t_u8 *frame, t_u32 len, t_u8 *dest_ad
     if (wifi_event_completion(WIFI_EVENT_NLIST_REPORT, WIFI_EVENT_REASON_SUCCESS, pnlist_rep_param) != WM_SUCCESS)
     {
         /* If fail to send message on queue, free allocated memory ! */
-        os_mem_free((void *)pnlist_rep_param);
+#if !CONFIG_MEM_POOLS
+        OSA_MemoryFree((void *)pnlist_rep_param);
+#else
+        OSA_MemoryPoolFree(buf_128_MemoryPool, pnlist_rep_param);
+#endif
     }
     return;
 
 out:
-    os_mem_free((void *)pnlist_rep_param);
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree((void *)pnlist_rep_param);
+#else
+    OSA_MemoryPoolFree(buf_128_MemoryPool, pnlist_rep_param);
+#endif
 }
 
 /**
@@ -1023,7 +1076,13 @@ int wlan_send_mgmt_rm_neighbor_request(mlan_private *pmpriv, t_u8 *ssid, t_u8 ss
     pmgmt_pkt_hdr->frm_len = pkt_len - (t_u16)sizeof(pmgmt_pkt_hdr->frm_len);
 
     (void)wifi_inject_frame(WLAN_BSS_TYPE_STA, (t_u8 *)pmgmt_pkt_hdr, pkt_len);
-    os_mem_free(pmgmt_pkt_hdr);
+
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(pmgmt_pkt_hdr);
+#else
+    OSA_MemoryPoolFree(buf_1536_MemoryPool, pmgmt_pkt_hdr);
+#endif
+
     return (int)MLAN_STATUS_SUCCESS;
 }
 #endif /* CONFIG_11K */

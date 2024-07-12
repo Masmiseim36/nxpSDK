@@ -203,7 +203,7 @@ static void notify_work_reschedule(struct bt_aics *inst, enum bt_aics_notify not
 
 	atomic_set_bit(inst->srv.notify, notify);
 
-	err = k_work_reschedule(&inst->srv.notify_work, K_NO_WAIT);
+	err = k_work_reschedule(&inst->srv.notify_work, osaWaitNone_c);
 	if (err < 0) {
 		LOG_ERR("Failed to reschedule %s notification err %d",
 			aics_notify_str(notify), err);
@@ -246,7 +246,7 @@ static void notify_work_handler(struct k_work *work)
 
 static void value_changed(struct bt_aics *inst, enum bt_aics_notify notify)
 {
-	notify_work_reschedule(inst, notify, K_NO_WAIT);
+	notify_work_reschedule(inst, notify, osaWaitNone_c);
 }
 #else
 #define value_changed(...)
@@ -530,10 +530,8 @@ int bt_aics_register(struct bt_aics *aics, struct bt_aics_register_param *param)
 	k_work_init_delayable(&aics->srv.notify_work, notify_work_handler);
 
 	if (param->description) {
-		strncpy(aics->srv.description, param->description,
-			sizeof(aics->srv.description) - 1);
-		/* strncpy may not always null-terminate */
-		aics->srv.description[sizeof(aics->srv.description) - 1] = '\0';
+		(void)utf8_lcpy(aics->srv.description, param->description,
+				sizeof(aics->srv.description));
 		if (IS_ENABLED(CONFIG_BT_AICS_LOG_LEVEL_DBG) &&
 		    strcmp(aics->srv.description, param->description)) {
 			LOG_DBG("Input desc clipped to %s", aics->srv.description);

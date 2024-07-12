@@ -64,8 +64,8 @@ void arm_scale_q15(
 {
     uint32_t  blkCnt;           /* loop counters */
     q15x8_t vecSrc;
-    q15x8_t vecDst;
-
+    q15x8_t vecDst = { 0 };
+    q31x4_t low, high;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3;
@@ -77,8 +77,14 @@ void arm_scale_q15(
          * Scale the input and then store the result in the destination buffer.
          */
         vecSrc = vld1q(pSrc);
-        vecDst = vmulhq(vecSrc, vdupq_n_s16(scaleFract));
-        vecDst = vqshlq_r(vecDst, shift + 1);
+        low = vmullbq_int(vecSrc, vdupq_n_s16(scaleFract));
+        low = vqshlq_r(low, shift);
+        vecDst = vqshrnbq_n_s32(vecDst,low,15);
+
+        high = vmulltq_int(vecSrc, vdupq_n_s16(scaleFract));
+        high = vqshlq_r(high, shift);
+        vecDst = vqshrntq_n_s32(vecDst,high,15);
+
         vst1q(pDst, vecDst);
         /*
          * Decrement the blockSize loop counter
@@ -96,10 +102,15 @@ void arm_scale_q15(
     blkCnt = blockSize & 7;
     if (blkCnt > 0U)
     {
-        mve_pred16_t p0 = vctp16q(blkCnt);;
+        mve_pred16_t p0 = vctp16q(blkCnt);
         vecSrc = vld1q(pSrc);
-        vecDst = vmulhq(vecSrc, vdupq_n_s16(scaleFract));
-        vecDst = vqshlq_r(vecDst, shift + 1);
+        low = vmullbq_int(vecSrc, vdupq_n_s16(scaleFract));
+        low = vqshlq_r(low, shift);
+        vecDst = vqshrnbq_n_s32(vecDst,low,15);
+
+        high = vmulltq_int(vecSrc, vdupq_n_s16(scaleFract));
+        high = vqshlq_r(high, shift);
+        vecDst = vqshrntq_n_s32(vecDst,high,15);
         vstrhq_p(pDst, vecDst, p0);
     }
 
@@ -136,8 +147,8 @@ void arm_scale_q15(
 
 #if defined (ARM_MATH_DSP)
     /* read 2 times 2 samples at a time from source */
-    inA1 = read_q15x2_ia ((q15_t **) &pSrc);
-    inA2 = read_q15x2_ia ((q15_t **) &pSrc);
+    inA1 = read_q15x2_ia (&pSrc);
+    inA2 = read_q15x2_ia (&pSrc);
 
     /* Scale inputs and store result in temporary variables
      * in single cycle by packing the outputs */

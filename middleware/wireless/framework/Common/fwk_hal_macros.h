@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  * All rights reserved.
  *
  * \file
@@ -32,8 +32,8 @@
  *****************************************************************************************/
 #if defined(__GNUC__)
 
-#define HAL_CLZ(x) __builtin_clz(x)
-#define HAL_CTZ(x) __builtin_ctz(x)
+#define HAL_CLZ(x) ((uint8_t)(__builtin_clz(x) & 0x1fUL))
+#define HAL_CTZ(x) ((uint8_t)(__builtin_ctz(x) & 0x1fUL))
 static inline uint32_t __hal_revb(uint32_t x)
 {
     unsigned int res;
@@ -44,14 +44,14 @@ static inline uint32_t __hal_revb(uint32_t x)
 
 #elif defined(__IAR_SYSTEMS_ICC__)
 
-#define HAL_CLZ(x)  __iar_builtin_CLZ(x)
-#define HAL_RBIT(x) __iar_builtin_RBIT(x)
+#define HAL_CLZ(x)  ((uint8_t)(__iar_builtin_CLZ(x) & 0x1fUL))
+#define HAL_RBIT(x) ((uint32_t)(__iar_builtin_RBIT(x) & 0x1fUL))
 
-static inline uint32_t __hal_ctz(uint32_t x)
+static inline uint8_t __hal_ctz(uint32_t x)
 {
-    uint32_t res;
-    x   = (uint32_t)HAL_RBIT((unsigned int)x);
-    res = (uint32_t)HAL_CLZ((unsigned int)x);
+    uint8_t res;
+    x   = HAL_RBIT((unsigned int)x);
+    res = HAL_CLZ((unsigned int)x);
     return res;
 }
 
@@ -71,9 +71,9 @@ static inline uint32_t __hal_ctz(uint32_t x)
  *
  ****************************************************************************************
  */
-#define HAL_BSR(x) (31 - HAL_CLZ(x))
+#define HAL_BSR(x) ((uint8_t)(31u - HAL_CLZ(x)))
 #define HAL_BSF(x) HAL_CTZ(x)
-#define HAL_FFS(x) (HAL_CTZ(x) + 1)
+#define HAL_FFS(x) (HAL_CTZ(x) + 1U)
 
 /*!
  ****************************************************************************************
@@ -83,13 +83,13 @@ static inline uint32_t __hal_ctz(uint32_t x)
  ****************************************************************************************
  */
 #if defined(__GNUC__)
-#define HAL_REV16(x) __builtin_bswap16(x)
-#define HAL_REV32(x) __builtin_bswap32(x)
+#define HAL_REV16(x) ((uint32_t)__builtin_bswap16(x))
+#define HAL_REV32(x) ((uint32_t)__builtin_bswap32(x))
 
 #elif defined(__IAR_SYSTEMS_ICC__) || defined(__CC_ARM)
 
-#define HAL_REV16(x) __REV16(x)
-#define HAL_REV32(x) __REV(x)
+#define HAL_REV16(x) ((uint32_t)__REV16(x))
+#define HAL_REV32(x) ((uint32_t)__REV(x))
 
 #endif
 
@@ -110,10 +110,10 @@ static inline uint32_t __hal_ctz(uint32_t x)
  ****************************************************************************************
  */
 #ifndef KB
-#define KB(x) (((uint32_t)x) << 10u)
+#define KB(x) (((uint32_t)x) << 10U)
 #endif
 #ifndef MB
-#define MB(x) (((uint32_t)x) << 20u)
+#define MB(x) (((uint32_t)x) << 20U)
 #endif
 
 /*!
@@ -126,22 +126,98 @@ static inline uint32_t __hal_ctz(uint32_t x)
 #define KHz(x) (((uint32_t)x) * 1000U)
 #define MHz(x) (((uint32_t)x) * 1000000U)
 
-#define SET_BIT(bitmap, i) bitmap[((i) >> 5)] |= (1U << ((i)&0x1f))
-#define CLR_BIT(bitmap, i) bitmap[((i) >> 5)] &= ~(1U << ((i)&0x1f))
-#define GET_BIT(bitmap, i) (((bitmap[(i) >> 5] & (1U << ((i)&0x1f))) >> ((i)&0x1f)) != 0U)
+#define SET_BIT(bitmap, i) bitmap[((i) >> 5U)] |= (1U << ((i)&0x1f))
+#define CLR_BIT(bitmap, i) bitmap[((i) >> 5U)] &= ~(1U << ((i)&0x1f))
+#define GET_BIT(bitmap, i) (((bitmap[(i) >> 5U] & (1U << ((i)&0x1f))) >> ((i)&0x1f)) != 0U)
 
 /* LOG_1, LOG_2, LOG_4, LOG_8: used by LOG macro */
-#define LOG_1(n) (((n) >= 2) ? 1 : 0)
-#define LOG_2(n) (((n) >= (1 << 2)) ? (2 + LOG_1((n) >> 2)) : LOG_1(n))
-#define LOG_4(n) (((n) >= (1 << 4)) ? (4 + LOG_2((n) >> 4)) : LOG_2(n))
-#define LOG_8(n) (((n) >= (1 << 8)) ? (8 + LOG_4((n) >> 8)) : LOG_4(n))
+#define LOG_1(n) (((n) >= (1u << 1U)) ? 1U : 0U)
+#define LOG_2(n) (((n) >= (1u << 2U)) ? (2U + LOG_1((n) >> 2U)) : LOG_1(n))
+#define LOG_4(n) (((n) >= (1u << 4U)) ? (4U + LOG_2((n) >> 4U)) : LOG_2(n))
+#define LOG_8(n) (((n) >= (1u << 8U)) ? (8U + LOG_4((n) >> 8U)) : LOG_4(n))
 /*
- * Macro to compute log2 of a constant at compile time.
+ * Macro to compute log2 (logarithm) of a constant at compile time.
  * Does not make sense for runtime log2 calculation.
  * Computation should be based on __builtin_clz.
  * For in
  *
  */
-#define LOG(n) (((n) >= (1 << 16)) ? (16 + LOG_8((n) >> 16)) : LOG_8(n))
+#define LOG(n) (((n) >= (1U << 16U)) ? (16U + LOG_8((n) >> 16U)) : LOG_8(n))
+
+#if !defined(__IAR_SYSTEMS_ICC__)
+#undef BUILD_ASSERT /* clear out common version */
+/* C++11 has static_assert built in */
+#if defined(__cplusplus) && (__cplusplus >= 201103L)
+#define BUILD_ASSERT(EXPR, MSG...) static_assert(EXPR, "" MSG)
+
+/*
+ * GCC 4.6 and higher have the C11 _Static_assert built in and its
+ * output is easier to understand than the common BUILD_ASSERT macros.
+ * Don't use this in C++98 mode though (which we can hit, as
+ * static_assert() is not available)
+ */
+#elif !defined(__cplusplus) && \
+    ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)) || (__STDC_VERSION__) >= 201100)
+#define BUILD_ASSERT(EXPR, MSG...) _Static_assert(EXPR, "" MSG)
+#else
+#define BUILD_ASSERT(EXPR, MSG...)
+#endif
+
+/**
+ * @brief Validate if two entities have a compatible type
+ *
+ * @param a the first entity to be compared
+ * @param b the second entity to be compared
+ * @return 1 if the two elements are compatible, 0 if they are not
+ */
+#define SAME_TYPE(a, b) __builtin_types_compatible_p(__typeof__(a), __typeof__(b))
+
+/**
+ * @brief Validate CONTAINER_OF parameters, only applies to C mode.
+ */
+#ifndef __cplusplus
+#define CONTAINER_OF_VALIDATE(ptr, type, field)                                    \
+    BUILD_ASSERT(SAME_TYPE(*(ptr), ((type *)0)->field) || SAME_TYPE(*(ptr), void), \
+                 "pointer type mismatch in CONTAINER_OF");
+#else /* __cplusplus */
+#define CONTAINER_OF_VALIDATE(ptr, type, field)
+#endif /* __cplusplus */
+#else  /* __IAR_SYSTEMS_ICC__ */
+/* No CONTAINER_OF_VALIDATE macros for IAR */
+#define CONTAINER_OF_VALIDATE(ptr, type, field)
+/* Neither BUILD_ASSERT nor  SAME_TYPE defined for IAR */
+#endif /* __IAR_SYSTEMS_ICC__ */
+
+#define _DO_CONCAT(x, y) x##y
+#define _CONCAT(x, y)    _DO_CONCAT(x, y)
+
+#define DECL_ALIGN(type) __aligned(__alignof(type)) type
+
+/**
+ * @brief Get a pointer to a structure containing the element
+ *
+ * Example:
+ *
+ *	struct foo {
+ *		int bar;
+ *	};
+ *
+ *	struct foo my_foo;
+ *	int *ptr = &my_foo.bar;
+ *
+ *	struct foo *container = CONTAINER_OF(ptr, struct foo, bar);
+ *
+ * Above, @p container points at @p my_foo.
+ *
+ * @param ptr pointer to a structure element
+ * @param type name of the type that @p ptr is an element of
+ * @param field the name of the field within the struct @p ptr points to
+ * @return a pointer to the structure that contains @p ptr
+ */
+#define CONTAINER_OF(_PTR_, _TYPE_, _FIELD_)                         \
+    ({                                                               \
+        CONTAINER_OF_VALIDATE(_PTR_, _TYPE_, _FIELD_)                \
+        ((_TYPE_ *)(((char *)(_PTR_)) - offsetof(_TYPE_, _FIELD_))); \
+    })
 
 #endif

@@ -1,7 +1,7 @@
 var a00030 =
 [
     [ "FLEXSPI DMA Driver", "a00031.html", "a00031" ],
-    [ "_flexspi_config", "a00030.html#a00351", [
+    [ "_flexspi_config", "a00030.html#a00348", [
       [ "rxSampleClock", "a00030.html#ab93a70b962e412c67056c594ccb253d9", null ],
       [ "enableSckFreeRunning", "a00030.html#aac53cf0a47755797a0b181da0d03e5fa", null ],
       [ "enableDoze", "a00030.html#a2384344decb673f8f71ef6336fd9883e", null ],
@@ -21,7 +21,7 @@ var a00030 =
       [ "enableAHBBufferable", "a00030.html#aa8e89cd73c3dc0c25818760e65f71330", null ],
       [ "enableAHBCachable", "a00030.html#a3b5f6efffb62ad1a2e9f5d98dc76ba36", null ]
     ] ],
-    [ "_flexspi_device_config", "a00030.html#a00352", [
+    [ "_flexspi_device_config", "a00030.html#a00349", [
       [ "flexspiRootClk", "a00030.html#ada4f7b68383877a039072875d711e173", null ],
       [ "isSck2Enabled", "a00030.html#ab5474dc0d9a00d6b19ce9851ad416fa8", null ],
       [ "flashSize", "a00030.html#abdcc90de5832fc28832998cfbf3b3ef2", null ],
@@ -41,7 +41,7 @@ var a00030 =
       [ "enableWriteMask", "a00030.html#a8befdeb701b4cc314ca2674b1ed92d4d", null ],
       [ "isFroClockSource", "a00030.html#a0fcf90afc5eff58c649dbc31bc8a8ec5", null ]
     ] ],
-    [ "_flexspi_transfer", "a00030.html#a00356", [
+    [ "_flexspi_transfer", "a00030.html#a00353", [
       [ "deviceAddress", "a00030.html#a20a77fdf5a7f94011ba836f4988cd97a", null ],
       [ "port", "a00030.html#a395cf7bdd479592e3f9cf0836caf2d82", null ],
       [ "cmdType", "a00030.html#a157c99b27542cb81982f1f628e693922", null ],
@@ -50,7 +50,7 @@ var a00030 =
       [ "data", "a00030.html#a2bebccd3d5a95128f4f845c247cd11ba", null ],
       [ "dataSize", "a00030.html#a01c6167563be949085220af5a0c9f4f2", null ]
     ] ],
-    [ "_flexspi_handle", "a00030.html#a00354", [
+    [ "_flexspi_handle", "a00030.html#a00351", [
       [ "state", "a00030.html#a6380ef8079e8f6d2948e5140c6757fe9", null ],
       [ "data", "a00030.html#ac9c3641aac74166d2de5ce2ff57df325", null ],
       [ "dataSize", "a00030.html#a2fa8ac09be115299cd7684237965415c", null ],

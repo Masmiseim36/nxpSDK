@@ -39,6 +39,10 @@
 
     #include "hci_socket.h"
 
+#elif defined BT_PLATFORM
+
+    #include "hci_platform.h"
+
 #else /* Error */
 
     #error "Forgot to define HCI Transport Flag in the Makefile ?"

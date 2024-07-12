@@ -270,7 +270,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pe188,Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -357,7 +357,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -365,6 +364,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1360,7 +1360,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pe188,Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1447,7 +1447,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1455,6 +1454,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2449,7 +2449,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pe188,Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2536,7 +2536,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -2544,6 +2543,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3539,7 +3539,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pe188,Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3626,7 +3626,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -3634,6 +3633,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4804,6 +4804,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/base64.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/bignum_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/bignum.c</name>
       </file>
       <file>
@@ -5219,12 +5222,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -5238,6 +5235,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

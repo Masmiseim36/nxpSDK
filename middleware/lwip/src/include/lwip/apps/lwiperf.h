@@ -5,6 +5,7 @@
 
 /*
  * Copyright (c) 2014 Simon Goldschmidt
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

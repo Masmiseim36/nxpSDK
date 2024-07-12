@@ -24,18 +24,18 @@
 #include <string.h>
 #ifndef _WIN32_WCE
 //#include <signal.h>
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 #include <sys/types.h>
 #include <errno.h>
 #endif
 #endif /* _WIN32_WCE */
 #include <ctype.h>
 
-#if !(defined(MSC_VER) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(MSC_VER) || defined(__ZEPHYR__) || (CONFIG_FREERTOS))
 #include <unistd.h>
 #endif /* _MSC_VER */
 
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !((CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || (CONFIG_FREERTOS))
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -45,140 +45,139 @@
 #endif /* __vxworks */
 #endif /* CONFIG_NATIVE_WINDOWS */
 
-#if defined(CONFIG_ZEPHYR)
-#if defined(CONFIG_POSIX_API)
+#if defined(__ZEPHYR__)
+#if (CONFIG_POSIX_API)
 #include <zephyr/posix/arpa/inet.h>
 #include <zephyr/posix/sys/select.h>
 #include <zephyr/posix/sys/socket.h>
 #include <zephyr/posix/unistd.h>
-#else /* defined(CONFIG_POSIX_API) */
+#else /* (CONFIG_POSIX_API) */
 #include <zephyr/net/net_ip.h>
 #include <zephyr/net/socket.h>
-#endif /* defined(CONFIG_POSIX_API) */
+#endif /* (CONFIG_POSIX_API) */
 #include <zephyr/shell/shell.h>
-#endif /* defined(CONFIG_ZEPHYR) */
+#endif /* defined(__ZEPHYR__) */
 
 #include <wm_net.h>
 
-#if defined(CONFIG_FREERTOS)
+#if (CONFIG_FREERTOS)
 
-#if defined(CONFIG_POSIX_API)
+#if (CONFIG_POSIX_API)
 #include <posix/arpa/inet.h>
 //#include <posix/sys/select.h>
 #include <posix/sys/socket.h>
 //#include <posix/unistd.h>
-#else /* defined(CONFIG_POSIX_API) */
+#else /* (CONFIG_POSIX_API) */
 #include <lwip/inet.h>
 #include <lwip/sockets.h>
-#endif /* defined(CONFIG_POSIX_API) */
+#endif /* (CONFIG_POSIX_API) */
 //#include <zephyr/shell/shell.h>
 #include <fsl_debug_console.h>
-#endif /* defined(CONFIG_FREERTOS) */
+#endif /* (CONFIG_FREERTOS) */
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO
+#if CONFIG_WPA_SUPP_CRYPTO
 
 #include <mbedtls/version.h>
 
 #ifndef MBEDTLS_NIST_KW_C
-#define CONFIG_INTERNAL_AES_WRAP
-#define CONFIG_INTERNAL_AES_UNWRAP
+#define CONFIG_INTERNAL_AES_WRAP 1
+#define CONFIG_INTERNAL_AES_UNWRAP 1
 #endif
 
 #ifndef MBEDTLS_CMAC_C
-#define CONFIG_INTERNAL_OMAC1_AES
+#define CONFIG_INTERNAL_OMAC1_AES 1
 #endif
 
 #ifndef MBEDTLS_ARC4_C
-#define CONFIG_INTERNAL_RC4
+#define CONFIG_INTERNAL_RC4 1
 #endif
 
 #ifndef MBEDTLS_MD4_C
-#define CONFIG_INTERNAL_MD4
+#define CONFIG_INTERNAL_MD4 1
 #endif
 
 #endif
 
 #ifdef CONFIG_FIPS
-#define CONFIG_INTERNAL_MD4
-#define CONFIG_INTERNAL_MD5
-#define CONFIG_INTERNAL_AES_WRAP
-#define CONFIG_INTERNAL_AES_UNWRAP
-#define CONFIG_INTERNAL_DES
+#define CONFIG_INTERNAL_MD4 1
+#define CONFIG_INTERNAL_MD5 1
+#define CONFIG_INTERNAL_AES_WRAP 1
+#define CONFIG_INTERNAL_AES_UNWRAP 1
+#define CONFIG_INTERNAL_DES 1
 #endif
 
-#define CONFIG_SHA256
-#ifdef CONFIG_WPA_SUPP_CRYPTO
-#define CONFIG_SHA384
-#define CONFIG_SHA512
-#define CONFIG_DES
-#define CONFIG_AES
+#define CONFIG_SHA256 1
+#if CONFIG_WPA_SUPP_CRYPTO
+#define CONFIG_SHA384 1
+#define CONFIG_SHA512 1
+#define CONFIG_DES 1
+#define CONFIG_AES 1
 #endif
 
-#ifndef CONFIG_AES
-#define CONFIG_INTERNAL_AES
+#if !CONFIG_AES
+#define CONFIG_INTERNAL_AES 1
 #endif
 
-#ifdef CONFIG_11R
-#define CONFIG_IEEE80211R
-#ifdef CONFIG_WPA_SUPP_AP
-#define CONFIG_IEEE80211R_AP
+#if CONFIG_11R
+#define CONFIG_IEEE80211R 1
+#if CONFIG_WPA_SUPP_AP
+#define CONFIG_IEEE80211R_AP 1
 #endif
 #endif
 
-#define CONFIG_SME
+#define CONFIG_SME 1
 // #define CONFIG_NO_TKIP
-#define CONFIG_NO_CONFIG_WRITE
-#define CONFIG_CTRL_IFACE
-#define CONFIG_CTRL_IFACE_UDP
-#define CONFIG_NO_RANDOM_POOL
-#define CONFIG_MBO
-#define CONFIG_WNM
+#define CONFIG_NO_CONFIG_WRITE 1
+#define CONFIG_CTRL_IFACE 1
+#define CONFIG_CTRL_IFACE_UDP 1
+#define CONFIG_NO_RANDOM_POOL 1
+#define CONFIG_WNM 1
 #define IEEE8021X_EAPOL
 
-#ifdef CONFIG_WPA_SUPP_AP
-#define CONFIG_AP
-#define CONFIG_NO_RADIUS
-#define CONFIG_NO_VLAN
-#define CONFIG_NO_ACCOUNTING
+#if CONFIG_WPA_SUPP_AP
+#define CONFIG_AP 1
+#define CONFIG_NO_RADIUS 1
+#define CONFIG_NO_VLAN 1
+#define CONFIG_NO_ACCOUNTING 1
 #define NEED_AP_MLME
 #define HOSTAPD
-#define CONFIG_IEEE80211AX
-#define CONFIG_ACS
+#define CONFIG_IEEE80211AX 1
+#define CONFIG_ACS 1
 #define NEED_RSN_AUTHENTICATOR
-#define CONFIG_IEEE80211AC
-#define CONFIG_WNM_AP
-#define CONFIG_ETH_P_OUI
+#define CONFIG_IEEE80211AC 1
+#define CONFIG_WNM_AP 1
+#define CONFIG_ETH_P_OUI 1
 #endif
 
-#ifndef CONFIG_WPA_SUPP_CRYPTO
-#define CONFIG_CRYPTO_INTERNAL
-#define CONFIG_INTERNAL_OMAC1_AES
-#define CONFIG_INTERNAL_MD4
-#define CONFIG_INTERNAL_MD5
-#define CONFIG_INTERNAL_AES_WRAP
-#define CONFIG_INTERNAL_AES_UNWRAP
-#define CONFIG_INTERNAL_DES
-#define CONFIG_INTERNAL_AES
-#define CONFIG_INTERNAL_RC4
-#define CONFIG_INTERNAL_SHA1
-#define CONFIG_INTERNAL_SHA256
+#if !CONFIG_WPA_SUPP_CRYPTO
+#define CONFIG_CRYPTO_INTERNAL 1
+#define CONFIG_INTERNAL_OMAC1_AES 1
+#define CONFIG_INTERNAL_MD4 1
+#define CONFIG_INTERNAL_MD5 1
+#define CONFIG_INTERNAL_AES_WRAP 1
+#define CONFIG_INTERNAL_AES_UNWRAP 1
+#define CONFIG_INTERNAL_DES 1
+#define CONFIG_INTERNAL_AES 1
+#define CONFIG_INTERNAL_RC4 1
+#define CONFIG_INTERNAL_SHA1 1
+#define CONFIG_INTERNAL_SHA256 1
 
 //#define CONFIG_TLS_INTERNAL_CLIENT
 //#define CONFIG_TLS_INTERNAL_SERVER
-#define CONFIG_SHA256
+#define CONFIG_SHA256 1
 //#define CONFIG_SHA384
 //#define CONFIG_HMAC_SHA384_KDF
 //#define CONFIG_INTERNAL_SHA384
 #endif
 
-#ifdef CONFIG_WPA_SUPP_WPA3
-#define CONFIG_SAE
+#if CONFIG_WPA_SUPP_WPA3
+#define CONFIG_SAE 1
 //#define CONFIG_SAE_PK
-#define CONFIG_ECC
+#define CONFIG_ECC 1
 #endif
 
-#ifdef CONFIG_WPA_SUPP_WPS
-#define CONFIG_WPS
+#if CONFIG_WPA_SUPP_WPS
+#define CONFIG_WPS 1
 #define EAP_WSC
 #define IEEE8021X_EAPOL
 #define NEED_DH_GROUPS
@@ -187,35 +186,31 @@
 #define EAP_SERVER_WSC
 #endif
 
-#ifdef CONFIG_WPA_SUPP_P2P
-#define CONFIG_P2P
-#define CONFIG_GAS
-#define CONFIG_OFFCHANNEL
+#if CONFIG_WPA_SUPP_P2P
+#define CONFIG_P2P 1
+#define CONFIG_GAS 1
+#define CONFIG_OFFCHANNEL 1
 #endif
 
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
 #define CONFIG_DPP
-#ifdef CONFIG_WPA_SUPP_DPP2
 #define CONFIG_DPP2
-#endif
-#ifdef CONFIG_WPA_SUPP_DPP3
 #define CONFIG_DPP3
-#endif
 #define CONFIG_GAS
 #define CONFIG_OFFCHANNEL
 #define CONFIG_GAS_SERVER
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_AP
 #define CONFIG_INTERWORKING
 #endif /* CONFIG_WPA_SUPP_AP */
 #endif
 
-#if defined(CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || defined(CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE)
+#if (CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || (CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE)
 
-#define CONFIG_SUITEB
-#define CONFIG_SUITEB192
+#define CONFIG_SUITEB 1
+#define CONFIG_SUITEB192 1
 
-#define CONFIG_TLSV11
-#define CONFIG_TLSV12
+#define CONFIG_TLSV11 1
+#define CONFIG_TLSV12 1
 #define TLS_FUNCS
 #define EAP_TLS_FUNCS
 #define MS_FUNCS
@@ -241,27 +236,27 @@
 #define NEED_AES_EAX
 #define NEED_AES_SIV
 #define NEED_AES_CTR
-#define CONFIG_SIM_SIMULATOR
-#define CONFIG_USIM_SIMULATOR
+#define CONFIG_SIM_SIMULATOR 1
+#define CONFIG_USIM_SIMULATOR 1
 #define NEED_MILENAGE
 #define NEED_AES_ENC
 #define IEEE8021X_EAPOL
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_EAP_TLS
 #define EAP_TLS
 #endif
-#ifdef CONFIG_EAP_PEAP
+#if CONFIG_EAP_PEAP
 #define EAP_PEAP
 #endif
-#ifdef CONFIG_EAP_TTLS
+#if CONFIG_EAP_TTLS
 #define EAP_TTLS
 #endif
 //#define EAP_MD5
 //#define EAP_LEAP
 //#define EAP_PSK
-#if !defined(CONFIG_FIPS)
-#ifdef CONFIG_EAP_FAST
+#ifndef CONFIG_FIPS
+#if CONFIG_EAP_FAST
 #define EAP_FAST
 #endif
 #endif
@@ -271,61 +266,65 @@
 //#define EAP_PWD
 //#define EAP_EKE
 //#define EAP_IKEv2
-#ifdef CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM
 #define EAP_SIM
-#define CONFIG_EAP_SIM_COMMON
+#define CONFIG_EAP_SIM_COMMON 1
 #endif
-#ifdef CONFIG_EAP_AKA_PRIME
+#if CONFIG_EAP_AKA_PRIME
 #define EAP_AKA_PRIME
-#define CONFIG_EAP_AKA
+#if !CONFIG_EAP_AKA
+#define CONFIG_EAP_AKA 1
 #endif
-#ifdef CONFIG_EAP_AKA
+#endif
+#if CONFIG_EAP_AKA
 #define EAP_AKA
-#define CONFIG_EAP_SIM_COMMON
+#define CONFIG_EAP_SIM_COMMON 1
 #endif
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_MSCHAPV2
 #define EAP_MSCHAPv2
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
 #define EAP_GTC
 #endif
 #endif
 
-#ifdef CONFIG_WPA_SUPP_AP
-#ifdef CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
+#if CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
 #define RADIUS_SERVER
 #define EAP_SERVER
 #define EAP_SERVER_IDENTITY
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_EAP_TLS
 #define EAP_SERVER_TLS
 #endif
-#ifdef CONFIG_EAP_PEAP
+#if CONFIG_EAP_PEAP
 #define EAP_SERVER_PEAP
 #endif
-#ifdef CONFIG_EAP_TTLS
+#if CONFIG_EAP_TTLS
 #define EAP_SERVER_TTLS
 #endif
 #define EAP_SIM_DB
-#ifdef CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM
 #define EAP_SERVER_SIM
 #endif
-#ifdef CONFIG_EAP_AKA_PRIME
+#if CONFIG_EAP_AKA_PRIME
 #define EAP_SERVER_AKA_PRIME
-#define CONFIG_EAP_AKA
+#if !CONFIG_EAP_AKA
+#define CONFIG_EAP_AKA 1
 #endif
-#ifdef CONFIG_EAP_AKA
+#endif
+#if CONFIG_EAP_AKA
 #define EAP_SERVER_AKA
-#define CONFIG_EAP_SIM_COMMON
+#define CONFIG_EAP_SIM_COMMON 1
 #endif
-#if !defined(CONFIG_FIPS)
-#ifdef CONFIG_EAP_FAST
+#ifndef CONFIG_FIPS
+#if CONFIG_EAP_FAST
 #define EAP_SERVER_FAST
 #endif
 #endif
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_MSCHAPV2
 #define EAP_SERVER_MSCHAPV2
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
 #define EAP_SERVER_GTC
 #endif
 #endif

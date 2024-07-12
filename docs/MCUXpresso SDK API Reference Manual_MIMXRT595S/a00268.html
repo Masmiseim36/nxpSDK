@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SMARTDMA: SMART DMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: debug console configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,243 +99,161 @@ $(document).ready(function(){initNavTree('a00268.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SMARTDMA: SMART DMA Driver</div>  </div>
+<div class="title">debug console configuration<div class="ingroups"><a class="el" href="a00267.html">Debug Console</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The configuration is used for debug console only.  
+<a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the SMART DMA module of MCUXpresso SDK devices. </p>
+<p> .</p>
+<p>Please note, it is not sued for debug console lite. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga9ff250f52d3cc2a6b0eb1ade2950831e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga9ff250f52d3cc2a6b0eb1ade2950831e">smartdma_callback_t</a> )(void *param)</td></tr>
-<tr class="memdesc:ga9ff250f52d3cc2a6b0eb1ade2950831e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function prototype for the smartdma driver.  <a href="#ga9ff250f52d3cc2a6b0eb1ade2950831e">More...</a><br/></td></tr>
-<tr class="separator:ga9ff250f52d3cc2a6b0eb1ade2950831e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga0160c7e7812b4500e84c918190a405a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga0160c7e7812b4500e84c918190a405a4">SMARTDMA_Init</a> (uint32_t apiMemAddr, const void *firmware, uint32_t firmwareSizeByte)</td></tr>
-<tr class="memdesc:ga0160c7e7812b4500e84c918190a405a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SMARTDMA.  <a href="#ga0160c7e7812b4500e84c918190a405a4">More...</a><br/></td></tr>
-<tr class="separator:ga0160c7e7812b4500e84c918190a405a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5de2415d7b9aa7b9c46140d70a2502a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#gaa5de2415d7b9aa7b9c46140d70a2502a">SMARTDMA_InitWithoutFirmware</a> (void)</td></tr>
-<tr class="memdesc:gaa5de2415d7b9aa7b9c46140d70a2502a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SMARTDMA.  <a href="#gaa5de2415d7b9aa7b9c46140d70a2502a">More...</a><br/></td></tr>
-<tr class="separator:gaa5de2415d7b9aa7b9c46140d70a2502a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4cfe75e9b746829e9ed1227ba97681e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga4cfe75e9b746829e9ed1227ba97681e1">SMARTDMA_InstallFirmware</a> (uint32_t apiMemAddr, const void *firmware, uint32_t firmwareSizeByte)</td></tr>
-<tr class="memdesc:ga4cfe75e9b746829e9ed1227ba97681e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Install the firmware.  <a href="#ga4cfe75e9b746829e9ed1227ba97681e1">More...</a><br/></td></tr>
-<tr class="separator:ga4cfe75e9b746829e9ed1227ba97681e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8aa9942804213a2305e9ce6be7412790"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga8aa9942804213a2305e9ce6be7412790">SMARTDMA_InstallCallback</a> (<a class="el" href="a00268.html#ga9ff250f52d3cc2a6b0eb1ade2950831e">smartdma_callback_t</a> callback, void *param)</td></tr>
-<tr class="memdesc:ga8aa9942804213a2305e9ce6be7412790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Install the complete callback function.  <a href="#ga8aa9942804213a2305e9ce6be7412790">More...</a><br/></td></tr>
-<tr class="separator:ga8aa9942804213a2305e9ce6be7412790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ab9f69469e28e1d21dbb1c5bd9005cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga3ab9f69469e28e1d21dbb1c5bd9005cf">SMARTDMA_Boot</a> (uint32_t apiIndex, void *pParam, uint8_t mask)</td></tr>
-<tr class="memdesc:ga3ab9f69469e28e1d21dbb1c5bd9005cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boot the SMARTDMA to run program.  <a href="#ga3ab9f69469e28e1d21dbb1c5bd9005cf">More...</a><br/></td></tr>
-<tr class="separator:ga3ab9f69469e28e1d21dbb1c5bd9005cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf13e1d28b4b50f72d29c6ca04811e6b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf13e1d28b4b50f72d29c6ca04811e6b8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#gaf13e1d28b4b50f72d29c6ca04811e6b8">SMARTDMA_Deinit</a> (void)</td></tr>
-<tr class="memdesc:gaf13e1d28b4b50f72d29c6ca04811e6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize the SMARTDMA. <br/></td></tr>
-<tr class="separator:gaf13e1d28b4b50f72d29c6ca04811e6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2ddfeb2ea66b444c601b14adedac7e46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2ddfeb2ea66b444c601b14adedac7e46"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga2ddfeb2ea66b444c601b14adedac7e46">SMARTDMA_Reset</a> (void)</td></tr>
-<tr class="memdesc:ga2ddfeb2ea66b444c601b14adedac7e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the SMARTDMA. <br/></td></tr>
-<tr class="separator:ga2ddfeb2ea66b444c601b14adedac7e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99d625c651859c9491367921f543e489"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga99d625c651859c9491367921f543e489"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga99d625c651859c9491367921f543e489">SMARTDMA_HandleIRQ</a> (void)</td></tr>
-<tr class="memdesc:ga99d625c651859c9491367921f543e489"><td class="mdescLeft">&#160;</td><td class="mdescRight">SMARTDMA IRQ. <br/></td></tr>
-<tr class="separator:ga99d625c651859c9491367921f543e489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga7b5e8b00441c9f9c17e65e207da3996a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7b5e8b00441c9f9c17e65e207da3996a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga7b5e8b00441c9f9c17e65e207da3996a">FSL_SMARTDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 9, 0))</td></tr>
-<tr class="memdesc:ga7b5e8b00441c9f9c17e65e207da3996a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SMARTDMA driver version. <br/></td></tr>
-<tr class="separator:ga7b5e8b00441c9f9c17e65e207da3996a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga028eff2428680ec9e47eed17d7ad6180"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga028eff2428680ec9e47eed17d7ad6180">DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN</a>&#160;&#160;&#160;(512U)</td></tr>
+<tr class="memdesc:ga028eff2428680ec9e47eed17d7ad6180"><td class="mdescLeft">&#160;</td><td class="mdescRight">If Non-blocking mode is needed, please define it at project setting, otherwise blocking mode is the default transfer mode.  <a href="#ga028eff2428680ec9e47eed17d7ad6180">More...</a><br/></td></tr>
+<tr class="separator:ga028eff2428680ec9e47eed17d7ad6180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadad6011e61c820f396b1c13568dbfe16"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#gadad6011e61c820f396b1c13568dbfe16">DEBUG_CONSOLE_RECEIVE_BUFFER_LEN</a>&#160;&#160;&#160;(1024U)</td></tr>
+<tr class="memdesc:gadad6011e61c820f396b1c13568dbfe16"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the receive buffer length which is used to store the user input, buffer is enabled automatically when non-blocking transfer is using, This value will affect the RAM's ultilization, should be set per paltform's capability and software requirement.  <a href="#gadad6011e61c820f396b1c13568dbfe16">More...</a><br/></td></tr>
+<tr class="separator:gadad6011e61c820f396b1c13568dbfe16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2823ff7917ffeaaccf805f739116ec1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#gab2823ff7917ffeaaccf805f739116ec1">DEBUG_CONSOLE_TX_RELIABLE_ENABLE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:gab2823ff7917ffeaaccf805f739116ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether enable the reliable TX function If the macro is zero, the reliable TX function of the debug console is disabled.  <a href="#gab2823ff7917ffeaaccf805f739116ec1">More...</a><br/></td></tr>
+<tr class="separator:gab2823ff7917ffeaaccf805f739116ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27259eda6262948659d081ea4b7ad2fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga27259eda6262948659d081ea4b7ad2fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga27259eda6262948659d081ea4b7ad2fe">DEBUG_CONSOLE_RX_ENABLE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:ga27259eda6262948659d081ea4b7ad2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether enable the RX function If the macro is zero, the receive function of the debug console is disabled. <br/></td></tr>
+<tr class="separator:ga27259eda6262948659d081ea4b7ad2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga9777b06b434b336e5a2c1b21421c9ea3">DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN</a>&#160;&#160;&#160;(128U)</td></tr>
+<tr class="memdesc:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the MAX log length debug console support , that is when you call printf("log", x);, the log length can not bigger than this value.  <a href="#ga9777b06b434b336e5a2c1b21421c9ea3">More...</a><br/></td></tr>
+<tr class="separator:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2afcebb59f366867a49bb888b8d043d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#gab2afcebb59f366867a49bb888b8d043d">DEBUG_CONSOLE_SCANF_MAX_LOG_LEN</a>&#160;&#160;&#160;(20U)</td></tr>
+<tr class="memdesc:gab2afcebb59f366867a49bb888b8d043d"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the buffer support buffer scanf log length, that is when you call scanf("log", &amp;x);, the log length can not bigger than this value.  <a href="#gab2afcebb59f366867a49bb888b8d043d">More...</a><br/></td></tr>
+<tr class="separator:gab2afcebb59f366867a49bb888b8d043d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cbe5dd480860843788779e39d1d0d1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga1cbe5dd480860843788779e39d1d0d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console synchronization User should not change these macro for synchronization mode, but add the corresponding synchronization mechanism per different software environment.  <a href="#ga1cbe5dd480860843788779e39d1d0d1e">More...</a><br/></td></tr>
+<tr class="separator:ga1cbe5dd480860843788779e39d1d0d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9589914d5a8b1cfedf834d52a6574496"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9589914d5a8b1cfedf834d52a6574496"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga9589914d5a8b1cfedf834d52a6574496">DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ga9589914d5a8b1cfedf834d52a6574496"><td class="mdescLeft">&#160;</td><td class="mdescRight">synchronization for freertos software <br/></td></tr>
+<tr class="separator:ga9589914d5a8b1cfedf834d52a6574496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b85f4e4309413064a69c99e7327d3f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga7b85f4e4309413064a69c99e7327d3f2">DEBUG_CONSOLE_SYNCHRONIZATION_MODE</a>&#160;&#160;&#160;<a class="el" href="a00268.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a></td></tr>
+<tr class="memdesc:ga7b85f4e4309413064a69c99e7327d3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTOS synchronization mechanism disable If not defined, default is enable, to avoid multitask log print mess.  <a href="#ga7b85f4e4309413064a69c99e7327d3f2">More...</a><br/></td></tr>
+<tr class="separator:ga7b85f4e4309413064a69c99e7327d3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5cc1f7845683fbde63e9619f38aac2d1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga5cc1f7845683fbde63e9619f38aac2d1">DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">echo function support If you want to use the echo function,please define DEBUG_CONSOLE_ENABLE_ECHO at your project setting. <br/></td></tr>
+<tr class="separator:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74776e2523880761897d8b57199e5596"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html#ga74776e2523880761897d8b57199e5596">BOARD_USE_VIRTUALCOM</a>&#160;&#160;&#160;0U</td></tr>
+<tr class="memdesc:ga74776e2523880761897d8b57199e5596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition to select virtual com(USB CDC) as the debug console.  <a href="#ga74776e2523880761897d8b57199e5596">More...</a><br/></td></tr>
+<tr class="separator:ga74776e2523880761897d8b57199e5596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga9ff250f52d3cc2a6b0eb1ade2950831e"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga028eff2428680ec9e47eed17d7ad6180"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* smartdma_callback_t)(void *param)</td>
+          <td class="memname">#define DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN&#160;&#160;&#160;(512U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Warning: If you want to use non-blocking transfer,please make sure the corresponding IO interrupt is enable, otherwise there is no output. And non-blocking is combine with buffer, no matter bare-metal or rtos. Below shows how to configure in your project if you want to use non-blocking mode. For IAR, right click project and select "Options", define it in "C/C++ Compiler-&gt;Preprocessor-&gt;Defined symbols". For KEIL, click "Options for Target…", define it in "C/C++-&gt;Preprocessor Symbols-&gt;Define". For ARMGCC, open CmakeLists.txt and add the following lines, "SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")" for debug target. "SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")" for release target. For MCUxpresso, right click project and select "Properties", define it in "C/C++ Build-&gt;Settings-&gt;MCU C
+Complier-&gt;Preprocessor".</p>
+<p>define the transmit buffer length which is used to store the multi task log, buffer is enabled automatically when non-blocking transfer is using, This value will affect the RAM's ultilization, should be set per paltform's capability and software requirement. If it is configured too small, log maybe missed , because the log will not be buffered if the buffer is full, and the print will return immediately with -1. And this value should be multiple of 4 to meet memory alignment. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0160c7e7812b4500e84c918190a405a4"></a>
+<a class="anchor" id="gadad6011e61c820f396b1c13568dbfe16"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SMARTDMA_Init </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>apiMemAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>firmware</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>firmwareSizeByte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DEBUG_CONSOLE_RECEIVE_BUFFER_LEN&#160;&#160;&#160;(1024U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">apiMemAddr</td><td>The address firmware will be copied to. </td></tr>
-    <tr><td class="paramname">firmware</td><td>The firmware to use. </td></tr>
-    <tr><td class="paramname">firmwareSizeByte</td><td>Size of firmware. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="deprecated"><dt><b><a class="el" href="a00284.html#_deprecated000014">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00268.html#gaa5de2415d7b9aa7b9c46140d70a2502a">SMARTDMA_InitWithoutFirmware</a> and <a class="el" href="a00268.html#ga4cfe75e9b746829e9ed1227ba97681e1">SMARTDMA_InstallFirmware</a>. </dd></dl>
+<p>If it is configured too small, log maybe missed, because buffer will be overwrited if buffer is too small. And this value should be multiple of 4 to meet memory alignment. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaa5de2415d7b9aa7b9c46140d70a2502a"></a>
+<a class="anchor" id="gab2823ff7917ffeaaccf805f739116ec1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SMARTDMA_InitWithoutFirmware </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">#define DEBUG_CONSOLE_TX_RELIABLE_ENABLE&#160;&#160;&#160;(1U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function is similar with <a class="el" href="a00268.html#ga0160c7e7812b4500e84c918190a405a4">SMARTDMA_Init</a>, the difference is this function does not install the firmware, the firmware could be installed using <a class="el" href="a00268.html#ga4cfe75e9b746829e9ed1227ba97681e1">SMARTDMA_InstallFirmware</a>. </p>
+<p>When the macro is zero, the string of PRINTF will be thrown away after the transmit buffer is full. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga4cfe75e9b746829e9ed1227ba97681e1"></a>
+<a class="anchor" id="ga9777b06b434b336e5a2c1b21421c9ea3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SMARTDMA_InstallFirmware </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>apiMemAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>firmware</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>firmwareSizeByte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN&#160;&#160;&#160;(128U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">apiMemAddr</td><td>The address firmware will be copied to. </td></tr>
-    <tr><td class="paramname">firmware</td><td>The firmware to use. </td></tr>
-    <tr><td class="paramname">firmwareSizeByte</td><td>Size of firmware. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Only call this function when SMARTDMA is not busy. </dd></dl>
+<p>This macro decide the local log buffer length, the buffer locate at stack, the stack maybe overflow if the buffer is too big and current task stack size not big enough. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga8aa9942804213a2305e9ce6be7412790"></a>
+<a class="anchor" id="gab2afcebb59f366867a49bb888b8d043d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SMARTDMA_InstallCallback </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00268.html#ga9ff250f52d3cc2a6b0eb1ade2950831e">smartdma_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>param</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DEBUG_CONSOLE_SCANF_MAX_LOG_LEN&#160;&#160;&#160;(20U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">callback</td><td>The callback called when smartdma program finished. </td></tr>
-    <tr><td class="paramname">param</td><td>Parameter for the callback. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Only call this function when SMARTDMA is not busy. </dd></dl>
+<p>As same as the DEBUG_CONSOLE_BUFFER_PRINTF_MAX_LOG_LEN. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga3ab9f69469e28e1d21dbb1c5bd9005cf"></a>
+<a class="anchor" id="ga1cbe5dd480860843788779e39d1d0d1e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SMARTDMA_Boot </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>apiIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pParam</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DEBUG_CONSOLE_SYNCHRONIZATION_BM&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">apiIndex</td><td>Index of the API to call. </td></tr>
-    <tr><td class="paramname">pParam</td><td>Pointer to the parameter. </td></tr>
-    <tr><td class="paramname">mask</td><td>Value set to register SMARTDMA-&gt;ARM2EZH[0:1]. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Only call this function when SMARTDMA is not busy. </dd></dl>
+<p>Such as, if another RTOS is used, add: #define DEBUG_CONSOLE_SYNCHRONIZATION_XXXX 3 in this configuration file and implement the synchronization in fsl.log.c.</p>
+<p>synchronization for baremetal software </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7b85f4e4309413064a69c99e7327d3f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEBUG_CONSOLE_SYNCHRONIZATION_MODE&#160;&#160;&#160;<a class="el" href="a00268.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If other RTOS is used, you can implement the RTOS's specific synchronization mechanism in fsl.log.c If synchronization is disabled, log maybe messed on terminal. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga74776e2523880761897d8b57199e5596"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOARD_USE_VIRTUALCOM&#160;&#160;&#160;0U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

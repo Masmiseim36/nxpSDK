@@ -9,19 +9,7 @@
  */
 /*
  *  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
 #ifndef ELS_PKC_MBEDTLS_CONFIG_H
@@ -133,6 +121,7 @@
     #define MBEDTLS_SHA256_FINISH_ALT
     #define MBEDTLS_SHA256_FULL_ALT
     #define MBEDTLS_SHA256_PROCESS_ALT
+    #define MBEDTLS_SHA256_CLONE_ALT
 
 #endif
 
@@ -144,6 +133,7 @@
     #define MBEDTLS_SHA512_FINISH_ALT
     #define MBEDTLS_SHA512_FULL_ALT
     #define MBEDTLS_SHA512_PROCESS_ALT
+    #define MBEDTLS_SHA512_CLONE_ALT
 
 #endif
 
@@ -4347,6 +4337,12 @@
 //#define MBEDTLS_X509_MAX_FILE_PATH_LEN     512 /**< Maximum length of a path/filename string in bytes including the null terminator character ('\0'). */
 
 /** \} name SECTION: Module configuration options */
+
+/** 
+ * Use an PKC-accelerated method for calculating mpi_exp_mod.
+ */
+#define MBEDTLS_MPI_EXP_MOD_ALT
+
 
 /* Target and application specific configurations
  *

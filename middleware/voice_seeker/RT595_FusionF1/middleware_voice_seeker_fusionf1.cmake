@@ -5,7 +5,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 if((CONFIG_BOARD STREQUAL evkmimxrt595) AND CONFIG_USE_middleware_voice_seeker_rdsp_utilities_public_fusionf1)
 
-if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
+if(CONFIG_TOOLCHAIN STREQUAL xcc)
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/include
 )
@@ -20,7 +20,7 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
-if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
+if(CONFIG_TOOLCHAIN STREQUAL xcc)
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
       ${CMAKE_CURRENT_LIST_DIR}/lib/libvoiceseeker_no_aec.a

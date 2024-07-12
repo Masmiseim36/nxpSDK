@@ -46,14 +46,14 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lcdif_cursor_masked.c"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../lcdif_support.h"
-"${ProjDirPath}/../lcdif_support.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../lcdif_support.h"
+"${ProjDirPath}/../lcdif_support.c"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE

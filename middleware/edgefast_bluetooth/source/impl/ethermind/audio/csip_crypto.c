@@ -15,8 +15,8 @@
 
 #include "csip_crypto.h"
 #include <bluetooth/crypto.h>
-
 #include <sys/byteorder.h>
+#include <sys/util.h>
 
 #include "../host/bt_pal_crypto_internal.h"
 

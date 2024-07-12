@@ -27,7 +27,9 @@
 
 #define MAX_ELOOP_TIMEOUTS 100
 
-#ifdef CONFIG_ZEPHYR
+extern OSA_EVENT_HANDLE_DEFINE(supplicant_event_Handle);
+
+#ifdef __ZEPHYR__
 #define portMAX_DELAY (uint32_t)0xffffffffUL
 #endif
 
@@ -512,7 +514,7 @@ int eloop_replenish_timeout(
     return -1;
 }
 
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 static void eloop_handle_alarm(int sig)
 {
     fprintf(stderr,
@@ -532,7 +534,7 @@ static void eloop_handle_signal(int sig)
 {
     int i;
 
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     if ((sig == SIGINT || sig == SIGTERM) && !eloop.pending_terminate)
     {
         /* Use SIGALRM to break out from potential busy loops that
@@ -563,7 +565,7 @@ static void eloop_process_pending_signals(void)
 
     if (eloop.pending_terminate)
     {
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
         alarm(0);
 #endif
         eloop.pending_terminate = 0;
@@ -594,7 +596,7 @@ int eloop_register_signal(int sig, eloop_signal_handler handler, void *user_data
     tmp[eloop.signal_count].signaled  = 0;
     eloop.signal_count++;
     eloop.signals = tmp;
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     signal(sig, eloop_handle_signal);
 #endif
 
@@ -603,7 +605,7 @@ int eloop_register_signal(int sig, eloop_signal_handler handler, void *user_data
 
 int eloop_register_signal_terminate(eloop_signal_handler handler, void *user_data)
 {
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 
     int ret = eloop_register_signal(SIGINT, handler, user_data);
     if (ret == 0)
@@ -616,14 +618,14 @@ int eloop_register_signal_terminate(eloop_signal_handler handler, void *user_dat
 
 int eloop_register_signal_reconfig(eloop_signal_handler handler, void *user_data)
 {
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     return eloop_register_signal(SIGHUP, handler, user_data);
 #else
     return 0;
 #endif
 }
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 extern struct k_event suppMainTaskEvent;
 #endif
 void eloop_run(void)
@@ -631,9 +633,12 @@ void eloop_run(void)
     //fd_set *rfds, *wfds, *efds;
     struct timeval _tv;
     struct os_time tv, now;
-    uint32_t taskNotification = 0U;
     uint32_t timeout_ms = 0U;
-
+#ifdef __ZEPHYR__
+    uint32_t taskNotification = 0U;
+#else
+    osa_event_flags_t taskNotification;
+#endif
 #if 0
     rfds = os_malloc(sizeof(*rfds));
     wfds = os_malloc(sizeof(*wfds));
@@ -676,12 +681,14 @@ void eloop_run(void)
         eloop_process_pending_signals();
 #endif
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
         taskNotification = k_event_wait(&suppMainTaskEvent, (1U << DUMMY) | (1U << EVENT), false,
             eloop.timeout ? K_MSEC(timeout_ms): K_FOREVER);
         k_event_clear(&suppMainTaskEvent, 0xFF);
 #else
-        xTaskNotifyWait(0U, ULONG_MAX, &taskNotification, eloop.timeout ? timeout_ms : portMAX_DELAY);
+        /* Wait till we receive supplicant event */
+        (void)OSA_EventWait((osa_event_handle_t)supplicant_event_Handle, (1U << DUMMY) | (1U << EVENT), false, eloop.timeout ? timeout_ms : osaWaitForever_c,
+                            &taskNotification);
 #endif
 
         /* check if some registered timeouts have occurred */

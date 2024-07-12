@@ -366,9 +366,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -727,22 +727,25 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_reset_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_reset_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_reset_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -817,12 +820,7 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
-          <state>--keep=__dsp_reset_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1026,19 +1024,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -1465,9 +1463,9 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1825,22 +1823,25 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_reset_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_reset_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_reset_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -1915,12 +1916,7 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
-          <state>--keep=__dsp_reset_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2124,19 +2120,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -2474,12 +2470,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2490,6 +2480,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

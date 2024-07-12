@@ -6,6 +6,7 @@
 
 /*
  * Copyright (c) 2010 Inico Technologies Ltd.
+ * Copyright 2017, 2020, 2023-2024 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -420,6 +421,7 @@ ip6_forward(struct pbuf *p, struct ip6_hdr *iphdr, struct netif *inp)
     return;
   }
 #endif /* LWIP_IPV6_SCOPES */
+#if !IP_FORWARD_ALLOW_TX_ON_RX_NETIF
   /* Do not forward packets onto the same network interface on which
    * they arrived. */
   if (netif == inp) {
@@ -428,6 +430,7 @@ ip6_forward(struct pbuf *p, struct ip6_hdr *iphdr, struct netif *inp)
     IP6_STATS_INC(ip6.drop);
     return;
   }
+#endif /* IP_FORWARD_ALLOW_TX_ON_RX_NETIF */
 
   /* decrement HL */
   IP6H_HOPLIM_SET(iphdr, IP6H_HOPLIM(iphdr) - 1);
@@ -1031,9 +1034,10 @@ netif_found:
           goto ip6_input_cleanup;
         }
 
-        /* Returned p point to IPv6 header.
+        /* Returned p points to IPv6 header.
          * Update all our variables and pointers and continue. */
         ip6hdr = (struct ip6_hdr *)p->payload;
+        ip_data.current_ip6_header = ip6hdr;
         nexth = &IP6H_NEXTH(ip6hdr);
         hlen = hlen_tot = IP6_HLEN;
         pbuf_remove_header(p, IP6_HLEN);

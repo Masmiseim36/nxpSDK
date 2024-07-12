@@ -11,21 +11,19 @@
 /* Type used to represent characters internally. */
 #if MF_ENCODING == MF_ENCODING_ASCII
 typedef char mf_char;
-#else
+#elif MF_ENCODING == MF_ENCODING_UTF8
+typedef char mf_char;
+#elif MF_ENCODING == MF_ENCODING_UTF16
 typedef uint16_t mf_char;
+#elif MF_ENCODING == MF_ENCODING_UTF32
+typedef uint32_t mf_char;
+#elif MF_ENCODING == MF_ENCODING_WCHAR
+#include <stddef.h>
+typedef wchar_t mf_char;
 #endif
 
 /* Type used to represent input strings. */
-#if MF_ENCODING == MF_ENCODING_ASCII
-typedef const char * mf_str;
-#elif MF_ENCODING == MF_ENCODING_UTF8
-typedef const char * mf_str;
-#elif MF_ENCODING == MF_ENCODING_UTF16
-typedef const uint16_t * mf_str;
-#elif MF_ENCODING == MF_ENCODING_WCHAR
-#include <stddef.h>
-typedef const wchar_t * mf_str;
-#endif
+typedef const mf_char * mf_str;
 
 /* Returns the next character in the string and advances the pointer.
  * When the string ends, returns 0 and leaves the pointer at the 0 byte.

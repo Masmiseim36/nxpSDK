@@ -63,6 +63,7 @@ API_RESULT wt_init_pl (BT_THREAD_START_ROUTINE routine)
     "[WT] Creating Write Task ...\n");
 
     /* Create Write Task */
+    // coverity[overrun-buffer-val:SUPPRESS]
     if (BT_thread_create (&wt_tid,
                           &wt_task_attr,
                           routine,

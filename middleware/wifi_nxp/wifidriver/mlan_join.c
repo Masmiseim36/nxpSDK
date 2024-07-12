@@ -19,10 +19,13 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
+#if CONFIG_WPS2
+#include "wifi_nxp_wps.h"
+#endif
 /********************************************************
                 Local Constants
 ********************************************************/
@@ -122,16 +125,23 @@ static int wlan_cmd_append_generic_ie(mlan_private *priv, t_u8 **ppbuffer)
 static mlan_status wlan_get_common_rates(
     IN mlan_private *pmpriv, IN t_u8 *rate1, IN t_u32 rate1_size, IN t_u8 *rate2, IN t_u32 rate2_size)
 {
-    mlan_status ret     = MLAN_STATUS_SUCCESS;
+    mlan_status ret = MLAN_STATUS_SUCCESS;
+#if !CONFIG_MEM_POOLS
     mlan_callbacks *pcb = (mlan_callbacks *)&pmpriv->adapter->callbacks;
-    t_u8 *ptr           = rate1;
-    t_u8 *tmp           = MNULL;
+#endif
+    t_u8 *ptr = rate1;
+    t_u8 *tmp = MNULL;
     t_u32 i, j;
 
     ENTER();
 
+#if !CONFIG_MEM_POOLS
     ret = pcb->moal_malloc(pmpriv->adapter->pmoal_handle, rate1_size, MLAN_MEM_DEF, &tmp);
     if (ret != MLAN_STATUS_SUCCESS || (tmp == MNULL))
+#else
+    tmp = OSA_MemoryPoolAllocate(buf_128_MemoryPool);
+    if (tmp == MNULL)
+#endif
     {
         PRINTM(MERROR, "Failed to allocate buffer\n");
         ret = MLAN_STATUS_FAILURE;
@@ -183,7 +193,11 @@ static mlan_status wlan_get_common_rates(
 done:
     if (tmp != MNULL)
     {
+#if !CONFIG_MEM_POOLS
         (void)pcb->moal_mfree(pmpriv->adapter->pmoal_handle, tmp);
+#else
+        OSA_MemoryPoolFree(buf_128_MemoryPool, tmp);
+#endif
     }
 
     LEAVE();
@@ -319,7 +333,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     */
     t_u8 preference_selected;
     t_u8 cipher_selected_id;
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
     t_u8 cipher_preference[11] = {0, 0, 1, 0, 2, 0, 0, 0, 4, 5, 3};
 #else
     t_u8 cipher_preference[5] = {0, 0, 1, 0, 2};
@@ -327,6 +341,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     t_u8 oui[4] = {0x00, 0x0f, 0xac, 0x00};
 
     /* AKM Perference Order:
+       (13) AKM_SUITE_TYPE_SAE_EXT_KEY       = 24
        (12) AKM_SUITE_TYPE_1X_SUITEB_FT_SHA384  = 13
        (11) AKM_SUITE_TYPE_1X_SUITEB_SHA384  = 12
        (10) AKM_SUITE_TYPE_1X_SUITEB_SHA256  = 11
@@ -343,7 +358,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     */
     t_u8 akm_type_selected;
     t_u8 akm_type_id        = 0;
-    t_u8 akm_preference[19] = {0, 7, 1, 9, 3, 8, 2, 0, 5, 6, 0, 10, 11, 12, 0, 0, 0, 0, 4};
+    t_u8 akm_preference[25] = {0, 7, 1, 9, 3, 8, 2, 0, 5, 6, 0, 10, 11, 12, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 13};
 
     int ap_mfpc = 0, ap_mfpr = 0, ret = MLAN_STATUS_SUCCESS;
 
@@ -379,7 +394,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
         return MLAN_STATUS_FAILURE;
     }
     if ((preference_selected == PREFERENCE_TKIP) && ((*akm_type == AssocAgentAuth_Wpa3Sae)
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
                                                      || (*akm_type == AssocAgentAuth_Owe)))
     {
 #else
@@ -456,23 +471,23 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
             {
                 *akm_type = AssocAgentAuth_Open;
             }
-#ifdef CONFIG_11R
+#if CONFIG_11R
             else if (akm_type_id == 4)
             {
                 *akm_type = AssocAgentAuth_FastBss;
             }
 #endif
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
             else if (akm_type_id == 18)
             {
                 *akm_type = AssocAgentAuth_Owe;
             }
 #endif
-            else if (akm_type_id == 8)
+            else if (akm_type_id == 8 || akm_type_id == 24)
             {
                 *akm_type = AssocAgentAuth_Wpa3Sae;
             }
-#ifdef CONFIG_11R
+#if CONFIG_11R
             else if (akm_type_id == 9)
             {
                 *akm_type = AssocAgentAuth_FastBss_SAE;
@@ -488,14 +503,14 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
         {
             if (ptr[3] < sizeof(akm_preference))
             {
-#ifdef CONFIG_11R
+#if CONFIG_11R
                 if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 13))
                 {
                     break;
                 }
                 else
 #endif
-                if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 12))
+                    if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 12))
                 {
                     break;
                 }
@@ -503,7 +518,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
                 {
                     break;
                 }
-#ifdef CONFIG_11R
+#if CONFIG_11R
                 else if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 3))
                 {
                     break;
@@ -517,35 +532,23 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
                 {
                     break;
                 }
-#ifdef CONFIG_11R
-                else if ((*akm_type == AssocAgentAuth_FastBss) && (ptr[3] == 9))
-                {
-                    break;
-                }
+#if CONFIG_11R
                 else if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 9))
                 {
                     break;
                 }
 #endif
-                else if ((*akm_type == AssocAgentAuth_Wpa3Sae) && (ptr[3] == 8))
+                else if ((*akm_type == AssocAgentAuth_Wpa3Sae) && (ptr[3] == 8 || ptr[3] == 24))
                 {
                     break;
                 }
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
                 else if ((*akm_type == AssocAgentAuth_Owe) && (ptr[3] == 18))
                 {
                     break;
                 }
 #endif
-#ifdef CONFIG_11R
-                else if ((*akm_type == AssocAgentAuth_FastBss) && (ptr[3] == 4))
-                {
-                    break;
-                }
-                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 4))
-                {
-                    break;
-                }
+#if CONFIG_11R
                 else if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 4))
                 {
                     break;
@@ -647,7 +650,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     return ret;
 }
 
-#ifdef CONFIG_11R
+#if CONFIG_11R
 /**
  *  @brief This function is to find FT AKM in RSN.
  *
@@ -810,10 +813,12 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     t_u16 tmp_cap;
     t_u8 *pos, *auth_pos = NULL;
     t_u8 akm_type = 0;
-#ifdef CONFIG_11R
+#if CONFIG_11R
     t_u8 ft_akm = 0;
 #endif
-#ifdef CONFIG_DRIVER_MBO
+    MrvlIEtypes_PrevBssid_t *prev_bssid_tlv = MNULL;
+    t_u8 zero_mac[MLAN_MAC_ADDR_LENGTH]     = {0};
+#if CONFIG_DRIVER_MBO
     t_u8 oper_class = 1;
 #endif
 
@@ -829,6 +834,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 
     /* Save so we know which BSS Desc to use in the response handler */
     pmpriv->pattempted_bss_desc = pbss_desc;
+    (void)__memcpy(pmadapter, &pmpriv->curr_bss_params.attemp_bssid, pbss_desc->mac_address, MLAN_MAC_ADDR_LENGTH);
     pmpriv->assoc_req_size = 0;
 
     (void)__memcpy(pmadapter, passo->peer_sta_addr, pbss_desc->mac_address, sizeof(passo->peer_sta_addr));
@@ -884,7 +890,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 
     /* Add the Authentication type to be used for Auth frames if needed */
     if ((pmpriv->sec_info.authentication_mode != MLAN_AUTH_MODE_AUTO)
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
         || (pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE)
 #endif
     )
@@ -896,7 +902,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         {
             pauth_tlv->auth_type = wlan_cpu_to_le16((t_u16)AssocAgentAuth_Wpa3Sae);
         }
-#ifdef CONFIG_11R
+#if CONFIG_11R
         else if (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_FT)
         {
             if (pmpriv->curr_bss_params.host_mlme)
@@ -909,7 +915,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
             }
         }
 #endif
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
         else if (
             !pmpriv->curr_bss_params.host_mlme &&
             ((pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE) ||
@@ -949,18 +955,21 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         pos += sizeof(pchan_tlv->header) + sizeof(ChanScanParamSet_t);
     }
 
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_WPA_SUPP_WPS
+#if CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP_WPS
     if (pmpriv->wps.session_enable == MFALSE)
     {
 #endif /* CONFIG_WPA_SUPP_WPS */
+#elif (CONFIG_WPS2)
+    if (wlan_get_prov_session() != PROV_WPS_SESSION_ATTEMPT)
+    {
 #endif
         /* fixme: The above 'if' is used instead of below 'if' for now since
            WPS module is mlan integrated yet. Fix after it is done.
         */
         /* if (!pmpriv->wps.session_enable) { */
         if ((pmpriv->sec_info.wpa_enabled || pmpriv->sec_info.wpa2_enabled)
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
             || (pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE) ||
             (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_OWE)
 #endif
@@ -985,7 +994,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
             {
                 (void)__memcpy(pmadapter, prsn_ie_tlv->rsn_ie, &pmpriv->wpa_ie[2], prsn_ie_tlv->header.len);
                 if (pmpriv->sec_info.wpa2_enabled
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
                     && pmpriv->is_dpp_connect == MFALSE
 #endif
                 )
@@ -994,7 +1003,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
                     t_u16 rsn_ie_tlv_len = prsn_ie_tlv->header.len;
                     ret = (mlan_status)wlan_update_rsn_ie(pmpriv, prsn_ie_tlv, &rsn_ie_tlv_len, &akm_type);
                     prsn_ie_tlv->header.len = rsn_ie_tlv_len;
-#ifdef CONFIG_11R
+#if CONFIG_11R
                     /** parse rsn ie to find whether ft akm is used*/
                     ft_akm = wlan_ft_akm_is_used(pmpriv, (t_u8 *)prsn_ie_tlv);
 #endif
@@ -1009,7 +1018,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
             pos += sizeof(prsn_ie_tlv->header) + prsn_ie_tlv->header.len;
             prsn_ie_tlv->header.len = wlan_cpu_to_le16(prsn_ie_tlv->header.len);
 
-#ifdef CONFIG_11R
+#if CONFIG_11R
             if ((akm_type == AssocAgentAuth_FastBss) && (pmpriv->sec_info.is_ft == false))
             {
                 akm_type = AssocAgentAuth_Open;
@@ -1019,7 +1028,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
                 akm_type = AssocAgentAuth_Wpa3Sae;
             }
 #endif
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
             if ((akm_type == AssocAgentAuth_Owe) && (pmpriv->curr_bss_params.host_mlme))
             {
                 akm_type = AssocAgentAuth_Open;
@@ -1035,10 +1044,12 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
                 pauth_tlv->header.len = wlan_cpu_to_le16(pauth_tlv->header.len);
             }
         }
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_WPA_SUPP_WPS
+#if CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP_WPS
     }
 #endif /* CONFIG_WPA_SUPP_WPS */
+#elif (CONFIG_WPS2)
+    }
 #endif
 
     if ((pauth_tlv != MNULL) && (pauth_tlv->auth_type == wlan_cpu_to_le16(AssocAgentAuth_Wpa3Sae)))
@@ -1072,7 +1083,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         /* Do nothing */
     }
 
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
     if (ISSUPP_11ACENABLED(pmadapter->fw_cap_info) && (!pbss_desc->disable_11n) &&
         wlan_11ac_bandconfig_allowed(pmpriv, pbss_desc->bss_band))
     {
@@ -1080,7 +1091,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     }
 #endif
 
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
     if ((IS_FW_SUPPORT_11AX(pmadapter)) && (!pbss_desc->disable_11n) &&
         wlan_11ax_bandconfig_allowed(pmpriv, pbss_desc->bss_band))
         wlan_cmd_append_11ax_tlv(pmpriv, pbss_desc, &pos);
@@ -1088,8 +1099,8 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 
     (void)wlan_wmm_process_association_req(pmpriv, &pos, &pbss_desc->wmm_ie, pbss_desc->pht_cap);
 
-#ifdef CONFIG_11R
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_11R
+#if CONFIG_WPA_SUPP
     if (pmpriv->md_ie_len != 0U)
 #else
     if (ft_akm == 1U)
@@ -1111,8 +1122,17 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         host_mlme_tlv->host_mlme   = MTRUE;
         pos += sizeof(host_mlme_tlv->header) + host_mlme_tlv->header.len;
     }
+    if (memcmp(&pmpriv->curr_bss_params.prev_bssid, zero_mac, MLAN_MAC_ADDR_LENGTH))
+    {
+        prev_bssid_tlv              = (MrvlIEtypes_PrevBssid_t *)pos;
+        prev_bssid_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_PREV_BSSID);
+        prev_bssid_tlv->header.len  = wlan_cpu_to_le16(MLAN_MAC_ADDR_LENGTH);
+        __memcpy(pmadapter, prev_bssid_tlv->prev_bssid, &pmpriv->curr_bss_params.prev_bssid, MLAN_MAC_ADDR_LENGTH);
+        PRINTM(MCMND, "ASSOCIATE: PREV_BSSID = " MACSTR "\n", MAC2STR(pmpriv->curr_bss_params.prev_bssid));
+        pos += sizeof(prev_bssid_tlv->header) + MLAN_MAC_ADDR_LENGTH;
+    }
 
-#ifdef CONFIG_DRIVER_MBO
+#if CONFIG_DRIVER_MBO
     wlan_get_curr_global_oper_class(pmpriv, pbss_desc->phy_param_set.ds_param_set.current_chan, BW_20MHZ, &oper_class);
     wlan_add_supported_oper_class_ie(pmpriv, &pos, oper_class);
 #endif
@@ -1135,7 +1155,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     /* set SpectrumMgmt(BIT8) and RadioMeasurement(BIT12) if 11K is enabled
      */
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
         if (pmpriv->enable_host_11k == (t_u8)1U)
     {
         SPECTRUM_MGMT_ENABLED(tmp_cap);
@@ -1153,6 +1173,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     (void)__memcpy(pmadapter, &passo->cap_info, &tmp_cap, sizeof(passo->cap_info));
 
 done:
+
     LEAVE();
     return ret;
 }
@@ -1243,7 +1264,7 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     /* t_u8 event_buf[100]; */
     /* mlan_event *pevent = (mlan_event *) event_buf; */
     t_u8 cur_mac[MLAN_MAC_ADDR_LENGTH] = {0x0};
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
     t_u8 media_connected = pmpriv->media_connected;
 #endif
     /* mlan_adapter *pmadapter = pmpriv->adapter; */
@@ -1299,6 +1320,10 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     /* Send a Media Connected event, according to the Spec */
     pmpriv->media_connected = MTRUE;
 
+#if CONFIG_WMM_UAPSD
+    pmpriv->adapter->pps_uapsd_mode = MFALSE;
+    pmpriv->adapter->tx_lock_flag   = MFALSE;
+#endif
 
     /* Set the attempted BSSID Index to current */
     pbss_desc = pmpriv->pattempted_bss_desc;
@@ -1341,6 +1366,14 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     }
 
     /* fixme: Enable if req */
+#if CONFIG_WMM_UAPSD
+    pmpriv->curr_bss_params.wmm_uapsd_enabled = MFALSE;
+
+    if (pmpriv->wmm_enabled == MTRUE)
+    {
+        pmpriv->curr_bss_params.wmm_uapsd_enabled = pbss_desc->wmm_ie.qos_info.qos_uapsd;
+    }
+#endif
     if (pmpriv->sec_info.wpa_enabled || pmpriv->sec_info.wpa2_enabled)
     {
         pmpriv->wpa_is_gtk_set = MFALSE;
@@ -1375,7 +1408,7 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     }
 
 
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
     /* Add the ra_list here for infra mode as there will be only 1 ra always */
     if (media_connected == MTRUE)
     {
@@ -1501,7 +1534,7 @@ bool wlan_use_non_default_ht_vht_cap(IN BSSDescriptor_t *pbss_desc)
 {
     /* If connect to 11ax or non-brcm AP, still use default HT/VHT cap */
     if (
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
         pbss_desc->phe_cap ||
 #endif
         (!pbss_desc->brcm_ie_exist && !pbss_desc->epigram_ie_exist))
@@ -1511,7 +1544,7 @@ bool wlan_use_non_default_ht_vht_cap(IN BSSDescriptor_t *pbss_desc)
      * In VHT cap, check if "Number of Sounding Dimensions" is set to 3,
      * If both are true, do not use default HT/VHT cap */
     if ((pbss_desc->pht_cap && (((pbss_desc->ht_cap_saved.ht_cap.tx_bf_cap >> 4) & 0x1) == 0x0))
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
         && (!pbss_desc->pvht_cap ||
             (pbss_desc->pvht_cap && (GET_VHTCAP_NUMSNDDM(pbss_desc->vht_cap_saved.vht_cap.vht_cap_info) == 0x2)))
 #endif

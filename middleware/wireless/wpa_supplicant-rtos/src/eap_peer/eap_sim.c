@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#ifdef CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM
 
 #include "utils/common.h"
 #include "pcsc_funcs.h"

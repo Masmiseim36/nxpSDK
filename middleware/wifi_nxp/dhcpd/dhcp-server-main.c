@@ -12,19 +12,25 @@
  */
 #include <string.h>
 
-#include <wm_os.h>
+#include <osa.h>
 #include <wm_net.h>
 #include <dhcp-server.h>
 
 #include "dhcp-priv.h"
 
-#ifndef CONFIG_DHCP_SERVER_STACK_SIZE
+#if !CONFIG_DHCP_SERVER_STACK_SIZE
 #define CONFIG_DHCP_SERVER_STACK_SIZE 2048
 #endif
 
-static os_thread_t dhcpd_thread;
-static os_thread_stack_define(dhcp_stack, CONFIG_DHCP_SERVER_STACK_SIZE);
 static bool dhcpd_running;
+
+void dhcpd_task(osa_task_param_t arg);
+
+/* OSA_TASKS: name, priority, instances, stackSz, useFloat */
+static OSA_TASK_DEFINE(dhcpd_task, OSA_PRIORITY_NORMAL, 1, CONFIG_DHCP_SERVER_STACK_SIZE, 0);
+
+OSA_TASK_HANDLE_DEFINE(dhcpd_task_Handle);
+
 /*
  * API
  */
@@ -32,6 +38,7 @@ static bool dhcpd_running;
 int dhcp_server_start(void *intrfc_handle)
 {
     int ret;
+    osa_status_t status;
 
     dhcp_d("DHCP server start request");
     if (dhcpd_running)
@@ -45,8 +52,8 @@ int dhcp_server_start(void *intrfc_handle)
         return ret;
     }
 
-    ret = os_thread_create(&dhcpd_thread, "dhcp-server", dhcp_server, NULL, &dhcp_stack, OS_PRIO_3);
-    if (ret != 0)
+    status = OSA_TaskCreate((osa_task_handle_t)dhcpd_task_Handle, OSA_TASK(dhcpd_task), NULL);
+    if (status != KOSA_StatusSuccess)
     {
         (void)dhcp_free_allocations();
         return -WM_E_DHCPD_THREAD_CREATE;
@@ -67,9 +74,9 @@ void dhcp_server_stop(void)
             return;
         }
 
-        os_thread_sleep(os_msec_to_ticks(50));
+        OSA_TimeDelay(50);
 
-        if (os_thread_delete(&dhcpd_thread) != WM_SUCCESS)
+        if (OSA_TaskDestroy((osa_task_handle_t)dhcpd_task_Handle) != KOSA_StatusSuccess)
         {
             dhcp_w("failed to delete thread");
         }

@@ -15,10 +15,10 @@
 #include <bluetooth/hci.h>
 #include <bluetooth/addr.h>
 
-#define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HCI_CORE)
+#define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_SMP)
 #define LOG_MODULE_NAME bt_ssp
 #include "fsl_component_log.h"
-LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
+LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelDebug);
 
 #if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
 #include "sm_ssp_pl.h"
@@ -48,6 +48,8 @@ static const uint8_t ssp_method[4 /* remote */][4 /* local */] = {
 
 static int ssp_passkey_neg_reply(struct bt_conn *conn);
 static int ssp_confirm_reply(struct bt_conn *conn);
+
+extern bt_security_t l2cap_br_server_security_level_max(void);
 
 static int pin_code_neg_reply(bt_addr_t *bdaddr)
 {
@@ -330,8 +332,8 @@ static void ssp_pairing_complete(struct bt_conn *conn, uint8_t status)
 
 		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs, listener,
 						  next, node, struct bt_conn_auth_info_cb) {
-			if (listener->pairing_complete) {
-				listener->pairing_complete(conn, status);
+			if (listener->pairing_failed) {
+				listener->pairing_failed(conn, (enum bt_security_err)status);
 			}
 		}
 	}
@@ -472,7 +474,14 @@ static int conn_auth(struct bt_conn *conn)
 
 	return bt_hci_cmd_send_sync(BT_HCI_OP_AUTH_REQUESTED, buf, NULL);
 #else
-	API_RESULT retval = BT_sm_authentication_request (conn->br.dst.val);
+    API_RESULT retval = API_SUCCESS;
+
+	/* Try L2CAP_SC_CHECK_TIMEOUT to take semaphore to wait until the security level updated. */
+	osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, 200);
+	if(KOSA_StatusSuccess == status) {
+		retval = BT_sm_authentication_request (conn->br.dst.val);
+	}
+
 	if (API_SUCCESS == retval)
 	{
 		return 0;
@@ -708,6 +717,7 @@ void bt_hci_link_key_req(struct net_buf *buf)
 {
 	struct bt_hci_evt_link_key_req *evt = (struct bt_hci_evt_link_key_req *)buf->data;
 	struct bt_conn *conn;
+    bt_security_t level;
 
 	LOG_DBG("%s", bt_addr_str(&evt->bdaddr));
 
@@ -738,6 +748,28 @@ void bt_hci_link_key_req(struct net_buf *buf)
 		bt_conn_unref(conn);
 		return;
 	}
+
+    level = l2cap_br_server_security_level_max();
+    if (conn->encrypt > 0)
+    {
+        if (level > conn->sec_level)
+        {
+            link_key_neg_reply(&evt->bdaddr);
+            bt_conn_unref(conn);
+            return;
+        }
+    }
+#if 0
+    else
+    {
+        if ((BT_SECURITY_L1 != conn->required_sec_level) && (level > conn->required_sec_level))
+        {
+            link_key_neg_reply(&evt->bdaddr);
+            bt_conn_unref(conn);
+            return;
+        }
+    }
+#endif
 
 	link_key_reply(&evt->bdaddr, conn->br.link_key->val);
 	bt_conn_unref(conn);
@@ -968,9 +1000,13 @@ void bt_hci_auth_complete(struct net_buf *buf)
 		bt_conn_security_changed(conn, evt->status,
 					 bt_security_err_get(evt->status));
 	} else {
-#if 0
-		link_encr(handle);
-#endif
+		if (conn->sec_level < conn->required_sec_level) {
+			API_RESULT ret;
+			ret = BT_sm_encryption_request(&conn->br.dst.val[0], 1);
+			if (API_SUCCESS != ret) {
+				LOG_ERR("Cannot send encryption request");
+			}
+		}
 	}
 	bt_conn_unref(conn);
 }

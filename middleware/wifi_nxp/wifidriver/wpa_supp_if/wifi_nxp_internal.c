@@ -10,7 +10,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <wm_os.h>
+#include <osa.h>
 #include <wm_net.h>
 #include <wifi.h>
 #include <wifi_nxp.h>
@@ -18,7 +18,7 @@
 #include <wifi-internal.h>
 #include <wifi-debug.h>
 
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
 
 #include <rtos_wpa_supp_if.h>
 #include "supp_main.h"
@@ -27,7 +27,7 @@ void wifi_survey_result_get(struct wifi_message *msg)
 {
     nxp_wifi_trigger_op_t *wifi_survey_params = (nxp_wifi_trigger_op_t *)msg->data;
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
     wm_wifi.hostapd_op = false;
 
     if (wifi_survey_params->hostapd)
@@ -37,7 +37,7 @@ void wifi_survey_result_get(struct wifi_message *msg)
 #endif
 
     wifi_nxp_survey_res_get();
-    os_mem_free(wifi_survey_params);
+    OSA_MemoryFree(wifi_survey_params);
 }
 
 /* Event handlers*/
@@ -61,7 +61,7 @@ void wifi_scan_done(struct wifi_message *msg)
 {
     struct wifi_nxp_ctx_rtos *wifi_if_ctx_rtos = NULL;
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
     if (wm_wifi.hostapd_op)
     {
         wifi_if_ctx_rtos = (struct wifi_nxp_ctx_rtos *)wm_wifi.hapd_if_priv;
@@ -88,7 +88,7 @@ void wifi_scan_done(struct wifi_message *msg)
     {
         if (wm_wifi.supp_if_callbk_fns->scan_done_callbk_fn)
         {
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
             if (wifi_if_ctx_rtos->hostapd)
             {
                 wm_wifi.supp_if_callbk_fns->scan_done_callbk_fn(wm_wifi.hapd_if_priv, wm_wifi.external_scan);
@@ -125,7 +125,7 @@ void wifi_process_remain_on_channel(struct wifi_message *msg)
     }
     if (msg->data)
     {
-        os_mem_free(msg->data);
+        OSA_MemoryFree(msg->data);
         msg->data = NULL;
     }
 }

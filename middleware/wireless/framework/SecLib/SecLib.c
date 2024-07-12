@@ -23,7 +23,8 @@
 #include "CryptoLibSW.h"
 #include "fwk_config.h"
 
-#if defined(KW45B41Z83_SERIES) || defined(KW45B41Z82_SERIES) || defined(K32W1480_SERIES)
+#if defined(KW45B41Z83_SERIES) || defined(KW45B41Z82_SERIES) || defined(K32W1480_SERIES) || \
+    defined(MCXW716A_SERIES) || defined(MCXW716C_SERIES)
 /* we need to prevent SecLib from using LTC HW on these chips, since they are located in Radio domain only */
 #undef FSL_FEATURE_SOC_LTC_COUNT
 #endif
@@ -91,8 +92,7 @@ extern osa_status_t SecLibMutexUnlock(void);
  * It is likely to be present on all Core M33, Core M7 and Core M4 devices.
  * Nonetheless RW61x was designed without ARM DSP extension, in which case avoid defining
  * gSecLibUseDspExtension_d.
- * __DSP_EXT__ must be defined in the build system (CFLAGS containing -D__DSP_EXT__=1 for instance)
- * gSecLibUseDspExtension_d follows __DSP_PRESENT unless overidden to 0
+ * gSecLibUseDspExtension_d follows __DSP_PRESENT definition unless overridden to 0
  */
 
 #ifndef gSecLibUseDspExtension_d

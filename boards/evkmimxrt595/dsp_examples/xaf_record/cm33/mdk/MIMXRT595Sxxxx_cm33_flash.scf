@@ -54,7 +54,7 @@
 #define  m_interrupts_size             0x00000200
 
 #define  m_text_start                  0x08001200
-#define  m_text_size                   0x003FEE00
+#define  m_text_size                   0x007FEE00
 
 #define m_interrupts_ram_start         0x20280000
 #define m_interrupts_ram_size          __ram_vector_table_size__

@@ -35,7 +35,7 @@
 /**************************** KSDK ********************************************/
 
 #include "fsl_device_registers.h"
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 #include <zephyr/kernel.h>
 #else
 #include "fsl_debug_console.h"
@@ -50,7 +50,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_PLATFORM_STD_FREE vPortFree
 
 #endif /* USE_RTOS*/
-#endif /* CONFIG_ZEPHYR */
+#endif /* __ZEPHYR__ */
 
 #undef FSL_FEATURE_SOC_DCP_COUNT
 
@@ -148,8 +148,8 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * HW acceleration of SHA is enabled on chip with context switch.
  */
 #if defined(FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE)
-#define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
-#define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
+//#define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
+//#define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
 #endif
 #endif
 
@@ -4392,6 +4392,9 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * Allow user to override any previous default.
  *
  */
+
+#define MBEDTLS_ALLOW_PRIVATE_ACCESS
+
 #if defined(MBEDTLS_USER_CONFIG_FILE)
 #include MBEDTLS_USER_CONFIG_FILE
 #endif

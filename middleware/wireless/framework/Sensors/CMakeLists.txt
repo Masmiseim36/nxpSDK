@@ -20,7 +20,16 @@ target_link_libraries(connfwk-Sensors
 # If the selected build type is for coverage, we build the same lib but with coverage instrumentation
 if(${CMAKE_BUILD_TYPE} MATCHES "Coverage")
     add_library(connfwk-Sensors-coverage ${SOURCES})
-    target_link_libraries(connfwk-Sensors-coverage PRIVATE connfwk-config)
+    target_link_libraries(connfwk-Sensors-coverage
+        PRIVATE
+            connfwk-config
+            ${CONNFWK_PLATFORM_LIB}
+            ${CONNFWK_MCUX_SDK_LIB}
+        )
+    target_include_directories(connfwk-Sensors-coverage
+        PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}
+    )
 
     set(COVERAGE_COMPILE_OPTIONS
         --cs-on

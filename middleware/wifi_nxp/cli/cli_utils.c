@@ -14,8 +14,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifndef __ZEPHYR__
 #include <fsl_debug_console.h>
 #include <cli.h>
+#endif
+#include <wm_utils.h>
 #include <cli_utils.h>
 #include <ctype.h>
 #include <wm_net.h> /* for errno */
@@ -67,7 +70,7 @@ unsigned int a2hex(const char *s)
 {
     uint32_t val = 0;
 
-    if (strncasecmp("0x", s, 2) == 0)
+    if (strncmp("0x", s, 2) == 0 || strncmp("0X", s, 2) == 0)
     {
         s += 2;
     }
@@ -180,6 +183,50 @@ bool get_mac(const char *arg, char *dest, char sep)
     return false;
 }
 
+#if defined(RW610) && (CONFIG_ANT_DETECT)
+bool get_channel_list(const char *arg, uint8_t *num_channels, uint8_t *chan_number, char sep)
+{
+    unsigned int len = 0;
+    unsigned int i;
+    uint8_t count = 0;
+    uint8_t val   = 0;
+
+    len = strlen(arg);
+
+    if (len == 0U)
+    {
+        (void)PRINTF("Error: len == 0\r\n");
+        return true;
+    }
+
+    for (i = 0; i < len; i++)
+    {
+        if (arg[i] == sep)
+        {
+            chan_number[count] = val;
+            count++;
+            val = 0;
+            continue;
+        }
+
+        if (arg[i] < '0' || arg[i] > '9')
+        {
+            return true;
+        }
+        val *= 10U;
+        val += (uint8_t)arg[i] - (uint8_t)'0';
+
+        if (i == len - 1)
+        {
+            chan_number[count] = val;
+        }
+    }
+
+    *num_channels = count + 1;
+    return false;
+}
+#endif
+
 /* Non-reentrant getopt implementation */
 int cli_optind   = 0;
 char *cli_optarg = NULL;
@@ -215,4 +262,13 @@ int cli_getopt(int argc, char **argv, const char *fmt)
         }
     }
     return (int)c[0];
+}
+
+/* allocate a copy of a string */
+char *string_dup(const char *s)
+{
+    char *snew = (char *)OSA_MemoryAllocate(strlen(s) + 1);
+    if (snew)
+        (void)strcpy(snew, s);
+    return snew;
 }

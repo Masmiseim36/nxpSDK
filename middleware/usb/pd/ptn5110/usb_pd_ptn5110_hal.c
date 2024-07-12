@@ -83,6 +83,9 @@ pd_status_t PDPTN5110_HalInit(pd_handle pdHandle)
     (void)Reg_BusReadBlock(pdInstance, pd_interface_rev, 2,
                            (uint8_t *)&pdInstance->tcpcRegCache.GLOBAL.pd_interface_rev);
 
+    /* Store power control to default status */
+    Reg_BusWriteByte(pdInstance, power_control, 0x60U);
+
     /*  Enable and clear all interrupt */
     if (Reg_CacheRead(pdInstance, GLOBAL, pd_interface_rev) >= PD_INTERFACE_REV2VER1)
     {
@@ -99,6 +102,7 @@ pd_status_t PDPTN5110_HalInit(pd_handle pdHandle)
     /* Set VBUS_STOP_DISCHARGE_THRESHOLD to 0.6V(default 0.8V) to be compatible with UGREEN dongle(Type-C to
      * DisplayPort) */
     Reg_BusWriteWord(pdInstance, vbus_stop_discharge_threshold, VBUS_STOP_DISCHARGE_THRESHOLD);
+    (void)Reg_BusWriteByte(pdInstance, alert_extended, 0x07U);
     (void)Reg_BusWriteBlock(pdInstance, (uint8_t *)&blockdata, 2, alert_mask);
     (void)Reg_BusWriteBlock(pdInstance, (uint8_t *)&blockdata, 2, alert);
     if (Reg_CacheRead(pdInstance, GLOBAL, vendor_id) == PD_VENDOR_ID_NXP &&

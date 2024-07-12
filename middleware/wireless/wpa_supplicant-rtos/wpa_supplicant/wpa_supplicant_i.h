@@ -776,6 +776,11 @@ struct wpa_supplicant
     int key_mgmt;
     int wpa_proto;
     int mgmt_group_cipher;
+    /*
+     * Allowed key management suites for roaming/initial connection
+     * when the driver's SME is in use.
+     */
+    int allowed_key_mgmts;
 
     void *drv_priv; /* private data used by driver_ops */
     void *global_drv_priv;
@@ -960,6 +965,7 @@ struct wpa_supplicant
     unsigned int max_match_sets;
     unsigned int max_remain_on_chan;
     unsigned int max_stations;
+    unsigned int max_num_akms;
 
     int pending_mic_error_report;
     int pending_mic_error_pairwise;
@@ -1045,6 +1051,7 @@ struct wpa_supplicant
         u8 ext_auth_bssid[ETH_ALEN];
         u8 ext_auth_ssid[SSID_MAX_LEN];
         size_t ext_auth_ssid_len;
+        int ext_auth_key_mgmt;
         int *sae_rejected_groups;
 #endif /* CONFIG_SAE */
     } sme;
@@ -1882,5 +1889,4 @@ int wpas_pasn_auth_tx_status(struct wpa_supplicant *wpa_s, const u8 *data, size_
 int wpas_pasn_auth_rx(struct wpa_supplicant *wpa_s, const struct ieee80211_mgmt *mgmt, size_t len);
 
 int wpas_pasn_deauthenticate(struct wpa_supplicant *wpa_s, const u8 *bssid);
-
 #endif /* WPA_SUPPLICANT_I_H */

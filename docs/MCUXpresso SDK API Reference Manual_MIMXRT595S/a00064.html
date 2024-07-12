@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Shell</title>
+<title>MCUXpresso SDK API Reference Manual: SPI Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,241 +99,713 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Shell</div>  </div>
+<div class="title">SPI Driver<div class="ingroups"><a class="el" href="a00245.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the Shell middleware.</p>
-<p>Shell controls MCUs by commands via the specified communication peripheral based on the debug console driver.</p>
-<h1><a class="anchor" id="ShellFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="ShellInit"></a>
-Initialization</h2>
-<p>To initialize the Shell middleware, call the <span style="color:red"><a class="el" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a></span> function with these parameters. This function automatically enables the middleware.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> <a class="code" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(<a class="code" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="code" href="a00061.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <span class="keywordtype">char</span> *prompt);</div>
-</div><!-- fragment --><p>Then, after the initialization was successful, call a command to control MCUs.</p>
-<p>This example shows how to call the <a class="el" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a> given the user configuration structure.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="ShellAdvFeature"></a>
-Advanced Feature</h2>
-<ul>
-<li>Support to get a character from standard input devices. <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_GetChar(shell_context_handle_t *shellContextHandle, uint8_t *ch);</div>
-</div><!-- fragment --></li>
-</ul>
-<div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>Commands  </th><th>Description  </th></tr>
-<tr>
-<td>help  </td><td>List all the registered commands.   </td></tr>
-<tr>
-<td>exit  </td><td>Exit program.   </td></tr>
-</table>
-</div><h2><a class="anchor" id="SHELLOper"></a>
-Shell Operation</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
-<div class="line"><a class="code" href="a00064.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a>((s_shellHandle);</div>
-</div><!-- fragment --> <table class="memberdecls">
+<p>This section describes the programming interface of the SPI DMA driver. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00144"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00144.html">fsl_spi.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00434"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00434">_shell_command</a></td></tr>
-<tr class="memdesc:a00434"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00064.html#a00434">More...</a><br/></td></tr>
-<tr class="separator:a00434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00433"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00433">_spi_delay_config</a></td></tr>
+<tr class="memdesc:a00433"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI delay time configure structure.  <a href="a00064.html#a00433">More...</a><br/></td></tr>
+<tr class="separator:a00433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00436"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00436">_spi_master_config</a></td></tr>
+<tr class="memdesc:a00436"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master user configure structure.  <a href="a00064.html#a00436">More...</a><br/></td></tr>
+<tr class="separator:a00436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00438"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00438">_spi_slave_config</a></td></tr>
+<tr class="memdesc:a00438"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI slave user configure structure.  <a href="a00064.html#a00438">More...</a><br/></td></tr>
+<tr class="separator:a00438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00439"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00439">_spi_transfer</a></td></tr>
+<tr class="memdesc:a00439"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transfer structure.  <a href="a00064.html#a00439">More...</a><br/></td></tr>
+<tr class="separator:a00439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00435"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00435">_spi_half_duplex_transfer</a></td></tr>
+<tr class="memdesc:a00435"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI half-duplex(master only) transfer structure.  <a href="a00064.html#a00435">More...</a><br/></td></tr>
+<tr class="separator:a00435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00432"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00432">_spi_config</a></td></tr>
+<tr class="memdesc:a00432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal configuration structure used in 'spi' and 'spi_dma' driver.  <a href="a00064.html#a00432">More...</a><br/></td></tr>
+<tr class="separator:a00432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00437"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00437">_spi_master_handle</a></td></tr>
+<tr class="memdesc:a00437"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transfer handle structure.  <a href="a00064.html#a00437">More...</a><br/></td></tr>
+<tr class="separator:a00437"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">SHELL_NON_BLOCKING_MODE</a>&#160;&#160;&#160;<a class="el" href="a00061.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td></tr>
-<tr class="memdesc:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether use non-blocking mode.  <a href="#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">More...</a><br/></td></tr>
-<tr class="separator:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga30882f4b5fc99cbc21459cc960ef9ffe">SHELL_AUTO_COMPLETE</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set on/off auto-complete feature.  <a href="#ga30882f4b5fc99cbc21459cc960ef9ffe">More...</a><br/></td></tr>
-<tr class="separator:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf98219b0fb886040896b83966903a135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="memdesc:gaf98219b0fb886040896b83966903a135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set console buffer size.  <a href="#gaf98219b0fb886040896b83966903a135">More...</a><br/></td></tr>
-<tr class="separator:gaf98219b0fb886040896b83966903a135"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga0800d9fb741c785d0601f0c3d7125f40">SHELL_MAX_ARGS</a>&#160;&#160;&#160;(8U)</td></tr>
-<tr class="memdesc:ga0800d9fb741c785d0601f0c3d7125f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum arguments in command.  <a href="#ga0800d9fb741c785d0601f0c3d7125f40">More...</a><br/></td></tr>
-<tr class="separator:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4362aa35752c9abf77387a237faaaea5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="memdesc:ga4362aa35752c9abf77387a237faaaea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum count of history commands.  <a href="#ga4362aa35752c9abf77387a237faaaea5">More...</a><br/></td></tr>
-<tr class="separator:ga4362aa35752c9abf77387a237faaaea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c32b818330b7a6b62a5b819703e5e8f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga8c32b818330b7a6b62a5b819703e5e8f">SHELL_IGNORE_PARAMETER_COUNT</a>&#160;&#160;&#160;(0xFF)</td></tr>
-<tr class="memdesc:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to bypass arguments check. <br/></td></tr>
-<tr class="separator:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a></td></tr>
-<tr class="memdesc:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle size of the shell module.  <a href="#gaa4c15d7595f7cf7ee5f837a02cbdf574">More...</a><br/></td></tr>
-<tr class="separator:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga100ef8e4a639c03682d84fb981ba235b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga100ef8e4a639c03682d84fb981ba235b">SHELL_USE_COMMON_TASK</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga100ef8e4a639c03682d84fb981ba235b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to determine whether use common task.  <a href="#ga100ef8e4a639c03682d84fb981ba235b">More...</a><br/></td></tr>
-<tr class="separator:ga100ef8e4a639c03682d84fb981ba235b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga5b98f71ea7bd89ef344cac14aa79a1e3">SHELL_TASK_PRIORITY</a>&#160;&#160;&#160;(2U)</td></tr>
-<tr class="memdesc:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task priority.  <a href="#ga5b98f71ea7bd89ef344cac14aa79a1e3">More...</a><br/></td></tr>
-<tr class="separator:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga416667c8e6b960d2c1ec518b41a06d62">SHELL_TASK_STACK_SIZE</a>&#160;&#160;&#160;(1000U)</td></tr>
-<tr class="memdesc:ga416667c8e6b960d2c1ec518b41a06d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task stack size.  <a href="#ga416667c8e6b960d2c1ec518b41a06d62">More...</a><br/></td></tr>
-<tr class="separator:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00064.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
-<tr class="memdesc:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell handle.  <a href="#gafdb2c68b2d83d459fc196ab0f58d7ab3">More...</a><br/></td></tr>
-<tr class="separator:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(command, descriptor, callback, paramCount)</td></tr>
-<tr class="memdesc:gacd1f7ee25cd791efee6a45e753ec9824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell command structure.  <a href="#gacd1f7ee25cd791efee6a45e753ec9824">More...</a><br/></td></tr>
-<tr class="separator:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(command)&#160;&#160;&#160;&amp;g_shellCommand##command</td></tr>
-<tr class="memdesc:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the shell command pointer.  <a href="#ga16dd6cfbd9db7dafdaa802eda58564b5">More...</a><br/></td></tr>
-<tr class="separator:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1541129ba8262e1649592b5109e2074c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1541129ba8262e1649592b5109e2074c">SPI_DUMMYDATA</a>&#160;&#160;&#160;(0x00U)</td></tr>
+<tr class="memdesc:ga1541129ba8262e1649592b5109e2074c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI dummy transfer data, the data is sent while txBuff is NULL.  <a href="#ga1541129ba8262e1649592b5109e2074c">More...</a><br/></td></tr>
+<tr class="separator:ga1541129ba8262e1649592b5109e2074c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4717c15ca9604c505a5e5c60df29ebe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaa4717c15ca9604c505a5e5c60df29ebe">SPI_RETRY_TIMES</a>&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td></tr>
+<tr class="memdesc:gaa4717c15ca9604c505a5e5c60df29ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry times for waiting flag.  <a href="#gaa4717c15ca9604c505a5e5c60df29ebe">More...</a><br/></td></tr>
+<tr class="separator:gaa4717c15ca9604c505a5e5c60df29ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga404a8f9575fa7e73f64e24e4a1876195"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga404a8f9575fa7e73f64e24e4a1876195"></a>
-typedef enum <a class="el" href="a00064.html#gaefa59271a266a79694a5c9574f1db8b5">_shell_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a></td></tr>
-<tr class="memdesc:ga404a8f9575fa7e73f64e24e4a1876195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status. <br/></td></tr>
-<tr class="separator:ga404a8f9575fa7e73f64e24e4a1876195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga818c3ca274bd83d1dc870a5618eb21f2"></a>
-typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a></td></tr>
-<tr class="memdesc:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle of the shell module. <br/></td></tr>
-<tr class="separator:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> )(<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td></tr>
-<tr class="memdesc:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command function prototype.  <a href="#ga7ace1ddfb1e83ac1516ac44be90cf822">More...</a><br/></td></tr>
-<tr class="separator:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga408f7fb32b47f13f37eb195eb51074fe"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00064.html#a00434">_shell_command</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a></td></tr>
-<tr class="memdesc:ga408f7fb32b47f13f37eb195eb51074fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="#ga408f7fb32b47f13f37eb195eb51074fe">More...</a><br/></td></tr>
-<tr class="separator:ga408f7fb32b47f13f37eb195eb51074fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3814c31ee934902d15e6831da736cd47"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00064.html#gaaa2e2f2efa7be228c775fa239ab5ea03">_spi_xfer_option</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga3814c31ee934902d15e6831da736cd47">spi_xfer_option_t</a></td></tr>
+<tr class="memdesc:ga3814c31ee934902d15e6831da736cd47"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transfer option.  <a href="#ga3814c31ee934902d15e6831da736cd47">More...</a><br/></td></tr>
+<tr class="separator:ga3814c31ee934902d15e6831da736cd47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc24bb931a59fc64ee4cb60ed56addb4"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00064.html#ga1737fd82344e0800f66b541342894b85">_spi_shift_direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gadc24bb931a59fc64ee4cb60ed56addb4">spi_shift_direction_t</a></td></tr>
+<tr class="memdesc:gadc24bb931a59fc64ee4cb60ed56addb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI data shifter direction options.  <a href="#gadc24bb931a59fc64ee4cb60ed56addb4">More...</a><br/></td></tr>
+<tr class="separator:gadc24bb931a59fc64ee4cb60ed56addb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9de95ac02ae859ac26534c06eb47b5b8"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00064.html#ga17f9450af8f63de3fa2b3b105eeec38d">_spi_clock_polarity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga9de95ac02ae859ac26534c06eb47b5b8">spi_clock_polarity_t</a></td></tr>
+<tr class="memdesc:ga9de95ac02ae859ac26534c06eb47b5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI clock polarity configuration.  <a href="#ga9de95ac02ae859ac26534c06eb47b5b8">More...</a><br/></td></tr>
+<tr class="separator:ga9de95ac02ae859ac26534c06eb47b5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12e1c73dd72aaabd76ff5ce23c0d3244"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00064.html#ga76b6ec98408fdaf2e9133952eefa1baa">_spi_clock_phase</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga12e1c73dd72aaabd76ff5ce23c0d3244">spi_clock_phase_t</a></td></tr>
+<tr class="memdesc:ga12e1c73dd72aaabd76ff5ce23c0d3244"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI clock phase configuration.  <a href="#ga12e1c73dd72aaabd76ff5ce23c0d3244">More...</a><br/></td></tr>
+<tr class="separator:ga12e1c73dd72aaabd76ff5ce23c0d3244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fef36dc3a69e6e5f998bc61be0a5569"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7fef36dc3a69e6e5f998bc61be0a5569"></a>
+typedef enum <a class="el" href="a00064.html#ga35cda0eedeef2b6fc66409f8d7cbab0f">_spi_txfifo_watermark</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga7fef36dc3a69e6e5f998bc61be0a5569">spi_txfifo_watermark_t</a></td></tr>
+<tr class="memdesc:ga7fef36dc3a69e6e5f998bc61be0a5569"><td class="mdescLeft">&#160;</td><td class="mdescRight">txFIFO watermark values <br/></td></tr>
+<tr class="separator:ga7fef36dc3a69e6e5f998bc61be0a5569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac97bab8c9034bbe8f10c332eb726feba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac97bab8c9034bbe8f10c332eb726feba"></a>
+typedef enum <a class="el" href="a00064.html#ga07607e4b4c217d4b9e3a5f5745ba11fc">_spi_rxfifo_watermark</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gac97bab8c9034bbe8f10c332eb726feba">spi_rxfifo_watermark_t</a></td></tr>
+<tr class="memdesc:gac97bab8c9034bbe8f10c332eb726feba"><td class="mdescLeft">&#160;</td><td class="mdescRight">rxFIFO watermark values <br/></td></tr>
+<tr class="separator:gac97bab8c9034bbe8f10c332eb726feba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga237f202331592eab8ddadc63b780fa9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga237f202331592eab8ddadc63b780fa9d"></a>
+typedef enum <a class="el" href="a00064.html#ga63554b1f1f01b827bf6449b55ca80280">_spi_data_width</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga237f202331592eab8ddadc63b780fa9d">spi_data_width_t</a></td></tr>
+<tr class="memdesc:ga237f202331592eab8ddadc63b780fa9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer data width. <br/></td></tr>
+<tr class="separator:ga237f202331592eab8ddadc63b780fa9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2c4dcc02a93990358783cbdce5e6d51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab2c4dcc02a93990358783cbdce5e6d51"></a>
+typedef enum <a class="el" href="a00064.html#ga6cb1b64722deb9a98a4f1a442f58f8a9">_spi_ssel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab2c4dcc02a93990358783cbdce5e6d51">spi_ssel_t</a></td></tr>
+<tr class="memdesc:gab2c4dcc02a93990358783cbdce5e6d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave select. <br/></td></tr>
+<tr class="separator:gab2c4dcc02a93990358783cbdce5e6d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81db47cb3d4de3ce1bee11725659b0d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga81db47cb3d4de3ce1bee11725659b0d7"></a>
+typedef enum <a class="el" href="a00064.html#gaace382ece8210631749c404f115f2998">_spi_spol</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga81db47cb3d4de3ce1bee11725659b0d7">spi_spol_t</a></td></tr>
+<tr class="memdesc:ga81db47cb3d4de3ce1bee11725659b0d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">ssel polarity <br/></td></tr>
+<tr class="separator:ga81db47cb3d4de3ce1bee11725659b0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d2ab71dbc12d399a9e125103fd3ec10"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00064.html#a00433">_spi_delay_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga5d2ab71dbc12d399a9e125103fd3ec10">spi_delay_config_t</a></td></tr>
+<tr class="memdesc:ga5d2ab71dbc12d399a9e125103fd3ec10"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI delay time configure structure.  <a href="#ga5d2ab71dbc12d399a9e125103fd3ec10">More...</a><br/></td></tr>
+<tr class="separator:ga5d2ab71dbc12d399a9e125103fd3ec10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15e5f834f83ba89de1e920bba9d00394"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00064.html#a00436">_spi_master_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga15e5f834f83ba89de1e920bba9d00394">spi_master_config_t</a></td></tr>
+<tr class="memdesc:ga15e5f834f83ba89de1e920bba9d00394"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master user configure structure.  <a href="#ga15e5f834f83ba89de1e920bba9d00394">More...</a><br/></td></tr>
+<tr class="separator:ga15e5f834f83ba89de1e920bba9d00394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa62352a5d0a01f70fe74941809d03ec3"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00064.html#a00438">_spi_slave_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaa62352a5d0a01f70fe74941809d03ec3">spi_slave_config_t</a></td></tr>
+<tr class="memdesc:gaa62352a5d0a01f70fe74941809d03ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI slave user configure structure.  <a href="#gaa62352a5d0a01f70fe74941809d03ec3">More...</a><br/></td></tr>
+<tr class="separator:gaa62352a5d0a01f70fe74941809d03ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59314d5596f240cfbe8b9466bd99ed3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga59314d5596f240cfbe8b9466bd99ed3f"></a>
+typedef struct <a class="el" href="a00064.html#a00439">_spi_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga59314d5596f240cfbe8b9466bd99ed3f">spi_transfer_t</a></td></tr>
+<tr class="memdesc:ga59314d5596f240cfbe8b9466bd99ed3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transfer structure. <br/></td></tr>
+<tr class="separator:ga59314d5596f240cfbe8b9466bd99ed3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5788e6eb50f5486bfd9aaf9ca6bc2930"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5788e6eb50f5486bfd9aaf9ca6bc2930"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00064.html#a00435">_spi_half_duplex_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga5788e6eb50f5486bfd9aaf9ca6bc2930">spi_half_duplex_transfer_t</a></td></tr>
+<tr class="memdesc:ga5788e6eb50f5486bfd9aaf9ca6bc2930"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI half-duplex(master only) transfer structure. <br/></td></tr>
+<tr class="separator:ga5788e6eb50f5486bfd9aaf9ca6bc2930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa17cf32c2b184e9a5945091ba92a16a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa17cf32c2b184e9a5945091ba92a16a4"></a>
+typedef struct <a class="el" href="a00064.html#a00432">_spi_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaa17cf32c2b184e9a5945091ba92a16a4">spi_config_t</a></td></tr>
+<tr class="memdesc:gaa17cf32c2b184e9a5945091ba92a16a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal configuration structure used in 'spi' and 'spi_dma' driver. <br/></td></tr>
+<tr class="separator:gaa17cf32c2b184e9a5945091ba92a16a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb311d8a8b7de084d82915f5a003a300"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafb311d8a8b7de084d82915f5a003a300"></a>
+typedef struct <a class="el" href="a00064.html#a00437">_spi_master_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gafb311d8a8b7de084d82915f5a003a300">spi_master_handle_t</a></td></tr>
+<tr class="memdesc:gafb311d8a8b7de084d82915f5a003a300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master handle type. <br/></td></tr>
+<tr class="separator:gafb311d8a8b7de084d82915f5a003a300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad267cfee3a876b2860217ff94f03f574"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad267cfee3a876b2860217ff94f03f574"></a>
+typedef <a class="el" href="a00064.html#gafb311d8a8b7de084d82915f5a003a300">spi_master_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gad267cfee3a876b2860217ff94f03f574">spi_slave_handle_t</a></td></tr>
+<tr class="memdesc:gad267cfee3a876b2860217ff94f03f574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave handle type. <br/></td></tr>
+<tr class="separator:gad267cfee3a876b2860217ff94f03f574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9bd140aeb645efab6c7552b3994e01a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae9bd140aeb645efab6c7552b3994e01a"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gae9bd140aeb645efab6c7552b3994e01a">spi_master_callback_t</a> )(SPI_Type *base, <a class="el" href="a00064.html#gafb311d8a8b7de084d82915f5a003a300">spi_master_handle_t</a> *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gae9bd140aeb645efab6c7552b3994e01a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master callback for finished transmit. <br/></td></tr>
+<tr class="separator:gae9bd140aeb645efab6c7552b3994e01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86b45b85e036adc762eed5bcd2a0491d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga86b45b85e036adc762eed5bcd2a0491d"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga86b45b85e036adc762eed5bcd2a0491d">spi_slave_callback_t</a> )(SPI_Type *base, <a class="el" href="a00064.html#gad267cfee3a876b2860217ff94f03f574">spi_slave_handle_t</a> *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:ga86b45b85e036adc762eed5bcd2a0491d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI slave callback for finished transmit. <br/></td></tr>
+<tr class="separator:ga86b45b85e036adc762eed5bcd2a0491d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c61065c015d5b1c3247cf979238d434"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga2c61065c015d5b1c3247cf979238d434">flexcomm_spi_master_irq_handler_t</a> )(SPI_Type *base, <a class="el" href="a00064.html#gafb311d8a8b7de084d82915f5a003a300">spi_master_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga2c61065c015d5b1c3247cf979238d434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for master interrupt handler.  <a href="#ga2c61065c015d5b1c3247cf979238d434">More...</a><br/></td></tr>
+<tr class="separator:ga2c61065c015d5b1c3247cf979238d434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae305531ff5562d2c51423f85032942ae"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gae305531ff5562d2c51423f85032942ae">flexcomm_spi_slave_irq_handler_t</a> )(SPI_Type *base, <a class="el" href="a00064.html#gad267cfee3a876b2860217ff94f03f574">spi_slave_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gae305531ff5562d2c51423f85032942ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for slave interrupt handler.  <a href="#gae305531ff5562d2c51423f85032942ae">More...</a><br/></td></tr>
+<tr class="separator:gae305531ff5562d2c51423f85032942ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaefa59271a266a79694a5c9574f1db8b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaefa59271a266a79694a5c9574f1db8b5">_shell_status</a> { <br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaefa59271a266a79694a5c9574f1db8b5aeb6cf57843c8b47b87ae07417d53df3e">kStatus_SHELL_Success</a> = kStatus_Success, 
+<tr class="memitem:gaaa2e2f2efa7be228c775fa239ab5ea03"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaaa2e2f2efa7be228c775fa239ab5ea03">_spi_xfer_option</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#ggaaa2e2f2efa7be228c775fa239ab5ea03a368ad1fd03f7af182af9a61c7f4967ed">kSPI_FrameDelay</a> = (SPI_FIFOWR_EOF_MASK), 
 <br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaefa59271a266a79694a5c9574f1db8b5ae1a9ae61e350888892f4cde21f8dd7f9">kStatus_SHELL_Error</a> = MAKE_STATUS(kStatusGroup_SHELL, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaefa59271a266a79694a5c9574f1db8b5a25ff80ec847b1028041ae913beec2b5b">kStatus_SHELL_OpenWriteHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaefa59271a266a79694a5c9574f1db8b5a14f89a732b5c11a35e8c9b91d4e22ad8">kStatus_SHELL_OpenReadHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaefa59271a266a79694a5c9574f1db8b5ad139f389943f49d948bbff024d6c5a26">kStatus_SHELL_RetUsage</a> = MAKE_STATUS(kStatusGroup_SHELL, 4)
+&#160;&#160;<a class="el" href="a00064.html#ggaaa2e2f2efa7be228c775fa239ab5ea03adbcf2b399fc2e5f1ad5c2586117a1ae9">kSPI_FrameAssert</a> = (SPI_FIFOWR_EOT_MASK)
 <br/>
  }</td></tr>
-<tr class="memdesc:gaefa59271a266a79694a5c9574f1db8b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status.  <a href="a00064.html#gaefa59271a266a79694a5c9574f1db8b5">More...</a><br/></td></tr>
-<tr class="separator:gaefa59271a266a79694a5c9574f1db8b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaaa2e2f2efa7be228c775fa239ab5ea03"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transfer option.  <a href="a00064.html#gaaa2e2f2efa7be228c775fa239ab5ea03">More...</a><br/></td></tr>
+<tr class="separator:gaaa2e2f2efa7be228c775fa239ab5ea03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1737fd82344e0800f66b541342894b85"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1737fd82344e0800f66b541342894b85">_spi_shift_direction</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga1737fd82344e0800f66b541342894b85ae7b997e8cff761aab865cbd42c4c3989">kSPI_MsbFirst</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga1737fd82344e0800f66b541342894b85a20ac53684c3e1ad338553cecbfab94a9">kSPI_LsbFirst</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1737fd82344e0800f66b541342894b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI data shifter direction options.  <a href="a00064.html#ga1737fd82344e0800f66b541342894b85">More...</a><br/></td></tr>
+<tr class="separator:ga1737fd82344e0800f66b541342894b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17f9450af8f63de3fa2b3b105eeec38d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga17f9450af8f63de3fa2b3b105eeec38d">_spi_clock_polarity</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga17f9450af8f63de3fa2b3b105eeec38da031c0ee2693cf1fd621e8b8cba676629">kSPI_ClockPolarityActiveHigh</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga17f9450af8f63de3fa2b3b105eeec38dacfc8257079c9604086622df6de326aea">kSPI_ClockPolarityActiveLow</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga17f9450af8f63de3fa2b3b105eeec38d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI clock polarity configuration.  <a href="a00064.html#ga17f9450af8f63de3fa2b3b105eeec38d">More...</a><br/></td></tr>
+<tr class="separator:ga17f9450af8f63de3fa2b3b105eeec38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76b6ec98408fdaf2e9133952eefa1baa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga76b6ec98408fdaf2e9133952eefa1baa">_spi_clock_phase</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga76b6ec98408fdaf2e9133952eefa1baaad15d61c6fd642f13101edbf401d0c72e">kSPI_ClockPhaseFirstEdge</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga76b6ec98408fdaf2e9133952eefa1baaa18a98985c1f7dd56175e4a2724db3675">kSPI_ClockPhaseSecondEdge</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga76b6ec98408fdaf2e9133952eefa1baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI clock phase configuration.  <a href="a00064.html#ga76b6ec98408fdaf2e9133952eefa1baa">More...</a><br/></td></tr>
+<tr class="separator:ga76b6ec98408fdaf2e9133952eefa1baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35cda0eedeef2b6fc66409f8d7cbab0f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga35cda0eedeef2b6fc66409f8d7cbab0f">_spi_txfifo_watermark</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fab00ed44c27cc2f5c8be6a37a7e54bbb0">kSPI_TxFifo0</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fad84aa8fe681fb1922108dd71035a1e7a">kSPI_TxFifo1</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0faf0f35b4313810fb0a721f6d0c96e361d">kSPI_TxFifo2</a> = 2, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fa583e03e419cab47b3a257f39a96f9098">kSPI_TxFifo3</a> = 3, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fadd72390240691eb878a8bc236b0ae0f1">kSPI_TxFifo4</a> = 4, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fa2d97d5d6a34b441ebdd1a5dcf9cd0d49">kSPI_TxFifo5</a> = 5, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fa50675672a2887ec04a4a2d11c183958b">kSPI_TxFifo6</a> = 6, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga35cda0eedeef2b6fc66409f8d7cbab0fa4f8e84453e704f97a592944ff3dc5c50">kSPI_TxFifo7</a> = 7
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga35cda0eedeef2b6fc66409f8d7cbab0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">txFIFO watermark values  <a href="a00064.html#ga35cda0eedeef2b6fc66409f8d7cbab0f">More...</a><br/></td></tr>
+<tr class="separator:ga35cda0eedeef2b6fc66409f8d7cbab0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07607e4b4c217d4b9e3a5f5745ba11fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga07607e4b4c217d4b9e3a5f5745ba11fc">_spi_rxfifo_watermark</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fca2d49ceb52f1bf6c51e2514b35e5d9804">kSPI_RxFifo1</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fca90eb93fdd80d4baf71ff3d75d4df2454">kSPI_RxFifo2</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fcab27946413b575e3dd27e0a37c8ccb17b">kSPI_RxFifo3</a> = 2, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fcaf6dcb50b13a1d8208d1d977ce79ff662">kSPI_RxFifo4</a> = 3, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fca2c961e2e2c24014368dfe867d2295f3d">kSPI_RxFifo5</a> = 4, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fcad8bce70560016fbd76c7e1a9e5a2369f">kSPI_RxFifo6</a> = 5, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fca24b9a255d74d6a5b47d59b82717586dc">kSPI_RxFifo7</a> = 6, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga07607e4b4c217d4b9e3a5f5745ba11fcaba4452e3c770cac6e822a0f85e2b53f3">kSPI_RxFifo8</a> = 7
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga07607e4b4c217d4b9e3a5f5745ba11fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">rxFIFO watermark values  <a href="a00064.html#ga07607e4b4c217d4b9e3a5f5745ba11fc">More...</a><br/></td></tr>
+<tr class="separator:ga07607e4b4c217d4b9e3a5f5745ba11fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga63554b1f1f01b827bf6449b55ca80280"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga63554b1f1f01b827bf6449b55ca80280">_spi_data_width</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a0cb8b30c67c53c6d53712d5bacc818ce">kSPI_Data4Bits</a> = 3, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a7232b4afb5bd82503252ce608638e6eb">kSPI_Data5Bits</a> = 4, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a6604fcf5c8bebf904c5b072295027bba">kSPI_Data6Bits</a> = 5, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a2c62d3d7d92866c97bb513d4e603518e">kSPI_Data7Bits</a> = 6, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280ad6b98474a7f14ae7665b7b6d3355657c">kSPI_Data8Bits</a> = 7, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a4b864a74545165c2cf2dd74134fdadd1">kSPI_Data9Bits</a> = 8, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a2b2887663c9d025a4137263fc7984024">kSPI_Data10Bits</a> = 9, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280a91e908a7a4725ab9df05549a2b034dec">kSPI_Data11Bits</a> = 10, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280ad1cfe18fd912c0d25dc32e6ca9fa8f97">kSPI_Data12Bits</a> = 11, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280ad8c2fa2e2f5bf137176dc736cc6a2531">kSPI_Data13Bits</a> = 12, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280ae83435f494d1b9f3ce2f2da0ac03fc38">kSPI_Data14Bits</a> = 13, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280add11012a8887066fad29e23c20d66af8">kSPI_Data15Bits</a> = 14, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga63554b1f1f01b827bf6449b55ca80280abbc2566ba4eb2b5e5dc259a7c4f80bcf">kSPI_Data16Bits</a> = 15
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga63554b1f1f01b827bf6449b55ca80280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer data width.  <a href="a00064.html#ga63554b1f1f01b827bf6449b55ca80280">More...</a><br/></td></tr>
+<tr class="separator:ga63554b1f1f01b827bf6449b55ca80280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cb1b64722deb9a98a4f1a442f58f8a9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga6cb1b64722deb9a98a4f1a442f58f8a9">_spi_ssel</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga6cb1b64722deb9a98a4f1a442f58f8a9aba6e24e125d6e2623fdf66179d8d3595">kSPI_Ssel0</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga6cb1b64722deb9a98a4f1a442f58f8a9a6a919364d43781f9da7c826c53008863">kSPI_Ssel1</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga6cb1b64722deb9a98a4f1a442f58f8a9a42cddec913f2774241d7d962143e1588">kSPI_Ssel2</a> = 2, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga6cb1b64722deb9a98a4f1a442f58f8a9a242faca0999052891ca8ed24a116e466">kSPI_Ssel3</a> = 3
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga6cb1b64722deb9a98a4f1a442f58f8a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave select.  <a href="a00064.html#ga6cb1b64722deb9a98a4f1a442f58f8a9">More...</a><br/></td></tr>
+<tr class="separator:ga6cb1b64722deb9a98a4f1a442f58f8a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaace382ece8210631749c404f115f2998"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaace382ece8210631749c404f115f2998">_spi_spol</a> </td></tr>
+<tr class="memdesc:gaace382ece8210631749c404f115f2998"><td class="mdescLeft">&#160;</td><td class="mdescRight">ssel polarity <br/></td></tr>
+<tr class="separator:gaace382ece8210631749c404f115f2998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabed82baf7f470b522273a3e37c24c600"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00064.html#ggabed82baf7f470b522273a3e37c24c600a703abdf7900047c4d13536480f3463ab">kStatus_SPI_Busy</a> = MAKE_STATUS(kStatusGroup_LPC_SPI, 0), 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggabed82baf7f470b522273a3e37c24c600a4e32c5b06dccaf4b81e2fd1679e1b560">kStatus_SPI_Idle</a> = MAKE_STATUS(kStatusGroup_LPC_SPI, 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggabed82baf7f470b522273a3e37c24c600a2ff91d774e93aed936b87ffaa18aaf9e">kStatus_SPI_Error</a> = MAKE_STATUS(kStatusGroup_LPC_SPI, 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggabed82baf7f470b522273a3e37c24c600ab0f4d4de5f92524c9d33524f22a04e03">kStatus_SPI_BaudrateNotSupport</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggabed82baf7f470b522273a3e37c24c600a496ced6fffc33d7bbeb01d203dfc4836">kStatus_SPI_Timeout</a> = MAKE_STATUS(kStatusGroup_LPC_SPI, 4)
+<br/>
+ }</td></tr>
+<tr class="memdesc:gabed82baf7f470b522273a3e37c24c600"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transfer status.  <a href="a00064.html#gabed82baf7f470b522273a3e37c24c600">More...</a><br/></td></tr>
+<tr class="separator:gabed82baf7f470b522273a3e37c24c600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedd690a0f91a0a9eb0fd573b57e31f67"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaedd690a0f91a0a9eb0fd573b57e31f67">_spi_interrupt_enable</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#ggaedd690a0f91a0a9eb0fd573b57e31f67a81a10bf611827929fcf8eed0468aea7a">kSPI_RxLvlIrq</a> = SPI_FIFOINTENSET_RXLVL_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggaedd690a0f91a0a9eb0fd573b57e31f67a13d4e9159c4ba5d49adef5e7e5f5b1dd">kSPI_TxLvlIrq</a> = SPI_FIFOINTENSET_TXLVL_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaedd690a0f91a0a9eb0fd573b57e31f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI interrupt sources.  <a href="a00064.html#gaedd690a0f91a0a9eb0fd573b57e31f67">More...</a><br/></td></tr>
+<tr class="separator:gaedd690a0f91a0a9eb0fd573b57e31f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88b3958a041355f297213b5c407dded2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga88b3958a041355f297213b5c407dded2">_spi_statusflags</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga88b3958a041355f297213b5c407dded2a243d09d83665d0ab9deefcb8e14ea1ae">kSPI_TxEmptyFlag</a> = SPI_FIFOSTAT_TXEMPTY_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga88b3958a041355f297213b5c407dded2a3892d0ae82fadd910932410fb86b0415">kSPI_TxNotFullFlag</a> = SPI_FIFOSTAT_TXNOTFULL_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga88b3958a041355f297213b5c407dded2a5dffa125a4a171d539f4d1df9abf6e8a">kSPI_RxNotEmptyFlag</a> = SPI_FIFOSTAT_RXNOTEMPTY_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga88b3958a041355f297213b5c407dded2a24187382b09195b069e487ed1e29cbcd">kSPI_RxFullFlag</a> = SPI_FIFOSTAT_RXFULL_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga88b3958a041355f297213b5c407dded2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI status flags.  <a href="a00064.html#ga88b3958a041355f297213b5c407dded2">More...</a><br/></td></tr>
+<tr class="separator:ga88b3958a041355f297213b5c407dded2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga9d35e904f2864488f65fddcfb5277f44"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga9d35e904f2864488f65fddcfb5277f44">s_dummyData</a> []</td></tr>
+<tr class="memdesc:ga9d35e904f2864488f65fddcfb5277f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI default SSEL COUNT.  <a href="#ga9d35e904f2864488f65fddcfb5277f44">More...</a><br/></td></tr>
+<tr class="separator:ga9d35e904f2864488f65fddcfb5277f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Shell functional operation</h2></td></tr>
-<tr class="memitem:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00061.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, char *prompt)</td></tr>
-<tr class="memdesc:ga7961e946400cd244c315cfbbd36ae5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the shell module.  <a href="#ga7961e946400cd244c315cfbbd36ae5d1">More...</a><br/></td></tr>
-<tr class="separator:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *shellCommand)</td></tr>
-<tr class="memdesc:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the shell command.  <a href="#gab5f85f3ba2cc7dd58bc85076c19c5177">More...</a><br/></td></tr>
-<tr class="separator:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *shellCommand)</td></tr>
-<tr class="memdesc:ga53355638d856258b0bcb76e308803dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the shell command.  <a href="#ga53355638d856258b0bcb76e308803dab">More...</a><br/></td></tr>
-<tr class="separator:ga53355638d856258b0bcb76e308803dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga9f182608b5a6107757be5bb8a90ad74c">SHELL_Write</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:ga9f182608b5a6107757be5bb8a90ad74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream.  <a href="#ga9f182608b5a6107757be5bb8a90ad74c">More...</a><br/></td></tr>
-<tr class="separator:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaade5449d8cbfc3cd026667b40c35d29f">SHELL_Printf</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
-<tr class="memdesc:gaade5449d8cbfc3cd026667b40c35d29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream.  <a href="#gaade5449d8cbfc3cd026667b40c35d29f">More...</a><br/></td></tr>
-<tr class="separator:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6466b141fd4f94e78636e4a15c302dda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga6466b141fd4f94e78636e4a15c302dda">SHELL_WriteSynchronization</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:ga6466b141fd4f94e78636e4a15c302dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream with OS synchronization.  <a href="#ga6466b141fd4f94e78636e4a15c302dda">More...</a><br/></td></tr>
-<tr class="separator:ga6466b141fd4f94e78636e4a15c302dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56c78f6217a822015a9369bf3e52e92a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga56c78f6217a822015a9369bf3e52e92a">SHELL_PrintfSynchronization</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
-<tr class="memdesc:ga56c78f6217a822015a9369bf3e52e92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream with OS synchronization.  <a href="#ga56c78f6217a822015a9369bf3e52e92a">More...</a><br/></td></tr>
-<tr class="separator:ga56c78f6217a822015a9369bf3e52e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca4540dc42f8892cb276691644a247e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaca4540dc42f8892cb276691644a247e2">SHELL_ChangePrompt</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, char *prompt)</td></tr>
-<tr class="memdesc:gaca4540dc42f8892cb276691644a247e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change shell prompt.  <a href="#gaca4540dc42f8892cb276691644a247e2">More...</a><br/></td></tr>
-<tr class="separator:gaca4540dc42f8892cb276691644a247e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2a840776dee8490d482a0692fbf2d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gad2a840776dee8490d482a0692fbf2d7e">SHELL_PrintPrompt</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
-<tr class="memdesc:gad2a840776dee8490d482a0692fbf2d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print shell prompt.  <a href="#gad2a840776dee8490d482a0692fbf2d7e">More...</a><br/></td></tr>
-<tr class="separator:gad2a840776dee8490d482a0692fbf2d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a> (<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
-<tr class="memdesc:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task function for Shell.  <a href="#ga44e3087a3cdea9b62f159e2585dfcd8d">More...</a><br/></td></tr>
-<tr class="separator:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4eeb17b16773359c132f1d40478938ec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga4eeb17b16773359c132f1d40478938ec">SHELL_checkRunningInIsr</a> (void)</td></tr>
-<tr class="memdesc:ga4eeb17b16773359c132f1d40478938ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if code is running in ISR.  <a href="#ga4eeb17b16773359c132f1d40478938ec">More...</a><br/></td></tr>
-<tr class="separator:ga4eeb17b16773359c132f1d40478938ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Driver version</h2></td></tr>
+<tr class="memitem:gaeb6046de02dffe9248de71332fac246e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaeb6046de02dffe9248de71332fac246e">FSL_SPI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+<tr class="memdesc:gaeb6046de02dffe9248de71332fac246e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI driver version.  <a href="#gaeb6046de02dffe9248de71332fac246e">More...</a><br/></td></tr>
+<tr class="separator:gaeb6046de02dffe9248de71332fac246e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00434" id="a00434"></a>
+<a name="a00433" id="a00433"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _shell_command</td>
+          <td class="memname">struct _spi_delay_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Note: The DLY register controls several programmable delays related to SPI signalling, it stands for how many SPI clock time will be inserted. The maxinun value of these delay time is 15. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a5a9538fb17f9ad1ae6e5bc3654674bf5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a5a9538fb17f9ad1ae6e5bc3654674bf5">preDelay</a></td></tr>
+<tr class="memdesc:a5a9538fb17f9ad1ae6e5bc3654674bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay between SSEL assertion and the beginning of transfer.  <a href="#a5a9538fb17f9ad1ae6e5bc3654674bf5">More...</a><br/></td></tr>
+<tr class="separator:a5a9538fb17f9ad1ae6e5bc3654674bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed8236ecb1aea1a39be3f060e8de34c7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aed8236ecb1aea1a39be3f060e8de34c7">postDelay</a></td></tr>
+<tr class="memdesc:aed8236ecb1aea1a39be3f060e8de34c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay between the end of transfer and SSEL deassertion.  <a href="#aed8236ecb1aea1a39be3f060e8de34c7">More...</a><br/></td></tr>
+<tr class="separator:aed8236ecb1aea1a39be3f060e8de34c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf7584dd222128b434052c58d1bdecbc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#abf7584dd222128b434052c58d1bdecbc">frameDelay</a></td></tr>
+<tr class="memdesc:abf7584dd222128b434052c58d1bdecbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay between frame to frame.  <a href="#abf7584dd222128b434052c58d1bdecbc">More...</a><br/></td></tr>
+<tr class="separator:abf7584dd222128b434052c58d1bdecbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef054205e545959e62a3aea546cee042"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aef054205e545959e62a3aea546cee042">transferDelay</a></td></tr>
+<tr class="memdesc:aef054205e545959e62a3aea546cee042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay between transfer to transfer.  <a href="#aef054205e545959e62a3aea546cee042">More...</a><br/></td></tr>
+<tr class="separator:aef054205e545959e62a3aea546cee042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a5a9538fb17f9ad1ae6e5bc3654674bf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _spi_delay_config::preDelay</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aed8236ecb1aea1a39be3f060e8de34c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _spi_delay_config::postDelay</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abf7584dd222128b434052c58d1bdecbc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _spi_delay_config::frameDelay</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aef054205e545959e62a3aea546cee042"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _spi_delay_config::transferDelay</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00436" id="a00436"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _spi_master_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a02e67ebfd942afb269dbfa8906dabb4a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a02e67ebfd942afb269dbfa8906dabb4a">pcCommand</a></td></tr>
-<tr class="memdesc:a02e67ebfd942afb269dbfa8906dabb4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command that is executed.  <a href="#a02e67ebfd942afb269dbfa8906dabb4a">More...</a><br/></td></tr>
-<tr class="separator:a02e67ebfd942afb269dbfa8906dabb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acce9b1b9a25275d44a705457522151b6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#acce9b1b9a25275d44a705457522151b6">pcHelpString</a></td></tr>
-<tr class="memdesc:acce9b1b9a25275d44a705457522151b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">String that describes how to use the command.  <a href="#acce9b1b9a25275d44a705457522151b6">More...</a><br/></td></tr>
-<tr class="separator:acce9b1b9a25275d44a705457522151b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6ae0c867566014c33620c413c568a68"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00064.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab6ae0c867566014c33620c413c568a68">pFuncCallBack</a></td></tr>
-<tr class="memdesc:ab6ae0c867566014c33620c413c568a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the callback function that returns the output generated by the command.  <a href="#ab6ae0c867566014c33620c413c568a68">More...</a><br/></td></tr>
-<tr class="separator:ab6ae0c867566014c33620c413c568a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9304a184b0817140b357805e4e324f58"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9304a184b0817140b357805e4e324f58">cExpectedNumberOfParameters</a></td></tr>
-<tr class="memdesc:a9304a184b0817140b357805e4e324f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commands expect a fixed number of parameters, which may be zero.  <a href="#a9304a184b0817140b357805e4e324f58">More...</a><br/></td></tr>
-<tr class="separator:a9304a184b0817140b357805e4e324f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab656143c38d8fc0338aa2e58e76d73a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab656143c38d8fc0338aa2e58e76d73a2"></a>
-list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab656143c38d8fc0338aa2e58e76d73a2">link</a></td></tr>
-<tr class="memdesc:ab656143c38d8fc0338aa2e58e76d73a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">link of the element <br/></td></tr>
-<tr class="separator:ab656143c38d8fc0338aa2e58e76d73a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1677d25ffaa802e2a44ea7ed20d2ca18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1677d25ffaa802e2a44ea7ed20d2ca18"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a1677d25ffaa802e2a44ea7ed20d2ca18">enableLoopback</a></td></tr>
+<tr class="memdesc:a1677d25ffaa802e2a44ea7ed20d2ca18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable loopback for test purpose. <br/></td></tr>
+<tr class="separator:a1677d25ffaa802e2a44ea7ed20d2ca18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21f290440b9d5e90f40c297a35e9d5ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21f290440b9d5e90f40c297a35e9d5ec"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a21f290440b9d5e90f40c297a35e9d5ec">enableMaster</a></td></tr>
+<tr class="memdesc:a21f290440b9d5e90f40c297a35e9d5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable SPI at initialization time. <br/></td></tr>
+<tr class="separator:a21f290440b9d5e90f40c297a35e9d5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15ea04ce3dbecb805bd69d09bbfdd7f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15ea04ce3dbecb805bd69d09bbfdd7f0"></a>
+<a class="el" href="a00064.html#ga9de95ac02ae859ac26534c06eb47b5b8">spi_clock_polarity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a15ea04ce3dbecb805bd69d09bbfdd7f0">polarity</a></td></tr>
+<tr class="memdesc:a15ea04ce3dbecb805bd69d09bbfdd7f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock polarity. <br/></td></tr>
+<tr class="separator:a15ea04ce3dbecb805bd69d09bbfdd7f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc401e8087ffd719fe719f95953540b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc401e8087ffd719fe719f95953540b3"></a>
+<a class="el" href="a00064.html#ga12e1c73dd72aaabd76ff5ce23c0d3244">spi_clock_phase_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#adc401e8087ffd719fe719f95953540b3">phase</a></td></tr>
+<tr class="memdesc:adc401e8087ffd719fe719f95953540b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock phase. <br/></td></tr>
+<tr class="separator:adc401e8087ffd719fe719f95953540b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae222bf1f735603efc912489f7d3b778c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae222bf1f735603efc912489f7d3b778c"></a>
+<a class="el" href="a00064.html#gadc24bb931a59fc64ee4cb60ed56addb4">spi_shift_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae222bf1f735603efc912489f7d3b778c">direction</a></td></tr>
+<tr class="memdesc:ae222bf1f735603efc912489f7d3b778c"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSB or LSB. <br/></td></tr>
+<tr class="separator:ae222bf1f735603efc912489f7d3b778c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cba2f473c8c924773ddc933be83c939"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cba2f473c8c924773ddc933be83c939"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a8cba2f473c8c924773ddc933be83c939">baudRate_Bps</a></td></tr>
+<tr class="memdesc:a8cba2f473c8c924773ddc933be83c939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Baud Rate for SPI in Hz. <br/></td></tr>
+<tr class="separator:a8cba2f473c8c924773ddc933be83c939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a469b1825c66af9b9a2a1f7f6988cb496"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a469b1825c66af9b9a2a1f7f6988cb496"></a>
+<a class="el" href="a00064.html#ga237f202331592eab8ddadc63b780fa9d">spi_data_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a469b1825c66af9b9a2a1f7f6988cb496">dataWidth</a></td></tr>
+<tr class="memdesc:a469b1825c66af9b9a2a1f7f6988cb496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width of the data. <br/></td></tr>
+<tr class="separator:a469b1825c66af9b9a2a1f7f6988cb496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9393478a24ae6a6ffbbd29d44bc26c75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9393478a24ae6a6ffbbd29d44bc26c75"></a>
+<a class="el" href="a00064.html#gab2c4dcc02a93990358783cbdce5e6d51">spi_ssel_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9393478a24ae6a6ffbbd29d44bc26c75">sselNum</a></td></tr>
+<tr class="memdesc:a9393478a24ae6a6ffbbd29d44bc26c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave select number. <br/></td></tr>
+<tr class="separator:a9393478a24ae6a6ffbbd29d44bc26c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f51045dced477383067e6b7139beccc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f51045dced477383067e6b7139beccc"></a>
+<a class="el" href="a00064.html#ga81db47cb3d4de3ce1bee11725659b0d7">spi_spol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a0f51045dced477383067e6b7139beccc">sselPol</a></td></tr>
+<tr class="memdesc:a0f51045dced477383067e6b7139beccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure active CS polarity. <br/></td></tr>
+<tr class="separator:a0f51045dced477383067e6b7139beccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a283383f8535f2b2bd364bb372ace9851"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a283383f8535f2b2bd364bb372ace9851"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a283383f8535f2b2bd364bb372ace9851">txWatermark</a></td></tr>
+<tr class="memdesc:a283383f8535f2b2bd364bb372ace9851"><td class="mdescLeft">&#160;</td><td class="mdescRight">txFIFO watermark <br/></td></tr>
+<tr class="separator:a283383f8535f2b2bd364bb372ace9851"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1482772b5fe9846211f758a17e333e26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1482772b5fe9846211f758a17e333e26"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a1482772b5fe9846211f758a17e333e26">rxWatermark</a></td></tr>
+<tr class="memdesc:a1482772b5fe9846211f758a17e333e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">rxFIFO watermark <br/></td></tr>
+<tr class="separator:a1482772b5fe9846211f758a17e333e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dd557fb69673bc7e825d0e9845fd575"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00064.html#ga5d2ab71dbc12d399a9e125103fd3ec10">spi_delay_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a0dd557fb69673bc7e825d0e9845fd575">delayConfig</a></td></tr>
+<tr class="memdesc:a0dd557fb69673bc7e825d0e9845fd575"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay configuration.  <a href="#a0dd557fb69673bc7e825d0e9845fd575">More...</a><br/></td></tr>
+<tr class="separator:a0dd557fb69673bc7e825d0e9845fd575"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a02e67ebfd942afb269dbfa8906dabb4a"></a>
+<a class="anchor" id="a0dd557fb69673bc7e825d0e9845fd575"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* _shell_command::pcCommand</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>For example "help". It must be all lower case. </p>
-
-</div>
-</div>
-<a class="anchor" id="acce9b1b9a25275d44a705457522151b6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char* _shell_command::pcHelpString</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>It should start with the command itself, and end with "\r\n". For example "help: Returns a list of all the commands\r\n". </p>
-
-</div>
-</div>
-<a class="anchor" id="ab6ae0c867566014c33620c413c568a68"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a00064.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> _shell_command::pFuncCallBack</td>
+          <td class="memname"><a class="el" href="a00064.html#ga5d2ab71dbc12d399a9e125103fd3ec10">spi_delay_config_t</a> _spi_master_config::delayConfig</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9304a184b0817140b357805e4e324f58"></a>
+
+</div>
+</div>
+<a name="a00438" id="a00438"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t _shell_command::cExpectedNumberOfParameters</td>
+          <td class="memname">struct _spi_slave_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a9cd2350556d5f374c285e1cc82d1a0cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cd2350556d5f374c285e1cc82d1a0cd"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9cd2350556d5f374c285e1cc82d1a0cd">enableSlave</a></td></tr>
+<tr class="memdesc:a9cd2350556d5f374c285e1cc82d1a0cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable SPI at initialization time. <br/></td></tr>
+<tr class="separator:a9cd2350556d5f374c285e1cc82d1a0cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec2c4ad4d95665683b976ec6ba239f16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec2c4ad4d95665683b976ec6ba239f16"></a>
+<a class="el" href="a00064.html#ga9de95ac02ae859ac26534c06eb47b5b8">spi_clock_polarity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aec2c4ad4d95665683b976ec6ba239f16">polarity</a></td></tr>
+<tr class="memdesc:aec2c4ad4d95665683b976ec6ba239f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock polarity. <br/></td></tr>
+<tr class="separator:aec2c4ad4d95665683b976ec6ba239f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35333ccd9d63ff0501a613b9607db161"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35333ccd9d63ff0501a613b9607db161"></a>
+<a class="el" href="a00064.html#ga12e1c73dd72aaabd76ff5ce23c0d3244">spi_clock_phase_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a35333ccd9d63ff0501a613b9607db161">phase</a></td></tr>
+<tr class="memdesc:a35333ccd9d63ff0501a613b9607db161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock phase. <br/></td></tr>
+<tr class="separator:a35333ccd9d63ff0501a613b9607db161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa45fa3b6868b3efab6bb769342a83b08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa45fa3b6868b3efab6bb769342a83b08"></a>
+<a class="el" href="a00064.html#gadc24bb931a59fc64ee4cb60ed56addb4">spi_shift_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa45fa3b6868b3efab6bb769342a83b08">direction</a></td></tr>
+<tr class="memdesc:aa45fa3b6868b3efab6bb769342a83b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSB or LSB. <br/></td></tr>
+<tr class="separator:aa45fa3b6868b3efab6bb769342a83b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42d262df3d5c8b7f90ad8cc4f194dff6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42d262df3d5c8b7f90ad8cc4f194dff6"></a>
+<a class="el" href="a00064.html#ga237f202331592eab8ddadc63b780fa9d">spi_data_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a42d262df3d5c8b7f90ad8cc4f194dff6">dataWidth</a></td></tr>
+<tr class="memdesc:a42d262df3d5c8b7f90ad8cc4f194dff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width of the data. <br/></td></tr>
+<tr class="separator:a42d262df3d5c8b7f90ad8cc4f194dff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad09544cb7084b593e71e2ab2fa932f6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad09544cb7084b593e71e2ab2fa932f6e"></a>
+<a class="el" href="a00064.html#ga81db47cb3d4de3ce1bee11725659b0d7">spi_spol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad09544cb7084b593e71e2ab2fa932f6e">sselPol</a></td></tr>
+<tr class="memdesc:ad09544cb7084b593e71e2ab2fa932f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure active CS polarity. <br/></td></tr>
+<tr class="separator:ad09544cb7084b593e71e2ab2fa932f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c69c6713b47950e540f3af41872cffe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c69c6713b47950e540f3af41872cffe"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9c69c6713b47950e540f3af41872cffe">txWatermark</a></td></tr>
+<tr class="memdesc:a9c69c6713b47950e540f3af41872cffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">txFIFO watermark <br/></td></tr>
+<tr class="separator:a9c69c6713b47950e540f3af41872cffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8773abc4a51284ca118dcfe1786216d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8773abc4a51284ca118dcfe1786216d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#af8773abc4a51284ca118dcfe1786216d">rxWatermark</a></td></tr>
+<tr class="memdesc:af8773abc4a51284ca118dcfe1786216d"><td class="mdescLeft">&#160;</td><td class="mdescRight">rxFIFO watermark <br/></td></tr>
+<tr class="separator:af8773abc4a51284ca118dcfe1786216d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00439" id="a00439"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _spi_transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a5d641c5d54073465367d596ae82c45a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d641c5d54073465367d596ae82c45a2"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a5d641c5d54073465367d596ae82c45a2">txData</a></td></tr>
+<tr class="memdesc:a5d641c5d54073465367d596ae82c45a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer. <br/></td></tr>
+<tr class="separator:a5d641c5d54073465367d596ae82c45a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a747148e84f9c242b274a022aed7a0555"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a747148e84f9c242b274a022aed7a0555"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a747148e84f9c242b274a022aed7a0555">rxData</a></td></tr>
+<tr class="memdesc:a747148e84f9c242b274a022aed7a0555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer. <br/></td></tr>
+<tr class="separator:a747148e84f9c242b274a022aed7a0555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59471cf32712d027d561669583d2f89f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a59471cf32712d027d561669583d2f89f">configFlags</a></td></tr>
+<tr class="memdesc:a59471cf32712d027d561669583d2f89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional option to control transfer, <a class="el" href="a00064.html#ga3814c31ee934902d15e6831da736cd47">spi_xfer_option_t</a>.  <a href="#a59471cf32712d027d561669583d2f89f">More...</a><br/></td></tr>
+<tr class="separator:a59471cf32712d027d561669583d2f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79e2b8992abc1795158494ee18ad4473"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79e2b8992abc1795158494ee18ad4473"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a79e2b8992abc1795158494ee18ad4473">dataSize</a></td></tr>
+<tr class="memdesc:a79e2b8992abc1795158494ee18ad4473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer bytes. <br/></td></tr>
+<tr class="separator:a79e2b8992abc1795158494ee18ad4473"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a59471cf32712d027d561669583d2f89f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _spi_transfer::configFlags</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00435" id="a00435"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _spi_half_duplex_transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a7c9a34aeefd6bb46a5f1e90588d9a518"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c9a34aeefd6bb46a5f1e90588d9a518"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a7c9a34aeefd6bb46a5f1e90588d9a518">txData</a></td></tr>
+<tr class="memdesc:a7c9a34aeefd6bb46a5f1e90588d9a518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer. <br/></td></tr>
+<tr class="separator:a7c9a34aeefd6bb46a5f1e90588d9a518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6146042bc7848109c2aa8ceee88d1458"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6146042bc7848109c2aa8ceee88d1458"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a6146042bc7848109c2aa8ceee88d1458">rxData</a></td></tr>
+<tr class="memdesc:a6146042bc7848109c2aa8ceee88d1458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer. <br/></td></tr>
+<tr class="separator:a6146042bc7848109c2aa8ceee88d1458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa53d83102495ade899e43aef7b5a99fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa53d83102495ade899e43aef7b5a99fb"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa53d83102495ade899e43aef7b5a99fb">txDataSize</a></td></tr>
+<tr class="memdesc:aa53d83102495ade899e43aef7b5a99fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer bytes for transmit. <br/></td></tr>
+<tr class="separator:aa53d83102495ade899e43aef7b5a99fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f3aea64144af631ee97cc42ed4bc56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69f3aea64144af631ee97cc42ed4bc56"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a69f3aea64144af631ee97cc42ed4bc56">rxDataSize</a></td></tr>
+<tr class="memdesc:a69f3aea64144af631ee97cc42ed4bc56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer bytes. <br/></td></tr>
+<tr class="separator:a69f3aea64144af631ee97cc42ed4bc56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc1f76e21c3fea4cb9aac948342bfcec"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#adc1f76e21c3fea4cb9aac948342bfcec">configFlags</a></td></tr>
+<tr class="memdesc:adc1f76e21c3fea4cb9aac948342bfcec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer configuration flags, <a class="el" href="a00064.html#ga3814c31ee934902d15e6831da736cd47">spi_xfer_option_t</a>.  <a href="#adc1f76e21c3fea4cb9aac948342bfcec">More...</a><br/></td></tr>
+<tr class="separator:adc1f76e21c3fea4cb9aac948342bfcec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce59b84b55723ce006d4ffd8af48148"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a6ce59b84b55723ce006d4ffd8af48148">isPcsAssertInTransfer</a></td></tr>
+<tr class="memdesc:a6ce59b84b55723ce006d4ffd8af48148"><td class="mdescLeft">&#160;</td><td class="mdescRight">If PCS pin keep assert between transmit and receive.  <a href="#a6ce59b84b55723ce006d4ffd8af48148">More...</a><br/></td></tr>
+<tr class="separator:a6ce59b84b55723ce006d4ffd8af48148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8535f343a6ed512dc3e03f7fec0b94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ace8535f343a6ed512dc3e03f7fec0b94">isTransmitFirst</a></td></tr>
+<tr class="memdesc:ace8535f343a6ed512dc3e03f7fec0b94"><td class="mdescLeft">&#160;</td><td class="mdescRight">True for transmit first and false for receive first.  <a href="#ace8535f343a6ed512dc3e03f7fec0b94">More...</a><br/></td></tr>
+<tr class="separator:ace8535f343a6ed512dc3e03f7fec0b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="adc1f76e21c3fea4cb9aac948342bfcec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _spi_half_duplex_transfer::configFlags</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6ce59b84b55723ce006d4ffd8af48148"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _spi_half_duplex_transfer::isPcsAssertInTransfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>true for assert and false for deassert. </p>
+
+</div>
+</div>
+<a class="anchor" id="ace8535f343a6ed512dc3e03f7fec0b94"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _spi_half_duplex_transfer::isTransmitFirst</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00432" id="a00432"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _spi_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div>
+</div>
+</div>
+<a name="a00437" id="a00437"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _spi_master_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a7b352b80ec0469764edd49b8122a4bbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b352b80ec0469764edd49b8122a4bbf"></a>
+const uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a7b352b80ec0469764edd49b8122a4bbf">txData</a></td></tr>
+<tr class="memdesc:a7b352b80ec0469764edd49b8122a4bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
+<tr class="separator:a7b352b80ec0469764edd49b8122a4bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2ff0ccc0b7c02ad4be567e9e09eb840"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2ff0ccc0b7c02ad4be567e9e09eb840"></a>
+uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ac2ff0ccc0b7c02ad4be567e9e09eb840">rxData</a></td></tr>
+<tr class="memdesc:ac2ff0ccc0b7c02ad4be567e9e09eb840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer. <br/></td></tr>
+<tr class="separator:ac2ff0ccc0b7c02ad4be567e9e09eb840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6694d3629434500b949c94f88e6f6743"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6694d3629434500b949c94f88e6f6743"></a>
+volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a6694d3629434500b949c94f88e6f6743">txRemainingBytes</a></td></tr>
+<tr class="memdesc:a6694d3629434500b949c94f88e6f6743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data to be transmitted [in bytes]. <br/></td></tr>
+<tr class="separator:a6694d3629434500b949c94f88e6f6743"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3706da91ee40a2f2bd006765fa6d9d5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3706da91ee40a2f2bd006765fa6d9d5f"></a>
+volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a3706da91ee40a2f2bd006765fa6d9d5f">rxRemainingBytes</a></td></tr>
+<tr class="memdesc:a3706da91ee40a2f2bd006765fa6d9d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data to be received [in bytes]. <br/></td></tr>
+<tr class="separator:a3706da91ee40a2f2bd006765fa6d9d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b499b11fdcd9160e2a471263b6ed14f"><td class="memItemLeft" align="right" valign="top">volatile int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a3b499b11fdcd9160e2a471263b6ed14f">toReceiveCount</a></td></tr>
+<tr class="memdesc:a3b499b11fdcd9160e2a471263b6ed14f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of data expected to receive in data width.  <a href="#a3b499b11fdcd9160e2a471263b6ed14f">More...</a><br/></td></tr>
+<tr class="separator:a3b499b11fdcd9160e2a471263b6ed14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90dcc0891804465061db37a61d6a6dfe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90dcc0891804465061db37a61d6a6dfe"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a90dcc0891804465061db37a61d6a6dfe">totalByteCount</a></td></tr>
+<tr class="memdesc:a90dcc0891804465061db37a61d6a6dfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">A number of transfer bytes. <br/></td></tr>
+<tr class="separator:a90dcc0891804465061db37a61d6a6dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e535bb80a844ac409dbf51c2ecee955"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e535bb80a844ac409dbf51c2ecee955"></a>
+volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4e535bb80a844ac409dbf51c2ecee955">state</a></td></tr>
+<tr class="memdesc:a4e535bb80a844ac409dbf51c2ecee955"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI internal state. <br/></td></tr>
+<tr class="separator:a4e535bb80a844ac409dbf51c2ecee955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23ddc6ed23916e8d059decde7018013b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23ddc6ed23916e8d059decde7018013b"></a>
+<a class="el" href="a00064.html#gae9bd140aeb645efab6c7552b3994e01a">spi_master_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a23ddc6ed23916e8d059decde7018013b">callback</a></td></tr>
+<tr class="memdesc:a23ddc6ed23916e8d059decde7018013b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI callback. <br/></td></tr>
+<tr class="separator:a23ddc6ed23916e8d059decde7018013b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaee79d264a914993a6f719038a62f1b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaee79d264a914993a6f719038a62f1b9"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aaee79d264a914993a6f719038a62f1b9">userData</a></td></tr>
+<tr class="memdesc:aaee79d264a914993a6f719038a62f1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter. <br/></td></tr>
+<tr class="separator:aaee79d264a914993a6f719038a62f1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a078d736075e4466b9b45e066f33bfb6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a078d736075e4466b9b45e066f33bfb6f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a078d736075e4466b9b45e066f33bfb6f">dataWidth</a></td></tr>
+<tr class="memdesc:a078d736075e4466b9b45e066f33bfb6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width of the data [Valid values: 1 to 16]. <br/></td></tr>
+<tr class="separator:a078d736075e4466b9b45e066f33bfb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade941f6dd3a2fcdf0aad40689a927edc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade941f6dd3a2fcdf0aad40689a927edc"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ade941f6dd3a2fcdf0aad40689a927edc">sselNum</a></td></tr>
+<tr class="memdesc:ade941f6dd3a2fcdf0aad40689a927edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave select number to be asserted when transferring data [Valid values: 0 to 3]. <br/></td></tr>
+<tr class="separator:ade941f6dd3a2fcdf0aad40689a927edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a275f6c34c9089fbb530b69539856fce7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a275f6c34c9089fbb530b69539856fce7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a275f6c34c9089fbb530b69539856fce7">configFlags</a></td></tr>
+<tr class="memdesc:a275f6c34c9089fbb530b69539856fce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional option to control transfer. <br/></td></tr>
+<tr class="separator:a275f6c34c9089fbb530b69539856fce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8e6da5db3ee851f4cd404cadb0ba031"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8e6da5db3ee851f4cd404cadb0ba031"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#af8e6da5db3ee851f4cd404cadb0ba031">txWatermark</a></td></tr>
+<tr class="memdesc:af8e6da5db3ee851f4cd404cadb0ba031"><td class="mdescLeft">&#160;</td><td class="mdescRight">txFIFO watermark <br/></td></tr>
+<tr class="separator:af8e6da5db3ee851f4cd404cadb0ba031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3cd7ddfb424db1356239c96c27b4c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade3cd7ddfb424db1356239c96c27b4c2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ade3cd7ddfb424db1356239c96c27b4c2">rxWatermark</a></td></tr>
+<tr class="memdesc:ade3cd7ddfb424db1356239c96c27b4c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">rxFIFO watermark <br/></td></tr>
+<tr class="separator:ade3cd7ddfb424db1356239c96c27b4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a3b499b11fdcd9160e2a471263b6ed14f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile int8_t _spi_master_handle::toReceiveCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Since the received count and sent count should be the same to complete the transfer, if the sent count is x and the received count is y, toReceiveCount is x-y. </p>
 
 </div>
 </div>
@@ -341,246 +813,146 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"></a>
+<a class="anchor" id="gaeb6046de02dffe9248de71332fac246e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_NON_BLOCKING_MODE&#160;&#160;&#160;<a class="el" href="a00061.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td>
+          <td class="memname">#define FSL_SPI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga30882f4b5fc99cbc21459cc960ef9ffe"></a>
+<a class="anchor" id="ga1541129ba8262e1649592b5109e2074c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_AUTO_COMPLETE&#160;&#160;&#160;(1U)</td>
+          <td class="memname">#define SPI_DUMMYDATA&#160;&#160;&#160;(0x00U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaf98219b0fb886040896b83966903a135"></a>
+<a class="anchor" id="gaa4717c15ca9604c505a5e5c60df29ebe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_BUFFER_SIZE&#160;&#160;&#160;(64U)</td>
+          <td class="memname">#define SPI_RETRY_TIMES&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga0800d9fb741c785d0601f0c3d7125f40"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_MAX_ARGS&#160;&#160;&#160;(8U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga4362aa35752c9abf77387a237faaaea5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_HISTORY_COUNT&#160;&#160;&#160;(3U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gaa4c15d7595f7cf7ee5f837a02cbdf574"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_HANDLE_SIZE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(160U + <a class="code" href="a00064.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a> * <a class="code" href="a00064.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + <a class="code" href="a00064.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + SERIAL_MANAGER_READ_HANDLE_SIZE + <a class="code" href="a00061.html#gac278be51c3508495c1be1a4cff566f3f">\</a></div>
-<div class="line"><a class="code" href="a00061.html#gac278be51c3508495c1be1a4cff566f3f">     SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>)</div>
-<div class="ttc" id="a00064_html_gaf98219b0fb886040896b83966903a135"><div class="ttname"><a href="a00064.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a></div><div class="ttdeci">#define SHELL_BUFFER_SIZE</div><div class="ttdoc">Macro to set console buffer size. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:35</div></div>
-<div class="ttc" id="a00061_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00061.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:114</div></div>
-<div class="ttc" id="a00064_html_ga4362aa35752c9abf77387a237faaaea5"><div class="ttname"><a href="a00064.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a></div><div class="ttdeci">#define SHELL_HISTORY_COUNT</div><div class="ttdoc">Macro to set maximum count of history commands. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:43</div></div>
-</div><!-- fragment --><p>It is the sum of the SHELL_HISTORY_COUNT * SHELL_BUFFER_SIZE + SHELL_BUFFER_SIZE + SERIAL_MANAGER_READ_HANDLE_SIZE + SERIAL_MANAGER_WRITE_HANDLE_SIZE </p>
-
-</div>
-</div>
-<a class="anchor" id="ga100ef8e4a639c03682d84fb981ba235b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_USE_COMMON_TASK&#160;&#160;&#160;(0U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga5b98f71ea7bd89ef344cac14aa79a1e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_TASK_PRIORITY&#160;&#160;&#160;(2U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga416667c8e6b960d2c1ec518b41a06d62"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_TASK_STACK_SIZE&#160;&#160;&#160;(1000U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gafdb2c68b2d83d459fc196ab0f58d7ab3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_HANDLE_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00064.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro is used to define a 4 byte aligned shell handle. Then use "(shell_handle_t)name" to get the shell handle.</p>
-<p>The macro should be global and could be optional. You could also define shell handle by yourself.</p>
-<p>This is an example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(shellHandle);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The name string of the shell handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacd1f7ee25cd791efee6a45e753ec9824"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_COMMAND_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">command, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">descriptor, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">callback, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">paramCount&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">\</a></div>
-<div class="line"><a class="code" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">    shell_command_t</a> g_shellCommand##command = {                         \</div>
-<div class="line">        (#command), (descriptor), (callback), (paramCount), {0},        \</div>
-<div class="line">    }</div>
-<div class="ttc" id="a00064_html_ga408f7fb32b47f13f37eb195eb51074fe"><div class="ttname"><a href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a></div><div class="ttdeci">struct _shell_command shell_command_t</div><div class="ttdoc">User command data configuration structure. </div></div>
-</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
-<p>This is a example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
-<div class="line">* <a class="code" href="a00064.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00064.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
-    <tr><td class="paramname">descriptor</td><td>The description of the command is used for showing the command usage when "help" is typing. </td></tr>
-    <tr><td class="paramname">callback</td><td>The callback of the command is used to handle the command line when the input command is matched. </td></tr>
-    <tr><td class="paramname">paramCount</td><td>The max parameter count of the current command. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga16dd6cfbd9db7dafdaa802eda58564b5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_COMMAND</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">command</td><td>)</td>
-          <td>&#160;&#160;&#160;&amp;g_shellCommand##command</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro is used to get the shell command pointer. The macro should not be used before the macro SHELL_COMMAND_DEFINE is used.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga7ace1ddfb1e83ac1516ac44be90cf822"></a>
+<a class="anchor" id="ga3814c31ee934902d15e6831da736cd47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>(* cmd_function_t)(<a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td>
+          <td class="memname">typedef enum <a class="el" href="a00064.html#gaaa2e2f2efa7be228c775fa239ab5ea03">_spi_xfer_option</a>  <a class="el" href="a00064.html#ga3814c31ee934902d15e6831da736cd47">spi_xfer_option_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga408f7fb32b47f13f37eb195eb51074fe"></a>
+<a class="anchor" id="gadc24bb931a59fc64ee4cb60ed56addb4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00064.html#a00434">_shell_command</a>  <a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a></td>
+          <td class="memname">typedef enum <a class="el" href="a00064.html#ga1737fd82344e0800f66b541342894b85">_spi_shift_direction</a>  <a class="el" href="a00064.html#gadc24bb931a59fc64ee4cb60ed56addb4">spi_shift_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9de95ac02ae859ac26534c06eb47b5b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00064.html#ga17f9450af8f63de3fa2b3b105eeec38d">_spi_clock_polarity</a>  <a class="el" href="a00064.html#ga9de95ac02ae859ac26534c06eb47b5b8">spi_clock_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga12e1c73dd72aaabd76ff5ce23c0d3244"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00064.html#ga76b6ec98408fdaf2e9133952eefa1baa">_spi_clock_phase</a>  <a class="el" href="a00064.html#ga12e1c73dd72aaabd76ff5ce23c0d3244">spi_clock_phase_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5d2ab71dbc12d399a9e125103fd3ec10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00064.html#a00433">_spi_delay_config</a>  <a class="el" href="a00064.html#ga5d2ab71dbc12d399a9e125103fd3ec10">spi_delay_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Note: The DLY register controls several programmable delays related to SPI signalling, it stands for how many SPI clock time will be inserted. The maxinun value of these delay time is 15. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga15e5f834f83ba89de1e920bba9d00394"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00064.html#a00436">_spi_master_config</a>  <a class="el" href="a00064.html#ga15e5f834f83ba89de1e920bba9d00394">spi_master_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa62352a5d0a01f70fe74941809d03ec3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00064.html#a00438">_spi_slave_config</a>  <a class="el" href="a00064.html#gaa62352a5d0a01f70fe74941809d03ec3">spi_slave_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga2c61065c015d5b1c3247cf979238d434"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* flexcomm_spi_master_irq_handler_t)(SPI_Type *base, <a class="el" href="a00064.html#gafb311d8a8b7de084d82915f5a003a300">spi_master_handle_t</a> *handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae305531ff5562d2c51423f85032942ae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* flexcomm_spi_slave_irq_handler_t)(SPI_Type *base, <a class="el" href="a00064.html#gad267cfee3a876b2860217ff94f03f574">spi_slave_handle_t</a> *handle)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -588,450 +960,327 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaefa59271a266a79694a5c9574f1db8b5"></a>
+<a class="anchor" id="gaaa2e2f2efa7be228c775fa239ab5ea03"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00064.html#gaefa59271a266a79694a5c9574f1db8b5">_shell_status</a></td>
+          <td class="memname">enum <a class="el" href="a00064.html#gaaa2e2f2efa7be228c775fa239ab5ea03">_spi_xfer_option</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5aeb6cf57843c8b47b87ae07417d53df3e"></a>kStatus_SHELL_Success</em>&nbsp;</td><td class="fielddoc">
-<p>Success. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaaa2e2f2efa7be228c775fa239ab5ea03a368ad1fd03f7af182af9a61c7f4967ed"></a>kSPI_FrameDelay</em>&nbsp;</td><td class="fielddoc">
+<p>A delay may be inserted, defined in the DLY register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5ae1a9ae61e350888892f4cde21f8dd7f9"></a>kStatus_SHELL_Error</em>&nbsp;</td><td class="fielddoc">
-<p>Failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5a25ff80ec847b1028041ae913beec2b5b"></a>kStatus_SHELL_OpenWriteHandleFailed</em>&nbsp;</td><td class="fielddoc">
-<p>Open write handle failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5a14f89a732b5c11a35e8c9b91d4e22ad8"></a>kStatus_SHELL_OpenReadHandleFailed</em>&nbsp;</td><td class="fielddoc">
-<p>Open read handle failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5ad139f389943f49d948bbff024d6c5a26"></a>kStatus_SHELL_RetUsage</em>&nbsp;</td><td class="fielddoc">
-<p>RetUsage for print cmd usage. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaaa2e2f2efa7be228c775fa239ab5ea03adbcf2b399fc2e5f1ad5c2586117a1ae9"></a>kSPI_FrameAssert</em>&nbsp;</td><td class="fielddoc">
+<p>SSEL will be deasserted at the end of a transfer. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7961e946400cd244c315cfbbd36ae5d1"></a>
+<a class="anchor" id="ga1737fd82344e0800f66b541342894b85"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_Init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00061.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>prompt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">enum <a class="el" href="a00064.html#ga1737fd82344e0800f66b541342894b85">_spi_shift_direction</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function must be called before calling all other Shell functions. Call operation the Shell commands with user-defined settings. The example below shows how to set up the Shell and how to call the SHELL_Init function by passing in these parameters. This is an example. </p>
-<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00064.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(s_shellHandle);</div>
-<div class="line">*   <a class="code" href="a00064.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>((<a class="code" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>)s_shellHandle, (<a class="code" href="a00061.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00064.html#gaa4c15d7595f7cf7ee5f837a02cbdf574" title="The handle size of the shell module. ">SHELL_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00064.html#gafdb2c68b2d83d459fc196ab0f58d7ab3" title="Defines the shell handle. ">SHELL_HANDLE_DEFINE(shellHandle)</a>; or uint32_t shellHandle[((SHELL_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
-    <tr><td class="paramname">prompt</td><td>The string prompt pointer of Shell. Only the global variable can be passed. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>The shell initialization succeed. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred when the shell is initialized. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_OpenWriteHandleFailed</td><td>Open the write handle failed. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_OpenReadHandleFailed</td><td>Open the read handle failed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab5f85f3ba2cc7dd58bc85076c19c5177"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_RegisterCommand </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *&#160;</td>
-          <td class="paramname"><em>shellCommand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to register the shell command by using the command configuration shell_command_config_t. This is a example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
-<div class="line">* <a class="code" href="a00064.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00064.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully register the command. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga53355638d856258b0bcb76e308803dab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_UnregisterCommand </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *&#160;</td>
-          <td class="paramname"><em>shellCommand</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to unregister the shell command.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully unregister the command. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9f182608b5a6107757be5bb8a90ad74c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_Write </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to send data to the shell output stream.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
-    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaade5449d8cbfc3cd026667b40c35d29f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int SHELL_Printf </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>formatString</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to write a formatted output to the shell output stream.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6466b141fd4f94e78636e4a15c302dda"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_WriteSynchronization </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to send data to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
-    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga56c78f6217a822015a9369bf3e52e92a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int SHELL_PrintfSynchronization </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>formatString</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to write a formatted output to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaca4540dc42f8892cb276691644a247e2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SHELL_ChangePrompt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>prompt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to change shell prompt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-    <tr><td class="paramname">prompt</td><td>The string which will be used for command prompt </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad2a840776dee8490d482a0692fbf2d7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SHELL_PrintPrompt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to print shell prompt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga44e3087a3cdea9b62f159e2585dfcd8d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SHELL_Task </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The task function for Shell; The function should be polled by upper layer. This function does not return until Shell command exit was called.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4eeb17b16773359c132f1d40478938ec"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool SHELL_checkRunningInIsr </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1737fd82344e0800f66b541342894b85ae7b997e8cff761aab865cbd42c4c3989"></a>kSPI_MsbFirst</em>&nbsp;</td><td class="fielddoc">
+<p>Data transfers start with most significant bit. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1737fd82344e0800f66b541342894b85a20ac53684c3e1ad338553cecbfab94a9"></a>kSPI_LsbFirst</em>&nbsp;</td><td class="fielddoc">
+<p>Data transfers start with least significant bit. </p>
+</td></tr>
 </table>
+
+</div>
+</div>
+<a class="anchor" id="ga17f9450af8f63de3fa2b3b105eeec38d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga17f9450af8f63de3fa2b3b105eeec38d">_spi_clock_polarity</a></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
-<p>This function is used to check if code running in ISR.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">TRUE</td><td>if code runing in ISR. </td></tr>
-  </table>
-  </dd>
-</dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga17f9450af8f63de3fa2b3b105eeec38da031c0ee2693cf1fd621e8b8cba676629"></a>kSPI_ClockPolarityActiveHigh</em>&nbsp;</td><td class="fielddoc">
+<p>Active-high SPI clock (idles low). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga17f9450af8f63de3fa2b3b105eeec38dacfc8257079c9604086622df6de326aea"></a>kSPI_ClockPolarityActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>Active-low SPI clock (idles high). </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga76b6ec98408fdaf2e9133952eefa1baa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga76b6ec98408fdaf2e9133952eefa1baa">_spi_clock_phase</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga76b6ec98408fdaf2e9133952eefa1baaad15d61c6fd642f13101edbf401d0c72e"></a>kSPI_ClockPhaseFirstEdge</em>&nbsp;</td><td class="fielddoc">
+<p>First edge on SCK occurs at the middle of the first cycle of a data transfer. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga76b6ec98408fdaf2e9133952eefa1baaa18a98985c1f7dd56175e4a2724db3675"></a>kSPI_ClockPhaseSecondEdge</em>&nbsp;</td><td class="fielddoc">
+<p>First edge on SCK occurs at the start of the first cycle of a data transfer. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga35cda0eedeef2b6fc66409f8d7cbab0f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga35cda0eedeef2b6fc66409f8d7cbab0f">_spi_txfifo_watermark</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fab00ed44c27cc2f5c8be6a37a7e54bbb0"></a>kSPI_TxFifo0</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark is empty. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fad84aa8fe681fb1922108dd71035a1e7a"></a>kSPI_TxFifo1</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 1 item. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0faf0f35b4313810fb0a721f6d0c96e361d"></a>kSPI_TxFifo2</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 2 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fa583e03e419cab47b3a257f39a96f9098"></a>kSPI_TxFifo3</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 3 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fadd72390240691eb878a8bc236b0ae0f1"></a>kSPI_TxFifo4</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 4 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fa2d97d5d6a34b441ebdd1a5dcf9cd0d49"></a>kSPI_TxFifo5</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 5 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fa50675672a2887ec04a4a2d11c183958b"></a>kSPI_TxFifo6</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 6 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga35cda0eedeef2b6fc66409f8d7cbab0fa4f8e84453e704f97a592944ff3dc5c50"></a>kSPI_TxFifo7</em>&nbsp;</td><td class="fielddoc">
+<p>SPI tx watermark at 7 items. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga07607e4b4c217d4b9e3a5f5745ba11fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga07607e4b4c217d4b9e3a5f5745ba11fc">_spi_rxfifo_watermark</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fca2d49ceb52f1bf6c51e2514b35e5d9804"></a>kSPI_RxFifo1</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 1 item. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fca90eb93fdd80d4baf71ff3d75d4df2454"></a>kSPI_RxFifo2</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 2 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fcab27946413b575e3dd27e0a37c8ccb17b"></a>kSPI_RxFifo3</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 3 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fcaf6dcb50b13a1d8208d1d977ce79ff662"></a>kSPI_RxFifo4</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 4 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fca2c961e2e2c24014368dfe867d2295f3d"></a>kSPI_RxFifo5</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 5 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fcad8bce70560016fbd76c7e1a9e5a2369f"></a>kSPI_RxFifo6</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 6 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fca24b9a255d74d6a5b47d59b82717586dc"></a>kSPI_RxFifo7</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 7 items. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga07607e4b4c217d4b9e3a5f5745ba11fcaba4452e3c770cac6e822a0f85e2b53f3"></a>kSPI_RxFifo8</em>&nbsp;</td><td class="fielddoc">
+<p>SPI rx watermark at 8 items. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga63554b1f1f01b827bf6449b55ca80280"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga63554b1f1f01b827bf6449b55ca80280">_spi_data_width</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a0cb8b30c67c53c6d53712d5bacc818ce"></a>kSPI_Data4Bits</em>&nbsp;</td><td class="fielddoc">
+<p>4 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a7232b4afb5bd82503252ce608638e6eb"></a>kSPI_Data5Bits</em>&nbsp;</td><td class="fielddoc">
+<p>5 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a6604fcf5c8bebf904c5b072295027bba"></a>kSPI_Data6Bits</em>&nbsp;</td><td class="fielddoc">
+<p>6 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a2c62d3d7d92866c97bb513d4e603518e"></a>kSPI_Data7Bits</em>&nbsp;</td><td class="fielddoc">
+<p>7 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280ad6b98474a7f14ae7665b7b6d3355657c"></a>kSPI_Data8Bits</em>&nbsp;</td><td class="fielddoc">
+<p>8 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a4b864a74545165c2cf2dd74134fdadd1"></a>kSPI_Data9Bits</em>&nbsp;</td><td class="fielddoc">
+<p>9 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a2b2887663c9d025a4137263fc7984024"></a>kSPI_Data10Bits</em>&nbsp;</td><td class="fielddoc">
+<p>10 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280a91e908a7a4725ab9df05549a2b034dec"></a>kSPI_Data11Bits</em>&nbsp;</td><td class="fielddoc">
+<p>11 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280ad1cfe18fd912c0d25dc32e6ca9fa8f97"></a>kSPI_Data12Bits</em>&nbsp;</td><td class="fielddoc">
+<p>12 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280ad8c2fa2e2f5bf137176dc736cc6a2531"></a>kSPI_Data13Bits</em>&nbsp;</td><td class="fielddoc">
+<p>13 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280ae83435f494d1b9f3ce2f2da0ac03fc38"></a>kSPI_Data14Bits</em>&nbsp;</td><td class="fielddoc">
+<p>14 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280add11012a8887066fad29e23c20d66af8"></a>kSPI_Data15Bits</em>&nbsp;</td><td class="fielddoc">
+<p>15 bits data width </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga63554b1f1f01b827bf6449b55ca80280abbc2566ba4eb2b5e5dc259a7c4f80bcf"></a>kSPI_Data16Bits</em>&nbsp;</td><td class="fielddoc">
+<p>16 bits data width </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga6cb1b64722deb9a98a4f1a442f58f8a9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga6cb1b64722deb9a98a4f1a442f58f8a9">_spi_ssel</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6cb1b64722deb9a98a4f1a442f58f8a9aba6e24e125d6e2623fdf66179d8d3595"></a>kSPI_Ssel0</em>&nbsp;</td><td class="fielddoc">
+<p>Slave select 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6cb1b64722deb9a98a4f1a442f58f8a9a6a919364d43781f9da7c826c53008863"></a>kSPI_Ssel1</em>&nbsp;</td><td class="fielddoc">
+<p>Slave select 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6cb1b64722deb9a98a4f1a442f58f8a9a42cddec913f2774241d7d962143e1588"></a>kSPI_Ssel2</em>&nbsp;</td><td class="fielddoc">
+<p>Slave select 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6cb1b64722deb9a98a4f1a442f58f8a9a242faca0999052891ca8ed24a116e466"></a>kSPI_Ssel3</em>&nbsp;</td><td class="fielddoc">
+<p>Slave select 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gabed82baf7f470b522273a3e37c24c600"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabed82baf7f470b522273a3e37c24c600a703abdf7900047c4d13536480f3463ab"></a>kStatus_SPI_Busy</em>&nbsp;</td><td class="fielddoc">
+<p>SPI bus is busy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabed82baf7f470b522273a3e37c24c600a4e32c5b06dccaf4b81e2fd1679e1b560"></a>kStatus_SPI_Idle</em>&nbsp;</td><td class="fielddoc">
+<p>SPI is idle. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabed82baf7f470b522273a3e37c24c600a2ff91d774e93aed936b87ffaa18aaf9e"></a>kStatus_SPI_Error</em>&nbsp;</td><td class="fielddoc">
+<p>SPI error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabed82baf7f470b522273a3e37c24c600ab0f4d4de5f92524c9d33524f22a04e03"></a>kStatus_SPI_BaudrateNotSupport</em>&nbsp;</td><td class="fielddoc">
+<p>Baudrate is not support in current clock source. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabed82baf7f470b522273a3e37c24c600a496ced6fffc33d7bbeb01d203dfc4836"></a>kStatus_SPI_Timeout</em>&nbsp;</td><td class="fielddoc">
+<p>SPI timeout polling status flags. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaedd690a0f91a0a9eb0fd573b57e31f67"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#gaedd690a0f91a0a9eb0fd573b57e31f67">_spi_interrupt_enable</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaedd690a0f91a0a9eb0fd573b57e31f67a81a10bf611827929fcf8eed0468aea7a"></a>kSPI_RxLvlIrq</em>&nbsp;</td><td class="fielddoc">
+<p>Rx level interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaedd690a0f91a0a9eb0fd573b57e31f67a13d4e9159c4ba5d49adef5e7e5f5b1dd"></a>kSPI_TxLvlIrq</em>&nbsp;</td><td class="fielddoc">
+<p>Tx level interrupt. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga88b3958a041355f297213b5c407dded2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga88b3958a041355f297213b5c407dded2">_spi_statusflags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga88b3958a041355f297213b5c407dded2a243d09d83665d0ab9deefcb8e14ea1ae"></a>kSPI_TxEmptyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>txFifo is empty </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga88b3958a041355f297213b5c407dded2a3892d0ae82fadd910932410fb86b0415"></a>kSPI_TxNotFullFlag</em>&nbsp;</td><td class="fielddoc">
+<p>txFifo is not full </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga88b3958a041355f297213b5c407dded2a5dffa125a4a171d539f4d1df9abf6e8a"></a>kSPI_RxNotEmptyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>rxFIFO is not empty </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga88b3958a041355f297213b5c407dded2a24187382b09195b069e487ed1e29cbcd"></a>kSPI_RxFullFlag</em>&nbsp;</td><td class="fielddoc">
+<p>rxFIFO is full </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ga9d35e904f2864488f65fddcfb5277f44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t s_dummyData[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Global variable for dummy data value setting. </p>
 
 </div>
 </div>

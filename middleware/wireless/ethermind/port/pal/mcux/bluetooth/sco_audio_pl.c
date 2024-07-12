@@ -138,6 +138,7 @@ static int num_sco_conn = 0U;
 
 API_RESULT sco_audio_start_pl (void)
 {
+	API_RESULT  retval = API_SUCCESS;
 #ifdef NVRAM_WORKAROUND
     /* Disable storage update */
     BT_storage_disable_store();
@@ -146,21 +147,9 @@ API_RESULT sco_audio_start_pl (void)
     UCHAR new[6U] = {0x00U, 0x00U, 0x08U, 0x00U, 0x00U, 0x00U};
     (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x006fU, new, sizeof(new));
 #ifndef HFP_BRIDGING
-    return sco_audio_start_pl_ext();
-#else //HFP_BRIDGING
-#if 0
-	printf("sco_audio_start_pl: HFP_BRIDGING enabled\n");
-	if (num_sco_conn == 1)
-    {
-        printf("Sending Vendor command for sco-bridging now\n");
-        UCHAR new[6U] = {0x00U, 0x01U, 0x08U, 0x00U, 0x09U, 0x00U};
-        (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x006fU, new, sizeof(new));
-    }
-    num_sco_conn++;
-	printf("num_sco_conn = %d\n", num_sco_conn);
-    return API_SUCCESS;
-#endif
+    retval = sco_audio_start_pl_ext();
 #endif //HFP_BRIDGING
+    return retval;
 }
 
 API_RESULT sco_audio_stop_pl (void)
@@ -287,7 +276,6 @@ void sco_audio_spkr_play_pl (UCHAR * m_data, UINT16 m_datalen)
 API_RESULT sco_bridge_audio_start_pl (UINT16 sco_handle_1, UINT16 sco_handle_2)
 {
 	printf("Sending Vendor command for sco-bridging now for handles 0x%x, 0x%x\n", sco_handle_1, sco_handle_2);
-	//UCHAR new[6U] = {0x00U, 0x01U, 0x08U, 0x00U, 0x09U, 0x00U};
 	UCHAR new[6U];
 	new[0] = 0x00U;
 	new[1] = 0x01U;
@@ -300,6 +288,6 @@ API_RESULT sco_bridge_audio_start_pl (UINT16 sco_handle_1, UINT16 sco_handle_2)
 	{
 		printf("%x\n", new[i]);
 	}
-	(BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x006fU, new, sizeof(new));
+	return BT_hci_vendor_specific_command(0x006fU, new, sizeof(new));
 }
 #endif //HFP_BRIDGING

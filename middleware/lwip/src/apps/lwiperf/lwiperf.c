@@ -19,6 +19,7 @@
 
 /*
  * Copyright (c) 2014 Simon Goldschmidt
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -443,7 +444,7 @@ lwiperf_tcp_client_send_more(lwiperf_state_tcp_t *conn)
       /* this session is byte-limited */
       u32_t amount_bytes = lwip_ntohl(conn->settings.base.amount);
       /* @todo: this can send up to 1*MSS more than requested... */
-      if (amount_bytes >= conn->bytes_transferred) {
+      if (conn->bytes_transferred >= amount_bytes) {
         /* all requested bytes transferred -> close the connection */
         lwiperf_tcp_close(conn, conn->base.reverse ? LWIPERF_TCP_DONE_SERVER_TX : LWIPERF_TCP_DONE_CLIENT_TX);
         return ERR_OK;

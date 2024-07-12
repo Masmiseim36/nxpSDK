@@ -423,7 +423,7 @@ struct hostapd_bss_config
 #endif /* CONFIG_IEEE80211R_AP */
 
     char *ctrl_interface; /* directory for UNIX domain sockets */
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     gid_t ctrl_interface_gid;
 #endif /* CONFIG_NATIVE_WINDOWS */
     int ctrl_interface_gid_set;

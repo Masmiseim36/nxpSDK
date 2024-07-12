@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -75,12 +75,6 @@ Purpose     : Interface of AppWizard
   extern "C" {             // Make sure we have C-declarations in C++ programs
 #endif
 
-//
-// Switching on use of APPW_ATOM in conditions.
-// To be removed after change-over has been finished in comparison terms...
-//
-#define USE_ATOM 1
-
 /*####################################################################
 #
 #       Defines & enums
@@ -108,6 +102,7 @@ Purpose     : Interface of AppWizard
 // Interaction flag(s)
 //
 #define APPW_ACTION_FLAG_DONTGETVALUEFROMEMITTER (1UL << 16)
+#define APPW_ACTION_FLAG_DEACTIVATED             (1UL << 17)
 
 //
 // Dispose modes
@@ -453,6 +448,7 @@ enum {
   /*  6 */ APPW_JOB_SETCOORD,       // (pPara + 0)->v     - Value
                                     // (pPara + 1)->v     - Index of coordinate
   /*  7 */ APPW_JOB_SETCOLOR,       // (pPara + 0)->v     - Color to be used
+                                    // (pPara + 1)->v     - Index of color
   /*  8 */ APPW_JOB_SETBKCOLOR,     // (pPara + 0)->v     - BkColor to be used
   /*  9 */ APPW_JOB_ADDVALUE,       // (pPara + 0)->v     - Value to be added
   /* 10 */ APPW_JOB_SETVALUE,       // (pPara + 0)->v     - Value to be set
@@ -958,12 +954,8 @@ typedef struct {
 *   Comparison with 2 items to be compared by the given function pointer
 */
 typedef struct {
-#if USE_ATOM
-  APPW_ATOM        aAtom[2];
-#else
-  APPW_COMP_ITEM   aElem[2];
-#endif
-  int           (* pFunc)(I32 v0, I32 v1);
+  APPW_ATOM aAtom[2];
+  int    (* pFunc)(I32 v0, I32 v1);
 } APPW_COND_COMP;
 
 /*********************************************************************
@@ -1352,11 +1344,9 @@ typedef struct {
   GUI_COLOR           aColor[3];
   int                 TextId;
   WM_HTIMER           hTimer;
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   U16                 FrameRadius;
   U16                 FrameSize;
-  GUI_COLOR           FrameColor;
 } WM_OBJECT_BUTTON;
 
 /*********************************************************************
@@ -1411,8 +1401,7 @@ typedef struct {
   U32                 State;
   APPW_DRAW_OBJECT    apDraw[6];
   int                 aTextId[2];
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
 } WM_OBJECT_SWITCH;
 
 /*********************************************************************
@@ -1429,8 +1418,7 @@ typedef struct {
   int                 xOffText;
   int                 yOffText;
   int                 TextId;
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   //
   // Elements required for decimal mode
   //
@@ -1456,8 +1444,7 @@ typedef struct {
   U16                 aIdDraw[2];  // Pre- and Post-draw
   U32                 State;
   unsigned            Mode;
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   U16                 FrameRadius;
   U16                 FrameSize;
   GUI_COLOR           FrameColor;
@@ -1511,8 +1498,7 @@ typedef struct {
   KEYBOARD_OBJ        Widget;      // GUI/WM-Widget
   APPW_DISPOSE        Dispose;     // Dispose structure
   U16                 aIdDraw[2];  // Pre- and Post-draw
-  GUI_FONT            aFont[2];
-  GUI_XBF_DATA        aFontData[2];
+  APPW_FONT         * apFont[2];
   //
   // Layout
   //
@@ -1569,8 +1555,7 @@ typedef struct {
   U16                 aIdDraw[2];  // Pre- and Post-draw
   U32                 State;
   unsigned            Mode;
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   int                 IndexText;
   U16                 FrameRadius;
   U16                 FrameSize;
@@ -1586,8 +1571,7 @@ typedef struct {
   APPW_DISPOSE        Dispose;     // Dispose structure
   U16                 aIdDraw[2];  // Pre- and Post-draw
   APPW_DRAW_OBJECT    apDraw[2];
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   U8                  FrameRadius;
   U8                  FrameSize;
   GUI_COLOR           FrameColor;
@@ -1602,8 +1586,7 @@ typedef struct {
   APPW_DISPOSE        Dispose;     // Dispose structure
   U16                 aIdDraw[2];  // Pre- and Post-draw
   APPW_DRAW_OBJECT    apDraw[2];
-  GUI_FONT            aFont[2];
-  GUI_XBF_DATA        aFontData[2];
+  APPW_FONT         * apFont[2];
   GUI_COLOR           FrameColorHeader;
   GUI_COLOR           FrameColorList;
   GUI_COLOR           ColorFocus;
@@ -1621,8 +1604,7 @@ typedef struct {
   LISTBOX_Obj         Widget;      // GUI/WM-Widget
   APPW_DISPOSE        Dispose;     // Dispose structure
   U16                 aIdDraw[2];  // Pre- and Post-draw
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   GUI_COLOR           FrameColor;
   U8                  FrameSize;
 } WM_OBJECT_LISTBOX;
@@ -1660,8 +1642,7 @@ typedef struct {
   U16                 aIdDraw[2];  // Pre- and Post-draw
   GUI_COLOR           aColor[2];   // Optional colors for alpha bitmaps (0: normal, 1: disabled)
   APPW_DRAW_OBJECT    apDraw[4];
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   U16                 Offset;
 } WM_OBJECT_RADIO;
 
@@ -1677,8 +1658,7 @@ typedef struct {
   GUI_COLOR           aColor[2];   // Optional colors for alpha bitmaps (0: normal, 1: disabled)
   APPW_DRAW_OBJECT    apDraw[6];
   int                 TextId;
-  GUI_FONT            Font;
-  GUI_XBF_DATA        FontData;
+  APPW_FONT         * pFont;
   U16                 Offset;
 } WM_OBJECT_CHECKBOX;
 
@@ -1761,12 +1741,15 @@ WM_HWIN WM_OBJECT_TIMER_Create (APPW_DISPOSE * pDispose, WM_HWIN hParent, int Id
 //
 // AppWizard.c (private functions, not to be documented)
 //
-void                      APPW__EnableUntouchable      (int OnOff);
-void                      APPW__SetUnTouchable         (WM_HWIN hWin);
-void                      APPW__RegisterPID_Hook       (void);
-APPW_DISPOSE            * APPW__GetDispose             (WM_HWIN hWin);
 int                       APPW__DisposeObject          (WM_HWIN hWin, int Index);
+void                      APPW__EnableMove             (unsigned OnOff);
+void                      APPW__EnableUntouchable      (int OnOff);
+APPW_DISPOSE            * APPW__GetDispose             (WM_HWIN hWin);
 GUI_HMEM                  APPW__GetTextItem            (int Mode, U32 Para, U16 Row, U16 Col);
+void                      APPW__RegisterPID_Hook       (void);
+void                      APPW__SetStreamedBitmap      (APPW_DRAW_OBJECT * pDraw, APPW_PARA_ITEM * pPara, GUI_BITMAPSTREAM_INFO * pInfo);
+void                      APPW__SetStreamedBitmap_HR   (APPW_DRAW_OBJECT * pDraw, APPW_PARA_ITEM * pPara, GUI_BITMAPSTREAM_INFO * pInfo);
+void                      APPW__SetUnTouchable         (WM_HWIN hWin);
 void                      APPW_CreateScroller          (WM_HWIN hWin, U8 Index, int ExFlags);
 void                      APPW_CreatePersistentScreens (void);
 WM_HWIN                   APPW_CreateRoot              (APPW_ROOT_INFO * pRoot, WM_HWIN hParent);
@@ -1777,7 +1760,6 @@ void                      APPW_DrawObject              (APPW_DRAW_OBJECT * pDraw
 void                      APPW_DrawObjectAt            (APPW_DRAW_OBJECT * pDraw, int xPos, int yPos);
 void                      APPW_DrawStreamedBitmapINT   (const APPW_DRAW_OBJECT * pDraw, int x, int y);
 void                      APPW_DrawStreamedBitmapINT_HR(const APPW_DRAW_OBJECT * pDraw, int x, int y);
-void                      APPW_Exec                    (void);
 void                      APPW_GetAtomInfo             (const APPW_ATOM * pAtom, APPW_ATOM_INFO * pInfo);
 I32                       APPW_GetAtomValue            (const APPW_ATOM * pAtom);
 APPW_ROOT_INFO          * APPW_GetCurrentRootInfo      (WM_HWIN hWin);
@@ -1793,7 +1775,6 @@ APPW_ROOT_INFO          * APPW_GetRootInfoByIndex      (int RootIndex);
 APPW_ROOT_INFO          * APPW_GetRootInfoByRootId     (U16 RootId);
 U8                        APPW_GetSupportFocus         (void);
 U8                        APPW_GetSupportScroller      (void);
-int                       APPW_HasAlpha                (GUI_COLOR Color);
 void                      APPW_Init                    (const char * pResourcePath);
 void                      APPW_InitResourcePath        (const char * pResourcePath);
 int                       APPW_IsValid                 (WM_HWIN hWin);
@@ -1810,26 +1791,29 @@ void                      APPW_SetDefaultPositionRoot  (WM_HWIN hRoot);
 void                      APPW_SetFocusInfo            (APPW_DRAW_FOCUS_INFO * pInfo);
 void                      APPW_SetpfInitFS             (void (* pFunc)(void));
 void                      APPW_SetpfInitText           (void (* pFunc)(void));
-void                      APPW_SetPos                  (WM_HWIN hItem, int xPos, int yPos);
-void                      APPW_SetStreamedBitmap       (APPW_DRAW_OBJECT * pDraw, APPW_PARA_ITEM * pPara, GUI_BITMAPSTREAM_INFO * pInfo);
-void                      APPW_SetStreamedBitmap_HR    (APPW_DRAW_OBJECT * pDraw, APPW_PARA_ITEM * pPara, GUI_BITMAPSTREAM_INFO * pInfo);
 void                      APPW_SetSupportFocus         (U8 SupportFocus);
 void                      APPW_SetSupportScroller      (U8 SupportScroller);
 void                      APPW_SetWidgetFocusable      (WM_HWIN hWin, APPW_PARA_ITEM * pPara);
 void                      APPW_TextInitMem             (const APPW_TEXT_INIT * pPara);
 void                      APPW_TextInitExt             (const APPW_TEXT_INIT * pPara);
 
+extern void (* APPW__pfInvalidateWindow)(WM_HWIN hWin);
+
 //
 // AppWizard.c (public functions, to be documented)
 //
+void                      APPW_CalcVar                 (U16 IdVar);
+int                       APPW_DoJob                   (U16 IdScreen, U16 IdWidget, int IdJob, APPW_PARA_ITEM * pPara);
+void                      APPW_Exec                    (void);
 int                       APPW_GetFont                 (U16 IdScreen, U16 IdWidget, GUI_FONT * pFont, GUI_XBF_DATA * pData);
 int                       APPW_GetText                 (U16 IdScreen, U16 IdWidget, char * pBuffer, U32 SizeOfBuffer);
 int                       APPW_GetValue                (U16 IdScreen, U16 IdWidget, int * pError);
 void                      APPW_SetCustCallback         (void (* pFunc)(void));
+void                      APPW_SetPos                  (WM_HWIN hItem, int xPos, int yPos);
+void                      APPW_SetStreamedBitmap       (U16 IdScreen, U16 IdWidget, int Index, const void * pData);
+void                      APPW_SetStreamedBitmapEx     (U16 IdScreen, U16 IdWidget, int Index, const char * pFileName);
 int                       APPW_SetText                 (U16 IdScreen, U16 IdWidget, char * pText);
 int                       APPW_SetValue                (U16 IdScreen, U16 IdWidget, int Value);
-int                       APPW_DoJob                   (U16 IdScreen, U16 IdWidget, int IdJob, APPW_PARA_ITEM * pPara);
-
 //
 // AppWizard_Action.c
 //
@@ -1897,7 +1881,8 @@ int                       APPW_CalcTerm                (const APPW_CALC * pCalc)
 void                      APPW__GetResource            (APPW_ROOT_INFO         *** pppRootInfo,    int * pNumScreens,
                                                         APPW_VAR_OBJECT         ** ppaVarList,     int * pNumVars,
                                                         const APPW_SCROLLER_DEF ** ppaScrollerDef, int * pNumScrollers,
-                                                        APPW_DRAWING_ITEM      *** pppDrawingList, int * pNumDrawings);
+                                                        APPW_DRAWING_ITEM      *** pppDrawingList, int * pNumDrawings,
+                                                                                                   int * pCreateFlags);
 void                      APPW__GetTextInit            (GUI_CONST_STORAGE APPW_TEXT_INIT ** ppTextInit);
 
 //

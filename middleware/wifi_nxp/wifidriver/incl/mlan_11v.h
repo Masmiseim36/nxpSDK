@@ -19,7 +19,7 @@ Change log:
 #ifndef _MLAN_11V_H_
 #define _MLAN_11V_H_
 
-#ifdef CONFIG_11V
+#if CONFIG_11V
 
 #define WLAN_WNM_MAX_NEIGHBOR_REPORT               6
 #define MGMT_WNM_NEIGHBOR_BSS_TRANSITION_CANDIDATE 3

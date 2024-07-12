@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_USE_middleware_fatfs_template_ram AND CONFIG_USE_middleware_fatfs_ram) OR (CONFIG_USE_middleware_fatfs_template_sd AND CONFIG_USE_middleware_fatfs_sd) OR (CONFIG_USE_middleware_fatfs_template_mmc AND CONFIG_USE_middleware_fatfs_mmc) OR (CONFIG_USE_middleware_fatfs_template_usb AND CONFIG_USE_middleware_fatfs_usb) OR (CONFIG_USE_middleware_fatfs_template_nand AND CONFIG_USE_middleware_fatfs_nand))
+if((CONFIG_USE_middleware_fatfs_template_ram AND CONFIG_USE_middleware_fatfs_ram) OR (CONFIG_USE_middleware_fatfs_template_sd AND CONFIG_USE_middleware_fatfs_sd) OR (CONFIG_USE_middleware_fatfs_template_sdspi AND CONFIG_USE_middleware_fatfs_sdspi) OR (CONFIG_USE_middleware_fatfs_template_mmc AND CONFIG_USE_middleware_fatfs_mmc) OR (CONFIG_USE_middleware_fatfs_template_usb AND CONFIG_USE_middleware_fatfs_usb) OR (CONFIG_USE_middleware_fatfs_template_nand AND CONFIG_USE_middleware_fatfs_nand))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/source/diskio.c

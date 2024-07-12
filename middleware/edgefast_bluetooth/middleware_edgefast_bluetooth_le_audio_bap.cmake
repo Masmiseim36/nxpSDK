@@ -7,6 +7,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/ascs.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/bap_iso.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/audio.c
+  ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/bap_base.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/bap_broadcast_sink.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/bap_broadcast_source.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/codec.c

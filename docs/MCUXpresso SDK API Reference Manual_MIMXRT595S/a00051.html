@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: MRT: Multi-Rate Timer</title>
+<title>MCUXpresso SDK API Reference Manual: OTFAD: On The Fly AES-128 Decryption Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,326 +99,321 @@ $(document).ready(function(){initNavTree('a00051.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">MRT: Multi-Rate Timer</div>  </div>
+<div class="title">OTFAD: On The Fly AES-128 Decryption Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the Multi-Rate Timer (MRT) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="MRTFunc"></a>
-Function groups</h1>
-<p>The MRT driver supports operating the module as a time counter.</p>
-<h2><a class="anchor" id="MRTInit"></a>
-Initialization and deinitialization</h2>
-<p>The function <a class="el" href="a00051.html#ga44091408531a61dfac7c4ee4982be317" title="Ungates the MRT clock and configures the peripheral for basic operation. ">MRT_Init()</a> initializes the MRT with specified configurations. The function <a class="el" href="a00051.html#gad30aa85105a47b708fd5880a929e5e84" title="Fill in the MRT config struct with the default settings. ">MRT_GetDefaultConfig()</a> gets the default configurations. The initialization function configures the MRT operating mode.</p>
-<p>The function <a class="el" href="a00051.html#ga5d988ee09b604ab28f1b37320ee8d2d9" title="Gate the MRT clock. ">MRT_Deinit()</a> stops the MRT timers and disables the module clock.</p>
-<h2><a class="anchor" id="MRTTimerPeriodOperation"></a>
-Timer period Operations</h2>
-<p>The function <a class="el" href="a00051.html#ga57f3d18e0ec88a5eb04b3282e0f3dc95" title="Used to update the timer period in units of count. ">MRT_UpdateTimerPeriod()</a> is used to update the timer period in units of count. The new value is immediately loaded or will be loaded at the end of the current time interval.</p>
-<p>The function <a class="el" href="a00051.html#ga7c0bbb20b4abd7450f860277ef9d8a20" title="Reads the current timer counting value. ">MRT_GetCurrentTimerCount()</a> reads the current timer counting value. This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
-<p>The timer period operation functions takes the count value in ticks. The user can call the utility macros provided in fsl_common.h to convert to microseconds or milliseconds</p>
-<h2><a class="anchor" id="MRTStartStopOperation"></a>
-Start and Stop timer operations</h2>
-<p>The function <a class="el" href="a00051.html#ga388dd5041e6c179d637e17cd6e5a607e" title="Starts the timer counting. ">MRT_StartTimer()</a> starts the timer counting. After calling this function, the timer loads the period value, counts down to 0 and depending on the timer mode it either loads the respective start value again or stop. When the timer reaches 0, it generates a trigger pulse and sets the timeout interrupt flag.</p>
-<p>The function <a class="el" href="a00051.html#ga7620866a54acdcc17abab2b46a94dc6c" title="Stops the timer counting. ">MRT_StopTimer()</a> stops the timer counting.</p>
-<h2><a class="anchor" id="MRTChannel"></a>
-Get and release channel</h2>
-<p>These functions can be used to reserve and release a channel. The function <a class="el" href="a00051.html#ga320ba098c93a30174254eb763dd37dde" title="Find the available channel. ">MRT_GetIdleChannel()</a> finds the available channel. This function returns the lowest available channel number. The function <a class="el" href="a00051.html#ga8e55bb859e4f9b98ea8ec580ed7b106a" title="Release the channel when the timer is using the multi-task mode. ">MRT_ReleaseChannel()</a> release the channel when the timer is using the multi-task mode. In multi-task mode, the INUSE flags allow more control over when MRT channels are released for further use.</p>
-<h2><a class="anchor" id="MRTStatus"></a>
-Status</h2>
-<p>Provides functions to get and clear the PIT status.</p>
-<h2><a class="anchor" id="MRTInterrupt"></a>
-Interrupt</h2>
-<p>Provides functions to enable/disable PIT interrupts and get current enabled interrupts.</p>
-<h1><a class="anchor" id="MRTUseCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="MRTTick"></a>
-MRT tick example</h2>
-<p>Updates the MRT period and toggles an LED periodically. Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mrt </p>
+<p>The MCUXpresso SDK provides a peripheral driver for On The Fly AES-128 Decryption (OTFAD) module of MCUXpresso SDK devices.</p>
+<p>This example code shows how to decrypt ciphertext in external memory using the OTFAD driver.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/otfad </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00200"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html">fsl_mrt.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00402"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00402">_mrt_config</a></td></tr>
-<tr class="memdesc:a00402"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="a00051.html#a00402">More...</a><br/></td></tr>
-<tr class="separator:a00402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00401"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00401">_otfad_encryption_config</a></td></tr>
+<tr class="memdesc:a00401"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure.  <a href="a00051.html#a00401">More...</a><br/></td></tr>
+<tr class="separator:a00401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00400"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00400">_otfad_config</a></td></tr>
+<tr class="memdesc:a00400"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure.  <a href="a00051.html#a00400">More...</a><br/></td></tr>
+<tr class="separator:a00400"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaf78437e7a713ae57fd5c12135af514ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf78437e7a713ae57fd5c12135af514ba"></a>
-typedef enum <a class="el" href="a00051.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">_mrt_chnl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a></td></tr>
-<tr class="memdesc:gaf78437e7a713ae57fd5c12135af514ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT channels. <br/></td></tr>
-<tr class="separator:gaf78437e7a713ae57fd5c12135af514ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaff791fb43331fc1ae8f4e0d9003ac286"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff791fb43331fc1ae8f4e0d9003ac286"></a>
-typedef enum <a class="el" href="a00051.html#gae772c3f1dc986d55a787b987f731b389">_mrt_timer_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaff791fb43331fc1ae8f4e0d9003ac286">mrt_timer_mode_t</a></td></tr>
-<tr class="memdesc:gaff791fb43331fc1ae8f4e0d9003ac286"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT timer modes. <br/></td></tr>
-<tr class="separator:gaff791fb43331fc1ae8f4e0d9003ac286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35fd7f67352e6660946fe980fcd4fc5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35fd7f67352e6660946fe980fcd4fc5d"></a>
-typedef enum <a class="el" href="a00051.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">_mrt_interrupt_enable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga35fd7f67352e6660946fe980fcd4fc5d">mrt_interrupt_enable_t</a></td></tr>
-<tr class="memdesc:ga35fd7f67352e6660946fe980fcd4fc5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT interrupts. <br/></td></tr>
-<tr class="separator:ga35fd7f67352e6660946fe980fcd4fc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga42f664094e65ac53728a8bb0dea0d641"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga42f664094e65ac53728a8bb0dea0d641"></a>
-typedef enum <a class="el" href="a00051.html#ga13878b183833475306c8aabb81391a8a">_mrt_status_flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga42f664094e65ac53728a8bb0dea0d641">mrt_status_flags_t</a></td></tr>
-<tr class="memdesc:ga42f664094e65ac53728a8bb0dea0d641"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT status flags. <br/></td></tr>
-<tr class="separator:ga42f664094e65ac53728a8bb0dea0d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb656916391d01109e84f6e5d97fd5c3"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00051.html#a00402">_mrt_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a></td></tr>
-<tr class="memdesc:gadb656916391d01109e84f6e5d97fd5c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="#gadb656916391d01109e84f6e5d97fd5c3">More...</a><br/></td></tr>
-<tr class="separator:gadb656916391d01109e84f6e5d97fd5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga828408bc7f3f0b2dfda7411a0c94b8e7"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00051.html#a00401">_otfad_encryption_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a></td></tr>
+<tr class="memdesc:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure. <br/></td></tr>
+<tr class="separator:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b90973600f36ddd230dcad13200323"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga98b90973600f36ddd230dcad13200323"></a>
+typedef struct <a class="el" href="a00051.html#a00400">_otfad_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a></td></tr>
+<tr class="memdesc:ga98b90973600f36ddd230dcad13200323"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure. <br/></td></tr>
+<tr class="separator:ga98b90973600f36ddd230dcad13200323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga05660f6ec5e7c0ac6204165d7ab9bf35"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">_mrt_chnl</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a27e83d437e2798b19c59c2af4d99e1dc">kMRT_Channel_0</a> = 0U, 
+<tr class="memitem:gafa9be5679ab03d785820f2474c5ccc6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00051.html#ggafa9be5679ab03d785820f2474c5ccc6eab86672f372b394bddf19bc570929597c">kStatus_OTFAD_ResRegAccessMode</a> = MAKE_STATUS(kStatusGroup_OTFAD, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a44b7807f36fe0a21240e721d46d8f9d7">kMRT_Channel_1</a>, 
+&#160;&#160;<a class="el" href="a00051.html#ggafa9be5679ab03d785820f2474c5ccc6eada2a68470d9b60529fde6beab292e72f">kStatus_OTFAD_AddressError</a> = MAKE_STATUS(kStatusGroup_OTFAD, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a17597fb66d9b1d3e97b318db79267f52">kMRT_Channel_2</a>, 
+&#160;&#160;<a class="el" href="a00051.html#ggafa9be5679ab03d785820f2474c5ccc6ea94765e8e9e448cfa441e2134f87a842f">kStatus_OTFAD_RegionOverlap</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35af57e6e009258a71bc3a2890aedff34b3">kMRT_Channel_3</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga05660f6ec5e7c0ac6204165d7ab9bf35"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT channels.  <a href="a00051.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">More...</a><br/></td></tr>
-<tr class="separator:ga05660f6ec5e7c0ac6204165d7ab9bf35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae772c3f1dc986d55a787b987f731b389"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gae772c3f1dc986d55a787b987f731b389">_mrt_timer_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#ggae772c3f1dc986d55a787b987f731b389a6b415c060dc09ed293ec3dda829cb257">kMRT_RepeatMode</a> = (0 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT), 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#ggae772c3f1dc986d55a787b987f731b389abe4ba0a30bc09f1921a0504eb826b3dc">kMRT_OneShotMode</a> = (1 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT), 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#ggae772c3f1dc986d55a787b987f731b389add9f55173bb54f623c955c29c22dd5b2">kMRT_OneShotStallMode</a> = (2 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT)
+&#160;&#160;<a class="el" href="a00051.html#ggafa9be5679ab03d785820f2474c5ccc6eab98da10f5a46caedb11ea21bcb4b6328">kStatus_OTFAD_RegionMiss</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gae772c3f1dc986d55a787b987f731b389"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT timer modes.  <a href="a00051.html#gae772c3f1dc986d55a787b987f731b389">More...</a><br/></td></tr>
-<tr class="separator:gae772c3f1dc986d55a787b987f731b389"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga854d01b9575db5b6f0f7aaad49cf0c7d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">_mrt_interrupt_enable</a> { <a class="el" href="a00051.html#gga854d01b9575db5b6f0f7aaad49cf0c7da2a5e8ee568da2c888093b732f2157ea5">kMRT_TimerInterruptEnable</a> = MRT_CHANNEL_CTRL_INTEN_MASK
- }</td></tr>
-<tr class="memdesc:ga854d01b9575db5b6f0f7aaad49cf0c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT interrupts.  <a href="a00051.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">More...</a><br/></td></tr>
-<tr class="separator:ga854d01b9575db5b6f0f7aaad49cf0c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13878b183833475306c8aabb81391a8a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga13878b183833475306c8aabb81391a8a">_mrt_status_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga13878b183833475306c8aabb81391a8aa6942598faf3aef148a850f8850cf01c3">kMRT_TimerInterruptFlag</a> = MRT_CHANNEL_STAT_INTFLAG_MASK, 
+<tr class="memdesc:gafa9be5679ab03d785820f2474c5ccc6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status codes for the OTFAD driver.  <a href="a00051.html#gafa9be5679ab03d785820f2474c5ccc6e">More...</a><br/></td></tr>
+<tr class="separator:gafa9be5679ab03d785820f2474c5ccc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00051.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a289054cf51b8d6cb3c32a87884400e17">kOTFAD_Context_0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga13878b183833475306c8aabb81391a8aa745c62687191197b48b35dbd1aac40db">kMRT_TimerRunFlag</a> = MRT_CHANNEL_STAT_RUN_MASK
+&#160;&#160;<a class="el" href="a00051.html#ggae6dceca96ec2c7a1b4aa211264a87ef6abe9a603f23afef05bfdeb1583713f336">kOTFAD_Context_1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a3769e4cee63954e3dfaceea80109ce08">kOTFAD_Context_2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ad32231e169446492d32c3674354dbf4d">kOTFAD_Context_3</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga13878b183833475306c8aabb81391a8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT status flags.  <a href="a00051.html#ga13878b183833475306c8aabb81391a8a">More...</a><br/></td></tr>
-<tr class="separator:ga13878b183833475306c8aabb81391a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context type.  <a href="a00051.html#gae6dceca96ec2c7a1b4aa211264a87ef6">More...</a><br/></td></tr>
+<tr class="separator:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56a0f36da7f9eaaf54bd05cc2bf49173"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00051.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a46b06bacd1a8297969a3a61810b5366f">kOTFAD_NRM</a> = 0x00U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga56a0f36da7f9eaaf54bd05cc2bf49173afa7c009b2feed9501056ff7ef74bec34">kOTFAD_SVM</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga56a0f36da7f9eaaf54bd05cc2bf49173afe2dfe963d9f93d97d2f7ebfcc3ccc96">kOTFAD_LDM</a> = 0x03U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga56a0f36da7f9eaaf54bd05cc2bf49173"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD operate mode.  <a href="a00051.html#ga56a0f36da7f9eaaf54bd05cc2bf49173">More...</a><br/></td></tr>
+<tr class="separator:ga56a0f36da7f9eaaf54bd05cc2bf49173"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gae39f6122bd73a5156d40291962f7507f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae39f6122bd73a5156d40291962f7507f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gae39f6122bd73a5156d40291962f7507f">FSL_MRT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
-<tr class="memdesc:gae39f6122bd73a5156d40291962f7507f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.3. <br/></td></tr>
-<tr class="separator:gae39f6122bd73a5156d40291962f7507f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga20f3f7f4a4d28843e4dcba42fe074de4">FSL_OTFAD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td></tr>
+<tr class="memdesc:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga20f3f7f4a4d28843e4dcba42fe074de4">More...</a><br/></td></tr>
+<tr class="separator:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga44091408531a61dfac7c4ee4982be317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga44091408531a61dfac7c4ee4982be317">MRT_Init</a> (MRT_Type *base, const <a class="el" href="a00051.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga44091408531a61dfac7c4ee4982be317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the MRT clock and configures the peripheral for basic operation.  <a href="#ga44091408531a61dfac7c4ee4982be317">More...</a><br/></td></tr>
-<tr class="separator:ga44091408531a61dfac7c4ee4982be317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga5d988ee09b604ab28f1b37320ee8d2d9">MRT_Deinit</a> (MRT_Type *base)</td></tr>
-<tr class="memdesc:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gate the MRT clock.  <a href="#ga5d988ee09b604ab28f1b37320ee8d2d9">More...</a><br/></td></tr>
-<tr class="separator:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad30aa85105a47b708fd5880a929e5e84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gad30aa85105a47b708fd5880a929e5e84">MRT_GetDefaultConfig</a> (<a class="el" href="a00051.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *config)</td></tr>
-<tr class="memdesc:gad30aa85105a47b708fd5880a929e5e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill in the MRT config struct with the default settings.  <a href="#gad30aa85105a47b708fd5880a929e5e84">More...</a><br/></td></tr>
-<tr class="separator:gad30aa85105a47b708fd5880a929e5e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f4d38afa34e99ba521d9ca08be06355"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga8f4d38afa34e99ba521d9ca08be06355">MRT_SetupChannelMode</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, const <a class="el" href="a00051.html#gaff791fb43331fc1ae8f4e0d9003ac286">mrt_timer_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga8f4d38afa34e99ba521d9ca08be06355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up an MRT channel mode.  <a href="#ga8f4d38afa34e99ba521d9ca08be06355">More...</a><br/></td></tr>
-<tr class="separator:ga8f4d38afa34e99ba521d9ca08be06355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7ec529b7e632085d191bc1c772efaa2e">OTFAD_GetDefaultConfig</a> (<a class="el" href="a00051.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga7ec529b7e632085d191bc1c772efaa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga7ec529b7e632085d191bc1c772efaa2e">More...</a><br/></td></tr>
+<tr class="separator:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga50c3cc55c76ff1feacb5291ff2428a6c">OTFAD_Init</a> (OTFAD_Type *base, const <a class="el" href="a00051.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga50c3cc55c76ff1feacb5291ff2428a6c">More...</a><br/></td></tr>
+<tr class="separator:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a04f4e827eaee49fc2dc31e54d05397"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga8a04f4e827eaee49fc2dc31e54d05397">OTFAD_Deinit</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the OTFAD. <br/></td></tr>
+<tr class="separator:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupt Interface</h2></td></tr>
-<tr class="memitem:gae875817838659e596dc1cb1527c948c3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gae875817838659e596dc1cb1527c948c3">MRT_EnableInterrupts</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:gae875817838659e596dc1cb1527c948c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the MRT interrupt.  <a href="#gae875817838659e596dc1cb1527c948c3">More...</a><br/></td></tr>
-<tr class="separator:gae875817838659e596dc1cb1527c948c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a8066680089523fa602dbe58b0c0505"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7a8066680089523fa602dbe58b0c0505">MRT_DisableInterrupts</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga7a8066680089523fa602dbe58b0c0505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected MRT interrupt.  <a href="#ga7a8066680089523fa602dbe58b0c0505">More...</a><br/></td></tr>
-<tr class="separator:ga7a8066680089523fa602dbe58b0c0505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga2e666900eef9bdbd9d9e587d2b7ca2c2">MRT_GetEnabledInterrupts</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled MRT interrupts.  <a href="#ga2e666900eef9bdbd9d9e587d2b7ca2c2">More...</a><br/></td></tr>
-<tr class="separator:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Status</h2></td></tr>
+<tr class="memitem:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga97f6956807f1b567e8cf98a2306a4b1f">OTFAD_GetOperateMode</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get operate mode.  <a href="#ga97f6956807f1b567e8cf98a2306a4b1f">More...</a><br/></td></tr>
+<tr class="separator:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7760cfc19871898542641394ca4526d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac7760cfc19871898542641394ca4526d">OTFAD_GetStatus</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:gac7760cfc19871898542641394ca4526d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get status.  <a href="#gac7760cfc19871898542641394ca4526d">More...</a><br/></td></tr>
+<tr class="separator:gac7760cfc19871898542641394ca4526d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status Interface</h2></td></tr>
-<tr class="memitem:gafa8493a0faee1cc356da26ca99a54da8"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gafa8493a0faee1cc356da26ca99a54da8">MRT_GetStatusFlags</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:gafa8493a0faee1cc356da26ca99a54da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the MRT status flags.  <a href="#gafa8493a0faee1cc356da26ca99a54da8">More...</a><br/></td></tr>
-<tr class="separator:gafa8493a0faee1cc356da26ca99a54da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga959db20281cfce080c684bd94f667799"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga959db20281cfce080c684bd94f667799">MRT_ClearStatusFlags</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga959db20281cfce080c684bd94f667799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the MRT status flags.  <a href="#ga959db20281cfce080c684bd94f667799">More...</a><br/></td></tr>
-<tr class="separator:ga959db20281cfce080c684bd94f667799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Read and Write the timer period</h2></td></tr>
-<tr class="memitem:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga57f3d18e0ec88a5eb04b3282e0f3dc95">MRT_UpdateTimerPeriod</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t count, bool immediateLoad)</td></tr>
-<tr class="memdesc:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to update the timer period in units of count.  <a href="#ga57f3d18e0ec88a5eb04b3282e0f3dc95">More...</a><br/></td></tr>
-<tr class="separator:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7c0bbb20b4abd7450f860277ef9d8a20">MRT_GetCurrentTimerCount</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current timer counting value.  <a href="#ga7c0bbb20b4abd7450f860277ef9d8a20">More...</a><br/></td></tr>
-<tr class="separator:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Timer Start and Stop</h2></td></tr>
-<tr class="memitem:ga388dd5041e6c179d637e17cd6e5a607e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga388dd5041e6c179d637e17cd6e5a607e">MRT_StartTimer</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t count)</td></tr>
-<tr class="memdesc:ga388dd5041e6c179d637e17cd6e5a607e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer counting.  <a href="#ga388dd5041e6c179d637e17cd6e5a607e">More...</a><br/></td></tr>
-<tr class="separator:ga388dd5041e6c179d637e17cd6e5a607e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7620866a54acdcc17abab2b46a94dc6c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7620866a54acdcc17abab2b46a94dc6c">MRT_StopTimer</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga7620866a54acdcc17abab2b46a94dc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer counting.  <a href="#ga7620866a54acdcc17abab2b46a94dc6c">More...</a><br/></td></tr>
-<tr class="separator:ga7620866a54acdcc17abab2b46a94dc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Get &amp; release channel</h2></td></tr>
-<tr class="memitem:ga320ba098c93a30174254eb763dd37dde"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga320ba098c93a30174254eb763dd37dde">MRT_GetIdleChannel</a> (MRT_Type *base)</td></tr>
-<tr class="memdesc:ga320ba098c93a30174254eb763dd37dde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the available channel.  <a href="#ga320ba098c93a30174254eb763dd37dde">More...</a><br/></td></tr>
-<tr class="separator:ga320ba098c93a30174254eb763dd37dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga8e55bb859e4f9b98ea8ec580ed7b106a">MRT_ReleaseChannel</a> (MRT_Type *base, <a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release the channel when the timer is using the multi-task mode.  <a href="#ga8e55bb859e4f9b98ea8ec580ed7b106a">More...</a><br/></td></tr>
-<tr class="separator:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+functional</h2></td></tr>
+<tr class="memitem:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga49d9425e4b8a8d626be9713e5a7c9537">OTFAD_SetEncryptionConfig</a> (OTFAD_Type *base, const <a class="el" href="a00051.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module set encryption configuration.  <a href="#ga49d9425e4b8a8d626be9713e5a7c9537">More...</a><br/></td></tr>
+<tr class="separator:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga98b5cbfb4a1e6a8fe8af63df3965161d">OTFAD_GetEncryptionConfig</a> (OTFAD_Type *base, <a class="el" href="a00051.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get encryption configuration.  <a href="#ga98b5cbfb4a1e6a8fe8af63df3965161d">More...</a><br/></td></tr>
+<tr class="separator:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga874fd2f27989b88104253600094be09a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga874fd2f27989b88104253600094be09a">OTFAD_HitDetermination</a> (OTFAD_Type *base, uint32_t address, uint8_t *contextIndex)</td></tr>
+<tr class="memdesc:ga874fd2f27989b88104253600094be09a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module do hit determination.  <a href="#ga874fd2f27989b88104253600094be09a">More...</a><br/></td></tr>
+<tr class="separator:ga874fd2f27989b88104253600094be09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00402" id="a00402"></a>
+<a name="a00401" id="a00401"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _mrt_config</td>
+          <td class="memname">struct _otfad_encryption_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration settings for the MRT peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00051.html#gad30aa85105a47b708fd5880a929e5e84" title="Fill in the MRT config struct with the default settings. ">MRT_GetDefaultConfig()</a> function and pass a pointer to your config structure instance.</p>
-<p>The config struct can be made const so it resides in flash </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:adf44f75ebc1e4c27ed0cf88c03c122d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf44f75ebc1e4c27ed0cf88c03c122d9"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#adf44f75ebc1e4c27ed0cf88c03c122d9">enableMultiTask</a></td></tr>
-<tr class="memdesc:adf44f75ebc1e4c27ed0cf88c03c122d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Timers run in multi-task mode; false: Timers run in hardware status mode <br/></td></tr>
-<tr class="separator:adf44f75ebc1e4c27ed0cf88c03c122d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb78fa06289056ac14f0fc005a1668a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cb78fa06289056ac14f0fc005a1668a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a1cb78fa06289056ac14f0fc005a1668a">valid</a></td></tr>
+<tr class="memdesc:a1cb78fa06289056ac14f0fc005a1668a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context is valid or not. <br/></td></tr>
+<tr class="separator:a1cb78fa06289056ac14f0fc005a1668a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb19041cc58492f8a017804a4df4dce8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb19041cc58492f8a017804a4df4dce8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#acb19041cc58492f8a017804a4df4dce8">AESdecryption</a></td></tr>
+<tr class="memdesc:acb19041cc58492f8a017804a4df4dce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES decryption enable. <br/></td></tr>
+<tr class="separator:acb19041cc58492f8a017804a4df4dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b1429dd23d029a4f2836f8339c55b9e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a9b1429dd23d029a4f2836f8339c55b9e">readOnly</a></td></tr>
+<tr class="memdesc:a9b1429dd23d029a4f2836f8339c55b9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write attribute for the entire set of context registers <br/></td></tr>
+<tr class="separator:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac51567d3c9f496bcecedd3e5cfe328f4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac51567d3c9f496bcecedd3e5cfe328f4">contextIndex</a></td></tr>
+<tr class="memdesc:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context index. <br/></td></tr>
+<tr class="separator:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab87136c486c1734105d8d43fa946be43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab87136c486c1734105d8d43fa946be43"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ab87136c486c1734105d8d43fa946be43">startAddr</a></td></tr>
+<tr class="memdesc:ab87136c486c1734105d8d43fa946be43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address. <br/></td></tr>
+<tr class="separator:ab87136c486c1734105d8d43fa946be43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac828c03229990cbc659bca3ff7ac80ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac828c03229990cbc659bca3ff7ac80ec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac828c03229990cbc659bca3ff7ac80ec">endAddr</a></td></tr>
+<tr class="memdesc:ac828c03229990cbc659bca3ff7ac80ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">End address. <br/></td></tr>
+<tr class="separator:ac828c03229990cbc659bca3ff7ac80ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6427bccbb63e1f833102933d8e4940a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6427bccbb63e1f833102933d8e4940a2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6427bccbb63e1f833102933d8e4940a2">key</a> [4]</td></tr>
+<tr class="memdesc:a6427bccbb63e1f833102933d8e4940a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption key. <br/></td></tr>
+<tr class="separator:a6427bccbb63e1f833102933d8e4940a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a4171419d04f3e330ddd5781432cec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4a4171419d04f3e330ddd5781432cec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#af4a4171419d04f3e330ddd5781432cec">counter</a> [2]</td></tr>
+<tr class="memdesc:af4a4171419d04f3e330ddd5781432cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption counter. <br/></td></tr>
+<tr class="separator:af4a4171419d04f3e330ddd5781432cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gadb656916391d01109e84f6e5d97fd5c3"></a>
+<a name="a00400" id="a00400"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00051.html#a00402">_mrt_config</a>  <a class="el" href="a00051.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a></td>
+          <td class="memname">struct _otfad_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This structure holds the configuration settings for the MRT peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00051.html#gad30aa85105a47b708fd5880a929e5e84" title="Fill in the MRT config struct with the default settings. ">MRT_GetDefaultConfig()</a> function and pass a pointer to your config structure instance.</p>
-<p>The config struct can be made const so it resides in flash </p>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74de234f0a7a7e7f1b292878cb823dfc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a74de234f0a7a7e7f1b292878cb823dfc">forceSVM</a></td></tr>
+<tr class="memdesc:a74de234f0a7a7e7f1b292878cb823dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into SVM after a write. <br/></td></tr>
+<tr class="separator:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe2b6482b0a8e35e6562b2ed10d3b9d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#acfe2b6482b0a8e35e6562b2ed10d3b9d">forceLDM</a></td></tr>
+<tr class="memdesc:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into LDM after a write. <br/></td></tr>
+<tr class="separator:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2865c0afcc93d19ad54ec6f440ca46bf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a2865c0afcc93d19ad54ec6f440ca46bf">restrictedRegAccess</a></td></tr>
+<tr class="memdesc:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricted register access enable. <br/></td></tr>
+<tr class="separator:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5506b60d77173b44913cc06390b753ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5506b60d77173b44913cc06390b753ea"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a5506b60d77173b44913cc06390b753ea">enableOTFAD</a></td></tr>
+<tr class="memdesc:a5506b60d77173b44913cc06390b753ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD has decryption enabled. <br/></td></tr>
+<tr class="separator:a5506b60d77173b44913cc06390b753ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga20f3f7f4a4d28843e4dcba42fe074de4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_OTFAD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga05660f6ec5e7c0ac6204165d7ab9bf35"></a>
+<a class="anchor" id="gafa9be5679ab03d785820f2474c5ccc6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">_mrt_chnl</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35a27e83d437e2798b19c59c2af4d99e1dc"></a>kMRT_Channel_0</em>&nbsp;</td><td class="fielddoc">
-<p>MRT channel number 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafa9be5679ab03d785820f2474c5ccc6eab86672f372b394bddf19bc570929597c"></a>kStatus_OTFAD_ResRegAccessMode</em>&nbsp;</td><td class="fielddoc">
+<p>Restricted register mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35a44b7807f36fe0a21240e721d46d8f9d7"></a>kMRT_Channel_1</em>&nbsp;</td><td class="fielddoc">
-<p>MRT channel number 1. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggafa9be5679ab03d785820f2474c5ccc6eada2a68470d9b60529fde6beab292e72f"></a>kStatus_OTFAD_AddressError</em>&nbsp;</td><td class="fielddoc">
+<p>End address less than start address. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35a17597fb66d9b1d3e97b318db79267f52"></a>kMRT_Channel_2</em>&nbsp;</td><td class="fielddoc">
-<p>MRT channel number 2. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggafa9be5679ab03d785820f2474c5ccc6ea94765e8e9e448cfa441e2134f87a842f"></a>kStatus_OTFAD_RegionOverlap</em>&nbsp;</td><td class="fielddoc">
+<p>the OTFAD does not support any form of memory region overlap, for system accesses that hit in multiple contexts or no contexts, the fetched data is simply bypassed </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35af57e6e009258a71bc3a2890aedff34b3"></a>kMRT_Channel_3</em>&nbsp;</td><td class="fielddoc">
-<p>MRT channel number 3. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggafa9be5679ab03d785820f2474c5ccc6eab98da10f5a46caedb11ea21bcb4b6328"></a>kStatus_OTFAD_RegionMiss</em>&nbsp;</td><td class="fielddoc">
+<p>For accesses that hit in a single context, but not the selected one. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gae772c3f1dc986d55a787b987f731b389"></a>
+<a class="anchor" id="gae6dceca96ec2c7a1b4aa211264a87ef6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#gae772c3f1dc986d55a787b987f731b389">_mrt_timer_mode</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae772c3f1dc986d55a787b987f731b389a6b415c060dc09ed293ec3dda829cb257"></a>kMRT_RepeatMode</em>&nbsp;</td><td class="fielddoc">
-<p>Repeat Interrupt mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6a289054cf51b8d6cb3c32a87884400e17"></a>kOTFAD_Context_0</em>&nbsp;</td><td class="fielddoc">
+<p>context 0 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae772c3f1dc986d55a787b987f731b389abe4ba0a30bc09f1921a0504eb826b3dc"></a>kMRT_OneShotMode</em>&nbsp;</td><td class="fielddoc">
-<p>One-shot Interrupt mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6abe9a603f23afef05bfdeb1583713f336"></a>kOTFAD_Context_1</em>&nbsp;</td><td class="fielddoc">
+<p>context 1 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae772c3f1dc986d55a787b987f731b389add9f55173bb54f623c955c29c22dd5b2"></a>kMRT_OneShotStallMode</em>&nbsp;</td><td class="fielddoc">
-<p>One-shot stall mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6a3769e4cee63954e3dfaceea80109ce08"></a>kOTFAD_Context_2</em>&nbsp;</td><td class="fielddoc">
+<p>context 2 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6ad32231e169446492d32c3674354dbf4d"></a>kOTFAD_Context_3</em>&nbsp;</td><td class="fielddoc">
+<p>context 3 </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga854d01b9575db5b6f0f7aaad49cf0c7d"></a>
+<a class="anchor" id="ga56a0f36da7f9eaaf54bd05cc2bf49173"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">_mrt_interrupt_enable</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga854d01b9575db5b6f0f7aaad49cf0c7da2a5e8ee568da2c888093b732f2157ea5"></a>kMRT_TimerInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Timer interrupt enable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a46b06bacd1a8297969a3a61810b5366f"></a>kOTFAD_NRM</em>&nbsp;</td><td class="fielddoc">
+<p>Normal Mode. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga13878b183833475306c8aabb81391a8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga13878b183833475306c8aabb81391a8a">_mrt_status_flags</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga13878b183833475306c8aabb81391a8aa6942598faf3aef148a850f8850cf01c3"></a>kMRT_TimerInterruptFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Timer interrupt flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173afa7c009b2feed9501056ff7ef74bec34"></a>kOTFAD_SVM</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation Mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga13878b183833475306c8aabb81391a8aa745c62687191197b48b35dbd1aac40db"></a>kMRT_TimerRunFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates state of the timer. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173afe2dfe963d9f93d97d2f7ebfcc3ccc96"></a>kOTFAD_LDM</em>&nbsp;</td><td class="fielddoc">
+<p>Logically Disabled Mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga44091408531a61dfac7c4ee4982be317"></a>
+<a class="anchor" id="ga7ec529b7e632085d191bc1c772efaa2e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MRT_Init </td>
+          <td class="memname">void OTFAD_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga50c3cc55c76ff1feacb5291ff2428a6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTFAD_Init </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00051.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00051.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -428,40 +423,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the MRT driver.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to user's MRT config structure. If MRT has MULTITASK bit field in MODCFG reigster, param config is useless. </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5d988ee09b604ab28f1b37320ee8d2d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MRT_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad30aa85105a47b708fd5880a929e5e84"></a>
+<a class="anchor" id="ga97f6956807f1b567e8cf98a2306a4b1f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -469,503 +441,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void MRT_GetDefaultConfig </td>
+          <td class="memname">static uint32_t OTFAD_GetOperateMode </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00051.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The default values are: </p>
-<div class="fragment"><div class="line">*     config-&gt;enableMultiTask = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to user's MRT config structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8f4d38afa34e99ba521d9ca08be06355"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MRT_SetupChannelMode </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00051.html#gaff791fb43331fc1ae8f4e0d9003ac286">mrt_timer_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Channel that is being configured. </td></tr>
-    <tr><td class="paramname">mode</td><td>Timer mode to use for the channel. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae875817838659e596dc1cb1527c948c3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MRT_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00051.html#ga35fd7f67352e6660946fe980fcd4fc5d" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a8066680089523fa602dbe58b0c0505"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MRT_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00051.html#ga35fd7f67352e6660946fe980fcd4fc5d" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2e666900eef9bdbd9d9e587d2b7ca2c2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MRT_GetEnabledInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00051.html#ga35fd7f67352e6660946fe980fcd4fc5d" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gafa8493a0faee1cc356da26ca99a54da8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MRT_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00051.html#ga42f664094e65ac53728a8bb0dea0d641" title="List of MRT status flags. ">mrt_status_flags_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga959db20281cfce080c684bd94f667799"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MRT_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00051.html#ga42f664094e65ac53728a8bb0dea0d641" title="List of MRT status flags. ">mrt_status_flags_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga57f3d18e0ec88a5eb04b3282e0f3dc95"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MRT_UpdateTimerPeriod </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>immediateLoad</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The new value will be immediately loaded or will be loaded at the end of the current time interval. For one-shot interrupt mode the new value will be immediately loaded.</p>
-<dl class="section note"><dt>Note</dt><dd>User can call the utility macros provided in fsl_common.h to convert to ticks</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">count</td><td>Timer period in units of ticks </td></tr>
-    <tr><td class="paramname">immediateLoad</td><td>true: Load the new value immediately into the TIMER register; false: Load the new value at the end of current timer interval </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7c0bbb20b4abd7450f860277ef9d8a20"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MRT_GetCurrentTimerCount </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
-<dl class="section note"><dt>Note</dt><dd>User can call the utility macros provided in fsl_common.h to convert ticks to usec or msec</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Current timer counting value in ticks </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga388dd5041e6c179d637e17cd6e5a607e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MRT_StartTimer </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>After calling this function, timers load period value, counts down to 0 and depending on the timer mode it will either load the respective start value again or stop.</p>
-<dl class="section note"><dt>Note</dt><dd>User can call the utility macros provided in fsl_common.h to convert to ticks</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
-    <tr><td class="paramname">count</td><td>Timer period in units of ticks. Count can contain the LOAD bit, which control the force load feature. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7620866a54acdcc17abab2b46a94dc6c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MRT_StopTimer </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function stops the timer from counting.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga320ba098c93a30174254eb763dd37dde"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MRT_GetIdleChannel </td>
-          <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -976,17 +454,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the lowest available channel number.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8e55bb859e4f9b98ea8ec580ed7b106a"></a>
+<a class="anchor" id="gac7760cfc19871898542641394ca4526d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -994,21 +471,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void MRT_ReleaseChannel </td>
+          <td class="memname">static uint32_t OTFAD_GetStatus </td>
           <td>(</td>
-          <td class="paramtype">MRT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1017,14 +484,121 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </tr>
 </table>
 </div><div class="memdoc">
-<p>In multi-task mode, the INUSE flags allow more control over when MRT channels are released for further use. The user can hold on to a channel acquired by calling <a class="el" href="a00051.html#ga320ba098c93a30174254eb763dd37dde" title="Find the available channel. ">MRT_GetIdleChannel()</a> for as long as it is needed and release it by calling this function. This removes the need to ask for an available channel for every use.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ga49d9425e4b8a8d626be9713e5a7c9537"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_SetEncryptionConfig </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00051.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga98b5cbfb4a1e6a8fe8af63df3965161d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_GetEncryptionConfig </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga874fd2f27989b88104253600094be09a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_HitDetermination </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>contextIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the physical address space assigned to the QuadSPI(FlexSPI) module. </td></tr>
+    <tr><td class="paramname">contextIndex</td><td>hitted context region index. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status, such as kStatus_Success or kStatus_OTFAD_ResRegAccessMode. </dd></dl>
 
 </div>
 </div>

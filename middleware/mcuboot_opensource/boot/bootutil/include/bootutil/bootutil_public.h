@@ -39,9 +39,11 @@
 #define H_BOOTUTIL_PUBLIC
 
 #include <inttypes.h>
+#include <stdbool.h>
 #include <string.h>
 #include <flash_map_backend/flash_map_backend.h>
 #include <mcuboot_config/mcuboot_config.h>
+#include <bootutil/image.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -83,8 +85,10 @@ extern "C" {
 
 #ifdef MCUBOOT_BOOT_MAX_ALIGN
 
+#if defined(MCUBOOT_SWAP_USING_MOVE) || defined(MCUBOOT_SWAP_USING_SCRATCH)
 _Static_assert(MCUBOOT_BOOT_MAX_ALIGN >= 8 && MCUBOOT_BOOT_MAX_ALIGN <= 32,
-               "Unsupported value for MCUBOOT_BOOT_MAX_ALIGN");
+               "Unsupported value for MCUBOOT_BOOT_MAX_ALIGN for SWAP upgrade modes");
+#endif
 
 #define BOOT_MAX_ALIGN          MCUBOOT_BOOT_MAX_ALIGN
 #define BOOT_MAGIC_ALIGN_SIZE   ALIGN_UP(BOOT_MAGIC_SZ, BOOT_MAX_ALIGN)
@@ -265,6 +269,45 @@ boot_read_swap_state_by_id(int flash_area_id, struct boot_swap_state *state);
 int
 boot_read_swap_state(const struct flash_area *fa,
                      struct boot_swap_state *state);
+
+/**
+ * @brief Set next image application slot by flash area pointer
+ *
+ * @param fa pointer to flash_area representing image to set for next boot;
+ * @param active should be true if @fa points to currently running image
+ *        slot, false otherwise;
+ * @param confirm confirms image; when @p active is true, this is considered
+ *        true, regardless of passed value.
+ *
+ * It is users responsibility to identify whether @p fa provided as parameter
+ * is currently running/active image and provide proper value to @p active.
+ * Failing to do so may render device non-upgradeable.
+ *
+ * Note that in multi-image setup running/active application is the one
+ * that is currently being executed by any MCU core, from the pair of
+ * slots dedicated to that MCU core. As confirming application currently
+ * running on a given slot should be, preferably, done after functional
+ * tests prove application to function correctly, it may not be a good idea
+ * to cross-confirm running images.
+ * An application should only confirm slots designated to MCU core it is
+ * running on.
+ *
+ * @return 0 on success; non-zero error code on failure.
+ */
+int
+boot_set_next(const struct flash_area *fa, bool active, bool confirm);
+
+/**
+ * Attempts to load image header from flash; verifies flash header fields.
+ *
+ * @param[in]   fa_p    flash area pointer
+ * @param[out]  hdr     buffer for image header
+ *
+ * @return              0 on success, error code otherwise
+ */
+int
+boot_image_load_header(const struct flash_area *fa_p,
+                       struct image_header *hdr);
 
 #ifdef __cplusplus
 }

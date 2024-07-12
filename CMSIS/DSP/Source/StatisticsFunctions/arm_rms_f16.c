@@ -35,18 +35,7 @@
   @ingroup groupStats
  */
 
-/**
-  @defgroup RMS Root mean square (RMS)
 
-  Calculates the Root Mean Square of the elements in the input vector.
-  The underlying algorithm is used:
-
-  <pre>
-      Result = sqrt(((pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]) / blockSize));
-  </pre>
-
-  There are separate functions for floating point, Q31, and Q15 data types.
- */
 
 /**
   @addtogroup RMS
@@ -73,7 +62,7 @@ void arm_rms_f16(
     arm_power_f16(pSrc, blockSize, &pow);
 
     /* Compute Rms and store the result in the destination */
-    arm_sqrt_f16(pow / (float16_t) blockSize, pResult);
+    arm_sqrt_f16((_Float16)pow / (_Float16) blockSize, pResult);
 }
 #else
 
@@ -135,7 +124,7 @@ void arm_rms_f16(
   }
 
   /* Compute Rms and store result in destination */
-  arm_sqrt_f16(sum / (float16_t) blockSize, pResult);
+  arm_sqrt_f16((_Float16)sum / (_Float16) blockSize, pResult);
 }
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 

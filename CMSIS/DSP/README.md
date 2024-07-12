@@ -1,75 +1,175 @@
-# README
+# CMSIS-DSP
 
-## How to use
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/CMSIS-DSP?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/CMSIS-DSP)
 
-This document is explaining how to use cmake with CMSIS-DSP.
-(It is not official so not supported. The official way to build is to use the CMSIS-Pack).
 
-The example arm_variance_f32 in folder Examples/ARM/arm_variance_f32 has been modified to also
-support cmake and is used as an example in this document.
+## About
 
-### Generating the Makefiles
+CMSIS-DSP is an optimized compute library for embedded systems (DSP is in the name for legacy reasons).
 
-To build example arm_variance_f32 with cmake, you need to create a build folder where the build will take place. Don't build in your source directory.
+It provides optimized compute kernels for Cortex-M and for Cortex-A.
 
-You can create a build folder in Examples/ARM/arm_variance_f32
+Different variants are available according to the core and most of the functions are using a vectorized version when the Helium or Neon extension is available.
 
-Once you are in the build folder, you can use cmake to generate the Makefiles.
+This repository contains the CMSIS-DSP library and several other projects:
 
-The cmake command is requiring several arguments. For instance, to build for m7 with AC6 compiler:
+* Test framework for bare metal Cortex-M or Cortex-A
+* Examples for bare metal Cortex-M
+* ComputeGraph
+* PythonWrapper
 
-    cmake -DCMAKE_PREFIX_PATH="path to compiler (folder containing the bin folder)" \
-    -DCMAKE_TOOLCHAIN_FILE="../../../../armac6.cmake" \
-    -DARM_CPU="cortex-m7" \
-    -DROOT="../../../../../.." \
-    -DPLATFORM="FVP" \
-    -G "Unix Makefiles" ..
-  
-DCMAKE_PREFIX_PATH is the path to the compiler toolchain. This folder should contain the bin folder where are the compiler executables.
+You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.
 
-ROOT is pointing to the root CMSIS folder (the one containing CMSIS and Device).
+### License Terms
 
-PLATFORM is used to select the boot code for the example. In example below, Fast Model (FVP) is selected and the boot code for fast model will be used.
+CMSIS-DSP is licensed under [Apache License 2.0](LICENSE).
 
-CMAKE_TOOLCHAIN_FILE is selecting the toolchain (ac6, ac5 or gcc). The files are in CMSIS/DSP.
+### CMSIS-DSP Kernels
 
-ARM_CPU is selecting the core. The syntax must be the one recognized by the compiler.
-(So for instance different between AC5 and AC6).
+Kernels provided by CMSIS-DSP (list not exhaustive):
 
-The final .. is the path to the directory containing the CMakeLists.txt of the variance example.
-Since the build folder is assumed to be created in arm_variance_examples then the path to CMakeLists.txt from the build folder is ..
+* Basic mathematics (real, complex, quaternion, linear algebra, fast math functions)
+* DSP (filtering)
+* Transforms (FFT, MFCC, DCT)
+* Statistics 
+* Classical ML (Support Vector Machine, Distance functions for clustering ...)
 
-To build for A5, you need to change DCMAKE_TOOLCHAIN_FILE and ARM_CPU:
+Kernels are provided with several datatypes : f64, f32, f16, q31, q15, q7.
 
-    -DCMAKE_TOOLCHAIN_FILE=../../../../armac5.cmake 
-    -DARM_CPU="cortex-a5"
+### Python wrapper
 
-To build for A5 with Neon acceleration, you need to add:
-  
-    -DNEON=ON
+A [PythonWrapper](https://pypi.org/project/cmsisdsp/) is also available and can be installed with:
 
-### Building 
+`pip install cmsisdsp`
 
-Once cmake has generated the makefiles, you can use a GNU Make to build.
+With this wrapper you can design your algorithm in Python using an API as close as possible to the C API. The wrapper is compatible with NumPy. The wrapper is supporting fixed point arithmetic. This wrapper works in google colab.
 
-    make VERBOSE=1
+The goal is to make it easier to move from a design to a final implementation in C.
 
-### Running
+### Compute Graph
 
-The generated executable can be run on a fast model. 
-For instance, if you built for m7, you could just do:
+CMSIS-DSP is also providing an experimental [static scheduler for compute graph](ComputeGraph/README.md) to describe streaming solutions:
 
-    FVP_MPS2_Cortex-M7.exe -a arm_variance_example
+* You define your compute graph in Python
+* A static and deterministic schedule (computed by the Python script) is generated
+* The static schedule can be run on the device with low overhead
 
-The final executable has no extension in the filename. 
+The Python scripts for the static scheduler generator are part of the CMSIS-DSP Python wrapper. 
 
-## Building only the CMSIS-DSP library
+The header files are part of the CMSIS-DSP pack (version 1.10.2 and above).
 
-If you want to build only the CMSIS-DSP library and don't link with any boot code then you'll need to write a specific cmake.
+The Compute Graph makes it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
 
-Create a folder BuildCMSISOnly.
+## Support / Contact
 
-Inside the folder, create a CMakeLists.txt with the following content:
+For any questions or to reach the CMSIS-DSP  team, please create a new issue in https://github.com/ARM-software/CMSIS-DSP/issues
+
+## Table of  content
+
+* [Building for speed](#building-for-speed)
+  * [Options to use](#options-to-use)
+  * [Options to avoid](#options-to-avoid)
+* [Half float support](#half-float-support)
+* [How to build](#how-to-build)
+  * [How to build with MDK or Open CMSIS-Pack](#how-to-build-with-mdk-or-open-cmsis-pack)
+  * [How to build with Make](#how-to-build-with-make)
+  * [How to build with cmake](#how-to-build-with-cmake)
+  * [How to build with any other build system](#how-to-build-with-any-other-build-system)
+  * [How to build for aarch64](#how-to-build-for-aarch64)
+* [Code size](#code-size)
+* [Folders and files](#folders-and-files)
+  * [Folders](#folders)
+  * [Files](#files)
+
+## Building for speed
+
+CMSIS-DSP is used when you need performance. As consequence CMSIS-DSP should be compiled with the options giving the best performance:
+
+### Options to use
+
+* `-Ofast` must be used for best performances.
+* When using Helium it is strongly advised to use `-Ofast`
+* `GCC` is currently not giving good performances when targeting Helium. You should use the Arm compiler
+
+When float are used, then the fpu should be selected to ensure that the compiler is not using a software float emulation.
+
+When building with Helium support, it will be automatically detected by CMSIS-DSP. For Neon, it is not the case and you must enable the option `-DARM_MATH_NEON` for the C compilation. With `cmake` this option is controlled with `-DNEON=ON`.
+
+* `-DLOOPUNROLL=ON` can also be used when compiling with cmake
+* It corresponds to the C options `-DARM_MATH_LOOPUNROLL`
+
+Compilers are doing unrolling. So this option may not be needed but it is highly dependent on the compiler. With some compilers, this option is needed to get better performances.
+
+Speed of memory is important. If you can map the data and the constant tables used by CMSIS-DSP in `DTCM` memory then it is better. If you have a cache, enable it.
+
+### Options to avoid
+
+* `-fno-builtin`
+* `-ffreestanding` because it enables previous options
+
+The library is doing some type [punning](https://en.wikipedia.org/wiki/Type_punning) to process word 32 from memory as a pair of `q15` or a quadruple of `q7`.  Those type manipulations are done through `memcpy` functions. Most compilers should be able to optimize out those function calls when the length to copy is small (4 bytes).
+
+This optimization will **not** occur when `-fno-builtin` is used and it will have a **very bad** impact on the performances.
+
+Some compiler may also require the use of option `-munaligned-access` to specify that unaligned accesses are used.
+
+## Half float support
+
+`f16` data type (half float) has been added to the library. It is useful only if your Cortex has some half float hardware acceleration (for instance with Helium extension). If you don't need `f16`, you should disable it since it may cause compilation problems. Just define `-DDISABLEFLOAT16` when building.
+
+## How to build
+
+You can build CMSIS-DSP with the open CMSIS-Pack, or cmake, or Makefile and it is also easy to build if you use any other build tool.
+
+### How to build with MDK or Open CMSIS-Pack
+
+The standard way to build is by using the CMSIS pack technology. CMSIS-DSP is available as a pack.
+
+This pack technology is supported by some IDE like [Keil MDK](https://www.keil.com/download/product/) or [Keil studio](https://www.keil.arm.com/).
+
+You can also use those packs using the [Open CMSIS-Pack](https://www.open-cmsis-pack.org/) technology and from command line on any platform.
+
+You should first install the tools from https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools
+
+You can get the CMSIS-Toolbox which is containing the package installer, cmsis build and cmsis project manager. Here is some documentation:
+
+* Documentation about [CMSIS Build](https://open-cmsis-pack.github.io/devtools/buildmgr/latest/index.html)
+* Documentation about [CMSIS Pack](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html)
+* Documentation about [CMSIS Project manager](https://github.com/Open-CMSIS-Pack/devtools/blob/main/tools/projmgr/docs/Manual/Overview.md)
+
+Once you have installed the tools, you'll need to download the pack index using the `cpackget` tool.
+
+Then, you'll need to convert a solution file into `.cprj`. For instance, for the CMSIS-DSP Examples, you can go to: 
+
+`Examples/cmsis_build` 
+
+and then type 
+
+`csolution convert -s examples.csolution_ac6.yml`
+
+This command processes the `examples.csolution_ac6.yml` describing how to build the examples for several platforms. It will generate lots of `.cprj` files that can be built with `cbuild`.
+
+If you want to build the `FFT` example for the `Corstone-300` virtual hardware platform, you could just do:
+
+`cbuild "fftbin.Release+VHT-Corstone-300.cprj"`
+
+### How to build with Make
+
+There is an example `Makefile` in `Source`.
+
+In each source folder (like `BasicMathFunctions`), you'll see files with no `_datatype` suffix (like `BasicMathFunctions.c` and `BasicMathFunctionsF16.c`).
+
+Those files are all you need in your makefile. They are including all other C files from the source folders.
+
+Then, for the includes you'll need to add the paths: `Include`, `PrivateInclude` and, since there is a dependency to CMSIS Core, `Core/Include` from `CMSIS_5/CMSIS`.
+
+If you are building for `Cortex-A` and want to use Neon, you'll also need to include `ComputeLibrary/Include` and the source file in `ComputeLibrary/Source`.
+
+### How to build with cmake
+
+Create a `CMakeLists.txt` and inside add a project.
+
+Add CMSIS-DSP as a subdirectory. The variable `CMSISDSP` is the path to the CMSIS-DSP repository in below example.
 
 ```cmake
 cmake_minimum_required (VERSION 3.14)
@@ -77,75 +177,130 @@ cmake_minimum_required (VERSION 3.14)
 # Define the project
 project (testcmsisdsp VERSION 0.1)
 
-# Define the path to CMSIS-DSP (ROOT is defined on command line when using cmake)
-set(DSP ${ROOT}/CMSIS/DSP)
-
-# Add DSP folder to module path
-list(APPEND CMAKE_MODULE_PATH ${DSP})
-
-########### 
-#
-# CMSIS DSP
-#
-
-# Load CMSIS-DSP definitions. Libraries will be built in bin_dsp
-add_subdirectory(${DSP}/Source bin_dsp)
+add_subdirectory(${CMSISDSP}/Source bin_dsp)
 ```
 
-Create a build folder inside the BuildCMSISOnly folder.
+CMSIS-DSP is dependent on the CMSIS Core includes. So, you should define `CMSISCORE` on the cmake command line. The path used by CMSIS-DSP will be `${CMSISCORE}/Include`.
 
-Inside the build folder, type following cmake command
+You should also set the compilation options to use to build the library.
 
-    cmake -DROOT="path to CMSIS Root" \
-      -DCMAKE_PREFIX_PATH="path to compiler (folder containing the bin folder)" \
-      -DCMAKE_TOOLCHAIN_FILE="../../CMSIS_ROOT/CMSIS/DSP/armac6.cmake" \
-      -DARM_CPU="cortex-m7" \
-      -G "Unix Makefiles" ..
+If you build for Helium, you should use any of the option `MVEF`, `MVEI` or `HELIUM`.
 
-Now you can make:
+If you build for Neon, use `NEON` and/or `NEONEXPERIMENTAL`.
+
+#### Launching the build
+
+Once cmake has generated the makefiles, you can use a GNU Make to build.
 
     make VERBOSE=1
 
-When the build has finished, you'll have a bin_dsp folder inside your build folder.
-Inside bin_dsp, you'll have a folder per CMSIS-DSP Folder : BasicMathFunctions ...
+### How to build with any other build system
 
-Inside each of those folders, you'll  have a library : libCMSISDSPBasicMath.a ...
+You need the following folders:
 
+* Source
+* Include
+* PrivateInclude
+* ComputeLibrary (only if you target Neon)
 
+In `Source` subfolders, you may either build all of the source file with a datatype suffix (like `_f32.c`), or just compile the files without a datatype suffix. For instance for `BasicMathFunctions`, you can build all the C files except `BasicMathFunctions.c` and `BasicMathFunctionsF16.c`, or you can just build those two files (they are including all of the other C files of the folder).
 
-## Compilation symbols for tables
+`f16` files are not mandatory. You can build with `-DDISABLEFLOAT16`
 
-Some new compilations symbols have been introduced to avoid including all the tables if they are not needed.
+### How to build for aarch64
 
-If no new symbol is defined, everything will behave as usual. If ARM_DSP_CONFIG_TABLES is defined then the new symbols will be taken into account.
+The intrinsics defined in `Core_A/Include` are not available on recent Cortex-A processors.
 
-Then you can select all FFT tables or all interpolation tables by defining following compilation symbols:
+But you can still build for those Cortex-A cores and benefit from the Neon intrinsics.
 
-* ARM_ALL_FFT_TABLES : All FFT tables are included 
-* ARM_ALL_FAST_TABLES : All interpolation tables are included
+You need to build with `-D__GNUC_PYTHON__` on the compiler command line. This flag was introduced for building the Python wrapper and is disabling the use of CMSIS Core includes.
 
-If more control is required, there are other symbols but it is not always easy to know which ones need to be enabled for a given use case.
+When this flag is enabled, CMSIS-DSP is defining a few macros used in the library for compiler portability:
 
-If you use cmake, it is easy since high level options are defined and they will select the right compilation symbols. If you don't use cmake, you can just look at fft.cmake to see which compilation symbols are needed.
+```C
+#define  __ALIGNED(x) __attribute__((aligned(x)))
+#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
+#define __STATIC_INLINE static inline
+```
 
-For instance, if you want to use the arm_rfft_fast_f32, in fft.cmake you'll see an option RFFT_FAST_F32_32.
+If the compiler you are using is requiring different definitions, you can add them to `arm_math_types.h` in the `Include` folder of the library. MSVC and XCode are already supported and in those case, you don't need to define `-D__GNUC_PYTHON__`
 
-We see that following symbols need to be enabled :
+Then, you need to define `-DARM_MATH_NEON`
 
-* ARM_TABLE_TWIDDLECOEF_F32_16 
-* ARM_TABLE_BITREVIDX_FLT_16
-* ARM_TABLE_TWIDDLECOEF_RFFT_F32_32
-* ARM_TABLE_TWIDDLECOEF_F32_16
+For cmake the equivalent options are:
 
-In addition to that, ARM_DSP_CONFIG_TABLES must be enabled and finally ARM_FFT_ALLOW_TABLES must also be defined.
+* `-DHOST=ON`
+* `-DNEON=ON`
 
-This last symbol is required because if no transform functions are included in the build, then by default all flags related to FFT tables are ignored.
+cmake is automatically including the `ComputeLibrary` folder. If you are using a different build, you need to include this folder too to build with Neon support.
 
+## Code size
 
-## Bit Reverse Tables CMSIS DSP
+Previous versions of the library were using compilation directives to control the code size. It was too complex and not available in case CMSIS-DSP is only delivered as a static library.
 
-It is a question coming often.
+Now, the library relies again on the linker to do the code size optimization. But, this implies some constraints on the code you write and new functions had to be introduced.
 
-It is now detailed [in this github issue](https://github.com/ARM-software/CMSIS_5/issues/858)
+If you know the size of your FFT in advance, use initializations functions like `arm_cfft_init_64_f32` instead of using the generic initialization functions `arm_cfft_init_f32`. Using the generic function will prevent the linker from being able to deduce which functions and tables must be kept for the FFT and everything will be included.
 
-Someone from the community has written a [Python script to help](https://gist.github.com/rosek86/d0d709852fddf36193071d7f61987bae)
+There are similar functions for RFFT, MFCC ...
+
+If the flag `ARM_DSP_CONFIG_TABLES` is still set, you'll now get a compilation error to remind you that this flag no more have any effect on code size and that you may have to rework the initializations.
+
+## Folders and files
+
+The only folders required to build and use CMSIS-DSP Library are:
+
+* Source
+* Include
+* PrivateInclude
+* ComputeLibrary (only when using Neon)
+
+Other folders are part of different projects, tests or examples.
+
+### Folders
+
+* cmsisdsp
+  * Required to build the CMSIS-DSP PythonWrapper for the Python repository
+  * It contains all Python packages
+* ComputeLibrary:
+  * Some kernels required when building CMSIS-DSP with Neon acceleration
+* Examples:
+  * Examples of use of CMSIS-DSP on bare metal Cortex-M
+  * Require the use of CMSIS Build tools
+* Include:
+  * Include files for CMSIS-DSP
+* PrivateInclude:
+  * Some include needed to build CMSIS-DSP
+* PythonWrapper:
+  * C code for the CMSIS-DSP PythonWrapper
+  * Examples for the PythonWrapper
+* Scripts:
+  * Debugging scripts
+  * Script to generate some coefficient tables used by CMSIS-DSP
+* Compute Graph:
+  * Not needed to build CMSIS-DSP. This project is relying on CMSIS-DSP library
+  * Examples for the Compute Graph
+  * C++ templates for the Compute Graph
+  * Default (and optional) nodes
+  
+* Source:
+  * CMSIS-DSP source
+* Testing:
+  * CMSIS-DSP Test framework for bare metal Cortex-M and Cortex-A
+  * Require the use of CMSIS build tools
+
+### Files
+
+Some files are needed to generate the PythonWrapper:
+
+* PythonWrapper_README.md
+* LICENSE
+* MANIFEST.in
+* pyproject.toml
+* setup.py
+
+And we have a script to make it easier to customize the build:
+
+* cmsisdspconfig.py:
+  * Web browser UI to generate build configurations (temporary until the CMSIS-DSP configuration is reworked to be simpler and more maintainable)
+

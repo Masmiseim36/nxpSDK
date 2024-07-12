@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021, 2024 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -38,7 +38,7 @@
  * Adapter configuration
  ******************************************************************************/
 #if (defined(FMSTR_SHORT_INTR) && FMSTR_SHORT_INTR) || (defined(FMSTR_LONG_INTR) && FMSTR_LONG_INTR)
-#error The FreeMASTER RTT driver does not support interrupt mode.
+#warning "The FreeMASTER RTT driver does not support interrupt mode."
 #endif
 
 #if FMSTR_NET_AUTODISCOVERY != 0

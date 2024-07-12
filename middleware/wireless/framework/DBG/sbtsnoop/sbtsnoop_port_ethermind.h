@@ -21,7 +21,7 @@
 #warning "WARNING: SDK_DEBUGCONSOLE is disabled"
 #endif
 
-#define sbtsnoop_log_printf(...)            PRINTF(__VA_ARGS__)
+#define sbtsnoop_log_printf(...)            (void)PRINTF(__VA_ARGS__)
 #define sbtsnoop_log_scanf(...)             (void)SCANF((char *)__VA_ARGS__)
 #define sbtsnoop_get_us_timestamp           EM_get_us_timestamp
 

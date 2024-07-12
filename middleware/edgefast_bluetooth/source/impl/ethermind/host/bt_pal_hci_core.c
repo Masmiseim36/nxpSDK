@@ -298,15 +298,23 @@ static void bt_set_send_new_command(void)
 }
 
 #if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
+static void bt_set_send_iso_new(void)
+{
+	osa_status_t ret;
+	ret = OSA_EventSet(bt_dev.new_event, BT_DEV_SEND_ISO);
+	assert(KOSA_StatusSuccess == ret);
+
+	(void)ret;
+}
+
 void bt_set_send_iso(struct bt_conn *conn)
 {
-    osa_status_t ret;
+	osa_status_t ret;
 
-    ret = OSA_MsgQPut(bt_dev.iso_conn, &conn);
-    assert(KOSA_StatusSuccess == ret);
+	ret = OSA_MsgQPut(bt_dev.iso_conn, &conn);
+	assert(KOSA_StatusSuccess == ret);
 
-	ret = OSA_EventSet(bt_dev.new_event, BT_DEV_SEND_ISO);
-    assert(KOSA_StatusSuccess == ret);
+	bt_set_send_iso_new();
 
 	(void)ret;
 }
@@ -406,6 +414,7 @@ int bt_hci_cmd_send_sync(uint16_t opcode, struct net_buf *buf,
 	}
 
 	cmd(buf)->sync = (osa_semaphore_handle_t)(cmd(buf)->semaphoreHandle);
+    cmd(buf)->status = BT_HCI_ERR_UNSPECIFIED;
 
 	net_buf_put(bt_dev.cmd_tx_queue, net_buf_ref(buf));
 
@@ -509,6 +518,21 @@ uint8_t bt_get_phy(uint8_t hci_phy)
 	}
 }
 
+int bt_get_df_cte_type(uint8_t hci_cte_type)
+{
+	switch (hci_cte_type) {
+	case BT_HCI_LE_AOA_CTE:
+		return BT_DF_CTE_TYPE_AOA;
+	case BT_HCI_LE_AOD_CTE_1US:
+		return BT_DF_CTE_TYPE_AOD_1US;
+	case BT_HCI_LE_AOD_CTE_2US:
+		return BT_DF_CTE_TYPE_AOD_2US;
+	case BT_HCI_LE_NO_CTE:
+		return BT_DF_CTE_TYPE_NONE;
+	default:
+		return BT_DF_CTE_TYPE_NONE;
+	}
+}
 #if (defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U))
 static void hci_num_completed_packets(struct net_buf *buf)
 {
@@ -1610,7 +1634,8 @@ static void le_enh_conn_complete(struct net_buf *buf)
 	enh_conn_complete((struct bt_hci_evt_le_enh_conn_complete *)buf->data);
 }
 
-#if defined(CONFIG_BT_PER_ADV_RSP) || defined(CONFIG_BT_PER_ADV_SYNC_RSP)
+#if (defined(CONFIG_BT_PER_ADV_RSP) && (CONFIG_BT_PER_ADV_RSP > 0)) || \
+    (defined(CONFIG_BT_PER_ADV_SYNC_RSP) && (CONFIG_BT_PER_ADV_SYNC_RSP > 0))
 static void le_enh_conn_complete_v2(struct net_buf *buf)
 {
 	struct bt_hci_evt_le_enh_conn_complete_v2 *evt =
@@ -2317,6 +2342,9 @@ static void hci_encrypt_change(struct net_buf *buf)
             LOG_ERR("Failed to set required security level");
             bt_conn_disconnect(conn, status);
         }
+
+		/* Give the semaphore back, security level updated. */
+		(void)OSA_SemaphorePost(conn->sem_security_level_updated);
     }
 #endif /* CONFIG_BT_BREDR */
 
@@ -2630,6 +2658,32 @@ int bt_hci_register_vnd_evt_cb(bt_hci_vnd_evt_cb_t cb)
 	return 0;
 }
 #endif /* CONFIG_BT_HCI_VS_EVT_USER */
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && ((CONFIG_BT_TRANSMIT_POWER_CONTROL) > 0U))
+void bt_hci_le_transmit_power_report(struct net_buf *buf)
+{
+	struct bt_hci_evt_le_transmit_power_report *evt;
+	struct bt_conn_le_tx_power_report report;
+	struct bt_conn *conn;
+
+	evt = net_buf_pull_mem(buf, sizeof(*evt));
+	conn = bt_conn_lookup_handle(sys_le16_to_cpu(evt->handle), BT_CONN_TYPE_LE);
+	if (!conn) {
+		LOG_ERR("Unknown conn handle 0x%04X for transmit power report",
+		       sys_le16_to_cpu(evt->handle));
+		return;
+	}
+
+	report.reason = evt->reason;
+	report.phy = (enum bt_conn_le_tx_power_phy)evt->phy;
+	report.tx_power_level = evt->tx_power_level;
+	report.tx_power_level_flag = evt->tx_power_level_flag;
+	report.delta = evt->delta;
+
+	notify_tx_power_report(conn, report);
+
+	bt_conn_unref(conn);
+}
+#endif /* CONFIG_BT_TRANSMIT_POWER_CONTROL */
 
 #if (defined(CONFIG_BT_HCI_VS_EVT) && (CONFIG_BT_HCI_VS_EVT > 0))
 static const struct event_handler vs_events[] = {
@@ -2782,6 +2836,10 @@ static const struct event_handler meta_events[] = {
 	EVENT_HANDLER(BT_HCI_EVT_LE_CTE_REQUEST_FAILED, bt_hci_le_df_cte_req_failed,
 		      sizeof(struct bt_hci_evt_le_cte_req_failed)),
 #endif /* CONFIG_BT_DF_CONNECTION_CTE_REQ */
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && ((CONFIG_BT_TRANSMIT_POWER_CONTROL) > 0U))
+	EVENT_HANDLER(BT_HCI_EVT_LE_TRANSMIT_POWER_REPORT, bt_hci_le_transmit_power_report,
+		      sizeof(struct bt_hci_evt_le_transmit_power_report)),
+#endif /* CONFIG_BT_TRANSMIT_POWER_CONTROL */
 #if (defined(CONFIG_BT_PER_ADV_SYNC_RSP) && (CONFIG_BT_PER_ADV_SYNC_RSP > 0))
 	EVENT_HANDLER(BT_HCI_EVT_LE_PER_ADVERTISING_REPORT_V2, bt_hci_le_per_adv_report_v2,
 		      sizeof(struct bt_hci_evt_le_per_advertising_report_v2)),
@@ -2799,7 +2857,8 @@ static const struct event_handler meta_events[] = {
 		      sizeof(struct bt_hci_evt_le_per_adv_response_report)),
 #endif /* CONFIG_BT_PER_ADV_RSP */
 #if defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0)
-#if defined(CONFIG_BT_PER_ADV_RSP) || defined(CONFIG_BT_PER_ADV_SYNC_RSP)
+#if (defined(CONFIG_BT_PER_ADV_RSP) && (CONFIG_BT_PER_ADV_RSP > 0)) || \
+    (defined(CONFIG_BT_PER_ADV_SYNC_RSP) && (CONFIG_BT_PER_ADV_SYNC_RSP > 0))
 	EVENT_HANDLER(BT_HCI_EVT_LE_ENH_CONN_COMPLETE_V2, le_enh_conn_complete_v2,
 		      sizeof(struct bt_hci_evt_le_enh_conn_complete_v2)),
 #endif /* CONFIG_BT_PER_ADV_RSP || CONFIG_BT_PER_ADV_SYNC_RSP */
@@ -3115,22 +3174,22 @@ static void hci_tx_thread(void *param)
 
         if (BT_DEV_SEND_COMMAND & flags)
         {
-            while (true == send_cmd())
+            if (true == send_cmd())
             {
+                bt_set_send_new_command();
             }
         }
 #if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
         if (BT_DEV_SEND_ISO & flags)
         {
             struct bt_conn *conn;
-            do
-            {
-                ret = OSA_MsgQGet(bt_dev.iso_conn, &conn, osaWaitNone_c);
-                if (KOSA_StatusSuccess == ret)
-                {
-                    bt_conn_process_tx(conn);
-                }
-            } while (KOSA_StatusSuccess == ret);
+
+			ret = OSA_MsgQGet(bt_dev.iso_conn, &conn, osaWaitNone_c);
+			if (KOSA_StatusSuccess == ret)
+			{
+				bt_conn_process_tx(conn);
+				bt_set_send_iso_new();
+			}
         }
 #endif /* CONFIG_BT_ISO */
         if (BT_DEV_CONN_CHANGED & flags)
@@ -3374,6 +3433,9 @@ static int common_init(void)
 #if 0
 	}
 #endif
+    /* Set default link policy to support role switch and sniff mode */
+    BT_hci_write_default_link_policy_settings(0x05);
+
 	/* Read Local Supported Features */
 	err = bt_hci_cmd_send_sync(BT_HCI_OP_READ_LOCAL_FEATURES, NULL, &rsp);
 	if (err) {
@@ -3485,6 +3547,9 @@ static int le_set_event_mask(void)
 		     BT_FEAT_LE_PHY_CODED(bt_dev.le.features))) {
 			mask |= BT_EVT_MASK_LE_PHY_UPDATE_COMPLETE;
 		}
+		if (IS_ENABLED(CONFIG_BT_TRANSMIT_POWER_CONTROL)) {
+			mask |= BT_EVT_MASK_LE_TRANSMIT_POWER_REPORTING;
+		}
 	}
 
 	if (IS_ENABLED(CONFIG_BT_SMP) &&
@@ -3585,8 +3650,10 @@ static int le_init_iso(void)
 
 		net_buf_unref(rsp);
 	} else if (IS_ENABLED(CONFIG_BT_CONN)) {
-		LOG_WRN("Read Buffer Size V2 command is not supported."
-			"No ISO buffers will be available");
+		if (IS_ENABLED(CONFIG_BT_ISO_UNICAST) || IS_ENABLED(CONFIG_BT_ISO_BROADCASTER)) {
+			LOG_WRN("Read Buffer Size V2 command is not supported. "
+				"No ISO TX buffers will be available");
+		}
 
 		/* Read LE Buffer Size */
 		err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_READ_BUFFER_SIZE,
@@ -3832,21 +3899,20 @@ static int set_event_mask(void)
 
 #if (defined(CONFIG_BT_DEBUG) && ((CONFIG_BT_DEBUG) > 0U))
 #if LOG_ENABLE
-static const char *ver_str(uint8_t ver)
+const char *bt_hci_get_ver_str(uint8_t core_version)
 {
 	const char * const str[] = {
 		"1.0b", "1.1", "1.2", "2.0", "2.1", "3.0", "4.0", "4.1", "4.2",
 		"5.0", "5.1", "5.2", "5.3", "5.4"
 	};
 
-	if (ver < ARRAY_SIZE(str)) {
-		return str[ver];
+	if (core_version < ARRAY_SIZE(str)) {
+		return str[core_version];
 	}
 
 	return "unknown";
 }
 #endif
-
 static void bt_dev_show_info(void)
 {
 	int i;
@@ -3886,11 +3952,10 @@ static void bt_dev_show_info(void)
 #endif /* CONFIG_BT_LOG_SNIFFER_INFO */
 
 	LOG_INF("HCI: version %s (0x%02x) revision 0x%04x, manufacturer 0x%04x",
-		ver_str(bt_dev.hci_version), bt_dev.hci_version,
-		bt_dev.hci_revision, bt_dev.manufacturer);
-	LOG_INF("LMP: version %s (0x%02x) subver 0x%04x",
-		ver_str(bt_dev.lmp_version), bt_dev.lmp_version,
-		bt_dev.lmp_subversion);
+		bt_hci_get_ver_str(bt_dev.hci_version), bt_dev.hci_version, bt_dev.hci_revision,
+		bt_dev.manufacturer);
+	LOG_INF("LMP: version %s (0x%02x) subver 0x%04x", bt_hci_get_ver_str(bt_dev.lmp_version),
+		bt_dev.lmp_version, bt_dev.lmp_subversion);
 }
 #else
 static inline void bt_dev_show_info(void)
@@ -4047,9 +4112,21 @@ static void hci_vs_init(void)
 static int hci_init(void)
 {
 	int err;
-#if (defined(CONFIG_BT_HCI_SETUP) && ((CONFIG_BT_HCI_SETUP) > 0))
+
+
+#if (defined(CONFIG_BT_HCI_SETUP) && ((CONFIG_BT_HCI_SETUP) > 0U))
+	struct bt_hci_setup_params setup_params = { 0 };
+
+	bt_addr_copy(&setup_params.public_addr, BT_ADDR_ANY);
+
+#if (defined(CONFIG_BT_HCI_SET_PUBLIC_ADDR) && ((CONFIG_BT_HCI_SET_PUBLIC_ADDR) > 0U))
+	if (bt_dev.id_count > 0 && bt_dev.id_addr[BT_ID_DEFAULT].type == BT_ADDR_LE_PUBLIC) {
+		bt_addr_copy(&setup_params.public_addr, &bt_dev.id_addr[BT_ID_DEFAULT].a);
+	}
+#endif /* defined(CONFIG_BT_HCI_SET_PUBLIC_ADDR) */
+
 	if (bt_dev.drv->setup) {
-		err = bt_dev.drv->setup();
+		err = bt_dev.drv->setup(&setup_params);
 		if (err) {
 			return err;
 		}
@@ -4381,7 +4458,7 @@ static void hci_rx_thread(void* param)
 	}
 }
 #endif /* !CONFIG_BT_RECV_IS_RX_THREAD */
-
+struct net_buf *bt_buf_get_cmd_complete(k_timeout_t timeout);
 uint16_t ethermind_hci_event_callback
            (uint8_t  event_type,
             uint8_t *event_data,
@@ -4465,8 +4542,6 @@ void bt_br_acl_link_connect_req(bt_addr_t *peer, uint32_t cod)
 
 static API_RESULT ethermind_bt_on_complete ( void )
 {
-    /* Set default link policy to support role switch and sniff mode */
-    BT_hci_write_default_link_policy_settings(0x05);
 #if 0
     BT_hci_read_local_supported_features();
 #ifdef BT_LE
@@ -4881,7 +4956,7 @@ int bt_le_set_chan_map(uint8_t chan_map[5])
 	struct bt_hci_cp_le_set_host_chan_classif *cp;
 	struct net_buf *buf;
 
-	if (!IS_ENABLED(CONFIG_BT_CENTRAL)) {
+	if (!(IS_ENABLED(CONFIG_BT_CENTRAL) || IS_ENABLED(CONFIG_BT_BROADCASTER))) {
 		return -ENOTSUP;
 	}
     else

@@ -9,6 +9,7 @@
 
 /*
  * Copyright (c) 2002 CITEL Technologies Ltd.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

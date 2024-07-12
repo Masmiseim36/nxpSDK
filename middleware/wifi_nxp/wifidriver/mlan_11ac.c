@@ -14,7 +14,7 @@
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -30,7 +30,7 @@
 /********************************************************
    Local Functions
 ********************************************************/
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
 /**
  *  @brief determine the center frquency center index for bandwidth
  *         of 80 MHz and 160 MHz
@@ -206,7 +206,7 @@ static void wlan_fill_cap_info(mlan_private *priv, VHT_capa_t *vht_cap, t_u16 ba
 
     ENTER();
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     if ((bands & BAND_A) != 0U)
     {
         usr_dot_11ac_dev_cap = pmadapter->usr_dot_11ac_dev_cap_a;
@@ -218,11 +218,15 @@ static void wlan_fill_cap_info(mlan_private *priv, VHT_capa_t *vht_cap, t_u16 ba
     }
 
     vht_cap->vht_cap_info = usr_dot_11ac_dev_cap;
+#ifdef RW610
+    if (GET_VHTCAP_MAXMPDULEN(vht_cap->vht_cap_info) != 0U)
+        RESET_11ACMAXMPDULEN(vht_cap->vht_cap_info);
+#endif
 
     LEAVE();
 }
 
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
 /**
  *  @brief Set/get 11ac configuration
  *
@@ -375,7 +379,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
                 {
                     pmadapter->usr_dot_11ac_dev_cap_bg = usr_vht_cap_info;
                 }
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
                 else if (vht_cfg->band == BAND_SELECT_A)
                 {
                     pmadapter->usr_dot_11ac_dev_cap_a = usr_vht_cap_info;
@@ -384,7 +388,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
                 else
                 {
                     pmadapter->usr_dot_11ac_dev_cap_bg = usr_vht_cap_info;
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
                     pmadapter->usr_dot_11ac_dev_cap_a = usr_vht_cap_info;
 #endif
                 }
@@ -398,7 +402,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
                     vht_cfg->vht_cap_info = pmadapter->usr_dot_11ac_dev_cap_bg;
                     PRINTM(MINFO, "Get: vht cap info for 2.4GHz 0x%x\n", pmadapter->usr_dot_11ac_dev_cap_bg);
                 }
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
                 else if (vht_cfg->band == BAND_SELECT_A)
                 {
                     vht_cfg->vht_cap_info = pmadapter->usr_dot_11ac_dev_cap_a;
@@ -517,7 +521,7 @@ static mlan_status wlan_11ac_ioctl_supported_mcs_set(
                  NUM_MCS_FIELD - rx_mcs_supp);
     /* Set MCS32 with 40MHz support */
     if (ISSUPP_CHANWIDTH80(pmadapter->usr_dot_11ac_dev_cap_bg)
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
         || ISSUPP_CHANWIDTH80(pmadapter->usr_dot_11ac_dev_cap_a)
 #endif
         )
@@ -679,7 +683,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
         {0x1248, 0x15F0, 0x1860} /* NSS = 8 */
     };
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     if ((bands & BAND_AAC) != 0U)
     {
         usr_vht_cap_info    = pmadapter->usr_dot_11ac_dev_cap_a;
@@ -690,7 +694,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
 #endif
         usr_vht_cap_info    = pmadapter->usr_dot_11ac_dev_cap_bg;
         usr_dot_11n_dev_cap = pmadapter->usr_dot_11n_dev_cap_bg;
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     }
 #endif
 
@@ -1138,7 +1142,7 @@ void wlan_update_11ac_cap(mlan_private * pmpriv){
     pmpriv->usr_dot_11ac_mcs_support = pmadapter->hw_dot_11ac_mcs_support;
     pmpriv->usr_dot_11ac_dev_cap_bg =
 		pmadapter->hw_dot_11ac_dev_cap & ~DEFALUT_11AC_CAP_BEAMFORMING_RESET_MASK;
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
     pmpriv->usr_dot_11ac_dev_cap_a =
 		pmadapter->hw_dot_11ac_dev_cap & ~DEFALUT_11AC_CAP_BEAMFORMING_RESET_MASK;
 #endif
@@ -1162,7 +1166,7 @@ t_u8 wlan_11ac_bandconfig_allowed(mlan_private *pmpriv, t_u16 bss_band)
         {
             return (t_u8)(pmpriv->adapter->adhoc_start_band & BAND_GAC);
         }
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
         else if ((bss_band & BAND_A) != 0U)
         {
             return (t_u8)(pmpriv->adapter->adhoc_start_band & BAND_AAC);
@@ -1178,7 +1182,7 @@ t_u8 wlan_11ac_bandconfig_allowed(mlan_private *pmpriv, t_u16 bss_band)
         {
             return (t_u8)(pmpriv->config_bands & BAND_GAC);
         }
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
         else if ((bss_band & BAND_A) != 0U)
         {
             return (t_u8)(pmpriv->config_bands & BAND_AAC);

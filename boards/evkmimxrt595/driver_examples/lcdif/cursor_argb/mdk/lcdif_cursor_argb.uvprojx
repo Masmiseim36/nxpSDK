@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,26 +389,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdif_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdif_support.c</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -427,6 +407,26 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdif_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -494,16 +494,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lcdif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
@@ -522,6 +512,16 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -664,16 +664,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -692,6 +682,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1150,10 +1150,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1208,26 +1208,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdif_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdif_support.c</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -1246,6 +1226,26 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdif_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1313,16 +1313,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lcdif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
@@ -1341,6 +1331,16 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1483,16 +1483,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1511,6 +1501,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1969,10 +1969,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2027,26 +2027,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdif_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdif_support.c</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -2065,6 +2045,26 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdif_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2132,16 +2132,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lcdif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
@@ -2160,6 +2150,16 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2302,16 +2302,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2330,6 +2320,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2788,10 +2788,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2846,26 +2846,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdif_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdif_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdif_support.c</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -2884,6 +2864,26 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdif_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdif_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2951,16 +2951,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lcdif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
@@ -2979,6 +2969,16 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3121,16 +3121,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3149,6 +3139,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

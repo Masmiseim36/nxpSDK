@@ -50,18 +50,6 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #define LOG_WRN BT_WARN
 #endif
 
-void bt_audio_codec_cfg_to_iso_path(struct bt_iso_chan_path *path,
-				    struct bt_audio_codec_cfg *codec_cfg)
-{
-	path->pid = codec_cfg->path_id;
-	path->format = codec_cfg->id;
-	path->cid = codec_cfg->cid;
-	path->vid = codec_cfg->vid;
-	path->delay = 0; /* TODO: Add to bt_audio_codec_cfg? Use presentation delay? */
-	path->cc_len = codec_cfg->data_len;
-	path->cc = codec_cfg->data;
-}
-
 #if (defined(CONFIG_BT_BAP_UNICAST_CLIENT) && (CONFIG_BT_BAP_UNICAST_CLIENT > 0)) || \
 	(defined(CONFIG_BT_BAP_BROADCAST_SOURCE) && (CONFIG_BT_BAP_BROADCAST_SOURCE > 0)) || \
 	(defined(CONFIG_BT_BAP_BROADCAST_SINK) && (CONFIG_BT_BAP_BROADCAST_SINK > 0))
@@ -71,6 +59,10 @@ void bt_audio_codec_qos_to_iso_qos(struct bt_iso_chan_io_qos *io,
 	io->sdu = codec_qos->sdu;
 	io->phy = codec_qos->phy;
 	io->rtn = codec_qos->rtn;
+#if defined(CONFIG_BT_ISO_TEST_PARAMS) && (CONFIG_BT_ISO_TEST_PARAMS > 0)
+	io->burst_number = codec_qos->burst_number;
+	io->max_pdu = codec_qos->max_pdu;
+#endif /* CONFIG_BT_ISO_TEST_PARAMS */
 }
 #endif /* CONFIG_BT_BAP_UNICAST_CLIENT ||                                                          \
 	* CONFIG_BT_BAP_BROADCAST_SOURCE ||                                                        \
@@ -271,10 +263,12 @@ static bool bt_bap_stream_can_send(const struct bt_bap_stream *stream)
 	return info.can_send;
 }
 
-int bt_bap_stream_send(struct bt_bap_stream *stream, struct net_buf *buf,
-			 uint16_t seq_num, uint32_t ts)
+static int bap_stream_send(struct bt_bap_stream *stream, struct net_buf *buf, uint16_t seq_num,
+			   uint32_t ts, bool has_ts)
 {
+	struct bt_iso_chan *iso_chan;
 	struct bt_bap_ep *ep;
+	int ret;
 
 	if (stream == NULL || stream->ep == NULL) {
 		return -EINVAL;
@@ -294,10 +288,40 @@ int bt_bap_stream_send(struct bt_bap_stream *stream, struct net_buf *buf,
 		return -EBADMSG;
 	}
 
-	/* TODO: Add checks for broadcast sink */
+	iso_chan = bt_bap_stream_iso_chan_get(stream);
 
-	return bt_iso_chan_send(bt_bap_stream_iso_chan_get(stream),
-				buf, seq_num, ts);
+	if (has_ts) {
+		ret = bt_iso_chan_send_ts(iso_chan, buf, seq_num, ts);
+	} else {
+		ret = bt_iso_chan_send(iso_chan, buf, seq_num);
+	}
+
+	if (ret < 0) {
+		return ret;
+	}
+
+#if defined(CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM) && (CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM > 0) 
+	if (stream->_prev_seq_num != 0U && seq_num != 0U &&
+	    (stream->_prev_seq_num + 1U) != seq_num) {
+		LOG_WRN("Unexpected seq_num diff between %u and %u for %p", stream->_prev_seq_num,
+			seq_num, stream);
+	}
+
+	stream->_prev_seq_num = seq_num;
+#endif /* CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM */
+
+	return ret;
+}
+
+int bt_bap_stream_send(struct bt_bap_stream *stream, struct net_buf *buf, uint16_t seq_num)
+{
+	return bap_stream_send(stream, buf, seq_num, 0, false);
+}
+
+int bt_bap_stream_send_ts(struct bt_bap_stream *stream, struct net_buf *buf, uint16_t seq_num,
+			  uint32_t ts)
+{
+	return bap_stream_send(stream, buf, seq_num, ts, true);
 }
 
 int bt_bap_stream_get_tx_sync(struct bt_bap_stream *stream, struct bt_iso_tx_info *info)
@@ -413,20 +437,25 @@ void bt_bap_stream_detach(struct bt_bap_stream *stream)
 	stream->ep = NULL;
 
 	if (!is_broadcast) {
-		bt_bap_stream_disconnect(stream);
+		const int err = bt_bap_stream_disconnect(stream);
+
+		if (err != 0) {
+			LOG_DBG("Failed to disconnect stream %p: %d", stream, err);
+		}
 	}
 }
 
 int bt_bap_stream_disconnect(struct bt_bap_stream *stream)
 {
-	struct bt_iso_chan *iso_chan = bt_bap_stream_iso_chan_get(stream);
+	struct bt_iso_chan *iso_chan;
 
-	LOG_DBG("stream %p iso %p", stream, iso_chan);
+	LOG_DBG("stream %p", stream);
 
 	if (stream == NULL) {
 		return -EINVAL;
 	}
 
+	iso_chan = bt_bap_stream_iso_chan_get(stream);
 	if (iso_chan == NULL || iso_chan->iso == NULL) {
 		return -ENOTCONN;
 	}
@@ -812,7 +841,7 @@ int bt_bap_stream_release(struct bt_bap_stream *stream)
 	LOG_DBG("stream %p", stream);
 
 	CHECKIF(stream == NULL || stream->ep == NULL || stream->conn == NULL) {
-		LOG_DBG("Invalid stream");
+		LOG_DBG("Invalid stream (ep %p, conn %p)", stream->ep, (void *)stream->conn);
 		return -EINVAL;
 	}
 

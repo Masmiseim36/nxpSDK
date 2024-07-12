@@ -39,12 +39,13 @@
 
 #define sdio_e(...) wmlog_e("sdio", ##__VA_ARGS__)
 
-#ifdef CONFIG_WIFI_SDIO_DEBUG
+#if CONFIG_WIFI_SDIO_DEBUG
 #define sdio_d(...) wmlog("sdio", ##__VA_ARGS__)
 #else
 #define sdio_d(...)
 #endif /* CONFIG_WIFI_SDIO_DEBUG */
 
+#ifndef __ZEPHYR__
 #define SDIO_GO_IDLE_STATE      ((uint8_t)0)
 #define SDIO_SET_REL_ADDR       ((uint8_t)3)
 #define SDIO_SDIO_SEN_OP_COND   ((uint8_t)5)
@@ -54,6 +55,7 @@
 
 /* Depends on DMA_BUFSZ */
 #define DMA_BOUNDARY_SIZE (512 * 1024)
+#endif
 
 /** Read Card Register
  *
@@ -78,7 +80,8 @@ int sdio_drv_creg_read(int addr, int fn, uint32_t *resp);
  *  \param resp Response of CMD52
  *  \return true on success, false otherwise
  */
-bool sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp);
+int sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp);
+
 /** Read Data from SDIO
  *
  * This is used to read data from SDIO card using CMD53.
@@ -94,6 +97,13 @@ bool sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp);
  */
 int sdio_drv_read(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp);
 
+#if FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER
+void sg_init_table();
+void sg_set_num(size_t num_sg);
+void sg_set_buf(uint32_t *buf, size_t len);
+int sdio_drv_read_mb(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize);
+#endif
+
 /** Write Data to SDIO
  *
  * This is used to write data to SDIO card using CMD53.
@@ -107,7 +117,7 @@ int sdio_drv_read(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uin
  *  \param resp Response of CMD53
  *  \return true on success, false otherwise
  */
-bool sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp);
+int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp);
 
 /** Initialize the SDIO Driver
  *

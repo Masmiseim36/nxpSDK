@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['flexcomm_5fgetinstance',['FLEXCOMM_GetInstance',['../a00245.html#ga59338c42d2715c76e95c4dc2c1190f08',1,'fsl_flexcomm.h']]],
-  ['flexcomm_5finit',['FLEXCOMM_Init',['../a00245.html#gaff39b352ed7517521dfcece68ba34327',1,'fsl_flexcomm.h']]],
-  ['flexcomm_5fsetirqhandler',['FLEXCOMM_SetIRQHandler',['../a00245.html#gaedf64691b871a2b0ea6a68fab284376a',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fgetinstance',['FLEXCOMM_GetInstance',['../a00239.html#ga59338c42d2715c76e95c4dc2c1190f08',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5finit',['FLEXCOMM_Init',['../a00239.html#gaff39b352ed7517521dfcece68ba34327',1,'fsl_flexcomm.h']]],
+  ['flexcomm_5fsetirqhandler',['FLEXCOMM_SetIRQHandler',['../a00239.html#gaedf64691b871a2b0ea6a68fab284376a',1,'fsl_flexcomm.h']]],
   ['flexio_5fclearportoutput',['FLEXIO_ClearPortOutput',['../a00022.html#ga14a7060df29b8e584cbf9e2371c1c6ac',1,'fsl_flexio.h']]],
   ['flexio_5fclearportstatus',['FLEXIO_ClearPortStatus',['../a00022.html#ga0e42bce11803f4098c87c8c2b20dfc82',1,'fsl_flexio.h']]],
   ['flexio_5fclearshiftererrorflags',['FLEXIO_ClearShifterErrorFlags',['../a00022.html#ga0b6f2a30e4a265077a3516ef9b56c0e9',1,'fsl_flexio.h']]],
@@ -238,7 +238,7 @@ var searchData=
   ['flexspi_5fupdaterxsampleclock',['FLEXSPI_UpdateRxSampleClock',['../a00030.html#ga482b015aec3e0491c9359e698ca638a1',1,'fsl_flexspi.h']]],
   ['flexspi_5fwriteblocking',['FLEXSPI_WriteBlocking',['../a00030.html#ga9707db6bb7aaac807060bf4036554787',1,'fsl_flexspi.h']]],
   ['flexspi_5fwritedata',['FLEXSPI_WriteData',['../a00030.html#ga054519fc1555d02f1c3e6652631e50ae',1,'fsl_flexspi.h']]],
-  ['fmeas_5fgetfrequency',['FMEAS_GetFrequency',['../a00255.html#gac6ee7be474a37d4c17120b54fc8b856a',1,'fsl_fmeas.h']]],
-  ['fmeas_5fismeasurecomplete',['FMEAS_IsMeasureComplete',['../a00255.html#ga39ff45995edf620470c1397b1edd83b5',1,'fsl_fmeas.h']]],
-  ['fmeas_5fstartmeasure',['FMEAS_StartMeasure',['../a00255.html#gaf1392245996cea51e17175085a0c3cef',1,'fsl_fmeas.h']]]
+  ['fmeas_5fgetfrequency',['FMEAS_GetFrequency',['../a00252.html#gac6ee7be474a37d4c17120b54fc8b856a',1,'fsl_fmeas.h']]],
+  ['fmeas_5fismeasurecomplete',['FMEAS_IsMeasureComplete',['../a00252.html#ga39ff45995edf620470c1397b1edd83b5',1,'fsl_fmeas.h']]],
+  ['fmeas_5fstartmeasure',['FMEAS_StartMeasure',['../a00252.html#gaf1392245996cea51e17175085a0c3cef',1,'fsl_fmeas.h']]]
 ];

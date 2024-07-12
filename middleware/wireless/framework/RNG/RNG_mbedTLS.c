@@ -13,8 +13,9 @@
 #include "fsl_device_registers.h"
 #include "fsl_os_abstraction.h"
 #include "fsl_common.h"
+#include "fwk_platform.h"
+#include "fwk_platform_rng.h"
 
-#if !defined gRngUseSecureSubSystem_d || (gRngUseSecureSubSystem_d == 0)
 #include "mbedtls/entropy.h"
 #include "mbedtls/hmac_drbg.h"
 #include "mbedtls/md.h"
@@ -42,6 +43,16 @@ extern osa_status_t SecLibMutexUnlock(void);
 #define RNG_MUTEX_LOCK()   (void)SecLibMutexLock()
 #define RNG_MUTEX_UNLOCK() (void)SecLibMutexUnlock()
 
+typedef struct rng_ctx_t
+{
+    bool_t   mRngCtxInitialized;
+    bool_t   mPrngSeeded;
+    bool_t   mPolyRngSeeded;
+    uint32_t mPolyRngRandom;
+    uint32_t mPRNG_Requests;
+    bool_t   mNeedReseed;
+} RNG_context_t;
+
 /*! *********************************************************************************
 *************************************************************************************
 * Private memory declarations
@@ -51,11 +62,14 @@ extern osa_status_t SecLibMutexUnlock(void);
 static mbedtls_entropy_context   mRngEntropyCtx;
 static mbedtls_hmac_drbg_context mRngHmacDrbgCtx;
 
-static bool_t mRngCtxInitialized = FALSE;
-static bool_t mPrngSeeded        = FALSE;
-
-static bool_t   mPolyRngSeeded = FALSE;
-static uint32_t mPolyRngRandom = 0xDEADBEEF;
+static RNG_context_t rng_ctx = {
+    .mRngCtxInitialized = FALSE,
+    .mPrngSeeded        = FALSE,
+    .mPolyRngSeeded     = FALSE,
+    .mPolyRngRandom     = 0xDEADBEEF,
+    .mPRNG_Requests     = gRngMaxRequests_d,
+    .mNeedReseed        = FALSE,
+};
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -68,6 +82,7 @@ static uint32_t mPolyRngRandom = 0xDEADBEEF;
 * Private prototypes
 *************************************************************************************
 ********************************************************************************** */
+
 static int RNG_entropy_func(void *data, unsigned char *output, size_t len);
 
 /*! *********************************************************************************
@@ -84,38 +99,44 @@ static int RNG_entropy_func(void *data, unsigned char *output, size_t len);
  * \return  Status of the RNG initialization procedure.
  *
  ********************************************************************************** */
-uint8_t RNG_Init(void)
+int RNG_Init(void)
 {
-    int     rngResult = 0;
-    uint8_t result    = gRngInternalError_d;
+    int rngResult = 0;
+    int result    = gRngInternalError_d;
+
+    PLATFORM_InitCrypto();
 
     mbedtls_entropy_init(&mRngEntropyCtx);
     mbedtls_hmac_drbg_init(&mRngHmacDrbgCtx);
-    mRngCtxInitialized = TRUE;
+    rng_ctx.mRngCtxInitialized = TRUE;
     do
     {
         (void)SecLibMutexCreate();
 
         RNG_MUTEX_LOCK();
-        rngResult = mbedtls_entropy_func(&mRngEntropyCtx, (unsigned char *)&mPolyRngRandom, sizeof(mPolyRngRandom));
+        rngResult = mbedtls_entropy_func(&mRngEntropyCtx, (unsigned char *)&rng_ctx.mPolyRngRandom,
+                                         sizeof(rng_ctx.mPolyRngRandom));
         RNG_MUTEX_UNLOCK();
 
         if (rngResult != 0)
         {
             break;
         }
-        mPolyRngSeeded = TRUE;
-        result         = gRngSuccess_d;
+        rng_ctx.mPolyRngSeeded = TRUE;
+        result                 = gRngSuccess_d;
     } while (0 != 0);
+
+    /* Set seed for pseudo random number generation */
+    RNG_SetSeed();
+
     return result;
 }
 
-void RNG_ReInit(void)
+int RNG_ReInit(void)
 {
-#if USE_SENTINEL_RNG
-    (void)CRYPTO_ReinitHardware();
-#endif
-    return;
+    int result = gRngSuccess_d;
+    PLATFORM_ResetCrypto();
+    return result;
 }
 
 /*! *********************************************************************************
@@ -126,53 +147,14 @@ void RNG_ReInit(void)
  * \param[out]  pRandomNo  Pointer to location where the value will be stored
  *
  ********************************************************************************** */
-void RNG_GetRandomNo(uint32_t *pRandomNo)
+int RNG_GetTrueRandomNumber(uint32_t *pRandomNo)
 {
-    if ((mPolyRngSeeded == TRUE) && (pRandomNo != NULL))
+    if ((rng_ctx.mPolyRngSeeded == TRUE) && (pRandomNo != NULL))
     {
-        mPolyRngRandom = (uint32_t)(((uint64_t)mPolyRngRandom * 279470273UL) % 4294967291UL);
-        *pRandomNo     = mPolyRngRandom;
+        rng_ctx.mPolyRngRandom = (uint32_t)(((uint64_t)rng_ctx.mPolyRngRandom * 279470273UL) % 4294967291UL);
+        *pRandomNo             = rng_ctx.mPolyRngRandom;
     }
-}
-
-/*! *********************************************************************************
- * \brief  Initialize seed for the PRNG algorithm.
- *         If this function is called again, even with a NULL argument,
- *         the PRNG will be reseeded.
- *
- * \param[in]  pSeed  Ignored - please set to NULL
- *             This parameter is ignored because it is no longer needed.
- *             The PRNG is automatically seeded from the true random source.
- *
- ********************************************************************************** */
-void RNG_SetPseudoRandomNoSeed(uint8_t *pSeed)
-{
-    int drbgResult;
-
-    if (mPrngSeeded == FALSE)
-    {
-        const mbedtls_md_info_t *pMdInfo;
-
-        pMdInfo = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
-        RNG_MUTEX_LOCK();
-        /* Seed the HMAC DRBG from the true entropy source. */
-        drbgResult = mbedtls_hmac_drbg_seed(&mRngHmacDrbgCtx, pMdInfo, RNG_entropy_func, &mRngEntropyCtx,
-                                            mPrngPersonalizationString_c, sizeof(mPrngPersonalizationString_c));
-        RNG_MUTEX_UNLOCK();
-        assert(drbgResult == 0);
-        (void)drbgResult;
-
-        mPrngSeeded = TRUE;
-    }
-    else
-    {
-        RNG_MUTEX_LOCK();
-        /* Reseed the HMAC DRBG with no additional seed data. */
-        drbgResult = mbedtls_hmac_drbg_reseed(&mRngHmacDrbgCtx, NULL, 0);
-        assert(drbgResult == 0);
-        (void)drbgResult;
-        RNG_MUTEX_UNLOCK();
-    }
+    return gRngSuccess_d;
 }
 
 /*! *********************************************************************************
@@ -191,14 +173,19 @@ void RNG_SetPseudoRandomNoSeed(uint8_t *pSeed)
  *          0 if he PRNG was not initialized or 0 bytes were requested or an error occurred
  *
  ********************************************************************************** */
-int16_t RNG_GetPseudoRandomNo(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
+int RNG_GetPseudoRandomData(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
 {
     int drbgResult;
 
-    if (mRngCtxInitialized == TRUE)
+    if (rng_ctx.mRngCtxInitialized == TRUE)
     {
-        if (mPrngSeeded == TRUE)
+        if (rng_ctx.mPrngSeeded == TRUE)
         {
+            if (rng_ctx.mPRNG_Requests == gRngMaxRequests_d)
+            {
+                RNG_TriggerReseed();
+            }
+
             if (outBytes == 0U)
             {
                 return 0;
@@ -220,6 +207,8 @@ int16_t RNG_GetPseudoRandomNo(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
             RNG_MUTEX_LOCK();
             drbgResult = mbedtls_hmac_drbg_random(&mRngHmacDrbgCtx, pOut, outBytes);
             RNG_MUTEX_UNLOCK();
+
+            rng_ctx.mPRNG_Requests++;
 
             if (drbgResult == 0)
             {
@@ -251,7 +240,7 @@ int16_t RNG_GetPseudoRandomNo(uint8_t *pOut, uint8_t outBytes, uint8_t *pSeed)
  ********************************************************************************** */
 fpRngPrng_t RNG_GetPrngFunc(void)
 {
-    if (mPrngSeeded == TRUE)
+    if (rng_ctx.mPrngSeeded == TRUE)
     {
         return &mbedtls_hmac_drbg_random;
     }
@@ -271,7 +260,7 @@ fpRngPrng_t RNG_GetPrngFunc(void)
  ********************************************************************************** */
 void *RNG_GetPrngContext(void)
 {
-    if (mRngCtxInitialized == TRUE)
+    if (rng_ctx.mRngCtxInitialized == TRUE)
     {
         return &mRngHmacDrbgCtx;
     }
@@ -291,7 +280,7 @@ void *RNG_GetPrngContext(void)
  ********************************************************************************** */
 fpRngEntropy_t RNG_GetEntropyFunc(void)
 {
-    if (mRngCtxInitialized == TRUE)
+    if (rng_ctx.mRngCtxInitialized == TRUE)
     {
         return &RNG_entropy_func;
     }
@@ -311,7 +300,7 @@ fpRngEntropy_t RNG_GetEntropyFunc(void)
  ********************************************************************************** */
 void *RNG_GetEntropyContext(void)
 {
-    if (mRngCtxInitialized == TRUE)
+    if (rng_ctx.mRngCtxInitialized == TRUE)
     {
         return &mRngEntropyCtx;
     }
@@ -319,6 +308,58 @@ void *RNG_GetEntropyContext(void)
     {
         return NULL;
     }
+}
+
+void RNG_SetSeed(void)
+{
+    int drbgResult;
+    if (rng_ctx.mRngCtxInitialized == TRUE)
+    {
+        if (rng_ctx.mPrngSeeded == FALSE)
+        {
+            const mbedtls_md_info_t *pMdInfo;
+
+            pMdInfo = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+            RNG_MUTEX_LOCK();
+            /* Seed the HMAC DRBG from the true entropy source. */
+            drbgResult = mbedtls_hmac_drbg_seed(&mRngHmacDrbgCtx, pMdInfo, RNG_entropy_func, &mRngEntropyCtx,
+                                                mPrngPersonalizationString_c, sizeof(mPrngPersonalizationString_c));
+            RNG_MUTEX_UNLOCK();
+            assert(drbgResult == 0);
+            (void)drbgResult;
+
+            rng_ctx.mPrngSeeded = TRUE;
+        }
+        else
+        {
+            RNG_MUTEX_LOCK();
+            /* Reseed the HMAC DRBG with no additional seed data. */
+            drbgResult = mbedtls_hmac_drbg_reseed(&mRngHmacDrbgCtx, NULL, 0);
+            assert(drbgResult == 0);
+            (void)drbgResult;
+            RNG_MUTEX_UNLOCK();
+        }
+        /* On RNG_mbedTLS as the seed is only managed by mbedTLS layer we cannot send it to another core */
+        rng_ctx.mNeedReseed = FALSE;
+
+        /* Reset to 1 the request to pseudo random number generation when reseeding */
+        rng_ctx.mPRNG_Requests = 1U;
+    }
+}
+
+void RNG_TriggerReseed(void)
+{
+    rng_ctx.mNeedReseed = TRUE;
+}
+
+bool_t RNG_IsReseedneeded(void)
+{
+    return rng_ctx.mNeedReseed;
+}
+
+void RNG_SetExternalSeed(uint8_t *external_seed)
+{
+    ; /* External seeding is not supported on mbedtls */
 }
 
 /*! *********************************************************************************
@@ -374,5 +415,4 @@ static int RNG_entropy_func(void *data, unsigned char *output, size_t len)
 
     return result;
 }
-#endif /* USE_SENTINEL_RNG */
 /********************************** EOF ***************************************/

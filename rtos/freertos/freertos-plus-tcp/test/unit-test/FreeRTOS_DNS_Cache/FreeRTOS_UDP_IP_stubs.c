@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -42,6 +42,13 @@
 
 const BaseType_t xBufferAllocFixedSize = pdTRUE;
 
+/* ===========================  EXTERN VARIABLES  =========================== */
+
+struct freertos_addrinfo pucAddrBuffer[ 2 ];
+struct freertos_sockaddr pucSockAddrBuffer[ 1 ];
+
+/* ======================== Stub Callback Functions ========================= */
+
 void vPortEnterCritical( void )
 {
 }
@@ -50,7 +57,8 @@ void vPortExitCritical( void )
 {
 }
 
-BaseType_t xApplicationDNSQueryHook( const char * pcName )
+BaseType_t xApplicationDNSQueryHook_Multi( struct xNetworkEndPoint * pxEndPoint,
+                                           const char * pcName )
 {
     return pdFALSE;
 }

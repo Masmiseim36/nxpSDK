@@ -248,7 +248,7 @@ int os_file_exists(const char *fname);
  */
 // int os_fdatasync(FILE *stream);
 
-#if defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS)
+#if defined(__ZEPHYR__) || defined(CONFIG_FREERTOS)
 /**
  * os_malloc - Allocate dynamic memory
  * @size: Size of the buffer to allocate
@@ -321,7 +321,7 @@ static inline void *os_calloc(size_t nmemb, size_t size)
  * these functions need to be implemented in os_*.c file for the target system.
  */
 
-#if defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS)
+#if defined(__ZEPHYR__) || defined(CONFIG_FREERTOS)
 /**
  * os_strdup - Duplicate a string
  * @s: Source string
@@ -540,24 +540,24 @@ void os_free(void *ptr);
 char *os_strdup(const char *s);
 #else /* WPA_TRACE */
 #ifndef os_malloc
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 #define os_malloc(s) malloc((s))
 #endif
 #endif
 #ifndef os_realloc
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 #define os_realloc(p, s) realloc((p), (s))
 #endif
 #endif
 #ifndef os_free
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 #define os_free(p) free((p))
 #endif
 #endif
 #ifndef os_strdup
 #ifdef _MSC_VER
 #define os_strdup(s) _strdup(s)
-#elif !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#elif !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 #define os_strdup(s) strdup(s)
 #endif
 #endif
@@ -582,14 +582,14 @@ char *os_strdup(const char *s);
 #ifndef os_strcasecmp
 #ifdef _MSC_VER
 #define os_strcasecmp(s1, s2) _stricmp((s1), (s2))
-#elif !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#elif !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 #define os_strcasecmp(s1, s2) strcasecmp((s1), (s2))
 #endif
 #endif
 #ifndef os_strncasecmp
 #ifdef _MSC_VER
 #define os_strncasecmp(s1, s2, n) _strnicmp((s1), (s2), (n))
-#elif !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#elif !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 #define os_strncasecmp(s1, s2, n) strncasecmp((s1), (s2), (n))
 #endif
 #endif
@@ -657,7 +657,7 @@ static inline void os_remove_in_array(void *ptr, size_t nmemb, size_t size, size
  */
 size_t os_strlcpy(char *dest, const char *src, size_t siz);
 
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 /**
  * os_memcmp_const - Constant time memory comparison
  * @a: First buffer to compare

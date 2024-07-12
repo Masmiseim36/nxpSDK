@@ -18,24 +18,72 @@
 
 #include <cli.h>
 #include <cli_utils.h>
-#include <wm_os.h>
+#include <osa.h>
 #include <fsl_debug_console.h>
+#include "board.h"
 
 #include "cli_mem.h"
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+#include "fsl_usart_freertos.h"
+#include "fsl_usart.h"
+#endif
+#endif
 #define END_CHAR      '\r'
 #define PROMPT        "\r\n# "
 #define HALT_MSG      "CLI_HALT"
 #define NUM_BUFFERS   1
 #define MAX_COMMANDS  200U
 #define IN_QUEUE_SIZE 4
+#define ITEM_SIZE     sizeof(void *)
 
-#define RX_WAIT   OS_WAIT_FOREVER
-#define SEND_WAIT OS_WAIT_FOREVER
+/* OSA_TASKS: name, priority, instances, stackSz, useFloat */
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+
+#define CONFIG_UART_STACK_SIZE (1024)
+
+static void uart_task(osa_task_param_t arg);
+
+#if CONFIG_UART_INTERACTIVE
+static OSA_TASK_DEFINE(uart_task, PRIORITY_RTOS_TO_OSA(3), 1, CONFIG_UART_STACK_SIZE, 0);
+#else
+#if CONFIG_NCP
+static OSA_TASK_DEFINE(uart_task, PRIORITY_RTOS_TO_OSA(1), 1, CONFIG_UART_STACK_SIZE, 0);
+#else
+static OSA_TASK_DEFINE(uart_task, PRIORITY_RTOS_TO_OSA(0), 1, CONFIG_UART_STACK_SIZE, 0);
+#endif
+#endif
+#endif
+#elif defined(FSL_RTOS_THREADX)
+
+#define CONFIG_UART_STACK_SIZE (4 * 1024)
+#define DATA_LENGTH            (32)
+
+static uint8_t rx_buffer[DATA_LENGTH];
+static tx_uart_context_t uart_context;
+
+static void uart_task(osa_task_param_t arg);
+
+static OSA_TASK_DEFINE(uart_task, OSA_PRIORITY_BELOW_NORMAL, 1, CONFIG_UART_STACK_SIZE, 0);
+#endif
+OSA_TASK_HANDLE_DEFINE(uart_task_Handle);
 
 #define CONFIG_CLI_STACK_SIZE (5376)
 
-static os_mutex_t cli_mutex;
-static os_queue_pool_define(queue_data, IN_QUEUE_SIZE);
+static void cli_task(osa_task_param_t arg);
+
+/* OSA_TASKS: name, priority, instances, stackSz, useFloat */
+#if CONFIG_UART_INTERACTIVE
+static OSA_TASK_DEFINE(cli_task, PRIORITY_RTOS_TO_OSA(3), 1, CONFIG_CLI_STACK_SIZE, 0);
+#else
+static OSA_TASK_DEFINE(cli_task, PRIORITY_RTOS_TO_OSA(1), 1, CONFIG_CLI_STACK_SIZE, 0);
+#endif
+
+OSA_TASK_HANDLE_DEFINE(cli_task_Handle);
+
+OSA_MUTEX_HANDLE_DEFINE(cli_mutex_Handle);
+
 static struct
 {
     int input_enabled;
@@ -48,14 +96,34 @@ static struct
     unsigned int num_commands;
     bool echo_disabled;
 
-    os_queue_t input_queue;
-    os_queue_pool_t in_queue_data;
-
+    OSA_MSGQ_HANDLE_DEFINE(msgqHandle, IN_QUEUE_SIZE, ITEM_SIZE);
 } cli;
 
-static os_thread_t cli_main_thread;
-static os_thread_stack_define(cli_stack, CONFIG_CLI_STACK_SIZE);
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+#define USART_INPUT_SIZE 1
+#define USART_NVIC_PRIO  5
+uint8_t background_buffer[32];
+uint8_t recv_buffer[USART_INPUT_SIZE];
+static usart_rtos_handle_t ur_handle;
+struct _usart_handle t_u_handle;
+
+struct rtos_usart_config usart_config = {
+    .baudrate    = BOARD_DEBUG_UART_BAUDRATE,
+    .parity      = kUSART_ParityDisabled,
+    .stopbits    = kUSART_OneStopBit,
+    .buffer      = background_buffer,
+    .buffer_size = sizeof(background_buffer),
+};
+#if CONFIG_HOST_SLEEP
+#if CONFIG_POWER_MANAGER
+extern bool usart_suspend_flag;
+#endif
+#endif
+#endif
+#endif
+
+#if CONFIG_APP_FRM_CLI_HISTORY
 #define MAX_CMDS_IN_HISTORY 20
 static char *cmd_hist_arr[MAX_CMDS_IN_HISTORY];
 static int total_hist_cmds, last_cmd_num;
@@ -64,14 +132,13 @@ static bool hist_inited;
 
 static char *cli_strdup(const char *s, int len)
 {
-    char *result = os_mem_alloc(len + 1);
+    char *result = OSA_MemoryAllocate(len + 1);
     int i;
 
     if (result)
     {
         for (i = 0; i < len; i++)
         {
-
             result[i] = s[i] == '\0' ? ' ' : s[i];
         }
 
@@ -123,7 +190,7 @@ static int store_cmd_to_hist(int cmd_no, const char *buf, int len)
         }
         else
         {
-            os_mem_free(cmd_hist_arr[cmd_no]);
+            OSA_MemoryFree(cmd_hist_arr[cmd_no]);
             cmd_hist_arr[cmd_no] = NULL;
         }
     }
@@ -131,7 +198,7 @@ static int store_cmd_to_hist(int cmd_no, const char *buf, int len)
 
     cmd_hist_arr[cmd_no] = cli_strdup(buf, len); /* ignore failure silently */
 
-#if 0 /* debug only */
+#if 0                                            /* debug only */
 	int i;
     PRINTF("\r\n");
 	for (i = 0; i < MAX_CMDS_IN_HISTORY; i++)
@@ -148,6 +215,7 @@ static int store_cmd_to_hist(int cmd_no, const char *buf, int len)
 static int get_total_cmds()
 {
     int cmd_no = 0;
+
     return cmd_no;
 }
 
@@ -185,7 +253,7 @@ static int cmd_hist_is_duplicate(const char *cmd)
     static char *tmpbuf;
     if (!tmpbuf)
     {
-        tmpbuf = os_mem_alloc(INBUF_SIZE);
+        tmpbuf = OSA_MemoryAllocate(INBUF_SIZE);
         if (!tmpbuf)
             return false; /* ignore silently */
     }
@@ -193,7 +261,6 @@ static int cmd_hist_is_duplicate(const char *cmd)
     int rv = get_cmd_from_hist(last_cmd_num, tmpbuf, INBUF_SIZE);
     if (rv != WM_SUCCESS)
     {
-        (void)PRINTF("%s: read cmd %d failed\r\n", __func__, last_cmd_num);
         return false;
     }
 
@@ -298,7 +365,7 @@ static const struct cli_command *lookup_command(char *name, int len)
  *          input line.
  *          2 on invalid syntax: the arguments list couldn't be parsed
  */
-static int handle_input(char *handle_inbuf)
+int handle_input(char *handle_inbuf)
 {
     struct
     {
@@ -307,10 +374,10 @@ static int handle_input(char *handle_inbuf)
         unsigned done : 1;
     } stat;
     static char *argv[64];
-    int argc                          = 0;
-    int i                             = 0;
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
-    int len                           = 0;
+    int argc = 0;
+    int i    = 0;
+#if CONFIG_APP_FRM_CLI_HISTORY
+    int len = 0;
 #endif
     unsigned int j                    = 0;
     const struct cli_command *command = NULL;
@@ -423,7 +490,7 @@ static int handle_input(char *handle_inbuf)
         (void)PRINTF("\r\n");
     }
 
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
     len = i - 1;
 #endif
 
@@ -438,7 +505,7 @@ static int handle_input(char *handle_inbuf)
         return 1;
     }
 
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
     cmd_hist_add(handle_inbuf, len);
 #endif
 
@@ -507,7 +574,7 @@ enum
     EXT_KEY_SECOND_SYMBOL,
 };
 
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
 static void clear_line(unsigned int cnt)
 {
     while (cnt--)
@@ -522,9 +589,18 @@ static int get_input(char *get_inbuf, unsigned int *bp)
 {
     static int state = BASIC_KEY;
     static char second_char;
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
     int rv = -WM_FAIL;
 #endif /* CONFIG_APP_FRM_CLI_HISTORY */
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+    int ret;
+    size_t n;
+#endif
+#elif defined(FSL_RTOS_THREADX)
+    UINT status;
+#endif
+
     if (get_inbuf == NULL)
     {
         return 0;
@@ -534,8 +610,39 @@ static int get_input(char *get_inbuf, unsigned int *bp)
 
     while (true)
     {
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+#if CONFIG_HOST_SLEEP
+#if CONFIG_POWER_MANAGER
+        if (usart_suspend_flag)
+        {
+            OSA_TimeDelay(1000);
+            continue;
+        }
+#endif
+#endif
+        ret = USART_RTOS_Receive(&ur_handle, recv_buffer, sizeof(recv_buffer), &n);
+        if (ret == kStatus_USART_RxRingBufferOverrun)
+        {
+            /* Notify about hardware buffer overrun and un-received buffer content */
+            background_buffer[31] = 0;
+            PRINTF("\r\nRing buffer overrun: %s\r\n", background_buffer);
+            PRINTF("\r\nPlease do not input during throughput tests\r\n");
+            vTaskSuspend(NULL);
+        }
+        get_inbuf[*bp] = recv_buffer[0];
+#else
         get_inbuf[*bp] = (char)GETCHAR();
+#endif
+#elif defined(FSL_RTOS_THREADX)
 
+        status = tx_uart_recv(&uart_context, rx_buffer, 1);
+
+        if (status == TX_SUCCESS)
+        {
+            get_inbuf[*bp] = rx_buffer[0];
+        }
+#endif
         if (state == EXT_KEY_SECOND_SYMBOL)
         {
             if (second_char == (char)(0x4F))
@@ -549,7 +656,7 @@ static int get_input(char *get_inbuf, unsigned int *bp)
                     return 1;
                 }
             }
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
             if (second_char == 0x5B)
             {
                 if (get_inbuf[*bp] == 0x41)
@@ -628,7 +735,7 @@ static int get_input(char *get_inbuf, unsigned int *bp)
 
         if ((get_inbuf[*bp] == (char)(0x08)) || /* backspace */
             (get_inbuf[*bp] == (char)(0x7f)))
-        { /* DEL */
+        {                                       /* DEL */
             if (*bp > (unsigned int)(0))
             {
                 (*bp)--;
@@ -667,7 +774,7 @@ static int get_input(char *get_inbuf, unsigned int *bp)
  * representation of non-printable characters.
  * Non-printable characters show as "\0xXX".
  */
-static void print_bad_command(char *cmd_string)
+void print_bad_command(char *cmd_string)
 {
     if (cmd_string != NULL)
     {
@@ -731,18 +838,20 @@ static void console_tick(void)
  * Input collectors handle their own lexical analysis and must pass complete
  * command lines to CLI.
  */
-static void cli_main(os_thread_arg_t data)
+static void cli_task(void *arg)
 {
     while (true)
     {
         int ret;
         char *msg;
+        osa_status_t status;
 
         msg = NULL;
-        ret = os_queue_recv(&cli.input_queue, &msg, RX_WAIT);
-        if (ret != WM_SUCCESS)
+
+        status = OSA_MsgQGet((osa_msgq_handle_t)cli.msgqHandle, &msg, osaWaitForever_c);
+        if (status != KOSA_StatusSuccess)
         {
-            if (ret == (int)WM_E_BADF)
+            if (status == KOSA_StatusTimeout)
             {
                 (void)PRINTF(
                     "Error: CLI fatal queue error."
@@ -787,26 +896,37 @@ static void cli_main(os_thread_arg_t data)
             (void)cli_mem_free(&msg);
         }
     }
-    os_thread_self_complete(NULL);
+
+    while (true)
+    {
+        OSA_TimeDelay(60000);
+    }
 }
 
+#if defined(SDK_OS_FREE_RTOS)
+#if !CONFIG_UART_INTERRUPT
 /* Automatically bind an input processor to the console */
 static int cli_install_UART_Tick(void)
 {
-    return os_setup_idle_function(console_tick);
+    return OSA_SetupIdleFunction(console_tick);
 }
 
 static int cli_remove_UART_Tick(void)
 {
-    return os_remove_idle_function(console_tick);
+    return OSA_RemoveIdleFunction(console_tick);
 }
+#endif
+#endif
 
 /* Internal cleanup function. */
 static int __cli_cleanup(void)
 {
     int ret, final = WM_SUCCESS;
     char *halt_msg = HALT_MSG;
+    osa_status_t status;
 
+#if defined(SDK_OS_FREE_RTOS)
+#if !CONFIG_UART_INTERRUPT
     if (cli_remove_UART_Tick() != WM_SUCCESS)
     {
         (void)PRINTF(
@@ -814,6 +934,8 @@ static int __cli_cleanup(void)
             "\r\n");
         final = -WM_FAIL;
     }
+#endif
+#endif
 
     ret = cli_submit_cmd_buffer(&halt_msg);
     if (ret != WM_SUCCESS)
@@ -822,9 +944,9 @@ static int __cli_cleanup(void)
             "Error: problem sending cli message"
             "\r\n");
     }
-    (void)os_mutex_get(&cli_mutex, OS_WAIT_FOREVER);
-    ret = os_queue_delete(&cli.input_queue);
-    if (ret != WM_SUCCESS)
+    (void)OSA_MutexLock((osa_mutex_handle_t)cli_mutex_Handle, osaWaitForever_c);
+    status = OSA_MsgQDestroy((osa_msgq_handle_t)cli.msgqHandle);
+    if (status != KOSA_StatusSuccess)
     {
         (void)PRINTF("Warning: failed to delete queue.\r\n");
         final = -WM_FAIL;
@@ -840,15 +962,24 @@ static int __cli_cleanup(void)
     {
         final = -WM_FAIL;
     }
-
-    ret = os_thread_delete(&cli_main_thread);
-    if (ret != WM_SUCCESS)
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+    status = OSA_TaskDestroy((osa_task_handle_t)uart_task_Handle);
+    if (status != KOSA_StatusSuccess)
     {
-        (void)PRINTF("Warning: failed to delete thread.\r\n");
+        (void)PRINTF("Warning: failed to delete uart thread.\r\n");
         final = -WM_FAIL;
     }
-    (void)os_mutex_put(&cli_mutex);
-    (void)os_mutex_delete(&cli_mutex);
+#endif
+#endif
+    status = OSA_TaskDestroy((osa_task_handle_t)cli_task_Handle);
+    if (status != KOSA_StatusSuccess)
+    {
+        (void)PRINTF("Warning: failed to delete cli thread.\r\n");
+        final = -WM_FAIL;
+    }
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)cli_mutex_Handle);
+    (void)OSA_MutexDestroy((osa_mutex_handle_t)cli_mutex_Handle);
     cli.initialized = false;
     return final;
 }
@@ -857,33 +988,34 @@ static int __cli_cleanup(void)
 static int cli_start(void)
 {
     int ret;
+    osa_status_t status;
 
     if (cli.initialized == true)
     {
         return WM_SUCCESS;
     }
 
-    ret = os_mutex_create(&cli_mutex, "cli", OS_MUTEX_INHERIT);
-    if (ret != WM_SUCCESS)
+    status = OSA_MutexCreate((osa_mutex_handle_t)cli_mutex_Handle);
+    if (status != KOSA_StatusSuccess)
     {
         return -WM_FAIL;
     }
 
-    ret = os_queue_create(&cli.input_queue, "cli_queue", (int)sizeof(void *), &cli.in_queue_data);
-    if (ret != WM_SUCCESS)
+    status = OSA_MsgQCreate((osa_msgq_handle_t)cli.msgqHandle, IN_QUEUE_SIZE, ITEM_SIZE);
+    if (status != KOSA_StatusSuccess)
     {
-        (void)PRINTF("Error: Failed to create cli queue: %d\r\n", ret);
+        (void)PRINTF("Error: Failed to create cli queue: %d\r\n", status);
         return -WM_FAIL;
     }
 
-    ret = os_thread_create(&cli_main_thread, "cli", cli_main, 0, &cli_stack, OS_PRIO_3);
-    if (ret != WM_SUCCESS)
+    status = OSA_TaskCreate((osa_task_handle_t)cli_task_Handle, OSA_TASK(cli_task), NULL);
+    if (status != KOSA_StatusSuccess)
     {
-        (void)PRINTF("Error: Failed to create cli thread: %d\r\n", ret);
+        (void)PRINTF("Error: Failed to create cli thread: %d\r\n", status);
         return -WM_FAIL;
     }
 
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
     cmd_hist_init();
     cmd_hist_add(" ", 1);
 #endif
@@ -930,8 +1062,7 @@ int cli_get_cmd_buffer(char **buff)
 /* Submit a command buffer to the main thread for processing */
 int cli_submit_cmd_buffer(char **buff)
 {
-    int ret   = -WM_FAIL;
-    int final = WM_SUCCESS;
+    osa_status_t status = KOSA_StatusSuccess;
 
     if (buff == NULL)
     {
@@ -941,14 +1072,15 @@ int cli_submit_cmd_buffer(char **buff)
 
     if (cli.initialized != false)
     {
-        ret = os_queue_send(&cli.input_queue, (void *)buff, SEND_WAIT);
+        status = OSA_MsgQPut((osa_msgq_handle_t)cli.msgqHandle, (void *)buff);
     }
 
-    if (ret != WM_SUCCESS)
+    if (status != KOSA_StatusSuccess)
     {
-        final = -WM_FAIL;
+        return -WM_FAIL;
     }
-    return final;
+
+    return WM_SUCCESS;
 }
 
 /* Built-in "help" command: prints all registered commands and their help
@@ -968,6 +1100,18 @@ void help_command(int argc, char **argv)
         }
         i++;
     }
+}
+
+#if defined(__ICCARM__)
+#pragma diag_suppress = Pe192
+#endif
+
+static void clear_command(int argc, char **argv)
+{
+    (void)argc;
+    (void)argv;
+
+    PRINTF("\e[1;1H\e[2J");
 }
 
 #if 0
@@ -995,6 +1139,7 @@ static void echo_cmd_handler(int argc, char **argv)
 
 static struct cli_command built_ins[] = {
     {"help", NULL, help_command},
+    {"clear", NULL, clear_command},
 };
 
 /*
@@ -1082,24 +1227,90 @@ int cli_unregister_commands(const struct cli_command *commands, int num_commands
     return 0;
 }
 
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+static void uart_task(void *pvParameters)
+{
+    usart_config.srcclk = BOARD_DEBUG_UART_CLK_FREQ;
+    usart_config.base   = BOARD_DEBUG_UART;
+
+    NVIC_SetPriority(BOARD_UART_IRQ, USART_NVIC_PRIO);
+
+    if (USART_RTOS_Init(&ur_handle, &t_u_handle, &usart_config) != WM_SUCCESS)
+    {
+        vTaskSuspend(NULL);
+    }
+
+    /* Receive user input and send it back to terminal. */
+    while (1)
+    {
+        console_tick();
+    }
+}
+
+#if CONFIG_HOST_SLEEP
+int cli_uart_reinit()
+{
+    return USART_RTOS_Init(&ur_handle, &t_u_handle, &usart_config);
+}
+
+int cli_uart_deinit()
+{
+    return USART_RTOS_Deinit(&ur_handle);
+}
+
+void cli_uart_notify()
+{
+    xEventGroupSetBits(ur_handle.rxEvent, RTOS_USART_COMPLETE);
+}
+#endif
+#endif
+#endif
+
+#if defined(FSL_RTOS_THREADX)
+
+static void uart_task(void *pvParameters)
+{
+    UINT status;
+
+    TX_THREAD_NOT_USED(pvParameters);
+
+    status = tx_uart_init(&uart_context);
+
+    if (status != TX_SUCCESS)
+        return;
+
+    do
+    {
+        console_tick();
+
+    } while (1);
+}
+
+#endif
 
 int cli_init(void)
 {
     static bool cli_init_done;
+
     if (cli_init_done)
     {
         return WM_SUCCESS;
     }
 
+    (void)PRINTF("CLI Build: %s [%s]", __DATE__, __TIME__);
+    (void)PRINTF("\r\nCopyright  2024  NXP\r\n");
+
     (void)memset((void *)&cli, 0, sizeof(cli));
     cli.input_enabled = 1;
-    cli.in_queue_data = queue_data;
 
     /* add our built-in commands */
     if (cli_register_commands(&built_ins[0], (int)(sizeof(built_ins) / sizeof(struct cli_command))) != 0)
     {
         return -WM_FAIL;
     }
+#if defined(SDK_OS_FREE_RTOS)
+#if !CONFIG_UART_INTERRUPT
     if (cli_install_UART_Tick() != WM_SUCCESS)
     {
         (void)PRINTF(
@@ -1107,11 +1318,35 @@ int cli_init(void)
             "\r\n");
         return -WM_FAIL;
     }
+#endif
+#endif
     int ret = cli_start();
     if (ret == WM_SUCCESS)
     {
         cli_init_done = true;
     }
+#if defined(SDK_OS_FREE_RTOS)
+#if CONFIG_UART_INTERRUPT
+    osa_status_t status = OSA_TaskCreate((osa_task_handle_t)uart_task_Handle, OSA_TASK(uart_task), NULL);
+    if (status != KOSA_StatusSuccess)
+    {
+        (void)PRINTF("Error: Failed to create uart thread: %d\r\n", status);
+        return -WM_FAIL;
+    }
+#endif
+#elif defined(FSL_RTOS_THREADX)
+    osa_status_t status = OSA_TaskCreate((osa_task_handle_t)uart_task_Handle, OSA_TASK(uart_task), NULL);
+    if (status != KOSA_StatusSuccess)
+    {
+        (void)PRINTF("Error: Failed to create uart thread: %d\r\n", status);
+        return -WM_FAIL;
+    }
+#endif
+#ifdef BOARD_NAME
+    PRINTF("MCU Board: %s\r\n", BOARD_NAME);
+    PRINTF("========================================\r\n");
+#endif
+
     return ret;
 }
 

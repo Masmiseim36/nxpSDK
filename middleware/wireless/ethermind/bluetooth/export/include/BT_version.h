@@ -51,7 +51,7 @@
  *  number, a change resulting in increment in sub-minor number will result in
  *  increment in minor number.
  */
-#define BT_MINOR_VERSION_NUMBER       11U
+#define BT_MINOR_VERSION_NUMBER       12U
 
 /**
  *  An increment in this number implies a trivial change, changes such as

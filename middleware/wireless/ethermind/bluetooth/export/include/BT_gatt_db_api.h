@@ -948,19 +948,19 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
 #define GATT_DB_DYNAMIC_CONFIG_LIMITS(x) \
         gatt_db_dynamic_global_config.config_##x
 
-#define BT_DEFINE_GLOBAL_ARRAY(type, var, s) \
+#define GATT_DB_DEFINE_GLOBAL_ARRAY(type, var, s) \
         type * var
 
-#define BT_DECLARE_GLOBAL_ARRAY(type, var, s) \
+#define GATT_DB_DECLARE_GLOBAL_ARRAY(type, var, s) \
         extern type * var
 
 /* TODO: Check if the allocation is success */
-#define BT_INIT_GLOBAL_ARRAY(type, var, s, i)   \
+#define GATT_DB_INIT_GLOBAL_ARRAY(type, var, s, i)   \
         (var) = BT_alloc_mem((s) * sizeof(type)); \
         COMMON_TRC(BT_MODULE_ID_GATT_DB, "Allocated %lu bytes for %s. Ptr: %p\n", ((s) * sizeof(type)), #var, (var)); \
         BT_mem_set((var), (i), ((s) * sizeof(type)))
 
-#define BT_DEINIT_GLOBAL_ARRAY(type, var, s) \
+#define GATT_DB_DEINIT_GLOBAL_ARRAY(type, var, s) \
         if (NULL != (var))            \
         {                           \
             COMMON_TRC(BT_MODULE_ID_GATT_DB, "Freeing %s with Allocated Ptr: %p\n", #var, (var));\
@@ -970,16 +970,16 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
 #else
 #define GATT_DB_DYNAMIC_CONFIG_LIMITS(x) (x)
 
-#define BT_DEFINE_GLOBAL_ARRAY(type, var, s) \
+#define GATT_DB_DEFINE_GLOBAL_ARRAY(type, var, s) \
         type var[(s)]
 
-#define BT_DECLARE_GLOBAL_ARRAY(type, var, s) \
+#define GATT_DB_DECLARE_GLOBAL_ARRAY(type, var, s) \
         extern type var[(s)]
 
-#define BT_INIT_GLOBAL_ARRAY(type, var, s, i) \
+#define GATT_DB_INIT_GLOBAL_ARRAY(type, var, s, i) \
         BT_mem_set(var, (i), ((s) * sizeof(type)))
 
-#define BT_DEINIT_GLOBAL_ARRAY(type, var, s)
+#define GATT_DB_DEINIT_GLOBAL_ARRAY(type, var, s)
 
 #endif /* BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY */
 

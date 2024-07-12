@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -105,16 +105,16 @@ $(document).ready(function(){initNavTree('a00034.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Hashcrypt AES<div class="ingroups"><a class="el" href="a00256.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
+<div class="title">Hashcrypt AES<div class="ingroups"><a class="el" href="a00253.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00361"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#a00361">_hashcrypt_handle</a></td></tr>
-<tr class="memdesc:a00361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify HASHCRYPT's key resource.  <a href="a00034.html#a00361">More...</a><br/></td></tr>
-<tr class="separator:a00361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00358"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#a00358">_hashcrypt_handle</a></td></tr>
+<tr class="memdesc:a00358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify HASHCRYPT's key resource.  <a href="a00034.html#a00358">More...</a><br/></td></tr>
+<tr class="separator:a00358"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -174,36 +174,36 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga516111a46b4c1e6d172005f1cf9546e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga516111a46b4c1e6d172005f1cf9546e3">HASHCRYPT_AES_SetKey</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *key, size_t keySize)</td></tr>
+<tr class="memitem:ga516111a46b4c1e6d172005f1cf9546e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga516111a46b4c1e6d172005f1cf9546e3">HASHCRYPT_AES_SetKey</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *key, size_t keySize)</td></tr>
 <tr class="memdesc:ga516111a46b4c1e6d172005f1cf9546e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set AES key to hashcrypt_handle_t struct and optionally to HASHCRYPT.  <a href="#ga516111a46b4c1e6d172005f1cf9546e3">More...</a><br/></td></tr>
 <tr class="separator:ga516111a46b4c1e6d172005f1cf9546e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga417b271e51105b9506b5b9b5fe89cf74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga417b271e51105b9506b5b9b5fe89cf74">HASHCRYPT_AES_EncryptEcb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size)</td></tr>
+<tr class="memitem:ga417b271e51105b9506b5b9b5fe89cf74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga417b271e51105b9506b5b9b5fe89cf74">HASHCRYPT_AES_EncryptEcb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size)</td></tr>
 <tr class="memdesc:ga417b271e51105b9506b5b9b5fe89cf74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES on one or multiple 128-bit block(s).  <a href="#ga417b271e51105b9506b5b9b5fe89cf74">More...</a><br/></td></tr>
 <tr class="separator:ga417b271e51105b9506b5b9b5fe89cf74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f171677c79d7903cd6e66409565b83e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga0f171677c79d7903cd6e66409565b83e">HASHCRYPT_AES_DecryptEcb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size)</td></tr>
+<tr class="memitem:ga0f171677c79d7903cd6e66409565b83e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga0f171677c79d7903cd6e66409565b83e">HASHCRYPT_AES_DecryptEcb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size)</td></tr>
 <tr class="memdesc:ga0f171677c79d7903cd6e66409565b83e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES on one or multiple 128-bit block(s).  <a href="#ga0f171677c79d7903cd6e66409565b83e">More...</a><br/></td></tr>
 <tr class="separator:ga0f171677c79d7903cd6e66409565b83e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#gaa71be50a4d4417e46fb8aae6c85759aa">HASHCRYPT_AES_EncryptCbc</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
+<tr class="memitem:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#gaa71be50a4d4417e46fb8aae6c85759aa">HASHCRYPT_AES_EncryptCbc</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
 <tr class="memdesc:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CBC block mode.  <a href="#gaa71be50a4d4417e46fb8aae6c85759aa">More...</a><br/></td></tr>
 <tr class="separator:gaa71be50a4d4417e46fb8aae6c85759aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#gaf65c31d69a8ad1d985091fa5de5dfa17">HASHCRYPT_AES_DecryptCbc</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
+<tr class="memitem:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#gaf65c31d69a8ad1d985091fa5de5dfa17">HASHCRYPT_AES_DecryptCbc</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
 <tr class="memdesc:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CBC block mode.  <a href="#gaf65c31d69a8ad1d985091fa5de5dfa17">More...</a><br/></td></tr>
 <tr class="separator:gaf65c31d69a8ad1d985091fa5de5dfa17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga209a497b9766b85ac2a76d3b3b5f3163">HASHCRYPT_AES_CryptCtr</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *input, uint8_t *output, size_t size, uint8_t counter[<a class="el" href="a00034.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>], uint8_t counterlast[<a class="el" href="a00034.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>], size_t *szLeft)</td></tr>
+<tr class="memitem:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga209a497b9766b85ac2a76d3b3b5f3163">HASHCRYPT_AES_CryptCtr</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *input, uint8_t *output, size_t size, uint8_t counter[<a class="el" href="a00034.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>], uint8_t counterlast[<a class="el" href="a00034.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>], size_t *szLeft)</td></tr>
 <tr class="memdesc:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts or decrypts AES using CTR block mode.  <a href="#ga209a497b9766b85ac2a76d3b3b5f3163">More...</a><br/></td></tr>
 <tr class="separator:ga209a497b9766b85ac2a76d3b3b5f3163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga8e0d6e211b37c9f82cff48fe9e80115d">HASHCRYPT_AES_CryptOfb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *input, uint8_t *output, size_t size, const uint8_t iv[<a class="el" href="a00034.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>])</td></tr>
+<tr class="memitem:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga8e0d6e211b37c9f82cff48fe9e80115d">HASHCRYPT_AES_CryptOfb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *input, uint8_t *output, size_t size, const uint8_t iv[<a class="el" href="a00034.html#gac8b498d3aa014ca9ea26a73569784ae0">HASHCRYPT_AES_BLOCK_SIZE</a>])</td></tr>
 <tr class="memdesc:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts or decrypts AES using OFB block mode.  <a href="#ga8e0d6e211b37c9f82cff48fe9e80115d">More...</a><br/></td></tr>
 <tr class="separator:ga8e0d6e211b37c9f82cff48fe9e80115d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23c43c66d7654bbf9b116b7a949ead60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga23c43c66d7654bbf9b116b7a949ead60">HASHCRYPT_AES_EncryptCfb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
+<tr class="memitem:ga23c43c66d7654bbf9b116b7a949ead60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#ga23c43c66d7654bbf9b116b7a949ead60">HASHCRYPT_AES_EncryptCfb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
 <tr class="memdesc:ga23c43c66d7654bbf9b116b7a949ead60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CFB block mode.  <a href="#ga23c43c66d7654bbf9b116b7a949ead60">More...</a><br/></td></tr>
 <tr class="separator:ga23c43c66d7654bbf9b116b7a949ead60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#gaa3b9c8a805fbd8b004fcde0add292f3a">HASHCRYPT_AES_DecryptCfb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
+<tr class="memitem:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#gaa3b9c8a805fbd8b004fcde0add292f3a">HASHCRYPT_AES_DecryptCfb</a> (HASHCRYPT_Type *base, <a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
 <tr class="memdesc:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CFB block mode.  <a href="#gaa3b9c8a805fbd8b004fcde0add292f3a">More...</a><br/></td></tr>
 <tr class="separator:gaa3b9c8a805fbd8b004fcde0add292f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00361" id="a00361"></a>
+<a name="a00358" id="a00358"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -325,7 +325,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_SetKey </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_SetKey </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -333,7 +333,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -374,7 +374,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptEcb </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptEcb </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -382,7 +382,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -430,7 +430,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptEcb </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptEcb </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -438,7 +438,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -486,7 +486,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptCbc </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptCbc </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -494,7 +494,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -548,7 +548,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptCbc </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptCbc </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -556,7 +556,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -610,7 +610,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_CryptCtr </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_CryptCtr </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -618,7 +618,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -687,7 +687,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_CryptOfb </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_CryptOfb </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -695,7 +695,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -750,7 +750,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptCfb </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_EncryptCfb </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -758,7 +758,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -812,7 +812,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptCfb </td>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HASHCRYPT_AES_DecryptCfb </td>
           <td>(</td>
           <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -820,7 +820,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00361">hashcrypt_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00358">hashcrypt_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>

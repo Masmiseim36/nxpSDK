@@ -19,7 +19,7 @@ Change log:
 #ifndef _MLAN_11K_H_
 #define _MLAN_11K_H_
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
 /* Link Measurement Request frame */
 typedef MLAN_PACK_START struct _mgmt_rrm_link_meas_request
 {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008-2023 NXP
+ *  Copyright 2008-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
  *
@@ -120,19 +120,26 @@
 #ifndef __WLAN_H__
 #define __WLAN_H__
 
+#ifdef __ZEPHYR__
+#include <nxp_wifi.h>
+#endif
+
 #include <wmtypes.h>
 #include <wmerrno.h>
 #include <stdint.h>
 #include <wifi_events.h>
 #include <wifi.h>
 
-#define WLAN_DRV_VERSION "v1.3.r47.p16"
+#define WLAN_DRV_VERSION "v1.3.r48.p16"
 
+#if CONFIG_WPA2_ENTP
+#include <wm_mbedtls_helper_api.h>
+#endif
 
 #define ARG_UNUSED(x) (void)(x)
 /* Configuration */
 
-#ifndef CONFIG_WLAN_KNOWN_NETWORKS
+#if !CONFIG_WLAN_KNOWN_NETWORKS
 #define CONFIG_WLAN_KNOWN_NETWORKS 5U
 #endif
 
@@ -140,11 +147,20 @@
 #define wlcm_e(...) wmlog_e("wlcm", ##__VA_ARGS__)
 #define wlcm_w(...) wmlog_w("wlcm", ##__VA_ARGS__)
 
-#ifdef CONFIG_WLCMGR_DEBUG
+#if CONFIG_WLCMGR_DEBUG
 #define wlcm_d(...) wmlog("wlcm", ##__VA_ARGS__)
 #else
 #define wlcm_d(...)
 #endif /* ! CONFIG_WLCMGR_DEBUG */
+
+#if (defined(configSUPPORT_STATIC_ALLOCATION) && (configSUPPORT_STATIC_ALLOCATION > 0U)) && \
+    !((defined(configSUPPORT_DYNAMIC_ALLOCATION) && (configSUPPORT_DYNAMIC_ALLOCATION == 1U)))
+
+#if CONFIG_WPA_SUPP
+#error "Static memory allocation is not supported for wpa supplicant "
+#endif
+
+#endif
 
 /** Action GET */
 #define ACTION_GET (0U)
@@ -161,8 +177,13 @@
 #define IEEEtypes_ADDRESS_SIZE 6
 #endif /* IEEEtypes_ADDRESS_SIZE */
 
-#ifdef CONFIG_HOST_SLEEP
+#if CONFIG_HOST_SLEEP
+#if CONFIG_POWER_MANAGER
+extern osa_msg_handle_t mon_thread_event_queue;
 #endif
+#endif
+
+#define WLAN_REASON_CODE_PREV_AUTH_NOT_VALID 2U
 
 typedef enum
 {
@@ -175,10 +196,10 @@ typedef enum
 
 /** The number of times that the WLAN Connection Manager will look for a
  *  network before giving up. */
-#ifdef CONFIG_MAX_RESCAN_LIMIT
+#if CONFIG_MAX_RESCAN_LIMIT
 #define WLAN_RESCAN_LIMIT CONFIG_MAX_RESCAN_LIMIT
 #else
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
 #define WLAN_RESCAN_LIMIT 30U
 #else
 #define WLAN_RESCAN_LIMIT 5U
@@ -188,7 +209,9 @@ typedef enum
 #define WLAN_11D_SCAN_LIMIT 3U
 /** The number of times that the WLAN Connection Manager will attempt a
  * reconnection with the network before giving up. */
+#ifndef WLAN_RECONNECT_LIMIT
 #define WLAN_RECONNECT_LIMIT 5U
+#endif
 /** The minimum length for network names, see \ref wlan_network.  This must
  *  be between 1 and \ref WLAN_NETWORK_NAME_MAX_LENGTH */
 #define WLAN_NETWORK_NAME_MIN_LENGTH 1U
@@ -220,7 +243,7 @@ typedef enum
 /** MAX domain len */
 #define DOMAIN_MATCH_MAX_LENGTH 64U
 
-#ifdef CONFIG_WLAN_KNOWN_NETWORKS
+#if CONFIG_WLAN_KNOWN_NETWORKS
 /** The size of the list of known networks maintained by the WLAN
    Connection Manager */
 #define WLAN_MAX_KNOWN_NETWORKS CONFIG_WLAN_KNOWN_NETWORKS
@@ -230,6 +253,10 @@ typedef enum
 /** Length of a pairwise master key (PMK).  It's always 256 bits (32 Bytes) */
 #define WLAN_PMK_LENGTH 32
 
+#if CONFIG_WMM_UAPSD
+#define WMM_UAPSD_QOS_INFO     0x0F
+#define WMM_UAPSD_SLEEP_PERIOD 20
+#endif
 
 
 /* Max number of sta filter list can be upto 16 */
@@ -285,6 +312,10 @@ typedef enum
 /** BITMAP for Action frame */
 #define WLAN_MGMT_ACTION MBIT(13)
 
+#if CONFIG_WMM_UAPSD
+#define WMM_UAPSD_QOS_INFO     0x0F
+#define WMM_UAPSD_SLEEP_PERIOD 20
+#endif
 
 #define WLAN_KEY_MGMT_IEEE8021X             MBIT(0)
 #define WLAN_KEY_MGMT_PSK                   MBIT(1)
@@ -312,12 +343,13 @@ typedef enum
 #define WLAN_KEY_MGMT_DPP                   MBIT(23)
 #define WLAN_KEY_MGMT_FT_IEEE8021X_SHA384   MBIT(24)
 #define WLAN_KEY_MGMT_PASN                  MBIT(25)
+#define WLAN_KEY_MGMT_SAE_EXT_KEY           MBIT(26)
 
 #define WLAN_KEY_MGMT_FT                                                                                            \
     (WLAN_KEY_MGMT_FT_PSK | WLAN_KEY_MGMT_FT_IEEE8021X | WLAN_KEY_MGMT_FT_IEEE8021X_SHA384 | WLAN_KEY_MGMT_FT_SAE | \
      WLAN_KEY_MGMT_FT_FILS_SHA256 | WLAN_KEY_MGMT_FT_FILS_SHA384)
 
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
 
 #define WLAN_CIPHER_NONE         MBIT(0)
 #define WLAN_CIPHER_WEP40        MBIT(1)
@@ -405,7 +437,7 @@ enum wlan_event_reason
      *  WLAN Connection Manager should be stopped and started again via
      *  wlan_stop() and wlan_start() respectively. */
     WLAN_REASON_INITIALIZATION_FAILED,
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
     /** The WLAN Connection Manager has entered in hang mode. */
     WLAN_REASON_FW_HANG,
     /** The WLAN Connection Manager has reset fw successfully. */
@@ -433,7 +465,42 @@ enum wlan_event_reason
        threshold and frequency. If CONFIG_11K, CONFIG_11V, CONFIG_11R or CONFIG_ROAMING enabled then RSSI low event is
        processed internally.*/
     WLAN_REASON_RSSI_LOW,
-#ifdef CONFIG_NCP_BRIDGE
+#if CONFIG_SUBSCRIBE_EVENT_SUPPORT
+    /** The WLAN Connection Manager has received subscribed RSSI high event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_RSSI_HIGH,
+    /** The WLAN Connection Manager has received subscribed SNR low event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_SNR_LOW,
+    /** The WLAN Connection Manager has received subscribed SNR high event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_SNR_HIGH,
+    /** The WLAN Connection Manager has received subscribed Max fail event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_MAX_FAIL,
+    /** The WLAN Connection Manager has received subscribed Beacon missed fail event on station interface as per
+       configured threshold and frequency. */
+    WLAN_REASON_BEACON_MISSED,
+    /** The WLAN Connection Manager has received subscribed Data RSSI low event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_DATA_RSSI_LOW,
+    /** The WLAN Connection Manager has received subscribed Data RSSI high event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_DATA_RSSI_HIGH,
+    /** The WLAN Connection Manager has received subscribed Data SNR low event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_DATA_SNR_LOW,
+    /** The WLAN Connection Manager has received subscribed Data SNR high event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_DATA_SNR_HIGH,
+    /** The WLAN Connection Manager has received subscribed LINK QUALITY event on station interface as per configured
+    link_snr threshold and frequency, link_rate threshold and frequency, link_tx_latency threshold and frequency*/
+    WLAN_REASON_LINK_QUALITY,
+    /** The WLAN Connection Manager has received subscribed Pre beacon lost event on station interface as per configured
+       threshold and frequency. */
+    WLAN_REASON_PRE_BEACON_LOST,
+#endif
+#if CONFIG_NCP
     /** Scan is done */
     WLAN_REASON_SCAN_DONE,
     /** WPS session is done */
@@ -470,6 +537,8 @@ enum wlan_connection_state
     WLAN_CONNECTING,
     /** The WLAN Connection Manager is not connected but associated. */
     WLAN_ASSOCIATED,
+    /** The WLAN Connection Manager is not connected but authenticated. */
+    WLAN_AUTHENTICATED,
     /** The WLAN Connection Manager is connected.  It is possible to scan and
      *  connect to another network at this time.  Information about the current
      *  network configuration is available. */
@@ -499,6 +568,10 @@ typedef enum wlan_ps_mode
     WLAN_DEEP_SLEEP,
     /** IEEE and Deep sleep power save mode */
     WLAN_IEEE_DEEP_SLEEP,
+    /** WNM power save mode */
+    WLAN_WNM,
+    /** WNM and Deep sleep power save mode */
+    WLAN_WNM_DEEP_SLEEP,
 } wlan_ps_mode;
 
 enum wlan_ps_state
@@ -514,6 +587,8 @@ typedef enum _ENH_PS_MODES
     GET_PS        = 0,
     SLEEP_CONFIRM = 5,
     EXT_PS_PARAM  = 6,
+    DIS_WNM_PS = 0xfc,
+    EN_WNM_PS  = 0xfd,
     DIS_AUTO_PS = 0xfe,
     EN_AUTO_PS  = 0xff,
 } ENH_PS_MODES;
@@ -524,8 +599,13 @@ typedef enum _Host_Sleep_Action
     HS_ACTIVATE  = 0x0002,
 } Host_Sleep_Action;
 
+typedef PACK_START struct
+{
+    uint8_t action;
+    uint8_t result;
+} PACK_END wnm_sleep_result_t;
 
-#ifdef CONFIG_CSI
+#if CONFIG_CSI
 enum wlan_csi_opt
 {
     CSI_FILTER_OPT_ADD = 0,
@@ -543,6 +623,153 @@ enum wlan_monitor_opt
     MONITOR_FILTER_OPT_DUMP,
 };
 
+#if (CONFIG_11MC) || (CONFIG_11AZ)
+#define FTM_ACTION_START 1
+#define FTM_ACTION_STOP  2
+
+#define PROTO_DOT11AZ_NTB 1
+#define PROTO_DOT11AZ_TB  2
+#define PROTO_DOT11MC     0
+
+/* DOT11MC CFG */
+/* Burst Duration
+ 0 - 1: Reserved
+ 2: 250 micro seconds
+ 3: 500 micro seconds
+ 4: 1 ms
+ 5: 2 ms
+ 6: 4 ms
+ 7: 8 ms
+ 8: 16 ms
+ 9: 32 ms
+ 10: 64 ms
+ 11: 128 ms
+ 12-14 reserved*/
+#define BURST_DURATION 11
+/* Burst Period in units of 100 milli seconds */
+#define BURST_PERIOD 10
+/* FTM frames per burst */
+#define FTM_PER_BURST 5
+/* Indicates minimum time between consecutive Fine Timing Measurement frames. It is specified in in units of 100 micro
+ * seconds. */
+#define MIN_DELTA 60
+/* ASAP */
+#define IS_ASAP 1
+/* Bandwidth
+ 9  - HT20
+ 10 - VHT20
+ 11 - HT40
+ 12 - VHT40
+ 13 - VHT80 */
+#define BW 13 /* RW610 only allows 20M bandwidth */
+/*Indicates how many burst instances are requested for the FTM session */
+#define BURST_EXP 3
+
+/* LCI */
+#define LCI_REQUEST                1
+#define LCI_LATITIUDE              -33.8570095
+#define LCI_LONGITUDE              151.2152005
+#define LCI_LATITUDE_UNCERTAINITY  18
+#define LCI_LONGITUDE_UNCERTAINITY 18
+#define LCI_ALTITUDE               11.2
+#define LCI_ALTITUDE_UNCERTAINITY  15
+#define Z_INFO                     0
+
+/* CIVIC */
+#define CIVIC_REQUEST       1
+#define CIVIC_LOCATION      1
+#define CIVIC_LOCATION_TYPE 1
+#define CIVIC_COUNTRY_CODE  0 /* US */
+#define CIVIC_ADDRESS_TYPE  22
+#define CIVIC_ADDRESS       "#123"
+
+/* DOT11AZ CFG */
+#define FORMAT_BW 2 /* RW610 only allows 20M bandwidth */
+/*Maximum number of space-time streams to be used in DL/UL NDP frames in the session upto 80MHz*/
+#define MAX_I2R_STS_UPTO80 0 /* RW610 only allows to send 1 N_STS*/
+#define MAX_R2I_STS_UPTO80 0
+/* Measurement freq in Hz to calculate measurement interval*/
+#define AZ_MEASUREMENT_FREQ       4 /* in 0.1 Hz increments */
+#define AZ_NUMBER_OF_MEASUREMENTS 6
+#define I2R_LMR_FEEDBACK          0 /* allow RSTA to request I2R reporting */
+
+#define FOR_RANGING 0
+
+/** Structure of FTM_SESSION_CFG_NTB_RANGING / FTM_SESSION_CFG_TB_RANGING TLV data*/
+typedef struct _ranging_11az_cfg
+{
+    /** Indicates the channel BW for session*/
+    /*0: HE20, 1: HE40, 2: HE80, 3: HE80+80, 4: HE160, 5:HE160_SRF*/
+    t_u8 format_bw;
+    /** indicates for bandwidths less than or equal to 80 MHz the maximum number of space-time streams to be used in
+     * DL/UL NDP frames in the session*/
+    t_u8 max_i2r_sts_upto80;
+    /**indicates for bandwidths less than or equal to 80 MHz the maximum number of space-time streams to be used in
+     * DL/UL NDP frames in the session*/
+    t_u8 max_r2i_sts_upto80;
+    /**Specify measurement freq in Hz to calculate measurement interval*/
+    t_u8 az_measurement_freq;
+    /**Indicates the number of measurements to be done for session*/
+    t_u8 az_number_of_measurements;
+    /** Initator lmr feedback */
+    t_u8 i2r_lmr_feedback;
+    /**Include location civic request (Expect location civic from responder)*/
+    t_u8 civic_req;
+    /**Include LCI request (Expect LCI info from responder)*/
+    t_u8 lci_req;
+} ranging_11az_cfg_t;
+
+typedef struct _location_cfg_info
+{
+    /** known Latitude uncertainty*/
+    t_u8 lat_unc;
+    /** known Longitude uncertainty*/
+    t_u8 long_unc;
+    /** Known Altitude uncertainty*/
+    t_u8 alt_unc;
+    /**Include LCI request (Expect LCI info from responder)*/
+    t_u8 lci_req;
+    /** known longitude*/
+    double longitude;
+    /** known Latitude*/
+    double latitude;
+    /** known altitude*/
+    double altitude;
+} location_cfg_info_t;
+
+typedef struct _location_civic_rep
+{
+    /**Civic location type*/
+    t_u8 civic_location_type;
+    /**Civic address type*/
+    t_u8 civic_address_type;
+    /**Civic address length*/
+    t_u8 civic_address_length;
+    /**Include LCI request (Expect LCI info from responder)*/
+    t_u8 civic_req;
+    /**Country code*/
+    t_u16 country_code;
+} location_civic_rep_t;
+
+/** Structure of FTM_SESSION_CFG TLV data*/
+typedef struct _ftm_11mc_nego_cfg
+{
+    /** Indicates how many burst instances are requested for the FTM session*/
+    t_u8 burst_exponent;
+    /** Indicates the duration of a burst instance*/
+    t_u8 burst_duration;
+    /**Minimum time between consecutive FTM frames*/
+    t_u8 min_delta_FTM;
+    /**ASAP/non-ASAP casel*/
+    t_u8 is_ASAP;
+    /**Number of FTMs per burst*/
+    t_u8 per_burst_FTM;
+    /**FTM channel spacing: HT20/HT40/VHT80/... */
+    t_u8 channel_spacing;
+    /**Indicates the interval between two consecutive burst instances*/
+    t_u16 burst_period;
+} ftm_11mc_nego_cfg_t;
+#endif
 
 /** Scan Result */
 struct wlan_scan_result
@@ -567,12 +794,12 @@ struct wlan_scan_result
     /** The network supports 802.11N.  This is set to 0 if the network does not
      *  support 802.11N or if the system does not have 802.11N support enabled. */
     unsigned dot11n : 1;
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
     /** The network supports 802.11AC.  This is set to 0 if the network does not
      *  support 802.11AC or if the system does not have 802.11AC support enabled. */
     unsigned dot11ac : 1;
 #endif
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
     /** The network supports 802.11AX.  This is set to 0 if the network does not
      *  support 802.11AX or if the system does not have 802.11AX support enabled. */
     unsigned dot11ax : 1;
@@ -581,7 +808,7 @@ struct wlan_scan_result
     /** The network supports WMM.  This is set to 0 if the network does not
      *  support WMM or if the system does not have WMM support enabled. */
     unsigned wmm : 1;
-#if defined(CONFIG_WPA_SUPP_WPS) || defined(CONFIG_WPS2)
+#if (CONFIG_WPA_SUPP_WPS) || (CONFIG_WPS2)
     /** The network supports WPS.  This is set to 0 if the network does not
      *  support WPS or if the system does not have WPS support enabled. */
     unsigned wps : 1;
@@ -596,7 +823,7 @@ struct wlan_scan_result
     unsigned wpa2 : 1;
     /** The network uses WPA2 SHA256 security */
     unsigned wpa2_sha256 : 1;
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
     /** The network uses OWE security */
     unsigned owe : 1;
 #endif
@@ -610,7 +837,7 @@ struct wlan_scan_result
     unsigned wpa3_1x_sha256 : 1;
     /** The network uses WPA3 Enterprise SHA384 security */
     unsigned wpa3_1x_sha384 : 1;
-#ifdef CONFIG_11R
+#if CONFIG_11R
     /** The network uses FT 802.1x security (For internal use only)*/
     unsigned ft_1x : 1;
     /** The network uses FT 892.1x SHA384 security */
@@ -642,12 +869,14 @@ struct wlan_scan_result
     t_u8 ap_mfpc;
     /** MFPR bit of AP*/
     t_u8 ap_mfpr;
+    /** PWE bit of AP*/
+    t_u8 ap_pwe;
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
     /** Neigbort report support (For internal use only)*/
     bool neighbor_report_supported;
 #endif
-#ifdef CONFIG_11V
+#if CONFIG_11V
     /** bss transition support (For internal use only)*/
     bool bss_transition_supported;
 #endif
@@ -701,7 +930,7 @@ typedef PACK_START struct
 } PACK_END ChanBandInfo_t;
 
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
 #define DFS_REC_HDR_LEN (8)
 #define DFS_REC_HDR_NUM (10)
 #define BIN_COUNTER_LEN (7)
@@ -738,36 +967,37 @@ enum wlan_security_type
     WLAN_SECURITY_WPA2,
     /** The network uses WPA/WPA2 mixed security with PSK */
     WLAN_SECURITY_WPA_WPA2_MIXED,
-#ifdef CONFIG_11R
+#if CONFIG_11R
     /** The network uses WPA2 security with PSK FT. */
     WLAN_SECURITY_WPA2_FT,
 #endif
     /** The network uses WPA3 security with SAE. */
     WLAN_SECURITY_WPA3_SAE,
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_11R
+#if CONFIG_WPA_SUPP
+#if CONFIG_11R
     /** The network uses WPA3 security with SAE FT. */
     WLAN_SECURITY_WPA3_FT_SAE,
 #endif
 #endif
-    /** The network uses WPA2/WPA3 SAE mixed security with PSK. This security mode
-     * is specific to uAP or SoftAP only */
+    /** The network uses WPA3 security with SAE EXT KEY. */
+    WLAN_SECURITY_WPA3_SAE_EXT_KEY,
+    /** The network uses WPA2/WPA3 SAE mixed security with PSK. */
     WLAN_SECURITY_WPA2_WPA3_SAE_MIXED,
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
     /** The network uses OWE only security without Transition mode support. */
     WLAN_SECURITY_OWE_ONLY,
 #endif
-#if defined(CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || defined(CONFIG_WPA2_ENTP)
+#if (CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || (CONFIG_WPA2_ENTP)
     /** The network uses WPA2 Enterprise EAP-TLS security
      * The identity field in \ref wlan_network structure is used */
     WLAN_SECURITY_EAP_TLS,
 #endif
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_EAP_TLS
     /** The network uses WPA2 Enterprise EAP-TLS SHA256 security
      * The identity field in \ref wlan_network structure is used */
     WLAN_SECURITY_EAP_TLS_SHA256,
-#ifdef CONFIG_11R
+#if CONFIG_11R
     /** The network uses WPA2 Enterprise EAP-TLS FT security
      * The identity field in \ref wlan_network structure is used */
     WLAN_SECURITY_EAP_TLS_FT,
@@ -776,73 +1006,73 @@ enum wlan_security_type
     WLAN_SECURITY_EAP_TLS_FT_SHA384,
 #endif
 #endif
-#ifdef CONFIG_EAP_TTLS
+#if CONFIG_EAP_TTLS
     /** The network uses WPA2 Enterprise EAP-TTLS security
      * The identity field in \ref wlan_network structure is used */
     WLAN_SECURITY_EAP_TTLS,
-#ifdef CONFIG_EAP_MSCHAPV2
+#endif
+#if CONFIG_EAP_MSCHAPV2
     /** The network uses WPA2 Enterprise EAP-TTLS-MSCHAPV2 security
      * The anonymous identity, identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_TTLS_MSCHAPV2,
 #endif
 #endif
-#endif
-#if defined(CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || defined(CONFIG_PEAP_MSCHAPV2) || defined(CONFIG_WPA2_ENTP)
+#if (CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || (CONFIG_PEAP_MSCHAPV2) || (CONFIG_WPA2_ENTP)
     /** The network uses WPA2 Enterprise EAP-PEAP-MSCHAPV2 security
      * The anonymous identity, identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_PEAP_MSCHAPV2,
 #endif
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-#ifdef CONFIG_EAP_PEAP
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_EAP_PEAP
+#if CONFIG_EAP_TLS
     /** The network uses WPA2 Enterprise EAP-PEAP-TLS security
      * The anonymous identity, identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_PEAP_TLS,
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
     /** The network uses WPA2 Enterprise EAP-PEAP-GTC security
      * The anonymous identity, identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_PEAP_GTC,
 #endif
 #endif
-#ifdef CONFIG_EAP_FAST
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_FAST
+#if CONFIG_EAP_MSCHAPV2
     /** The network uses WPA2 Enterprise EAP-FAST-MSCHAPV2 security
      * The anonymous identity, identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_FAST_MSCHAPV2,
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
     /** The network uses WPA2 Enterprise EAP-FAST-GTC security
      * The anonymous identity, identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_FAST_GTC,
 #endif
 #endif
-#ifdef CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM
     /** The network uses WPA2 Enterprise EAP-SIM security
      * The identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_SIM,
 #endif
-#ifdef CONFIG_EAP_AKA
+#if CONFIG_EAP_AKA
     /** The network uses WPA2 Enterprise EAP-AKA security
      * The identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_AKA,
 #endif
-#ifdef CONFIG_EAP_AKA_PRIME
+#if CONFIG_EAP_AKA_PRIME
     /** The network uses WPA2 Enterprise EAP-AKA-PRIME security
      * The identity and password fields in
      * \ref wlan_network structure are used */
     WLAN_SECURITY_EAP_AKA_PRIME,
 #endif
 #endif
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
     /** The network uses DPP security with NAK(Net Access Key) */
     WLAN_SECURITY_DPP,
 #endif
@@ -851,6 +1081,21 @@ enum wlan_security_type
      * type.  */
     WLAN_SECURITY_WILDCARD,
 };
+
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_EAP_TLS
+/** EAP TLS Cipher types*/
+enum eap_tls_cipher_type
+{
+    EAP_TLS_NONE,
+    /** EAP TLS with ECDH & ECDSA with p384 */
+    EAP_TLS_ECC_P384,
+    /** EAP TLS with ECDH & RSA with > 3K */
+    EAP_TLS_RSA_3K,
+};
+#endif
+#endif
+
 /** Wlan Cipher structure */
 struct wlan_cipher
 {
@@ -893,112 +1138,118 @@ static inline int is_valid_security(int security)
     /*Currently only these modes are supported */
     if ((security == WLAN_SECURITY_NONE) || (security == WLAN_SECURITY_WEP_OPEN) || (security == WLAN_SECURITY_WPA) ||
         (security == WLAN_SECURITY_WPA2) ||
-#ifdef CONFIG_11R
+#if CONFIG_11R
         (security == WLAN_SECURITY_WPA2_FT) ||
 #endif
         (security == WLAN_SECURITY_WPA_WPA2_MIXED) ||
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_EAP_TLS
         (security == WLAN_SECURITY_EAP_TLS) || (security == WLAN_SECURITY_EAP_TLS_SHA256) ||
-#ifdef CONFIG_11R
+#if CONFIG_11R
         (security == WLAN_SECURITY_EAP_TLS_FT) || (security == WLAN_SECURITY_EAP_TLS_FT_SHA384) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_TTLS
+#if CONFIG_EAP_TTLS
         (security == WLAN_SECURITY_EAP_TTLS) ||
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_MSCHAPV2
         (security == WLAN_SECURITY_EAP_TTLS_MSCHAPV2) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_PEAP
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_PEAP
+#if CONFIG_EAP_MSCHAPV2
         (security == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
 #endif
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_EAP_TLS
         (security == WLAN_SECURITY_EAP_PEAP_TLS) ||
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
         (security == WLAN_SECURITY_EAP_PEAP_GTC) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_FAST
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_FAST
+#if CONFIG_EAP_MSCHAPV2
         (security == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
         (security == WLAN_SECURITY_EAP_FAST_GTC) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM
         (security == WLAN_SECURITY_EAP_SIM) ||
 #endif
-#ifdef CONFIG_EAP_AKA
+#if CONFIG_EAP_AKA
         (security == WLAN_SECURITY_EAP_AKA) ||
 #endif
-#ifdef CONFIG_EAP_AKA_PRIME
+#if CONFIG_EAP_AKA_PRIME
         (security == WLAN_SECURITY_EAP_AKA_PRIME) ||
 #endif
 #else
+#if CONFIG_WPA2_ENTP
+        (security == WLAN_SECURITY_EAP_TLS) ||
+#endif
+#if CONFIG_PEAP_MSCHAPV2
+        (security == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
+#endif
 #endif /* CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE */
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
         (security == WLAN_SECURITY_OWE_ONLY) ||
 #endif
         (security == WLAN_SECURITY_WPA3_SAE) || (security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED) ||
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_11R
+#if CONFIG_WPA_SUPP
+#if CONFIG_11R
         (security == WLAN_SECURITY_WPA3_FT_SAE) ||
 #endif
 #endif
-        (security == WLAN_SECURITY_WILDCARD))
+        (security == WLAN_SECURITY_WPA3_SAE_EXT_KEY) || (security == WLAN_SECURITY_WILDCARD))
     {
         return 1;
     }
     return 0;
 }
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
 static inline int is_ep_valid_security(int security)
 {
     /*Currently only these modes are supported */
     if (
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_EAP_TLS
         (security == WLAN_SECURITY_EAP_TLS) || (security == WLAN_SECURITY_EAP_TLS_SHA256) ||
-#ifdef CONFIG_11R
+#if CONFIG_11R
         (security == WLAN_SECURITY_EAP_TLS_FT) || (security == WLAN_SECURITY_EAP_TLS_FT_SHA384) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_TTLS
+#if CONFIG_EAP_TTLS
         (security == WLAN_SECURITY_EAP_TTLS) ||
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_MSCHAPV2
         (security == WLAN_SECURITY_EAP_TTLS_MSCHAPV2) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_PEAP
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_PEAP
+#if CONFIG_EAP_MSCHAPV2
         (security == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
 #endif
-#ifdef CONFIG_EAP_TLS
+#if CONFIG_EAP_TLS
         (security == WLAN_SECURITY_EAP_PEAP_TLS) ||
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
         (security == WLAN_SECURITY_EAP_PEAP_GTC) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_FAST
-#ifdef CONFIG_EAP_MSCHAPV2
+#if CONFIG_EAP_FAST
+#if CONFIG_EAP_MSCHAPV2
         (security == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
 #endif
-#ifdef CONFIG_EAP_GTC
+#if CONFIG_EAP_GTC
         (security == WLAN_SECURITY_EAP_FAST_GTC) ||
 #endif
 #endif
-#ifdef CONFIG_EAP_SIM
+#if CONFIG_EAP_SIM
         (security == WLAN_SECURITY_EAP_SIM) ||
 #endif
-#ifdef CONFIG_EAP_AKA
+#if CONFIG_EAP_AKA
         (security == WLAN_SECURITY_EAP_AKA) ||
 #endif
-#ifdef CONFIG_EAP_AKA_PRIME
+#if CONFIG_EAP_AKA_PRIME
         (security == WLAN_SECURITY_EAP_AKA_PRIME) ||
 #endif
         false)
@@ -1021,7 +1272,7 @@ struct wlan_network_security
     struct wlan_cipher mcstCipher;
     /** Type of network security Pairwise Cipher suite used internally*/
     struct wlan_cipher ucstCipher;
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
     /** Proactive Key Caching */
     unsigned pkc : 1;
     /** Type of network security Group Cipher suite */
@@ -1044,7 +1295,7 @@ struct wlan_network_security
     /** WPA3 SAE password, for WPA3 SAE networks this is an ASCII
      * password of length password_len.  This field is ignored for networks with no
      * security. */
-    char password[WLAN_PASSWORD_MAX_LENGTH];
+    char password[WLAN_PASSWORD_MAX_LENGTH + 1];
     /** Length of the WPA3 SAE Password, \ref WLAN_PASSWORD_MIN_LENGTH to \ref
      * WLAN_PASSWORD_MAX_LENGTH.  Ignored for networks with no security. */
     size_t password_len;
@@ -1054,7 +1305,7 @@ struct wlan_network_security
     uint8_t pwe_derivation;
     /** transition disable */
     uint8_t transition_disable;
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
     /** OWE Groups */
     char *owe_groups;
 #endif
@@ -1075,14 +1326,14 @@ struct wlan_network_security
     bool mfpc;
     /** Management Frame Protection Required (MFPR) */
     bool mfpr;
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#if CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
     /** WPA3 Enterprise mode */
     unsigned wpa3_sb : 1;
     /** WPA3 Enterprise Suite B 192 mode */
     unsigned wpa3_sb_192 : 1;
-#ifdef CONFIG_EAP_PEAP
     /** PEAP version */
     unsigned eap_ver : 1;
+#if CONFIG_EAP_PEAP
     /** PEAP label */
     unsigned peap_label : 1;
     /** crypto_binding option can be used to control \ref WLAN_SECURITY_EAP_PEAP_MSCHAPV2, \ref
@@ -1090,10 +1341,14 @@ struct wlan_network_security
      * cryptobinding (default) 1 = use cryptobinding if server supports it 2 = require cryptobinding */
     uint8_t eap_crypto_binding;
 #endif
-#if defined(CONFIG_EAP_SIM) || defined(CONFIG_EAP_AKA) || defined(CONFIG_EAP_AKA_PRIME)
+#if (CONFIG_EAP_SIM) || (CONFIG_EAP_AKA) || (CONFIG_EAP_AKA_PRIME)
     /** eap_result_ind=1 can be used to enable \ref WLAN_SECURITY_EAP_SIM, \ref WLAN_SECURITY_EAP_AKA and \ref
      * WLAN_SECURITY_EAP_AKA_PRIME to use protected result indication.*/
     unsigned eap_result_ind : 1;
+#endif
+#if CONFIG_EAP_TLS
+    /** Cipher for EAP TLS */
+    unsigned char tls_cipher;
 #endif
     /** Identity string for EAP */
     char identity[IDENTITY_MAX_LENGTH];
@@ -1137,8 +1392,8 @@ struct wlan_network_security
     size_t client_key2_len;
     /** Client key2 password */
     char client_key2_passwd[PASSWORD_MAX_LENGTH];
-#ifdef CONFIG_HOSTAPD
-#ifdef CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
+#if CONFIG_HOSTAPD
+#if CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
     /** DH params blob */
     unsigned char *dh_data;
     /** DH params blob len */
@@ -1159,7 +1414,7 @@ struct wlan_network_security
     char identities[MAX_USERS][IDENTITY_MAX_LENGTH];
     /** User Passwords */
     char passwords[MAX_USERS][PASSWORD_MAX_LENGTH];
-#ifdef CONFIG_EAP_FAST
+#if CONFIG_EAP_FAST
     /** Encryption key for EAP-FAST PAC-Opaque values */
     char pac_opaque_encr_key[PAC_OPAQUE_ENCR_KEY_MAX_LENGTH];
     /** EAP-FAST authority identity (A-ID) */
@@ -1174,8 +1429,15 @@ struct wlan_network_security
 #endif
 #endif
 #endif
+#elif (CONFIG_WPA2_ENTP)
+    /** TLS client cert configuration */
+    wm_mbedtls_cert_t tls_cert;
+    /** mbedtls_ssl_config handle */
+    mbedtls_ssl_config *wlan_ctx;
+    /** mbedtls_ssl_context handle */
+    mbedtls_ssl_context *wlan_ssl;
 #endif
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
     unsigned char *dpp_connector;
     unsigned char *dpp_c_sign_key;
     unsigned char *dpp_net_access_key;
@@ -1194,6 +1456,11 @@ struct wifi_scan_params_t
     int split_scan_delay;
 };
 
+#if CONFIG_WIFI_GET_LOG
+/** Wi-Fi firmware stat from \ref wifi_pkt_stats_t
+ */
+typedef wifi_pkt_stats_t wlan_pkt_stats_t;
+#endif
 
 /** Configuration for Wireless scan channel list from
  * \ref wifi_scan_channel_list_t
@@ -1210,7 +1477,7 @@ typedef wifi_scan_params_v2_t wlan_scan_params_v2_t;
  */
 typedef wifi_cal_data_t wlan_cal_data_t;
 
-#ifdef CONFIG_AUTO_RECONNECT
+#if CONFIG_AUTO_RECONNECT
 /** Configuration for Auto reconnect configuration from
  * \ref wifi_auto_reconnect_config_t
  */
@@ -1231,7 +1498,7 @@ typedef wifi_wowlan_ptn_cfg_t wlan_wowlan_ptn_cfg_t;
  */
 typedef wifi_tcp_keep_alive_t wlan_tcp_keep_alive_t;
 
-#ifdef CONFIG_CLOUD_KEEP_ALIVE
+#if CONFIG_CLOUD_KEEP_ALIVE
 /** Configuration for Cloud Keep alive parameters from
  * \ref wifi_cloud_keep_alive_t
  */
@@ -1273,7 +1540,7 @@ typedef wifi_ext_coex_stats_t wlan_ext_coex_stats_t;
 typedef wifi_ext_coex_config_t wlan_ext_coex_config_t;
 #endif
 
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
 /** Configuration for RU TX Pwr Limit from
  * \ref wifi_rutxpwrlimit_t
  */
@@ -1282,7 +1549,7 @@ typedef wifi_rutxpwrlimit_t wlan_rutxpwrlimit_t;
  * \ref wifi_11ax_config_t
  */
 typedef wifi_11ax_config_t wlan_11ax_config_t;
-#ifdef CONFIG_11AX_TWT
+#if CONFIG_11AX_TWT
 /** Configuration for TWT Setup
  * \ref wifi_twt_setup_config_t
  */
@@ -1299,9 +1566,17 @@ typedef wifi_btwt_config_t wlan_btwt_config_t;
  * \ref wifi_twt_report_t
  */
 typedef wifi_twt_report_t wlan_twt_report_t;
+/** Configuration for TWT Information
+ * \ref wifi_twt_information_t
+ */
+typedef wifi_twt_information_t wlan_twt_information_t;
 #endif /* CONFIG_11AX_TWT */
+#if CONFIG_MMSF
+#define WLAN_AMPDU_DENSITY 0x30
+#define WLAN_AMPDU_MMSF    0x6
 #endif
-#ifdef CONFIG_WIFI_CLOCKSYNC
+#endif
+#if CONFIG_WIFI_CLOCKSYNC
 /** Configuration for Clock Sync GPIO TSF latch
  * \ref wifi_clock_sync_gpio_tsf_t
  */
@@ -1312,26 +1587,38 @@ typedef wifi_clock_sync_gpio_tsf_t wlan_clock_sync_gpio_tsf_t;
 typedef wifi_tsf_info_t wlan_tsf_info_t;
 #endif
 
+#if CONFIG_MULTI_CHAN
+/** Configuration for multi-channel switch
+ * \ref wifi_drcs_cfg_t
+ */
+typedef wifi_drcs_cfg_t wlan_drcs_cfg_t;
+#endif
 
 typedef wifi_mgmt_frame_t wlan_mgmt_frame_t;
 
 
-#ifdef CONFIG_CSI
+#if CONFIG_CSI
 /** Configuration for Csi Config Params from
  * \ref wifi_csi_config_params_t
  */
 typedef wifi_csi_config_params_t wlan_csi_config_params_t;
 #endif
 
+#if CONFIG_NET_MONITOR
+/** Configuration for Net monitor from
+ * \ref wifi_net_monitor_t
+ */
+typedef wifi_net_monitor_t wlan_net_monitor_t;
+#endif
 
-#if defined(CONFIG_WIFI_IND_RESET) && defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_RESET) && (CONFIG_WIFI_IND_DNLD)
 /** Configuration for GPIO independent reset
  * \ref wifi_indrst_cfg_t
  */
 typedef wifi_indrst_cfg_t wlan_indrst_cfg_t;
 #endif
 
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
 /** Configuration for TX Rate Setting from
  * \ref txrate_setting
  */
@@ -1343,6 +1630,43 @@ typedef txrate_setting wlan_txrate_setting;
  */
 typedef wifi_rssi_info_t wlan_rssi_info_t;
 
+#if CONFIG_EXTERNAL_COEX_PTA
+#define MIN_SAMP_TIMING              20
+#define MAX_SAMP_TIMING              200
+#define COEX_PTA_FEATURE_ENABLE      1
+#define COEX_PTA_FEATURE_DISABLE     0
+#define POL_GRANT_PIN_HIGH           0
+#define POL_GRANT_PIN_LOW            1
+#define STATE_INPUT_DISABLE          0
+#define STATE_PTA_PIN                1
+#define STATE_PRIORITY_PIN           2
+#define SAMPLE_TIMING_VALUE          100
+#define EXT_COEX_PTA_INTERFACE       5
+#define EXT_COEX_WCI2_INTERFACE      6
+#define EXT_COEX_WCI2_GPIO_INTERFACE 7
+
+typedef struct _external_coex_pta_cfg
+{
+    /** Enable: 0x01, Disable: 0x00 */
+    t_u8 enabled;
+    /** Enable ExtWifiBtArb: 0x01, Disable ExWifiBtArb: 0x00 */
+    t_u8 ext_WifiBtArb;
+    /** Active high: 0x00, Active low: 0x01 */
+    t_u8 polGrantPin;
+    /**  Enable PriPtaInt: 0x01, Disable PriPtaInt: 0x00 */
+    t_u8 enable_PriPtaInt;
+    /** State input disable: 0x00, State info is from state pin: 0x01, State info is sampled on priority pin: 0x02 */
+    t_u8 enable_StatusFromPta;
+    /** Timing to sample Priority bit */
+    t_u16 setPriSampTiming;
+    /** Timing to sample Tx/Rx info */
+    t_u16 setStateInfoSampTiming;
+    /** Enable external traffic Tx/Rx Priority: 0x01, Disable external traffic Tx/Rx Priority: 0x00 */
+    t_u8 extRadioTrafficPrio;
+    /** Enable wci-2 interface: 0x01, Disable wci-2 interface: 0x00 */
+    t_u8 extCoexHwIntWci2;
+} ext_coex_pta_cfg;
+#endif
 
 int verify_scan_duration_value(int scan_duration);
 int verify_scan_channel_value(int channel);
@@ -1386,7 +1710,7 @@ struct ipv4_config
     unsigned dns2;
 };
 
-#ifdef CONFIG_IPV6
+#if CONFIG_IPV6
 /** This data structure represents an IPv6 address */
 struct ipv6_config
 {
@@ -1406,10 +1730,12 @@ struct ipv6_config
  */
 struct wlan_ip_config
 {
-#ifdef CONFIG_IPV6
+#if CONFIG_IPV6
     /** The network IPv6 address configuration that should be
      * associated with this interface. */
     struct ipv6_config ipv6[CONFIG_MAX_IPV6_ADDRESSES];
+    /** The network IPv6 valid addresses count */
+    size_t ipv6_count;
 #endif
     /** The network IPv4 address configuration that should be
      * associated with this interface. */
@@ -1440,7 +1766,7 @@ struct wlan_ip_config
  */
 struct wlan_network
 {
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
     /** Identifier for network profile */
     int id;
     /* wps_network marks the network is for wps*/
@@ -1482,16 +1808,20 @@ struct wlan_network
     uint16_t acs_band;
     /** RSSI */
     int rssi;
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_SCAN_WITH_RSSIFILTER
+    /** Rssi threshold */
+    short rssi_threshold;
+#endif
+#if CONFIG_WPA_SUPP
     /** HT capabilities */
     unsigned short ht_capab;
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
     /** VHT capabilities */
     unsigned int vht_capab;
     /** VHT bandwidth */
     unsigned char vht_oper_chwidth;
 #endif
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
     /** HE bandwidth */
     unsigned char he_oper_chwidth;
 #endif
@@ -1510,6 +1840,13 @@ struct wlan_network
     /** The network IP address configuration specified by struct
      * wlan_ip_config that should be associated with this interface. */
     struct wlan_ip_config ip;
+#if CONFIG_WPA2_ENTP
+    char identity[IDENTITY_MAX_LENGTH];
+#if CONFIG_PEAP_MSCHAPV2
+    char anonymous_identity[IDENTITY_MAX_LENGTH];
+    char password[PASSWORD_MAX_LENGTH];
+#endif
+#endif
 
     /* Private Fields */
 
@@ -1525,7 +1862,7 @@ struct wlan_network
      * specified (not an empty string), otherwise it is set to 0.
      */
     unsigned ssid_specific : 1;
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
     /**
      * If set to 1, the ssid field contains the transitional SSID for this
      * network.
@@ -1555,19 +1892,24 @@ struct wlan_network
      * WLAN_SECURITY_WILDCARD.
      */
     unsigned security_specific : 1;
+#if CONFIG_WPS2
+    /** This indicates this network is used as an internal network for
+     * WPS */
+    unsigned wps_specific : 1;
+#endif
 
     /** The network supports 802.11N. (For internal use only) */
     unsigned dot11n : 1;
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
     /** The network supports 802.11AC. (For internal use only) */
     unsigned dot11ac : 1;
 #endif
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
     /** The network supports 802.11AX. (For internal use only) */
     unsigned dot11ax : 1;
 #endif
 
-#ifdef CONFIG_11R
+#if CONFIG_11R
     /** Mobility Domain ID */
     uint16_t mdid;
     /** The network uses FT 802.1x security (For internal use only)*/
@@ -1577,7 +1919,7 @@ struct wlan_network
     /** The network uses FT SAE security (For internal use only)*/
     unsigned ft_sae : 1;
 #endif
-#ifdef CONFIG_OWE
+#if CONFIG_DRIVER_OWE
     /** OWE Transition mode */
     unsigned int owe_trans_mode;
     /** The network transitional SSID, represented as a C string of up to 32 characters
@@ -1598,13 +1940,13 @@ struct wlan_network
     uint8_t dtim_period;
     /** Wireless capabilities of uAP network 802.11n, 802.11ac or/and 802.11ax*/
     uint8_t wlan_capa;
-#ifdef CONFIG_11V
+#if CONFIG_11V
     /** BTM mode */
     uint8_t btm_mode;
     /** bss transition support (For internal use only)*/
     bool bss_transition_supported;
 #endif
-#ifdef CONFIG_11K
+#if CONFIG_11K
     /** Neighbor report support (For internal use only)*/
     bool neighbor_report_supported;
 #endif
@@ -1628,8 +1970,36 @@ struct wlan_ieeeps_config
     t_u32 ps_mode;
 };
 
+#if CONFIG_WIFI_TX_PER_TRACK
+/** Tx Per Tracking Structure
+ * Driver sets tx per tracking statistic to fw.
+ * Fw will check tx packet error rate periodically and
+ * report PER to host if per is high.
+ */
+struct wlan_tx_pert_info
+{
+    /** Enable/Disable tx per tracking */
+    t_u8 tx_pert_check;
+    /** Check period(unit sec) */
+    t_u8 tx_pert_check_peroid;
+    /** (Fail TX packet)/(Total TX packet) ratio(unit 10%)
+     * default: 5
+     */
+    t_u8 tx_pert_check_ratio;
+    /** A watermark of check number(default 5) */
+    t_u16 tx_pert_check_num;
+};
+#endif
+#if defined(RW610)
+typedef enum
+{
+    CLI_DISABLE_WIFI,
+    CLI_ENABLE_WIFI,
+    CLI_RESET_WIFI,
+} cli_reset_option;
+#endif
 
-#ifdef CONFIG_HOST_SLEEP
+#if CONFIG_HOST_SLEEP
 enum wlan_hostsleep_event
 {
     HOST_SLEEP_HANDSHAKE = 1,
@@ -1648,6 +2018,114 @@ enum wlan_hostsleep_state
 #define WLAN_HOSTSLEEP_FAIL       3
 #endif
 
+#if CONFIG_TX_RX_HISTOGRAM
+struct wlan_txrx_histogram_info
+{
+    /**  Enable or disable  */
+    t_u8 enable;
+    /** Choose to get TX, RX or both */
+    t_u16 action;
+};
+
+#define FLAG_TX_HISTOGRAM       0x01
+#define FLAG_RX_HISTOGRAM       0x02
+#define DISABLE_TX_RX_HISTOGRAM 0x00
+#define ENABLE_TX_RX_HISTOGRAM  0x01
+#define GET_TX_RX_HISTOGRAM     0x02
+
+/** TX histiogram ht statistic parameters */
+typedef struct _tx_pkt_ht_rate_info
+{
+    /** tx packet counter of MCS0~MCS15 */
+    t_u32 htmcs_txcnt[16];
+    /** tx packet's short GI counter of MCS0~MCS15 */
+    t_u32 htsgi_txcnt[16];
+    /** tx STBC packet counter of MCS0~MCS15 */
+    t_u32 htstbcrate_txcnt[16];
+} tx_pkt_ht_rate_info;
+/** TX histiogram vht statistic parameters */
+typedef struct _tx_pkt_vht_rate_info
+{
+    /** tx packet counter of MCS0~MCS9 */
+    t_u32 vhtmcs_txcnt[10];
+    /** tx packet's short GI counter of MCS0~MCS9 */
+    t_u32 vhtsgi_txcnt[10];
+    /** tx STBC packet counter of MCS0~MCS9 */
+    t_u32 vhtstbcrate_txcnt[10];
+} tx_pkt_vht_rate_info;
+/** TX histiogram he statistic parameters */
+typedef struct _tx_pkt_he_rate_info
+{
+    /** tx packet counter of MCS0~MCS11 */
+    t_u32 hemcs_txcnt[12];
+    /** tx STBC packet counter of MCS0~MCS11 */
+    t_u32 hestbcrate_txcnt[12];
+} tx_pkt_he_rate_info;
+/** TX histogram statistic parameters*/
+typedef struct _tx_pkt_rate_info
+{
+    /** tx packet counter of every NSS, NSS=1,2 */
+    t_u32 nss_txcnt[2];
+    /** tx packet counter of every bandwith */
+    t_u32 bandwidth_txcnt[3];
+    /** different preamble tx packet counter */
+    t_u32 preamble_txcnt[4];
+    /** tx packet counter of using LDPC coding */
+    t_u32 ldpc_txcnt;
+    /** transmitted RTS counter */
+    t_u32 rts_txcnt;
+    /** RSSI of ack */
+    t_s32 ack_RSSI;
+} tx_pkt_rate_info;
+/** RX histiogram ht statistic parameters */
+typedef struct _rx_pkt_ht_rate_info
+{
+    /** Rx packet counter of MCS0~MCS15 */
+    t_u32 htmcs_rxcnt[16];
+    /** Rx packet's short GI counter of MCS0~MCS15 */
+    t_u32 htsgi_rxcnt[16];
+    /** Rx STBC packet counter of MCS0~MCS15 */
+    t_u32 htstbcrate_rxcnt[16];
+} rx_pkt_ht_rate_info;
+/** RX histiogram vht statistic parameters */
+typedef struct _rx_pkt_vht_rate_info
+{
+    /** Rx packet counter of MCS0~MCS9 */
+    t_u32 vhtmcs_rxcnt[10];
+    /** Rx packet's short GI counter of MCS0~MCS9 */
+    t_u32 vhtsgi_rxcnt[10];
+    /** Rx STBC packet counter of MCS0~MCS9 */
+    t_u32 vhtstbcrate_rxcnt[10];
+} rx_pkt_vht_rate_info;
+/** RX histiogram he statistic parameters */
+typedef struct _rx_pkt_he_rate_info
+{
+    /** Rx packet counter of MCS0~MCS11 */
+    t_u32 hemcs_rxcnt[12];
+    /** Rx STBC packet counter of MCS0~MCS11 */
+    t_u32 hestbcrate_rxcnt[12];
+} rx_pkt_he_rate_info;
+/** RX histogram statistic parameters*/
+typedef struct _rx_pkt_rate_info
+{
+    /** Rx packet counter of every NSS, NSS=1,2 */
+    t_u32 nss_rxcnt[2];
+    /** Received packet counter which using STBC */
+    t_u32 nsts_rxcnt;
+    /** Rx packet counter of every bandwith */
+    t_u32 bandwidth_rxcnt[3];
+    /** Different preamble Rx packet counter */
+    t_u32 preamble_rxcnt[6];
+    /** VHT SIGA2 LDPC bit*/
+    t_u32 ldpc_txbfcnt[2];
+    /**  Average RSSI */
+    t_s32 rssi_value[2];
+    /** RSSI value of path A */
+    t_s32 rssi_chain0[4];
+    /** RSSI value of path B */
+    t_s32 rssi_chain1[4];
+} rx_pkt_rate_info;
+#endif
 
 #define TX_AMPDU_RTS_CTS            0
 #define TX_AMPDU_CTS_2_SELF         1
@@ -1663,6 +2141,9 @@ typedef struct _tx_ampdu_prot_mode_para
 
 typedef wifi_uap_client_disassoc_t wlan_uap_client_disassoc_t;
 
+#if CONFIG_INACTIVITY_TIMEOUT_EXT
+typedef wifi_inactivity_to_t wlan_inactivity_to_t;
+#endif
 
 /* WLAN Connection Manager API */
 
@@ -1721,9 +2202,80 @@ int wlan_stop(void);
  */
 void wlan_deinit(int action);
 
+#if CONFIG_WPS2
+/** Generate valid PIN for WPS session.
+ *
+ *  This function generate PIN for WPS PIN session.
+ *
+ * \param[in]  pin A pointer to WPS pin to be generated.
+ */
+void wlan_wps_generate_pin(uint32_t *pin);
 
+/** Start WPS PIN session.
+ *
+ *  This function starts WPS PIN session.
+ *
+ * \param[in]  pin Pin for WPS session.
+ *
+ * \return WM_SUCCESS if the pin entered is valid.
+ * \return -WM_FAIL if invalid pin entered.
+ */
+int wlan_start_wps_pin(uint32_t pin);
 
-#ifdef CONFIG_NCP_BRIDGE
+/** Start WPS PBC session.
+ *
+ *  This function starts WPS PBC session.
+ *
+ * \return  WM_SUCCESS if successful
+ */
+int wlan_start_wps_pbc(void);
+/**
+ * Set None/WPS/802.1x session.
+ *
+ *\param[in] session       0 -- PROV_NON_SESSION_ATTEMPT, 1 -- PROV_WPS_SESSION_ATTEMPT, 2 -- PROV_ENTP_SESSION_ATTEMPT.
+ */
+void wlan_set_prov_session(int session);
+
+/**
+ * Get connect session type.
+ *
+ * \return 0 -- PROV_NON_SESSION_ATTEMPT, 1 -- PROV_WPS_SESSION_ATTEMPT, 2 -- PROV_ENTP_SESSION_ATTEMPT.
+ */
+int wlan_get_prov_session(void);
+#endif
+
+/** Stop and Remove all wireless network profiles.
+ *
+ *  \return WM_SUCCESS if successful.
+ */
+int wlan_remove_all_network_profiles(void);
+
+#if defined(RW610)
+/** Reset driver.
+ *  \param ResetOption option including enable, disable or reset wifi driver
+ *  can be chosen.
+ */
+void wlan_reset(cli_reset_option ResetOption);
+/** Stop and Remove all wireless network (Access Point).
+ *
+ *  \return WM_SUCCESS if successful.
+ */
+int wlan_remove_all_networks(void);
+
+/**
+ * This API destroy all tasks.
+ */
+void wlan_destroy_all_tasks(void);
+/** Retrieve the status information of if wlan started.
+ *
+ *  \return TRUE if started.
+ *  \return FALSE if not started.
+ */
+int wlan_is_started();
+
+#endif // RW610
+
+#if CONFIG_NCP
 /** uap provisioning deinit callback function */
 void wlan_register_uap_prov_deinit_cb(int (*cb)(void));
 /** uap provisioning cleanup callback function */
@@ -1735,10 +2287,98 @@ void wlan_register_uap_prov_cleanup_cb(void (*cb)(void));
 int wlan_stop_all_networks(void);
 #endif
 
+#if CONFIG_RX_ABORT_CFG
+struct wlan_rx_abort_cfg
+{
+    /** Enable/Disable Rx abort config */
+    t_u8 enable;
+    /** Rx weak RSSI pkt threshold */
+    int rssi_threshold;
+};
+#endif
 
+#if CONFIG_RX_ABORT_CFG_EXT
+struct wlan_rx_abort_cfg_ext
+{
+    /** Enable/disable dyn rx abort on weak pkt rssi */
+    int enable;
+    /** specify rssi margin */
+    int rssi_margin;
+    /** specify ceil rssi threshold */
+    int ceil_rssi_threshold;
+    /** specify floor rssi threshold */
+    int floor_rssi_threshold;
+    /** current dynamic rssi threshold */
+    int current_dynamic_rssi_threshold;
+    /** rssi config: default or user configured */
+    int rssi_default_config;
+    /** EDMAC status */
+    int edmac_enable;
+};
+#endif
 
+#if CONFIG_CCK_DESENSE_CFG
+#define CCK_DESENSE_MODE_DISABLED 0
+#define CCK_DESENSE_MODE_DYNAMIC  1
+#define CCK_DESENSE_MODE_DYN_ENH  2
 
+struct wlan_cck_desense_cfg
+{
+    /** cck desense mode: 0:disable 1:normal 2:dynamic */
+    t_u16 mode;
+    /** specify rssi margin */
+    int margin;
+    /** specify ceil rssi threshold */
+    int ceil_thresh;
+    /** cck desense "on" interval count */
+    int num_on_intervals;
+    /** cck desense "off" interval count */
+    int num_off_intervals;
+};
+#endif
+#if CONFIG_RX_ABORT_CFG
+/**
+ * Set/Get RX abort configure to/from Fw.
+ *
+ * \param[in,out] cfg A pointer to information buffer
+ * \param[in] action Command action: GET or SET
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_get_rx_abort_cfg(struct wlan_rx_abort_cfg *cfg, t_u16 action);
+#endif
 
+#if CONFIG_RX_ABORT_CFG_EXT
+/**
+ * Set Dynamic RX abort config to Fw.
+ *
+ * \param[in] cfg A pointer to information buffer
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_rx_abort_cfg_ext(const struct wlan_rx_abort_cfg_ext *cfg);
+
+/**
+ * Get Dynamic RX abort config from Fw.
+ *
+ * \param[in,out] cfg A pointer to information buffer
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_get_rx_abort_cfg_ext(struct wlan_rx_abort_cfg_ext *cfg);
+#endif
+
+#if CONFIG_CCK_DESENSE_CFG
+/**
+ * Set/Get CCK Desense configure to/from Fw.
+ *
+ * \param[in,out] cfg A pointer to information buffer
+ * \param[in] action Command action: GET or SET
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_get_cck_desense_cfg(struct wlan_cck_desense_cfg *cfg, t_u16 action);
+#endif
 
 /** WLAN initialize micro-AP network information
  *
@@ -2118,6 +2758,21 @@ int wlan_get_current_network(struct wlan_network *network);
  */
 int wlan_get_current_network_ssid(char *ssid);
 
+/** Retrieve the current network bssid of station interface.
+ *
+ *  This function retrieves the current network bssid of station
+ *  interface when the station interface is in the \ref WLAN_CONNECTED
+ *  state.
+ *
+ *  \param[out] bssid A pointer to the bssid.
+ *
+ *  \return WM_SUCCESS if successful.
+ *  \return -WM_E_INVAL if \a network is NULL.
+ *  \return WLAN_ERROR_STATE if the WLAN Connection Manager was
+ *          not running or not in the \ref WLAN_CONNECTED state.
+ */
+int wlan_get_current_network_bssid(char *bssid);
+
 /** Retrieve the current network configuration of micro-AP interface.
  *
  *  This function retrieves the current network configuration of micro-AP
@@ -2146,6 +2801,9 @@ int wlan_get_current_uap_network(struct wlan_network *network);
  */
 int wlan_get_current_uap_network_ssid(char *ssid);
 
+#if CONFIG_SCAN_WITH_RSSIFILTER
+int wlan_set_rssi_threshold(int rssithr);
+#endif
 
 /** Retrieve the status information of the micro-AP interface.
  *
@@ -2169,7 +2827,7 @@ bool is_sta_connected(void);
  */
 bool is_sta_ipv4_connected(void);
 
-#ifdef CONFIG_IPV6
+#if CONFIG_IPV6
 /** Retrieve the status information of the ipv6 network of station interface.
  *
  *  \return TRUE if ipv6 network of station interface is in \ref WLAN_CONNECTED
@@ -2482,11 +3140,75 @@ void wlan_set_cal_data(const uint8_t *cal_data, const unsigned int cal_data_size
  * \param[in] mac The MAC Address in 6 byte array format like
  *                uint8_t mac[] = { 0x00, 0x50, 0x43, 0x21, 0x19, 0x6E};
  *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
  */
-void wlan_set_mac_addr(uint8_t *mac);
+int wlan_set_mac_addr(uint8_t *mac);
 
+/** Set wireless MAC Address for STA in WLAN firmware.
+ *
+ * This function may be called to set wireless MAC Address in firmware.
+ * This should be call before \ref wlan_init() function.
+ * When called after wlan init done, it will set only STA MAC adderess.
+ *
+ * \param[in] mac The MAC Address in 6 byte array format like
+ *                uint8_t mac[] = { 0x00, 0x50, 0x43, 0x21, 0x19, 0x6E};
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_set_sta_mac_addr(uint8_t *mac);
 
-#ifdef CONFIG_WIFI_TX_BUFF
+/** Set wireless MAC Address for uAP in WLAN firmware.
+ *
+ * This function may be called to set wireless MAC Address in firmware.
+ * This should be call before \ref wlan_init() function.
+ * When called after wlan init done, it will set only uAP MAC address.
+ *
+ * \param[in] mac The MAC Address in 6 byte array format like
+ *                uint8_t mac[] = { 0x00, 0x50, 0x43, 0x21, 0x19, 0x6E};
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_set_uap_mac_addr(uint8_t *mac);
+
+#if CONFIG_WMM_UAPSD
+/** Set QOS info in WLAN firmware.
+ *
+ * \param[in] qos_info UAPSD QOS info.
+ * \param[in] action Set/get action.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_wmm_uapsd_qosinfo(t_u8 *qos_info, t_u8 action);
+/** Enable/disable UAPSD in WLAN firmware.
+ *
+ * \param[in] uapsd_enable Enable/disable UAPSD.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_set_wmm_uapsd(t_u8 uapsd_enable);
+/** Set/get UAPSD sleep period in WLAN firmware.
+ *
+ * \param[in] sleep_period UAPSD sleep period.
+ * \param[in] action Set/get action.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_sleep_period(unsigned int *sleep_period, t_u8 action);
+/** Check if UAPSD is enabled or not.
+ *
+ * \return true if UAPSD is enabled.
+ * \return false if UAPSD is disabled.
+ */
+t_u8 wlan_is_wmm_uapsd_enabled(void);
+#endif
+
+#if CONFIG_WIFI_TX_BUFF
 /** Reconfigure wifi tx buffer size in WLAN firmware.
  *
  * This function may be called to reconfigure wifi tx buffer size in firmware.
@@ -2500,9 +3222,33 @@ void wlan_set_mac_addr(uint8_t *mac);
 void wlan_recfg_tx_buf_size(uint16_t buf_size, mlan_bss_type bss_type);
 #endif
 
+#if CONFIG_WIFI_TX_PER_TRACK
+/** Set Tx PER tracking config.
+ * This function may be called to set Tx PER tracking in firmware.
+ *
+ * \param[in] tx_pert User configured parameters of Tx PER tracking
+ *            period, ratio and number of tx packets.
+ *
+ * \param[in] bss_type BSS type for STA or uAP.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+void wlan_set_tx_pert(struct wlan_tx_pert_info *tx_pert, mlan_bss_type bss_type);
+#endif
 
+#if CONFIG_TX_RX_HISTOGRAM
+/** Set Tx Rx histogram config.
+ * This function may be called to set Tx Rx histogram config.
+ *
+ * \param[in] txrx_histogram User configured parameters of Tx Rx histogram
+ *            including enable and action.
+ * \param[out] data Tx Rx histogram data from fw.
+ */
+void wlan_set_txrx_histogram(struct wlan_txrx_histogram_info *txrx_histogram, t_u8 *data);
+#endif
 
-#ifdef CONFIG_ROAMING
+#if CONFIG_ROAMING
 /** Set soft roaming config.
  *
  * This function may be called to enable/disable soft roaming
@@ -2534,9 +3280,37 @@ void wlan_recfg_tx_buf_size(uint16_t buf_size, mlan_bss_type bss_type);
  * \return -WM_FAIL if failed.
  */
 int wlan_set_roaming(const int enable, const uint8_t rssi_low_threshold);
+
+int wlan_get_roaming_status();
 #endif
 
-#ifdef CONFIG_HOST_SLEEP
+#if CONFIG_HOST_SLEEP
+#ifdef RW610
+/** Wowlan configure.
+ * This function may be called to config host sleep in firmware.
+ *
+ * \param[in] is_mef Flag to indicate use MEF condition or not.
+ * \param[in] wake_up_conds Bit map of default condition.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_wowlan_config(uint8_t is_mef, t_u32 wake_up_conds);
+
+/** Host sleep configure.
+ * This function may be called to config host sleep in firmware.
+ *
+ * \param[in] is_manual Flag to indicate host enter low power mode with power manager or by command.
+ * \param[in] is_periodic Flag to indicate host enter low power periodically or once with power manager.
+ */
+void wlan_config_host_sleep(bool is_manual, t_u8 is_periodic);
+
+/** This function sent host sleep events to mon_thread
+ * \param[in] id Event ID.
+ * \param[in] data Pointer to event msg.
+ */
+status_t wlan_hs_send_event(int id, void *data);
+#endif /*RW610*/
 
 /** Cancel host sleep.
  * This function may be called to cancel host sleep in firmware.
@@ -2556,6 +3330,14 @@ void wlan_clear_host_sleep_config();
  */
 int wlan_set_multicast(t_u8 mef_action);
 #endif
+
+/** Set configuration parameters of IEEE power save mode.
+ *
+ * \param [in] ps_cfg : powersave configuratiuon includes multiple parameters.
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL if failed.
+ */
+int wlan_set_ieeeps_cfg(struct wlan_ieeeps_config *ps_cfg);
 
 /** Set configuration parameters of IEEE power save mode.
  *
@@ -2635,6 +3417,14 @@ int wlan_set_ieeeps_cfg(struct wlan_ieeeps_config *ps_cfg);
  */
 void wlan_configure_listen_interval(int listen_interval);
 
+void wlan_configure_delay_to_ps(unsigned int timeout_ms);
+
+unsigned short wlan_get_listen_interval();
+
+unsigned int wlan_get_delay_to_ps();
+
+bool wlan_is_power_save_enabled();
+
 /** Configure Null packet interval of IEEE power save mode.
  *
  *  \note In IEEEPS station sends a NULL packet to AP to indicate that
@@ -2652,7 +3442,7 @@ void wlan_configure_listen_interval(int listen_interval);
  */
 void wlan_configure_null_pkt_interval(int time_in_secs);
 
-
+#ifndef RW610
 /** This API can be used to set the mode of Tx/Rx antenna.
  * If SAD is enabled, this API can also used to set SAD antenna
  * evaluate time interval(antenna mode must be antenna diversity
@@ -2684,6 +3474,45 @@ int wlan_set_antcfg(uint32_t ant, uint16_t evaluate_time);
  * \return WLAN_ERROR_STATE if unsuccessful.
  */
 int wlan_get_antcfg(uint32_t *ant, uint16_t *evaluate_time, uint16_t *current_antenna);
+#else
+/** This API can be used to set the mode of Tx/Rx antenna.
+ * If SAD is enabled, this API can also used to set SAD antenna
+ * evaluate time interval(antenna mode must be antenna diversity
+ * when set SAD evaluate time interval).
+ *
+ * \param[in] ant Antenna valid values are 1, 2 and 65535
+ *                1 : Tx/Rx antenna 1
+ *                2 : Tx/Rx antenna 2
+ *	          0xFFFF: Tx/Rx antenna diversity
+ * \param[in] evaluate_time
+ *	      SAD evaluate time interval, default value is 6s(0x1770).
+ *  \param[in] evaluate_mode
+ *	            0: PCB Ant  + Ext Ant0
+ *              1: Ext Ant0 + Ext Ant1
+ *              2: PCB Ant  + Ext Ant1
+ *           0xFF: Default divisity mode.
+ *
+ * \return WM_SUCCESS if successful.
+ * \return WLAN_ERROR_STATE if unsuccessful.
+ *
+ */
+int wlan_set_antcfg(uint32_t ant, uint16_t evaluate_time, uint8_t evaluate_mode);
+
+/** This API can be used to get the mode of Tx/Rx antenna.
+ * If SAD is enabled, this API can also used to get SAD antenna
+ * evaluate time interval(antenna mode must be antenna diversity
+ * when set SAD evaluate time interval).
+ *
+ * \param[out] ant pointer to antenna variable.
+ * \param[out] evaluate_time pointer to evaluate_time variable for SAD.
+ * \param[out] current_mode pointer to evaluate_mode.
+ * \param[out] current_antenna pointer to current antenna.
+ *
+ * \return WM_SUCCESS if successful.
+ * \return WLAN_ERROR_STATE if unsuccessful.
+ */
+int wlan_get_antcfg(uint32_t *ant, uint16_t *evaluate_time, uint8_t *evaluate_mode, uint16_t *current_antenna);
+#endif /*RW610*/
 
 /** Get the wifi firmware version extension string.
  *
@@ -2747,6 +3576,43 @@ int wlan_ieeeps_on(unsigned int wakeup_conditions);
  */
 int wlan_ieeeps_off(void);
 
+#if !CONFIG_WPA_SUPP
+/** Enable WNM with Host Sleep Configuration
+ *
+ * When enabled, it opportunistically puts the wireless card into IEEEPS mode.
+ * Before putting the Wireless card in power
+ * save this also sets the hostsleep configuration on the card as
+ * specified. This makes the card generate a wakeup for the processor if
+ * any of the wakeup conditions are met.
+ *
+ * \param[in] wakeup_conditions conditions to wake the host. This should
+ *            be a logical OR of the conditions in \ref wlan_wakeup_event_t.
+ *            Typically devices would want to wake up on
+ *            \ref WAKE_ON_ALL_BROADCAST,
+ *            \ref WAKE_ON_UNICAST,
+ *            \ref WAKE_ON_MAC_EVENT.
+ *            \ref WAKE_ON_MULTICAST,
+ *            \ref WAKE_ON_ARP_BROADCAST,
+ *            \ref WAKE_ON_MGMT_FRAME
+ * \param[in] wnm_sleep_time wnm sleep interval.(number of dtims)
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL otherwise.
+ *
+ */
+int wlan_wnmps_on(unsigned int wakeup_conditions, t_u16 wnm_sleep_time);
+
+/** Turn off WNM Power Save mode.
+ *
+ * \note This call is asynchronous. The system will exit the power-save mode
+ *       only when all requisite conditions are met.
+ *
+ * \return WM_SUCCESS if the call was successful.
+ * \return -WM_FAIL otherwise.
+ *
+ */
+int wlan_wnmps_off(void);
+#endif
 
 /** Turn on Deep Sleep Power Save mode.
  *
@@ -2987,7 +3853,7 @@ int wlan_wowlan_cfg_ptn_match(wlan_wowlan_ptn_cfg_t *ptn_cfg);
  */
 int wlan_set_ipv6_ns_offload();
 
-#ifdef CONFIG_HOST_SLEEP
+#if CONFIG_HOST_SLEEP
 
 /** WLCMGR host sleep pre configuration */
 void wlan_hs_pre_cfg(void);
@@ -3049,6 +3915,35 @@ int wlan_get_current_bssid(uint8_t *bssid);
  */
 uint8_t wlan_get_current_channel(void);
 
+#if CONFIG_WIFI_GET_LOG
+/**
+ * Use this API to get the various statistics of sta from Wi-Fi firmware like
+ * number of beacons received, missed and so on.
+ *
+ * \param[in] stats A pointer to structure where stats collected from Wi-Fi firmware
+ *	      will be copied.
+ * \note Please explore the elements of the \ref wlan_pkt_stats_t strucutre for
+ * 	 more information on stats.
+ *
+ * \return WM_SUCCESS if operation is successful.
+ * \return -WM_FAIL if command fails.
+ */
+int wlan_get_log(wlan_pkt_stats_t *stats);
+
+/**
+ * Use this API to get the various statistics of uap from Wi-Fi firmware like
+ * number of beacons received, missed and so on.
+ *
+ * \param[in] stats A pointer to structure where stats collected from Wi-Fi firmware
+ *	      will be copied.
+ * \note Please explore the elements of the \ref wlan_pkt_stats_t strucutre for
+ * 	 more information on stats.
+ *
+ * \return WM_SUCCESS if operation is successful.
+ * \return -WM_FAIL if command fails.
+ */
+int wlan_uap_get_log(wlan_pkt_stats_t *stats);
+#endif
 
 /** Get station interface power save mode.
  *
@@ -3201,7 +4096,7 @@ int wlan_enhanced_cli_init(void);
 
 int wlan_enhanced_cli_deinit(void);
 
-#ifdef CONFIG_RF_TEST_MODE
+#if CONFIG_RF_TEST_MODE
 /** Register WLAN Test Mode CLI commands.
  *
  *  Register the WLAN Test Mode CLI commands like set or get channel,
@@ -3437,6 +4332,7 @@ int wlan_set_sta_tx_power(t_u32 power_level);
  */
 int wlan_set_wwsm_txpwrlimit(void);
 
+#ifndef RW610
 /**
  * Get wlan region code from tx power config
  *
@@ -3444,6 +4340,7 @@ int wlan_set_wwsm_txpwrlimit(void);
  *
  */
 const char *wlan_get_wlan_region_code(void);
+#endif
 
 /**
  * Get Management IE for given BSS type (interface) and index.
@@ -3588,7 +4485,7 @@ int wlan_get_otp_user_data(uint8_t *buf, uint16_t len);
  */
 int wlan_get_cal_data(wlan_cal_data_t *cal_data);
 
-#ifdef CONFIG_COMPRESS_TX_PWTBL
+#if CONFIG_COMPRESS_TX_PWTBL
 /**
  * Set the compressed Tx PWR Limit configuration.
  *
@@ -3673,7 +4570,7 @@ int wlan_set_txpwrlimit(wlan_txpwrlimit_t *txpwrlimit);
  */
 int wlan_get_txpwrlimit(wifi_SubBand_t subband, wifi_txpwrlimit_t *txpwrlimit);
 
-#ifdef CONFIG_AUTO_RECONNECT
+#if CONFIG_AUTO_RECONNECT
 /**
  * Enable Auto Reconnect feature in WLAN firmware.
  *
@@ -3744,7 +4641,7 @@ void wlan_uap_set_beacon_period(const uint16_t beacon_period);
 /** API to set the bandwidth of uAP
  *
  *\param[in] bandwidth Wi-Fi AP Bandwidth (20MHz/40MHz)
-    1: 20 MHz 2: 40 MHz
+    1: 20 MHz 2: 40 MHz 3: 80 MHz
  *
  *\return WM_SUCCESS if successful otherwise failure.
  *\return -WM_FAIL if command fails.
@@ -3754,6 +4651,19 @@ void wlan_uap_set_beacon_period(const uint16_t beacon_period);
  *
  */
 int wlan_uap_set_bandwidth(const uint8_t bandwidth);
+
+/** API to Get the bandwidth of uAP
+ *
+ *\param[out] bandwidth Wi-Fi AP Bandwidth (20MHz/40MHz)
+    1: 20 MHz 2: 40 MHz 3: 80 MHz
+ *
+ *\return WM_SUCCESS if successful otherwise failure.
+ *\return -WM_FAIL if command fails.
+ *
+ *\note Please call this API before calling uAP start API.
+ *
+ */
+int wlan_uap_get_bandwidth(uint8_t *bandwidth);
 
 /** API to control SSID broadcast capability of uAP
  *
@@ -3924,6 +4834,19 @@ void wlan_uap_ampdu_rx_disable(void);
  */
 void wlan_uap_set_scan_chan_list(wifi_scan_chan_list_t scan_chan_list);
 
+#if CONFIG_WPA2_ENTP
+
+/**
+ * Use this API if application want to allow station
+ * connection to WPA2 Enterprise ap profiles only.
+ *
+ * If called the in scan result only the WPA2 Enterprise AP
+ * will be listed and station network profile only with WPA2
+ * Enterprise security will be allowed to add to network profile
+ * list.
+ */
+void wlan_enable_wpa2_enterprise_ap_only();
+#endif
 
 /**
  * Set the rts threshold of sta in WLAN firmware.
@@ -3979,7 +4902,7 @@ static inline void print_mac(const char *mac)
     (void)PRINTF("%02X:%02X:%02X:%02X:%02X:%02X ", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 }
 
-#ifdef CONFIG_RF_TEST_MODE
+#if CONFIG_RF_TEST_MODE
 
 /**
  * Set the RF Test Mode on in Wi-Fi firmware.
@@ -4320,8 +5243,56 @@ int wlan_set_rf_tx_frame(const uint32_t enable,
                          const uint32_t stbc,
                          const uint8_t *bssid);
 
+/**
+ * Set the RF OTP MAC address in Wi-Fi firmware.
+ *
+ * \note Please call \ref wlan_set_rf_test_mode API before using this API.
+ *
+ * \param[in] mac A Pointer to a variable where OTP MAC address is to be stored.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int wlan_set_rf_otp_mac_addr(uint8_t *mac);
+
+/**
+ * Get the RF OTP MAC address from Wi-Fi firmware.
+ *
+ * \note Please call \ref wlan_set_rf_test_mode API before using this API.
+ *
+ * \param[out] mac A Pointer to a variable where OTP MAC address is to be stored.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int wlan_get_rf_otp_mac_addr(uint8_t *mac);
+
+/**
+ * Set the RF OTP cal data in Wi-Fi firmware.
+ *
+ * \note Please call \ref wlan_set_rf_test_mode API before using this API.
+ *
+ * \param[in] cal_data A Pointer to a variable where OTP cal data is to be stored.
+ * \param[in] cal_data_len The length of OTP cal data.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int wlan_set_rf_otp_cal_data(const uint8_t *cal_data, uint32_t cal_data_len);
+
+/**
+ * Get the RF OTP cal data from Wi-Fi firmware.
+ *
+ * \note Please call \ref wlan_set_rf_test_mode API before using this API.
+ *
+ * \param[out] cal_data A Pointer to a variable where OTP cal data is to be stored.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ *
+ */
+int wlan_get_rf_otp_cal_data(uint8_t *cal_data);
 #endif
-#ifdef CONFIG_WIFI_FW_DEBUG
+#if CONFIG_WIFI_FW_DEBUG
 /** This function registers callbacks which are used to generate FW Dump on USB
  * device.
  *
@@ -4340,7 +5311,7 @@ void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
 
 #endif
 
-#ifdef CONFIG_WIFI_EU_CRYPTO
+#if CONFIG_WIFI_EU_CRYPTO
 #define EU_CRYPTO_DATA_MAX_LENGTH  1300U
 #define EU_CRYPTO_KEY_MAX_LENGTH   32U
 #define EU_CRYPTO_KEYIV_MAX_LENGTH 32U
@@ -4571,8 +5542,21 @@ int wlan_set_crypto_AES_GCMP_decrypt(const t_u8 *Key,
                                      t_u16 *DataLength);
 #endif
 
+#if CONFIG_WIFI_MEM_ACCESS
+/** This function reads/writes adapter memory location value.
+ *
+ *\param[in]        action      0 -- read, 1 -- write
+ *\param[in]        addr        Specifies the memory address that is to be read/write.
+ *\param[in/out]    value       Value if specified, stand for write action, then that value will be written to that
+ *offset in the specified register. Value should be specified in hexadecimal. Otherwise, it stands for read action, the
+ *value is updated with read value.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_mem_access(uint16_t action, uint32_t addr, uint32_t *value);
+#endif
 
-#ifdef CONFIG_WIFI_BOOT_SLEEP
+#if CONFIG_WIFI_BOOT_SLEEP
 /** This function get/set wlan boot sleep enable status.
  *
  *\param[in]        action      0 -- get, 1 -- set
@@ -4611,7 +5595,7 @@ int wlan_boot_sleep(uint16_t action, uint16_t *enable);
 int wlan_send_hostcmd(
     const void *cmd_buf, uint32_t cmd_buf_len, void *host_resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
 
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
 /**
  * This function is used to set HTC parameter.
  *
@@ -4649,7 +5633,7 @@ int wlan_send_debug_htc(const uint8_t count,
 int wlan_enable_disable_htc(uint8_t option);
 #endif
 
-#ifdef CONFIG_11AX
+#if CONFIG_11AX
 /**
  * Use this API to set the set 11AX Tx OMI.
  *
@@ -4728,7 +5712,7 @@ int wlan_set_11ax_cfg(wlan_11ax_config_t *ax_config);
  */
 uint8_t *wlan_get_11ax_cfg();
 
-#ifdef CONFIG_11AX_TWT
+#if CONFIG_11AX_TWT
 /** Set btwt config params
  *
  * \param[in] btwt_config Broadcast TWT Setup parameters to be sent to Firmware
@@ -4778,11 +5762,44 @@ uint8_t *wlan_get_twt_teardown_cfg();
  * \return WM_SUCCESS if successful otherwise failure.
  */
 int wlan_get_twt_report(wlan_twt_report_t *twt_report);
+
+/** Twt information
+ *
+ * \param[out] twt_information TWT information.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_twt_information(wlan_twt_information_t *twt_information);
 #endif /* CONFIG_11AX_TWT */
 
+#if CONFIG_MMSF
+/**
+ * Set 11AX AMPDU Density config.
+ * \param[in] enable     0 - Disbale MMSF;  1 - Enable MMSF
+ * \param[in] Density    ampdu Density value. Default value is 0x30.
+ * \param[in] MMSF       ampdu MMSF value. Default value is 0x6.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_mmsf(const t_u8 enable, const t_u8 Density, const t_u8 MMSF);
+
+/**
+ * Get 11AX AMPDU Density config.
+ * \param[out] enable     0 - Disbale MMSF;  1 - Enable MMSF
+ * \param[out] Density    ampdu Density value. Default value is 0x30.
+ * \param[out] MMSF       ampdu MMSF value. Default value is 0x6.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_get_mmsf(t_u8 *enable, t_u8 *Density, t_u8 *MMSF);
+#endif
 #endif /* CONFIG_11AX */
 
-#ifdef CONFIG_WIFI_CLOCKSYNC
+#if CONFIG_WIFI_RECOVERY
+int wlan_recovery_test(void);
+#endif
+
+#if CONFIG_WIFI_CLOCKSYNC
 /** Set Clock Sync GPIO based TSF
  *
  * \param[in] tsf_latch Clock Sync TSF latch parameters to be sent to Firmware
@@ -4799,7 +5816,7 @@ int wlan_set_clocksync_cfg(const wlan_clock_sync_gpio_tsf_t *tsf_latch);
 int wlan_get_tsf_info(wlan_tsf_info_t *tsf_info);
 #endif /* CONFIG_WIFI_CLOCKSYNC */
 
-#ifdef CONFIG_HEAP_DEBUG
+#if CONFIG_HEAP_DEBUG
 /**
  * Show os mem alloc and free info.
  *
@@ -4807,8 +5824,45 @@ int wlan_get_tsf_info(wlan_tsf_info_t *tsf_info);
 void wlan_show_os_mem_stat();
 #endif
 
+#if CONFIG_MULTI_CHAN
+/**
+ * Set multi-channel status disable/enable.
+ * \param[in]      status       multi channel status
+ * 0-disable, 1-enable
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_multi_chan_status(const int status);
 
-#ifdef CONFIG_11R
+/**
+ * Get multi-channel status disable/enable.
+ * \param[out]      status       multi channel status
+ * 0-disable, 1-enable
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_get_multi_chan_status(int *status);
+
+/**
+ * Set multi-channel config.
+ * \param[in]      num       array length of drcs_cfg[]
+ * \param[in] drcs_cfg  multi-channel config, maybe an array
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_drcs_cfg(const wlan_drcs_cfg_t *drcs_cfg, const int num);
+
+/**
+ * Get multi-channel config.
+ * \param[in]      num       array length of drcs_cfg[]
+ * \param[out] drcs_cfg  multi-channel config, maybe an array
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_get_drcs_cfg(wlan_drcs_cfg_t *drcs_cfg, int num);
+#endif
+
+#if CONFIG_11R
 /**
  * Start FT roaming : This API is used to initiate fast BSS transition based
  * roaming.
@@ -4861,7 +5915,7 @@ int wlan_rx_mgmt_indication(const enum wlan_bss_type bss_type,
                                                     const wlan_mgmt_frame_t *frame,
                                                     const size_t len));
 
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
 void wlan_wmm_tx_stats_dump(int bss_type);
 #endif
 
@@ -4872,7 +5926,7 @@ void wlan_wmm_tx_stats_dump(int bss_type);
  */
 void wlan_set_scan_channel_gap(unsigned scan_chan_gap);
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
 /**
  * enable/disable host 11k feature
  *
@@ -4882,6 +5936,8 @@ void wlan_set_scan_channel_gap(unsigned scan_chan_gap);
  */
 int wlan_host_11k_cfg(int enable_11k);
 
+bool wlan_get_host_11k_status();
+
 /**
  * host send neighbor report request
  *
@@ -4889,10 +5945,10 @@ int wlan_host_11k_cfg(int enable_11k);
  * \note ssid parameter is optional
  * \return WM_SUCCESS if successful otherwise failure.
  */
-int wlan_host_11k_neighbor_req(t_u8 *ssid);
+int wlan_host_11k_neighbor_req(const char *ssid);
 #endif
 
-#ifdef CONFIG_11V
+#if CONFIG_11V
 /**
  * host send bss transition management query
  *
@@ -4903,8 +5959,8 @@ int wlan_host_11k_neighbor_req(t_u8 *ssid);
 int wlan_host_11v_bss_trans_query(t_u8 query_reason);
 #endif
 
-#ifndef CONFIG_WPA_SUPP
-#ifdef CONFIG_DRIVER_MBO
+#if !CONFIG_WPA_SUPP
+#if CONFIG_DRIVER_MBO
 /**
  * enable/disable MBO feature
  *
@@ -4927,9 +5983,36 @@ int wlan_mbo_peferch_cfg(t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1);
 #endif
 #endif
 
+#if (CONFIG_11MC) || (CONFIG_11AZ)
+/**
+ * start or stop ftm based on the command from cli.
+ * \param[in] action 1: start ftm  2: stop ftm.
+ * \param[in] loop_cnt         number of ftm sessions to run repeatedly ( default:1,  0:non-stop, n>1: n times).
+ * \param[in] mac              Mac address of the peer with whom FTM session is required.
+ * \param[in] channel          Channel on which FTM must be started.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_ftm_start_stop(const t_u16 action, const t_u8 loop_cnt, const t_u8 *mac, const t_u8 channel);
 
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_11AX
+/**
+ * Config ftm protocol.
+ * \param[in] protocol 0:Dot11mc, 1:Dot11az_ntb, 2:Dot11az_tb
+ * \param[in] ftm_ranging_cfg      FTM ranging config
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_ftm_cfg(const t_u8 protocol, ranging_11az_cfg_t *ftm_ranging_cfg);
+
+int wlan_ftm_11mc_cfg(ftm_11mc_nego_cfg_t *ftm_11mc_nego_cfg);
+
+int wlan_ftm_location_cfg(location_cfg_info_t *ftm_location_cfg);
+
+int wlan_ftm_civic_cfg(location_civic_rep_t *ftm_civic_cfg);
+#endif
+
+#if CONFIG_WPA_SUPP
+#if (CONFIG_11AX && defined(CONFIG_MBO))
 /**
  * Multi Band Operation (MBO) non-preferred channels
  *
@@ -5017,9 +6100,154 @@ int wlan_set_scan_interval(int scan_int);
 #endif
 
 
+#if CONFIG_ECSA
+/**
+ * Send the ecsa config parameter to FW.
+ *
+ *\param[in] block_tx      0 -- no need to block traffic,1 -- need block traffic.
+ *\param[in] oper_class    Operating class according to IEEE std802.11 spec, refer to Annex E,
+ *                         when 0 is used, automatically get operclass through band_width and channel.
+ *\param[in] channel       The channel will switch to.
+ *\param[in] switch_count  Channel switch time to send ECSA ie, unit is 110ms.
+ *\param[in] band_width    Channel width switch to(optional), only for 5G channels.
+ *                         Depends on the hardware capabilities, when the hardware does not support, it will
+ *automatically downgrade. Redfinch support 20M. 0 -- 20MHZ, 1 -- 40M above, 3 -- 40M below, 4 -- 80M, 5 -- 160M
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_uap_set_ecsa_cfg(t_u8 block_tx, t_u8 oper_class, t_u8 channel, t_u8 switch_count, t_u8 band_width);
+#endif
 
+#if CONFIG_SUBSCRIBE_EVENT_SUPPORT
 
+/*Type enum definition of subscribe event*/
+typedef enum
+{
+    /** Event Id for subscribe event rssi low */
+    EVENT_SUB_RSSI_LOW = 0,
+    /** Event Id for subscribe event rssi high */
+    EVENT_SUB_RSSI_HIGH,
+    /** Event Id for subscribe event snr low */
+    EVENT_SUB_SNR_LOW,
+    /** Event Id for subscribe event snr high */
+    EVENT_SUB_SNR_HIGH,
+    /** Event Id for subscribe event max fail */
+    EVENT_SUB_MAX_FAIL,
+    /** Event Id for subscribe event beacon missed */
+    EVENT_SUB_BEACON_MISSED,
+    /** Event Id for subscribe event data rssi low */
+    EVENT_SUB_DATA_RSSI_LOW,
+    /** Event Id for subscribe event data rssi high */
+    EVENT_SUB_DATA_RSSI_HIGH,
+    /** Event Id for subscribe event data snr low */
+    EVENT_SUB_DATA_SNR_LOW,
+    /** Event Id for subscribe event data snr high */
+    EVENT_SUB_DATA_SNR_HIGH,
+    /** Event Id for subscribe event link quality */
+    EVENT_SUB_LINK_QUALITY,
+    /** Event Id for subscribe event pre_beacon_lost */
+    EVENT_SUB_PRE_BEACON_LOST,
+    /** Fail event id */
+    MAX_EVENT_ID,
+} sub_event_id;
 
+/** Type definition of wlan_ds_subscribe_evt for subscribe events */
+typedef wifi_ds_subscribe_evt wlan_ds_subscribe_evt;
+
+/**
+ * Subscribe specified event from the Wi-Fi firmware. Wi-Fi firmware will report the registered event to driver upon
+ * configured report conditions are met. \param[in] event_id event to register as per \ref sub_event_id \param[in]
+ * thresh_value threshold value (dBm) \param[in] freq event frequency 0--report once, 1--report everytime happened, N --
+ * report only happened > N consecutive times.
+ */
+int wlan_set_subscribe_event(unsigned int event_id, unsigned int thresh_value, unsigned int freq);
+/**
+ * Get all subscribed events from Wi-Fi firmware along with threshold value and report frequency.
+ * \param[in] sub_evt A pointer to \ref wlan_ds_subscribe_evt to store the events data.
+ */
+int wlan_get_subscribe_event(wlan_ds_subscribe_evt *sub_evt);
+/**
+ * cancel the subscribe event to firmware
+ * \param[in] event_id event id to clear as per \ref sub_event_id
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_clear_subscribe_event(unsigned int event_id);
+/**
+ * subscibe link quality event
+ * \param[in] event_id event id to clear as per \ref sub_event_id
+ * \param[in] link_snr link quality snr value
+ * \param[in] link_snr_freq link quality snr freq
+ * \param[in] link_rate link quality rate
+ * \param[in] link_rate_freq link quality rate freq
+ * \param[in] link_tx_latency link quality write lantency
+ * \param[in] link_tx_lantency_freq link quality write lantency freq
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_threshold_link_quality(unsigned int evend_id,
+                                    unsigned int link_snr,
+                                    unsigned int link_snr_freq,
+                                    unsigned int link_rate,
+                                    unsigned int link_rate_freq,
+                                    unsigned int link_tx_latency,
+                                    unsigned int link_tx_lantency_freq);
+#endif
+
+#if CONFIG_TSP
+/**
+ * get TSP(Thermal Safeguard Protection) configuration.
+ * TSP algorithm moniters PA Tj and primarily backs off data throughput.
+ * \param[out] enable    enable/disable tsp algothrim
+ * \param[out] back_off     power back off   [0...20]dB
+ * \param[out] highThreshold     high threshold  [0...300]°C
+ * \param[out] lowThreshold     low threshold   [0...300]°C
+ *          High Threshold must be greater than Low Threshold.
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_get_tsp_cfg(t_u16 *enable,
+                     t_u32 *back_off,
+                     t_u32 *highThreshold,
+                     t_u32 *lowThreshold,
+                     t_u32 *dutycycstep,
+                     t_u32 *dutycycmin,
+                     int *highthrtemp,
+                     int *lowthrtemp,
+                     int *currCAUTemp,
+                     int *currRFUTemp);
+/**
+ * set TSP(Thermal Safeguard Protection) configuration.
+ * TSP algorithm moniters PA Tj and primarily backs off data throughput.
+ * \param[in] enable    enable/disable tsp algothrim
+ * \param[in] back_off     power back off   [0...20]dB
+ * \param[in] highThreshold     high threshold  [0...300]°C
+ * \param[in] lowThreshold     low threshold   [0...300]°C
+ *          High Threshold must be greater than Low Threshold.
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+
+int wlan_set_tsp_cfg(t_u16 enable,
+                     t_u32 back_off,
+                     t_u32 highThreshold,
+                     t_u32 lowThreshold,
+                     t_u32 dutycycstep,
+                     t_u32 dutycycmin,
+                     int highthrtemp,
+                     int lowthrtemp);
+#endif
+
+#if CONFIG_WIFI_REG_ACCESS
+/** This function reads/writes adapter registers value.
+ *
+ *\param[in]        type        Register type: 1 -- MAC, 2 -- BBP, 3 -- RF.
+ *\param[in]        action      0 -- read, 1 -- write
+ *\param[in]        offset      Specifies the offset location that is to be read/write.
+ *\param[in/out]    value       Value if specified, stand for write action, then that value will be written to that
+ *offset in the specified register. Value should be specified in hexadecimal. Otherwise, it stands for read action, the
+ *value is updated with read value.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_reg_access(wifi_reg_t type, uint16_t action, uint32_t offset, uint32_t *value);
+#endif
 
 /**
  * Set/Get Tx ampdu prot mode.
@@ -5081,7 +6309,7 @@ int wlan_config_mef(int type, t_u8 mef_action);
  */
 int wlan_set_ipv6_ns_mef(t_u8 mef_action);
 
-#ifdef CONFIG_CSI
+#if CONFIG_CSI
 /**
  * Send the csi config parameter to FW.
  *
@@ -5128,7 +6356,7 @@ int wlan_register_csi_user_callback(int (*csi_data_recv_callback)(void *buffer, 
 int wlan_unregister_csi_user_callback(void);
 #endif
 
-#if defined(CONFIG_11K) || defined(CONFIG_11V) || defined(CONFIG_ROAMING)
+#if (CONFIG_11K) || (CONFIG_11V) || (CONFIG_11R) || (CONFIG_ROAMING)
 /**
  * Use this API to set the RSSI threshold value for low RSSI event subscription.
  * When RSSI falls below this threshold firmware will generate the low RSSI event to driver.
@@ -5141,8 +6369,8 @@ int wlan_unregister_csi_user_callback(void);
 void wlan_set_rssi_low_threshold(uint8_t threshold);
 #endif
 
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_WPA_SUPP_WPS
+#if CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP_WPS
 /** Generate valid PIN for WPS session.
  *
  *  This function generate PIN for WPS PIN session.
@@ -5182,7 +6410,7 @@ int wlan_start_wps_pbc(void);
  */
 int wlan_wps_cancel(void);
 
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_AP
 /** Start WPS PIN session.
  *
  *  This function starts AP WPS PIN session.
@@ -5217,7 +6445,7 @@ int wlan_wps_ap_cancel(void);
 #endif
 #endif
 
-#if defined(CONFIG_WPA2_ENTP) || defined(CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE)
+#if (CONFIG_WPA2_ENTP) || (CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE)
 #define FILE_TYPE_NONE              0
 #define FILE_TYPE_ENTP_CA_CERT      1
 #define FILE_TYPE_ENTP_CLIENT_CERT  2
@@ -5226,7 +6454,7 @@ int wlan_wps_ap_cancel(void);
 #define FILE_TYPE_ENTP_CLIENT_CERT2 5
 #define FILE_TYPE_ENTP_CLIENT_KEY2  6
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
 #define FILE_TYPE_ENTP_SERVER_CERT 8
 #define FILE_TYPE_ENTP_SERVER_KEY  9
 #define FILE_TYPE_ENTP_DH_PARAMS   10
@@ -5267,6 +6495,35 @@ t_u32 wlan_get_entp_cert_files(int cert_type, t_u8 **data);
 void wlan_free_entp_cert_files(void);
 #endif
 
+#if CONFIG_NET_MONITOR
+/**
+ * Send the net monitor config parameter to FW.
+ *
+ *\param[in] monitor Monitor config parameter
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_net_monitor_cfg(wlan_net_monitor_t *monitor);
+
+/** This function registers callback which are used to deliver monitor data to user.
+ *
+ * \param[in] monitor_data_recv_callback Callback to deliver monitor data and data length to user.
+ *          Memory layout of buffer:
+ *          offset(byte)                        items
+ *          0                                   rssi
+ *          1                                   802.11 mac header
+ *          1 + 'size of 802.11 mac header'     frame body
+ *
+ * \return void
+ */
+void wlan_register_monitor_user_callback(int (*monitor_data_recv_callback)(void *buffer, t_u16 data_len));
+
+/** This function deregisters monitor callback.
+ *
+ * \return void
+ */
+void wlan_deregister_net_monitor_user_callback();
+#endif
 
 /** Check if 11n(2G or 5G) is supported by hardware or not.
  *
@@ -5292,6 +6549,16 @@ uint8_t wlan_check_11ac_capa(unsigned int channel);
  */
 uint8_t wlan_check_11ax_capa(unsigned int channel);
 
+#if (CONFIG_IPS)
+/**
+ * Config IEEE power save mode(IPS).If the option is 1, the ips hardware listens to beacon frames after WLAN CPU enters
+ * power save mode. When there is work needed to done by WLAN CPU, WLAN CPU will be woken up by ips hardware. \param[in]
+ * option    0/1  disable/enable ips
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_set_ips(int option);
+#endif
 
 /**
  * Get rssi information.
@@ -5301,7 +6568,7 @@ uint8_t wlan_check_11ax_capa(unsigned int channel);
  */
 int wlan_get_signal_info(wlan_rssi_info_t *signal);
 
-#if defined(CONFIG_COMPRESS_TX_PWTBL)
+#if (CONFIG_COMPRESS_TX_PWTBL)
 /**
  * set region power table
  * \param[in] region_code region code
@@ -5373,7 +6640,7 @@ void wlan_set_ps_cfg(t_u16 multiple_dtims,
                      t_u16 mode,
                      t_u16 delay_to_ps);
 
-#ifdef CONFIG_CLOUD_KEEP_ALIVE
+#if CONFIG_CLOUD_KEEP_ALIVE
 /**
  * Save start cloud keep alive parameters
  *
@@ -5483,9 +6750,37 @@ int wlan_get_region_code(unsigned int *region_code);
  */
 int wlan_set_11d_state(int bss_type, int state);
 
+#if CONFIG_COEX_DUTY_CYCLE
+/**
+ * Set single ant duty cycle.
+ * \param[in] enable
+ * \param[in] nbTime
+ * \param[in] wlanTime
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_single_ant_duty_cycle(t_u16 enable, t_u16 nbTime, t_u16 wlanTime);
 
+/**
+ * Set dual ant duty cycle.
+ * \param[in] enable
+ * \param[in] nbTime
+ * \param[in] wlanTime
+ * \param[in] wlanBlockTime
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_dual_ant_duty_cycle(t_u16 enable, t_u16 nbTime, t_u16 wlanTime, t_u16 wlanBlockTime);
+#endif
 
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_EXTERNAL_COEX_PTA
+/**
+ * Set external coex pta parameters.
+ * \param[in] coex_pta_config
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_external_coex_pta_cfg(ext_coex_pta_cfg coex_pta_config);
+#endif
+
+#if CONFIG_WPA_SUPP_DPP
 /** Add a DPP Configurator
  *
  *  If this device is DPP Configurator, add it to get configurator ID.
@@ -5637,7 +6932,7 @@ int wlan_dpp_reconfig(const char *cmd);
 int wlan_dpp_configurator_sign(int is_ap, const char *cmd);
 #endif
 
-#ifdef CONFIG_IMD3_CFG
+#if CONFIG_IMD3_CFG
 /**
  * Set imd validation parameters.
  * \param[in] imd3_value   disable imd3: imd3_value = 0;
@@ -5649,7 +6944,7 @@ int wlan_imd3_cfg(t_u8 imd3_value);
 
 int wlan_host_set_sta_mac_filter(int filter_mode, int mac_count, unsigned char *mac_addr);
 
-#if defined(CONFIG_WIFI_IND_RESET) && defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_RESET) && (CONFIG_WIFI_IND_DNLD)
 /**
  * Set GPIO independent reset configuration
  *
@@ -5679,6 +6974,72 @@ int wlan_independent_reset();
 
 #endif
 
+int wlan_set_network_ip_byname(char *name, struct wlan_ip_config *ip);
 
+#if CONFIG_INACTIVITY_TIMEOUT_EXT
+/**
+ * Get/Set inactivity timeout extend
+ * \param[in] inac_to
+ * \param[in] action
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_sta_inactivityto(wlan_inactivity_to_t *inac_to, t_u16 action);
+#endif
+
+#ifdef RW610
+/**
+ * Get board temperature.
+ * \return board temperature.
+ */
+int32_t wlan_get_temperature(void);
+#endif
+
+#if CONFIG_CPU_LOADING
+/**
+ * Set parameters for cpu loading test.
+ *
+ * \param[in]  start    0 stop test, 1 start test.
+ * \param[in]  number   The number of cpu loading test.
+ * \param[in]  period   The period of cpu loading test.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_cpu_loading(uint8_t start, uint32_t number, uint8_t period);
+#endif
+
+#if CONFIG_AUTO_NULL_TX
+/** Configuration for auto null tx parameters from
+ * \ref wifi_auto_null_tx_t
+ */
+typedef wifi_auto_null_tx_t wlan_auto_null_tx_t;
+
+/**
+ * Start/Stop auto tx null
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_auto_null_tx(wlan_auto_null_tx_t *auto_null_tx, mlan_bss_type bss_type);
+#endif
+
+/**
+ * allocate a copy of a string
+ *
+ */
+char *wlan_string_dup(const char *s);
+
+/**
+ * Get board type.
+ *
+ * \return board type.
+ */
+uint32_t wlan_get_board_type();
+
+/**
+ * Disconnect to sta which is connected with internal uap.
+ *
+ * \param[in]  sta_addr    sta mac address
+ * \return WM_SUCCESS if successful otherwise failure.
+ */
+int wlan_uap_disconnect_sta(uint8_t *sta_addr);
 
 #endif /* __WLAN_H__ */

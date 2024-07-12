@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I2C FreeRTOS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: I2C Slave Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,115 +100,858 @@ $(document).ready(function(){initNavTree('a00038.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">I2C FreeRTOS Driver<div class="ingroups"><a class="el" href="a00246.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">I2C Slave Driver<div class="ingroups"><a class="el" href="a00240.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00367"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a00367">_i2c_rtos_handle</a></td></tr>
-<tr class="memdesc:a00367"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C FreeRTOS handle.  <a href="a00038.html#a00367">More...</a><br/></td></tr>
+<tr class="memitem:a00364"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a00364">_i2c_slave_address</a></td></tr>
+<tr class="memdesc:a00364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data structure with 7-bit Slave address and Slave address disable.  <a href="a00038.html#a00364">More...</a><br/></td></tr>
+<tr class="separator:a00364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00365"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a00365">_i2c_slave_config</a></td></tr>
+<tr class="memdesc:a00365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I2C slave module.  <a href="a00038.html#a00365">More...</a><br/></td></tr>
+<tr class="separator:a00365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00367"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a00367">_i2c_slave_transfer</a></td></tr>
+<tr class="memdesc:a00367"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave transfer structure.  <a href="a00038.html#a00367">More...</a><br/></td></tr>
 <tr class="separator:a00367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00366"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a00366">_i2c_slave_handle</a></td></tr>
+<tr class="memdesc:a00366"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave handle structure.  <a href="a00038.html#a00366">More...</a><br/></td></tr>
+<tr class="separator:a00366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaca5136879399aca804329b17b23063d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca5136879399aca804329b17b23063d6"></a>
-typedef struct <a class="el" href="a00038.html#a00367">_i2c_rtos_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a></td></tr>
-<tr class="memdesc:gaca5136879399aca804329b17b23063d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C FreeRTOS handle. <br/></td></tr>
-<tr class="separator:gaca5136879399aca804329b17b23063d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5011aa3cf4340912b0a54c5fd2ccc881"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00038.html#gaa4d64624a394b298aeb74188f932406a">_i2c_slave_address_register</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga5011aa3cf4340912b0a54c5fd2ccc881">i2c_slave_address_register_t</a></td></tr>
+<tr class="memdesc:ga5011aa3cf4340912b0a54c5fd2ccc881"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave address register.  <a href="#ga5011aa3cf4340912b0a54c5fd2ccc881">More...</a><br/></td></tr>
+<tr class="separator:ga5011aa3cf4340912b0a54c5fd2ccc881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4952975f11796f57c1dbc8c9352ee496"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00038.html#a00364">_i2c_slave_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a></td></tr>
+<tr class="memdesc:ga4952975f11796f57c1dbc8c9352ee496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data structure with 7-bit Slave address and Slave address disable.  <a href="#ga4952975f11796f57c1dbc8c9352ee496">More...</a><br/></td></tr>
+<tr class="separator:ga4952975f11796f57c1dbc8c9352ee496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02d133f25b39ab4842c870de2d66179f"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00038.html#gadbb0ae033785e1ad024c953e24cc2f36">_i2c_slave_address_qual_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga02d133f25b39ab4842c870de2d66179f">i2c_slave_address_qual_mode_t</a></td></tr>
+<tr class="memdesc:ga02d133f25b39ab4842c870de2d66179f"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave address match options.  <a href="#ga02d133f25b39ab4842c870de2d66179f">More...</a><br/></td></tr>
+<tr class="separator:ga02d133f25b39ab4842c870de2d66179f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga222f565dee8428d8f882203a4a6c22ff"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00038.html#ga6c18ce95502d66818793c44df9029eae">_i2c_slave_bus_speed</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga222f565dee8428d8f882203a4a6c22ff">i2c_slave_bus_speed_t</a></td></tr>
+<tr class="memdesc:ga222f565dee8428d8f882203a4a6c22ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave bus speed options.  <a href="#ga222f565dee8428d8f882203a4a6c22ff">More...</a><br/></td></tr>
+<tr class="separator:ga222f565dee8428d8f882203a4a6c22ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa70dd0ec9815617269569190efd2de5d"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00038.html#a00365">_i2c_slave_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d">i2c_slave_config_t</a></td></tr>
+<tr class="memdesc:gaa70dd0ec9815617269569190efd2de5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I2C slave module.  <a href="#gaa70dd0ec9815617269569190efd2de5d">More...</a><br/></td></tr>
+<tr class="separator:gaa70dd0ec9815617269569190efd2de5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95f120f6a73af41648364538cf9a6eca"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00038.html#ga87e42e170b60f17f657ef3c06a918133">_i2c_slave_transfer_event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca">i2c_slave_transfer_event_t</a></td></tr>
+<tr class="memdesc:ga95f120f6a73af41648364538cf9a6eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="#ga95f120f6a73af41648364538cf9a6eca">More...</a><br/></td></tr>
+<tr class="separator:ga95f120f6a73af41648364538cf9a6eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga394e5278816efe62815de9d25be84752"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00038.html#a00366">_i2c_slave_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a></td></tr>
+<tr class="memdesc:ga394e5278816efe62815de9d25be84752"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave handle typedef.  <a href="#ga394e5278816efe62815de9d25be84752">More...</a><br/></td></tr>
+<tr class="separator:ga394e5278816efe62815de9d25be84752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69e696cb21165bc58176475879a471cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga69e696cb21165bc58176475879a471cf"></a>
+typedef struct <a class="el" href="a00038.html#a00367">_i2c_slave_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a></td></tr>
+<tr class="memdesc:ga69e696cb21165bc58176475879a471cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave transfer structure. <br/></td></tr>
+<tr class="separator:ga69e696cb21165bc58176475879a471cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0704c8f14da38feb11555e4127d86a18"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga0704c8f14da38feb11555e4127d86a18">i2c_slave_transfer_callback_t</a> )(I2C_Type *base, volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
+<tr class="memdesc:ga0704c8f14da38feb11555e4127d86a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#ga0704c8f14da38feb11555e4127d86a18">More...</a><br/></td></tr>
+<tr class="separator:ga0704c8f14da38feb11555e4127d86a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace8044962fd3c872ae2d7952de85525a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gace8044962fd3c872ae2d7952de85525a"></a>
+typedef enum <a class="el" href="a00038.html#ga41bf767e5abf573149dd68e87fc45276">_i2c_slave_fsm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gace8044962fd3c872ae2d7952de85525a">i2c_slave_fsm_t</a></td></tr>
+<tr class="memdesc:gace8044962fd3c872ae2d7952de85525a"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave software finite state machine states. <br/></td></tr>
+<tr class="separator:gace8044962fd3c872ae2d7952de85525a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac86dc9a3b232a90765a2eb7df0eb9217"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gac86dc9a3b232a90765a2eb7df0eb9217">flexcomm_i2c_master_irq_handler_t</a> )(I2C_Type *base, <a class="el" href="a00036.html#ga2fd51f58b8cfd309be985bce4b817fdc">i2c_master_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gac86dc9a3b232a90765a2eb7df0eb9217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for master interrupt handler.  <a href="#gac86dc9a3b232a90765a2eb7df0eb9217">More...</a><br/></td></tr>
+<tr class="separator:gac86dc9a3b232a90765a2eb7df0eb9217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3e88bbb01efa34d7df40e87734aa4f1"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gad3e88bbb01efa34d7df40e87734aa4f1">flexcomm_i2c_slave_irq_handler_t</a> )(I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gad3e88bbb01efa34d7df40e87734aa4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for slave interrupt handler.  <a href="#gad3e88bbb01efa34d7df40e87734aa4f1">More...</a><br/></td></tr>
+<tr class="separator:gad3e88bbb01efa34d7df40e87734aa4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaa4d64624a394b298aeb74188f932406a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa4d64624a394b298aeb74188f932406a">_i2c_slave_address_register</a> { <br/>
+&#160;&#160;<a class="el" href="a00038.html#ggaa4d64624a394b298aeb74188f932406aa39e0e158674bd8a6e254a6a42b5ce50f">kI2C_SlaveAddressRegister0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#ggaa4d64624a394b298aeb74188f932406aa42a589b5e31f29ddc41088c3fb4bfcf1">kI2C_SlaveAddressRegister1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#ggaa4d64624a394b298aeb74188f932406aa8381dd229f545df5e6a32ee5f0aac871">kI2C_SlaveAddressRegister2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#ggaa4d64624a394b298aeb74188f932406aa9e73a2b09fe3943d51849a7d87fbe8a3">kI2C_SlaveAddressRegister3</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa4d64624a394b298aeb74188f932406a"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave address register.  <a href="a00038.html#gaa4d64624a394b298aeb74188f932406a">More...</a><br/></td></tr>
+<tr class="separator:gaa4d64624a394b298aeb74188f932406a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbb0ae033785e1ad024c953e24cc2f36"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gadbb0ae033785e1ad024c953e24cc2f36">_i2c_slave_address_qual_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00038.html#ggadbb0ae033785e1ad024c953e24cc2f36af542f0269c83549e7b492911e281a902">kI2C_QualModeMask</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#ggadbb0ae033785e1ad024c953e24cc2f36a6b755a1d30a626380730ce947d09335f">kI2C_QualModeExtend</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gadbb0ae033785e1ad024c953e24cc2f36"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave address match options.  <a href="a00038.html#gadbb0ae033785e1ad024c953e24cc2f36">More...</a><br/></td></tr>
+<tr class="separator:gadbb0ae033785e1ad024c953e24cc2f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c18ce95502d66818793c44df9029eae"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga6c18ce95502d66818793c44df9029eae">_i2c_slave_bus_speed</a> </td></tr>
+<tr class="memdesc:ga6c18ce95502d66818793c44df9029eae"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave bus speed options.  <a href="a00038.html#ga6c18ce95502d66818793c44df9029eae">More...</a><br/></td></tr>
+<tr class="separator:ga6c18ce95502d66818793c44df9029eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87e42e170b60f17f657ef3c06a918133"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga87e42e170b60f17f657ef3c06a918133">_i2c_slave_transfer_event</a> { <br/>
+&#160;&#160;<a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133acb1ae174dd6798a6fd79800a9e39a3c6">kI2C_SlaveAddressMatchEvent</a> = 0x01U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa">kI2C_SlaveTransmitEvent</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de">kI2C_SlaveReceiveEvent</a> = 0x04U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a> = 0x20U, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a5e765c1c316a51908b68f1f32a7b524d">kI2C_SlaveDeselectedEvent</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc">kI2C_SlaveAllEvents</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga87e42e170b60f17f657ef3c06a918133"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="a00038.html#ga87e42e170b60f17f657ef3c06a918133">More...</a><br/></td></tr>
+<tr class="separator:ga87e42e170b60f17f657ef3c06a918133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41bf767e5abf573149dd68e87fc45276"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga41bf767e5abf573149dd68e87fc45276">_i2c_slave_fsm</a> </td></tr>
+<tr class="memdesc:ga41bf767e5abf573149dd68e87fc45276"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave software finite state machine states. <br/></td></tr>
+<tr class="separator:ga41bf767e5abf573149dd68e87fc45276"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga8a57a810d1c6632d3bf7dd2ea4e76ae5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga8a57a810d1c6632d3bf7dd2ea4e76ae5">FSL_I2C_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 8))</td></tr>
-<tr class="memdesc:ga8a57a810d1c6632d3bf7dd2ea4e76ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C FreeRTOS driver version 2.0.8.  <a href="#ga8a57a810d1c6632d3bf7dd2ea4e76ae5">More...</a><br/></td></tr>
-<tr class="separator:ga8a57a810d1c6632d3bf7dd2ea4e76ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Slave initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga7115f80e28b62bbbd3be1a2a918529ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a> (<a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d">i2c_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memdesc:ga7115f80e28b62bbbd3be1a2a918529ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I2C slave peripheral.  <a href="#ga7115f80e28b62bbbd3be1a2a918529ba">More...</a><br/></td></tr>
+<tr class="separator:ga7115f80e28b62bbbd3be1a2a918529ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga175a81b5ab74dd78469d6cdea690d8cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a> (I2C_Type *base, const <a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d">i2c_slave_config_t</a> *slaveConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga175a81b5ab74dd78469d6cdea690d8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I2C slave peripheral.  <a href="#ga175a81b5ab74dd78469d6cdea690d8cc">More...</a><br/></td></tr>
+<tr class="separator:ga175a81b5ab74dd78469d6cdea690d8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf721065f83982e3df651111183bf7b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gacf721065f83982e3df651111183bf7b2">I2C_SlaveSetAddress</a> (I2C_Type *base, <a class="el" href="a00038.html#ga5011aa3cf4340912b0a54c5fd2ccc881">i2c_slave_address_register_t</a> addressRegister, uint8_t address, bool addressDisable)</td></tr>
+<tr class="memdesc:gacf721065f83982e3df651111183bf7b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures Slave Address n register.  <a href="#gacf721065f83982e3df651111183bf7b2">More...</a><br/></td></tr>
+<tr class="separator:gacf721065f83982e3df651111183bf7b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb50014db29dd75ea2001fb7bc837e77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gadb50014db29dd75ea2001fb7bc837e77">I2C_SlaveDeinit</a> (I2C_Type *base)</td></tr>
+<tr class="memdesc:gadb50014db29dd75ea2001fb7bc837e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the I2C slave peripheral.  <a href="#gadb50014db29dd75ea2001fb7bc837e77">More...</a><br/></td></tr>
+<tr class="separator:gadb50014db29dd75ea2001fb7bc837e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbb93d5ea4f4b40038f41e0e942a9ee1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gacbb93d5ea4f4b40038f41e0e942a9ee1">I2C_SlaveEnable</a> (I2C_Type *base, bool enable)</td></tr>
+<tr class="memdesc:gacbb93d5ea4f4b40038f41e0e942a9ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the I2C module as slave.  <a href="#gacbb93d5ea4f4b40038f41e0e942a9ee1">More...</a><br/></td></tr>
+<tr class="separator:gacbb93d5ea4f4b40038f41e0e942a9ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-I2C RTOS Operation</h2></td></tr>
-<tr class="memitem:ga2d8b0de9d5d807257ac91df157233cae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga2d8b0de9d5d807257ac91df157233cae">I2C_RTOS_Init</a> (<a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a> *handle, I2C_Type *base, const <a class="el" href="a00036.html#gad739710b6b65e12ca5ba9dc2a2a2b463">i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:ga2d8b0de9d5d807257ac91df157233cae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes I2C.  <a href="#ga2d8b0de9d5d807257ac91df157233cae">More...</a><br/></td></tr>
-<tr class="separator:ga2d8b0de9d5d807257ac91df157233cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe3dc27604637a77cba04967097defb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gabe3dc27604637a77cba04967097defb2">I2C_RTOS_Deinit</a> (<a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:gabe3dc27604637a77cba04967097defb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the I2C.  <a href="#gabe3dc27604637a77cba04967097defb2">More...</a><br/></td></tr>
-<tr class="separator:gabe3dc27604637a77cba04967097defb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b090779ab62f02149066a2325feb868"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga0b090779ab62f02149066a2325feb868">I2C_RTOS_Transfer</a> (<a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a> *handle, <a class="el" href="a00036.html#ga7edd253f4df51a13bd0a6a0461b9f93a">i2c_master_transfer_t</a> *transfer)</td></tr>
-<tr class="memdesc:ga0b090779ab62f02149066a2325feb868"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs I2C transfer.  <a href="#ga0b090779ab62f02149066a2325feb868">More...</a><br/></td></tr>
-<tr class="separator:ga0b090779ab62f02149066a2325feb868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Slave status</h2></td></tr>
+<tr class="memitem:ga545c1a43d8d49c4675de493d45a4063a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga545c1a43d8d49c4675de493d45a4063a">I2C_SlaveClearStatusFlags</a> (I2C_Type *base, uint32_t statusMask)</td></tr>
+<tr class="memdesc:ga545c1a43d8d49c4675de493d45a4063a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the I2C status flag state.  <a href="#ga545c1a43d8d49c4675de493d45a4063a">More...</a><br/></td></tr>
+<tr class="separator:ga545c1a43d8d49c4675de493d45a4063a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Slave bus operations</h2></td></tr>
+<tr class="memitem:ga280404c6b1ede542f2c1c20bd382869c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga280404c6b1ede542f2c1c20bd382869c">I2C_SlaveWriteBlocking</a> (I2C_Type *base, const uint8_t *txBuff, size_t txSize)</td></tr>
+<tr class="memdesc:ga280404c6b1ede542f2c1c20bd382869c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I2C bus.  <a href="#ga280404c6b1ede542f2c1c20bd382869c">More...</a><br/></td></tr>
+<tr class="separator:ga280404c6b1ede542f2c1c20bd382869c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89baaf8bc82b19c837032665e89a1707"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga89baaf8bc82b19c837032665e89a1707">I2C_SlaveReadBlocking</a> (I2C_Type *base, uint8_t *rxBuff, size_t rxSize)</td></tr>
+<tr class="memdesc:ga89baaf8bc82b19c837032665e89a1707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I2C bus.  <a href="#ga89baaf8bc82b19c837032665e89a1707">More...</a><br/></td></tr>
+<tr class="separator:ga89baaf8bc82b19c837032665e89a1707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Slave non-blocking</h2></td></tr>
+<tr class="memitem:gac9b90f575d92ff8ad3cc350a5c8ad1b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9">I2C_SlaveTransferCreateHandle</a> (I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle, <a class="el" href="a00038.html#ga0704c8f14da38feb11555e4127d86a18">i2c_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memdesc:gac9b90f575d92ff8ad3cc350a5c8ad1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the I2C slave non-blocking APIs.  <a href="#gac9b90f575d92ff8ad3cc350a5c8ad1b9">More...</a><br/></td></tr>
+<tr class="separator:gac9b90f575d92ff8ad3cc350a5c8ad1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa387d81ea08a9d4b39cfeb3dfec505f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa387d81ea08a9d4b39cfeb3dfec505f7">I2C_SlaveTransferNonBlocking</a> (I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle, uint32_t eventMask)</td></tr>
+<tr class="memdesc:gaa387d81ea08a9d4b39cfeb3dfec505f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting slave transfers.  <a href="#gaa387d81ea08a9d4b39cfeb3dfec505f7">More...</a><br/></td></tr>
+<tr class="separator:gaa387d81ea08a9d4b39cfeb3dfec505f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7602b6897596348fe190e4fc63f1381"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gac7602b6897596348fe190e4fc63f1381">I2C_SlaveSetSendBuffer</a> (I2C_Type *base, volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *transfer, const void *txData, size_t txSize, uint32_t eventMask)</td></tr>
+<tr class="memdesc:gac7602b6897596348fe190e4fc63f1381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting master read from slave requests.  <a href="#gac7602b6897596348fe190e4fc63f1381">More...</a><br/></td></tr>
+<tr class="separator:gac7602b6897596348fe190e4fc63f1381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25b9c35089f0fc966facec3bf874c840"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga25b9c35089f0fc966facec3bf874c840">I2C_SlaveSetReceiveBuffer</a> (I2C_Type *base, volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *transfer, void *rxData, size_t rxSize, uint32_t eventMask)</td></tr>
+<tr class="memdesc:ga25b9c35089f0fc966facec3bf874c840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting master write to slave requests.  <a href="#ga25b9c35089f0fc966facec3bf874c840">More...</a><br/></td></tr>
+<tr class="separator:ga25b9c35089f0fc966facec3bf874c840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c9fc06eeb8a3beb024f6525e4d99a0b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga4c9fc06eeb8a3beb024f6525e4d99a0b">I2C_SlaveGetReceivedAddress</a> (I2C_Type *base, volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *transfer)</td></tr>
+<tr class="memdesc:ga4c9fc06eeb8a3beb024f6525e4d99a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the slave address sent by the I2C master.  <a href="#ga4c9fc06eeb8a3beb024f6525e4d99a0b">More...</a><br/></td></tr>
+<tr class="separator:ga4c9fc06eeb8a3beb024f6525e4d99a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ae9f5e6e854d14d33ba3029128bd6f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga5ae9f5e6e854d14d33ba3029128bd6f0">I2C_SlaveTransferAbort</a> (I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga5ae9f5e6e854d14d33ba3029128bd6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the slave non-blocking transfers.  <a href="#ga5ae9f5e6e854d14d33ba3029128bd6f0">More...</a><br/></td></tr>
+<tr class="separator:ga5ae9f5e6e854d14d33ba3029128bd6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf38a498bd3527ea0b7cc947ae71e17e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gabf38a498bd3527ea0b7cc947ae71e17e">I2C_SlaveTransferGetCount</a> (I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:gabf38a498bd3527ea0b7cc947ae71e17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave transfer remaining bytes during a interrupt non-blocking transfer.  <a href="#gabf38a498bd3527ea0b7cc947ae71e17e">More...</a><br/></td></tr>
+<tr class="separator:gabf38a498bd3527ea0b7cc947ae71e17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Slave IRQ handler</h2></td></tr>
+<tr class="memitem:ga3bc939e5dbdc165169f58b8d47d1742d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga3bc939e5dbdc165169f58b8d47d1742d">I2C_SlaveTransferHandleIRQ</a> (I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga3bc939e5dbdc165169f58b8d47d1742d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle slave interrupts.  <a href="#ga3bc939e5dbdc165169f58b8d47d1742d">More...</a><br/></td></tr>
+<tr class="separator:ga3bc939e5dbdc165169f58b8d47d1742d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00367" id="a00367"></a>
+<a name="a00364" id="a00364"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _i2c_rtos_handle</td>
+          <td class="memname">struct _i2c_slave_address</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7fce448b1c3f5b4972f70c5a5d5e3aed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fce448b1c3f5b4972f70c5a5d5e3aed"></a>
-I2C_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a7fce448b1c3f5b4972f70c5a5d5e3aed">base</a></td></tr>
-<tr class="memdesc:a7fce448b1c3f5b4972f70c5a5d5e3aed"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C base address. <br/></td></tr>
-<tr class="separator:a7fce448b1c3f5b4972f70c5a5d5e3aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b7b7e8fced2c194598ae6d6d0c60ac3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b7b7e8fced2c194598ae6d6d0c60ac3"></a>
-<a class="el" href="a00036.html#ga2fd51f58b8cfd309be985bce4b817fdc">i2c_master_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a5b7b7e8fced2c194598ae6d6d0c60ac3">drv_handle</a></td></tr>
-<tr class="memdesc:a5b7b7e8fced2c194598ae6d6d0c60ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handle of the underlying driver, treated as opaque by the RTOS layer. <br/></td></tr>
-<tr class="separator:a5b7b7e8fced2c194598ae6d6d0c60ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49d12942a901d7c91474884ca54df26b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49d12942a901d7c91474884ca54df26b"></a>
-<a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a49d12942a901d7c91474884ca54df26b">async_status</a></td></tr>
-<tr class="memdesc:a49d12942a901d7c91474884ca54df26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transactional state of the underlying driver. <br/></td></tr>
-<tr class="separator:a49d12942a901d7c91474884ca54df26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46b6e5bb5a28723d40fec928b7219813"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46b6e5bb5a28723d40fec928b7219813"></a>
-SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a46b6e5bb5a28723d40fec928b7219813">mutex</a></td></tr>
-<tr class="memdesc:a46b6e5bb5a28723d40fec928b7219813"><td class="mdescLeft">&#160;</td><td class="mdescRight">A mutex to lock the handle during a transfer. <br/></td></tr>
-<tr class="separator:a46b6e5bb5a28723d40fec928b7219813"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcf48aeeb04682621bb498b8a542a3c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcf48aeeb04682621bb498b8a542a3c4"></a>
-SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#abcf48aeeb04682621bb498b8a542a3c4">semaphore</a></td></tr>
-<tr class="memdesc:abcf48aeeb04682621bb498b8a542a3c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A semaphore to notify and unblock task when the transfer ends. <br/></td></tr>
-<tr class="separator:abcf48aeeb04682621bb498b8a542a3c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac0aeb8b419b1312b7f873549541be45"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#aac0aeb8b419b1312b7f873549541be45">address</a></td></tr>
+<tr class="memdesc:aac0aeb8b419b1312b7f873549541be45"><td class="mdescLeft">&#160;</td><td class="mdescRight">7-bit Slave address SLVADR.  <a href="#aac0aeb8b419b1312b7f873549541be45">More...</a><br/></td></tr>
+<tr class="separator:aac0aeb8b419b1312b7f873549541be45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a554d799403bbf3b7a43ba535f77036de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a554d799403bbf3b7a43ba535f77036de">addressDisable</a></td></tr>
+<tr class="memdesc:a554d799403bbf3b7a43ba535f77036de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave address disable SADISABLE.  <a href="#a554d799403bbf3b7a43ba535f77036de">More...</a><br/></td></tr>
+<tr class="separator:a554d799403bbf3b7a43ba535f77036de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga8a57a810d1c6632d3bf7dd2ea4e76ae5"></a>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="aac0aeb8b419b1312b7f873549541be45"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_I2C_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 8))</td>
+          <td class="memname">uint8_t _i2c_slave_address::address</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga2d8b0de9d5d807257ac91df157233cae"></a>
+<a class="anchor" id="a554d799403bbf3b7a43ba535f77036de"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_RTOS_Init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="memname">bool _i2c_slave_address::addressDisable</td>
         </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00365" id="a00365"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
+          <td class="memname">struct _i2c_slave_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure holds configuration settings for the I2C slave peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba" title="Provides a default configuration for the I2C slave peripheral. ">I2C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a5203e2e0d3d7e4f33aae8ced4df94778"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a5203e2e0d3d7e4f33aae8ced4df94778">address0</a></td></tr>
+<tr class="memdesc:a5203e2e0d3d7e4f33aae8ced4df94778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave's 7-bit address and disable.  <a href="#a5203e2e0d3d7e4f33aae8ced4df94778">More...</a><br/></td></tr>
+<tr class="separator:a5203e2e0d3d7e4f33aae8ced4df94778"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad750f43edf4fce1b7d46aa567fbef65e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ad750f43edf4fce1b7d46aa567fbef65e">address1</a></td></tr>
+<tr class="memdesc:ad750f43edf4fce1b7d46aa567fbef65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address and disable.  <a href="#ad750f43edf4fce1b7d46aa567fbef65e">More...</a><br/></td></tr>
+<tr class="separator:ad750f43edf4fce1b7d46aa567fbef65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc043a79268cdf3f2f9bb82f486f25ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#adc043a79268cdf3f2f9bb82f486f25ef">address2</a></td></tr>
+<tr class="memdesc:adc043a79268cdf3f2f9bb82f486f25ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address and disable.  <a href="#adc043a79268cdf3f2f9bb82f486f25ef">More...</a><br/></td></tr>
+<tr class="separator:adc043a79268cdf3f2f9bb82f486f25ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8bf7ada2ce9d9b2fd3fe94c7cae63f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#aa8bf7ada2ce9d9b2fd3fe94c7cae63f2">address3</a></td></tr>
+<tr class="memdesc:aa8bf7ada2ce9d9b2fd3fe94c7cae63f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address and disable.  <a href="#aa8bf7ada2ce9d9b2fd3fe94c7cae63f2">More...</a><br/></td></tr>
+<tr class="separator:aa8bf7ada2ce9d9b2fd3fe94c7cae63f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98fcd913b880ce599149066d0cd1f431"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga02d133f25b39ab4842c870de2d66179f">i2c_slave_address_qual_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a98fcd913b880ce599149066d0cd1f431">qualMode</a></td></tr>
+<tr class="memdesc:a98fcd913b880ce599149066d0cd1f431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Qualify mode for slave address 0.  <a href="#a98fcd913b880ce599149066d0cd1f431">More...</a><br/></td></tr>
+<tr class="separator:a98fcd913b880ce599149066d0cd1f431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b7ba3bb25c3bc531ade96ab283b8a5b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a0b7ba3bb25c3bc531ade96ab283b8a5b">qualAddress</a></td></tr>
+<tr class="memdesc:a0b7ba3bb25c3bc531ade96ab283b8a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave address qualifier for address 0.  <a href="#a0b7ba3bb25c3bc531ade96ab283b8a5b">More...</a><br/></td></tr>
+<tr class="separator:a0b7ba3bb25c3bc531ade96ab283b8a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27793bbbe385b9446a1e10e1d109dbbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga222f565dee8428d8f882203a4a6c22ff">i2c_slave_bus_speed_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a27793bbbe385b9446a1e10e1d109dbbd">busSpeed</a></td></tr>
+<tr class="memdesc:a27793bbbe385b9446a1e10e1d109dbbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave bus speed mode.  <a href="#a27793bbbe385b9446a1e10e1d109dbbd">More...</a><br/></td></tr>
+<tr class="separator:a27793bbbe385b9446a1e10e1d109dbbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad720331a891010209a1209585056a2b7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ad720331a891010209a1209585056a2b7">enableSlave</a></td></tr>
+<tr class="memdesc:ad720331a891010209a1209585056a2b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable slave mode.  <a href="#ad720331a891010209a1209585056a2b7">More...</a><br/></td></tr>
+<tr class="separator:ad720331a891010209a1209585056a2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a5203e2e0d3d7e4f33aae8ced4df94778"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a> _i2c_slave_config::address0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad750f43edf4fce1b7d46aa567fbef65e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a> _i2c_slave_config::address1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adc043a79268cdf3f2f9bb82f486f25ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a> _i2c_slave_config::address2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa8bf7ada2ce9d9b2fd3fe94c7cae63f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a> _i2c_slave_config::address3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a98fcd913b880ce599149066d0cd1f431"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga02d133f25b39ab4842c870de2d66179f">i2c_slave_address_qual_mode_t</a> _i2c_slave_config::qualMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0b7ba3bb25c3bc531ade96ab283b8a5b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i2c_slave_config::qualAddress</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a27793bbbe385b9446a1e10e1d109dbbd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga222f565dee8428d8f882203a4a6c22ff">i2c_slave_bus_speed_t</a> _i2c_slave_config::busSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If the slave function stretches SCL to allow for software response, it must provide sufficient data setup time to the master before releasing the stretched clock. This is accomplished by inserting one clock time of CLKDIV at that point. The <a class="el" href="a00038.html#a27793bbbe385b9446a1e10e1d109dbbd" title="Slave bus speed mode. ">busSpeed</a> value is used to configure CLKDIV such that one clock time is greater than the tSU;DAT value noted in the I2C bus specification for the I2C mode that is being used. If the <a class="el" href="a00038.html#a27793bbbe385b9446a1e10e1d109dbbd" title="Slave bus speed mode. ">busSpeed</a> mode is unknown at compile time, use the longest data setup time kI2C_SlaveStandardMode (250 ns) </p>
+
+</div>
+</div>
+<a class="anchor" id="ad720331a891010209a1209585056a2b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i2c_slave_config::enableSlave</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00367" id="a00367"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _i2c_slave_transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a5138a6295a93e877a8de83980095b8ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a5138a6295a93e877a8de83980095b8ab">handle</a></td></tr>
+<tr class="memdesc:a5138a6295a93e877a8de83980095b8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to handle that contains this transfer.  <a href="#a5138a6295a93e877a8de83980095b8ab">More...</a><br/></td></tr>
+<tr class="separator:a5138a6295a93e877a8de83980095b8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a461d482d4a91765e8820b55b17e7e53c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca">i2c_slave_transfer_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a461d482d4a91765e8820b55b17e7e53c">event</a></td></tr>
+<tr class="memdesc:a461d482d4a91765e8820b55b17e7e53c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason the callback is being invoked.  <a href="#a461d482d4a91765e8820b55b17e7e53c">More...</a><br/></td></tr>
+<tr class="separator:a461d482d4a91765e8820b55b17e7e53c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a521a410193f5184aaea5ab42b8bafac7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a521a410193f5184aaea5ab42b8bafac7">receivedAddress</a></td></tr>
+<tr class="memdesc:a521a410193f5184aaea5ab42b8bafac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matching address send by master.  <a href="#a521a410193f5184aaea5ab42b8bafac7">More...</a><br/></td></tr>
+<tr class="separator:a521a410193f5184aaea5ab42b8bafac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26fb4094fa78037240e2dd1d71637026"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a26fb4094fa78037240e2dd1d71637026">eventMask</a></td></tr>
+<tr class="memdesc:a26fb4094fa78037240e2dd1d71637026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask of enabled events.  <a href="#a26fb4094fa78037240e2dd1d71637026">More...</a><br/></td></tr>
+<tr class="separator:a26fb4094fa78037240e2dd1d71637026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93589ac311615c53149c70f87cc85220"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93589ac311615c53149c70f87cc85220"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a93589ac311615c53149c70f87cc85220">rxData</a></td></tr>
+<tr class="memdesc:a93589ac311615c53149c70f87cc85220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer for receive data. <br/></td></tr>
+<tr class="separator:a93589ac311615c53149c70f87cc85220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab269c32e68b47ebecbdf6dc99694dc1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab269c32e68b47ebecbdf6dc99694dc1f"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ab269c32e68b47ebecbdf6dc99694dc1f">txData</a></td></tr>
+<tr class="memdesc:ab269c32e68b47ebecbdf6dc99694dc1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer for transmit data. <br/></td></tr>
+<tr class="separator:ab269c32e68b47ebecbdf6dc99694dc1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d96f5ea7d8287ae770a43aeba051765"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d96f5ea7d8287ae770a43aeba051765"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a8d96f5ea7d8287ae770a43aeba051765">txSize</a></td></tr>
+<tr class="memdesc:a8d96f5ea7d8287ae770a43aeba051765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
+<tr class="separator:a8d96f5ea7d8287ae770a43aeba051765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97340f3d81fba5c6f687f51ea68793c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97340f3d81fba5c6f687f51ea68793c3"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a97340f3d81fba5c6f687f51ea68793c3">rxSize</a></td></tr>
+<tr class="memdesc:a97340f3d81fba5c6f687f51ea68793c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
+<tr class="separator:a97340f3d81fba5c6f687f51ea68793c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae53c04dd44495a5f8cf8813e715a53e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#aae53c04dd44495a5f8cf8813e715a53e">transferredCount</a></td></tr>
+<tr class="memdesc:aae53c04dd44495a5f8cf8813e715a53e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes transferred during this transfer.  <a href="#aae53c04dd44495a5f8cf8813e715a53e">More...</a><br/></td></tr>
+<tr class="separator:aae53c04dd44495a5f8cf8813e715a53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c09cb680bd188a4176823b6dfa21335"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a5c09cb680bd188a4176823b6dfa21335">completionStatus</a></td></tr>
+<tr class="memdesc:a5c09cb680bd188a4176823b6dfa21335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#a5c09cb680bd188a4176823b6dfa21335">More...</a><br/></td></tr>
+<tr class="separator:a5c09cb680bd188a4176823b6dfa21335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a5138a6295a93e877a8de83980095b8ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a>* _i2c_slave_transfer::handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a461d482d4a91765e8820b55b17e7e53c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca">i2c_slave_transfer_event_t</a> _i2c_slave_transfer::event</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a521a410193f5184aaea5ab42b8bafac7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i2c_slave_transfer::receivedAddress</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>7-bits plus R/nW bit0 </p>
+
+</div>
+</div>
+<a class="anchor" id="a26fb4094fa78037240e2dd1d71637026"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i2c_slave_transfer::eventMask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aae53c04dd44495a5f8cf8813e715a53e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _i2c_slave_transfer::transferredCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5c09cb680bd188a4176823b6dfa21335"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> _i2c_slave_transfer::completionStatus</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Only applies for <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df" title="All data in the active transfer have been consumed. ">kI2C_SlaveCompletionEvent</a>. </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00366" id="a00366"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _i2c_slave_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad590d3719153a8cd99d22f10ee7bf859"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ad590d3719153a8cd99d22f10ee7bf859">transfer</a></td></tr>
+<tr class="memdesc:ad590d3719153a8cd99d22f10ee7bf859"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave transfer.  <a href="#ad590d3719153a8cd99d22f10ee7bf859">More...</a><br/></td></tr>
+<tr class="separator:ad590d3719153a8cd99d22f10ee7bf859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d7a3aa8f16a2ddacb9cf58977fd67c"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#af6d7a3aa8f16a2ddacb9cf58977fd67c">isBusy</a></td></tr>
+<tr class="memdesc:af6d7a3aa8f16a2ddacb9cf58977fd67c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether transfer is busy.  <a href="#af6d7a3aa8f16a2ddacb9cf58977fd67c">More...</a><br/></td></tr>
+<tr class="separator:af6d7a3aa8f16a2ddacb9cf58977fd67c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cc8b98baef51cb985c227d65e5f75f1"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="a00038.html#gace8044962fd3c872ae2d7952de85525a">i2c_slave_fsm_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a8cc8b98baef51cb985c227d65e5f75f1">slaveFsm</a></td></tr>
+<tr class="memdesc:a8cc8b98baef51cb985c227d65e5f75f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">slave transfer state machine.  <a href="#a8cc8b98baef51cb985c227d65e5f75f1">More...</a><br/></td></tr>
+<tr class="separator:a8cc8b98baef51cb985c227d65e5f75f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1a2ab536368e7b2e8981879f1a3f5ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00038.html#ga0704c8f14da38feb11555e4127d86a18">i2c_slave_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#aa1a2ab536368e7b2e8981879f1a3f5ca">callback</a></td></tr>
+<tr class="memdesc:aa1a2ab536368e7b2e8981879f1a3f5ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#aa1a2ab536368e7b2e8981879f1a3f5ca">More...</a><br/></td></tr>
+<tr class="separator:aa1a2ab536368e7b2e8981879f1a3f5ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c21a56aa399763f1969a28fbea35054"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#a0c21a56aa399763f1969a28fbea35054">userData</a></td></tr>
+<tr class="memdesc:a0c21a56aa399763f1969a28fbea35054"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback.  <a href="#a0c21a56aa399763f1969a28fbea35054">More...</a><br/></td></tr>
+<tr class="separator:a0c21a56aa399763f1969a28fbea35054"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="ad590d3719153a8cd99d22f10ee7bf859"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> _i2c_slave_handle::transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af6d7a3aa8f16a2ddacb9cf58977fd67c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool _i2c_slave_handle::isBusy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8cc8b98baef51cb985c227d65e5f75f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile <a class="el" href="a00038.html#gace8044962fd3c872ae2d7952de85525a">i2c_slave_fsm_t</a> _i2c_slave_handle::slaveFsm</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa1a2ab536368e7b2e8981879f1a3f5ca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00038.html#ga0704c8f14da38feb11555e4127d86a18">i2c_slave_transfer_callback_t</a> _i2c_slave_handle::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0c21a56aa399763f1969a28fbea35054"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _i2c_slave_handle::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga5011aa3cf4340912b0a54c5fd2ccc881"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00038.html#gaa4d64624a394b298aeb74188f932406a">_i2c_slave_address_register</a>  <a class="el" href="a00038.html#ga5011aa3cf4340912b0a54c5fd2ccc881">i2c_slave_address_register_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4952975f11796f57c1dbc8c9352ee496"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00038.html#a00364">_i2c_slave_address</a>  <a class="el" href="a00038.html#ga4952975f11796f57c1dbc8c9352ee496">i2c_slave_address_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga02d133f25b39ab4842c870de2d66179f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00038.html#gadbb0ae033785e1ad024c953e24cc2f36">_i2c_slave_address_qual_mode</a>  <a class="el" href="a00038.html#ga02d133f25b39ab4842c870de2d66179f">i2c_slave_address_qual_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga222f565dee8428d8f882203a4a6c22ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00038.html#ga6c18ce95502d66818793c44df9029eae">_i2c_slave_bus_speed</a>  <a class="el" href="a00038.html#ga222f565dee8428d8f882203a4a6c22ff">i2c_slave_bus_speed_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa70dd0ec9815617269569190efd2de5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00038.html#a00365">_i2c_slave_config</a>  <a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d">i2c_slave_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure holds configuration settings for the I2C slave peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba" title="Provides a default configuration for the I2C slave peripheral. ">I2C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga95f120f6a73af41648364538cf9a6eca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00038.html#ga87e42e170b60f17f657ef3c06a918133">_i2c_slave_transfer_event</a>  <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca">i2c_slave_transfer_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00038.html#gaa387d81ea08a9d4b39cfeb3dfec505f7" title="Starts accepting slave transfers. ">I2C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
+<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga394e5278816efe62815de9d25be84752"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00038.html#a00366">_i2c_slave_handle</a> <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0704c8f14da38feb11555e4127d86a18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* i2c_slave_transfer_callback_t)(I2C_Type *base, volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *transfer, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This callback is used only for the slave non-blocking transfer API. To install a callback, use the I2C_SlaveSetCallback() function after you have created a handle.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address for the I2C instance on which the event occurred. </td></tr>
+    <tr><td class="paramname">transfer</td><td>Pointer to transfer descriptor containing values passed to and/or from the callback. </td></tr>
+    <tr><td class="paramname">userData</td><td>Arbitrary pointer-sized value passed from the application. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac86dc9a3b232a90765a2eb7df0eb9217"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* flexcomm_i2c_master_irq_handler_t)(I2C_Type *base, <a class="el" href="a00036.html#ga2fd51f58b8cfd309be985bce4b817fdc">i2c_master_handle_t</a> *handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad3e88bbb01efa34d7df40e87734aa4f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* flexcomm_i2c_slave_irq_handler_t)(I2C_Type *base, <a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaa4d64624a394b298aeb74188f932406a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00038.html#gaa4d64624a394b298aeb74188f932406a">_i2c_slave_address_register</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa4d64624a394b298aeb74188f932406aa39e0e158674bd8a6e254a6a42b5ce50f"></a>kI2C_SlaveAddressRegister0</em>&nbsp;</td><td class="fielddoc">
+<p>Slave Address 0 register. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa4d64624a394b298aeb74188f932406aa42a589b5e31f29ddc41088c3fb4bfcf1"></a>kI2C_SlaveAddressRegister1</em>&nbsp;</td><td class="fielddoc">
+<p>Slave Address 1 register. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa4d64624a394b298aeb74188f932406aa8381dd229f545df5e6a32ee5f0aac871"></a>kI2C_SlaveAddressRegister2</em>&nbsp;</td><td class="fielddoc">
+<p>Slave Address 2 register. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa4d64624a394b298aeb74188f932406aa9e73a2b09fe3943d51849a7d87fbe8a3"></a>kI2C_SlaveAddressRegister3</em>&nbsp;</td><td class="fielddoc">
+<p>Slave Address 3 register. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gadbb0ae033785e1ad024c953e24cc2f36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00038.html#gadbb0ae033785e1ad024c953e24cc2f36">_i2c_slave_address_qual_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadbb0ae033785e1ad024c953e24cc2f36af542f0269c83549e7b492911e281a902"></a>kI2C_QualModeMask</em>&nbsp;</td><td class="fielddoc">
+<p>The SLVQUAL0 field (qualAddress) is used as a logical mask for matching address0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadbb0ae033785e1ad024c953e24cc2f36a6b755a1d30a626380730ce947d09335f"></a>kI2C_QualModeExtend</em>&nbsp;</td><td class="fielddoc">
+<p>The SLVQUAL0 (qualAddress) field is used to extend address 0 matching in a range of addresses. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga6c18ce95502d66818793c44df9029eae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00038.html#ga6c18ce95502d66818793c44df9029eae">_i2c_slave_bus_speed</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga87e42e170b60f17f657ef3c06a918133"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00038.html#ga87e42e170b60f17f657ef3c06a918133">_i2c_slave_transfer_event</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00038.html#gaa387d81ea08a9d4b39cfeb3dfec505f7" title="Starts accepting slave transfers. ">I2C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
+<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga87e42e170b60f17f657ef3c06a918133acb1ae174dd6798a6fd79800a9e39a3c6"></a>kI2C_SlaveAddressMatchEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Received the slave address after a start or repeated start. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa"></a>kI2C_SlaveTransmitEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Callback is requested to provide data to transmit (slave-transmitter role). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de"></a>kI2C_SlaveReceiveEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Callback is requested to provide a buffer in which to place received data (slave-receiver role). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df"></a>kI2C_SlaveCompletionEvent</em>&nbsp;</td><td class="fielddoc">
+<p>All data in the active transfer have been consumed. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87e42e170b60f17f657ef3c06a918133a5e765c1c316a51908b68f1f32a7b524d"></a>kI2C_SlaveDeselectedEvent</em>&nbsp;</td><td class="fielddoc">
+<p>The slave function has become deselected (SLVSEL flag changing from 1 to 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc"></a>kI2C_SlaveAllEvents</em>&nbsp;</td><td class="fielddoc">
+<p>Bit mask of all available events. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga7115f80e28b62bbbd3be1a2a918529ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_SlaveGetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d">i2c_slave_config_t</a> *&#160;</td>
+          <td class="paramname"><em>slaveConfig</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function provides the following default configuration for the I2C slave peripheral: </p>
+<div class="fragment"><div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#ad720331a891010209a1209585056a2b7">enableSlave</a> = <span class="keyword">true</span>;</div>
+<div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#a5203e2e0d3d7e4f33aae8ced4df94778">address0</a>.disable = <span class="keyword">false</span>;</div>
+<div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#a5203e2e0d3d7e4f33aae8ced4df94778">address0</a>.<a class="code" href="a00038.html#aac0aeb8b419b1312b7f873549541be45">address</a> = 0u;</div>
+<div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#ad750f43edf4fce1b7d46aa567fbef65e">address1</a>.disable = <span class="keyword">true</span>;</div>
+<div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#adc043a79268cdf3f2f9bb82f486f25ef">address2</a>.disable = <span class="keyword">true</span>;</div>
+<div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#aa8bf7ada2ce9d9b2fd3fe94c7cae63f2">address3</a>.disable = <span class="keyword">true</span>;</div>
+<div class="line">*  slaveConfig-&gt;<a class="code" href="a00038.html#a27793bbbe385b9446a1e10e1d109dbbd">busSpeed</a> = kI2C_SlaveStandardMode;</div>
+<div class="line">* </div>
+</div><!-- fragment --><p>After calling this function, override any settings to customize the configuration, prior to initializing the master driver with <a class="el" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc" title="Initializes the I2C slave peripheral. ">I2C_SlaveInit()</a>. Be sure to override at least the <em>address0.address</em> member of the configuration structure with the desired slave address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure that is set to default values. Refer to <a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d" title="Structure with settings to initialize the I2C slave module. ">i2c_slave_config_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga175a81b5ab74dd78469d6cdea690d8cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveInit </td>
+          <td>(</td>
           <td class="paramtype">I2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00036.html#gad739710b6b65e12ca5ba9dc2a2a2b463">i2c_master_config_t</a> *&#160;</td>
-          <td class="paramname"><em>masterConfig</em>, </td>
+          <td class="paramtype">const <a class="el" href="a00038.html#gaa70dd0ec9815617269569190efd2de5d">i2c_slave_config_t</a> *&#160;</td>
+          <td class="paramname"><em>slaveConfig</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -223,58 +966,45 @@ SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the I2C module and the related RTOS context.</p>
+<p>This function enables the peripheral clock and initializes the I2C slave peripheral as described by the user provided configuration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS I2C handle, the pointer to an allocated space for RTOS context. </td></tr>
-    <tr><td class="paramname">base</td><td>The pointer base address of the I2C instance to initialize. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Configuration structure to set-up I2C in master mode. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>Frequency of input clock of the I2C module. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gabe3dc27604637a77cba04967097defb2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_RTOS_Deinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the I2C module and the related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS I2C handle. </td></tr>
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">slaveConfig</td><td>User provided peripheral configuration. Use <a class="el" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba" title="Provides a default configuration for the I2C slave peripheral. ">I2C_SlaveGetDefaultConfig()</a> to get a set of defaults that you can override. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>Frequency in Hertz of the I2C functional clock. Used to calculate CLKDIV value to provide enough data setup time for master when slave stretches the clock. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga0b090779ab62f02149066a2325feb868"></a>
+<a class="anchor" id="gacf721065f83982e3df651111183bf7b2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_RTOS_Transfer </td>
+          <td class="memname">void I2C_SlaveSetAddress </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00038.html#gaca5136879399aca804329b17b23063d6">i2c_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00036.html#ga7edd253f4df51a13bd0a6a0461b9f93a">i2c_master_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>transfer</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga5011aa3cf4340912b0a54c5fd2ccc881">i2c_slave_address_register_t</a>&#160;</td>
+          <td class="paramname"><em>addressRegister</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>addressDisable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -283,15 +1013,604 @@ SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function performs an I2C transfer according to data given in the transfer structure.</p>
+<p>This function writes new value to Slave Address register.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS I2C handle. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Structure specifying the transfer parameters. </td></tr>
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">addressRegister</td><td>The module supports multiple address registers. The parameter determines which one shall be changed. </td></tr>
+    <tr><td class="paramname">address</td><td>The slave address to be stored to the address register for matching. </td></tr>
+    <tr><td class="paramname">addressDisable</td><td>Disable matching of the specified address register. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadb50014db29dd75ea2001fb7bc837e77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_SlaveDeinit </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the I2C slave peripheral and gates the clock. It also performs a software reset to restore the peripheral to reset conditions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacbb93d5ea4f4b40038f41e0e942a9ee1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_SlaveEnable </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>True to enable or flase to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga545c1a43d8d49c4675de493d45a4063a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I2C_SlaveClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>statusMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The following status register flags can be cleared:</p>
+<ul>
+<li>slave deselected flag</li>
+</ul>
+<p>Attempts to clear other flags has no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">statusMask</td><td>A bitmask of status flags that are to be cleared. The mask is composed of _i2c_slave_flags enumerators OR'd together. You may pass the result of a previous call to I2C_SlaveGetStatusFlags(). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd>_i2c_slave_flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga280404c6b1ede542f2c1c20bd382869c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveWriteBlocking </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>txBuff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>txSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The function executes blocking address phase and blocking data phase.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">txBuff</td><td>The pointer to the data to be transferred. </td></tr>
+    <tr><td class="paramname">txSize</td><td>The length in bytes of the data to be transferred. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success Data has been sent. </dd>
+<dd>
+kStatus_Fail Unexpected slave state (master data write while master read from slave is expected). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga89baaf8bc82b19c837032665e89a1707"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveReadBlocking </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rxBuff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The function executes blocking address phase and blocking data phase.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">rxBuff</td><td>The pointer to the data to be transferred. </td></tr>
+    <tr><td class="paramname">rxSize</td><td>The length in bytes of the data to be transferred. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success Data has been received. </dd>
+<dd>
+kStatus_Fail Unexpected slave state (master data read while master write to slave is expected). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac9b90f575d92ff8ad3cc350a5c8ad1b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_SlaveTransferCreateHandle </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga0704c8f14da38feb11555e4127d86a18">i2c_slave_transfer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The creation of a handle is for use with the non-blocking APIs. Once a handle is created, there is not a corresponding destroy handle. If the user wants to terminate a transfer, the <a class="el" href="a00038.html#ga5ae9f5e6e854d14d33ba3029128bd6f0" title="Aborts the slave non-blocking transfers. ">I2C_SlaveTransferAbort()</a> API shall be called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">handle</td><td>Pointer to the I2C slave driver handle. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">callback</td><td>User provided pointer to the asynchronous callback function. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">userData</td><td>User provided pointer to the application callback data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa387d81ea08a9d4b39cfeb3dfec505f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveTransferNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>eventMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call this API after calling <a class="el" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc" title="Initializes the I2C slave peripheral. ">I2C_SlaveInit()</a> and <a class="el" href="a00038.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9" title="Creates a new handle for the I2C slave non-blocking APIs. ">I2C_SlaveTransferCreateHandle()</a> to start processing transactions driven by an I2C master. The slave monitors the I2C bus and pass events to the callback that was passed into the call to <a class="el" href="a00038.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9" title="Creates a new handle for the I2C slave non-blocking APIs. ">I2C_SlaveTransferCreateHandle()</a>. The callback is always invoked from the interrupt context.</p>
+<p>If no slave Tx transfer is busy, a master read from slave request invokes <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kI2C_SlaveTransmitEvent</a> callback. If no slave Rx transfer is busy, a master write to slave request invokes <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kI2C_SlaveReceiveEvent</a> callback.</p>
+<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca" title="Set of events sent to the callback for non blocking slave transfers. ">i2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kI2C_SlaveTransmitEvent</a> and <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc" title="Bit mask of all available events. ">kI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to i2c_slave_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca" title="Set of events sent to the callback for non blocking slave transfers. ">i2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc" title="Bit mask of all available events. ">kI2C_SlaveAllEvents</a> to enable all events.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Slave transfers were successfully started. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac7602b6897596348fe190e4fc63f1381"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveSetSendBuffer </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>transfer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>txData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>txSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>eventMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The function can be called in response to <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kI2C_SlaveTransmitEvent</a> callback to start a new slave Tx transfer from within the transfer callback.</p>
+<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca" title="Set of events sent to the callback for non blocking slave transfers. ">i2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kI2C_SlaveTransmitEvent</a> and <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc" title="Bit mask of all available events. ">kI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">transfer</td><td>Pointer to <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf" title="I2C slave transfer structure. ">i2c_slave_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">txData</td><td>Pointer to data to send to master. </td></tr>
+    <tr><td class="paramname">txSize</td><td>Size of txData in bytes. </td></tr>
+    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca" title="Set of events sent to the callback for non blocking slave transfers. ">i2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc" title="Bit mask of all available events. ">kI2C_SlaveAllEvents</a> to enable all events.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Slave transfers were successfully started. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga25b9c35089f0fc966facec3bf874c840"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveSetReceiveBuffer </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>transfer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>rxData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rxSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>eventMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The function can be called in response to <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kI2C_SlaveReceiveEvent</a> callback to start a new slave Rx transfer from within the transfer callback.</p>
+<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca" title="Set of events sent to the callback for non blocking slave transfers. ">i2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kI2C_SlaveTransmitEvent</a> and <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc" title="Bit mask of all available events. ">kI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">transfer</td><td>Pointer to <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf" title="I2C slave transfer structure. ">i2c_slave_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">rxData</td><td>Pointer to data to store data from master. </td></tr>
+    <tr><td class="paramname">rxSize</td><td>Size of rxData in bytes. </td></tr>
+    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00038.html#ga95f120f6a73af41648364538cf9a6eca" title="Set of events sent to the callback for non blocking slave transfers. ">i2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a94b030ebdac378a84961893ae567bfbc" title="Bit mask of all available events. ">kI2C_SlaveAllEvents</a> to enable all events.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Slave transfers were successfully started. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952" title="The master is already performing a transfer. ">kStatus_I2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4c9fc06eeb8a3beb024f6525e4d99a0b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I2C_SlaveGetReceivedAddress </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">volatile <a class="el" href="a00038.html#ga69e696cb21165bc58176475879a471cf">i2c_slave_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>transfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function should only be called from the address match event callback <a class="el" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133acb1ae174dd6798a6fd79800a9e39a3c6" title="Received the slave address after a start or repeated start. ">kI2C_SlaveAddressMatchEvent</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">transfer</td><td>The I2C slave transfer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 8-bit address matched by the I2C slave. Bit 0 contains the R/w direction bit, and the 7-bit slave address is in the upper 7 bits. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5ae9f5e6e854d14d33ba3029128bd6f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_SlaveTransferAbort </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This API could be called at any time to stop slave for handling the bus events. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to i2c_slave_handle_t structure which stores the transfer state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+    <tr><td class="paramname"><a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea628d242f7bc0e3d5949c7f73eafaa508" title="The slave driver is idle. ">kStatus_I2C_Idle</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabf38a498bd3527ea0b7cc947ae71e17e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_SlaveTransferGetCount </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>I2C base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to i2c_slave_handle_t structure. </td></tr>
+    <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the non-blocking transaction. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>count is Invalid. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>Successfully return the count. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3bc939e5dbdc165169f58b8d47d1742d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_SlaveTransferHandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga394e5278816efe62815de9d25be84752">i2c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function does not need to be called unless you are reimplementing the non blocking API's interrupt handler routines to add special functionality. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I2C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to i2c_slave_handle_t structure which stores the transfer state. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,6 +1,6 @@
 var a00017 =
 [
-    [ "_dmic_channel_config", "a00017.html#a00311", [
+    [ "_dmic_channel_config", "a00017.html#a00308", [
       [ "divhfclk", "a00017.html#a36498a56cad6dde7bfae607efc3b17fc", null ],
       [ "osr", "a00017.html#a5891c99c3d8e7b17dd0dce0f5a8faf3c", null ],
       [ "gainshft", "a00017.html#ac84a16b61f1aefdf5d216e8d168afa28", null ],

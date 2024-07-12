@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -462,6 +462,7 @@ int  LCD_ROTATE_DecSel                (void);
 int  LCD_ROTATE_DecSelEx              (int LayerIndex);
 int  LCD_ROTATE_GetCurrentIndex       (void);
 int  LCD_ROTATE_GetCurrentIndexEx     (int LayerIndex);
+int  LCD_ROTATE_GetCurrentOrientation (void);
 int  LCD_ROTATE_GetOrientation        (int DriverIndex);
 int  LCD_ROTATE_GetOrientationEx      (int LayerIndex, int DriverIndex);
 int  LCD_ROTATE_GetNumDrivers         (void);
@@ -719,7 +720,7 @@ void LCD_AA_GetGamma   (U8 * pGamma);
 
 LCD_COLOR    LCD_AA_MixColors16 (LCD_COLOR Color, LCD_COLOR BkColor, U8 Intens);
 LCD_COLOR    LCD_AA_MixColors256(LCD_COLOR Color, LCD_COLOR BkColor, U8 Intens);
-LCD_COLOR    LCD_MixColors256   (LCD_COLOR Color, LCD_COLOR BkColor, unsigned Intens);
+LCD_COLOR    LCD_MixColors256   (LCD_COLOR Color, LCD_COLOR BkColor, U8 Intens);
 LCD_COLOR    LCD_GetPixelColor(int x, int y);     /* Get RGB color of pixel */
 unsigned int LCD_GetPixelIndex(int x, int y);
 int          LCD_GetBkColorIndex (void);

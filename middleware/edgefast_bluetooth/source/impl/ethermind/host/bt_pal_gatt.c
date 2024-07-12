@@ -1873,9 +1873,14 @@ ssize_t bt_gatt_attr_read_included(struct bt_conn *conn,
 	 * The Service UUID shall only be present when the UUID is a
 	 * 16-bit Bluetooth UUID.
 	 */
-	if (uuid->type == BT_UUID_TYPE_16) {
-		pdu.uuid16 = sys_cpu_to_le16(BT_UUID_16(uuid)->val);
-		value_len += sizeof(pdu.uuid16);
+#if 1 /* this change used to skip the case attr->user_data == NULL to prevent bus fault. */
+	if(incl != NULL)
+#endif
+	{
+		if (uuid->type == BT_UUID_TYPE_16) {
+			pdu.uuid16 = sys_cpu_to_le16(BT_UUID_16(uuid)->val);
+			value_len += sizeof(pdu.uuid16);
+		}
 	}
 
 	/* Lookup for service end handle */
@@ -3129,15 +3134,15 @@ uint8_t bt_gatt_check_perm(struct bt_conn *conn, const struct bt_gatt_attr *attr
 	 *
 	 * If neither an LTK nor an STK is available, the service
 	 * request shall be rejected with the error code
-	 * “Insufficient Authentication�?
+	 * “Insufficient Authentication�?
 	 * Note: When the link is not encrypted, the error code
-	 * “Insufficient Authentication�?does not indicate that
+	 * “Insufficient Authentication�?does not indicate that
 	 *  MITM protection is required.
 	 *
 	 * If an LTK or an STK is available and encryption is
 	 * required (LE security mode 1) but encryption is not
 	 * enabled, the service request shall be rejected with
-	 * the error code “Insufficient Encryption�?
+	 * the error code “Insufficient Encryption�?
 	 */
 
 	if (mask & (BT_GATT_PERM_ENCRYPT_MASK | BT_GATT_PERM_AUTHEN_MASK)) {
@@ -4598,6 +4603,9 @@ static void parse_read_by_uuid(struct bt_conn *conn,
 {
 	const struct bt_att_read_type_rsp *rsp = pdu;
 
+	const uint16_t req_start_handle = params->by_uuid.start_handle;
+	const uint16_t req_end_handle = params->by_uuid.end_handle;
+
 	/* Parse values found */
 	for (length--, pdu = rsp->data; length;
 	     length -= rsp->len, pdu = (const uint8_t *)pdu + rsp->len) {
@@ -4616,6 +4624,14 @@ static void parse_read_by_uuid(struct bt_conn *conn,
 		len = rsp->len > length ? length - 2 : rsp->len - 2;
 
 		LOG_DBG("handle 0x%04x len %u value %u", handle, rsp->len, len);
+		if (!IN_RANGE(handle, req_start_handle, req_end_handle)) {
+			LOG_WRN("Bad peer: ATT read-by-uuid rsp: "
+				"Handle 0x%04x is outside requested range 0x%04x-0x%04x. "
+				"Aborting read.",
+				handle, req_start_handle, req_end_handle);
+			params->func(conn, BT_ATT_ERR_UNLIKELY, params, NULL, 0);
+			return;
+		}
 
 		/* Update start_handle */
 		params->by_uuid.start_handle = handle;

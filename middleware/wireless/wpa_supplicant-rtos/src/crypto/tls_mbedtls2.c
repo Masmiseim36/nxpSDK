@@ -45,7 +45,7 @@
 #include "includes.h"
 #include "utils/common.h"
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO
+#if CONFIG_WPA_SUPP_CRYPTO
 
 #include <mbedtls/version.h>
 #include <mbedtls/ctr_drbg.h>
@@ -61,8 +61,8 @@
 
 #ifdef MBEDTLS_DEBUG_C
 #define DEBUG_THRESHOLD 4
-#ifdef CONFIG_ZEPHYR
 #include <mbedtls/debug.h>
+#ifdef __ZEPHYR__
 #define PRINTF printk
 #else
 #include "fsl_debug_console.h"
@@ -131,7 +131,7 @@ typedef mbedtls_tls_prf_types int;
 #if defined(EAP_TEAP) || defined(EAP_SERVER_TEAP)
 #define TLS_MBEDTLS_EAP_TEAP
 #endif
-#if !defined(CONFIG_FIPS) /* EAP-FAST keys cannot be exported in FIPS mode */
+#ifndef CONFIG_FIPS /* EAP-FAST keys cannot be exported in FIPS mode */
 #if defined(EAP_FAST) || defined(EAP_FAST_DYNAMIC) || defined(EAP_SERVER_FAST)
 #define TLS_MBEDTLS_EAP_FAST
 #endif
@@ -327,10 +327,10 @@ void tls_mbedtls_set_debug_cb(mbedtls_ssl_config *conf,
     {
         /**
          * If 'NULL' dbg function and already set 'g_f_dbg',
-         * we will not override it.
+         * we will not override 'g_f_dbg',
+         * but set it in conf.
          */
-        elog(-1, "Cannot override dbg function");
-        return;
+        mbedtls_ssl_conf_dbg(conf, g_f_dbg, NULL);
     }
     else if (f_dbg)
     {
@@ -2617,20 +2617,20 @@ bool tls_connection_get_own_cert_used(struct tls_connection *conn)
 }
 #endif
 
-#if defined(CONFIG_FIPS)
+#ifdef CONFIG_FIPS
 #define TLS_MBEDTLS_CONFIG_FIPS
 #endif
 
-#if defined(CONFIG_SHA256)
+#if (CONFIG_SHA256)
 #define TLS_MBEDTLS_TLS_PRF_SHA256
 #endif
 
-#if defined(CONFIG_SHA384)
+#if (CONFIG_SHA384)
 #define TLS_MBEDTLS_TLS_PRF_SHA384
 #endif
 
 #ifndef TLS_MBEDTLS_CONFIG_FIPS
-#if defined(CONFIG_MODULE_TESTS)
+#if (CONFIG_MODULE_TESTS)
 /* unused with CONFIG_TLS=mbedtls except in crypto_module_tests.c */
 #if MBEDTLS_VERSION_NUMBER >= 0x02120000   /* mbedtls 2.18.0 */ \
     && MBEDTLS_VERSION_NUMBER < 0x03000000 /* mbedtls 3.0.0 */
@@ -3122,7 +3122,7 @@ static int tls_mbedtls_verify_cb(void *arg, mbedtls_x509_crt *crt, int depth, ui
     struct tls_conf *tls_conf   = conn->tls_conf;
     uint32_t flags_in           = *flags;
 
-#ifdef TLS_MBEDTLS_CERT_DISABLE_KEY_USAGE_CHECK
+#if defined(TLS_MBEDTLS_CERT_DISABLE_KEY_USAGE_CHECK)
     crt->ext_types &= ~MBEDTLS_X509_EXT_KEY_USAGE;
     crt->ext_types &= ~MBEDTLS_X509_EXT_EXTENDED_KEY_USAGE;
 #endif
@@ -3205,7 +3205,7 @@ static int tls_mbedtls_verify_cb(void *arg, mbedtls_x509_crt *crt, int depth, ui
             /* check RSA modulus size (public key bitlen) */
             const mbedtls_pk_type_t pk_alg = mbedtls_pk_get_type(&crt->pk);
             if ((pk_alg == MBEDTLS_PK_RSA || pk_alg == MBEDTLS_PK_RSASSA_PSS)
-#ifdef CONFIG_SUITEB192
+#if CONFIG_SUITEB192
                 && mbedtls_pk_get_bitlen(&crt->pk) < 3072
 #else
                 && mbedtls_pk_get_bitlen(&crt->pk) < 2048

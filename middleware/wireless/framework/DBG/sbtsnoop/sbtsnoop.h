@@ -49,7 +49,7 @@ void sbtsnoop_fclose(void);
  * \param[in] pkt Pointer to packet
  * \param[in] size Packet size
  */
-void sbtsnoop_fwrite(void* pkt, uint16_t size);
+void sbtsnoop_fwrite(const void* pkt, uint16_t size);
 
 /*!
  * \brief Prints current content of the file, further write operation will

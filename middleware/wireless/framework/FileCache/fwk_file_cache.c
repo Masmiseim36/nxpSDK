@@ -10,6 +10,7 @@
 #include "fwk_fs_abstraction.h"
 #include "fwk_file_cache.h"
 #include "fsl_os_abstraction.h"
+#include "EmbeddedTypes.h"
 
 /**
  * \brief Definitions for flags argument provided to FC_CheckBufferInWriteList()
@@ -21,7 +22,7 @@
 #define FC_REMOVE_BUFFER_FROM_WRITE_LIST 1
 
 /* Fix pattern to eventually recognize the wasted space at the end of the ram section */
-#define FC_WASTED_SPACE_PATTERN 0xC1C1
+#define FC_WASTED_SPACE_PATTERN 0xC1C1u
 
 #define DEBUG_FWK_FILECACHE 0
 
@@ -40,6 +41,15 @@
 
 #define FC_PRINT_STATS 0
 
+/* Buffer descriptor flags */
+#define FC_BDFLAG_RECYCLE 0x1u /* buff scheduled for recycle */
+
+#define FC_SetBufferRecycleFlag(p) (p)->flags |= (uint8_t)FC_BDFLAG_RECYCLE
+
+#define FC_ResetBufferRecycleFlag(p) (p)->flags &= (uint8_t)(~FC_BDFLAG_RECYCLE)
+
+#define FC_BufferToRecycle(p) (((p)->flags & FC_BDFLAG_RECYCLE) == (uint8_t)FC_BDFLAG_RECYCLE) ? 1 : 0
+
 #if defined(FC_PRINT_STATS) && (FC_PRINT_STATS == 1)
 #include "fsl_debug_console.h"
 #endif
@@ -52,14 +62,16 @@ typedef struct
     void *list_tail;
 } fc_list_t;
 
-typedef struct fc_buffer_desc_s
+typedef PACKED_STRUCT fc_buffer_desc_s
 {
     uint16_t payload_size;
     uint16_t buffer_size; /* Differentiate buffer size from payload size when open a buffer in write queue */
     struct fc_buffer_desc_s *next;
     struct fc_context_s *    fc_context;
+    uint8_t                  flags; /* properties of the current buffer */
     char                     file_name[FC_FILE_NAME_SIZE_MAX];
-} fc_buffer_desc_t;
+}
+fc_buffer_desc_t;
 
 typedef struct fc_context_s
 {
@@ -149,43 +161,50 @@ static int FC_CheckRamSectionSpace(fc_context_t *fc_context_p, uint16_t buf_size
 
     assert(fc_context_p != NULL);
 
-    /* Just to have a more leggible code */
+    /* Just to have a more legible code */
     free_off = fc_context_p->free_buffer_offset;
     used_off = fc_context_p->used_buffer_offset;
 
     ret                = 0;
-    available_ram_size = 0;
+    available_ram_size = 0u;
     /* The space needed to allocate a new buffer includes the size of the descriptor and the effective size of the
      * buffer */
     req_space = sizeof(fc_buffer_desc_t) + buf_size;
 
-    /* If both the offset are set to 0, we are sure that the whole ram section is free */
-    if ((used_off > free_off) || ((used_off == free_off) && (used_off == 0)))
+    if (used_off >= free_off)
     {
-        /* Available ram size after the used offset */
-        available_ram_size = fc_context_p->remaining_ram_size - used_off;
-        /* Keep free the last 4 bytes of the ram section to allocate in the worst case at least the flag that signals
-         * the presence of wasted space */
-        if (req_space <= (available_ram_size - 4))
+        /* If both the offset are set to 0, we are sure that the whole ram section is free */
+        if ((used_off > free_off) || (used_off == 0u))
         {
-            ret = 1;
+            /* Available ram size after the used offset */
+            available_ram_size = fc_context_p->remaining_ram_size - used_off;
+            /* Keep free the last 4 bytes of the ram section to allocate in the worst case at least the flag that
+             * signals the presence of wasted space */
+            if (req_space <= (available_ram_size - 4u))
+            {
+                ret = 1;
+            }
+            else
+            {
+                /* Check if there is enough space before the free offset */
+                if (req_space <= free_off)
+                {
+                    ret = 1;
+                    /* Some wasted space at the end of the buffer */
+                    buf_desc_p                       = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + used_off);
+                    buf_desc_p->buffer_size          = FC_WASTED_SPACE_PATTERN;
+                    buf_desc_p->payload_size         = FC_WASTED_SPACE_PATTERN;
+                    fc_context_p->used_buffer_offset = 0u;
+                }
+            }
+            available_ram_size += free_off;
         }
         else
         {
-            /* Check if there is enough space before the free offset */
-            if (req_space <= free_off)
-            {
-                ret = 1;
-                /* Some wasted space at the end of the buffer */
-                buf_desc_p                       = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + used_off);
-                buf_desc_p->buffer_size          = FC_WASTED_SPACE_PATTERN;
-                buf_desc_p->payload_size         = FC_WASTED_SPACE_PATTERN;
-                fc_context_p->used_buffer_offset = 0;
-            }
+            /* TODO check what to do */
         }
-        available_ram_size += free_off;
     }
-    else if (used_off < free_off)
+    else
     {
         /* Available ram size between used offset and free offset */
         available_ram_size = free_off - used_off;
@@ -214,12 +233,13 @@ static fc_buffer_desc_t *FC_GetFreeBuffer(fc_context_t *fc_context_p, const char
     space_ok = FC_CheckRamSectionSpace(fc_context_p, buf_size);
 
     /* Check if there is enough space in RAM section to allocate the buffer */
-    if (space_ok == 1)
+    if (space_ok == 1u)
     {
         /* There is enough space after the used offset */
         buf_desc_p = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->used_buffer_offset);
         /* Update the offset of the used space inside the ram section */
         fc_context_p->used_buffer_offset += sizeof(fc_buffer_desc_t) + buf_size;
+        (void)memset(buf_desc_p, 0, sizeof(fc_buffer_desc_t));
         buf_desc_p->fc_context  = fc_context_p;
         buf_desc_p->next        = NULL;
         buf_desc_p->buffer_size = buf_size;
@@ -238,10 +258,21 @@ static fc_buffer_desc_t *FC_GetFreeBuffer(fc_context_t *fc_context_p, const char
     return buf_desc_p;
 }
 
+/**
+ * \brief Return a buffer to the free buffer pool
+ *
+ * The used buffer pool does not support "holes" and, therefore, in a first
+ * stage, the buffer is only marked with a "to-be-recycled" flag. In a second
+ * stage, the [free_buffer_offset] attribute of the buffer pool is updated only
+ * if the buffer in hand is the FIRST buffer in the pool. Otherwise (if other
+ * buffers need to be released before this one) the update of the
+ * [free_buffer_offset] attribute is postponed until those buffers are released.
+ *
+ * \param buf_desc_p [in] The handle of the buffer to be returned to the free buffer pool
+ */
 static void FC_AddFreeBuffer(fc_buffer_desc_t *buf_desc_p)
 {
     fc_context_t *    fc_context_p;
-    uint16_t          available_ram_size;
     fc_buffer_desc_t *buf_pointed_by_free;
 
     assert(buf_desc_p != NULL);
@@ -251,42 +282,46 @@ static void FC_AddFreeBuffer(fc_buffer_desc_t *buf_desc_p)
     fc_context_p = buf_desc_p->fc_context;
     assert(fc_context_p != NULL);
 
-    available_ram_size = fc_context_p->remaining_ram_size - fc_context_p->free_buffer_offset;
-    /* This happens when there is some wasted space at the end of the buffer */
-    if (available_ram_size < (buf_desc_p->buffer_size + sizeof(fc_buffer_desc_t)))
-    {
-        fc_context_p->free_buffer_offset = 0;
-    }
-
-    /* The free offset could point to a buffer located before the one to be freed within the ram section */
-    if (buf_desc_p != (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset))
-    {
-        while (buf_desc_p != (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset))
-        {
-            /* Wait until the right buffer is pointed by the free offset */
-            OSA_TimeDelay(FC_WAIT_LOOP_MS);
-        }
-    }
-
     FC_CRITICAL_SECTION_ENTER();
-    assert(buf_desc_p == (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset));
-    fc_context_p->free_buffer_offset += (buf_desc_p->buffer_size + sizeof(fc_buffer_desc_t));
+    /* Mark this buffer for recycling */
+    FC_SetBufferRecycleFlag(buf_desc_p);
 
-    /* If after the free, the free offset points to wasted space, reset it */
-    buf_pointed_by_free = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset);
-    if ((buf_pointed_by_free->payload_size == FC_WASTED_SPACE_PATTERN) &&
-        (buf_pointed_by_free->buffer_size == FC_WASTED_SPACE_PATTERN))
+    /*
+     * Process, in order, the buffers starting from the [free_buffer_offset]
+     * and recycle all of them until the first buffer which is not marked for
+     * recycling.
+     */
+    buf_desc_p = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset);
+    while ((FC_BufferToRecycle(buf_desc_p)) != 0)
     {
-        fc_context_p->free_buffer_offset = 0;
+        /* Update the free buffer offset */
+        fc_context_p->free_buffer_offset += (buf_desc_p->buffer_size + (uint16_t)sizeof(fc_buffer_desc_t));
+
+        /* If after the free, the free offset points to wasted space, reset it */
+        buf_pointed_by_free = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset);
+        if ((buf_pointed_by_free->payload_size == FC_WASTED_SPACE_PATTERN) &&
+            (buf_pointed_by_free->buffer_size == FC_WASTED_SPACE_PATTERN))
+        {
+            fc_context_p->free_buffer_offset = 0;
+        }
+
+        /*
+         * If the free offset reached the used offset, it means that all the
+         * buffers used were freed. We can start again from the beginning of
+         * the scratch ram section
+         */
+        if (fc_context_p->used_buffer_offset == fc_context_p->free_buffer_offset)
+        {
+            fc_context_p->used_buffer_offset = 0;
+            fc_context_p->free_buffer_offset = 0;
+            /* All the buffers were released. No more processing is required */
+            break;
+        }
+
+        /* Proceed to the next buffer and check if it scheduled to be recycled */
+        buf_desc_p = (fc_buffer_desc_t *)(fc_context_p->buf_start_addr + fc_context_p->free_buffer_offset);
     }
 
-    /* If the free offset reached the used offset, it means that all the buffers used were freed
-       We can start again from the beginning of the scratch ram section */
-    if (fc_context_p->used_buffer_offset == fc_context_p->free_buffer_offset)
-    {
-        fc_context_p->used_buffer_offset = 0;
-        fc_context_p->free_buffer_offset = 0;
-    }
 #if defined(FC_PRINT_STATS) && (FC_PRINT_STATS == 1)
     buf_in_ram_section--;
 #endif
@@ -397,15 +432,19 @@ static void FC_RemoveFromWriteQueue(fc_buffer_desc_t *buf_desc_p)
         {
             buf_desc_l = buf_desc_l->next;
         }
-
-        /* should not happen , buf_desc_p shall be in the queue*/
-        assert(buf_desc_l != NULL);
-
-        if (fc_config_top_p->fc_write_buffer_list.list_tail == buf_desc_p)
+        /* If we exited the loop and buf_desc_l is NULL, it means buf_desc_p was not found  */
+        if (buf_desc_l != NULL)
         {
-            fc_config_top_p->fc_write_buffer_list.list_tail = buf_desc_l;
+            if (fc_config_top_p->fc_write_buffer_list.list_tail == buf_desc_p)
+            {
+                fc_config_top_p->fc_write_buffer_list.list_tail = buf_desc_l;
+            }
+            buf_desc_l->next = buf_desc_p->next;
         }
-        buf_desc_l->next = buf_desc_p->next;
+        else
+        {
+            assert(buf_desc_l != NULL); /* should not happen , buf_desc_p shall be in the queue*/
+        }
     }
     buf_desc_p->next = NULL;
 
@@ -431,9 +470,7 @@ static bool FC_IsSameBufName(const char *buffer_name1, const char *buffer_name2)
     return same_name;
 }
 
-static fc_buffer_desc_t *FC_CheckBufferInWriteList(const char *buffer_name,
-                                                   uint16_t *  buffer_length,
-                                                   uint8_t     buffer_flag)
+static fc_buffer_desc_t *FC_CheckBufferInWriteList(const char *buffer_name, uint16_t buffer_length, uint8_t buffer_flag)
 {
     fc_buffer_desc_t *buf_desc_p;
 
@@ -452,12 +489,12 @@ static fc_buffer_desc_t *FC_CheckBufferInWriteList(const char *buffer_name,
     if (buf_desc_p != NULL)
     {
         /* buffer found but too small */
-        if (*buffer_length > buf_desc_p->buffer_size)
+        if (buffer_length > buf_desc_p->buffer_size)
         {
             fc_buffer_desc_t *buf_desc_l;
 
             /* Try to reallocate a new bigger buffer */
-            buf_desc_l = FC_GetFreeBuffer(buf_desc_p->fc_context, buffer_name, *buffer_length);
+            buf_desc_l = FC_GetFreeBuffer(buf_desc_p->fc_context, buffer_name, buffer_length);
             if (buf_desc_l != NULL)
             {
                 /* The allocation of the bigger buffer succeeded */
@@ -472,16 +509,17 @@ static fc_buffer_desc_t *FC_CheckBufferInWriteList(const char *buffer_name,
 
                 /* Return the new allocated buffer */
                 buf_desc_p              = buf_desc_l;
-                buf_desc_p->buffer_size = *buffer_length;
+                buf_desc_p->buffer_size = buffer_length;
             }
             else
             {
                 FC_CRITICAL_SECTION_EXIT();
 
                 /* The allocation of the bigger buffer failed */
-                /* Return NULL and report the available size */
-                *buffer_length = buf_desc_p->buffer_size;
-                buf_desc_p     = NULL;
+                /*
+                 * Just return the original buffer descriptor, even though it
+                 * is too small.
+                 */
             }
         }
         else
@@ -496,9 +534,6 @@ static fc_buffer_desc_t *FC_CheckBufferInWriteList(const char *buffer_name,
                 FC_RemoveFromWriteQueue(buf_desc_p);
             }
             FC_CRITICAL_SECTION_EXIT();
-
-            /* Return the payload size (as it should be after a read) */
-            *buffer_length = buf_desc_p->payload_size;
         }
     }
 #if defined(FC_EnableTaskDelayKeepSchedulerEnabled_d) && (FC_EnableTaskDelayKeepSchedulerEnabled_d == 1)
@@ -549,8 +584,8 @@ void *FC_InitConfig(const fc_config_t *fc_config_p)
         uint8_t *     fc_inc_addr;
 
         /* Init local variables */
-        fc_context_p               = (fc_context_t *)(fc_config_p->scracth_ram_p);
-        remaining_scratch_ram_size = fc_config_p->scracth_ram_sz;
+        fc_context_p               = (fc_context_t *)(fc_config_p->scratch_ram_p);
+        remaining_scratch_ram_size = fc_config_p->scratch_ram_sz;
         fc_inc_addr                = (uint8_t *)fc_context_p + sizeof(fc_context_t);
 
         /* Start filling fc_context */
@@ -580,14 +615,12 @@ int FC_DeInit(void *fc_context_p)
     uint16_t          free_off;
     uint16_t          used_off;
     uint16_t          req_space;
-    uint16_t          buf_len;
 
     assert(fc_context_p != NULL);
 
     ret = 0;
     i   = 0;
     /* We want only to check if the buffer is in the write list */
-    buf_len  = 0;
     fc_ctx_p = (fc_context_t *)fc_context_p;
     free_off = fc_ctx_p->free_buffer_offset;
     used_off = fc_ctx_p->used_buffer_offset;
@@ -611,16 +644,15 @@ int FC_DeInit(void *fc_context_p)
             /* Check if the buffer is in the write list */
             do
             {
-                buf_len = 0;
                 /* Wait loop until the file is written in flash or the maximum number of iteration is reached */
                 /* The flag removeFromWriteQueue is set to 0 because we want only to check if the buffer is in the write
                  * list and not remove it if it is found */
-                buf_desc_l = FC_CheckBufferInWriteList(buf_desc_p->file_name, &buf_len, FC_CHECK_BUFFER_ONLY);
+                buf_desc_l = FC_CheckBufferInWriteList(buf_desc_p->file_name, 0, FC_CHECK_BUFFER_ONLY);
                 OSA_TimeDelay(FC_WAIT_LOOP_MS);
                 i++;
-            } while (buf_desc_l != NULL && i < FC_DEINIT_WAIT_LOOP_MAX_ITERATIONS_N);
+            } while ((buf_desc_l != NULL) && (i < FC_DEINIT_WAIT_LOOP_MAX_ITERATIONS_N));
 #else
-            buf_desc_l = FC_CheckBufferInWriteList(buf_desc_p->file_name, &buf_len, FC_CHECK_BUFFER_ONLY);
+            buf_desc_l = FC_CheckBufferInWriteList(buf_desc_p->file_name, 0, FC_CHECK_BUFFER_ONLY);
 #endif
 
             /* The buffer has not been freed */
@@ -630,7 +662,7 @@ int FC_DeInit(void *fc_context_p)
                 break;
             }
             buf_desc_p = (fc_buffer_desc_t *)((uint8_t *)(buf_desc_p) + req_space);
-        } while (buf_desc_p != (fc_buffer_desc_t *)(fc_ctx_p->buf_start_addr + used_off));
+        } while (buf_desc_p != (fc_buffer_desc_t *)&fc_ctx_p->buf_start_addr[used_off]);
     }
     if (ret == 0)
     {
@@ -644,16 +676,14 @@ int FC_GetFileSize(const char *buffer_name, uint16_t *payload_size)
 {
     int               ret;
     fc_buffer_desc_t *buf_desc_p;
-    uint16_t          buffer_length;
 
-    ret           = 0;
-    buffer_length = 0;
+    ret = 0;
 
     /* Check if the buffer is in the write list or in the being written list*/
     /* Passes 0 as buffer_lenght because we want to know only the payload size of the buffer */
     /* The flag removeFromWriteQueue is set to 0 because we want only to check if the buffer is in the write
      * list and not remove it if it is found */
-    buf_desc_p = FC_CheckBufferInWriteList(buffer_name, &buffer_length, FC_CHECK_BUFFER_ONLY);
+    buf_desc_p = FC_CheckBufferInWriteList(buffer_name, 0, FC_CHECK_BUFFER_ONLY);
 
     /* Check if the buffer is in the flash */
     if (buf_desc_p == NULL)
@@ -675,7 +705,7 @@ int FC_GetFileSize(const char *buffer_name, uint16_t *payload_size)
     }
     else
     {
-        *payload_size = buffer_length;
+        *payload_size = buf_desc_p->payload_size;
     }
 
     return ret;
@@ -686,62 +716,51 @@ void *FC_Open(
 {
     fc_context_t *    fc_context_l = (fc_context_t *)fc_context_p;
     fc_buffer_desc_t *buf_desc_p;
-    uint16_t          requested_buf_length;
 
-    requested_buf_length = *buffer_length;
+    assert(strlen(buffer_name) < FC_FILE_NAME_SIZE_MAX);
 
-    assert(strlen(buffer_name) <= FC_FILE_NAME_SIZE_MAX);
-
-    /* on return of the FC_CheckBufferInWriteList() call, *buffer_length will provide the available buf lenght (being
-     * smaller than requested_buf_length)*/
+    /* on return of the FC_CheckBufferInWriteList() call, *buffer_length will provide the available buf length */
     /* The flag removeFromWriteQueue is set to 1 as we want the buffer to be removed from the write list if it is found
      */
-    buf_desc_p = FC_CheckBufferInWriteList(buffer_name, buffer_length, FC_REMOVE_BUFFER_FROM_WRITE_LIST);
+    buf_desc_p = FC_CheckBufferInWriteList(buffer_name, *buffer_length, FC_REMOVE_BUFFER_FROM_WRITE_LIST);
 
     if (buf_desc_p == NULL)
     {
-        if (*buffer_length < requested_buf_length)
+        /* Request a free buffer of size *buffer_length , will return NULL if no buffer available with this size */
+        buf_desc_p = FC_GetFreeBuffer(fc_context_l, buffer_name, *buffer_length);
+
+        if (buf_desc_p != NULL)
         {
-            /* Buffer was found but too small compared to requested size, just return NULL , *buffer_length will provide
-             * the available buffer size */
+            int               read_size;
+            fc_buffer_desc_t *buf_desc_l;
+
+            /* Get buffer address */
+            buf_desc_l   = buf_desc_p;
+            *buffer_addr = (uint8_t *)(++buf_desc_l);
+            assert(*buffer_addr != NULL);
+
+            read_size = FSA_ReadBufferFromFile(buffer_name, *buffer_addr, *buffer_length);
+            if (read_size >= 0)
+            {
+                buf_desc_p->payload_size = read_size;
+            }
+
+            strncpy(buf_desc_p->file_name, buffer_name, FC_FILE_NAME_SIZE_MAX);
         }
         else
         {
-            /* Request a free buffer of size *buffer_length , will return NULL if no buffer available with this size */
-            buf_desc_p = FC_GetFreeBuffer(fc_context_l, buffer_name, *buffer_length);
-
-            if (buf_desc_p != NULL)
-            {
-                int               read_size;
-                fc_buffer_desc_t *buf_desc_l;
-
-                /* Get buffer address */
-                buf_desc_l   = buf_desc_p;
-                *buffer_addr = (uint8_t *)(++buf_desc_l);
-                assert(*buffer_addr != NULL);
-
-                read_size = FSA_ReadBufferFromFile(buffer_name, *buffer_addr, *buffer_length);
-                if (read_size >= 0)
-                {
-                    *buffer_length = read_size;
-                }
-
-                strncpy(buf_desc_p->file_name, buffer_name, FC_FILE_NAME_SIZE_MAX);
-            }
-            else
-            {
-                /* when returning NULL (as allocation has failed), indicate which size is available */
-                *buffer_length = 0; // for now, no buffer left , size NULL
-            }
+            /* when returning NULL (as allocation has failed), indicate which size is available */
+            *buffer_length = 0; // for now, no buffer left , size NULL
         }
     }
     else
     {
-        /* Buffer removed from write queue, provide also the buffer address */
+        /* Buffer removed from write queue, provide also the buffer address and length */
         fc_buffer_desc_t *buf_desc_l;
 
-        buf_desc_l   = buf_desc_p;
-        *buffer_addr = (uint8_t *)(++buf_desc_l);
+        buf_desc_l     = buf_desc_p;
+        *buffer_addr   = (uint8_t *)(++buf_desc_l);
+        *buffer_length = buf_desc_p->buffer_size;
         assert(*buffer_addr != NULL);
     }
 
@@ -768,7 +787,7 @@ int FC_Close(void *fc_hdl, uint16_t payload_size, uint16_t flag)
     {
         /* was a simple read, release buffer */
         /* If the buffer is in the write list should not be freed */
-        if (buf_desc_p->payload_size != 0)
+        if (buf_desc_p->payload_size != 0u)
         {
             FC_AddToWriteList(fc_hdl, buf_desc_p->payload_size);
         }
@@ -827,15 +846,12 @@ int FC_Process(void)
 int FC_Delete(const char *buffer_name)
 {
     int               ret;
-    uint16_t          buffer_length;
     fc_buffer_desc_t *buf_desc_p;
-
-    buffer_length = 0;
 
     /* If the buffer is in the write list, it will be removed.
        If the buffer is in the being written list, it will be written in flash, so a delete from flash is required after
        that */
-    buf_desc_p = FC_CheckBufferInWriteList(buffer_name, &buffer_length, FC_REMOVE_BUFFER_FROM_WRITE_LIST);
+    buf_desc_p = FC_CheckBufferInWriteList(buffer_name, 0, FC_REMOVE_BUFFER_FROM_WRITE_LIST);
     if (buf_desc_p != NULL)
     {
         /* The buffer has been removed from the write list, but the space in RAM section has not been freed yet */
@@ -846,7 +862,12 @@ int FC_Delete(const char *buffer_name)
 
     /* Delete from flash */
     ret = FSA_DeleteFile(buffer_name);
-    if (ret < 0)
+    /* We have to take into consideration that the file may not exist in flash
+     * yet, especially if we have found a buffer in the write list. Considering
+     * FSA_DeleteFile() would return -1 for "file not found" and -2 or less for
+     * unrecoverable I/O errors, we can ignore a -1 error code considering it
+     * normal operation. */
+    if (ret < -1)
     {
         ret = -1;
     }

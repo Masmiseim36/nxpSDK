@@ -15,7 +15,11 @@ Change log:
 
 #include <mlan_api.h>
 #include "wifi.h"
+#ifdef RW610
+#include "wifi-imu.h"
+#else
 #include "wifi-sdio.h"
+#endif
 
 /********************************************************
                 Local Variables
@@ -46,7 +50,7 @@ static mlan_status wlan_process_mgmt_radio_measurement_action(
 
     pos         = payload + sizeof(wlan_802_11_header) + 1;
     action_code = *pos++;
-#ifdef CONFIG_11K
+#if CONFIG_11K
     IEEEtypes_FrameCtl_t *mgmt_fc_p =
         (IEEEtypes_FrameCtl_t *)(void *)&(((wlan_802_11_header *)(void *)payload)->frm_ctl);
     payload_len -= (sizeof(wlan_802_11_header) + 2U);
@@ -54,7 +58,7 @@ static mlan_status wlan_process_mgmt_radio_measurement_action(
 
     switch (action_code)
     {
-#ifdef CONFIG_11K
+#if CONFIG_11K
         case (t_u8)IEEE_MGMT_RRM_RADIO_MEASUREMENT_REQUEST:
         {
             wlan_process_radio_measurement_request(pos, payload_len, dest_addr, src_addr, (bool)mgmt_fc_p->wep);
@@ -104,7 +108,7 @@ static mlan_status wlan_process_mgmt_wnm_action(t_u8 *payload, t_u32 payload_len
 
     switch (action_code)
     {
-#ifdef CONFIG_11V
+#if CONFIG_11V
         case IEEE_MGMT_WNM_BTM_REQUEST:
         {
             IEEEtypes_FrameCtl_t *mgmt_fc_p =

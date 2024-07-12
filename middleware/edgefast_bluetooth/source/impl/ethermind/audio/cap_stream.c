@@ -201,6 +201,28 @@ static void cap_stream_sent_cb(struct bt_bap_stream *bap_stream)
 }
 #endif /* CONFIG_BT_AUDIO_TX */
 
+static void cap_stream_connected_cb(struct bt_bap_stream *bap_stream)
+{
+	struct bt_cap_stream *cap_stream =
+		CONTAINER_OF(bap_stream, struct bt_cap_stream, bap_stream);
+	struct bt_bap_stream_ops *ops = cap_stream->ops;
+
+	if (ops != NULL && ops->connected != NULL) {
+		ops->connected(bap_stream);
+	}
+}
+
+static void cap_stream_disconnected_cb(struct bt_bap_stream *bap_stream, uint8_t reason)
+{
+	struct bt_cap_stream *cap_stream =
+		CONTAINER_OF(bap_stream, struct bt_cap_stream, bap_stream);
+	struct bt_bap_stream_ops *ops = cap_stream->ops;
+
+	if (ops != NULL && ops->disconnected != NULL) {
+		ops->disconnected(bap_stream, reason);
+	}
+}
+
 static struct bt_bap_stream_ops bap_stream_ops = {
 #if defined(CONFIG_BT_BAP_UNICAST) && (CONFIG_BT_BAP_UNICAST > 0)
 	.configured = cap_stream_configured_cb,
@@ -218,6 +240,8 @@ static struct bt_bap_stream_ops bap_stream_ops = {
 #if defined(CONFIG_BT_AUDIO_TX) && (CONFIG_BT_AUDIO_TX > 0)
 	.sent = cap_stream_sent_cb,
 #endif /* CONFIG_BT_AUDIO_TX */
+	.connected = cap_stream_connected_cb,
+	.disconnected = cap_stream_disconnected_cb,
 };
 
 void bt_cap_stream_ops_register_bap(struct bt_cap_stream *cap_stream)
@@ -242,8 +266,7 @@ void bt_cap_stream_ops_register(struct bt_cap_stream *stream,
 }
 
 #if defined(CONFIG_BT_AUDIO_TX) && (CONFIG_BT_AUDIO_TX > 0)
-int bt_cap_stream_send(struct bt_cap_stream *stream, struct net_buf *buf, uint16_t seq_num,
-		       uint32_t ts)
+int bt_cap_stream_send(struct bt_cap_stream *stream, struct net_buf *buf, uint16_t seq_num)
 {
 	CHECKIF(stream == NULL) {
 		LOG_DBG("stream is NULL");
@@ -251,7 +274,19 @@ int bt_cap_stream_send(struct bt_cap_stream *stream, struct net_buf *buf, uint16
 		return -EINVAL;
 	}
 
-	return bt_bap_stream_send(&stream->bap_stream, buf, seq_num, ts);
+	return bt_bap_stream_send(&stream->bap_stream, buf, seq_num);
+}
+
+int bt_cap_stream_send_ts(struct bt_cap_stream *stream, struct net_buf *buf, uint16_t seq_num,
+			  uint32_t ts)
+{
+	CHECKIF(stream == NULL) {
+		LOG_DBG("stream is NULL");
+
+		return -EINVAL;
+	}
+
+	return bt_bap_stream_send_ts(&stream->bap_stream, buf, seq_num, ts);
 }
 
 int bt_cap_stream_get_tx_sync(struct bt_cap_stream *stream, struct bt_iso_tx_info *info)

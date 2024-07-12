@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -38,6 +38,10 @@
 
 /* It is not sensible for this macro to have a default value as it is hardware
  * dependent. */
-#define ipconfigBYTE_ORDER    pdFREERTOS_LITTLE_ENDIAN
+#define ipconfigBYTE_ORDER                             pdFREERTOS_LITTLE_ENDIAN
 
-#endif
+/* The windows simulator cannot really simulate MAC interrupts, and needs to
+ * block occasionally to allow other tasks to run. */
+#define configWINDOWS_MAC_INTERRUPT_SIMULATOR_DELAY    ( 20 / portTICK_PERIOD_MS )
+
+#endif /* ifndef FREERTOS_IP_CONFIG_H */

@@ -347,7 +347,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
@@ -356,6 +355,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1428,7 +1428,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
@@ -1437,6 +1436,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2508,7 +2508,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
@@ -2517,6 +2516,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3589,7 +3589,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
@@ -3598,6 +3597,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4358,12 +4358,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4374,6 +4368,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -4491,19 +4491,19 @@
           <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_common_tables.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_f16.h</name>
@@ -4556,6 +4556,9 @@
             <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/debug.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</name>
           </file>
           <file>
@@ -4584,6 +4587,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/none.h</name>
@@ -4620,6 +4626,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/window_functions.h</name>
           </file>
         </group>
       </group>

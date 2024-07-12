@@ -7,6 +7,8 @@
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
 
+#include "bt_ble_settings.h"
+
 /* Max settings key length (with all components) */
 #define BT_SETTINGS_KEY_MAX 36
 

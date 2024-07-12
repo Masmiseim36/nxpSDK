@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -109,6 +109,18 @@
  */
 #ifndef CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE
     #define CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE 4
+#endif
+
+/*! @brief Maximum number of subgroups supported for the BASS receive states
+ * This option sets the maximum number of subgroups supported.
+ * Due to limitations in advertising data, the maximum size of all subgroups are 249.
+ * The minimum size of a subgroup is 10 octets.
+ * So effectively there can be a maximum of 24 subgroups in a BASE.
+ *
+ * Valid range 1 ~ 24
+ */
+#ifndef CONFIG_BT_BAP_BASS_MAX_SUBGROUPS
+    #define CONFIG_BT_BAP_BASS_MAX_SUBGROUPS 1
 #endif
 
 /*! @brief Codec Capabilities Data Size
@@ -224,7 +236,6 @@
     #endif
 
 #endif /* CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC */
-
 
 #endif /* CONFIG_BT_BAP_UNICAST_CLIENT */
 
@@ -399,22 +410,15 @@
     #define CONFIG_BT_BAP_SCAN_DELEGATOR_RECV_STATE_COUNT 1
 #endif
 
-/*! @brief Scan Delegator Maximum Metadata Length
- * The maximum metadata length support by the BASS server.
+/*! @brief Milliseconds of timeout when handle concurrent access to the long read ASE buffer
+ * The maximum number of milliseconds that the scan delegator implementation will wait
+ * before rejecting a read or dropping a notification if the scan delegator state is
+ * being accessed by another thread.
  * 
- * Valid range 0 ~ 255
+ * Valid range 0 ~ 1000
  */
-#ifndef CONFIG_BT_BAP_SCAN_DELEGATOR_MAX_METADATA_LEN
-    #define CONFIG_BT_BAP_SCAN_DELEGATOR_MAX_METADATA_LEN 32
-#endif
-
-/*! @brief Scan Delegator Maximum Number of Subgroups support
- * The maximum number of BIS subgroups supported.
- * 
- * Valid range 0 ~ 31
- */
-#ifndef CONFIG_BT_BAP_SCAN_DELEGATOR_MAX_SUBGROUPS
-    #define CONFIG_BT_BAP_SCAN_DELEGATOR_MAX_SUBGROUPS 1
+#ifndef CONFIG_BT_BAP_SCAN_DELEGATOR_BUF_TIMEOUT
+    #define CONFIG_BT_BAP_SCAN_DELEGATOR_BUF_TIMEOUT 50
 #endif
 
 #endif /* CONFIG_BT_BAP_SCAN_DELEGATOR */
@@ -495,6 +499,26 @@
 
     #ifndef CONFIG_BT_BAP_STREAM
         #define CONFIG_BT_BAP_STREAM 1
+    #endif
+
+#endif
+
+/*! @brief Bluetooth Audio Stream sequence number debug
+ * Use this option to enable Bluetooth Audio Stream sequence number debugging logs for
+ * the Bluetooth Audio functionality. This will provide a warning if the application
+ * provides unexpected sequence numbers.
+ * 
+ */
+#ifndef CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM
+    #define CONFIG_BT_BAP_DEBUG_STREAM_SEQ_NUM 0
+#endif
+
+#if (defined(CONFIG_BT_BAP_BROADCAST_SINK) && (CONFIG_BT_BAP_BROADCAST_SINK > 0)) || \
+    (defined(CONFIG_BT_BAP_BROADCAST_ASSISTANT) && (CONFIG_BT_BAP_BROADCAST_ASSISTANT > 0)) || \
+    (defined(CONFIG_BT_BAP_SCAN_DELEGATOR) && (CONFIG_BT_BAP_SCAN_DELEGATOR > 0))
+
+    #ifndef CONFIG_BT_BAP_BASE
+        #define CONFIG_BT_BAP_BASE 1
     #endif
 
 #endif

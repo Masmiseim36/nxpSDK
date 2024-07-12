@@ -16,7 +16,7 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
-if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
+if(CONFIG_TOOLCHAIN STREQUAL xcc)
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
       ${CMAKE_CURRENT_LIST_DIR}/nn/nnlib/lib/hifi4/libxa_nnlib.a

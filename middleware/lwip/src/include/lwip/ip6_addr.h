@@ -6,6 +6,7 @@
 
 /*
  * Copyright (c) 2010 Inico Technologies Ltd.
+ * Copyright 2017, 2022-2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

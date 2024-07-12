@@ -20,8 +20,13 @@
 #define __CLI_H__
 #include <wmtypes.h>
 
+#ifdef RW610
+#define COEX_APP_SUPPORT
+#endif
 
-#define CONFIG_APP_FRM_CLI_HISTORY
+#ifndef RW610
+#define CONFIG_APP_FRM_CLI_HISTORY 1
+#endif
 
 /** Structure for registering CLI commands */
 struct cli_command
@@ -34,7 +39,6 @@ struct cli_command
     void (*function)(int argc, char **argv);
 };
 
-/*lookup_command declaration for coexapp */
 #ifdef COEX_APP_SUPPORT
 const struct cli_command *lookup_command(char *name, int len);
 #endif
@@ -134,7 +138,7 @@ typedef int (*cli_name_val_get)(const char *name, char *value, int max_len);
  *
  */
 typedef int (*cli_name_val_set)(const char *name, const char *value);
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#if CONFIG_APP_FRM_CLI_HISTORY
 /**
  * @internal
  *
@@ -151,4 +155,23 @@ int cli_add_history_hook(cli_name_val_get get_cb, cli_name_val_set set_cb);
  */
 void help_command(int argc, char **argv);
 
+#if CONFIG_UART_INTERRUPT
+#if CONFIG_HOST_SLEEP
+/** Reinit USART
+ *
+ * \return kStatus_Success, others fail.
+ */
+int cli_uart_reinit();
+
+/** Deinit USART
+ *
+ * \return kStatus_Success, others fail.
+ */
+int cli_uart_deinit();
+
+/** Notify uart_task
+ */
+void cli_uart_notify();
+#endif
+#endif
 #endif /* __CLI_H__ */

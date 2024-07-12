@@ -61,6 +61,25 @@ target_include_directories(connfwk-config INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}/Common
     ${CMAKE_CURRENT_SOURCE_DIR}/DBG
     ${CMAKE_CURRENT_SOURCE_DIR}/NVS/Interface
+    ${CMAKE_CURRENT_SOURCE_DIR}/FunctionLib
+    ${CMAKE_CURRENT_SOURCE_DIR}/SecLib
+    ${CMAKE_CURRENT_SOURCE_DIR}/RNG
+    ${CMAKE_CURRENT_SOURCE_DIR}/HWParameter
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sensors
+    ${CMAKE_CURRENT_SOURCE_DIR}/FileSystem
+    ${CMAKE_CURRENT_SOURCE_DIR}/FSAbstraction
+    ${CMAKE_CURRENT_SOURCE_DIR}/FactoryDataProvider
+    ${CMAKE_CURRENT_SOURCE_DIR}/FileCache
+    ${CMAKE_CURRENT_SOURCE_DIR}/KeyStorage
+    ${CMAKE_CURRENT_SOURCE_DIR}/LowPower
+    ${CMAKE_CURRENT_SOURCE_DIR}/ModuleInfo
+    ${CMAKE_CURRENT_SOURCE_DIR}/HDI
+    ${CMAKE_CURRENT_SOURCE_DIR}/IPC
+    ${CMAKE_CURRENT_SOURCE_DIR}/SFC
+    ${CMAKE_CURRENT_SOURCE_DIR}/OtaSupport/Interface
+    ${CMAKE_CURRENT_SOURCE_DIR}/FSCI/Interface
+    ${CMAKE_CURRENT_SOURCE_DIR}/NVM/Interface
+    ${CMAKE_CURRENT_SOURCE_DIR}/PDM/Include
 )
 
 if(NOT CONNFWK_BOARD_LIB_EXTERNAL)
@@ -129,6 +148,9 @@ endif()
 
 if(CONNFWK_NVS)
     add_subdirectory(NVS)
+    if(CONNFWK_SETTINGS)
+        add_subdirectory(Settings)
+    endif()
 endif()
 
 
@@ -140,12 +162,24 @@ if(CONNFWK_OTW)
     add_subdirectory(OTW)
 endif()
 
+if(CONNFWK_PDM)
+    add_subdirectory(PDM)
+endif()
+
+if(CONNFWK_PDUM)
+    add_subdirectory(PDUM)
+endif()
+
 if(CONNFWK_IPC)
     add_subdirectory(IPC)
 endif()
 
 if(CONNFWK_HDI)
     add_subdirectory(HDI)
+endif()
+
+if(CONNFWK_DBG)
+    add_subdirectory(DBG)
 endif()
 
 if(CONNFWK_TESTS)

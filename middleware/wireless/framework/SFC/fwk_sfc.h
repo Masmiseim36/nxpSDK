@@ -25,11 +25,14 @@
  * Note: it will be converted to power of two to allow for bit-shift operations
  * \var sfc_config_t::ppmTarget
  * Defines the ppm target
+ * \var sfc_config_t::maxCalibrationIntervalMs
+ * Defines the maximum time between 2 calibration in msec.
  */
 typedef struct
 {
     uint32_t filterSize;
     uint32_t ppmTarget;
+    uint32_t maxCalibrationIntervalMs;
 } sfc_config_t;
 
 /*!

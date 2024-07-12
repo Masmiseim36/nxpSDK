@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=2883584, DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -754,16 +754,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -777,6 +767,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1150,10 +1150,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=135266304, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1573,16 +1573,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1596,6 +1586,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1969,10 +1969,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=2883584, NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2392,16 +2392,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2415,6 +2405,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2788,10 +2788,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEMO_CODE_START_NS=135266304, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33/secure;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/drivers;../../../../flash_config;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3211,16 +3211,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3234,6 +3224,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -5,6 +5,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/cap_acceptor.c
+  ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/cap_commander.c
+  ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/cap_common.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/cap_initiator.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/audio/cap_stream.c
 )

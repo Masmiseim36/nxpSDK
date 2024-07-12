@@ -90,13 +90,13 @@
 extern int  xf_trace(const char *format, ...);
 
 /* ...tracing facility initialization */
-extern void xf_trace_init(const char *banner);
+extern void xf_trace_init(const char *banner, void *buffer_p, int size);
 
 /* ...tracing facility deinitialization */
 extern void xf_trace_deinit();
 
 /* ...initialize tracing facility */
-#define TRACE_INIT(banner)              (xf_trace_init(banner))
+#define TRACE_INIT(banner, buffer_p, size) (xf_trace_init(banner, buffer_p, size))
 
 /* ...deinitialize tracing facility */
 #define TRACE_DEINIT()                  (xf_trace_deinit())

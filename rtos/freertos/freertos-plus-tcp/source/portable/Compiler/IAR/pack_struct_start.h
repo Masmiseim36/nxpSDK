@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -31,5 +31,12 @@
 * http://www.FreeRTOS.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/Embedded_Compiler_Porting.html
 *
 *****************************************************************************/
+
+/* Following line is to suppress the incorrect warning [Warning[Pe1644]: definition at
+ * end of file not followed by a semicolon or a declarator] emitted by the IAR Compiler */
+#pragma diag_suppress=Pe1644
+
+/* Following line is to suppress the warning about the usage of forward declarations. */
+#pragma diag_suppress=Pe301
 
 __packed

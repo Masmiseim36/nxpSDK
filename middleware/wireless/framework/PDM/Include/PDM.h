@@ -81,7 +81,10 @@ extern "C" {
 #define PDM_ID_BASE_APP_ZB (0x0000) /* 0x0000?0x00ff: ZigBee Application Notes */
 #define PDM_ID_BASE_ZPSAPL (0xf000) /* 0xf000?0xf0ff: ZigBee ZPS APL layer */
 #define PDM_ID_BASE_ZPSNWK (0xf100) /* 0xf100?0xf1ff: ZigBee ZPS NWK layer */
+#define PDM_ID_BASE_ZPSMAC (0xf200) /* 0xf200?0xf2ff: ZigBee ZPS MAC layer */
 #define PDM_ID_BASE_RADIO  (0xff00) /* 0xff00?0xffff: Radio driver */
+
+#define PDM_ID_ZPSMAC_EXTADDR (PDM_ID_BASE_ZPSMAC + 0x0000)
 
 /* PDM ID individual allocation reservations
  * Each PDM_ID_xxx below is an individual ID within one of the reserved ranges.

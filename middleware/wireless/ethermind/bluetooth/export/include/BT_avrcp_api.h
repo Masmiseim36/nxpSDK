@@ -908,9 +908,9 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *
  *
  *
- *  \section Section_5 AVRCP Message Recieved Indication
+ *  \section Section_5 AVRCP Message Received Indication
  *  The AVRCP will call the Event Notification Callback for this event when
- *  AVRCP recieves AVRCP control command message packet.
+ *  AVRCP Receives AVRCP control command message packet.
  *
  *  \param [in] event_type
  *         This parameter will be set to AVRCP_MESSAGE_IND.
@@ -932,9 +932,9 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  - Error Code describing the reason of failure.
  *
  *
- *  \section Section_6 AVRCP Message Recieved Conformation
+ *  \section Section_6 AVRCP Message Received Conformation
  *  The AVRCP will call the Event Notification Callback for this event when
- *  AVRCP recieves AVRCP control response message packetin intiator side.
+ *  AVRCP receives AVRCP control response message packet in initiator side.
  *
  *  \param [in] event_type
  *         This parameter will be set to AVRCP_MESSAGE_CNF.

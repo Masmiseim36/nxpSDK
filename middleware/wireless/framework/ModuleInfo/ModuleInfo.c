@@ -21,8 +21,8 @@
 /* FWK build version  */
 /*! \cond DOXY_SKIP_TAG */
 #define gFwkVerMajor_c 6
-#define gFwkVerMinor_c 1
-#define gFwkVerPatch_c 8
+#define gFwkVerMinor_c 2
+#define gFwkVerPatch_c 2
 #define gFwkBuildNo_c  0
 #define gFwkModuleId_c 0xA3
 /*! \endcond */

@@ -12,7 +12,7 @@
  */
 #include <string.h>
 
-#include <wm_os.h>
+#include <osa.h>
 #include <wm_net.h>
 #include <dhcp-server.h>
 #include <wlan.h>
@@ -222,7 +222,7 @@ void dhcp_enable_dns_server(char **domain_names)
         {
             dnss.count_qnames++;
         }
-        dnss.list_qnames = os_mem_alloc(dnss.count_qnames * sizeof(struct dns_qname));
+        dnss.list_qnames = OSA_MemoryAllocate(dnss.count_qnames * sizeof(struct dns_qname));
 
         for (i = 0; i < dnss.count_qnames; i++)
         {
@@ -301,7 +301,7 @@ void dns_free_allocations(void)
     if (dnss.list_qnames != NULL)
     {
         dnss.count_qnames = 0;
-        os_mem_free(dnss.list_qnames);
+        OSA_MemoryFree(dnss.list_qnames);
         dnss.list_qnames = NULL;
     }
     if (dnss.dnssock != -1)

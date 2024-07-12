@@ -25,13 +25,21 @@ target_link_libraries(connfwk-RNG
         connfwk-config
         connfwk-FunctionLib
         connfwk-SecLib
+        ${CONNFWK_PLATFORM_LIB}
         ${CONNFWK_MCUX_SDK_LIB}
 )
 
 # If the selected build type is for coverage, we build the same lib but with coverage instrumentation
 if(${CMAKE_BUILD_TYPE} MATCHES "Coverage")
     add_library(connfwk-RNG-coverage ${SOURCES})
-    target_link_libraries(connfwk-RNG-coverage PRIVATE connfwk-config)
+    target_link_libraries(connfwk-RNG-coverage
+        PRIVATE 
+            connfwk-config
+            connfwk-FunctionLib
+            connfwk-SecLib
+            ${CONNFWK_PLATFORM_LIB}
+            ${CONNFWK_MCUX_SDK_LIB}
+        )
 
     set(COVERAGE_COMPILE_OPTIONS
         --cs-on
@@ -43,7 +51,10 @@ if(${CMAKE_BUILD_TYPE} MATCHES "Coverage")
         $<$<COMPILE_LANGUAGE:C>:${COVERAGE_COMPILE_OPTIONS}>
         $<$<COMPILE_LANGUAGE:CXX>:${COVERAGE_COMPILE_OPTIONS}>
     )
-
+    target_include_directories(connfwk-RNG-coverage
+        PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}
+    )
     set_target_properties(connfwk-RNG-coverage PROPERTIES STATIC_LIBRARY_OPTIONS --cs-on)
 endif()
 

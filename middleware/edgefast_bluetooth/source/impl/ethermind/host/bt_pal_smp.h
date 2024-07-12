@@ -204,4 +204,6 @@ int bt_smp_sign(struct bt_conn *conn, struct net_buf *buf);
 /** Generate IRK from Identity Root (IR) */
 int bt_smp_irk_get(uint8_t *ir, uint8_t *irk);
 
+/** used to upon transmission to indicate support for the h7 function for PTS test */
+int bt_smp_set_ct2(struct bt_conn *conn, uint8_t enable);
 #endif /* __SMP_H__ */

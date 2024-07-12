@@ -1360,8 +1360,9 @@ bool_t FSCI_OtaSupportHandlerFunc(clientPacket_t *pData, uint32_t fsciInterface)
  ********************************************************************************** */
 bool_t FSCI_EnableBootloaderFunc(clientPacket_t *pData, uint32_t fsciInterface)
 {
-#if !(defined(K32W232H_SERIES) || defined(KW45B41Z83_SERIES) || defined(K32W1480_SERIES) || \
-      defined(KW45B41Z83_SERIES) || defined(MCXW345_SERIES) || defined(NHS52S04_SERIES))
+#if !(defined(K32W232H_SERIES) || defined(KW45B41Z83_SERIES) || defined(K32W1480_SERIES) ||                            \
+      defined(KW45B41Z83_SERIES) || defined(MCXW345_SERIES) || defined(NHS52S04_SERIES) || defined(MCXW716C_SERIES) || \
+      defined(MCXW716A_SERIES))
 #ifdef USE_MSD_BOOTLOADER
     (void)NV_FlashEraseSector(0xBFF8, FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE);
 #else

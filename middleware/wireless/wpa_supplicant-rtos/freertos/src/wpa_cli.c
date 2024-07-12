@@ -15,12 +15,11 @@
 #include <ctype.h>
 
 #include <string.h>
-#include <wm_os.h>
 #include <cli.h>
 #include <cli_utils.h>
 
 //int cli_main(int argc, char **argv);
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
 //int hostapd_cli_main(int argc, char **argv);
 int hlr_main(int argc, char *argv[]);
 #endif
@@ -34,7 +33,7 @@ void test_wpa_cli(int argc, char **argv)
 }
 #endif
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
 #if 0
 void test_hostapd_cli(int argc, char **argv)
 {
@@ -54,13 +53,13 @@ void test_hlr_cli(int argc, char **argv)
 
 static struct cli_command wpa_cli[] = {
 //    {"wpa_cli", "<standard wpa cli options>", test_wpa_cli},
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
 //    {"hostapd_cli", "<standard hostapd cli options>", test_hostapd_cli},
-    {"hlr_cli", "<standard hlr cli options>", test_hlr_cli},
+    {"wlan-hlr-cli", "<standard hlr cli options>", test_hlr_cli},
 #endif
 };
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
 extern int hlr_cli_init(void);
 extern int hlr_cli_deinit(void);
 #endif
@@ -76,7 +75,7 @@ int wpa_cli_init(void)
         }
     }
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
     return hlr_cli_init();
 #else
     return WM_SUCCESS;
@@ -95,7 +94,7 @@ int wpa_cli_deinit(void)
         }
     }
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
     return hlr_cli_deinit();
 #else
     return WM_SUCCESS;

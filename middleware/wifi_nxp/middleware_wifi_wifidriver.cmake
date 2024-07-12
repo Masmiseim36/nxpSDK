@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_freertos-kernel AND CONFIG_USE_utility_debug_console AND CONFIG_USE_middleware_wifi_template AND ((CONFIG_USE_middleware_wifi_sdio AND CONFIG_USE_middleware_wifi_fwdnld AND CONFIG_USE_middleware_wifi_fwdnld_intf_abs)))
+if(((CONFIG_USE_utility_debug_console AND (NOT CONFIG_USE_utility_debug_console_lite)) OR (CONFIG_USE_utility_debug_console_lite AND (NOT CONFIG_USE_utility_debug_console))) AND CONFIG_USE_middleware_wifi_template AND CONFIG_USE_middleware_wifi_osa AND CONFIG_USE_middleware_wifi_net AND ((CONFIG_USE_middleware_wifi_sdio AND CONFIG_USE_middleware_wifi_fwdnld AND CONFIG_USE_middleware_wifi_fwdnld_intf_abs) OR (CONFIG_USE_middleware_wifi_imu AND CONFIG_USE_middleware_wifi_common_files)))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11ac.c

@@ -51,10 +51,10 @@
  * Private memory declarations
  ************************************************************************************/
 
-static lfs_t                    lfs;
+static lfs_t                    lfs_ctx;
 static const struct lfs_config *cfg_p;
 static bool                     lfs_mounted   = false;
-static uint8_t                  fsa_init_done = 0;
+static uint8_t                  fsa_init_done = 0u;
 
 static uint32_t                     file_buffer[LITTLEFS_CACHE_SIZE / 4];
 static const struct lfs_file_config file_cfg = {
@@ -100,22 +100,33 @@ int FSA_Format(void)
     int res;
 
     /* FSA shall be initialized first for mutex creation */
-    FSA_Init();
+    do
+    {
+        res = FSA_Init();
+        if (res >= 0)
+        {
+            res = 0;
+        }
+        else
+        {
+            /* there was an error at mount time */
+            break;
+        }
 
-    /* get pointer to const default config structure from peripherals.c,
-        if config structure needs to be changed, update peripherals.c directly for your application */
-    lfs_get_default_config(&cfg_p);
+        /* get pointer to const default config structure from peripherals.c,
+           if config structure needs to be changed, update peripherals.c directly for your application */
+        (void)lfs_get_default_config(&cfg_p);
 
 #if FWK_FSABSTRACTION_THREADSAFE
-    /* prevent simultaneous mount/format at same time */
-    (void)OSA_MutexLock((osa_mutex_handle_t)mLfsMutexId, osaWaitForever_c);
+        /* prevent simultaneous mount/format at same time */
+        (void)OSA_MutexLock((osa_mutex_handle_t)mLfsMutexId, osaWaitForever_c);
 #endif
-    res = lfs_format(&lfs, cfg_p);
+        res = lfs_format(&lfs_ctx, cfg_p);
 
 #if FWK_FSABSTRACTION_THREADSAFE
-    (void)OSA_MutexUnlock((osa_mutex_handle_t)mLfsMutexId);
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)mLfsMutexId);
 #endif
-
+    } while (false);
     return res;
 }
 
@@ -128,7 +139,7 @@ int FSA_Init(void)
 {
     int res = 1; // File system already initialized
 
-    if (fsa_init_done == 0)
+    if (fsa_init_done == 0u)
     {
 #if FWK_FSABSTRACTION_THREADSAFE
         /* Mutex create */
@@ -146,24 +157,24 @@ int FSA_Init(void)
         {
             /* get pointer to const default config structure from peripherals.c,
                 if config structure needs to be changed, update peripherals.c directly for your application */
-            lfs_get_default_config(&cfg_p);
+            (void)lfs_get_default_config(&cfg_p);
 
             FSA_CRITICAL_SECTION_ENTER();
 
-            res = lfs_mount(&lfs, cfg_p);
-            if (res)
+            res = lfs_mount(&lfs_ctx, cfg_p);
+            if (res != 0)
             {
                 /* Can not mount => format the File System */
                 INFO_PRINTF("\rError mounting LFS: %d -> formatting\r\n", res);
-                res = lfs_format(&lfs, cfg_p);
-                if (res)
+                res = lfs_format(&lfs_ctx, cfg_p);
+                if (res != 0)
                 {
                     DBG_PRINTF("\rError formatting LFS: %d\r\n", res);
                 }
                 else
                 {
-                    res = lfs_mount(&lfs, cfg_p);
-                    if (res)
+                    res = lfs_mount(&lfs_ctx, cfg_p);
+                    if (res != 0)
                     {
                         DBG_PRINTF("\rCan not mount after formating: %d\r\n", res);
                     }
@@ -212,17 +223,17 @@ int FSA_DeInit(void)
     FSA_CRITICAL_SECTION_ENTER();
 
     fsa_init_done--;
-    res = fsa_init_done;
+    res = (int)fsa_init_done;
 
-    if (fsa_init_done == 0)
+    if (fsa_init_done == 0u)
     {
         if (!lfs_mounted)
         {
             DBG_PRINTF("LFS not mounted\r\n");
         }
 
-        res = lfs_unmount(&lfs);
-        if (res)
+        res = lfs_unmount(&lfs_ctx);
+        if (res != 0)
         {
             INFO_PRINTF("\rError unmounting LFS: %i\r\n", res);
         }
@@ -232,6 +243,7 @@ int FSA_DeInit(void)
 #if FWK_FSABSTRACTION_THREADSAFE
         /* Take mutex so ensure it is free when destroying it */
         (void)OSA_MutexLock((osa_mutex_handle_t)mLfsMutexId, osaWaitForever_c);
+
         (void)OSA_MutexUnlock((osa_mutex_handle_t)mLfsMutexId);
 
         (void)OSA_MutexDestroy(mLfsMutexId);
@@ -256,23 +268,23 @@ int FSA_ReadBufferFromFileLocation(const char *file_name, uint8_t *buffer, uint1
         (void)OSA_MutexLock((osa_mutex_handle_t)mLfsMutexId, osaWaitForever_c);
 #endif
 
-        res = lfs_file_opencfg(&lfs, &file, file_name, LFS_O_RDONLY, &file_cfg);
+        res = lfs_file_opencfg(&lfs_ctx, &file, file_name, (int)LFS_O_RDONLY, &file_cfg);
 
-        if (res)
+        if (res != 0)
         {
             INFO_PRINTF("\rError opening file: %i   -> create new file\r\n", res);
 
             /* Create new file */
-            res = lfs_file_opencfg(&lfs, &file, file_name, LFS_O_CREAT, &file_cfg);
+            res = lfs_file_opencfg(&lfs_ctx, &file, file_name, (int)LFS_O_CREAT, &file_cfg);
 
-            if (res)
+            if (res != 0)
             {
                 DBG_PRINTF("\rError creating file: %i\r\n", res);
             }
             else
             {
-                res = lfs_file_close(&lfs, &file);
-                if (res)
+                res = lfs_file_close(&lfs_ctx, &file);
+                if (res != 0)
                 {
                     DBG_PRINTF("\rError closing file: %i\r\n", res);
                 }
@@ -289,7 +301,7 @@ int FSA_ReadBufferFromFileLocation(const char *file_name, uint8_t *buffer, uint1
 
             if (offset != 0U)
             {
-                res = lfs_file_seek(&lfs, &file, offset, LFS_SEEK_SET);
+                res = lfs_file_seek(&lfs_ctx, &file, (int)offset, (int)LFS_SEEK_SET);
             }
 
             if (res < 0)
@@ -299,7 +311,7 @@ int FSA_ReadBufferFromFileLocation(const char *file_name, uint8_t *buffer, uint1
             }
             else
             {
-                size = lfs_file_read(&lfs, &file, buffer, buf_length);
+                size = lfs_file_read(&lfs_ctx, &file, buffer, buf_length);
                 if (size < 0)
                 {
                     /* display the error code */
@@ -307,8 +319,8 @@ int FSA_ReadBufferFromFileLocation(const char *file_name, uint8_t *buffer, uint1
                 }
             }
 
-            res = lfs_file_close(&lfs, &file);
-            if (res)
+            res = lfs_file_close(&lfs_ctx, &file);
+            if (res != 0)
             {
                 DBG_PRINTF("\rError closing file: %i\r\n", res);
             }
@@ -324,7 +336,11 @@ int FSA_ReadBufferFromFileLocation(const char *file_name, uint8_t *buffer, uint1
         (void)OSA_MutexUnlock((osa_mutex_handle_t)mLfsMutexId);
 #endif
     }
-
+    else
+    {
+        /* Not mounted */
+        res = -255;
+    }
     return res;
 }
 
@@ -337,7 +353,7 @@ int FSA_WriteBufferToFile(const char *file_name, const uint8_t *buffer, uint16_t
 {
     int res = -255;
 
-    if (buf_length == 0)
+    if (buf_length == 0u)
     {
         res = FSA_DeleteFile(file_name);
     }
@@ -354,8 +370,10 @@ int FSA_WriteBufferToFile(const char *file_name, const uint8_t *buffer, uint16_t
         (void)OSA_MutexLock((osa_mutex_handle_t)mLfsMutexId, osaWaitForever_c);
 #endif
 
-        res = lfs_file_opencfg(&lfs, &file, file_name, LFS_O_CREAT | LFS_O_WRONLY | LFS_O_TRUNC, &file_cfg);
-        if (res)
+        res =
+            lfs_file_opencfg(&lfs_ctx, &file, file_name,
+                             (int)((uint32_t)LFS_O_CREAT | (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_TRUNC), &file_cfg);
+        if (res != 0)
         {
             DBG_PRINTF("\rError opening file: %i\r\n", res);
         }
@@ -366,24 +384,23 @@ int FSA_WriteBufferToFile(const char *file_name, const uint8_t *buffer, uint16_t
 
             buffer_to_copy = buffer;
 
-            size = lfs_file_write(&lfs, &file, buffer_to_copy, buf_length);
+            size = lfs_file_write(&lfs_ctx, &file, buffer_to_copy, buf_length);
             if (size < 0)
             {
-                /* return the error code */
-                res = size;
-
-                DBG_PRINTF("\rError writing file: %i\r\n", res);
+                /* size contains the error code */
+                DBG_PRINTF("\rError writing file: %i\r\n", size);
             }
 
-            res = lfs_file_close(&lfs, &file);
-            if (res)
+            res = lfs_file_close(&lfs_ctx, &file);
+            if (res != 0)
             {
                 DBG_PRINTF("\rError closing file: %i\r\n", res);
             }
             else
             {
                 /* All successful
-                   res will return the number of bytes written  */
+                   res will return the number of bytes written or potentially the error code returned by lfs_file_write
+                 */
                 res = size;
             }
         }
@@ -400,29 +417,31 @@ int FSA_WriteBufferToFile(const char *file_name, const uint8_t *buffer, uint16_t
         (void)OSA_MutexUnlock((osa_mutex_handle_t)mLfsMutexId);
 #endif
     }
+    else
+    {
+        /* do nothing */
+    }
 
     return res;
 }
 
 int FSA_DeleteFile(const char *file_name)
 {
-    int        res;
-    lfs_file_t file;
-
+    int res;
+    (void)res; /* res status only used in debug code */
 #if FWK_FSABSTRACTION_THREADSAFE
     /* Emptying file content shall be atomic */
     (void)OSA_MutexLock((osa_mutex_handle_t)mLfsMutexId, osaWaitForever_c);
 #endif
-
-    res = lfs_remove(&lfs, file_name);
-    DBG_PRINTF("\rlfs_remove res=%d\r\n", res);
-
-    res = lfs_file_opencfg(&lfs, &file, file_name, LFS_O_CREAT, &file_cfg);
-    DBG_PRINTF("\rlfs_remove res=%d\r\n", res);
-
-    res = lfs_file_close(&lfs, &file);
-    DBG_PRINTF("\rlfs_remove res=%d\r\n", res);
-
+    do
+    {
+        res = lfs_remove(&lfs_ctx, file_name);
+        DBG_PRINTF("\rlfs_remove res=%d\r\n", res);
+        if (res < 0)
+        {
+            break;
+        }
+    } while (false);
 #if FWK_FSABSTRACTION_THREADSAFE
     (void)OSA_MutexUnlock((osa_mutex_handle_t)mLfsMutexId);
 #endif
@@ -435,10 +454,15 @@ int FSA_CheckFileSize(const char *file_name)
     int             res;
     struct lfs_info info = {0};
 
-    res = lfs_stat(&lfs, file_name, &info);
-    if (res == LFS_ERR_OK)
+    res = lfs_stat(&lfs_ctx, file_name, &info);
+    if (res == (int)LFS_ERR_OK)
     {
-        res = info.size;
+        res = (int)info.size;
+    }
+    else if (res == (int)LFS_ERR_NOENT)
+    {
+        /* When a file does not exist, the function returns a size of zero */
+        res = 0;
     }
 
     return res;

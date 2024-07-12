@@ -2,7 +2,12 @@
 @page middleware_log Middleware Change Log
 
 @section dsp_audio_framework DSP Audio Streamer
-  The current version of DSP Audio Streamer is 2.6p2.
+  The current version of DSP Audio Streamer is 3.5.
+  - 3.5_rev1
+    - Remove allocation of XAF_MEM_ID_COMP_FAST memory when creating the audio device.
+    - Add possibility to output XAF TRACE into a dynamically allocated buffer (e.g. in RAM)
+  - 3.5
+    - Update to version 3.5
   - 2.6p2
     - Update to version 2.6p2 (2.6 patch)
   - 2.6p1

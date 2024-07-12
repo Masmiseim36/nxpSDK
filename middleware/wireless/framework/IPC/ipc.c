@@ -45,22 +45,29 @@ void Ipc_Init(hal_rpmsg_handle_t        ipcRpmsgHandle,
     osa_status = OSA_SemaphoreCreate(gIpcDataBufferingSem, 0);
     assert(osa_status == KOSA_StatusSuccess);
     (void)osa_status;
-
+    mIpcInterface    = NULL;
     s_ipcRpmsgHandle = ipcRpmsgHandle;
-
-    /* Init RPMSG */
-    ipc_rpmsg_status = HAL_RpmsgInit((hal_rpmsg_handle_t)ipcRpmsgHandle, (hal_rpmsg_config_t *)ipcRpmsgConfig);
-    assert(ipc_rpmsg_status == kStatus_HAL_RpmsgSuccess);
-
-    ipc_rpmsg_status = HAL_RpmsgInstallRxCallback((hal_rpmsg_handle_t)ipcRpmsgHandle, Ipc_RxCallBack, NULL);
-    assert(ipc_rpmsg_status == kStatus_HAL_RpmsgSuccess);
-    (void)ipc_rpmsg_status;
-
-    mIpcInterface = interface;
-
+    do
+    {
+        /* Init RPMSG */
+        ipc_rpmsg_status = HAL_RpmsgInit((hal_rpmsg_handle_t)ipcRpmsgHandle, (hal_rpmsg_config_t *)ipcRpmsgConfig);
+        if (kStatus_HAL_RpmsgSuccess != ipc_rpmsg_status)
+        {
+            break;
+        }
+        ipc_rpmsg_status = HAL_RpmsgInstallRxCallback((hal_rpmsg_handle_t)ipcRpmsgHandle, Ipc_RxCallBack, NULL);
+        if (kStatus_HAL_RpmsgSuccess != ipc_rpmsg_status)
+        {
+            break;
+        }
+        mIpcInterface = interface;
+    } while (false);
+    if (NULL == mIpcInterface)
+    {
 #ifndef KW45B41Z83_NBU_SERIES
-    assert(mIpcInterface != NULL);
+        assert(mIpcInterface != NULL);
 #endif
+    }
 }
 
 int Ipc_SendPacket(void *pPacket, uint16_t packetSize)

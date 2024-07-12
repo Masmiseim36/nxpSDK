@@ -111,11 +111,9 @@ typedef enum {
 
 typedef enum {
     XAF_MEM_ID_DEV = 0,
-    XAF_MEM_ID_DEV_FAST,
-    XAF_MEM_ID_DEV_MAX = XAF_MEM_ID_DEV_FAST, /* ...ID_DEV_MAX set to the last DEV mem type. To insert additional pools before MAX */
+    XAF_MEM_ID_DEV_MAX = XAF_MEM_ID_DEV, /* ...ID_DEV_MAX set to the last DEV mem type. To insert additional pools before MAX */
     XAF_MEM_ID_COMP,
-    XAF_MEM_ID_COMP_FAST,
-    XAF_MEM_ID_COMP_MAX = XAF_MEM_ID_COMP_FAST, /* ...ID_COMP_MAX set to the last COMP mem type. To insert additional pools before MAX */
+    XAF_MEM_ID_COMP_MAX = XAF_MEM_ID_COMP, /* ...ID_COMP_MAX set to the last COMP mem type. To insert additional pools before MAX */
     XAF_MEM_ID_MAX
 } XAF_MEM_ID;
 

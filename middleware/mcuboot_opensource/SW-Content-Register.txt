@@ -1,0 +1,7 @@
+Release Name: MCUBoot
+Release Version: 2.0.0
+Outgoing License: Apache License Version 2.0, January 2004
+License File: LICENSE
+Format: Source
+Description: MCUboot is a secure bootloader for 32-bits microcontrollers.
+Origin: https://github.com/mcu-tools/mcuboot

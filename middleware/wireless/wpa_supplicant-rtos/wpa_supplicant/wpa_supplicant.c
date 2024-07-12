@@ -888,7 +888,7 @@ void wpa_supplicant_reinit_autoscan(struct wpa_supplicant *wpa_s)
     }
 }
 
-#if defined(CONFIG_ZEPHYR)
+#if defined(__ZEPHYR__)
 // TODO: This WAR is needed as we always lose the first frame after association (DHCP),
 // and IP assignment gets delayed (esp. with exponential backoff in Zephyr DHCP client), so
 // we send out a dummy frame that will be lost, and then DHCP will go through smoothly.
@@ -1014,7 +1014,7 @@ void wpa_supplicant_set_state(struct wpa_supplicant *wpa_s, enum wpa_states stat
         wpa_s->after_wps      = 0;
         wpa_s->known_wps_freq = 0;
         wpas_p2p_completed(wpa_s);
-#if defined(CONFIG_ZEPHYR)
+#if defined(__ZEPHYR__)
         dhcp_war(wpa_s);
 #endif
         sme_sched_obss_scan(wpa_s, 1);
@@ -1348,6 +1348,116 @@ void wpas_set_mgmt_group_cipher(struct wpa_supplicant *wpa_s, struct wpa_ssid *s
     wpa_sm_set_param(wpa_s->wpa, WPA_PARAM_MFP, wpas_get_ssid_pmf(wpa_s, ssid));
 }
 
+static void wpas_update_allowed_key_mgmt(struct wpa_supplicant *wpa_s,
+                                                  struct wpa_ssid *ssid)
+{
+    int akm_count = wpa_s->max_num_akms;
+    u8 capab = 0;
+
+    if (akm_count < 2)
+        return;
+
+    akm_count--;
+    wpa_s->allowed_key_mgmts = 0;
+    switch (wpa_s->key_mgmt)
+    {
+    case WPA_KEY_MGMT_PSK:
+        if (ssid->key_mgmt & WPA_KEY_MGMT_SAE)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_SAE;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_SAE_EXT_KEY)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_SAE_EXT_KEY;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_PSK_SHA256)
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_PSK_SHA256;
+        break;
+    case WPA_KEY_MGMT_PSK_SHA256:
+        if (ssid->key_mgmt & WPA_KEY_MGMT_SAE)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_SAE;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_SAE_EXT_KEY)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_SAE_EXT_KEY;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_PSK)
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_PSK;
+        break;
+    case WPA_KEY_MGMT_SAE:
+        if (ssid->key_mgmt & WPA_KEY_MGMT_PSK)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_PSK;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_SAE_EXT_KEY)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_SAE_EXT_KEY;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_PSK_SHA256)
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_PSK_SHA256;
+        break;
+    case WPA_KEY_MGMT_SAE_EXT_KEY:
+        if (ssid->key_mgmt & WPA_KEY_MGMT_SAE)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_SAE;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_PSK)
+        {
+            akm_count--;
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_PSK;
+        }
+        if (!akm_count)
+            break;
+        if (ssid->key_mgmt & WPA_KEY_MGMT_PSK_SHA256)
+            wpa_s->allowed_key_mgmts |= WPA_KEY_MGMT_PSK_SHA256;
+        break;
+    default:
+        return;
+    }
+
+    if (wpa_s->conf->sae_pwe != 0 && wpa_s->conf->sae_pwe != 3)
+        capab |= BIT(WLAN_RSNX_CAPAB_SAE_H2E);
+#ifdef CONFIG_SAE_PK
+    if (ssid->sae_pk)
+        capab |= BIT(WLAN_RSNX_CAPAB_SAE_PK);
+#endif /* CONFIG_SAE_PK */
+
+    if (!((wpa_s->allowed_key_mgmts & (WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_SAE_EXT_KEY)) && capab))
+        return;
+
+    if (!wpa_s->rsnxe_len)
+    {
+        wpa_s->rsnxe_len = 3;
+        wpa_s->rsnxe[0] = WLAN_EID_RSNX;
+        wpa_s->rsnxe[1] = 1;
+        wpa_s->rsnxe[2] = 0;
+    }
+
+    wpa_s->rsnxe[2] |= capab;
+}
+
 /**
  * wpa_supplicant_set_suites - Set authentication and encryption parameters
  * @wpa_s: Pointer to wpa_supplicant data
@@ -1544,7 +1654,7 @@ int wpa_supplicant_set_suites(
     sel = ie.key_mgmt & ssid->key_mgmt;
 #ifdef CONFIG_SAE
     if (!(wpa_s->drv_flags & WPA_DRIVER_FLAGS_SAE))
-        sel &= ~(WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_FT_SAE);
+        sel &= ~(WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_SAE_EXT_KEY | WPA_KEY_MGMT_FT_SAE);
 #endif /* CONFIG_SAE */
 #ifdef CONFIG_IEEE80211R
     if (!(wpa_s->drv_flags & (WPA_DRIVER_FLAGS_SME | WPA_DRIVER_FLAGS_UPDATE_FT_IES)))
@@ -1631,6 +1741,11 @@ int wpa_supplicant_set_suites(
 #endif /* CONFIG_DPP */
 #ifdef CONFIG_SAE
     }
+    else if (sel & WPA_KEY_MGMT_SAE_EXT_KEY)
+    {
+        wpa_s->key_mgmt = WPA_KEY_MGMT_SAE_EXT_KEY;
+        wpa_dbg(wpa_s, MSG_DEBUG, "RSN: using KEY_MGMT SAE (ext key)");
+    }
     else if (sel & WPA_KEY_MGMT_FT_SAE)
     {
         wpa_s->key_mgmt = WPA_KEY_MGMT_FT_SAE;
@@ -1712,7 +1827,7 @@ int wpa_supplicant_set_suites(
         wpa_sm_set_param(wpa_s->wpa, WPA_PARAM_OCV, ssid->ocv);
 #endif /* CONFIG_OCV */
     sae_pwe = wpa_s->conf->sae_pwe;
-    if (ssid->sae_password_id && sae_pwe != 3)
+    if (ssid->sae_password_id && wpa_key_mgmt_sae_ext_key(wpa_s->key_mgmt) && sae_pwe != 3)
         sae_pwe = 1;
     wpa_sm_set_param(wpa_s->wpa, WPA_PARAM_SAE_PWE, sae_pwe);
 #ifdef CONFIG_SAE_PK
@@ -1909,6 +2024,10 @@ int wpa_supplicant_set_suites(
         wpa_s->deny_ptk0_rekey = 0;
         wpa_sm_set_param(wpa_s->wpa, WPA_PARAM_DENY_PTK0_REKEY, 0);
     }
+
+    if (wpa_key_mgmt_cross_akm(wpa_s->key_mgmt) &&
+	    !(wpa_s->drv_flags & WPA_DRIVER_FLAGS_SME))
+        wpas_update_allowed_key_mgmt(wpa_s, ssid);
 
     return 0;
 }
@@ -2158,7 +2277,9 @@ static void wpa_s_setup_sae_pt(struct wpa_config *conf, struct wpa_ssid *ssid)
     if (!password)
         password = ssid->passphrase;
 
-    if (!password || (conf->sae_pwe == 0 && !ssid->sae_password_id && !sae_pk_valid_password(password)) ||
+    if (!password || (conf->sae_pwe == 0 && !ssid->sae_password_id &&
+        !wpa_key_mgmt_sae_ext_key(ssid->key_mgmt) &&
+        !sae_pk_valid_password(password)) ||
         conf->sae_pwe == 3)
     {
         /* PT derivation not needed */
@@ -6738,7 +6859,7 @@ static int wpa_supplicant_init_iface(struct wpa_supplicant *wpa_s, const struct 
         return -1;
     wpa_sm_set_eapol(wpa_s->wpa, wpa_s->eapol);
 
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     wpa_s->ctrl_iface = wpa_supplicant_ctrl_iface_init(wpa_s);
     if (wpa_s->ctrl_iface == NULL)
     {
@@ -6905,7 +7026,7 @@ static void wpa_supplicant_deinit_iface(struct wpa_supplicant *wpa_s, int notify
 
     if (terminate)
         wpa_msg(wpa_s, MSG_INFO, WPA_EVENT_TERMINATING);
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     wpa_supplicant_ctrl_iface_deinit(wpa_s, wpa_s->ctrl_iface);
     wpa_s->ctrl_iface = NULL;
 #endif
@@ -8100,7 +8221,7 @@ void wpas_request_disconnection(struct wpa_supplicant *wpa_s)
 #endif /* CONFIG_WNM */
 }
 
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 void dump_freq_data(struct wpa_supplicant *wpa_s,
                     const char *title,
                     struct wpa_used_freq_data *freqs_data,
@@ -8115,7 +8236,7 @@ void dump_freq_data(struct wpa_supplicant *wpa_s,
         wpa_dbg(wpa_s, MSG_DEBUG, "freq[%u]: %d, flags=0x%X", i, cur->freq, cur->flags);
     }
 }
-#endif /* CONFIG_ZEPHYR , CONFIG_FREERTOS*/
+#endif /* __ZEPHYR__ , CONFIG_FREERTOS*/
 
 /*
  * Find the operating frequencies of any of the virtual interfaces that
@@ -8163,9 +8284,9 @@ int get_shared_radio_freqs_data(struct wpa_supplicant *wpa_s, struct wpa_used_fr
         }
     }
 
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     dump_freq_data(wpa_s, "completed iteration", freqs_data, idx);
-#endif /* CONFIG_ZEPHYR ,CONFIG_FREERTOS */
+#endif /* __ZEPHYR__ ,CONFIG_FREERTOS */
     return idx;
 }
 
@@ -8551,3 +8672,4 @@ struct wpa_scan_results *wpa_drv_get_scan_results2(struct wpa_supplicant *wpa_s)
 
     return scan_res;
 }
+

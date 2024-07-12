@@ -9,8 +9,8 @@
  */
 
 #include "fsl_os_abstraction.h"
-#ifdef CONFIG_ZEPHYR
-#include "wm_net_decl.h"
+#ifdef __ZEPHYR__
+#include "wm_net.h"
 #else
 #include <lwip/sys.h>
 #include <lwip/netif.h>
@@ -28,7 +28,7 @@
 #include "wpa_supplicant_i.h"
 #include "driver_i.h"
 
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_AP
 #include "utils/uuid.h"
 #include "crypto/random.h"
 #include "crypto/tls.h"
@@ -49,7 +49,7 @@
 #include "supp_main.h"
 #include "crc32.h"
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO
+#if CONFIG_WPA_SUPP_CRYPTO
 
 #if !defined(MBEDTLS_CONFIG_FILE)
 #include "mbedtls/config.h"
@@ -75,7 +75,7 @@
 #elif defined(MBEDTLS_MCUX_ELE_S400_API)
 #include "ele_mbedtls.h"
 #else
-#ifdef CONFIG_KSDK_MBEDTLS
+#if CONFIG_KSDK_MBEDTLS
 #include "ksdk_mbedtls.h"
 #endif
 #endif
@@ -83,7 +83,7 @@
 #endif /* CONFIG_WPA_SUPP_CRYPTO */
 
 extern OSA_SEMAPHORE_HANDLE_DEFINE(wpaSuppReadySemaphoreHandle);
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
 extern OSA_SEMAPHORE_HANDLE_DEFINE(hostapdReadySemaphoreHandle);
 #endif
 
@@ -91,9 +91,9 @@ extern OSA_SEMAPHORE_HANDLE_DEFINE(hostapdReadySemaphoreHandle);
 
 struct wpa_global *global;
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 
-const int WPA_SUPP_TASK_PRIO       = CONFIG_WIFI_MAX_PRIO + 1; //OS_PRIO_2;
+const int WPA_SUPP_TASK_PRIO       = CONFIG_WIFI_MAX_PRIO + 2; //OS_PRIO_2;
 
 struct k_thread suppMainTask;
 k_tid_t supplicant_thread;
@@ -108,15 +108,17 @@ K_EVENT_DEFINE(suppMainTaskEvent);
 
 const int WPA_SUPP_TASK_PRIO       = 2; //OS_PRIO_2;
 
-#define CONFIG_SUPP_MAIN_THREAD_STACK_SIZE 1536
+#define CONFIG_SUPP_MAIN_THREAD_STACK_SIZE 6144
 
 static sys_mbox_t event_queue;
 
-sys_thread_t supplicant_thread;
-
 static void supplicant_main_task(osa_task_param_t arg);
 
-OSA_TASK_HANDLE_DEFINE(suppMainTaskHandle);
+OSA_TASK_HANDLE_DEFINE(supplicant_thread);
+OSA_EVENT_HANDLE_DEFINE(supplicant_event_Handle);
+
+/* OSA_TASKS: name, priority, instances, stackSz, useFloat */
+static OSA_TASK_DEFINE(supplicant_main_task, PRIORITY_RTOS_TO_OSA(2), 1, CONFIG_SUPP_MAIN_THREAD_STACK_SIZE, 0);
 #endif
 
 struct hapd_global
@@ -130,7 +132,7 @@ static struct hapd_global hglobal;
 static void hostapd_main_task(osa_task_param_t arg);
 static void hostapd_task_cleanup(void);
 
-#ifdef CONFIG_MATCH_IFACE
+#if CONFIG_MATCH_IFACE
 static int wpa_supplicant_init_match(struct wpa_global *global)
 {
     /*
@@ -158,7 +160,7 @@ static void iface_cb(struct netif *iface, void *user_data)
 {
     struct wpa_interface *ifaces = user_data;
     char own_addr[NETIF_MAX_HWADDR_LEN];
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     const struct net_linkaddr *link_addr = NULL;
     const struct device *dev             = NULL;
 
@@ -170,7 +172,7 @@ static void iface_cb(struct netif *iface, void *user_data)
 
     memset(ifname, 0, sizeof(ifname));
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     dev = net_if_get_device((struct net_if *)iface);
     strncpy(ifname, dev->name, NETIF_NAMESIZE - 1);
     ifname[NETIF_NAMESIZE - 1] = '\0';
@@ -184,12 +186,311 @@ static void iface_cb(struct netif *iface, void *user_data)
     ifaces[idx++].ifname = ifname;
 }
 
+void wpa_supplicant_event_wrapper_deep_copy_free(struct wpa_supplicant_event_msg *msg)
+{
+    enum wpa_event_type event;
+    union wpa_event_data *data;
+
+    if (msg == NULL || msg->data == NULL)
+        return;
+
+    event = msg->event;
+    data  = msg->data;
+
+    /* Free up deep copied data */
+    if (event == EVENT_AUTH) {
+        os_free((char *)data->auth.ies);
+    } else if (event == EVENT_RX_MGMT) {
+        os_free((char *)data->rx_mgmt.frame);
+    } else if (event == EVENT_TX_STATUS) {
+        os_free((char *)data->tx_status.data);
+    } else if (event == EVENT_ASSOC) {
+        os_free((char *)data->assoc_info.addr);
+        os_free((char *)data->assoc_info.req_ies);
+        os_free((char *)data->assoc_info.resp_ies);
+        os_free((char *)data->assoc_info.resp_frame);
+    } else if (event == EVENT_ASSOC_REJECT) {
+        os_free((char *)data->assoc_reject.bssid);
+        os_free((char *)data->assoc_reject.resp_ies);
+    } else if (event == EVENT_DEAUTH) {
+        os_free((char *)data->deauth_info.addr);
+        os_free((char *)data->deauth_info.ie);
+    } else if (event == EVENT_DISASSOC) {
+        os_free((char *)data->disassoc_info.addr);
+        os_free((char *)data->disassoc_info.ie);
+    } else if (event == EVENT_UNPROT_DEAUTH) {
+        os_free((char *)data->unprot_deauth.sa);
+        os_free((char *)data->unprot_deauth.da);
+    } else if (event == EVENT_UNPROT_DISASSOC) {
+        os_free((char *)data->unprot_disassoc.sa);
+        os_free((char *)data->unprot_disassoc.da);
+    } else if (msg->event == EVENT_EAPOL_RX) {
+        os_free((char *)data->eapol_rx.data);
+        os_free((char *)data->eapol_rx.src);
+    }
+}
+
+int wpa_supplicant_event_wrapper_deep_copy(struct wpa_supplicant_event_msg *msg,
+                                           enum wpa_event_type event,
+                                           union wpa_event_data *data)
+{
+    union wpa_event_data *data_tmp;
+
+    if (msg == NULL || msg->data == NULL || data == NULL)
+        return -1;
+
+    data_tmp = msg->data;
+    /* Handle deep copy for some event data */
+    if (event == EVENT_AUTH) {
+        if (data->auth.ies) {
+            char *ies = os_zalloc(data->auth.ies_len);
+
+            if (!ies) {
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc ies", __func__);
+                return -1;
+            }
+
+            os_memcpy(ies, data->auth.ies, data->auth.ies_len);
+            data_tmp->auth.ies = (const u8 *)ies;
+        }
+    } else if (event == EVENT_RX_MGMT) {
+        if (data->rx_mgmt.frame) {
+            char *frame = os_zalloc(data->rx_mgmt.frame_len);
+
+            if (!frame) {
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc frame",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(frame, data->rx_mgmt.frame, data->rx_mgmt.frame_len);
+            data_tmp->rx_mgmt.frame = (const u8 *)frame;
+        }
+    } else if (event == EVENT_TX_STATUS) {
+        const struct ieee80211_hdr *hdr;
+
+        if (data->tx_status.data) {
+            char *frame = os_zalloc(data->tx_status.data_len);
+
+            if (!frame) {
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc frame\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(frame, data->tx_status.data, data->tx_status.data_len);
+            data_tmp->tx_status.data = (const u8 *)frame;
+            hdr = (const struct ieee80211_hdr *) frame;
+            data_tmp->tx_status.dst = hdr->addr1;
+        }
+    } else if (event == EVENT_ASSOC) {
+        char *addr = os_zalloc(ETH_ALEN);
+
+        if (!addr) {
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc addr\n",
+                __func__);
+            return -1;
+        }
+
+        os_memcpy(addr, data->assoc_info.addr, ETH_ALEN);
+        data_tmp->assoc_info.addr = (const u8 *)addr;
+
+        if (data->assoc_info.req_ies) {
+            char *req_ies = os_zalloc(data->assoc_info.req_ies_len);
+
+            if (!req_ies) {
+                os_free(addr);
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc req_ies\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(req_ies, data->assoc_info.req_ies,
+                      data->assoc_info.req_ies_len);
+            data_tmp->assoc_info.req_ies = (const u8 *)req_ies;
+        }
+        if (data->assoc_info.resp_ies) {
+            char *resp_ies = os_zalloc(data->assoc_info.resp_ies_len);
+
+            if (!resp_ies) {
+                os_free(addr);
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc resp_ies\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(resp_ies, data->assoc_info.resp_ies,
+                      data->assoc_info.resp_ies_len);
+            data_tmp->assoc_info.resp_ies = (const u8 *)resp_ies;
+        }
+        if (data->assoc_info.resp_frame) {
+            char *resp_frame = os_zalloc(data->assoc_info.resp_frame_len);
+
+            if (!resp_frame) {
+                os_free(addr);
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc resp_frame\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(resp_frame, data->assoc_info.resp_frame,
+                      data->assoc_info.resp_frame_len);
+            data_tmp->assoc_info.resp_frame = (const u8 *)resp_frame;
+        }
+    } else if (event == EVENT_ASSOC_REJECT) {
+        char *bssid = os_zalloc(ETH_ALEN);
+
+        if (!bssid) {
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc bssid\n",
+                __func__);
+            return -1;
+        }
+
+        os_memcpy(bssid, data->assoc_reject.bssid, ETH_ALEN);
+        data_tmp->assoc_reject.bssid = (const u8 *)bssid;
+
+        if (data->assoc_reject.resp_ies) {
+            char *resp_ies = os_zalloc(data->assoc_reject.resp_ies_len);
+
+            if (!resp_ies) {
+                os_free(bssid);
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc resp_ies\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(resp_ies, data->assoc_reject.resp_ies,
+                      data->assoc_reject.resp_ies_len);
+            data_tmp->assoc_reject.resp_ies = (const u8 *)resp_ies;
+        }
+    } else if (event == EVENT_DEAUTH) {
+        char *sa = os_zalloc(ETH_ALEN);
+
+        if (!sa) {
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc SA\n",
+                __func__);
+            return -1;
+        }
+
+        os_memcpy(sa, data->deauth_info.addr, ETH_ALEN);
+        data_tmp->deauth_info.addr = (const u8 *)sa;
+        if (data->deauth_info.ie) {
+            char *ie = os_zalloc(data->deauth_info.ie_len);
+
+            if (!ie) {
+                os_free(sa);
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc ie\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(ie, data->deauth_info.ie, data->deauth_info.ie_len);
+            data_tmp->deauth_info.ie = (const u8 *)ie;
+        }
+    } else if (event == EVENT_DISASSOC) {
+        char *sa = os_zalloc(ETH_ALEN);
+
+        if (!sa) {
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc SA\n",
+                __func__);
+            return -1;
+        }
+
+        os_memcpy(sa, data->disassoc_info.addr, ETH_ALEN);
+        data_tmp->disassoc_info.addr = (const u8 *)sa;
+        if (data->disassoc_info.ie) {
+            char *ie = os_zalloc(data->disassoc_info.ie_len);
+
+            if (!ie) {
+                os_free(sa);
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc ie\n",
+                  __func__);
+                return -1;
+            }
+
+            os_memcpy(ie, data->disassoc_info.ie, data->disassoc_info.ie_len);
+            data_tmp->disassoc_info.ie = (const u8 *)ie;
+        }
+    } else if (event == EVENT_UNPROT_DEAUTH) {
+        char *sa = os_zalloc(ETH_ALEN);
+        char *da = os_zalloc(ETH_ALEN);
+
+        if (!sa) {
+            if (da)
+                os_free(da);
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc sa\n",
+                __func__);
+            return -1;
+        }
+
+        if (!da) {
+            if (sa)
+                os_free(sa);
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc da\n",
+                __func__);
+            return -1;
+        }
+        os_memcpy(sa, data->unprot_deauth.sa, ETH_ALEN);
+        data_tmp->unprot_deauth.sa = (const u8 *)sa;
+        os_memcpy(da, data->unprot_deauth.da, ETH_ALEN);
+        data_tmp->unprot_deauth.da = (const u8 *)da;
+    }  else if (event == EVENT_UNPROT_DISASSOC) {
+        char *sa = os_zalloc(ETH_ALEN);
+        char *da = os_zalloc(ETH_ALEN);
+
+        if (!sa) {
+            if (da)
+                os_free(da);
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc sa\n",
+                __func__);
+            return -1;
+        }
+
+        if (!da) {
+            if (sa)
+                os_free(sa);
+            wpa_printf(MSG_ERROR, "%s: Failed to alloc da\n",
+                __func__);
+            return -1;
+        }
+        os_memcpy(sa, data->unprot_disassoc.sa, ETH_ALEN);
+        data_tmp->unprot_disassoc.sa = (const u8 *)sa;
+        os_memcpy(da, data->unprot_disassoc.da, ETH_ALEN);
+        data_tmp->unprot_disassoc.da = (const u8 *)da;
+    } else if (event == EVENT_EAPOL_RX) {
+        if (data->eapol_rx.data && data->eapol_rx.src) {
+            char *frame = os_zalloc(data->eapol_rx.data_len);
+
+            if (!frame) {
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc frame",
+                  __func__);
+                return -1;
+            }
+
+            char *addr = os_zalloc(ETH_ALEN);
+
+            if (!addr) {
+                wpa_printf(MSG_ERROR, "%s: Failed to alloc addr\n",
+                    __func__);
+                os_free(frame);
+                return -1;
+            }
+
+            os_memcpy(frame, data->eapol_rx.data, data->eapol_rx.data_len);
+            data_tmp->eapol_rx.data = (const u8 *)frame;
+            os_memcpy(addr, data->eapol_rx.src, ETH_ALEN);
+            data_tmp->eapol_rx.src = (const u8 *)addr;
+        }
+    }
+    return 0;
+}
+
 void process_wpa_supplicant_event()
 {
     void *mem;
     struct wpa_supplicant_event_msg *msg = NULL;
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     while (k_msgq_get(&event_queue, &mem, K_NO_WAIT) == 0)
 #else
     if (sys_mbox_valid(&event_queue))
@@ -202,7 +503,7 @@ void process_wpa_supplicant_event()
                 msg = (struct wpa_supplicant_event_msg *)mem;
                 wpa_printf(MSG_DEBUG, "Passing message %d to %s", msg->event, msg->hostapd == 1 ? "hostapd" : "wpa_supplicant");
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
                 if (msg->hostapd)
                     hostapd_event(msg->ctx, msg->event, msg->data);
                 else
@@ -211,38 +512,29 @@ void process_wpa_supplicant_event()
 
                 if (msg->data)
                 {
+                    wpa_supplicant_event_wrapper_deep_copy_free(msg);
                     os_free(msg->data);
                 }
                 os_free(msg);
             }
         }
-#ifndef CONFIG_ZEPHYR
+#ifndef __ZEPHYR__
      }
 #endif
 }
 
 static void notify_wpa_supplicant_event(wpa_supp_event_t event)
 {
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     k_event_post(&suppMainTaskEvent, (1U << event));
     k_yield();
     k_sleep(K_MSEC(10));
 #else
-    if (__get_IPSR())
+    (void)OSA_EventSet((osa_event_handle_t)supplicant_event_Handle, (1U << event));
+    if (!__get_IPSR())
     {
-        portBASE_TYPE taskToWake = pdFALSE;
-
-        if (pdPASS == xTaskNotifyFromISR(supplicant_thread, (1U << event), eSetBits, &taskToWake))
-        {
-                portYIELD();
-                os_thread_sleep(10);
-        }
-    }
-    else
-    {
-        xTaskNotify(supplicant_thread, (1U << event), eSetBits);
-        portYIELD();
-        os_thread_sleep(10);
+        OSA_TaskYield();
+        OSA_TimeDelay(10);
     }
 #endif
 }
@@ -256,18 +548,31 @@ int send_wpa_supplicant_dummy_event()
 
 int send_wpa_supplicant_event(struct wpa_supplicant_event_msg *msg)
 {
-#ifdef CONFIG_ZEPHYR
-    k_msgq_put(&event_queue, (void *)(&msg), K_FOREVER);
+    int ret;
+
+#ifdef __ZEPHYR__
+    ret = k_msgq_put(&event_queue, (void *)(&msg), K_NO_WAIT);
 #else
-    sys_mbox_post(&event_queue, (void *)msg);
+    ret = sys_mbox_trypost(&event_queue, (void *)msg);
 #endif
+    if (ret != 0)
+    {
+        if (msg->data)
+        {
+            wpa_printf(MSG_ERROR, "Drop supplicant event %d for queue full", msg->event);
+            wpa_supplicant_event_wrapper_deep_copy_free(msg);
+            os_free(msg->data);
+        }
+        os_free(msg);
+        return -1;
+    }
 
     notify_wpa_supplicant_event(EVENT);
 
     return 0;
 }
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 static void supplicant_main_task(void *arg, void *arg1, void *arg2)
 #else
 static void supplicant_main_task(osa_task_param_t arg)
@@ -280,7 +585,7 @@ static void supplicant_main_task(osa_task_param_t arg)
     int iface_count, exitcode = -1;
     struct wpa_params params;
 
-#ifndef CONFIG_ZEPHYR
+#ifndef __ZEPHYR__
     if (sys_mbox_new(&event_queue, WS_NUM_MESSAGES) != ERR_OK)
     {
         wpa_printf(MSG_ERROR, "Failed to create msg queue");
@@ -289,7 +594,7 @@ static void supplicant_main_task(osa_task_param_t arg)
 #endif
 
     os_memset(&params, 0, sizeof(params));
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
     params.wpa_debug_level = MSG_INFO;
 #else
     params.wpa_debug_level = CONFIG_WPA_SUPP_DEBUG_LEVEL;
@@ -299,7 +604,7 @@ static void supplicant_main_task(osa_task_param_t arg)
                params.wpa_debug_level);
 
     iface_count = 1;
-#ifndef CONFIG_HOSTAPD
+#if !CONFIG_HOSTAPD
     iface_count++;
 #endif
 
@@ -341,7 +646,7 @@ static void supplicant_main_task(osa_task_param_t arg)
         goto out;
     }
 
-#ifndef CONFIG_HOSTAPD
+#if !CONFIG_HOSTAPD
     netif = net_get_uap_interface();
 
     if (netif != NULL)
@@ -370,7 +675,7 @@ static void supplicant_main_task(osa_task_param_t arg)
         if ((ifaces[i].confname == NULL && (i == 0 && ifaces[i].ctrl_interface == NULL)) || ifaces[i].ifname == NULL)
         {
             if (iface_count == 1 && (params.ctrl_interface ||
-#ifdef CONFIG_MATCH_IFACE
+#if CONFIG_MATCH_IFACE
                                      params.match_iface_count ||
 #endif /* CONFIG_MATCH_IFACE */
                                      params.dbus_ctrl_interface))
@@ -395,7 +700,7 @@ static void supplicant_main_task(osa_task_param_t arg)
             wpa_s->conf->ap_scan = 2;
     }
  
-#ifdef CONFIG_MATCH_IFACE
+#if CONFIG_MATCH_IFACE
     if (exitcode == 0)
     {
         exitcode = wpa_supplicant_init_match(global);
@@ -408,7 +713,7 @@ static void supplicant_main_task(osa_task_param_t arg)
         exitcode = wpa_supplicant_run(global);
     }
 
-#ifdef CONFIG_HOSTAPD
+#if CONFIG_HOSTAPD
     hostapd_task_cleanup();
 #endif
 
@@ -416,71 +721,89 @@ static void supplicant_main_task(osa_task_param_t arg)
 
 out:
     os_free(ifaces);
-#ifdef CONFIG_MATCH_IFACE
+#if CONFIG_MATCH_IFACE
     os_free(params.match_ifaces);
 #endif /* CONFIG_MATCH_IFACE */
 
-#ifdef CONFIG_ZEPHYR
+    void *mem;
+    struct wpa_supplicant_event_msg *msg = NULL;
+
+    /* Delete and drain the event_queue. */
+#ifdef __ZEPHYR__
+    while (k_msgq_get(&event_queue, &mem, K_NO_WAIT) == 0)
+#else
+    while (sys_mbox_tryfetch(&event_queue, &mem) != SYS_MBOX_EMPTY)
+#endif
+    {
+        msg = (struct wpa_supplicant_event_msg *)mem;
+        if (msg)
+        {
+            if (msg->data)
+            {
+                wpa_supplicant_event_wrapper_deep_copy_free(msg);
+                os_free(msg->data);
+            }
+
+            os_free(msg);
+        }
+    }
+#ifdef __ZEPHYR__
     k_msgq_purge(&event_queue);
 #else
-    if (event_queue != NULL)
-    {
-        void *mem;
-        struct wpa_supplicant_event_msg *msg = NULL;
-
-        /* Delete and drain the event_queue. */
-        while (sys_mbox_tryfetch(&event_queue, &mem) != SYS_MBOX_EMPTY)
-        {
-            msg = (struct wpa_supplicant_event_msg *)mem;
-            if (msg)
-            {
-                if (msg->data)
-                {
-                    os_free(msg->data);
-                }
-
-                os_free(msg);
-            }
-        }
-        sys_mbox_free(&event_queue);
-    }
+    sys_mbox_free(&event_queue);
 #endif
 
     wpa_printf(MSG_INFO, "wpa_supplicant_main: exitcode %d", exitcode);
 
     (void)OSA_SemaphorePost((osa_semaphore_handle_t)wpaSuppReadySemaphoreHandle);
 
-#ifndef CONFIG_ZEPHYR
+#ifndef __ZEPHYR__
     vTaskDelete(NULL);
 #endif
 
     return;
 }
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO
+#if CONFIG_WPA_SUPP_CRYPTO
 static bool crypto_init_done = false;
 #endif
-
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+#include "supp_psa_api.h"
+#endif
 int start_wpa_supplicant(char *iface_name)
 {
     int ret = 0;
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO
+#if (CONFIG_WPA_SUPP_CRYPTO) && !defined(__ZEPHYR__)
     if (crypto_init_done == false)
     {
         CRYPTO_InitHardware();
         crypto_init_done = true;
     }
 #endif
+#if CONFIG_WPA_SUPP_CRYPTO_MBEDTLS_PSA
+    supp_nxp_crypto_init();
+#endif
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     supplicant_thread = k_thread_create(&suppMainTask, suppMainTaskStack,
         K_THREAD_STACK_SIZEOF(suppMainTaskStack), supplicant_main_task, iface_name, NULL, NULL,
         WPA_SUPP_TASK_PRIO, 0, K_NO_WAIT);
     k_thread_name_set(supplicant_thread, "wpa_supplicant");
 #else
-    supplicant_thread = sys_thread_new("wpa_supplicant", supplicant_main_task, iface_name,
-                                       CONFIG_SUPP_MAIN_THREAD_STACK_SIZE, WPA_SUPP_TASK_PRIO);
+    int status;
+
+    status = OSA_EventCreate((osa_event_handle_t)supplicant_event_Handle, 1);
+    if (status != KOSA_StatusSuccess)
+    {
+        return -WM_FAIL;
+    }
+
+    status = OSA_TaskCreate((osa_task_handle_t)supplicant_thread, OSA_TASK(supplicant_main_task), NULL);
+    if (status != KOSA_StatusSuccess)
+    {
+        return -WM_FAIL;
+    }
 #endif
 
     return ret;
@@ -503,7 +826,7 @@ int stop_wpa_supplicant(void)
     /* Send dummy notification to supplicant thread for unblocking its eloop*/
     send_wpa_supplicant_dummy_event();
     /* Context Switch so that wpa suppplicant thread get chance to terminate eloop*/
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     k_yield();
 #else
     portYIELD();
@@ -520,7 +843,7 @@ int stop_wpa_supplicant(void)
     return 0;
 }
 
-#ifndef CONFIG_NO_HOSTAPD_LOGGER
+#if !CONFIG_NO_HOSTAPD_LOGGER
 static void hostapd_logger_cb(void *ctx, const u8 *addr, unsigned int module, int level, const char *txt, size_t len)
 {
     struct hostapd_data *hapd = ctx;
@@ -584,7 +907,7 @@ static void hostapd_logger_cb(void *ctx, const u8 *addr, unsigned int module, in
     else
         os_snprintf(format, maxlen, "%s%s%s", module_str ? module_str : "", module_str ? ": " : "", txt);
 
-#ifdef CONFIG_DEBUG_SYSLOG
+#if CONFIG_DEBUG_SYSLOG
     if (wpa_debug_syslog)
         conf_stdout = 0;
 #endif /* CONFIG_DEBUG_SYSLOG */
@@ -915,12 +1238,19 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     struct hostapd_config *conf;
     int errors = 0;
     size_t i;
+#ifdef RW610
+    int aCWmin = 4, aCWmax = 10;
+    struct hostapd_wmm_ac_params ac_bk = {aCWmin, aCWmax, 9, 0, 0}; /* background traffic */
+    struct hostapd_wmm_ac_params ac_be = {aCWmin, aCWmax - 4, 5, 0, 0}; /* best effort traffic */
+    struct hostapd_wmm_ac_params ac_vi = {aCWmin - 1, aCWmin, 3, 3008 / 32, 0}; /* video traffic */
+    struct hostapd_wmm_ac_params ac_vo = {aCWmin - 2, aCWmin - 1, 3, 1504 / 32, 0}; /* voice traffic */
+#endif
 
     netif = net_get_uap_interface();
 
     char if_name[NETIF_NAMESIZE] = {0};
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     const struct device *dev = NULL;
     dev = net_if_get_device((struct net_if *)netif);
     strncpy(if_name, dev->name, NETIF_NAMESIZE - 1);
@@ -935,6 +1265,12 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
         // fclose(f);
         return NULL;
     }
+#ifdef RW610
+    conf->wmm_ac_params[0] = ac_be;
+    conf->wmm_ac_params[1] = ac_bk;
+    conf->wmm_ac_params[2] = ac_vi;
+    conf->wmm_ac_params[3] = ac_vo;
+#endif
     /* set default driver based on configuration */
     conf->driver = wpa_drivers[0];
     if (conf->driver == NULL)
@@ -961,12 +1297,12 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     conf->hw_mode        = HOSTAPD_MODE_IEEE80211G;
     bss->wps_state       = WPS_STATE_CONFIGURED;
     bss->eap_server      = 1;
-#ifdef CONFIG_WPA_SUPP_WPS
+#if CONFIG_WPA_SUPP_WPS
     bss->ap_setup_locked = 1;
 #endif
     conf->channel        = 1;
     conf->acs            = conf->channel == 0;
-#ifdef CONFIG_ACS
+#if CONFIG_ACS
     conf->acs_num_scans = 1;
 #endif /* CONFIG_ACS */
     conf->ieee80211n = 1;
@@ -996,6 +1332,9 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     return conf;
 }
 
+#ifdef CONFIG_WPA_SUPP_WPA3
+extern void hostapd_config_free_sae_passwords(struct hostapd_bss_config *conf);
+#endif
 static int hostapd_enable_iface_cb(struct hostapd_iface *hapd_iface)
 {
     struct hostapd_data *bss;
@@ -1015,6 +1354,9 @@ static int hostapd_enable_iface_cb(struct hostapd_iface *hapd_iface)
     if (hostapd_setup_interface(hapd_iface))
     {
         wpa_printf(MSG_ERROR, "Failed to initialize hostapd interface");
+#ifdef CONFIG_WPA_SUPP_WPA3
+        hostapd_config_free_sae_passwords(hapd_iface->conf->last_bss);
+#endif
         return -1;
     }
 
@@ -1062,7 +1404,7 @@ static void hostapd_main_task(osa_task_param_t arg)
     int debug = 0;
     const char *entropy_file = NULL;
     size_t num_bss_configs = 0;
-#ifdef CONFIG_DEBUG_LINUX_TRACING
+#if CONFIG_DEBUG_LINUX_TRACING
     int enable_trace_dbg = 0;
 #endif /* CONFIG_DEBUG_LINUX_TRACING */
     int start_ifaces_in_sync = 0;
@@ -1081,7 +1423,7 @@ static void hostapd_main_task(osa_task_param_t arg)
     interfaces.global_iface_name  = NULL;
     interfaces.global_ctrl_sock   = -1;
     dl_list_init(&interfaces.global_ctrl_dst);
-#ifdef CONFIG_ETH_P_OUI
+#if CONFIG_ETH_P_OUI
     dl_list_init(&interfaces.eth_p_oui);
 #endif /* CONFIG_ETH_P_OUI */
 #ifdef CONFIG_DPP
@@ -1122,7 +1464,7 @@ static void hostapd_main_task(osa_task_param_t arg)
 
     char if_name[NETIF_NAMESIZE] = {0};
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     const struct device *dev = NULL;
     dev = net_if_get_device((struct net_if *)netif);
     strncpy(if_name, dev->name, NETIF_NAMESIZE - 1);

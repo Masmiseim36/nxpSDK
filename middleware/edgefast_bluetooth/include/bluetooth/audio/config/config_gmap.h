@@ -1,0 +1,67 @@
+/*
+ * Copyright 2024 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef __CONFIG_GMAP_H__
+#define __CONFIG_GMAP_H__
+
+#if (defined(CONFIG_BT_CAP_INITIATOR) && (CONFIG_BT_CAP_INITIATOR > 0)) && \
+    (defined(CONFIG_BT_BAP_UNICAST_CLIENT) && (CONFIG_BT_BAP_UNICAST_CLIENT > 0)) && \
+    (defined(CONFIG_BT_VCP_VOL_CTLR) && (CONFIG_BT_VCP_VOL_CTLR > 0))
+
+    #ifndef CONFIG_BT_GMAP_UGG_SUPPORTED
+        #define CONFIG_BT_GMAP_UGG_SUPPORTED 1
+    #endif
+
+#endif /* CONFIG_BT_CAP_INITIATOR && CONFIG_BT_BAP_UNICAST_CLIENT && CONFIG_BT_VCP_VOL_CTLR */
+
+#if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0)) && \
+    (defined(CONFIG_BT_BAP_UNICAST_SERVER) && (CONFIG_BT_BAP_UNICAST_SERVER > 0))
+
+    #ifndef CONFIG_BT_GMAP_UGT_SUPPORTED
+        #define CONFIG_BT_GMAP_UGT_SUPPORTED 1
+    #endif
+
+#endif /* CONFIG_BT_CAP_ACCEPTOR && CONFIG_BT_BAP_UNICAST_SERVER */
+
+#if (defined(CONFIG_BT_CAP_INITIATOR) && (CONFIG_BT_CAP_INITIATOR > 0)) && \
+    (defined(CONFIG_BT_BAP_BROADCAST_SOURCE) && (CONFIG_BT_BAP_BROADCAST_SOURCE > 0))
+
+    #ifndef CONFIG_BT_GMAP_BGS_SUPPORTED
+        #define CONFIG_BT_GMAP_BGS_SUPPORTED 1
+    #endif
+
+#endif /* CONFIG_BT_CAP_INITIATOR && CONFIG_BT_BAP_BROADCAST_SOURCE */
+
+#if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0)) && \
+    (defined(CONFIG_BT_BAP_BROADCAST_SINK) && (CONFIG_BT_BAP_BROADCAST_SINK > 0)) && \
+    (defined(CONFIG_BT_VCP_VOL_REND) && (CONFIG_BT_VCP_VOL_REND > 0))
+
+    #ifndef CONFIG_BT_GMAP_BGR_SUPPORTED
+        #define CONFIG_BT_GMAP_BGR_SUPPORTED 1
+    #endif
+
+#endif /* CONFIG_BT_CAP_ACCEPTOR && CONFIG_BT_BAP_BROADCAST_SINK && CONFIG_BT_VCP_VOL_REND */
+
+/*! @brief Gaming Audio Profile [EXPERIMENTAL]
+ * Enabling this will enable GMAP.
+ */
+#ifndef CONFIG_BT_GMAP
+    #define CONFIG_BT_GMAP 0
+#endif
+
+#if (defined(CONFIG_BT_GMAP) && (CONFIG_BT_GMAP > 0))
+
+    #if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0)) || \
+        (defined(CONFIG_BT_CAP_INITIATOR) && (CONFIG_BT_CAP_INITIATOR > 0))
+        /* PASS */
+    #else
+        #error CONFIG_BT_GMAP depends on CONFIG_BT_CAP_ACCEPTOR || CONFIG_BT_CAP_INITIATOR.
+    #endif
+
+#endif /* CONFIG_BT_GMAP */
+
+#endif /* __CONFIG_GMAP_H__ */

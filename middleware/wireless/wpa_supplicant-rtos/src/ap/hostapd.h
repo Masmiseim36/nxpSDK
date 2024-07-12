@@ -58,7 +58,7 @@ struct hapd_interfaces
     struct dl_list global_ctrl_dst;
     char *global_iface_path;
     char *global_iface_name;
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     gid_t ctrl_iface_group;
 #endif /* CONFIG_NATIVE_WINDOWS */
     struct hostapd_iface **iface;

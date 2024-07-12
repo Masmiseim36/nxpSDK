@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -173,6 +173,126 @@
         #define CONFIG_BT_MCC_SHELL 1
     #endif
 #endif /* CONFIG_BT_SHELL */
+
+/*! @brief Minimal Media Control Client without optional procedures
+ * This option disables all optional procedures in the Media Control Client.
+ */
+#ifndef CONFIG_BT_MCC_MINIMAL
+    #define CONFIG_BT_MCC_MINIMAL 0
+#endif
+
+/*! @brief Support reading Media Player Icon URL
+ * This option enables support for Read Media Information procedure
+ * optionally read the Media Player Icon URL.
+ */
+#ifndef CONFIG_BT_MCC_READ_MEDIA_PLAYER_ICON_URL
+    #define CONFIG_BT_MCC_READ_MEDIA_PLAYER_ICON_URL !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Track Title
+ * This option enables support for reading Track Title.
+ */
+#ifndef CONFIG_BT_MCC_READ_TRACK_TITLE
+    #define CONFIG_BT_MCC_READ_TRACK_TITLE !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support to enable or disable the subscription of Track Title
+ * This option enables support for the subscription of Track Title.
+ */
+#ifndef CONFIG_BT_MCC_READ_TRACK_TITLE_ENABLE_SUBSCRIPTION
+    #define CONFIG_BT_MCC_READ_TRACK_TITLE_ENABLE_SUBSCRIPTION !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Track Duration
+ * This option enables support for reading Track Duration.
+ */
+#ifndef CONFIG_BT_MCC_READ_TRACK_DURATION
+    #define CONFIG_BT_MCC_READ_TRACK_DURATION !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Track Position
+ * This option enables support for reading Track Position.
+ */
+#ifndef CONFIG_BT_MCC_READ_TRACK_POSITION
+    #define CONFIG_BT_MCC_READ_TRACK_POSITION !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support setting Track Position
+ * This option enables support for setting Track Position.
+ */
+#ifndef CONFIG_BT_MCC_SET_TRACK_POSITION
+    #define CONFIG_BT_MCC_SET_TRACK_POSITION !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Playback Speed
+ * This option enables support for reading Playback Speed.
+ */
+#ifndef CONFIG_BT_MCC_READ_PLAYBACK_SPEED
+    #define CONFIG_BT_MCC_READ_PLAYBACK_SPEED !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support setting Playback Speed
+ * This option enables support for setting Playback Speed.
+ */
+#ifndef CONFIG_BT_MCC_SET_PLAYBACK_SPEED
+    #define CONFIG_BT_MCC_SET_PLAYBACK_SPEED !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Seeking Speed
+ * This option enables support for reading Seeking Speed.
+ */
+#ifndef CONFIG_BT_MCC_READ_SEEKING_SPEED
+    #define CONFIG_BT_MCC_READ_SEEKING_SPEED !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Playing Order
+ * This option enables support for reading Playing Order.
+ */
+#ifndef CONFIG_BT_MCC_READ_PLAYING_ORDER
+    #define CONFIG_BT_MCC_READ_PLAYING_ORDER !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support setting Playing Order"
+ * This option enables support for setting Playing Order.
+ */
+#ifndef CONFIG_BT_MCC_SET_PLAYING_ORDER
+    #define CONFIG_BT_MCC_SET_PLAYING_ORDER !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Playing Order Supported"
+ * This option enables support for reading Playing Order Supported.
+ */
+#ifndef CONFIG_BT_MCC_READ_PLAYING_ORDER_SUPPORTED
+    #define CONFIG_BT_MCC_READ_PLAYING_ORDER_SUPPORTED !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Media State"
+ * This option enables support for reading Media State.
+ */
+#ifndef CONFIG_BT_MCC_READ_MEDIA_STATE
+    #define CONFIG_BT_MCC_READ_MEDIA_STATE !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support setting Media Control Point"
+ * This option enables support for setting Media Control Point.
+ */
+#ifndef CONFIG_BT_MCC_SET_MEDIA_CONTROL_POINT
+    #define CONFIG_BT_MCC_SET_MEDIA_CONTROL_POINT !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Media Control Point Opcodes Supported"
+ * This option enables support for reading Media Control Point Opcodes Supported.
+ */
+#ifndef CONFIG_BT_MCC_READ_MEDIA_CONTROL_POINT_OPCODES_SUPPORTED
+    #define CONFIG_BT_MCC_READ_MEDIA_CONTROL_POINT_OPCODES_SUPPORTED !(CONFIG_BT_MCC_MINIMAL)
+#endif
+
+/*! @brief Support reading Content Control ID"
+ * This option enables support for reading Content Control ID.
+ */
+#ifndef CONFIG_BT_MCC_READ_CONTENT_CONTROL_ID
+    #define CONFIG_BT_MCC_READ_CONTENT_CONTROL_ID !(CONFIG_BT_MCC_MINIMAL)
+#endif
 
 #endif /* CONFIG_BT_MCC */
 

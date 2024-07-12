@@ -4,7 +4,7 @@
 #include "os.h"
 
 #include "fsl_os_abstraction.h"
-#include <time.h>
+//#include <time.h>
 #include "utils/common.h"
 //#include "mbedtls/platform_util.h"
 
@@ -38,7 +38,7 @@ static unsigned int os_timestamp(void)
     vPortExitCritical();
     return ((CNTMAX - counter) / CPU_CLOCK_TICKSPERUSEC) + (nticks * USECSPERTICK);
 }
-#endif
+
 
 int gettimeofday(struct timeval *tp, void *tzp)
 {
@@ -54,6 +54,7 @@ int gettimeofday(struct timeval *tp, void *tzp)
 
     return 0;
 }
+#endif
 
 void os_sleep(os_time_t sec, os_time_t usec)
 {
@@ -172,7 +173,7 @@ void os_daemonize_terminate(const char *pid_file)
 
 unsigned long os_random(void)
 {
-    return os_rand();
+    return OSA_Rand();
 }
 
 int os_get_random(unsigned char *buf, size_t len)
@@ -248,7 +249,14 @@ char *os_strdup(const char *s)
 
 void *os_memdup(const void *src, size_t len)
 {
-    void *r = os_malloc(len);
+    void *r = NULL;
+
+    if (len == 0)
+    {
+        len++;
+    }
+
+    r = os_malloc(len);
 
     if (r && src)
     {

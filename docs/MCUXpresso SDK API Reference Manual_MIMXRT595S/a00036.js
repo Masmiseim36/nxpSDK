@@ -1,12 +1,12 @@
 var a00036 =
 [
-    [ "_i2c_master_config", "a00036.html#a00363", [
+    [ "_i2c_master_config", "a00036.html#a00360", [
       [ "enableMaster", "a00036.html#a7a58fd313d0615ac1ca70d2b4f17ae9a", null ],
       [ "baudRate_Bps", "a00036.html#a282b6a9bd8e98bf35e8183665488d98c", null ],
       [ "enableTimeout", "a00036.html#ae638534f9f5735a294e951652c1d650b", null ],
       [ "timeout_Ms", "a00036.html#a7e002b275a9aeb2eca99c3c9e6f95416", null ]
     ] ],
-    [ "_i2c_master_transfer", "a00036.html#a00366", [
+    [ "_i2c_master_transfer", "a00036.html#a00363", [
       [ "flags", "a00036.html#a84861e140902bd67ae901b2f4c53bfc0", null ],
       [ "slaveAddress", "a00036.html#aa6d93caa78fc9bf0f0aac10f66b8eba1", null ],
       [ "direction", "a00036.html#a7bd3afcf89b78d9397b2f0c55f9deb27", null ],
@@ -15,7 +15,7 @@ var a00036 =
       [ "data", "a00036.html#a083727a4268398628225a68cad8c4a50", null ],
       [ "dataSize", "a00036.html#a7034b157201c46c116dc251e3b56412d", null ]
     ] ],
-    [ "_i2c_master_handle", "a00036.html#a00365", [
+    [ "_i2c_master_handle", "a00036.html#a00362", [
       [ "state", "a00036.html#ade67a2d6339836711ee255a18405e750", null ],
       [ "transferCount", "a00036.html#ab08095b4638786e1b364c1eed398fce4", null ],
       [ "remainingBytes", "a00036.html#aa041075cd1ecaf90bcc73d96478e94cf", null ],

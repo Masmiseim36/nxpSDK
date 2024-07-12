@@ -106,7 +106,7 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
                       vg_lite_font_t font,
                       vg_lite_matrix_t *matrix,
                       vg_lite_font_attributes_t  * attributes,
-                      char *text);
+                      vg_char *text);
 
 /* Internal memory allocator API */
 void *_mem_allocate(int size);

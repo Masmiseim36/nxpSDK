@@ -762,10 +762,10 @@ static shell_status_t cmd_show_db(shell_handle_t shell, int32_t argc, char *argv
 #if (defined(CONFIG_BT_GATT_DYNAMIC_DB) && (CONFIG_BT_GATT_DYNAMIC_DB > 0))
 /* Custom Service Variables */
 
-static struct bt_uuid_128 vnd_uuid = BT_UUID_INIT_128(
+static const struct bt_uuid_128 vnd_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef0));
 
-static struct bt_uuid_128 vnd_auth_uuid = BT_UUID_INIT_128(
+static const struct bt_uuid_128 vnd_auth_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef2));
 
 static const struct bt_uuid_128 vnd_long_uuid1 = BT_UUID_INIT_128(
@@ -776,7 +776,7 @@ static const struct bt_uuid_128 vnd_long_uuid2 = BT_UUID_INIT_128(
 
 static uint8_t vnd_value[] = { 'V', 'e', 'n', 'd', 'o', 'r' };
 
-static struct bt_uuid_128 vnd1_uuid = BT_UUID_INIT_128(
+static const struct bt_uuid_128 vnd1_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x12340, 0x56789abcdef4));
 
 static const struct bt_uuid_128 vnd1_echo_uuid = BT_UUID_INIT_128(
@@ -1098,7 +1098,7 @@ static shell_status_t cmd_notify_mult(shell_handle_t shell, int32_t argc, char *
 }
 #endif /* CONFIG_BT_GATT_NOTIFY_MULTIPLE */
 
-static struct bt_uuid_128 met_svc_uuid = BT_UUID_INIT_128(
+static const struct bt_uuid_128 met_svc_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcde01));
 static const struct bt_uuid_128 met_char_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcde02));

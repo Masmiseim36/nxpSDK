@@ -29,7 +29,7 @@
  * Variables
  ******************************************************************************/
 GENERIC_DRIVER_GPIO *pDspiGpioDriver = &Driver_GPIO_KSDK;
-#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN548VDF_cm33_core0)
+#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXA153VLH_cm33_nodsp) || defined(CPU_MCXA156VLL_cm33) || defined(CPU_MCXA156VLL)
 LPSPI_Type *const spiBases[] = LPSPI_BASE_PTRS;
 #else
 SPI_Type *const spiBases[] = SPI_BASE_PTRS;

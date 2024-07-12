@@ -111,7 +111,7 @@ void* rdsp_plugin_malloc(size_t Asize, MemAlign_t Aalign) {
 	// Only allocate if we have enough memory
 	if (ext_mem_bytes_left >= mem_size) {
 #if RDSP_MEMORY_UTILS_USES_STDLIB
-		mem_start_align = ALIGNED_MALLOC(mem_size, align);
+		mem_start_align = (uintptr_t)ALIGNED_MALLOC(mem_size, align);
 #endif // RDSP_MEMORY_UTILS_USES_STDLIB==1
 
 		// Check the start is aligned
@@ -206,7 +206,7 @@ void* rdsp_plugin_scratch_malloc(size_t Asize, MemAlign_t Aalign) {
 	// Only allocate if we have enough memory
 	if (ext_mem_scratch_bytes_left >= mem_size) {
 #if RDSP_MEMORY_UTILS_USES_STDLIB
-		mem_start_align = ALIGNED_MALLOC(Asize, align);
+		mem_start_align = (uintptr_t)ALIGNED_MALLOC(Asize, align);
 #endif // RDSP_MEMORY_UTILS_USES_STDLIB
 
 		// Check the start is aligned

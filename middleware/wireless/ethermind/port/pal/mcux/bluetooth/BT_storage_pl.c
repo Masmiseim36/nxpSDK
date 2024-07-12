@@ -19,7 +19,7 @@
 
 #ifdef BT_STORAGE
 
-#define CONFIG_NVM_SIZE (6U * 1024U)
+#define CONFIG_NVM_SIZE (8U * 1024U)
 
 /* --------------------------------------------- External Global Variables */
 

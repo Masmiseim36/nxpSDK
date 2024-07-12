@@ -24,7 +24,7 @@
 
 /** GAS query timeout in seconds */
 
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
 #define GAS_QUERY_TIMEOUT_PERIOD 5
 #else
 #define GAS_QUERY_TIMEOUT_PERIOD 2

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -76,7 +76,7 @@ struct GUI_WIDGET_CREATE_INFO_struct {
   I16                      y0;               // y position
   I16                      xSize;            // x size
   I16                      ySize;            // y size
-  U16                      Flags;            // Widget specific create flags (opt.)
+  U32                      Flags;            // Widget specific create flags (opt.)
   I32                      Para;             // Widget specific parameter (opt.)
   U32                      NumExtraBytes;    // Number of extra bytes usable with <WIDGET>_SetUserData & <WIDGET>_GetUserData
 };

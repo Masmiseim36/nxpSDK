@@ -23,7 +23,7 @@ void ieee802_1x_free_station(struct hostapd_data *hapd, struct sta_info *sta);
 
 void ieee802_1x_abort_auth(struct hostapd_data *hapd, struct sta_info *sta);
 void ieee802_1x_set_sta_authorized(struct hostapd_data *hapd, struct sta_info *sta, int authorized);
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
 void ieee802_1x_dump_state(FILE *f, const char *prefix, struct sta_info *sta);
 #endif
 int ieee802_1x_init(struct hostapd_data *hapd);

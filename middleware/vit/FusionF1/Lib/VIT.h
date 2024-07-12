@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP
+ * Copyright 2020-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -70,7 +70,7 @@ typedef enum
 
 
 #define VIT_API_VERSION_MAJOR 3
-#define VIT_API_VERSION_MINOR 0
+#define VIT_API_VERSION_MINOR 2
 #define VIT_API_VERSION       ((VIT_API_VERSION_MAJOR<<16) | (VIT_API_VERSION_MINOR<<8))
 
 /****************************************************************************************/
@@ -132,8 +132,10 @@ typedef enum
     VIT_IMXRT1170,                             // I.MXRT1170 : VIT running on Cortex-M7
     VIT_IMXRT500,                              // I.MXRT500  : VIT running on FusionF1
     VIT_IMXRT600,                              // I.MXRT600  : VIT running on HIFI4
+    VIT_IMXRT700,                              // I.MXRT700  : VIT running on HIFI4
     VIT_RW610,                                 // RW610      : VIT running on Cortex-M33-noDSP
     VIT_LPC55S69,                              // LPC55S69   : VIT running on Cortex-M33+PowerQuad
+    VIT_MCXN94X,                               // MCXN94X    : VIT running on Cortex-M33-Core0+PowerQuad
     VIT_IMX8MMINIM4,                           // I.MX8MINI  : VIT running on Cortex-M4
     VIT_IMX8MPLUSM7,                           // I.MX8PLUS  : VIT running on Cortex-M7
     VIT_IMX8MA53,                              // I.MX8MA53  : VIT running on Cortex-A53 (i.MX8MPlus, i.MX8MMini, i.MX8MNano and i.MX8QM)
@@ -150,10 +152,10 @@ typedef enum
  */
 typedef enum
 {
-    VIT_NO_DETECTION    = 0,               // Nothing detected
-    VIT_WW_DETECTED     = 1,               // WakeWord Detected
-    VIT_VC_DETECTED     = 2,               // a Voice Command Detected
-    VIT_INTENT_DETECTED = 3,               // an Intent Detected
+    VIT_NO_DETECTION           = 0,               // Nothing detected
+    VIT_WW_DETECTED            = 1,               // WakeWord Detected
+    VIT_VC_DETECTED            = 2,               // Voice Command Detected
+    VIT_INTENT_DETECTED        = 3,               // Intent Detected
     VIT_DUMMY_DETECTION = PL_MAXENUM
 }VIT_DetectionStatus_en;
 
@@ -178,6 +180,7 @@ typedef struct
     PL_UINT16                    Id;
     const char                   *pName;
     PL_UINT32                    StartOffset;                 // in samples
+    PL_UINT32                    EndOffset;                   // in samples
 } VIT_WakeWord_st;
 
 /* Voice Command structure */
@@ -219,7 +222,6 @@ typedef struct
     PL_UINT16                    NbOfIntentTag;
     const char                   *pIntentTag_List;
     PL_UINT16                    NbOfWords;
-    const char                   *pWords_List;
 }
 VIT_ModelInfo_st;
 
@@ -519,7 +521,6 @@ VIT_ReturnStatus_en VIT_GetWakeWordFound ( VIT_Handle_t         pVIT_Instance,
                                            VIT_WakeWord_st      *pWakeWord
                                          );
 
-
 /**
 * @brief Retrieve the Voice Command Detected (only supported in VIT_v4.x.y libraries).
 *
@@ -570,7 +571,6 @@ VIT_ReturnStatus_en VIT_GetVoiceCommandFound ( VIT_Handle_t         pVIT_Instanc
 VIT_ReturnStatus_en VIT_GetIntentFound ( VIT_Handle_t pVIT_Instance,
                                          VIT_Intent_st *pSpeechIntent
                                        );
-
 
 /**
 * @brief Retrieve information of the VIT model.

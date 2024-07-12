@@ -41,10 +41,6 @@ extern void arm_bitreversal_64(
   const uint16_t   bitRevLen,
   const uint16_t * pBitRevTable);
 
-/**
-* @} end of ComplexFFT group
-*/
-
 /* ----------------------------------------------------------------------
  * Internal helper function used by the FFTs
  * ---------------------------------------------------------------------- */
@@ -240,7 +236,7 @@ void arm_cfft_radix4by2_f64(
 }
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTF64
   @{
  */
 
@@ -314,5 +310,5 @@ void arm_cfft_f64(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTF64 group
  */

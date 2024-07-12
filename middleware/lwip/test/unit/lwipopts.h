@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2001-2003 Swedish Institute of Computer Science.
+ * Copyright 2023-2024 NXP
  * All rights reserved. 
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
@@ -64,7 +65,7 @@
 #define LWIP_DNS_SECURE (LWIP_DNS_SECURE_RAND_XID | LWIP_DNS_SECURE_RAND_SRC_PORT)
 
 /* Minimal changes to opt.h required for tcp unit tests: */
-#define MEM_SIZE                        16000
+#define MEM_SIZE                        20000
 #define TCP_SND_QUEUELEN                40
 #define MEMP_NUM_TCP_SEG                TCP_SND_QUEUELEN
 #define TCP_SND_BUF                     (12 * TCP_MSS)
@@ -102,5 +103,28 @@
 #define LWIP_HAVE_SLIPIF                0
 
 #define LWIP_DHCP_DOES_ACD_CHECK        1
+
+/* autodetect if we are running the tests on 32-bit or 64-bit */
+#if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN64)
+#define PTR64
+#else
+#define PTR32
+#endif
+#elif defined(__GNUC__)
+#if defined(__x86_64__) || defined(__ppc64__)
+#define PTR64
+#else
+#define PTR32
+#endif
+#elif UINTPTR_MAX > UINT_MAX
+#define PTR64
+#else
+#define PTR32
+#endif
+
+#ifdef PTR64
+#define IPV6_FRAG_COPYHEADER            1
+#endif
 
 #endif /* LWIP_HDR_LWIPOPTS_H */

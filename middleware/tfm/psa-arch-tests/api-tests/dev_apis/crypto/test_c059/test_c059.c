@@ -97,14 +97,14 @@ int32_t psa_aead_finish_test(caller_security_t caller __UNUSED)
 
         /* Finish encrypting a message in an AEAD operation */
         status = val->crypto_function(VAL_CRYPTO_AEAD_FINISH, &operation, output + length,
-                 check1[i].output_size, &finish_length, tag, check1[i].tag_size, &tag_length);
+                 check1[i].output_size - length, &finish_length, tag, check1[i].tag_size, &tag_length);		//NXP
         TEST_ASSERT_EQUAL(status, check1[i].expected_status, TEST_CHECKPOINT_NUM(9));
 
         if (check1[i].expected_status != PSA_SUCCESS)
         {
             /* Finish encrypting a message with an inactive operator should fail */
             status = val->crypto_function(VAL_CRYPTO_AEAD_FINISH, &operation, output,
-                 check1[i].output_size, &length, tag, check1[i].tag_size, &tag_length);
+                 check1[i].output_size - length, &length, tag, check1[i].tag_size, &tag_length);	//NXP
             TEST_ASSERT_EQUAL(status, PSA_ERROR_BAD_STATE, TEST_CHECKPOINT_NUM(10));
 
             /* Abort the AEAD operation */

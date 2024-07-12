@@ -1,0 +1,9 @@
+/**
+@page middleware_log Middleware Change Log
+@section mcuboot_opensource MCUBoot for MCUXpresso SDK
+  Current version is MCUBoot 2.0.0.
+
+  - 2.0.0
+    - Changed %zx to %x in printf's to make it compatible with internal formatting function
+    - Used original version of hmac.c in TinyCrypt to make it compatible with IAR
+*/

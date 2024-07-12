@@ -47,8 +47,10 @@
 /* Version of crypto spec used in attestation */
 #define CRYPTO_VERSION_BETA3
 
+#ifndef PLATFORM_HAS_ATTEST_PK
 /* Use hardcoded public key */
 #define PLATFORM_OVERRIDE_ATTEST_PK
+#endif
 
 /*
  * Include of PSA defined Header files

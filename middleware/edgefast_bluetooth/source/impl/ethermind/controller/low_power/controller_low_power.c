@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,16 +18,17 @@
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
 #include "controller_low_power.h"
+#include "controller_low_power_config.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* Controller low power command configuration. */
-#if defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
+#if defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_IW612_BOARD_MURATA_2EL_M2)
 /*
  * Vendor specific HCI command.
  */
-#define CONTROLLER_LOW_POWER_CONFIG_CMD_CNT 3U
+#define CONTROLLER_LOW_POWER_CONFIG_CMD_CNT     3U
 #define BT_HCI_CMD_SET_BT_SLEEP_MODE            BT_OP(BT_OGF_VS, 0x0023U)
 #define BT_HCI_CMD_WAKE_UP_METHOD               BT_OP(BT_OGF_VS, 0x0053U)
 #define BT_HCI_CMD_BLE_POWER_SAVE_MODE_CONFIG   BT_OP(BT_OGF_VS, 0x008BU)
@@ -47,7 +48,9 @@ static uint8_t wake_up_method_cmd[] = {0x03U, BT_C2H_GPIO,
 /* BT_HCI_CMD_BLE_POWER_SAVE_MODE_CONFIG */
 static uint8_t ble_power_save_mode_config_cmd[] = {0x01U};
 
-/* HCI command struct. */
+/*
+ * HCI command struct.
+ */
 static lp_config_cmd_t lp_mode_cfg_cmd[CONTROLLER_LOW_POWER_CONFIG_CMD_CNT] = {
     {
         .opcode  = BT_HCI_CMD_WAKE_UP_METHOD,
@@ -87,8 +90,8 @@ static hal_gpio_pin_config_t h2c_gpio_config =
 {
     .direction = kHAL_GpioDirectionOut,
     .level     = H2C_WAKEUP_VALUE,
-    .port      = APP_H2C_PORT,
-    .pin       = APP_H2C_PIN,
+    .port      = BOARD_BT_UART_H2C_PORT,
+    .pin       = BOARD_BT_UART_H2C_PIN,
 };
 
 /* C2H pin config */
@@ -97,8 +100,8 @@ static hal_gpio_pin_config_t c2h_gpio_config =
 {
     .direction = kHAL_GpioDirectionIn,
     .level     = C2H_WAKEUP_VALUE,
-    .port      = APP_C2H_PORT,
-    .pin       = APP_C2H_PIN,
+    .port      = BOARD_BT_UART_C2H_PORT,
+    .pin       = BOARD_BT_UART_C2H_PIN,
 };
 
 /*******************************************************************************
@@ -106,8 +109,6 @@ static hal_gpio_pin_config_t c2h_gpio_config =
  ******************************************************************************/
 /*
  * brief Initialize wake up pin and send vendor specific HCI command to configure controller.
- *
- * DO NOT execute this API before downloading BT firmware.
  *
  * return Zero on success or negative error code otherwise.
  */
@@ -129,29 +130,23 @@ uint8_t controller_low_power_init(void)
 /*
  * brief Check the power state of controller.
  *
- * return CONTROLLER_WAKE means controller is in active state.
- *        CONTROLLER_SLEEP means controller is in sleep state .
+ * return Zero on ready or 1 on not ready.
  */
 uint8_t controller_power_state(void)
 {
-    uint8_t pinState[2];
-    uint8_t ret = CONTROLLER_SLEEP;
-    USART_Type *const s_HciUsartBase[] = USART_BASE_PTRS;
+    uint8_t pinState;
+    uint8_t ret = CONTROLLER_WAKE;
 
     if(s_LowPowerPinInitialized)
     {
-        pinState[0] = s_HciUsartBase[BOARD_BT_UART_INSTANCE]->STAT & USART_STAT_CTS_MASK;
-        HAL_GpioGetInput(c2h_wakeup_handle, pinState + 1);
+        HAL_GpioGetInput(c2h_wakeup_handle, &pinState);
 
-        if((pinState[0] && pinState[1]) == 0)
+        if(pinState != C2H_WAKEUP_VALUE)
         {
-            ret = CONTROLLER_WAKE;
+            ret = CONTROLLER_SLEEP;
         }
     }
-    else
-    {
-        ret = CONTROLLER_WAKE;
-    }
+
     return ret;
 }
 
@@ -251,8 +246,8 @@ static void controller_enable_wakeup_host_irq()
     if(s_LowPowerPinInitialized)
     {
         /* Clean GPIO interrupt flags. */
-        GPIO_PinClearInterruptFlag(APP_C2H_GPIO, APP_C2H_PORT, APP_C2H_PIN, 0);
-        NVIC_ClearPendingIRQ(APP_C2H_IRQ);
+        GPIO_PinClearInterruptFlag(BOARD_BT_UART_C2H_GPIO, BOARD_BT_UART_C2H_PORT, BOARD_BT_UART_C2H_PIN, 0);
+        NVIC_ClearPendingIRQ(BOARD_BT_UART_C2H_IRQ);
 
         /* Enable interrupt. */
         HAL_GpioSetTriggerMode(c2h_wakeup_handle, HOST_WAKEUP_MODE);

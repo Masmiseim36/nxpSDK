@@ -16,7 +16,7 @@ Change log:
 #include <mlan_api.h>
 #include "mlan_mbo.h"
 
-#ifdef CONFIG_DRIVER_MBO
+#if CONFIG_DRIVER_MBO
 #define WNM_NOTIFICATION_SIZE 200U
 /********************************************************
                 Local Variables
@@ -161,7 +161,11 @@ void wlan_send_mgmt_wnm_notification(
     pkt_len                = (t_u16)meas_pkt_len;
     pmgmt_pkt_hdr->frm_len = (t_u16)pkt_len - (t_u16)sizeof(t_u16);
     (void)wifi_inject_frame(WLAN_BSS_TYPE_STA, (t_u8 *)pmgmt_pkt_hdr, pkt_len);
-    os_mem_free(pmgmt_pkt_hdr);
+#if !CONFIG_MEM_POOLS
+    OSA_MemoryFree(pmgmt_pkt_hdr);
+#else
+    OSA_MemoryPoolFree(buf_1536_MemoryPool, pmgmt_pkt_hdr);
+#endif
 }
 
 #endif /* CONFIG_DRIVER_MBO */

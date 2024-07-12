@@ -14,13 +14,14 @@
 
 #define BT_HCI_OP_ENABLE_TEST_MODE BT_OP(BT_OGF_TEST,0x03)
 
+#define BT_HCI_OP_LE_TEST_TX_COUNT              BT_OP(BT_OGF_VS, 0x0085)
 #define BT_HCI_OP_LE_SET_TX_POWER               BT_OP(BT_OGF_VS, 0x0087)
+
 STRUCT_PACKED_PRE
 struct bt_hci_le_config {
 	uint8_t  tx_power;
+	uint8_t  feloss;
 } STRUCT_PACKED_POST;
-
-
 
 STRUCT_PACKED_PRE
 struct bt_hci_command {

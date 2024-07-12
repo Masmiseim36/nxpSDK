@@ -68,7 +68,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, PS_ENCRYPTION, INITIAL_ATTESTATION, TF_M_PROFILE_LARGE, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, PS_ENCRYPTION, INITIAL_ATTESTATION, TF_M_PROFILE_LARGE, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS, QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1076,46 +1076,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>api-tests/platform/targets/tgt_dev_apis_nxp/nspe</GroupName>
-          <Files>
-            <File>
-              <FileName>pal_attestation_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pal_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pal_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pal_driver_intf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</FilePath>
-            </File>
-            <File>
-              <FileName>pal_storage_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>target_database.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</FilePath>
-            </File>
-            <File>
-              <FileName>target_database.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>api-tests/platform/targets/common/nspe/crypto</GroupName>
           <Files>
             <File>
@@ -3534,16 +3494,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3567,6 +3517,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3856,6 +3816,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>api-tests/platform/targets/tgt_dev_apis_nxp/nspe</GroupName>
+          <Files>
+            <File>
+              <FileName>pal_attestation_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pal_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pal_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pal_driver_intf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</FilePath>
+            </File>
+            <File>
+              <FileName>pal_storage_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>target_database.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</FilePath>
+            </File>
+            <File>
+              <FileName>target_database.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/lib/ext/t_cose/inc</GroupName>
           <Files>
             <File>
@@ -4042,7 +4042,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -4305,10 +4305,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, PS_ENCRYPTION, INITIAL_ATTESTATION, TF_M_PROFILE_LARGE, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, PS_ENCRYPTION, INITIAL_ATTESTATION, TF_M_PROFILE_LARGE, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS, QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5050,46 +5050,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>api-tests/platform/targets/tgt_dev_apis_nxp/nspe</GroupName>
-          <Files>
-            <File>
-              <FileName>pal_attestation_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pal_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pal_crypto_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pal_driver_intf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</FilePath>
-            </File>
-            <File>
-              <FileName>pal_storage_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>target_database.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</FilePath>
-            </File>
-            <File>
-              <FileName>target_database.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>api-tests/platform/targets/common/nspe/crypto</GroupName>
           <Files>
             <File>
@@ -7508,16 +7468,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -7541,6 +7491,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7826,6 +7786,46 @@
               <FileName>cmsis_os2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/RTOS2/Include/cmsis_os2.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/platform/targets/tgt_dev_apis_nxp/nspe</GroupName>
+          <Files>
+            <File>
+              <FileName>pal_attestation_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pal_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pal_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pal_driver_intf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</FilePath>
+            </File>
+            <File>
+              <FileName>pal_storage_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>target_database.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</FilePath>
+            </File>
+            <File>
+              <FileName>target_database.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</FilePath>
             </File>
           </Files>
         </Group>

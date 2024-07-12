@@ -8,6 +8,8 @@
 
 #include "utils/includes.h"
 
+#ifdef CONFIG_MBO
+
 #include "utils/common.h"
 #include "common/ieee802_11_defs.h"
 #include "common/ieee802_11_common.h"
@@ -227,3 +229,4 @@ void mbo_ap_wnm_notification_req(struct hostapd_data *hapd, const u8 *addr, cons
         pos += 2 + pos[1];
     }
 }
+#endif

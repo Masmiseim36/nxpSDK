@@ -141,6 +141,7 @@ struct bt_hci_cmd_hdr {
 #define BT_FEAT_HOST_SSP(feat)                  BT_FEAT_TEST(feat, 1, 0, 0)
 #define BT_FEAT_SC(feat)                        BT_FEAT_TEST(feat, 2, 1, 0)
 
+#define BT_FEAT_LMP_SCO_CAPABLE(feat)           BT_FEAT_TEST(feat, 0, 1, 3)
 #define BT_FEAT_LMP_ESCO_CAPABLE(feat)          BT_FEAT_TEST(feat, 0, 3, 7)
 #define BT_FEAT_HV2_PKT(feat)                   BT_FEAT_TEST(feat, 0, 1, 4)
 #define BT_FEAT_HV3_PKT(feat)                   BT_FEAT_TEST(feat, 0, 1, 5)
@@ -299,9 +300,9 @@ struct bt_hci_cmd_hdr {
 #define HCI_PKT_TYPE_HV3                        0x0080
 
 /* eSCO packet types */
-#define HCI_PKT_TYPE_ESCO_HV1                   0x0001
-#define HCI_PKT_TYPE_ESCO_HV2                   0x0002
-#define HCI_PKT_TYPE_ESCO_HV3                   0x0004
+#define HCI_PKT_TYPE_SCO_HV1                    0x0001
+#define HCI_PKT_TYPE_SCO_HV2                    0x0002
+#define HCI_PKT_TYPE_SCO_HV3                    0x0004
 #define HCI_PKT_TYPE_ESCO_EV3                   0x0008
 #define HCI_PKT_TYPE_ESCO_EV4                   0x0010
 #define HCI_PKT_TYPE_ESCO_EV5                   0x0020
@@ -311,12 +312,15 @@ struct bt_hci_cmd_hdr {
 #define HCI_PKT_TYPE_ESCO_3EV5                  0x0200
 
 
-#define ESCO_PKT_MASK                           (HCI_PKT_TYPE_ESCO_HV1 | \
-						 HCI_PKT_TYPE_ESCO_HV2 | \
-						 HCI_PKT_TYPE_ESCO_HV3)
-#define SCO_PKT_MASK                            (HCI_PKT_TYPE_HV1 | \
-						 HCI_PKT_TYPE_HV2 | \
-						 HCI_PKT_TYPE_HV3)
+#define ESCO_PKT_MASK                           (HCI_PKT_TYPE_SCO_HV1 | \
+						 HCI_PKT_TYPE_SCO_HV2 | \
+						 HCI_PKT_TYPE_SCO_HV3 | \
+						 HCI_PKT_TYPE_ESCO_EV3 | \
+						 HCI_PKT_TYPE_ESCO_EV4 | \
+						 HCI_PKT_TYPE_ESCO_EV5)
+#define SCO_PKT_MASK                            (HCI_PKT_TYPE_SCO_HV1 | \
+						 HCI_PKT_TYPE_SCO_HV2 | \
+						 HCI_PKT_TYPE_SCO_HV3)
 #define EDR_ESCO_PKT_MASK                       (HCI_PKT_TYPE_ESCO_2EV3 | \
 						 HCI_PKT_TYPE_ESCO_3EV3 | \
 						 HCI_PKT_TYPE_ESCO_2EV5 | \
@@ -329,6 +333,7 @@ struct bt_hci_cmd_hdr {
 
 /* OpCode Group Fields */
 #define BT_OGF_LINK_CTRL                        0x01
+#define BT_OGF_LINK_POLICY                      0x02
 #define BT_OGF_BASEBAND                         0x03
 #define BT_OGF_INFO                             0x04
 #define BT_OGF_STATUS                           0x05
@@ -553,6 +558,13 @@ struct bt_hci_cp_io_capability_neg_reply {
 	uint8_t   reason;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_OP_SWITCH_ROLE                   BT_OP(BT_OGF_LINK_POLICY, 0x000b)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_switch_role {
+	bt_addr_t bdaddr;
+	uint8_t   role;
+} STRUCT_PACKED_POST;
+
 #define BT_HCI_OP_SET_EVENT_MASK                BT_OP(BT_OGF_BASEBAND, 0x0001)
 STRUCT_PACKED_PRE
 struct bt_hci_cp_set_event_mask {
@@ -612,6 +624,37 @@ struct bt_hci_rp_read_tx_power_level {
 	int8_t   tx_power_level;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_LE_TX_POWER_PHY_1M               0x01
+#define BT_HCI_LE_TX_POWER_PHY_2M               0x02
+#define BT_HCI_LE_TX_POWER_PHY_CODED_S8         0x03
+#define BT_HCI_LE_TX_POWER_PHY_CODED_S2         0x04
+#define BT_HCI_OP_LE_ENH_READ_TX_POWER_LEVEL    BT_OP(BT_OGF_LE, 0x0076) /* 0x2076 */
+STRUCT_PACKED_PRE
+struct bt_hci_cp_le_read_tx_power_level {
+	uint16_t handle;
+	uint8_t  phy;
+} STRUCT_PACKED_POST;
+
+STRUCT_PACKED_PRE
+struct bt_hci_rp_le_read_tx_power_level {
+	uint8_t  status;
+	uint16_t handle;
+	uint8_t  phy;
+	int8_t   current_tx_power_level;
+	int8_t   max_tx_power_level;
+} STRUCT_PACKED_POST;
+
+#define BT_HCI_OP_LE_READ_REMOTE_TX_POWER_LEVEL	BT_OP(BT_OGF_LE, 0x0077) /* 0x2077 */
+
+#define BT_HCI_LE_TX_POWER_REPORT_DISABLE       0x00
+#define BT_HCI_LE_TX_POWER_REPORT_ENABLE        0x01
+#define BT_HCI_OP_LE_SET_TX_POWER_REPORT_ENABLE BT_OP(BT_OGF_LE, 0x007A) /* 0x207A */
+STRUCT_PACKED_PRE
+struct bt_hci_cp_le_set_tx_power_report_enable {
+	uint16_t handle;
+	uint8_t  local_enable;
+	uint8_t  remote_enable;
+} STRUCT_PACKED_POST;
 #define BT_HCI_CTL_TO_HOST_FLOW_DISABLE         0x00
 #define BT_HCI_CTL_TO_HOST_FLOW_ENABLE          0x01
 #define BT_HCI_OP_SET_CTL_TO_HOST_FLOW          BT_OP(BT_OGF_BASEBAND, 0x0031)
@@ -642,10 +685,27 @@ struct bt_hci_cp_host_num_completed_packets {
 	struct bt_hci_handle_count h[0];
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_OP_WRITE_CURRENT_IAC_LAP         BT_OP(BT_OGF_BASEBAND, 0x003A)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_write_current_iac_lap {
+	uint8_t  num_current_iac;
+	struct
+	{
+		uint8_t iac[3];
+	} lap[0];
+} STRUCT_PACKED_POST;
+
 #define BT_HCI_OP_WRITE_INQUIRY_MODE            BT_OP(BT_OGF_BASEBAND, 0x0045)
 STRUCT_PACKED_PRE
 struct bt_hci_cp_write_inquiry_mode {
 	uint8_t  mode;
+} STRUCT_PACKED_POST;
+
+#define BT_HCI_OP_WRITE_EXTENDED_INQUIRY_RESPONSE   BT_OP(BT_OGF_BASEBAND, 0x0052)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_write_extended_inquiry_response {
+	uint8_t fec_required;
+	uint8_t Extended_Inquiry_Response[240];
 } STRUCT_PACKED_POST;
 
 #define BT_HCI_OP_WRITE_SSP_MODE                BT_OP(BT_OGF_BASEBAND, 0x0056)
@@ -811,6 +871,8 @@ struct bt_hci_rp_read_bd_addr {
 #define BT_HCI_CODING_FORMAT_TRANSPARENT 0x03
 #define BT_HCI_CODING_FORMAT_LINEAR_PCM  0x04
 #define BT_HCI_CODING_FORMAT_MSBC        0x05
+#define BT_HCI_CODING_FORMAT_LC3         0x06
+#define BT_HCI_CODING_FORMAT_G729A       0x07
 #define BT_HCI_CODING_FORMAT_VS          0xFF
 
 
@@ -3201,7 +3263,26 @@ struct bt_hci_evt_le_req_peer_sca_complete {
 	uint16_t handle;
 	uint8_t  sca;
 } STRUCT_PACKED_POST;
+/** Reason for Transmit power reporting.
+ */
+/* Local Transmit power changed. */
+#define	BT_HCI_LE_TX_POWER_REPORT_REASON_LOCAL_CHANGED         0x00
+/* Remote Transmit power changed. */
+#define	BT_HCI_LE_TX_POWER_REPORT_REASON_REMOTE_CHANGED        0x01
+/* HCI_LE_Read_Remote_Transmit_Power_Level command completed. */
+#define	BT_HCI_LE_TX_POWER_REPORT_REASON_READ_REMOTE_COMPLETED 0x02
 
+#define BT_HCI_EVT_LE_TRANSMIT_POWER_REPORT     0x21
+STRUCT_PACKED_PRE
+struct bt_hci_evt_le_transmit_power_report {
+	uint8_t	 status;
+	uint16_t handle;
+	uint8_t  reason;
+	uint8_t  phy;
+	int8_t   tx_power_level;
+	uint8_t  tx_power_level_flag;
+	int8_t   delta;
+} STRUCT_PACKED_POST;
 #define BT_HCI_EVT_LE_BIGINFO_ADV_REPORT        0x22
 STRUCT_PACKED_PRE
 struct bt_hci_evt_le_biginfo_adv_report {

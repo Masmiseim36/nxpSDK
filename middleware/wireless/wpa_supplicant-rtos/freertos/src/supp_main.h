@@ -22,7 +22,7 @@ typedef enum __wpa_supp_event
 struct wpa_supplicant_event_msg
 {
     int hostapd;
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
     bool ignore_msg;
 #endif
     void *ctx;
@@ -33,6 +33,10 @@ struct wpa_supplicant_event_msg
 int send_wpa_supplicant_dummy_event();
 int send_wpa_supplicant_event(struct wpa_supplicant_event_msg *msg);
 void process_wpa_supplicant_event();
+void wpa_supplicant_event_wrapper_deep_copy_free(struct wpa_supplicant_event_msg *msg);
+int wpa_supplicant_event_wrapper_deep_copy(struct wpa_supplicant_event_msg *msg,
+                                           enum wpa_event_type event,
+                                           union wpa_event_data *data);
 
 int start_wpa_supplicant(char *iface_name);
 int stop_wpa_supplicant(void);

@@ -68,7 +68,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -DTFM_PARTITION_TEST_SECURE_SERVICES --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -DTFM_PARTITION_TEST_SECURE_SERVICES --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-gnu-variable-sized-type-not-at-end</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_SP_LOG_RAW_ENABLED, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, PS_WIPE_ALL, ITS_WIPE_ALL, PLATFORM_NO_FLASH, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_large.h\"', MBEDTLS_PSA_CRYPTO_CONFIG_FILE='\"crypto_config_profile_large.h\"', PS_CRYPTO_AEAD_ALG=PSA_ALG_CCM, CONFIG_TFM_BUILDING_SPE=1, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_NS_AGENT_TZ, TFM_PARTITION_IDLE, PLATFORM_DEFAULT_NV_COUNTERS, PLATFORM_DEFAULT_OTP, PLATFORM_DEFAULT_PROVISIONING, OTP_WRITEABLE, TFM_DUMMY_PROVISIONING, CONFIG_TFM_PARTITION_META, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, CONFIG_TFM_HALT_ON_CORE_PANIC, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, TEST_NS_ATTESTATION, TEST_S_ATTESTATION, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_CRYPTO_TEST_ALG_CBC, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_ALG_GCM, TFM_CRYPTO_TEST_ALG_SHA_512, TFM_CRYPTO_TEST_HKDF, TFM_CRYPTO_TEST_ECDH, TFM_CRYPTO_TEST_UNSUPPORTED_ALG, TFM_S_REG_TEST, USE_SP_LOG, TFM_PARTITION_PROTECTED_STORAGE, TEST_S_PLATFORM, TFM_PARTITION_IPC_TEST, TEST_S_IPC, TFM_PARTITION_TEST_PS, TEST_S_PS, TEST_NS_SLIH_IRQ, SERIAL_PORT_TYPE_UART=1, TFM_PARTITION_CRYPTO, PLATFORM_DEFAULT_CRYPTO_KEYS, MBEDTLS_PSA_CRYPTO_DRIVERS, MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER, ATTEST_KEY_BITS=256, T_COSE_DISABLE_MAC0, T_COSE_DISABLE_ES384, T_COSE_DISABLE_ES512, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PLATFORM, CRYPTO_HW_ACCELERATOR, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', TEST_S_ITS, TEST_S_CRYPTO</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb  -Wno-gnu-variable-sized-type-not-at-end</MiscControls>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_SP_LOG_RAW_ENABLED, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, PS_WIPE_ALL, ITS_WIPE_ALL, PLATFORM_NO_FLASH, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_large.h\"', MBEDTLS_PSA_CRYPTO_CONFIG_FILE='\"crypto_config_profile_large.h\"', PS_CRYPTO_AEAD_ALG=PSA_ALG_CCM, CONFIG_TFM_BUILDING_SPE=1, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_NS_AGENT_TZ, TFM_PARTITION_IDLE, PLATFORM_DEFAULT_OTP, PLATFORM_DEFAULT_PROVISIONING, OTP_WRITEABLE, TFM_DUMMY_PROVISIONING, CONFIG_TFM_PARTITION_META, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, CONFIG_TFM_HALT_ON_CORE_PANIC, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, TEST_NS_ATTESTATION, TEST_S_ATTESTATION, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_CRYPTO_TEST_ALG_CBC, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_ALG_GCM, TFM_CRYPTO_TEST_ALG_SHA_512, TFM_CRYPTO_TEST_HKDF, TFM_CRYPTO_TEST_ECDH, TFM_CRYPTO_TEST_UNSUPPORTED_ALG, TFM_S_REG_TEST, USE_SP_LOG, TFM_PARTITION_PROTECTED_STORAGE, TEST_S_PLATFORM, TFM_PARTITION_IPC_TEST, TEST_S_IPC, TFM_PARTITION_TEST_PS, TEST_S_PS, TEST_NS_SLIH_IRQ, SERIAL_PORT_TYPE_UART=1, TFM_PARTITION_CRYPTO, PLATFORM_DEFAULT_CRYPTO_KEYS, MBEDTLS_PSA_CRYPTO_DRIVERS, MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER, ATTEST_KEY_BITS=256, T_COSE_DISABLE_MAC0, T_COSE_DISABLE_ES384, T_COSE_DISABLE_ES512, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PLATFORM, CRYPTO_HW_ACCELERATOR, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', PLATFORM_DEFAULT_NV_COUNTERS, TEST_S_ITS, TEST_S_CRYPTO</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/common/template;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/arm/drivers/mpu/armv8m;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/core;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/runtime/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/service/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service/psa_manifest;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_driver_api;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/mbed-crypto/include/psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/common/template;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/arm/drivers/mpu/armv8m;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/core;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/runtime/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/service/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service/psa_manifest;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_driver_api;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/include/psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -839,11 +839,6 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/attest_hal.c</FilePath>
             </File>
             <File>
-              <FileName>crypto_keys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/crypto_keys.c</FilePath>
-            </File>
-            <File>
               <FileName>flash_otp_nv_counters_backend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.c</FilePath>
@@ -852,11 +847,6 @@
               <FileName>flash_otp_nv_counters_backend.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.h</FilePath>
-            </File>
-            <File>
-              <FileName>nv_counters.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/nv_counters.c</FilePath>
             </File>
             <File>
               <FileName>otp_flash.c</FileName>
@@ -872,6 +862,16 @@
               <FileName>tfm_initial_attest_pub_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_initial_attest_pub_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/crypto_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>nv_counters.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/nv_counters.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2394,16 +2394,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2427,6 +2417,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2929,14 +2929,14 @@
           <GroupName>tf-m/secure_fw/partitions/platform</GroupName>
           <Files>
             <File>
-              <FileName>platform_sp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/platform_sp.c</FilePath>
-            </File>
-            <File>
               <FileName>platform_sp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/platform_sp.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_sp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/platform_sp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2951,18 +2951,288 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbed-crypto/include/psa</GroupName>
+          <GroupName>mbed-crypto/include/mbedtls</GroupName>
           <Files>
             <File>
-              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileName>aes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_composites.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aes.h</FilePath>
             </File>
             <File>
-              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileName>aria.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_primitives.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aria.h</FilePath>
             </File>
+            <File>
+              <FileName>asn1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1.h</FilePath>
+            </File>
+            <File>
+              <FileName>asn1write.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1write.h</FilePath>
+            </File>
+            <File>
+              <FileName>base64.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/base64.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/bignum.h</FilePath>
+            </File>
+            <File>
+              <FileName>build_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/build_info.h</FilePath>
+            </File>
+            <File>
+              <FileName>camellia.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/camellia.h</FilePath>
+            </File>
+            <File>
+              <FileName>ccm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ccm.h</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chacha20.h</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chachapoly.h</FilePath>
+            </File>
+            <File>
+              <FileName>check_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/check_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>compat-2.x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/compat-2.x.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/config_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>constant_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/constant_time.h</FilePath>
+            </File>
+            <File>
+              <FileName>ctr_drbg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ctr_drbg.h</FilePath>
+            </File>
+            <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>des.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/des.h</FilePath>
+            </File>
+            <File>
+              <FileName>dhm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/dhm.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdh.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecdsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecjpake.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecjpake.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>entropy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/entropy.h</FilePath>
+            </File>
+            <File>
+              <FileName>error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/error.h</FilePath>
+            </File>
+            <File>
+              <FileName>gcm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/gcm.h</FilePath>
+            </File>
+            <File>
+              <FileName>hkdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hkdf.h</FilePath>
+            </File>
+            <File>
+              <FileName>hmac_drbg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hmac_drbg.h</FilePath>
+            </File>
+            <File>
+              <FileName>legacy_or_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/legacy_or_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>lms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/lms.h</FilePath>
+            </File>
+            <File>
+              <FileName>md.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md.h</FilePath>
+            </File>
+            <File>
+              <FileName>md5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>memory_buffer_alloc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/memory_buffer_alloc.h</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/nist_kw.h</FilePath>
+            </File>
+            <File>
+              <FileName>oid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/oid.h</FilePath>
+            </File>
+            <File>
+              <FileName>pem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pem.h</FilePath>
+            </File>
+            <File>
+              <FileName>pk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pk.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs5.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs12.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_time.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/poly1305.h</FilePath>
+            </File>
+            <File>
+              <FileName>private_access.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/private_access.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>ripemd160.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ripemd160.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha1.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha256.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha512.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha512.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/threading.h</FilePath>
+            </File>
+            <File>
+              <FileName>timing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/timing.h</FilePath>
+            </File>
+            <File>
+              <FileName>version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/version.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbed-crypto/include/psa</GroupName>
+          <Files>
             <File>
               <FileName>crypto.h</FileName>
               <FileType>5</FileType>
@@ -3028,16 +3298,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_values.h</FilePath>
             </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_primitives.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>mbed-crypto/library</GroupName>
           <Files>
-            <File>
-              <FileName>psa_crypto_driver_wrappers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.c</FilePath>
-            </File>
             <File>
               <FileName>aes.c</FileName>
               <FileType>1</FileType>
@@ -3449,6 +3724,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_ecp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_ecp.c</FilePath>
@@ -3611,286 +3891,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbed-crypto/include/mbedtls</GroupName>
-          <Files>
-            <File>
-              <FileName>aes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aes.h</FilePath>
-            </File>
-            <File>
-              <FileName>aria.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aria.h</FilePath>
-            </File>
-            <File>
-              <FileName>asn1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1.h</FilePath>
-            </File>
-            <File>
-              <FileName>asn1write.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1write.h</FilePath>
-            </File>
-            <File>
-              <FileName>base64.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/base64.h</FilePath>
-            </File>
-            <File>
-              <FileName>bignum.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/bignum.h</FilePath>
-            </File>
-            <File>
-              <FileName>build_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/build_info.h</FilePath>
-            </File>
-            <File>
-              <FileName>camellia.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/camellia.h</FilePath>
-            </File>
-            <File>
-              <FileName>ccm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ccm.h</FilePath>
-            </File>
-            <File>
-              <FileName>chacha20.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chacha20.h</FilePath>
-            </File>
-            <File>
-              <FileName>chachapoly.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chachapoly.h</FilePath>
-            </File>
-            <File>
-              <FileName>check_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/check_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>cipher.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cipher.h</FilePath>
-            </File>
-            <File>
-              <FileName>compat-2.x.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/compat-2.x.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cmac.h</FilePath>
-            </File>
-            <File>
-              <FileName>config_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/config_psa.h</FilePath>
-            </File>
-            <File>
-              <FileName>constant_time.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/constant_time.h</FilePath>
-            </File>
-            <File>
-              <FileName>ctr_drbg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ctr_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>des.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/des.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/dhm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecdh.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdh.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecdsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdsa.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecjpake.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecjpake.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecp.h</FilePath>
-            </File>
-            <File>
-              <FileName>entropy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/entropy.h</FilePath>
-            </File>
-            <File>
-              <FileName>error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/error.h</FilePath>
-            </File>
-            <File>
-              <FileName>gcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/gcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hkdf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hkdf.h</FilePath>
-            </File>
-            <File>
-              <FileName>hmac_drbg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hmac_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>legacy_or_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/legacy_or_psa.h</FilePath>
-            </File>
-            <File>
-              <FileName>lms.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/lms.h</FilePath>
-            </File>
-            <File>
-              <FileName>md.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md.h</FilePath>
-            </File>
-            <File>
-              <FileName>md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory_buffer_alloc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/memory_buffer_alloc.h</FilePath>
-            </File>
-            <File>
-              <FileName>nist_kw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/nist_kw.h</FilePath>
-            </File>
-            <File>
-              <FileName>oid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/oid.h</FilePath>
-            </File>
-            <File>
-              <FileName>pem.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pem.h</FilePath>
-            </File>
-            <File>
-              <FileName>pk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pk.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs5.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs12.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs12.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_time.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_time.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>poly1305.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/poly1305.h</FilePath>
-            </File>
-            <File>
-              <FileName>private_access.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/private_access.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/psa_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>ripemd160.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ripemd160.h</FilePath>
-            </File>
-            <File>
-              <FileName>rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/rsa.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha1.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha256.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha512.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha512.h</FilePath>
-            </File>
-            <File>
-              <FileName>threading.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/threading.h</FilePath>
-            </File>
-            <File>
-              <FileName>timing.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/timing.h</FilePath>
-            </File>
-            <File>
-              <FileName>version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/version.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbed-crypto/port</GroupName>
           <Files>
             <File>
@@ -3917,11 +3917,6 @@
               <FileName>mbedcrypto_mcux_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mbedcrypto_mcux_entropy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</FilePath>
             </File>
             <File>
               <FileName>mbedcrypto_mcux_pkc.c</FileName>
@@ -3967,6 +3962,21 @@
               <FileName>ccm_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/ccm_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>mbedcrypto_mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mbedcrypto_mcux_entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4372,7 +4382,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -DTFM_PARTITION_TEST_SECURE_SERVICES --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -DTFM_PARTITION_TEST_SECURE_SERVICES --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -4635,10 +4645,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-gnu-variable-sized-type-not-at-end</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_SP_LOG_RAW_ENABLED, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, PS_WIPE_ALL, ITS_WIPE_ALL, PLATFORM_NO_FLASH, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_large.h\"', MBEDTLS_PSA_CRYPTO_CONFIG_FILE='\"crypto_config_profile_large.h\"', PS_CRYPTO_AEAD_ALG=PSA_ALG_CCM, CONFIG_TFM_BUILDING_SPE=1, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_NS_AGENT_TZ, TFM_PARTITION_IDLE, PLATFORM_DEFAULT_NV_COUNTERS, PLATFORM_DEFAULT_OTP, PLATFORM_DEFAULT_PROVISIONING, OTP_WRITEABLE, TFM_DUMMY_PROVISIONING, CONFIG_TFM_PARTITION_META, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, CONFIG_TFM_HALT_ON_CORE_PANIC, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, TEST_NS_ATTESTATION, TEST_S_ATTESTATION, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_CRYPTO_TEST_ALG_CBC, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_ALG_GCM, TFM_CRYPTO_TEST_ALG_SHA_512, TFM_CRYPTO_TEST_HKDF, TFM_CRYPTO_TEST_ECDH, TFM_CRYPTO_TEST_UNSUPPORTED_ALG, TFM_S_REG_TEST, USE_SP_LOG, TFM_PARTITION_PROTECTED_STORAGE, TEST_S_PLATFORM, TFM_PARTITION_IPC_TEST, TEST_S_IPC, TFM_PARTITION_TEST_PS, TEST_S_PS, TEST_NS_SLIH_IRQ, SERIAL_PORT_TYPE_UART=1, TFM_PARTITION_CRYPTO, PLATFORM_DEFAULT_CRYPTO_KEYS, MBEDTLS_PSA_CRYPTO_DRIVERS, MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER, ATTEST_KEY_BITS=256, T_COSE_DISABLE_MAC0, T_COSE_DISABLE_ES384, T_COSE_DISABLE_ES512, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PLATFORM, CRYPTO_HW_ACCELERATOR, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', TEST_S_ITS, TEST_S_CRYPTO</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb  -Wno-gnu-variable-sized-type-not-at-end</MiscControls>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_SP_LOG_RAW_ENABLED, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, PS_WIPE_ALL, ITS_WIPE_ALL, PLATFORM_NO_FLASH, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_large.h\"', MBEDTLS_PSA_CRYPTO_CONFIG_FILE='\"crypto_config_profile_large.h\"', PS_CRYPTO_AEAD_ALG=PSA_ALG_CCM, CONFIG_TFM_BUILDING_SPE=1, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_NS_AGENT_TZ, TFM_PARTITION_IDLE, PLATFORM_DEFAULT_OTP, PLATFORM_DEFAULT_PROVISIONING, OTP_WRITEABLE, TFM_DUMMY_PROVISIONING, CONFIG_TFM_PARTITION_META, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, CONFIG_TFM_HALT_ON_CORE_PANIC, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, TEST_NS_ATTESTATION, TEST_S_ATTESTATION, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_CRYPTO_TEST_ALG_CBC, TFM_CRYPTO_TEST_ALG_CCM, TFM_CRYPTO_TEST_ALG_GCM, TFM_CRYPTO_TEST_ALG_SHA_512, TFM_CRYPTO_TEST_HKDF, TFM_CRYPTO_TEST_ECDH, TFM_CRYPTO_TEST_UNSUPPORTED_ALG, TFM_S_REG_TEST, USE_SP_LOG, TFM_PARTITION_PROTECTED_STORAGE, TEST_S_PLATFORM, TFM_PARTITION_IPC_TEST, TEST_S_IPC, TFM_PARTITION_TEST_PS, TEST_S_PS, TEST_NS_SLIH_IRQ, SERIAL_PORT_TYPE_UART=1, TFM_PARTITION_CRYPTO, PLATFORM_DEFAULT_CRYPTO_KEYS, MBEDTLS_PSA_CRYPTO_DRIVERS, MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY, PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER, ATTEST_KEY_BITS=256, T_COSE_DISABLE_MAC0, T_COSE_DISABLE_ES384, T_COSE_DISABLE_ES512, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PLATFORM, CRYPTO_HW_ACCELERATOR, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', PLATFORM_DEFAULT_NV_COUNTERS, TEST_S_ITS, TEST_S_CRYPTO</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/common/template;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/arm/drivers/mpu/armv8m;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/core;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/runtime/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/service/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service/psa_manifest;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_driver_api;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/mbed-crypto/include/psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/common/template;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/arm/drivers/mpu/armv8m;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/core;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/runtime/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/tf-m-tests;../../../../../../middleware/tfm/tf-m-tests/test;../../../../../../middleware/tfm/tf-m-tests/test/framework;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_secure_client_2;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/service/tfm_ipc_client;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service/psa_manifest;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_ps_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/irq/service/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/test_services/tfm_slih_test_service/psa_manifest;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_driver_api;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/include/psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/secure;../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT595S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5143,11 +5153,6 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/attest_hal.c</FilePath>
             </File>
             <File>
-              <FileName>crypto_keys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/crypto_keys.c</FilePath>
-            </File>
-            <File>
               <FileName>flash_otp_nv_counters_backend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.c</FilePath>
@@ -5156,11 +5161,6 @@
               <FileName>flash_otp_nv_counters_backend.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.h</FilePath>
-            </File>
-            <File>
-              <FileName>nv_counters.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/nv_counters.c</FilePath>
             </File>
             <File>
               <FileName>otp_flash.c</FileName>
@@ -5176,6 +5176,16 @@
               <FileName>tfm_initial_attest_pub_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_initial_attest_pub_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/crypto_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>nv_counters.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/nv_counters.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6698,16 +6708,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -6731,6 +6731,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7233,14 +7243,14 @@
           <GroupName>tf-m/secure_fw/partitions/platform</GroupName>
           <Files>
             <File>
-              <FileName>platform_sp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/platform_sp.c</FilePath>
-            </File>
-            <File>
               <FileName>platform_sp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/platform_sp.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_sp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/platform_sp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7255,18 +7265,288 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbed-crypto/include/psa</GroupName>
+          <GroupName>mbed-crypto/include/mbedtls</GroupName>
           <Files>
             <File>
-              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileName>aes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_composites.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aes.h</FilePath>
             </File>
             <File>
-              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileName>aria.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_primitives.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aria.h</FilePath>
             </File>
+            <File>
+              <FileName>asn1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1.h</FilePath>
+            </File>
+            <File>
+              <FileName>asn1write.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1write.h</FilePath>
+            </File>
+            <File>
+              <FileName>base64.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/base64.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/bignum.h</FilePath>
+            </File>
+            <File>
+              <FileName>build_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/build_info.h</FilePath>
+            </File>
+            <File>
+              <FileName>camellia.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/camellia.h</FilePath>
+            </File>
+            <File>
+              <FileName>ccm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ccm.h</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chacha20.h</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chachapoly.h</FilePath>
+            </File>
+            <File>
+              <FileName>check_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/check_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>compat-2.x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/compat-2.x.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cmac.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/config_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>constant_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/constant_time.h</FilePath>
+            </File>
+            <File>
+              <FileName>ctr_drbg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ctr_drbg.h</FilePath>
+            </File>
+            <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>des.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/des.h</FilePath>
+            </File>
+            <File>
+              <FileName>dhm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/dhm.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdh.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecdsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecjpake.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecjpake.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>entropy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/entropy.h</FilePath>
+            </File>
+            <File>
+              <FileName>error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/error.h</FilePath>
+            </File>
+            <File>
+              <FileName>gcm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/gcm.h</FilePath>
+            </File>
+            <File>
+              <FileName>hkdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hkdf.h</FilePath>
+            </File>
+            <File>
+              <FileName>hmac_drbg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hmac_drbg.h</FilePath>
+            </File>
+            <File>
+              <FileName>legacy_or_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/legacy_or_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>lms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/lms.h</FilePath>
+            </File>
+            <File>
+              <FileName>md.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md.h</FilePath>
+            </File>
+            <File>
+              <FileName>md5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>memory_buffer_alloc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/memory_buffer_alloc.h</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/nist_kw.h</FilePath>
+            </File>
+            <File>
+              <FileName>oid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/oid.h</FilePath>
+            </File>
+            <File>
+              <FileName>pem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pem.h</FilePath>
+            </File>
+            <File>
+              <FileName>pk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pk.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs5.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs12.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_time.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/poly1305.h</FilePath>
+            </File>
+            <File>
+              <FileName>private_access.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/private_access.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>ripemd160.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ripemd160.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha1.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha256.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha512.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha512.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/threading.h</FilePath>
+            </File>
+            <File>
+              <FileName>timing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/timing.h</FilePath>
+            </File>
+            <File>
+              <FileName>version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/version.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbed-crypto/include/psa</GroupName>
+          <Files>
             <File>
               <FileName>crypto.h</FileName>
               <FileType>5</FileType>
@@ -7332,16 +7612,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_values.h</FilePath>
             </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/psa/crypto_driver_contexts_primitives.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>mbed-crypto/library</GroupName>
           <Files>
-            <File>
-              <FileName>psa_crypto_driver_wrappers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.c</FilePath>
-            </File>
             <File>
               <FileName>aes.c</FileName>
               <FileType>1</FileType>
@@ -7753,6 +8038,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_ecp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_ecp.c</FilePath>
@@ -7915,286 +8205,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbed-crypto/include/mbedtls</GroupName>
-          <Files>
-            <File>
-              <FileName>aes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aes.h</FilePath>
-            </File>
-            <File>
-              <FileName>aria.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/aria.h</FilePath>
-            </File>
-            <File>
-              <FileName>asn1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1.h</FilePath>
-            </File>
-            <File>
-              <FileName>asn1write.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/asn1write.h</FilePath>
-            </File>
-            <File>
-              <FileName>base64.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/base64.h</FilePath>
-            </File>
-            <File>
-              <FileName>bignum.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/bignum.h</FilePath>
-            </File>
-            <File>
-              <FileName>build_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/build_info.h</FilePath>
-            </File>
-            <File>
-              <FileName>camellia.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/camellia.h</FilePath>
-            </File>
-            <File>
-              <FileName>ccm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ccm.h</FilePath>
-            </File>
-            <File>
-              <FileName>chacha20.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chacha20.h</FilePath>
-            </File>
-            <File>
-              <FileName>chachapoly.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/chachapoly.h</FilePath>
-            </File>
-            <File>
-              <FileName>check_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/check_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>cipher.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cipher.h</FilePath>
-            </File>
-            <File>
-              <FileName>compat-2.x.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/compat-2.x.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/cmac.h</FilePath>
-            </File>
-            <File>
-              <FileName>config_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/config_psa.h</FilePath>
-            </File>
-            <File>
-              <FileName>constant_time.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/constant_time.h</FilePath>
-            </File>
-            <File>
-              <FileName>ctr_drbg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ctr_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>des.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/des.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/dhm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecdh.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdh.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecdsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecdsa.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecjpake.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecjpake.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ecp.h</FilePath>
-            </File>
-            <File>
-              <FileName>entropy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/entropy.h</FilePath>
-            </File>
-            <File>
-              <FileName>error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/error.h</FilePath>
-            </File>
-            <File>
-              <FileName>gcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/gcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hkdf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hkdf.h</FilePath>
-            </File>
-            <File>
-              <FileName>hmac_drbg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/hmac_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>legacy_or_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/legacy_or_psa.h</FilePath>
-            </File>
-            <File>
-              <FileName>lms.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/lms.h</FilePath>
-            </File>
-            <File>
-              <FileName>md.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md.h</FilePath>
-            </File>
-            <File>
-              <FileName>md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory_buffer_alloc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/memory_buffer_alloc.h</FilePath>
-            </File>
-            <File>
-              <FileName>nist_kw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/nist_kw.h</FilePath>
-            </File>
-            <File>
-              <FileName>oid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/oid.h</FilePath>
-            </File>
-            <File>
-              <FileName>pem.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pem.h</FilePath>
-            </File>
-            <File>
-              <FileName>pk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pk.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs5.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs12.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/pkcs12.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_time.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_time.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/platform_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>poly1305.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/poly1305.h</FilePath>
-            </File>
-            <File>
-              <FileName>private_access.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/private_access.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/psa_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>ripemd160.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ripemd160.h</FilePath>
-            </File>
-            <File>
-              <FileName>rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/rsa.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha1.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha256.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha512.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/sha512.h</FilePath>
-            </File>
-            <File>
-              <FileName>threading.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/threading.h</FilePath>
-            </File>
-            <File>
-              <FileName>timing.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/timing.h</FilePath>
-            </File>
-            <File>
-              <FileName>version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/version.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbed-crypto/port</GroupName>
           <Files>
             <File>
@@ -8221,11 +8231,6 @@
               <FileName>mbedcrypto_mcux_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>mbedcrypto_mcux_entropy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</FilePath>
             </File>
             <File>
               <FileName>mbedcrypto_mcux_pkc.c</FileName>
@@ -8271,6 +8276,21 @@
               <FileName>ccm_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/ccm_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>mbedcrypto_mcux_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mbedtls_accelerator_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedtls_accelerator_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mbedcrypto_mcux_entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</FilePath>
             </File>
           </Files>
         </Group>

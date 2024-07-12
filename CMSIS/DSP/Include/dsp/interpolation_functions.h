@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     interpolation_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -55,7 +55,7 @@ extern "C"
           uint32_t nValues;           /**< nValues */
           float32_t x1;               /**< x1 */
           float32_t xSpacing;         /**< xSpacing */
-          float32_t *pYData;          /**< pointer to the table of Y values */
+          const float32_t *pYData;          /**< pointer to the table of Y values */
   } arm_linear_interp_instance_f32;
 
   /**
@@ -65,7 +65,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          float32_t *pData;   /**< points to the data table. */
+          const float32_t *pData;   /**< points to the data table. */
   } arm_bilinear_interp_instance_f32;
 
    /**
@@ -75,7 +75,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          q31_t *pData;       /**< points to the data table. */
+          const q31_t *pData;       /**< points to the data table. */
   } arm_bilinear_interp_instance_q31;
 
    /**
@@ -85,7 +85,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          q15_t *pData;       /**< points to the data table. */
+          const q15_t *pData;       /**< points to the data table. */
   } arm_bilinear_interp_instance_q15;
 
    /**
@@ -95,7 +95,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          q7_t *pData;        /**< points to the data table. */
+          const q7_t *pData;        /**< points to the data table. */
   } arm_bilinear_interp_instance_q7;
 
 
@@ -121,18 +121,6 @@ extern "C"
   } arm_spline_instance_f32;
 
 
-
-
-  /**
-   * @ingroup groupInterpolation
-   */
-
-  /**
-   * @addtogroup SplineInterpolate
-   * @{
-   */
-
-  
   /**
    * @brief Processing function for the floating-point cubic spline interpolation.
    * @param[in]  S          points to an instance of the floating-point spline structure.
@@ -166,18 +154,7 @@ extern "C"
           float32_t * tempBuffer);
 
 
-  /**
-   * @} end of SplineInterpolate group
-   */
-
-
-  
-  /**
-   * @addtogroup LinearInterpolate
-   * @{
-   */
-
-    /**
+   /**
    * @brief  Process function for the floating-point Linear Interpolation Function.
    * @param[in,out] S  is an instance of the floating-point Linear Interpolation structure
    * @param[in]     x  input sample to process
@@ -202,7 +179,7 @@ extern "C"
    *
    */
   q31_t arm_linear_interp_q31(
-  q31_t * pYData,
+  const q31_t * pYData,
   q31_t x,
   uint32_t nValues);
 
@@ -220,7 +197,7 @@ extern "C"
    *
    */
   q15_t arm_linear_interp_q15(
-  q15_t * pYData,
+  const q15_t * pYData,
   q31_t x,
   uint32_t nValues);
 
@@ -237,26 +214,9 @@ extern "C"
    * This function can support maximum of table size 2^12.
    */
 q7_t arm_linear_interp_q7(
-  q7_t * pYData,
+  const q7_t * pYData,
   q31_t x,
   uint32_t nValues);
-
-  /**
-   * @} end of LinearInterpolate group
-   */
-
-  
-
-
-  /**
-   * @ingroup groupInterpolation
-   */
-
-
-  /**
-   * @addtogroup BilinearInterpolate
-   * @{
-   */
 
   /**
   * @brief  Floating-point bilinear interpolation.
@@ -306,10 +266,6 @@ q7_t arm_linear_interp_q7(
   arm_bilinear_interp_instance_q7 * S,
   q31_t X,
   q31_t Y);
-  /**
-   * @} end of BilinearInterpolate group
-   */
-
 
 
 #ifdef   __cplusplus

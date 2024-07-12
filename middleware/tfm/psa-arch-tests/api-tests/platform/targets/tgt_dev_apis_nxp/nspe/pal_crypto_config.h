@@ -66,10 +66,12 @@
 #define ARCH_TEST_ECC_CURVE_SECP384R1
 #endif
 #endif
+
+#ifdef DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS
 /* curves of size <255 are obsolete algorithms, should be disabled. */
 #undef ARCH_TEST_ECC_CURVE_SECP192R1
 #undef ARCH_TEST_ECC_CURVE_SECP224R1
-
+#endif /* DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS */
 /**
  * \def ARCH_TEST_AES
  *

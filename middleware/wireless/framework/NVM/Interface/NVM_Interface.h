@@ -1,6 +1,6 @@
 /**********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2020-2022 NXP
+ * Copyright 2016-2017, 2020-2024 NXP
  * All rights reserved.
  *
  *
@@ -56,17 +56,16 @@
  * saves or a minimum-count-between-saves. A data set may have both.
  *
  * Whenever a data set is saved for any reason:
- *      it's dirty flag is cleared
+ *      its dirty flag is cleared
  *  AND
- *      it's minimum-time-between-saves timer is restarted from 0,
+ *      its minimum-time-between-saves timer is restarted from 0,
  *  AND
- *      it's minimum-count-between-saves counter is set to 0.
+ *      its minimum-count-between-saves counter is set to 0.
  *
  * @{
  */
 
 #include "EmbeddedTypes.h"
-#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -112,26 +111,30 @@ extern "C" {
 #endif
 
 /*
- * Name: gNvDualImageSupport
+ * Name: gNvDualImageSupport_d
  * Description: Used to enable/disable dual image support on NVM
  * Requires also gNvUseExtendedFeatureSet_d
- * Notes: NOT SUPPORTED as it has not been fully tested
  */
-#ifndef gNvDualImageSupport
-#define gNvDualImageSupport 0
+#ifndef gNvDualImageSupport_d
+#ifdef gNvDualImageSupport
+#warning "gNvDualImageSupport replaced by gNvDualImageSupport_d"
+#define gNvDualImageSupport_d gNvDualImageSupport
+#else
+#define gNvDualImageSupport_d 0
+#endif
 #endif
 
-#if gNvDualImageSupport
+#if gNvDualImageSupport_d
 #if defined gNvUseExtendedFeatureSet_d
 #if (gNvUseExtendedFeatureSet_d == 0)
-#warning "gNvUseExtendedFeatureSet_d must be set when using gNvDualImageSupport"
+#warning "gNvUseExtendedFeatureSet_d must be set when using gNvDualImageSupport_d"
 #undef gNvUseExtendedFeatureSet_d
 #define gNvUseExtendedFeatureSet_d 1
 #endif
 #else /* defined gNvUseExtendedFeatureSet_d */
 #define gNvUseExtendedFeatureSet_d 1
 #endif /* defined gNvUseExtendedFeatureSet_d */
-#endif /* gNvDualImageSupport*/
+#endif /* gNvDualImageSupport_d*/
 /*
  * Name: gNvUseExtendedFeatureSet_d
  * Description: enables/disables the extended feature set of the module:
@@ -505,6 +508,13 @@ typedef struct NVM_Statistics_tag
     uint32_t SecondPageEraseCyclesCount;
 } NVM_Statistics_t;
 
+/*!
+ * \brief ECC fault notification callback function pointer.
+ *  \param [in] fault_addr address where ECC fault was detected
+ *  \param [in] operation 0: write (programming flash), 1: read operation
+ */
+typedef void (*NVM_EccFaultNotifyCb_t)(uint32_t fault_addr, int operation);
+
 /*****************************************************************************
 ******************************************************************************
 * Public memory declarations
@@ -636,11 +646,7 @@ extern NVM_Status_t NvMoveToRam(void **ppData);
  *
  * \return 0 or flash table version
  ********************************************************************************* */
-#if gNvStorageIncluded_d
-#if gNvUseExtendedFeatureSet_d
 extern uint16_t GetFlashTableVersion(void);
-#endif
-#endif
 
 /*! *********************************************************************************
  * \brief Erase from NVM an unmirrored dataset
@@ -957,6 +963,7 @@ extern void NvCompletePendingOperations(void);
  *          the application should copy the members returned by this function in their
  *          respective RAM entry and allocate pData. The extended functionality must
  *          be enabled if this function is required.
+ *          Does nothing if gNvUseExtendedFeatureSet_d is unset.
  *
  * \param[in] index the ram entry index
  * \param[out] entry the flash entry at the specified index
@@ -965,18 +972,14 @@ extern void NvCompletePendingOperations(void);
            gNVM_AddressOutOfRange_c: if the index is too large\n
            gNVM_Error_c: not supported, NVM table is stored in FLASH
  ********************************************************************************* */
-#if gNvStorageIncluded_d
-#if gNvUseExtendedFeatureSet_d
 extern NVM_Status_t RecoverNvEntry(uint16_t index, NVM_DataEntry_t *entry);
-#endif
-#endif
 
 /*! *********************************************************************************
  *  \brief Tell if there is a pending NVM operation in the queue
  *
  * \return bool Is there a pending operation in the queue
  ********************************************************************************* */
-bool NvIsPendingOperation(void);
+bool_t NvIsPendingOperation(void);
 
 /*! *********************************************************************************
  *  \brief Register data entry array.
@@ -989,8 +992,6 @@ bool NvIsPendingOperation(void);
  *                       form tb_array.
  ********************************************************************************* */
 void NvSetNvmDataTable(NVM_DataEntry_t *tb_array, uint16_t nb_entries);
-
-uint32_t NV_SweepRangeForEccFaults(uint32_t start_addr, uint32_t end_addr);
 
 /*
  * Functions below are required in some NVM tests scenarii for setup or debug reasons.
@@ -1022,7 +1023,7 @@ void NV_ShowRamTable(uint16_t end_id);
 void NV_ShowDataEntry(uint8_t *ptr, uint16_t data_size);
 
 /*! *********************************************************************************
- *  \brief Getter to retrieve first meta offset. Used in tests or debug.
+ *  \brief Getter to retrieve first meta offset. Used in tests or debug only.
  *
  ********************************************************************************* */
 uint16_t Nv_GetFirstMetaOffset(void);
@@ -1042,13 +1043,30 @@ uint32_t NvGetTableSizeInFlash(void);
  *
  * \param[in] version version number to set in flash table.
  ********************************************************************************* */
-void NvSetFlashTableversion(uint16_t version);
+void NvSetFlashTableVersion(uint16_t version);
+
+/*! *********************************************************************************
+ *  \brief Register callback for NVM to notify application when ECC fault is detected.
+ *
+ * \param[in] version version number to set in flash table.
+ *
+ * \return: gNVM_Ok_c if gNvSalvageFromEccFault_d is set, gNVM_Error_c otherwise.
+
+ ********************************************************************************* */
+int NvRegisterEccFaultNotificationCb(NVM_EccFaultNotifyCb_t cb);
+
+/*! *********************************************************************************
+ *  \brief Get address of last MIT meta address. Used in tests or debug only.
+ *
+ ********************************************************************************* */
+uint32_t Nv_GetLastMetaAddress(void);
 
 /*! *********************************************************************************
  *  \brief Lock NVM Mutex from outside NVM module. Testing purposes only.
  *
  ********************************************************************************* */
 void NV_MutexLock(void);
+
 /*! *********************************************************************************
  *  \brief Unlock NVM Mutex from outside NVM module. Testing purposes only.
  *

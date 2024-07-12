@@ -45,7 +45,11 @@
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
 #ifndef STORAGE_IDLE_TASK_PRIORITY
+#if !defined(RW610_SERIES) && !defined(RW612_SERIES)
 #define STORAGE_IDLE_TASK_PRIORITY               (configMAX_PRIORITIES - 2)
+#else
+#define STORAGE_IDLE_TASK_PRIORITY               (OSA_TASK_PRIORITY_MIN - 1)
+#endif
 #endif
 
 #ifndef STORAGE_IDLE_TASK_STACK_SIZE

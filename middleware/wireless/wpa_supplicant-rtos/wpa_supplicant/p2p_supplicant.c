@@ -219,9 +219,9 @@ static unsigned int wpas_p2p_valid_oper_freqs(struct wpa_supplicant *wpa_s,
 
     os_free(freqs);
 
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     dump_freq_data(wpa_s, "valid for P2P", p2p_freqs, j);
-#endif /* CONFIG_ZEPHYR , CONFIG_FREERTOS*/
+#endif /* __ZEPHYR__ , CONFIG_FREERTOS*/
 
     return j;
 }

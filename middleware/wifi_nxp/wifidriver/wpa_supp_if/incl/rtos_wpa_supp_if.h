@@ -12,7 +12,9 @@
 #ifndef __RTOS_WPA_SUPP_IF_H__
 #define __RTOS_WPA_SUPP_IF_H__
 
-#ifdef CONFIG_WPA_SUPP
+#include <wifi_config_default.h>
+
+#if CONFIG_WPA_SUPP
 #include "includes.h"
 #include "common.h"
 #include "eloop.h"
@@ -27,7 +29,7 @@
 
 #define supp_e(...) wmlog_e("supp_if", ##__VA_ARGS__)
 
-#ifdef CONFIG_SUPP_DEBUG
+#if CONFIG_SUPP_DEBUG
 #define supp_d(...) wmlog("supp_if", ##__VA_ARGS__)
 #else
 #define supp_d(...)
@@ -89,6 +91,8 @@ int wifi_nxp_wpa_supp_set_key(void *if_priv,
                               size_t key_len,
                               enum key_flag key_flag);
 
+int wifi_nxp_wpa_supp_del_key(void *if_priv, const unsigned char *addr, int key_idx);
+
 int wifi_nxp_wpa_supp_set_rekey_info(
     void *if_priv, const u8 *kek, size_t kek_len, const u8 *kck, size_t kck_len, const u8 *replay_ctr);
 
@@ -143,6 +147,8 @@ void wifi_nxp_wpa_supp_event_proc_eapol_rx(void *if_priv,
 void wifi_nxp_wpa_supp_event_mgmt_tx_status(void *if_priv, nxp_wifi_event_mlme_t *mlme_event, unsigned int event_len);
 
 void wifi_nxp_wpa_supp_event_proc_ecsa_complete(void *if_priv, nxp_wifi_ch_switch_info *ch_switch_info);
+void wifi_nxp_wpa_supp_event_proc_dfs_cac_started(void *if_priv, nxp_wifi_dfs_cac_info *dfs_cac_info);
+void wifi_nxp_wpa_supp_event_proc_dfs_cac_finished(void *if_priv, nxp_wifi_dfs_cac_info *dfs_cac_info);
 
 void *wifi_nxp_hostapd_dev_init(void *hapd_drv_if_ctx,
                                 const char *iface_name,
@@ -160,5 +166,6 @@ int wifi_nxp_hostapd_set_frag(void *if_priv, int frag_threshold);
 int wifi_nxp_hostapd_stop_ap(void *if_priv);
 int wifi_nxp_hostapd_set_acl(void *if_priv, struct hostapd_acl_params *params);
 int wifi_nxp_wpa_dpp_listen(void *if_priv, bool enable);
+bool wifi_nxp_wpa_get_modes(void *if_priv);
 #endif /* CONFIG_WPA_SUPP */
 #endif /*  __rtos_WPA_SUPP_IF_H__ */

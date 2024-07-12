@@ -33,20 +33,6 @@
  */
 
 /**
-  @defgroup BasicOffset Vector Offset
-
-  Adds a constant offset to each element of a vector.
-
-  <pre>
-      pDst[n] = pSrc[n] + offset,   0 <= n < blockSize.
-  </pre>
-
-  The functions support in-place computation allowing the source and
-  destination pointers to reference the same memory buffer.
-  There are separate functions for floating-point, Q7, Q15, and Q31 data types.
- */
-
-/**
   @addtogroup BasicOffset
   @{
  */
@@ -128,13 +114,13 @@ void arm_offset_f16(
     /* C = A + offset */
 
     /* Add offset and store result in destination buffer. */
-    *pDst++ = (*pSrc++) + offset;
+    *pDst++ = (_Float16)(*pSrc++) + (_Float16)offset;
 
-    *pDst++ = (*pSrc++) + offset;
+    *pDst++ = (_Float16)(*pSrc++) + (_Float16)offset;
 
-    *pDst++ = (*pSrc++) + offset;
+    *pDst++ = (_Float16)(*pSrc++) + (_Float16)offset;
 
-    *pDst++ = (*pSrc++) + offset;
+    *pDst++ = (_Float16)(*pSrc++) + (_Float16)offset;
 
     /* Decrement loop counter */
     blkCnt--;
@@ -155,7 +141,7 @@ void arm_offset_f16(
     /* C = A + offset */
 
     /* Add offset and store result in destination buffer. */
-    *pDst++ = (*pSrc++) + offset;
+    *pDst++ = (_Float16)(*pSrc++) + (_Float16)offset;
 
     /* Decrement loop counter */
     blkCnt--;

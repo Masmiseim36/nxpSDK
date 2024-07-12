@@ -28,8 +28,9 @@
 /* static void(*em_process_term_handler)(void); */
 
 /* Task stack overflow handler */
+#if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U)
 static void(*em_sof_handler)(void * task_name);
-
+#endif /* #if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U) */
 /* -------------------------------------------- Functions */
 
 void EM_os_init (void)
@@ -131,6 +132,7 @@ INT32 EM_thread_create
     }
 
     /* Call to OSA task creation */
+    // coverity[overrun-buffer-val:SUPPRESS]
     retval = OSA_TaskCreate
              (
                  (osa_task_handle_t)(*thread),
@@ -165,6 +167,7 @@ INT32 EM_thread_delete
     ret = OSA_TaskDestroy(thread);
     if (KOSA_StatusSuccess == ret)
     {
+        EM_free_mem((thread));
         return 0;
     }
     else
@@ -272,6 +275,7 @@ INT32 EM_thread_mutex_deinit
         ret = OSA_MutexDestroy((*mutex));
         if (KOSA_StatusSuccess == ret)
         {
+            EM_free_mem((*mutex));
             return 0;
         }
     }
@@ -429,6 +433,7 @@ INT32 EM_thread_cond_deinit
 
         if (KOSA_StatusSuccess == ret)
         {
+            EM_free_mem((*cond));
             return 0;
         }
     }
@@ -802,12 +807,13 @@ void EM_process_term_notify (void(*handler)(void))
  *
  *  \return None
  */
+#if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U)
 void EM_register_sof_handler (void(*handler)(void* task_name))
 {
     /* Save the stack overflow handler */
     em_sof_handler = handler;
 }
-
+#endif /* #if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U) */
 /**
  *  \fn EM_thread_get_stack_unused
  *
@@ -846,6 +852,7 @@ UINT32 EM_thread_get_stack_unused (void)
 }
 
 /* -------------------------------------------- Static OS Hooks */
+#if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U)
 void vApplicationStackOverflowHook
      (
          TaskHandle_t pxTask,
@@ -865,5 +872,23 @@ void vApplicationStackOverflowHook
 
     for(;;) {}
 }
+#endif /* #if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U) */
 
+/**
+ *  \fn vApplicationMallocFailedHook
+ *
+ *  \brief Handle Malloc failure
+ *   Abstracted local time pointer to hold the system local time
+ *
+ *  \return None
+ */
+#if defined (APP_CONFIG_ENABLE_MALLOC_FAILURE_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_MALLOC_FAILURE_FREERTOS_HOOK == 1U)
+void vApplicationMallocFailedHook( void )
+{
+    printf("MallocFail:%d", xPortGetFreeHeapSize());
+    EM_usleep(100 * 1000); /*Giving 100 ms time to UART peripheral before disabling interrupts to log outstanding data on console*/
+    taskDISABLE_INTERRUPTS();
+    for(;;) {}
+}
+#endif /* #if defined (APP_CONFIG_ENABLE_MALLOC_FAILURE_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_MALLOC_FAILURE_FREERTOS_HOOK == 1U) */
 #endif /* EM_ENABLE_PAL_OS */

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                           Copyright 2023 NXP                               */
+/*                          Copyright 2023-2024 NXP                           */
 /*                            All rights reserved.                            */
 /*                    SPDX-License-Identifier: BSD-3-Clause                   */
 /* -------------------------------------------------------------------------- */
@@ -27,6 +27,7 @@
 /*                               Private macros                               */
 /* -------------------------------------------------------------------------- */
 static USART_Type *const s_HciUsartBase[] = USART_BASE_PTRS;
+static bool              s_boardSleep     = false;
 /* -------------------------------------------------------------------------- */
 /*                             Private prototypes                             */
 /* -------------------------------------------------------------------------- */
@@ -307,16 +308,32 @@ static void PLATFORM_ConfigPMICMode(pca9420_modecfg_t *cfg)
 
 static status_t PLATFORM_LowPowerCallback(pm_event_type_t eventType, uint8_t powerState, void *data)
 {
+    status_t ret = kStatus_Success;
     (void)data;
 
     if (eventType == kPM_EventEnteringSleep)
     {
-        PLATFORM_EnterLowPower();
+        /* Check if the board is allowed to enter low power mode. */
+        /* The time between checking C2H state and pulling up RTS should be as less as possible.
+         * Otherwise, when C2H is changed continuously, RTS cannot take action in time, which may cause data loss. */
+        if (PLATFORM_AllowEnterLowPower())
+        {
+            s_boardSleep = true;
+            PLATFORM_EnterLowPower();
+        }
+        else
+        {
+            s_boardSleep = false;
+            ret          = kStatus_Fail;
+        }
     }
     else
     {
-        PLATFORM_ExitLowPower();
+        if (s_boardSleep == true)
+        {
+            PLATFORM_ExitLowPower();
+        }
     }
 
-    return kStatus_Success;
+    return ret;
 }

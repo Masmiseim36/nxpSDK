@@ -547,8 +547,20 @@ typedef struct
  *     that is successfully established is over LE Fixed Channel.
  *   - when this is equal to Zero, the ATT Instance that is successfully
  *     established is over BREDR.
- *   - For all other values, one of more Instances of Enhanced ATT are
- *     established.
+ *   - For all other values, one or more Instances of Enhanced ATT are
+ *     established. The "data_len" represents the number of ATT Instances that
+ *     are established. The reference of these ATT Instances from data_param
+ *     are present as part of "handle" parameter and also "data_param"
+ *     parameter.
+ *
+ * Below table depicts the values of various parameters when the received
+ * event is \ref ATT_CONNECTION_IND.
+ * | ATT Bearer Type | handle                             | data_param          | data_len                  |
+ * | ----:           | :----:                             | :----:              | :----                     |
+ * | LE ATT          | reference to ATT Instance          | Peer BD Address     | size of BT_DEVICE_ADDR    |
+ * | BREDR ATT       | reference to ATT Instance          | NULL                | 0                         |
+ * | LE EATT         | reference to List of ATT Instances | List of ATT Handles | Number of Handles in List |
+ * | BREDR EATT      | reference to List of ATT Instances | List of ATT Handles | Number of Handles in List |
  */
 typedef API_RESULT (*ATT_NTF_CB)
         (

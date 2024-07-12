@@ -12,13 +12,15 @@
  */
 #include <string.h>
 
-#include <wm_os.h>
+#include <osa.h>
 #include <wm_net.h>
 #include <cli.h>
 #include <cli_utils.h>
+#if defined(SDK_OS_FREE_RTOS)
 #include <dhcp-server.h>
 
 #include "dhcp-priv.h"
+#endif
 
 /*
  * Command-Line Interface
@@ -40,7 +42,7 @@ int dhcpd_cli_init(void)
     {
         if (cli_register_command(&dhcp_cmds[i]) != 0)
         {
-            return -WM_E_DHCPD_REGISTER_CMDS;
+            return -WM_FAIL;
         }
     }
 
@@ -49,13 +51,13 @@ int dhcpd_cli_init(void)
 
 int dhcpd_cli_deinit(void)
 {
-    u8_t i;
+    uint8_t i;
 
     for (i = 0; i < sizeof(dhcp_cmds) / sizeof(struct cli_command); i++)
     {
         if (cli_unregister_command(&dhcp_cmds[i]) != 0)
         {
-            return -WM_E_DHCPD_REGISTER_CMDS;
+            return -WM_FAIL;
         }
     }
 

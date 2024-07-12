@@ -17,8 +17,8 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
-#ifdef CONFIG_TX_RX_ZERO_COPY
+#include <osa.h>
+#if CONFIG_TX_RX_ZERO_COPY
 #include <wm_net.h>
 #endif
 /* Always keep this include at the end of all include files */
@@ -135,15 +135,15 @@ t_void wlan_clean_txrx(pmlan_private priv)
 
     ENTER();
 
-#ifdef CONFIG_WMM
-    wlan_cleanup_bypass_txq(MLAN_BSS_TYPE_STA);
+#if CONFIG_WMM
+    wlan_cleanup_bypass_txq(GET_BSS_ROLE(priv));
 #endif
 
     wlan_11n_cleanup_reorder_tbl(priv);
 
     (void)pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
     wlan_11n_deleteall_txbastream_tbl(priv);
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
     wlan_ralist_del_all_enh(priv);
 #endif /* CONFIG_WMM */
     (void)__memcpy(pmadapter, tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
@@ -190,6 +190,35 @@ t_void wlan_init_wmm_param(pmlan_adapter pmadapter)
      * aifsn,ecw_max,ecw_min, tx_op_limit only when ucm is set to 1.
      * othewise the default setting/behavoir in firmware will be used.
      */
+#ifdef RW610
+    pmadapter->ac_params[AC_BE].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_BE].aci_aifsn.aci   = AC_BE;
+    pmadapter->ac_params[AC_BE].aci_aifsn.aifsn = 5;
+    pmadapter->ac_params[AC_BE].ecw.ecw_max     = 6;
+    pmadapter->ac_params[AC_BE].ecw.ecw_min     = 4;
+    pmadapter->ac_params[AC_BE].tx_op_limit     = 0;
+
+    pmadapter->ac_params[AC_BK].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_BK].aci_aifsn.aci   = AC_BK;
+    pmadapter->ac_params[AC_BK].aci_aifsn.aifsn = 9;
+    pmadapter->ac_params[AC_BK].ecw.ecw_max     = 10;
+    pmadapter->ac_params[AC_BK].ecw.ecw_min     = 4;
+    pmadapter->ac_params[AC_BK].tx_op_limit     = 0;
+
+    pmadapter->ac_params[AC_VI].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_VI].aci_aifsn.aci   = AC_VI;
+    pmadapter->ac_params[AC_VI].aci_aifsn.aifsn = 3;
+    pmadapter->ac_params[AC_VI].ecw.ecw_max     = 4;
+    pmadapter->ac_params[AC_VI].ecw.ecw_min     = 3;
+    pmadapter->ac_params[AC_VI].tx_op_limit     = 94;
+
+    pmadapter->ac_params[AC_VO].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_VO].aci_aifsn.aci   = AC_VO;
+    pmadapter->ac_params[AC_VO].aci_aifsn.aifsn = 3;
+    pmadapter->ac_params[AC_VO].ecw.ecw_max     = 3;
+    pmadapter->ac_params[AC_VO].ecw.ecw_min     = 2;
+    pmadapter->ac_params[AC_VO].tx_op_limit     = 47;
+#else
     pmadapter->ac_params[AC_BE].aci_aifsn.acm   = 0;
     pmadapter->ac_params[AC_BE].aci_aifsn.aci   = AC_BE;
     pmadapter->ac_params[AC_BE].aci_aifsn.aifsn = 3;
@@ -217,6 +246,7 @@ t_void wlan_init_wmm_param(pmlan_adapter pmadapter)
     pmadapter->ac_params[AC_VO].ecw.ecw_max     = 3;
     pmadapter->ac_params[AC_VO].ecw.ecw_min     = 2;
     pmadapter->ac_params[AC_VO].tx_op_limit     = 102;
+#endif
 }
 
 /**
@@ -367,7 +397,7 @@ t_u32 wlan_wmm_process_association_req(pmlan_private priv,
     return ret_len;
 }
 
-#ifdef CONFIG_WMM
+#if CONFIG_WMM
 /**
  *  @brief This function prepares the command of WMM_PARAM_CONFIG
  *
@@ -435,8 +465,8 @@ mlan_status wlan_ret_wmm_param_config(pmlan_private pmpriv, const HostCmd_DS_COM
 }
 #endif
 
-#ifdef CONFIG_WMM
-#ifdef CONFIG_WMM_DEBUG
+#if CONFIG_WMM
+#if CONFIG_WMM_DEBUG
 #define MAX_HISTORY_RA_LIST_NUM 32
 
 static raListTbl *wlan_ralist_get_history(mlan_private *priv, t_u8 *ra, t_u8 ac)
@@ -600,7 +630,7 @@ SUCC:
     mlan_adap->priv[interface]->wmm.pkts_queued[queue]--;
     ra_list->total_pkts--;
     ra_list->drop_count++;
-#ifdef CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY
     /* Before replacement, need free the buffer from stack first */
     net_stack_buffer_free(buf->buffer);
 #endif
@@ -662,8 +692,21 @@ static raListTbl *wlan_wmm_get_queue_raptr_enh(pmlan_private priv, t_u8 ac, t_u8
     if (ra_list != MNULL)
         return ra_list;
 
+#if CONFIG_WPA_SUPP
+    if ((GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP) &&
+         (0 != memcmp(ra_addr, bcast_addr, sizeof(bcast_addr))))
+    {
+        if (MNULL == wlan_get_station_entry(priv, ra_addr))
+        {
+            PRINTM(MERROR, "Drop packets to unknow station " MACSTR "\n",  MAC2STR(ra_addr));
+            LEAVE();
+            return MNULL;
+        }
+    }
+#else
     if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP && __memcmp(priv->adapter, ra_addr, bcast_addr, MLAN_MAC_ADDR_LENGTH))
         return MNULL;
+#endif
 
     /* wlan_ralist_add_enh will hold wmm lock, so need to unlock first */
     priv->adapter->callbacks.moal_semaphore_put(priv->adapter->pmoal_handle, &priv->wmm.tid_tbl_ptr[ac].ra_list.plock);
@@ -689,7 +732,7 @@ int wlan_wmm_add_buf_txqueue_enh(const uint8_t interface, const uint8_t *buffer,
         priv = mlan_adap->priv[1];
 
         /* refer to low_level_output payload memcpy */
-#ifdef CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY
     wifi_wmm_da_to_ra(&((outbuf_t *)buffer)->eth_header[0], ra);
 #else
     wifi_wmm_da_to_ra(&((outbuf_t *)buffer)->data[0], ra);
@@ -749,7 +792,7 @@ void wifi_wmm_buf_put(outbuf_t *buf)
 
     assert(mlan_adap->outbuf_pool.free_cnt < MAX_WMM_BUF_NUM);
 
-#ifdef CONFIG_TX_RX_ZERO_COPY
+#if CONFIG_TX_RX_ZERO_COPY
     /* Free driver's reference count for network buffer */
     net_stack_buffer_free(buf->buffer);
 #endif
@@ -824,11 +867,16 @@ void wlan_ralist_pkts_free_enh(mlan_private *priv, raListTbl *ra_list, t_u8 ac)
 /* should be called inside wmm tid_tbl_ptr ra_list lock */
 static void wlan_ralist_free_enh(mlan_private *priv, raListTbl *ra_list, t_u8 ac)
 {
-#ifdef CONFIG_WMM_DEBUG
+#if CONFIG_WMM_DEBUG
     wlan_ralist_restore_history(priv, ra_list, ac);
 #else
     priv->adapter->callbacks.moal_free_semaphore(priv->adapter->pmoal_handle, &ra_list->buf_head.plock);
+#if !CONFIG_MEM_POOLS
+
     priv->adapter->callbacks.moal_mfree(priv->adapter->pmoal_handle, (t_u8 *)ra_list);
+#else
+    OSA_MemoryPoolFree(buf_128_MemoryPool, ra_list);
+#endif
 #endif
 }
 
@@ -837,9 +885,18 @@ static raListTbl *wlan_ralist_alloc_enh(pmlan_adapter pmadapter, t_u8 *ra)
     mlan_status ret;
     raListTbl *ra_list = MNULL;
 
+#if !CONFIG_MEM_POOLS
     ret = pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, sizeof(raListTbl), MLAN_MEM_DEF, (t_u8 **)&ra_list);
     if (ret != MLAN_STATUS_SUCCESS || ra_list == MNULL)
         return MNULL;
+#else
+    ra_list = OSA_MemoryPoolAllocate(buf_128_MemoryPool);
+    if (ra_list == MNULL)
+    {
+        return MNULL;
+    }
+
+#endif
 
     util_init_list((pmlan_linked_list)ra_list);
     util_init_list_head((t_void *)pmadapter->pmoal_handle, &ra_list->buf_head, MFALSE, MNULL);
@@ -898,7 +955,7 @@ int wlan_ralist_update_enh(mlan_private *priv, t_u8 *old_ra, t_u8 *new_ra)
     int i;
     int update_count   = 0;
     raListTbl *ra_list = MNULL;
-#ifdef CONFIG_WMM_DEBUG
+#if CONFIG_WMM_DEBUG
     raListTbl *hist_ra_list = MNULL;
 #endif
 
@@ -922,7 +979,7 @@ int wlan_ralist_update_enh(mlan_private *priv, t_u8 *old_ra, t_u8 *new_ra)
 
         (void)__memcpy(priv->adapter, ra_list->ra, new_ra, MLAN_MAC_ADDR_LENGTH);
 
-#ifdef CONFIG_WMM_DEBUG
+#if CONFIG_WMM_DEBUG
         hist_ra_list = wlan_ralist_alloc_enh(priv->adapter, old_ra);
         if (hist_ra_list != MNULL)
         {
@@ -1126,7 +1183,11 @@ void wlan_cleanup_bypass_txq(uint8_t interface)
 
         buf = (bypass_outbuf_t *)util_dequeue_list(mlan_adap->pmoal_handle, &priv->bypass_txq, MNULL, MNULL);
         priv->bypass_txq_cnt--;
-        os_mem_free((t_u8 *)buf);
+#if !CONFIG_MEM_POOLS
+        OSA_MemoryFree(buf);
+#else
+        OSA_MemoryPoolFree(buf_1536_MemoryPool, buf);
+#endif
 
         wlan_put_bypass_lock(interface);
     }

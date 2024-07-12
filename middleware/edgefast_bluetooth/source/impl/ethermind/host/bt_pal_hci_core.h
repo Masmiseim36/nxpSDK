@@ -425,8 +425,10 @@ struct _bt_dev {
 	/* Local Identity Resolving Key */
 	uint8_t			irk[CONFIG_BT_ID_MAX][16];
 
+#if (defined(CONFIG_BT_RPA_SHARING) && ((CONFIG_BT_RPA_SHARING) > 0U))
 	/* Only 1 RPA per identity */
 	bt_addr_t		rpa[CONFIG_BT_ID_MAX];
+#endif
 	/* Work used for RPA rotation */
 	struct k_work_delayable rpa_update;
 
@@ -481,7 +483,14 @@ int bt_le_set_data_len(struct bt_conn *conn, uint16_t tx_octets, uint16_t tx_tim
 int bt_le_set_phy(struct bt_conn *conn, uint8_t all_phys,
 		  uint8_t pref_tx_phy, uint8_t pref_rx_phy, uint8_t phy_opts);
 uint8_t bt_get_phy(uint8_t hci_phy);
-
+/**
+ * @brief Convert CTE type value from HCI format to @ref bt_df_cte_type format.
+ *
+ * @param hci_cte_type   CTE type in an HCI format.
+ *
+ * @return CTE type (@ref bt_df_cte_type).
+ */
+int bt_get_df_cte_type(uint8_t hci_cte_type);
 int bt_le_scan_update(bool fast_scan);
 
 int bt_le_create_conn(const struct bt_conn *conn);

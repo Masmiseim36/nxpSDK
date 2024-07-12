@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#ifdef CONFIG_EAP_FAST
+#if CONFIG_EAP_FAST
 
 #include "utils/common.h"
 #include "crypto/aes_wrap.h"

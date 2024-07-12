@@ -12,6 +12,8 @@
 #ifndef __WIFI_EVENTS_H__
 #define __WIFI_EVENTS_H__
 
+#include <osa.h>
+
 /** Wifi events */
 enum wifi_event
 {
@@ -41,8 +43,8 @@ enum wifi_event
     WIFI_EVENT_GET_HW_SPEC,
     /** Association */
     WIFI_EVENT_ASSOCIATION,
-#ifdef CONFIG_WPA_SUPP
-#ifdef CONFIG_AUTO_RECONNECT
+#if CONFIG_WPA_SUPP
+#if CONFIG_AUTO_RECONNECT
     /** Association Notify */
     WIFI_EVENT_ASSOCIATION_NOTIFY,
 #endif
@@ -63,7 +65,31 @@ enum wifi_event
     WIFI_EVENT_FW_HANG,
     /** Firmware Reset event */
     WIFI_EVENT_FW_RESET,
-#ifdef CONFIG_HOST_SLEEP
+#if CONFIG_SUBSCRIBE_EVENT_SUPPORT
+    /* WiFi RSSI High Event */
+    WIFI_EVENT_RSSI_HIGH,
+    /* WiFi SRN Low Event */
+    WIFI_EVENT_SNR_LOW,
+    /* WiFi SNR High Event */
+    WIFI_EVENT_SNR_HIGH,
+    /* WiFi Max Fail Event */
+    WIFI_EVENT_MAX_FAIL,
+    /* WiFi Beacon miised Event */
+    WIFI_EVENT_BEACON_MISSED,
+    /* WiFi Data RSSI Low Event */
+    WIFI_EVENT_DATA_RSSI_LOW,
+    /* WiFi Data RSSI High Event */
+    WIFI_EVENT_DATA_RSSI_HIGH,
+    /* WiFi Data SNR Low Event */
+    WIFI_EVENT_DATA_SNR_LOW,
+    /* WiFi Data SNR High Event */
+    WIFI_EVENT_DATA_SNR_HIGH,
+    /* WiFi Link Quality Event */
+    WIFI_EVENT_FW_LINK_QUALITY,
+    /* WiFi Pre Beacon Lost Event */
+    WIFI_EVENT_FW_PRE_BCN_LOST,
+#endif
+#if CONFIG_HOST_SLEEP
     /* Host sleep activated */
     WIFI_EVENT_HS_ACTIVATED,
     /** HS configuration */
@@ -118,7 +144,7 @@ enum wifi_event
     WIFI_EVENT_CHAN_SWITCH_ANN,
     /** Channel Switch */
     WIFI_EVENT_CHAN_SWITCH,
-#ifdef CONFIG_IPV6
+#if CONFIG_IPV6
     /** IPv6 address state change */
     WIFI_EVENT_NET_IPV6_CONFIG,
 #endif
@@ -132,12 +158,21 @@ enum wifi_event
     WIFI_EVENT_REMAIN_ON_CHANNEL,
     /* Event to indicate Management tx status */
     WIFI_EVENT_MGMT_TX_STATUS,
-#ifdef CONFIG_CSI
+#if CONFIG_CSI
     /* Recv csi data */
     WIFI_EVENT_CSI,
 #endif
+#if (CONFIG_11MC) || (CONFIG_11AZ)
+    /* Event to trigger or stop ftm*/
+    WIFI_EVENT_FTM_COMPLETE,
+#if CONFIG_WLS_CSI_PROC
+    WIFI_EVENT_WLS_CSI,
+#endif
+#endif
     /** Event to sync region code with connected AP*/
     WIFI_EVENT_SYNC_REGION_CODE,
+    /** Event to set region power*/
+    WIFI_EVENT_REGION_POWER_CFG,
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,
     /* other events can be added after this, however this must

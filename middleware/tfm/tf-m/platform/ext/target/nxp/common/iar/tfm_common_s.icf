@@ -288,6 +288,17 @@ define block TFM_PSA_ROT_LINKER_DATA with alignment = TFM_LINKER_PSA_ROT_LINKER_
        section TFM_*_PSA-ROT_ATTR_ZI object *.o,
 };
 
+initialize by copy with packing = none { readwrite, section CodeQuickAccess, section DataQuickAccess }   //NXP
+#ifndef S_RAM_CODE_START
+       except { section .textrw }
+#endif
+       ;
+define block TFM_QUICK_ACESS_ZI with alignment = 4 {
+    zi section .bss.CodeQuickAccess
+       };
+define block TFM_QUICK_ACESS_RO with alignment = 4 {
+    ro code section CodeQuickAccess
+       };  //NXP
 
     /*
      * This empty, zero long execution region is here to mark the end address
@@ -322,6 +333,8 @@ define block LR_CODE with fixed order, maximum size = S_CODE_SIZE {
 
        block TFM_PSA_CODE_END,
 
+       block TFM_QUICK_ACESS_RO,
+
 /**** APPLICATION RoT RO part (CODE + RODATA) start here */
     /*
      * This empty, zero long execution region is here to mark the start address
@@ -342,11 +355,7 @@ do not initialize  {
    section .noinit,
    rw section .ramvec
    };
-initialize by copy with packing = none { readwrite, section CodeQuickAccess, section DataQuickAccess }   //NXP
-#ifndef S_RAM_CODE_START
-       except { section .textrw }
-#endif
-       ;
+
 if (isdefinedsymbol(__USE_DLIB_PERTHREAD))
 {
   // Required in a multi-threaded application
@@ -422,7 +431,8 @@ define block PRIV_DATA with fixed order {
 #if defined(ENABLE_HEAP)
     block ARM_LIB_HEAP,
 #endif
-    section CodeQuickAccess, section DataQuickAccess, //NXP
+    block TFM_QUICK_ACESS_ZI, //NXP
+    section DataQuickAccess,  //NXP
 
     block ER_TFM_DATA,
 

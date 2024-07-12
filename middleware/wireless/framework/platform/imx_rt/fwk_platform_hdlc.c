@@ -58,7 +58,9 @@ enum
 static SERIAL_MANAGER_HANDLE_DEFINE(otTransceiverSerialHandle);
 static SERIAL_MANAGER_READ_HANDLE_DEFINE(otTransceiverSerialReadHandle);
 
+#if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0))
 static uint8_t s_ringBuffer[kMaxRingBufferSize];
+#endif
 
 static platform_hdlc_rx_callback_t hdlcRxCallback;
 static void *                      callbackParam = NULL;
@@ -81,11 +83,13 @@ static serial_port_uart_config_t uartConfig = {
 };
 
 static const serial_manager_config_t serialManagerConfig = {
+#if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0))
     .ringBuffer     = &s_ringBuffer[0],
     .ringBufferSize = sizeof(s_ringBuffer),
-    .type           = kSerialPort_Uart,
-    .blockType      = kSerialManager_NonBlocking,
-    .portConfig     = (serial_port_uart_config_t *)&uartConfig,
+#endif
+    .type       = kSerialPort_Uart,
+    .blockType  = kSerialManager_NonBlocking,
+    .portConfig = (serial_port_uart_config_t *)&uartConfig,
 };
 
 static bool hdlcUartInitialized = false;

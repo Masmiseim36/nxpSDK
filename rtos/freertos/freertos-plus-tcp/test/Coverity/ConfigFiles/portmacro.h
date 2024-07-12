@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -27,6 +27,8 @@
 
 #ifndef PORTMACRO_H
 #define PORTMACRO_H
+
+#include <stdint.h>
 
 /******************************************************************************
 *   Defines

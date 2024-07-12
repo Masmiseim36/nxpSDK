@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -75,5 +75,7 @@ void * listGET_LIST_ITEM_OWNER( const ListItem_t * listItem );
 size_t xPortGetMinimumEverFreeHeapSize( void );
 
 UBaseType_t uxGetMinimumIPQueueSpace( void );
+
+void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent );
 
 #endif /* ifndef LIST_MACRO_H */

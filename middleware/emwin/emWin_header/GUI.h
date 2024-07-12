@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -93,6 +93,9 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #define GUI_MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #define GUI_MAX(a,b)            (((a) > (b)) ? (a) : (b))
 #define GUI_ZEROFILL(p, Size)   (memset(p, 0, Size))
+#define GUI_ZEROFILL_VAR(var)   (memset(&var,    0, sizeof(var)))
+#define GUI_ZEROFILL_ARR(arr)   (memset(&arr[0], 0, sizeof(arr)))
+#define GUI_ZEROFILL_PTR(ptr)   (memset(ptr,     0, sizeof(*ptr)))
 
 /*********************************************************************
 *
@@ -273,6 +276,7 @@ struct GUI_CONTEXT {
     int xOff, yOff;
     U8 WM_IsActive;
     U8 DisableCliprect;
+    U8 ClipBKActive;
   #endif
   //
   // Array of pointers to device chains
@@ -728,6 +732,199 @@ int                                GUI_JPEG_GetInfo         (const void * pFileD
 int                                GUI_JPEG_GetInfoEx       (GUI_GET_DATA_FUNC * pfGetData, void * p, GUI_JPEG_INFO * pInfo);
 void                               GUI_JPEG_SetpfDrawEx     (int (* pfDrawEx)(GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0));
 GUI_JPEG_WRITECLIPPEDPIXELS_FUNC * GUI_JPEG_SetpfWritePixels(GUI_JPEG_WRITECLIPPEDPIXELS_FUNC * pFunc);
+
+/*********************************************************************
+*
+*       SVG file support
+*/
+/*********************************************************************
+*
+*       GUI_POINTF
+*
+*  Description
+*    Defines a point in floating point coordinates.
+*/
+typedef struct {
+  float x; // X coordinate in floating points.
+  float y; // Y coordinate in floating points.
+} GUI_POINTF;
+
+/*********************************************************************
+*
+*       GUI_MATRIX
+*
+*  Description
+*    A column-major 3x3 matrix used for all kinds of affine transformations.
+*
+*  Additional information
+*    emWin uses column-major matrices which means that the matrix elements
+*    are stored in columns from top to bottom and left to right.
+* 
+*    The order is the same as in OpenVG, therefore GUI_MATRIX is implicitly
+*    convertible to the 3x3 matrix type used in OpenVG.
+*/
+typedef struct {
+  float sx;   // The scaling factor in the x-direction.
+  float shy;  // The shearing factor in the y-direction.
+  float w0;   // Should be left as \c{0.0F} to ensure affinity.
+  float shx;  // The shearing factor in the x-direction.
+  float sy;   // Scaling factor in y.
+  float w1;   // Should be left as \c{0.0F} to ensure affinity.
+  float tx;   // The translation factor in the x-direction.
+  float ty;   // The translation factor in the y-direction. 
+  float w2;   // Should be left as \c{1.0F} to ensure affinity.
+} GUI_MATRIX;
+
+void    GUI_MATRIX_Initialize   (GUI_MATRIX * pMatrix, float sx, float shx, float tx, float shy, float sy, float ty, float w0, float w1, float w2);
+void    GUI_MATRIX_Identity     (GUI_MATRIX * pMatrix);
+float * GUI_MATRIX_GetCellPtr   (GUI_MATRIX * pMatrix, unsigned Row, unsigned Col);
+int     GUI_MATRIX_Equals       (const GUI_MATRIX * p0, const GUI_MATRIX * p1);
+void    GUI_MATRIX_Multiply     (GUI_MATRIX * pMatrix, const GUI_MATRIX * pMult);
+void    GUI_MATRIX_MultiplyPoint(const GUI_MATRIX * pMatrix, GUI_POINTF * pPoint);
+void    GUI_MATRIX_Translate    (GUI_MATRIX * pMatrix, float tx, float ty);
+void    GUI_MATRIX_Scale        (GUI_MATRIX * pMatrix, float sx, float sy);
+void    GUI_MATRIX_Rotate       (GUI_MATRIX * pMatrix, float a);
+void    GUI_MATRIX_Shear        (GUI_MATRIX * pMatrix, float shx, float shy);
+
+typedef GUI_HMEM    GUI_SVG_Handle;
+
+/*********************************************************************
+*
+*       GUI_SVG_VIEWBOX
+*
+*  Description
+*    The SVG's view box, as it is defined by the \c{viewBox} attribute
+*    in the \c{<svg>} tag.
+*/
+typedef struct {
+  float x;      // X position of the view box.
+  float y;      // Y position of the view box.
+  float xSize;  // Width of the view box.
+  float ySize;  // Height of the view box.
+} GUI_SVG_VIEWBOX;
+
+/*********************************************************************
+*
+*       GUI_SVG_BBOX
+*
+*  Description
+*    Boundary box of an SVG based on the currently set parameters like position,
+*    scaling, rotation, etc.
+*/
+typedef struct {
+  float xMin;  // Minimum X position on the display in floating point coordinates.
+  float yMin;  // Minimum Y position on the display in floating point coordinates.
+  float xMax;  // Maximum X position on the display in floating point coordinates.
+  float yMax;  // Maximum Y position on the display in floating point coordinates.
+} GUI_SVG_BBOX;
+
+/*********************************************************************
+*
+*       GUI_SVG_INFO
+*
+*  Description
+*    Information about an SVG document, generated by the \c{GUI_SVG_GetInfo...()}
+*    functions.
+* 
+*  Additional information
+*    In case the \c{"width"} and \c{"height"} attributes of the SVG are in any other
+*    unit than pixels, the dimensions will be converted into pixels internally.
+*    Therefore, the struct members Width and Height are always in pixels.
+*    The conversion from other units into pixels is done using the currently set DPI
+*    (see GUI_SVG_SetDPI()).
+*/
+typedef struct {
+  GUI_SVG_VIEWBOX ViewBox;  // Viewbox of the SVG, defines the coordinate range.
+  GUI_SVG_BBOX    BBox;     // Boundary box of the SVG, based on the currently set affine transformation matrix.
+  float           xSize;    // Viewport width of the SVG, defined by the \c{"width"} attribute in the \c{<svg>} tag.
+  float           ySize;    // Viewport height of the SVG, defined by the \c{"height"} attribute in the \c{<svg>} tag.
+} GUI_SVG_INFO;
+
+/*********************************************************************
+*
+*       GUI_SVG_HOOKS
+*
+*  Description
+*    Allows to hook in into various spots during the SVG drawing process.
+* 
+*    Only the desired hooks need to be set. The hooks can be set with GUI_SVG_SetHooks().
+*/
+typedef struct {
+  U8   (* pfPreInitDriverHook) (void);  // Called before the SVG driver is initialized. Returns 1 on error
+                                        // to abort the driver initialization.
+  U8   (* pfPostInitDriverHook)(void);  // Called when the SVG driver initialization has finished. Returns 1 on error
+                                        // to abort the driver initialization.
+  void (* pfDeinitDriverHook)  (void);  // Called after the SVG driver has been de-initialized.
+  void (* pfSwitchBufferHook)  (void);  // Called during the drawing process, after the drawing commands have been flushed.
+  void (* pfBeginDrawPreHook)  (void);  // Called before the initialization of the drawing process of an SVG.
+  void (* pfBeginDrawPostHook) (void);  // Called at the end of the initialization of the drawing process of an SVG.
+  void (* pfEndDrawHook)       (void);  // Called once the SVG drawing process has finished.
+} GUI_SVG_HOOKS;
+
+/*********************************************************************
+*
+*       GUI_SVG_LOAD_API_CALLBACK
+*
+*  Description
+*    Callback used to load a given routine. The callback receives the
+*    name of the routine to be loaded as a string and should return its
+*    address as a void function pointer.
+* 
+*    The main use case of this callback is to load a function from a DLL.
+* 
+*  Parameters
+*    sFunction: [IN] Name of the routine to be loaded as a zero-terminated
+*                    string.
+*  
+*  Return value
+*    Address of the function casted to a void function pointer.
+*/
+typedef void (* GUI_SVG_LOAD_API_CALLBACK(const char * sFunction))(void);
+
+//
+// SVG module related
+//
+int      GUI_SVG_Enable           (int Enable);
+void     GUI_SVG_EnablePNG        (void);
+void     GUI_SVG_EnableJPEG       (void);
+void     GUI_SVG_EnableGIF        (void);
+void     GUI_SVG_EnableBMP        (void);
+unsigned GUI_SVG_SetDPI           (unsigned NumDotsPerInch);
+unsigned GUI_SVG_SetFileBufferSize(unsigned NumBytes);
+void     GUI_SVG_SetHooks         (const GUI_SVG_HOOKS * pHooks);
+//
+// SVG drawing API
+//
+int GUI_SVG_Draw               (const void * pFile, U32 FileSize, float x, float y);
+int GUI_SVG_DrawEx             (GUI_GET_DATA_FUNC * pfGetData, void * p, float x, float y);
+int GUI_SVG_DrawScaled         (const void * pFile, U32 FileSize, float x, float y, float Scale);
+int GUI_SVG_DrawScaledEx       (GUI_GET_DATA_FUNC * pfGetData, void * p, float x, float y, float Scale);
+int GUI_SVG_DrawScaledRotated  (const void * pFile, U32 FileSize, float x, float y, float Scale, float Angle);
+int GUI_SVG_DrawScaledRotatedEx(GUI_GET_DATA_FUNC * pfGetData, void * p, float x, float y, float Scale, float Angle);
+//
+// SVG handle API
+//
+GUI_SVG_Handle GUI_SVG_Create         (const void * pFile, U32 FileSize);
+GUI_SVG_Handle GUI_SVG_CreateEx       (GUI_GET_DATA_FUNC * pfGetData, void * p);
+void           GUI_SVG_Delete         (GUI_SVG_Handle hSVG);
+int            GUI_SVG_DrawH          (GUI_SVG_Handle hSVG, float x, float y);
+void           GUI_SVG_Identity       (GUI_SVG_Handle hSVG);
+void           GUI_SVG_EnableCacheMode(GUI_SVG_Handle hSVG, int Enable);
+int            GUI_SVG_Render         (GUI_SVG_Handle hSVG);
+void           GUI_SVG_Rotate         (GUI_SVG_Handle hSVG, float Angle);
+void           GUI_SVG_RotateEx       (GUI_SVG_Handle hSVG, float Angle, float x, float y);
+void           GUI_SVG_Scale          (GUI_SVG_Handle hSVG, float xScale, float yScale);
+void           GUI_SVG_ScaleEx        (GUI_SVG_Handle hSVG, float xScale, float yScale, float x, float y);
+void           GUI_SVG_ScaleToSize    (GUI_SVG_Handle hSVG, float xSize, float ySize);
+void           GUI_SVG_SetBkColor     (GUI_SVG_Handle hSVG, GUI_COLOR BkColor);
+void           GUI_SVG_Transform      (GUI_SVG_Handle hSVG, const GUI_MATRIX * pMatrix);
+void           GUI_SVG_Translate      (GUI_SVG_Handle hSVG, float x, float y);
+//
+// Info API
+//
+int GUI_SVG_GetInfo  (const void * pFile, U32 FileSize, GUI_SVG_INFO * pInfo);
+int GUI_SVG_GetInfoEx(GUI_GET_DATA_FUNC * pfGetData, void * p, GUI_SVG_INFO * pInfo);
+int GUI_SVG_GetInfoH (GUI_SVG_Handle hSVG, GUI_SVG_INFO * pInfo);
 
 /*********************************************************************
 *
@@ -1189,6 +1386,11 @@ GUI_ALLOC_DATATYPE GUI_ALLOC_GetNumUsedBlocks(void);
 GUI_ALLOC_DATATYPE GUI_ALLOC_GetNumUsedBytes (void);
 GUI_ALLOC_DATATYPE GUI_ALLOC_GetMaxUsedBytes (void);
 
+void * GUI_ALLOC_calloc (size_t NumItems, size_t Size);
+void   GUI_ALLOC_free   (void * p);
+void * GUI_ALLOC_malloc (size_t Size);
+void * GUI_ALLOC_realloc(void * p, size_t NewSize);
+
 void GUI_ALLOC_GetMemInfo  (GUI_ALLOC_INFO * pInfo);
 void GUI_ALLOC_SuppressPeak(int OnOff);
 
@@ -1205,12 +1407,12 @@ GUI_ALLOC_DATATYPE GUI_ALLOC_GetMaxSize      (void);
 GUI_ALLOC_DATATYPE GUI_ALLOC_GetSize         (GUI_HMEM  hMem);
 void *             GUI_ALLOC_h2p             (GUI_HMEM  hMem);
 GUI_HMEM           GUI_ALLOC_p2h             (void * p);
-void               GUI_ALLOC_Init            (void);
 void               GUI_ALLOC_Lock            (void);
 void *             GUI_ALLOC_LockH           (GUI_HMEM  hMem);
 GUI_HMEM           GUI_ALLOC_Realloc         (GUI_HMEM hOld, int NewSize);
 GUI_ALLOC_DATATYPE GUI_ALLOC_RequestSize     (void);
 void               GUI_ALLOC_SetAvBlockSize  (U32 BlockSize);
+void               GUI_ALLOC_SetShortOfRAM   (void (* pfOnShortOfRAM)(void));
 void               GUI_ALLOC_Unlock          (void);
 void *             GUI_ALLOC_UnlockH         (void ** pp);
 int                GUI_ALLOC_SetMaxPercentage(int MaxPercentage);
@@ -1325,11 +1527,12 @@ int                        GUI_MEMDEV_MULTIBUF_Enable     (int OnOff);
 
 /* Private functions */
 void                       GUI_MEMDEV__ClearCanvas        (void);
+void                       GUI_MEMDEV__ClearCanvasEx      (U8 SetActive);
 void                       GUI_MEMDEV__FadeDevice         (GUI_MEMDEV_Handle hMemWin, GUI_MEMDEV_Handle hMemBk, GUI_MEMDEV_Handle hMemDst, U8 Intens);
 void                       GUI_MEMDEV__FadeDeviceEx       (GUI_MEMDEV_Handle hMemWin, GUI_MEMDEV_Handle hMemBk, GUI_MEMDEV_Handle hMemDst, U8 Intens, int xPosWin, int yPosWin);
 void                       GUI_MEMDEV__Rotate             (GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, int dx, int dy, int a, int Mag, U32 Mask);
 void                       GUI_MEMDEV__RotateHR           (GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, I32 dx, I32 dy, int a, int Mag, U32 Mask);
-void                       GUI_MEMDEV__SetCanvas          (GUI_MEMDEV_Handle hMem);
+U8                         GUI_MEMDEV__SetCanvas          (GUI_MEMDEV_Handle hMem);
 
 void  GUI_SelectLCD(void);
 
@@ -1350,6 +1553,105 @@ void GUI_MEMDEV_SetRotateFuncLR(int (* pfRotate)(GUI_MEMDEV_Handle hSrc, GUI_MEM
 void GUI_MEMDEV_SetRotateFuncHR(int (* pfRotate)(GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, int dx, int dy, int a, int Mag));
 
 void GUI_MEMDEV_SetBlendFunc(int (* pfBlend)(GUI_MEMDEV_Handle hMem, GUI_COLOR Color, U8 BlendIntens));
+
+/*********************************************************************
+*
+*       Memory bitmaps
+*/
+typedef struct {
+  U8     Cmd;
+  int    xSize;
+  int    ySize;
+  void * pExtra;
+} GUI_MBITMAP_PARAM;
+
+typedef struct {
+  GUI_BITMAP Bitmap;
+  void *     pExtra;
+  void *     pData;
+} GUI_MBITMAP;
+
+typedef int               GUI_MBITMAP_DRAW_IMAGE   (const void * p, int Size, GUI_MBITMAP_PARAM * pPara);
+typedef int               GUI_MBITMAP_DRAW_IMAGE_EX(GUI_GET_DATA_FUNC * pfGetData, void * p, GUI_MBITMAP_PARAM * pPara);
+typedef GUI_MEMDEV_Handle GUI_MBITMAP_CREATE_MEMDEV(int xSize, int ySize, void * pExtra);
+typedef void              GUI_MBITMAP_DELETE_MEMDEV(GUI_MEMDEV_Handle hMem, void * pExtra);
+
+typedef struct {
+  GUI_MBITMAP_CREATE_MEMDEV * pfCreateMemdev;
+  GUI_MBITMAP_DELETE_MEMDEV * pfDeleteMemdev;
+  void *                      pExtra;
+} GUI_MBITMAP_CONFIG;
+
+//
+// GUI_MBITMAP prototypes
+//
+GUI_MBITMAP * GUI_MBITMAP_Create        (GUI_MBITMAP_DRAW_IMAGE * pFuncDraw, const void * pData, int SizeOfData);
+GUI_MBITMAP * GUI_MBITMAP_CreateEx      (GUI_MBITMAP_DRAW_IMAGE_EX * pFuncDrawEx, GUI_GET_DATA_FUNC * pfGetData, void * p);
+GUI_MBITMAP * GUI_MBITMAP_CreateUser    (GUI_MBITMAP_DRAW_IMAGE * pFuncDraw, const void * pData, int SizeOfData, int xSize, int ySize, GUI_MBITMAP_CONFIG * pConfig);
+GUI_MBITMAP * GUI_MBITMAP_CreateUserEx  (GUI_MBITMAP_DRAW_IMAGE_EX * pFuncDrawEx, GUI_GET_DATA_FUNC * pfGetData, void * p, int xSize, int ySize, GUI_MBITMAP_CONFIG * pConfig);
+void          GUI_MBITMAP_Delete        (GUI_MBITMAP * pMBitmap);
+void          GUI_MBITMAP_SetColorFormat(const GUI_DEVICE_API * pDeviceAPI, const LCD_API_COLOR_CONV * pColorConvAPI);
+
+//
+// Drawing functions
+//
+#define GUI_MBITMAP_DRAW_FUNC(TYPE)     int GUI_MBITMAP_Draw##TYPE(const void * p, int Size, GUI_MBITMAP_PARAM * pPara);
+#define GUI_MBITMAP_DRAW_FUNC_EX(TYPE)  int GUI_MBITMAP_Draw##TYPE##Ex(GUI_GET_DATA_FUNC * pfGetData, void * p, GUI_MBITMAP_PARAM * pPara);
+
+//
+// Create prototypes
+//
+GUI_MBITMAP_DRAW_FUNC(Bitmap)
+GUI_MBITMAP_DRAW_FUNC(BMP)
+GUI_MBITMAP_DRAW_FUNC(DTA)
+GUI_MBITMAP_DRAW_FUNC(GIF)
+GUI_MBITMAP_DRAW_FUNC(JPEG)
+GUI_MBITMAP_DRAW_FUNC(PNG)
+GUI_MBITMAP_DRAW_FUNC(SVG)
+GUI_MBITMAP_DRAW_FUNC_EX(BMP)
+GUI_MBITMAP_DRAW_FUNC_EX(DTA)
+GUI_MBITMAP_DRAW_FUNC_EX(GIF)
+GUI_MBITMAP_DRAW_FUNC_EX(JPEG)
+GUI_MBITMAP_DRAW_FUNC_EX(PNG)
+GUI_MBITMAP_DRAW_FUNC_EX(SVG)
+
+//
+//  Allow drawing types are:
+//   "Bitmap"
+//   "BMP"  - "BMPEx"
+//   "DTA"  - "DTAEx"
+//   "GIF"  - "GIFEx"
+//   "JPEG" - "JPEGEx"
+//   "PNG"  - "PNGEx"
+//   "SVG"  - "SVGEx"
+//
+#define GUI_MBITMAP_DRAW(TYPE)   GUI_MBITMAP_Draw##TYPE
+
+#define GUI_MBITMAP_BITMAP  GUI_MBITMAP_DRAW(Bitmap)
+#define GUI_MBITMAP_BMP     GUI_MBITMAP_DRAW(BMP)
+#define GUI_MBITMAP_DTA     GUI_MBITMAP_DRAW(DTA)
+#define GUI_MBITMAP_GIF     GUI_MBITMAP_DRAW(GIF)
+#define GUI_MBITMAP_JPEG    GUI_MBITMAP_DRAW(JPEG)
+#define GUI_MBITMAP_PNG     GUI_MBITMAP_DRAW(PNG)
+#define GUI_MBITMAP_SVG     GUI_MBITMAP_DRAW(SVG)
+#define GUI_MBITMAP_BMP_EX  GUI_MBITMAP_DRAW(BMPEx)
+#define GUI_MBITMAP_DTA_EX  GUI_MBITMAP_DRAW(DTAEx)
+#define GUI_MBITMAP_GIF_EX  GUI_MBITMAP_DRAW(GIFEx)
+#define GUI_MBITMAP_JPEG_EX GUI_MBITMAP_DRAW(JPEGEx)
+#define GUI_MBITMAP_PNG_EX  GUI_MBITMAP_DRAW(PNGEx)
+#define GUI_MBITMAP_SVG_EX  GUI_MBITMAP_DRAW(SVGEx)
+
+//
+// Conversion macro from GUI_MBITMAP to GUI_BITMAP
+//
+#define GUI_MBITMAP_2BITMAP(x)      ((GUI_BITMAP *)x)
+
+//
+// Commands used by drawing functions
+//
+#define GUI_MBITMAP_CMD_XSIZE  (0)
+#define GUI_MBITMAP_CMD_YSIZE  (1)
+#define GUI_MBITMAP_CMD_DRAW   (2)
 
 /*********************************************************************
 *
@@ -1532,8 +1834,8 @@ I32 GUI_ANIM__AccelDecel(GUI_TIMER_TIME ts, GUI_TIMER_TIME te, GUI_TIMER_TIME tN
 
 int             GUI_ANIM_AddItem          (GUI_ANIM_HANDLE hAnim, GUI_TIMER_TIME ts, GUI_TIMER_TIME te, GUI_ANIM_GETPOS_FUNC pfGetPos, void * pVoid, GUI_ANIMATION_FUNC * pfAnim);
 int             GUI_ANIM_AddItemById      (I16 Id,                GUI_TIMER_TIME ts, GUI_TIMER_TIME te, GUI_ANIM_GETPOS_FUNC pfGetPos, void * pVoid, GUI_ANIMATION_FUNC * pfAnim);
-GUI_ANIM_HANDLE GUI_ANIM_Create           (GUI_TIMER_TIME Period, unsigned MinTimePerFrame, void * pVoid, void (* pfSlice)(int State, void * _pVoid));
-GUI_ANIM_HANDLE GUI_ANIM_CreateWithId     (GUI_TIMER_TIME Period, unsigned MinTimePerSlice, void * pVoid, void (* pfSlice)(int State, void * _pVoid), I16 Id);
+GUI_ANIM_HANDLE GUI_ANIM_Create           (GUI_TIMER_TIME Period, unsigned MinTimePerFrame, void * pVoid, void (* pfSlice)(int, void *));
+GUI_ANIM_HANDLE GUI_ANIM_CreateWithId     (GUI_TIMER_TIME Period, unsigned MinTimePerSlice, void * pVoid, void (* pfSlice)(int, void *), I16 Id);
 void            GUI_ANIM_Delete           (GUI_ANIM_HANDLE hAnim);
 int             GUI_ANIM_DeleteById       (I16 Id);
 void            GUI_ANIM_DeleteAll        (void);
@@ -1544,6 +1846,7 @@ GUI_ANIM_HANDLE GUI_ANIM_GetFirst         (void);
 void          * GUI_ANIM_GetItemData      (GUI_ANIM_HANDLE hAnim, unsigned Index);
 GUI_ANIM_HANDLE GUI_ANIM_GetNext          (GUI_ANIM_HANDLE hAnim);
 int             GUI_ANIM_GetNumItems      (GUI_ANIM_HANDLE hAnim);
+GUI_TIMER_TIME  GUI_ANIM_GetPeriod        (GUI_ANIM_HANDLE hAnim);
 int             GUI_ANIM_Exec             (GUI_ANIM_HANDLE hAnim);
 int             GUI_ANIM_IsRunning        (GUI_ANIM_HANDLE hAnim);
 void            GUI_ANIM_SetData          (GUI_ANIM_HANDLE hAnim, void * pVoid);
@@ -1737,8 +2040,9 @@ int     GUI_MessageBox   (const char * sMessage, const char * sCaption, int Flag
 #define GUI_AA_NOTRANS 1  // Foreground color mixed up with current background color
 
 void GUI_AA_DisableHiRes      (void);
-void GUI_AA_DrawPie           (int x0, int y0, int r, I32 a0, I32 a1);
 void GUI_AA_EnableHiRes       (void);
+int  GUI_AA_IsHiResEnabled    (void);
+void GUI_AA_DrawPie           (int x0, int y0, int r, I32 a0, I32 a1);
 int  GUI_AA_GetFactor         (void);
 void GUI_AA_SetFactor         (int Factor);
 void GUI_AA_DrawArc           (int x0, int y0, int rx, int ry, int a0, int a1);
@@ -1982,9 +2286,9 @@ extern const GUI_BITMAP_METHODS GUI_BitmapMethodsAM565;
 extern const GUI_BITMAP_METHODS GUI_BitmapMethodsA555;
 extern const GUI_BITMAP_METHODS GUI_BitmapMethodsAM555;
 
-#define GUI_COMPRESS_RLE1 0
-#define GUI_COMPRESS_RLE4 0
-#define GUI_COMPRESS_RLE8 0
+#define GUI_COMPRESS_RLE1 0  // Used to initialize GUI_BITMAP struct if saved with the Bitmap Converter as RLE bitmap
+#define GUI_COMPRESS_RLE4 0  // Used to initialize GUI_BITMAP struct if saved with the Bitmap Converter as RLE bitmap
+#define GUI_COMPRESS_RLE8 0  // Used to initialize GUI_BITMAP struct if saved with the Bitmap Converter as RLE bitmap
 
 #define GUI_DRAW_RLE1          &GUI_BitmapMethodsRLE1           /* Method table ! */
 #define GUI_DRAW_RLE4          &GUI_BitmapMethodsRLE4           /* Method table ! */

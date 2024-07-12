@@ -385,7 +385,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/config</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -405,6 +404,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -731,7 +731,7 @@
       <name>BUILDACTION</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
+        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
         <postbuild/>
       </data>
     </settings>
@@ -1514,7 +1514,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/config</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1534,6 +1533,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1860,7 +1860,7 @@
       <name>BUILDACTION</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
+        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
         <postbuild/>
       </data>
     </settings>
@@ -2721,12 +2721,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2740,6 +2734,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

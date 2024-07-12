@@ -1749,22 +1749,28 @@ static void MMC_DecodeCid(mmc_card_t *card, uint32_t *rawCid)
 
     mmc_cid_t *cid;
 
+    /*
+     * The decoding of CID register is base on JEDEC Standard 84-B51 which can
+     * support eMMC v5.0/5.1. JEDEC maintains the compatibility with older
+     * versions like eMMC v4.1.
+     */
     cid                 = &(card->cid);
     cid->manufacturerID = (uint8_t)((rawCid[3U] & 0xFF000000U) >> 24U);
-    cid->applicationID  = (uint16_t)((rawCid[3U] & 0xFFFF00U) >> 8U);
+    cid->applicationID = (uint16_t)((rawCid[3U] & 0xFF00U) >> 8U);
 
     cid->productName[0U] = (uint8_t)((rawCid[3U] & 0xFFU));
     cid->productName[1U] = (uint8_t)((rawCid[2U] & 0xFF000000U) >> 24U);
     cid->productName[2U] = (uint8_t)((rawCid[2U] & 0xFF0000U) >> 16U);
     cid->productName[3U] = (uint8_t)((rawCid[2U] & 0xFF00U) >> 8U);
     cid->productName[4U] = (uint8_t)((rawCid[2U] & 0xFFU));
+    cid->productName[5U] = (uint8_t)((rawCid[1U] & 0xFF000000U) >> 24U);
 
-    cid->productVersion = (uint8_t)((rawCid[1U] & 0xFF000000U) >> 24U);
+    cid->productVersion = (uint8_t)((rawCid[1U] & 0xFF0000U) >> 16U);
 
-    cid->productSerialNumber = (uint32_t)((rawCid[1U] & 0xFFFFFFU) << 8U);
-    cid->productSerialNumber |= (uint32_t)((rawCid[0U] & 0xFF000000U) >> 24U);
+    cid->productSerialNumber = (uint32_t)((rawCid[1U] & 0xFFFFU) << 16U);
+    cid->productSerialNumber |= (uint32_t)((rawCid[0U] & 0xFFFF0000U) >> 16U);
 
-    cid->manufacturerData = (uint8_t)((rawCid[0U] & 0xFFF00U) >> 8U);
+    cid->manufacturerData = (uint8_t)((rawCid[0U] & 0xFF00U) >> 8U);
 }
 
 static status_t MMC_AllSendCid(mmc_card_t *card)

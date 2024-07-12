@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -591,13 +591,36 @@ typedef struct tGUI_SIF_APIList_struct {
 } tGUI_SIF_APIList;
 
 #define GUI_SIF_TYPE              tGUI_SIF_APIList
+//
+// Old macros left for compatibility.
+//
 #define GUI_SIF_TYPE_PROP         &GUI_SIF_APIList_Prop
 #define GUI_SIF_TYPE_PROP_EXT     &GUI_SIF_APIList_Prop_Ext
-#define GUI_SIF_TYPE_PROP_FRM     &GUI_SIF_APIList_Prop_Frm
 #define GUI_SIF_TYPE_PROP_AA2     &GUI_SIF_APIList_Prop_AA2
 #define GUI_SIF_TYPE_PROP_AA4     &GUI_SIF_APIList_Prop_AA4
 #define GUI_SIF_TYPE_PROP_AA2_EXT &GUI_SIF_APIList_Prop_AA2_EXT
 #define GUI_SIF_TYPE_PROP_AA4_EXT &GUI_SIF_APIList_Prop_AA4_EXT
+
+
+/*********************************************************************
+*
+*       SIF font types
+* 
+*  Description
+*    Available font type defines to be used by the \a{pFontType} parameter in function GUI_SIF_CreateFont().
+*/
+//
+// New macros: 'standard' renamed to 'legacy', 'extended' renamed to 'standard'.
+// Macro for framed fonts was left unchanged.
+//
+#define GUI_SIF_TYPE_PROP_LEG       GUI_SIF_TYPE_PROP            // Should be used if the parameter \a{pFont} points to a legacy proportional font.
+#define GUI_SIF_TYPE_PROP_LEG_AA2   GUI_SIF_TYPE_PROP_AA2        // Should be used if the parameter \a{pFont} points to a legacy proportional font that uses 2bpp anti-aliasing.
+#define GUI_SIF_TYPE_PROP_LEG_AA4   GUI_SIF_TYPE_PROP_AA4        // Should be used if the parameter \a{pFont} points to a legacy proportional font that uses 4bpp anti-aliasing.
+#define GUI_SIF_TYPE_PROP_FRM       &GUI_SIF_APIList_Prop_Frm    // Should be used if the parameter \a{pFont} points to a standard proportional framed font.
+#define GUI_SIF_TYPE_PROP_STD       GUI_SIF_TYPE_PROP_EXT        // Should be used if the parameter \a{pFont} points to a standard proportional font.
+#define GUI_SIF_TYPE_PROP_STD_AA2   GUI_SIF_TYPE_PROP_AA2_EXT    // Should be used if the parameter \a{pFont} points to a standard proportional font that uses 2bpp anti-aliasing.
+#define GUI_SIF_TYPE_PROP_STD_AA4   GUI_SIF_TYPE_PROP_AA4_EXT    // Should be used if the parameter \a{pFont} points to a standard proportional font that uses 4bpp anti-aliasing.
+
 
 /*********************************************************************
 *
@@ -622,11 +645,31 @@ typedef struct tGUI_XBF_APIList_struct {
 } tGUI_XBF_APIList;
 
 #define GUI_XBF_TYPE              tGUI_XBF_APIList
+//
+// Old macros left for compatibility.
+//
 #define GUI_XBF_TYPE_PROP         &GUI_XBF_APIList_Prop
 #define GUI_XBF_TYPE_PROP_EXT     &GUI_XBF_APIList_Prop_Ext
-#define GUI_XBF_TYPE_PROP_FRM     &GUI_XBF_APIList_Prop_Frm
 #define GUI_XBF_TYPE_PROP_AA2_EXT &GUI_XBF_APIList_Prop_AA2_Ext
 #define GUI_XBF_TYPE_PROP_AA4_EXT &GUI_XBF_APIList_Prop_AA4_Ext
+
+/*********************************************************************
+*
+*       XBF font types
+* 
+*  Description
+*    Available font type defines to be used by the \a{pFontType} parameter in function GUI_XBF_CreateFont().
+*/
+//
+// New macros: 'standard' renamed to 'legacy', 'extended' renamed to 'standard'.
+// Macro for framed fonts was left unchanged.
+//
+#define GUI_XBF_TYPE_PROP_LEG         GUI_XBF_TYPE_PROP            // Should be used if the parameter \a{pFont} points to a legacy proportional font.
+#define GUI_XBF_TYPE_PROP_FRM         &GUI_XBF_APIList_Prop_Frm    // Should be used if the parameter \a{pFont} points to a standard proportional font.
+#define GUI_XBF_TYPE_PROP_STD         GUI_XBF_TYPE_PROP_EXT        // Should be used if the parameter \a{pFont} points to a standard framed proportional font.
+#define GUI_XBF_TYPE_PROP_STD_AA2     GUI_XBF_TYPE_PROP_AA2_EXT    // Should be used if the parameter \a{pFont} points to a standard proportional font that uses 2bpp anti-aliasing.
+#define GUI_XBF_TYPE_PROP_STD_AA4     GUI_XBF_TYPE_PROP_AA4_EXT    // Should be used if the parameter \a{pFont} points to a standard proportional font that uses 4bpp anti-aliasing.
+
 
 /*********************************************************************
 *

@@ -239,8 +239,6 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_e
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/vorbis_dec/fusionf1/include/vorbis_dec)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
@@ -288,6 +286,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framew
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
 
@@ -345,8 +345,6 @@ add_executable(dsp_xaf_usb_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h"
@@ -511,6 +509,8 @@ add_executable(dsp_xaf_usb_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../srtm_utils.c"
 "${ProjDirPath}/../srtm_utils.h"
 "${ProjDirPath}/../ringbuffer.c"
@@ -574,8 +574,6 @@ add_executable(dsp_xaf_usb_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h"
@@ -740,6 +738,8 @@ add_executable(dsp_xaf_usb_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../srtm_utils.c"
 "${ProjDirPath}/../srtm_utils.h"
 "${ProjDirPath}/../ringbuffer.c"

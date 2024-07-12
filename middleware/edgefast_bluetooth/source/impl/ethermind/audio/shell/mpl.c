@@ -22,11 +22,11 @@
 #include <bluetooth/audio/media_proxy.h>
 #include "mpl_internal.h"
 
-#define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_DEBUG_MPL)
+#define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_MPL_LOG_LEVEL_DBG)
 #define LOG_MODULE_NAME bt_mpl_shell
 #include "fsl_component_log.h"
 
-#if (defined(CONFIG_BT_DEBUG_MPL) && (CONFIG_BT_DEBUG_MPL > 0)) && \
+#if (defined(CONFIG_BT_MPL_LOG_LEVEL_DBG) && (CONFIG_BT_MPL_LOG_LEVEL_DBG > 0)) && \
 	(defined(CONFIG_BT_TESTING) && (CONFIG_BT_TESTING > 0))
 static shell_status_t cmd_mpl_test_set_media_state(shell_handle_t sh, int32_t argc, char *argv[])
 {
@@ -59,16 +59,16 @@ static shell_status_t cmd_mpl_test_unset_parent_group(shell_handle_t sh, int32_t
 	return kStatus_SHELL_Success;
 }
 #endif /* CONFIG_BT_MPL_OBJECTS */
-#endif /* CONFIG_BT_DEBUG_MPL && CONFIG_BT_TESTING */
+#endif /* CONFIG_BT_MPL_LOG_LEVEL_DBG && CONFIG_BT_TESTING */
 
-#if (defined(CONFIG_BT_DEBUG_MPL) && (CONFIG_BT_DEBUG_MPL > 0))
+#if (defined(CONFIG_BT_MPL_LOG_LEVEL_DBG) && (CONFIG_BT_MPL_LOG_LEVEL_DBG > 0))
 static shell_status_t cmd_mpl_debug_dump_state(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	mpl_debug_dump_state();
 
 	return kStatus_SHELL_Success;
 }
-#endif /* CONFIG_BT_DEBUG_MPL */
+#endif /* CONFIG_BT_MPL_LOG_LEVEL_DBG */
 
 static shell_status_t cmd_media_proxy_pl_init(shell_handle_t sh, int32_t argc, char *argv[])
 {
@@ -195,22 +195,22 @@ static shell_status_t cmd_mpl(shell_handle_t sh, int32_t argc, char *argv[])
 }
 
 SHELL_STATIC_SUBCMD_SET_CREATE(mpl_cmds,
-#if (defined(CONFIG_BT_DEBUG_MPL) && (CONFIG_BT_DEBUG_MPL > 0)) && \
+#if (defined(CONFIG_BT_MPL_LOG_LEVEL_DBG) && (CONFIG_BT_MPL_LOG_LEVEL_DBG > 0)) && \
 	(defined(CONFIG_BT_TESTING) && (CONFIG_BT_TESTING > 0))
 	SHELL_CMD_ARG(test_set_media_state, NULL,
 		      "Set the media player state (test) <state>",
 		      cmd_mpl_test_set_media_state, 2, 0),
-#if CONFIG_BT_MPL_OBJECTS
+#if defined(CONFIG_BT_MPL_OBJECTS) && (CONFIG_BT_MPL_OBJECTS > 0)
 	SHELL_CMD_ARG(test_unset_parent_group, NULL,
 		      "Set current group to be its own parent (test)",
 		      cmd_mpl_test_unset_parent_group, 1, 0),
 #endif /* CONFIG_BT_MPL_OBJECTS */
-#endif /* CONFIG_BT_DEBUG_MPL && CONFIG_BT_TESTING */
-#if (defined(CONFIG_BT_DEBUG_MPL) && (CONFIG_BT_DEBUG_MPL > 0))
+#endif /* CONFIG_BT_MPL_LOG_LEVEL_DBG && CONFIG_BT_TESTING */
+#if (defined(CONFIG_BT_MPL_LOG_LEVEL_DBG) && (CONFIG_BT_MPL_LOG_LEVEL_DBG > 0))
 	SHELL_CMD_ARG(debug_dump_state, NULL,
 		      "Dump media player's state as debug output (debug)",
 		      cmd_mpl_debug_dump_state, 1, 0),
-#endif /* CONFIG_BT_DEBUG_MPL */
+#endif /* CONFIG_BT_MPL_LOG_LEVEL_DBG */
 	SHELL_CMD_ARG(init, NULL,
 		      "Initialize media player",
 		      cmd_media_proxy_pl_init, 1, 0),

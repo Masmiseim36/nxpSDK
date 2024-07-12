@@ -38,7 +38,7 @@ typedef struct _mlan_list_head
     /** Pointer to next node */
     struct _mlan_linked_list *pnext;
     /** Pointer to lock */
-    t_void *plock;
+    OSA_SEMAPHORE_HANDLE_DEFINE(plock);
 } mlan_list_head, *pmlan_list_head;
 
 /**
@@ -51,7 +51,7 @@ typedef struct _mlan_list_head
 static INLINE t_void util_init_list(pmlan_linked_list phead)
 {
     /* Both next and prev point to self */
-    phead->pprev = phead->pnext = (pmlan_linked_list)phead;
+    phead->pnext = phead->pprev = (pmlan_linked_list)phead;
 }
 
 /**
@@ -66,17 +66,13 @@ static INLINE t_void util_init_list(pmlan_linked_list phead)
 static INLINE t_void util_init_list_head(t_void *pmoal_handle,
                                          pmlan_list_head phead,
                                          bool lock_required,
-                                         mlan_status (*moal_init_lock)(t_void *handle, t_void **pplock))
+                                         mlan_status (*moal_init_lock)(t_void *handle, t_void *plock))
 {
     /* Both next and prev point to self */
     util_init_list((pmlan_linked_list)(void *)phead);
     if (lock_required != 0U)
     {
         (void)moal_init_lock(pmoal_handle, &phead->plock);
-    }
-    else
-    {
-        phead->plock = MNULL;
     }
 }
 
@@ -93,7 +89,8 @@ static INLINE t_void util_free_list_head(t_void *pmoal_handle,
                                          mlan_status (*moal_free_lock)(t_void *handle, t_void *plock))
 {
     phead->pprev = phead->pnext = MNULL;
-    if (phead->plock != MNULL)
+
+    if (moal_free_lock != MNULL)
     {
         (void)moal_free_lock(pmoal_handle, phead->plock);
     }
@@ -306,7 +303,7 @@ static INLINE t_void util_scalar_init(t_void *pmoal_handle,
                                       pmlan_scalar pscalar,
                                       t_s32 val,
                                       t_void *plock_to_use,
-                                      mlan_status (*moal_init_lock)(t_void *handle, t_void **pplock))
+                                      mlan_status (*moal_init_lock)(t_void *handle, t_void *plock))
 {
     pscalar->value = val;
     pscalar->flags = 0;

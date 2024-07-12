@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -28,11 +28,11 @@
 #ifndef PORTMACRO_H
     #define PORTMACRO_H
 
+    #include <limits.h>
+
     #ifdef __cplusplus
         extern "C" {
     #endif
-
-    #include <limits.h>
 
 /*-----------------------------------------------------------
  * Port specific definitions.
@@ -78,7 +78,7 @@
 
     #define portYIELD()                                 vPortYield()
 
-    #define portEND_SWITCHING_ISR( xSwitchRequired )    if( xSwitchRequired != pdFALSE ) vPortYield()
+    #define portEND_SWITCHING_ISR( xSwitchRequired )    if( xSwitchRequired != pdFALSE ) vPortYield( )
     #define portYIELD_FROM_ISR( x )                     portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
@@ -128,7 +128,7 @@
     #define portGET_RUN_TIME_COUNTER_VALUE()            ulPortGetRunTime()
 
     #ifdef __cplusplus
-        }
+}
     #endif
 
 #endif /* PORTMACRO_H */

@@ -113,8 +113,8 @@ static enum tfm_plat_err_t make_backup(void);
                                           (128 / TFM_HAL_ITS_PROGRAM_UNIT) * TFM_HAL_ITS_PROGRAM_UNIT)
 #endif /* OTP_NV_COUNTERS_WRITE_BLOCK_SIZE */
 
-#if (TFM_OTP_NV_COUNTERS_SECTOR_SIZE % OTP_NV_COUNTERS_WRITE_BLOCK_SIZE != 0) || \
-    (OTP_NV_COUNTERS_WRITE_BLOCK_SIZE % TFM_HAL_ITS_PROGRAM_UNIT != 0)
+// NXP removed the check for ITS program unit
+#if (TFM_OTP_NV_COUNTERS_SECTOR_SIZE % OTP_NV_COUNTERS_WRITE_BLOCK_SIZE != 0)
 #error "OTP_NV_COUNTERS_WRITE_BLOCK_SIZE has wrong alignment"
 #endif
 /* End of compilation time checks to be sure the defines are well defined */
@@ -345,8 +345,9 @@ enum tfm_plat_err_t write_otp_nv_counters_flash(uint32_t offset, const void *dat
     size_t swap_count_program_block_start_offset;
     size_t idx;
     uint32_t swap_count;
-    uint32_t swap_count_buf_size = TFM_HAL_ITS_PROGRAM_UNIT > sizeof(swap_count) ?
-        TFM_HAL_ITS_PROGRAM_UNIT : sizeof(swap_count);
+    // NXP replaced TFM_HAL_ITS_PROGRAM_UNIT usage with OTP_NV_COUNTERS_WRITE_BLOCK_SIZE in this function
+    uint32_t swap_count_buf_size = OTP_NV_COUNTERS_WRITE_BLOCK_SIZE > sizeof(swap_count) ?
+        OTP_NV_COUNTERS_WRITE_BLOCK_SIZE : sizeof(swap_count);
 
     erase_start_offset = round_down(offset, TFM_OTP_NV_COUNTERS_SECTOR_SIZE);
     erase_end_offset = round_up(offset + cnt, TFM_OTP_NV_COUNTERS_SECTOR_SIZE);
@@ -357,7 +358,7 @@ enum tfm_plat_err_t write_otp_nv_counters_flash(uint32_t offset, const void *dat
 
     swap_count_program_block_start_offset =
         round_down(offsetof(struct flash_otp_nv_counters_region_t, swap_count),
-                   TFM_HAL_ITS_PROGRAM_UNIT);
+                   OTP_NV_COUNTERS_WRITE_BLOCK_SIZE);
 
     if (erase_end_offset > TFM_OTP_NV_COUNTERS_AREA_SIZE) {
         /* Erase is beyond the TFM_OTP_NV_COUNTERS_AREA */

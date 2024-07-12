@@ -19,7 +19,7 @@ extern "C" {
 /**
  * @brief Bluetooth Generic Access Profile defines and Assigned Numbers.
  * @defgroup bt_gap_defines Defines and Assigned Numbers
- * @ingroup bluetooth
+ * @ingroup bt_gap
  * @{
  */
 

@@ -293,8 +293,6 @@ include_directories(${ProjDirPath}/../../../../../../components/uart)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include)
@@ -335,6 +333,8 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
 
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy)
@@ -373,8 +373,6 @@ add_executable(tflm_xaf_dsp.elf
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c"
@@ -559,6 +557,8 @@ add_executable(tflm_xaf_dsp.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/kiss_fft.c"
 "${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/_kiss_fft_guts.h"
 "${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/kissfft/kiss_fft.h"

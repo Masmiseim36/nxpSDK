@@ -28,7 +28,6 @@
 #include "queue.h"
 #include "task.h"
 #include "fsl_adapter_uart.h"
-
 #include "controller_hci_uart.h"
 
 #ifdef BT_UART
@@ -73,6 +72,11 @@ AT_NONCACHEABLE_SECTION_ALIGN(DECL_STATIC UCHAR hci_uart_wr_buf [HCI_UART_WR_BUF
 /* UART Read Task Synchronization */
 BT_DEFINE_MUTEX_TYPE(DECL_STATIC, hci_uart_mutex)
 BT_DEFINE_COND_TYPE(DECL_STATIC, hci_uart_cond)
+
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+/* UART transport write from two or more tasks */
+BT_DEFINE_MUTEX_TYPE(DECL_STATIC, hci_uart_multiplex_mutex)
+#endif
 
 #if HCI_UART_TX_NONBLOCKING || ((defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)))
 BT_DEFINE_MUTEX_TYPE(DECL_STATIC, hci_uart_tx_mutex)
@@ -133,6 +137,11 @@ void hci_uart_init (void)
 
     BT_MUTEX_INIT_VOID (hci_uart_mutex, TRANSPORT);
     BT_COND_INIT_VOID(hci_uart_cond, TRANSPORT);
+
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+    BT_MUTEX_INIT_VOID (hci_uart_multiplex_mutex, TRANSPORT);
+#endif
+
 #if HCI_UART_TX_NONBLOCKING || ((defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)))
     BT_MUTEX_INIT_VOID (hci_uart_tx_mutex, TRANSPORT);
     BT_COND_INIT_VOID(hci_uart_tx_cond, TRANSPORT);
@@ -855,32 +864,18 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
 #endif /* 0 */
 }
 
-#ifdef LE_AUDIO_CT_CG_TIME_DBG
-static UCHAR isIsoStarted1 = 0;
-
-UCHAR isIsoStarted (void)
-{
-	return isIsoStarted1;
-}
-#endif
-
 #ifdef HCI_UART_COLLECT_AND_WR_COMPLETE_PKT
 /** HCI-UART Send Data */
 API_RESULT hci_uart_send_data
            (UCHAR type, UCHAR * buf, UINT16 length, UCHAR flag)
 {
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+	(BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_multiplex_mutex);
+#endif
+
     static UINT32 total_len = 0U;
     static UINT32 cur_len = 0U;
     static UCHAR acl_data_pkt = BT_FALSE;
-
-#ifdef LE_AUDIO_CT_CG_TIME_DBG
-    static uint32_t startTime2;
-    static uint32_t endTime2;
-    static uint8_t firstTime2 = 1;
-
-    static int isoDataCount = 0;
-	#define TICKS_TO_MSEC(tick) ((uint32_t)((uint64_t)(tick)*1000uL / (uint64_t)configTICK_RATE_HZ))
-#endif
 
     if (0x1U != hci_uart_state)
     {
@@ -888,6 +883,9 @@ API_RESULT hci_uart_send_data
         "[HCI-UART] Incorrect UART State(%d)\n",
         hci_uart_state);
 
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+    	(BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_multiplex_mutex);
+#endif
         return API_FAILURE;
     }
 
@@ -898,25 +896,6 @@ API_RESULT hci_uart_send_data
             acl_data_pkt = BT_TRUE;
             total_len = (((UINT32)(buf[3U]) << 8U) | (UINT32)(buf[2U])) + 5U;
         }
-#ifdef LE_AUDIO_CT_CG_TIME_DBG
-        else if (HCI_ISO_DATA_PACKET == type)
-        {
-        	isIsoStarted1 = 1;
-        	isoDataCount++;
-
-			if (firstTime2) {
-				startTime2 = OSA_TimeGetMsec();
-				firstTime2 = 0;
-			} else {
-				endTime2 = OSA_TimeGetMsec();
-				//if (TICKS_TO_MSEC(endTime2 - startTime2) > 10)
-				{
-					printf("tx1=%dms, count:%d\n", TICKS_TO_MSEC(endTime2 - startTime2), isoDataCount);
-				}
-				startTime2 = endTime2;
-			}
-        }
-#endif
         else
         {
             total_len = (UINT32)length + 1U;
@@ -928,6 +907,9 @@ API_RESULT hci_uart_send_data
             "[HCI-UART] HCI Packet Size %d exceeds Configuration %d bytes\n",
             total_len, HCI_UART_WR_BUF_SIZE);
 
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+        	(BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_multiplex_mutex);
+#endif
             return API_FAILURE;
         }
     }
@@ -946,6 +928,9 @@ API_RESULT hci_uart_send_data
 
         if (cur_len != total_len)
         {
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+        	(BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_multiplex_mutex);
+#endif
             return API_SUCCESS;
         }
     }
@@ -1010,6 +995,9 @@ API_RESULT hci_uart_send_data
         acl_data_pkt = BT_FALSE;
     }
 
+#if defined(LE_AUDIO_PL_EXT_ENABLE) && (LE_AUDIO_PL_EXT_ENABLE == 1U)
+	(BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_multiplex_mutex);
+#endif
     return API_SUCCESS;
 }
 #else

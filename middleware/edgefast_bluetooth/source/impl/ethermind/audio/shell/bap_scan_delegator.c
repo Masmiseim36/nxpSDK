@@ -3,7 +3,7 @@
  * @brief Shell APIs for Bluetooth BAP scan delegator
  *
  * Copyright (c) 2020-2022 Nordic Semiconductor ASA
- * Copyright (C) 2022-2023 NXP
+ * Copyright (C) 2022-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,6 +18,7 @@
 #include <bluetooth/gatt.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/audio/bap.h>
+#include <audio/bap_internal.h>
 #include "shell_bt.h"
 
 #ifndef printk
@@ -150,6 +151,7 @@ static void pa_timer_handler(struct k_work *work)
 	}
 }
 
+#if defined(CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER) && (CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER > 0)
 static int pa_sync_past(struct bt_conn *conn,
 			struct sync_state *state,
 			uint16_t pa_interval)
@@ -173,6 +175,7 @@ static int pa_sync_past(struct bt_conn *conn,
 
 	return err;
 }
+#endif /* CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER */
 
 static int pa_sync_no_past(struct sync_state *state,
 			    uint16_t pa_interval)
@@ -315,11 +318,11 @@ static void broadcast_code_cb(struct bt_conn *conn,
 
 static int bis_sync_req_cb(struct bt_conn *conn,
 			   const struct bt_bap_scan_delegator_recv_state *recv_state,
-			   const uint32_t bis_sync_req[BT_BAP_SCAN_DELEGATOR_MAX_SUBGROUPS])
+			   const uint32_t bis_sync_req[CONFIG_BT_BAP_BASS_MAX_SUBGROUPS])
 {
 	printk("BIS sync request received for %p\n", recv_state);
 
-	for (int i = 0; i < BT_BAP_SCAN_DELEGATOR_MAX_SUBGROUPS; i++) {
+	for (int i = 0; i < CONFIG_BT_BAP_BASS_MAX_SUBGROUPS; i++) {
 		printk("  [%d]: 0x%08x\n", i, bis_sync_req[i]);
 	}
 
@@ -444,9 +447,11 @@ static shell_status_t cmd_bap_scan_delegator_sync_pa(shell_handle_t sh, int32_t 
 		return kStatus_SHELL_Error;
 	}
 
-	if (past_preference &&
-	    state->past_avail &&
-	    state->conn != NULL) {
+	if (0) {
+#if defined(CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER) && (CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER > 0)
+	} else if (past_preference &&
+		   state->past_avail &&
+		   state->conn != NULL) {
 		shell_info(sh, "Syncing with PAST");
 
 		err = pa_sync_past(state->conn, state, state->pa_interval);
@@ -461,7 +466,7 @@ static shell_status_t cmd_bap_scan_delegator_sync_pa(shell_handle_t sh, int32_t 
 
 			return kStatus_SHELL_Error;
 		}
-
+#endif /* CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER */
 	} else {
 		shell_info(sh, "Syncing without PAST");
 		err = pa_sync_no_past(state, state->pa_interval);
@@ -518,7 +523,7 @@ static shell_status_t cmd_bap_scan_delegator_add_src(shell_handle_t sh, int32_t 
 {
 	/* TODO: Add support to select which PA sync to BIG sync to */
 	struct bt_le_per_adv_sync *pa_sync = per_adv_syncs[0];
-	struct bt_bap_scan_delegator_subgroup *subgroup_param;
+	struct bt_bap_bass_subgroup *subgroup_param;
 	struct bt_bap_scan_delegator_add_src_param param;
 	unsigned long broadcast_id;
 	struct sync_state *state;
@@ -548,7 +553,7 @@ static shell_status_t cmd_bap_scan_delegator_add_src(shell_handle_t sh, int32_t 
 	}
 
 	if (enc_state > BT_BAP_BIG_ENC_STATE_BAD_CODE) {
-		shell_error(sh, "Invalid enc_state %lu", enc_state);
+		shell_error(sh, "Invalid enc_state %s", bt_bap_big_enc_state_str(enc_state));
 
 		return kStatus_SHELL_Error;
 	}
@@ -618,7 +623,7 @@ static shell_status_t cmd_bap_scan_delegator_add_src(shell_handle_t sh, int32_t 
 
 static shell_status_t cmd_bap_scan_delegator_mod_src(shell_handle_t sh, int32_t argc, char *argv[])
 {
-	struct bt_bap_scan_delegator_subgroup *subgroup_param;
+	struct bt_bap_bass_subgroup *subgroup_param;
 	struct bt_bap_scan_delegator_mod_src_param param;
 	unsigned long broadcast_id;
 	unsigned long enc_state;
@@ -661,7 +666,7 @@ static shell_status_t cmd_bap_scan_delegator_mod_src(shell_handle_t sh, int32_t 
 	}
 
 	if (enc_state > BT_BAP_BIG_ENC_STATE_BAD_CODE) {
-		shell_error(sh, "Invalid enc_state %lu", enc_state);
+		shell_error(sh, "Invalid enc_state %s", bt_bap_big_enc_state_str(enc_state));
 
 		return kStatus_SHELL_Error;
 	}
@@ -754,7 +759,7 @@ static shell_status_t cmd_bap_scan_delegator_rem_src(shell_handle_t sh, int32_t 
 
 static shell_status_t cmd_bap_scan_delegator_bis_synced(shell_handle_t sh, int32_t argc, char *argv[])
 {
-	uint32_t bis_syncs[CONFIG_BT_BAP_SCAN_DELEGATOR_MAX_SUBGROUPS];
+	uint32_t bis_syncs[CONFIG_BT_BAP_BASS_MAX_SUBGROUPS];
 	unsigned long pa_sync_state;
 	unsigned long bis_synced;
 	unsigned long src_id;
@@ -781,7 +786,7 @@ static shell_status_t cmd_bap_scan_delegator_bis_synced(shell_handle_t sh, int32
 	}
 
 	if (pa_sync_state > BT_BAP_PA_STATE_NO_PAST) {
-		shell_error(sh, "Invalid pa_sync_state %ld", pa_sync_state);
+		shell_error(sh, "Invalid pa_sync_state %s", bt_bap_pa_state_str(pa_sync_state));
 
 		return kStatus_SHELL_Error;
 	}

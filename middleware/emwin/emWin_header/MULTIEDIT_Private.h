@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -99,21 +99,21 @@ typedef struct {
   MULTIEDIT_PROPS  Props;
   WIDGET_COPY      Copy;
   WM_HMEM          hText;
-  U16              MaxNumChars;         // Maximum number of characters including the prompt
-  U16              NumChars;            // Number of characters (text and prompt) in object
-  U16              NumCharsPrompt;      // Number of prompt characters
-  U16              NumLines;            // Number of text lines needed to show all data
+  U32              MaxNumChars;         // Maximum number of characters including the prompt
+  U32              NumChars;            // Number of characters (text and prompt) in object
+  U32              NumCharsPrompt;      // Number of prompt characters
+  U32              NumLines;            // Number of text lines needed to show all data
   U16              TextSizeX;           // Size in X of text depending of wrapping mode
-  U16              BufferSize;
-  U16              CursorLine;          // Number of current cursor line
-  U16              CursorPosChar;       // Character offset number of cursor
-  U16              CursorPosByte;       // Byte offset number of cursor
+  U32              BufferSize;
+  U32              CursorLine;          // Number of current cursor line
+  U32              CursorPosChar;       // Character offset number of cursor
+  U32              CursorPosByte;       // Byte offset number of cursor
   I16              CursorPosX;          // Cursor position in X
-  U16              CursorPosY;          // Cursor position in Y
-  U16              CacheLinePosByte;
-  U16              CacheLineNumber;
-  U16              CacheFirstVisibleLine;
-  U16              CacheFirstVisibleByte;
+  I16              CursorPosY;          // Cursor position in Y
+  U32              CacheLinePosByte;
+  U32              CacheLineNumber;
+  U32              CacheFirstVisibleLine;
+  U32              CacheFirstVisibleByte;
   WM_SCROLL_STATE  ScrollStateV;
   WM_SCROLL_STATE  ScrollStateH;
   U16              Flags;

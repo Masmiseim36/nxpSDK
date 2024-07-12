@@ -121,7 +121,7 @@
   @param[in]     S         points to an instance of the floating-point FIR decimator structure
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the block of output data
-  @param[in]     blockSize number of samples to process
+  @param[in]     blockSize number of input samples to process
   @return        none
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -142,7 +142,7 @@ void arm_fir_decimate_f32(
     uint32_t  i, tapCnt, blkCnt, outBlockSize = blockSize / S->M;   /* Loop counters */
     uint32_t  blkCntN4;
     const float32_t *px0, *px1, *px2, *px3;
-    f32x4_t accv, acc0v, acc1v, acc2v, acc3v;
+    f32x4_t accv = { 0 }, acc0v, acc1v, acc2v, acc3v;
     f32x4_t x0v, x1v, x2v, x3v;
     f32x4_t c0v;
 

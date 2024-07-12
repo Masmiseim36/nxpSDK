@@ -1,58 +1,109 @@
 # CMSIS NN
+CMSIS NN software library is a collection of efficient neural network kernels developed to maximize the
+performance and minimize the memory footprint of neural networks on Arm Cortex-M processors.
 
-## About
-This page  give a quick overview of the functions available and key differences between them.
+## Supported Framework
+The library follows the [int8](https://www.tensorflow.org/lite/performance/quantization_spec) and int16 quantization specification of TensorFlow Lite for Microcontrollers.
 
-**Note:** The GitHub documentation does not follow the *develop* branch but rather the last official release in the *master* branch. Consequently, the group documentation linked to in the table table might not have the listed API. Please refer to the description in the [header](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS/NN/Include/arm_nnfunctions.h) file instead.
+## Branches and Tags
+There is a single branch called 'main'.
+Tags are created during a release. Two releases are planned to be done in a year. The releases can be found
+[here](https://github.com/ARM-software/CMSIS-NN/releases) .
+
+## Current Operator Support
+In general optimizations are written for an architecture feature. This falls into one of the following categories.
+Based on feature flags for a processor or architecture provided to the compiler, the right implementation is picked.
+### Pure C
+ There is always a pure C implementation for an operator. This is used for processors like Arm Cortex-M0 or Cortex-M3.
+### DSP Extension
+Processors with DSP extension uses Single Instruction Multiple Data(SIMD) instructions for optimization. Examples of
+processors here are Cortex-M4 or a Cortex-M33 configured with optional DSP extension.
+
+### MVE Extension
+Processors with Arm Helium Technology use the Arm M-profile Vector Extension(MVE) instructions for optimization.
+Examples are Cortex-M55 or Cortex-M85 configured with MVE.
+
+| Operator        | C <br> int8 | C<br>int16 | C<br>int4* | DSP<br>int8 | DSP<br>int16 | DSP<br>int4* | MVE<br>int8 | MVE<br>int16 |
+| --------------- | ----------- | ---------- |------------| ------------| -------------|--------------| ------------| -------------|
+| Conv2D          | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          |
+| DepthwiseConv2D | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          |
+| TransposeConv2D | Yes         | No         | No         | No          | No           | No           | No          | No           |
+| Fully Connected | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          |
+| Add             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
+| Mul             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
+| MaxPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
+| AvgPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          |
+| Softmax         | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | No           |
+| LSTM            | Yes         | NA         | No         | Yes         | NA           | No           | Yes         | NA           |
+| SVDF            | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           |
+
+* int4 weights + int8 activations
+
+## Contribution Guideline
+First, a thank you for the contribution. Here are some guidelines and good to know information to get started.
+
+### Coding Guideline
+By default, follow the style used in the file. You'll soon start noticing a pattern like
+* Variable and function names are lower case with an underscore separator.
+* Hungarian notation is not used. Well, almost.
+* If the variable names don't convey the action, then add comments.
+
+### New Files
+One function per file is followed in most places. In those cases, the file name must match the function name. Connect
+the function to an appropriate Doxygen group as well.
+
+### Doxygen
+Function prototypes must have a detailed comment header in Doxygen format. You can execute the doxygen document generation
+script in the Doxygen folder to check that no errors are introduced.
+
+### Unit Tests
+For any new features and bug fixes, new unit tests are needed. Improvements have to be verifed by unit tests. If you do
+not have the means to execute the tests, you can still make the PR and comment that you need help in completing/executing
+the unit tests.
+
+### Version & Date
+Each File has a version number and a date field that must be updated when making any change to that file. The versioning
+follows Semantic Versioning 2.0.0 format. For details check: https://semver.org/
+
+## Building CMSIS-NN as a library
+It is recommended to use toolchain files from [Arm Ethos-U Core Platform](https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) project. These are supporting TARGET_CPU, which is a required argument. Note that if not specifying TARGET_CPU, these toolchains will set some default. The format must be TARGET_CPU=cortex-mXX, see examples below.
+
+Here is an example:
+
+```
+cd </path/to/CMSIS_NN>
+mkdir build
+cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
+make
+```
+
+Some more examples:
+
+```
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain/armclang.cmake -DTARGET_CPU=cortex-m55
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m7
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain/armclang.cmake -DTARGET_CPU=cortex-m3
+```
+
+### Compiler Options
+Default optimization level is set at Ofast. Please change according to project needs. Just bear in mind this can impact
+performance. With only optimization level -O0, *ARM_MATH_AUTOVECTORIZE* needs to be defined for processors with Helium
+Technology.
+
+The compiler option *'-fomit-frame-pointer'* is enabled by default at -O and higher. When no optimization level is specified,
+you may need to specify '-fomit-frame-pointer'.
+
+The compiler option *'-fno-builtin'* does not utilize optimized implementations of e.g. memcpy and memset, which are heavily used by CMSIS-NN. It can significantly downgrade performance. So this should be avoided. The compiler option *'-ffreestanding'* should also be avoided as it enables '-fno-builtin' implicitly.
+
+### Supported Compilers
+* CMSIS-NN is tested on Arm Compiler 6 and on Arm GNU Toolchain.
+* IAR compiler is not tested and there can be compilation and/or performance issues.
+* Compilation for Host is not supported out of the box. It should be possible to use the C implementation and compile for host with minor stubbing effort.
+
+## Inclusive Language
+This product confirms to Arm’s inclusive language policy and, to the best of our knowledge, does not contain any non-inclusive language. If you find something that concerns you, email terms@arm.com.
 
 ## Support / Contact
-For any questions or to reach the CMSIS-NN team, please create a new issue in https://github.com/ARM-software/CMSIS_5/issues
 
-## Legacy vs TFL micro compliant APIs
-There are two kinds of APIs available in the CMSIS-NN repository; One that supports a legacy symmetric quantization scheme[1] and one that supports TFL micro's symmetric quantization scheme. One of the main differences is how the quantization is performed. The legacy APIs have a fixed point format with power of 2 scaling. This simplifies the re-quantization to a cycle efficient shift operation. No new development is done on the legacy functions and all of the new development is on the functions that support TFL micro. The table below highlights some of the differences between the two formats for convolution related functions. The TFL micro compliant APIs in most cases have a _s8 suffix and is always specified in the API header file.
-
-Operation | Legacy APIs | TFL micro compliant APIs|
-|:-----------|:---------------------|:-------------|
-Core loop | No input or filter offset | Input and/or filter offset |
-Re-quantization | Shift and saturate in one instruction. ~ 5 cycles | Greater than 200 cycles for one output element
-Quantization | Per layer quantization | Per-channel quantization
-Output offset | No | Per-layer output offset
-Fused Activation | No | Yes
-
-## TFL micro compliant APIs
-Group | API | Base Operator | Input Constraints | Additional memory required for <br/> optimizations (bytes) | DSP Optimized |  MVE Optimized | Other comments |
-|:----| :---| :------------ | :---------------- | :--------------------------------------------------------| :-------------| :------------- | :------------- |
-|[Conv](https://arm-software.github.io/CMSIS_5/NN/html/group__NNConv.html)||||| |  ||
-||arm_convolve_wrapper_s8()|CONV|dilation = 1|n.a.| Yes | Yes |The additional memory required depends on the optimal convolution function called|
-||arm_convolve_s8()|CONV|dilation = 1|4 * ker_x * ker_y * input_ch| Yes | Yes ||
-||arm_convolve_1x1_s8_fast() | CONV | dilation = 1 <br/> ker_x = 1, ker_y = 1 <br/> pad = 0<br/> stride = 1<br/> input_ch % 4 = 0| 0 | Yes |Yes ||
-||arm_convolve_1_n_s8() | CONV | dilation = 1 <br/> output_y % 4 = 0 | No |Yes ||
-|| arm_depthwise_conv_3x3_s8() | DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 <br/> pad_x <= 1 | No|No|No| Preferred function for 3x3 kernel size for DSP extension. </br> For MVE, use arm_depthwise_conv_s8_opt()||
-| | arm_depthwise_conv_s8() | DEPTHWISE_CONV | dilation = 1  | No|No|No||
-|| arm_depthwise_conv_s8_opt()| DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 | DSP: 2 * ker_x * ker_y * input_ch <br/> MVE: 2 * DSP + 4 | Yes| Yes| Best case is when channels are multiple of 4 or <br/>at the least >= 4 |
-|[Fully Connected](https://arm-software.github.io/CMSIS_5/NN/html/group__FC.html)||||| |  | |
-|| arm_fully_connected_s8() |FULLY CONNECTED & <br/> MAT MUL  | None | 0 | Yes | Yes | |
-|[Pooling](https://arm-software.github.io/CMSIS_5/NN/html/group__Pooling.html)||||| |  ||
-|| arm_avgpool_s8() | AVERAGE POOL | None | input_ch * 2<br/>(DSP only) | Yes| Yes| Best case case is when channels are multiple of 4 or <br/> at the least >= 4 |
-|| arm_maxpool_s8() | MAX POOL | None | None | Yes| Yes|  |
-|[Softmax](https://arm-software.github.io/CMSIS_5/NN/html/group__Softmax.html)||||| |  ||
-||arm_softmax_q7()| SOFTMAX | None | None | Yes | No | Not bit exact to TFLu but can be up to 70x faster |
-||arm_softmax_s8()| SOFTMAX | None | None | No | Yes | Bit exact to TFLu |
-||arm_softmax_u8()| SOFTMAX | None | None | No | No | Bit exact to TFLu |
-|[SVDF](https://arm-software.github.io/CMSIS_5/NN/html/group__SVDF.html)||||| |  ||
-||arm_svdf_s8()| SVDF | None | None | Yes | No | Bit exact to TFLu |
-|[Misc](https://arm-software.github.io/CMSIS_5/NN/html/group__groupNN.html)||||| |  ||
-||arm_reshape_s8()| SOFTMAX | None | None | No | No | |
-||arm_elementwise_add_s8()| ELEMENTWISE ADD | None | None | Yes| Yes| Reshape is not done in this function <br/> Only minor improvements are expected |
-||arm_elementwise_mul_s8()| ELEMENTWISE MUL | None | None | Yes| Yes| Reshape is not done in this function <br/> Only minor improvements are expected |
-||arm_relu_q7() | RELU | None | None | Yes| No|
-||arm_relu6_s8() | RELU | None | None | Yes| No|
-|[Concat](https://arm-software.github.io/CMSIS_5/NN/html/group__groupNN.html)||||| |  ||
-||arm_concatenation_s8_w() | CONCAT | None | None | No| No||
-||arm_concatenation_s8_x() | CONCAT | None | None | No| No||
-||arm_concatenation_s8_y() | CONCAT | None | None | No| No||
-||arm_concatenation_s8_z() | CONCAT | None | None | No| No||
-
-
-## Reference
-[1] Legacy CMSIS-NN and how to use it https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/converting-a-neural-network-for-arm-cortex-m-with-cmsis-nn/single-page
+For any questions or to reach the CMSIS-NN team, please create a new issue in https://github.com/ARM-software/CMSIS-NN/issues

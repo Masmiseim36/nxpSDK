@@ -98,7 +98,7 @@ void HDI_Init(void)
 
     LPSPI_MasterInit(HDI_SPI_BASE, &HdiSpiConfig, BOARD_GetSpiClock(0));
     LPSPI_FlushFifo(HDI_SPI_BASE, true, true);
-    LPSPI_DisableInterrupts(HDI_SPI_BASE, kLPSPI_AllInterruptEnable);
+    LPSPI_DisableInterrupts(HDI_SPI_BASE, (uint32_t)kLPSPI_AllInterruptEnable);
     fifo_size = LPSPI_GetTxFifoSize(HDI_SPI_BASE);
 }
 
@@ -112,7 +112,9 @@ static void send_to_spi(uint32_t word)
     LPSPI_WriteData(HDI_SPI_BASE, 0x55);
 #endif
     while (LPSPI_GetTxFifoCount(HDI_SPI_BASE) == fifo_size)
-        __asm("nop");
+    {
+        __NOP();
+    }
     LPSPI_WriteData(HDI_SPI_BASE, word);
     /* Flush RX fifo to avoid overrun */
     LPSPI_FlushFifo(HDI_SPI_BASE, FALSE, TRUE);

@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -25,10 +25,6 @@
  * http://www.FreeRTOS.org
  */
 
-/*
- *  TCP_NETSTAT.c
- *  Some function to get a list of sockets and active port numbers.
- */
 #ifndef TCP_NETSTAT_H
 
 #define TCP_NETSTAT_H

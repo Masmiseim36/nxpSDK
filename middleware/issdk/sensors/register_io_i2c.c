@@ -27,7 +27,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN548VDF_cm33_core0)
+#if defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXN547VDF_cm33_core0) || defined(CPU_MCXA153VLH_cm33_nodsp) || defined(CPU_MCXA156VLL_cm33) || defined(CPU_MCXA156VLL)
 LPI2C_Type *const i2cBases[] = LPI2C_BASE_PTRS;
 #else
 I2C_Type *const i2cBases[] = I2C_BASE_PTRS;
@@ -133,6 +133,20 @@ void I2C7_SignalEvent_t(uint32_t event)
     }
     b_I2C_CompletionFlag[7] = true;
 }
+#endif
+
+#ifdef CPU_MIMXRT798SGFOA_cm33_core0
+#if defined(I2C8)
+/* The I2C7 Signal Event Handler function. */
+void I2C8_SignalEvent_t(uint32_t event)
+{
+    if (event != ARM_I2C_EVENT_TRANSFER_DONE)
+    {
+        g_I2C_ErrorEvent[8] = event;
+    }
+    b_I2C_CompletionFlag[8] = true;
+}
+#endif
 #endif
 
 #ifdef MIMXRT500_AGM01

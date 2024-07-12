@@ -3,9 +3,9 @@
  *  @brief  This file provides firmware download related API for BT only fw download
  *
  *  Copyright 2021-2023 NXP
+ *  All rights reserved.
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
- *
+ *  SPDX-License-Identifier: BSD-3-Clause
  */
 /*===================== Include Files ============================================*/
 #ifndef FW_LOADER_UART_H

@@ -55,7 +55,7 @@ enum AFE_VOICESEEKER_RETURN_STATUS { AFE_VOICESEEKER_ERROR = -1, AFE_VOICESEEKER
 #define RDSP_ENABLE_AEC 0
 #define RDSP_ENABLE_DOA 0
 
-#define RDSP_BUFFER_LENGTH_SEC 1.5f
+#define RDSP_BUFFER_LENGTH_SEC 3.0f
 #define RDSP_AEC_FILTER_LENGTH_MS 150
 #define VAD_MEM_RESOURCE 500           //in bytes
 
@@ -167,7 +167,7 @@ int16_t AFE_VoiceSeeker_Init(AFE_VoiceSeeker_st* AFE_VoiceSeekerConfig, uint16_t
      * VoiceSeekerLight Version and configuration
      */
     rdsp_voiceseekerlight_ver_struct_t vsl_version;
-    VoiceSeekerLight_GetLibVersion(&AFE_VoiceSeekerConfig->vsl, &vsl_version.major, &vsl_version.minor, &vsl_version.patch);
+    VoiceSeekerLight_GetLibVersion(&AFE_VoiceSeekerConfig->vsl, &vsl_version);
     printf("VoiceSeekerLight_GetLibVersion: v%i.%i.%i\n", vsl_version.major, vsl_version.minor, vsl_version.patch);
 
     VoiceSeekerLight_PrintConfig(&AFE_VoiceSeekerConfig->vsl);

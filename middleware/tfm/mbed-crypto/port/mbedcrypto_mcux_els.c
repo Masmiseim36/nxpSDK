@@ -11,6 +11,7 @@
 #if defined(ELS) && MBEDTLS_MCUX_ELS
 #include <mcuxClEls.h>               /* Interface to the entire nxpClEls component */
 #include <mcuxClHashModes.h>
+#include <internal/mcuxClHash_Internal.h>
 #include <mcuxClMemory.h>
 #include <mcux_els.h>
 #include <mbedtls/platform.h>
@@ -804,13 +805,48 @@ void mbedtls_sha256_free( mbedtls_sha256_context *ctx )
     mbedtls_platform_zeroize( ctx, sizeof( mbedtls_sha256_context ) );
 }
 
-void mbedtls_sha256_clone( mbedtls_sha256_context *dst,
-                           const mbedtls_sha256_context *src )
+void mbedtls_sha256_clone( mbedtls_sha256_context *target_operation,
+                           const mbedtls_sha256_context *source_operation )
 {
-    SHA256_VALIDATE( dst != NULL );
-    SHA256_VALIDATE( src != NULL );
+    SHA256_VALIDATE( target_operation != NULL );
+    SHA256_VALIDATE( source_operation != NULL );
+  
+    /* Copy content from mcuxClHash_Context_t */
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_BEGIN(tokenCopy1, mcuxClMemory_copy (
+                                                    (uint8_t *) target_operation->context,
+                                                    (uint8_t *) source_operation->context,
+                                                    sizeof(mcuxClHash_ContextDescriptor_t),
+                                                    sizeof(mcuxClHash_ContextDescriptor_t)));
+    if (MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClMemory_copy) != tokenCopy1)
+    {
+        goto cleanup;
+    }
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_END();
 
-    memcpy(dst, src, sizeof(*dst));
+    /* Compute new position and length of buffers 
+     * Note: This is not compatible with SecSha. */
+    mcuxClHash_ContextDescriptor_t * pClnsHashDataTarget = (mcuxClHash_ContextDescriptor_t *) target_operation->context;
+    mcuxClHash_ContextDescriptor_t * pClnsHashDataSource = (mcuxClHash_ContextDescriptor_t *) source_operation->context;
+
+    uint32_t *pStateTarget = mcuxClHash_getStatePtr(pClnsHashDataTarget);
+    uint32_t *pStateSource = mcuxClHash_getStatePtr(pClnsHashDataSource);
+    size_t bufferSizes = pClnsHashDataSource->algo->stateSize + pClnsHashDataSource->algo->blockSize;
+
+    /* Copy state and unprocessed buffer to target hash operation handle. */
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_BEGIN(tokenCopy2, mcuxClMemory_copy (
+                                                      (uint8_t *) pStateTarget,
+                                                      (uint8_t *) pStateSource,
+                                                      bufferSizes,
+                                                      bufferSizes));
+    if (MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClMemory_copy) != tokenCopy2)
+    {
+        goto cleanup;
+    }
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_END();
+    /* Remaining Bytes in source and target behind pUnprocessed are not accessed by hash algorithms, so we do not copy them. */
+
+cleanup:
+    return;
 }
 
 int mbedtls_sha256_starts (mbedtls_sha256_context *ctx, int is224)
@@ -1006,13 +1042,48 @@ void mbedtls_sha512_free( mbedtls_sha512_context *ctx )
     mbedtls_platform_zeroize( ctx, sizeof( mbedtls_sha512_context ) );
 }
 
-void mbedtls_sha512_clone( mbedtls_sha512_context *dst,
-                           const mbedtls_sha512_context *src )
+void mbedtls_sha512_clone( mbedtls_sha512_context *target_operation,
+                           const mbedtls_sha512_context *source_operation )
 {
-    SHA512_VALIDATE( dst != NULL );
-    SHA512_VALIDATE( src != NULL );
+    SHA512_VALIDATE( target_operation != NULL );
+    SHA512_VALIDATE( source_operation != NULL );
+ 
+    /* Copy content from mcuxClHash_Context_t */
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_BEGIN(tokenCopy1, mcuxClMemory_copy (
+                                                    (uint8_t *) target_operation->context,
+                                                    (uint8_t *) source_operation->context,
+                                                    sizeof(mcuxClHash_ContextDescriptor_t),
+                                                    sizeof(mcuxClHash_ContextDescriptor_t)));
+    if (MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClMemory_copy) != tokenCopy1)
+    {
+        goto cleanup;
+    }
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_END();
 
-    memcpy(dst, src, sizeof(*dst));
+    /* Compute new position and length of buffers 
+     * Note: This is not compatible with SecSha. */
+    mcuxClHash_ContextDescriptor_t * pClnsHashDataTarget = (mcuxClHash_ContextDescriptor_t *) target_operation->context;
+    mcuxClHash_ContextDescriptor_t * pClnsHashDataSource = (mcuxClHash_ContextDescriptor_t *) source_operation->context;
+
+    uint32_t *pStateTarget = mcuxClHash_getStatePtr(pClnsHashDataTarget);
+    uint32_t *pStateSource = mcuxClHash_getStatePtr(pClnsHashDataSource);
+    size_t bufferSizes = pClnsHashDataSource->algo->stateSize + pClnsHashDataSource->algo->blockSize;
+
+    /* Copy state and unprocessed buffer to target hash operation handle. */
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_BEGIN(tokenCopy2, mcuxClMemory_copy (
+                                                      (uint8_t *) pStateTarget,
+                                                      (uint8_t *) pStateSource,
+                                                      bufferSizes,
+                                                      bufferSizes));
+    if (MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClMemory_copy) != tokenCopy2)
+    {
+        goto cleanup;
+    }
+    MCUX_CSSL_FP_FUNCTION_CALL_VOID_END();
+    /* Remaining Bytes in source and target behind pUnprocessed are not accessed by hash algorithms, so we do not copy them. */
+
+cleanup:
+    return;
 }
 
 int mbedtls_sha512_starts (mbedtls_sha512_context *ctx, int is384)

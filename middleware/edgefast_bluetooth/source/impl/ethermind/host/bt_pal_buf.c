@@ -114,41 +114,28 @@ struct net_buf *bt_buf_get_cmd_complete(k_timeout_t timeout)
 struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 			       k_timeout_t timeout)
 {
+	struct net_buf *buf;
+
 	switch (evt) {
 #if ((defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U)) || (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U)))
 	case BT_HCI_EVT_NUM_COMPLETED_PACKETS:
-		{
-			struct net_buf *buf;
-
-			buf = net_buf_alloc(&num_complete_pool, timeout);
-			if (buf) {
-				net_buf_reserve(buf, BT_BUF_RESERVE);
-				bt_buf_set_type(buf, BT_BUF_EVT);
-			}
-
-			return buf;
-		}
+		buf = net_buf_alloc(&num_complete_pool, timeout);
+		break;
 #endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
-	case BT_HCI_EVT_CMD_COMPLETE:
-	case BT_HCI_EVT_CMD_STATUS:
-		return bt_buf_get_cmd_complete(timeout);
 	default:
-#if (defined(CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT) && ((CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT) > 0U))
 		if (discardable) {
-			struct net_buf *buf;
-
 			buf = net_buf_alloc(&discardable_pool, timeout);
-			if (buf) {
-				net_buf_reserve(buf, BT_BUF_RESERVE);
-				bt_buf_set_type(buf, BT_BUF_EVT);
-			}
-
-			return buf;
+		} else {
+			return bt_buf_get_rx(BT_BUF_EVT, timeout);
 		}
-#endif /* CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT */
-
-		return bt_buf_get_rx(BT_BUF_EVT, timeout);
 	}
+
+	if (buf) {
+		net_buf_reserve(buf, BT_BUF_RESERVE);
+		bt_buf_set_type(buf, BT_BUF_EVT);
+	}
+
+	return buf;
 }
 
 #ifdef ZTEST_UNITTEST
@@ -176,7 +163,8 @@ struct net_buf_pool *bt_buf_get_discardable_pool(void)
 }
 #endif /* CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT */
 
-#if defined(CONFIG_BT_CONN) || defined(CONFIG_BT_ISO)
+#if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0)) || \
+    (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
 struct net_buf_pool *bt_buf_get_num_complete_pool(void)
 {
 	return &num_complete_pool;

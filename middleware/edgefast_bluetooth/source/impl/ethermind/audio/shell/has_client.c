@@ -3,7 +3,7 @@
  * @brief Bluetooth Hearing Access Service (HAS) shell.
  *
  * Copyright (c) 2022 Codecoup
- * Copyright (C) 2022-2023 NXP
+ * Copyright (C) 2022-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -68,73 +68,73 @@ static const struct bt_has_client_cb has_client_cb = {
 	.preset_read_rsp = has_client_preset_read_rsp_cb,
 };
 
-static shell_status_t cmd_has_client_init(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client_init(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	int err;
 
 	if (!ctx_shell) {
-		ctx_shell = shell;
+		ctx_shell = sh;
 	}
 
 	err = bt_has_client_cb_register(&has_client_cb);
 	if (err != 0) {
-		shell_error(shell, "bt_has_client_cb_register (err %d)", err);
+		shell_error(sh, "bt_has_client_cb_register (err %d)", err);
 	}
 
 	return (shell_status_t)err;
 }
 
-static shell_status_t cmd_has_client_discover(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client_discover(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	int err;
 
 	if (default_conn == NULL) {
-		shell_error(shell, "Not connected");
+		shell_error(sh, "Not connected");
 		return kStatus_SHELL_Error;
 	}
 
 	if (!ctx_shell) {
-		ctx_shell = shell;
+		ctx_shell = sh;
 	}
 
 	err = bt_has_client_discover(default_conn);
 	if (err != 0) {
-		shell_error(shell, "bt_has_client_discover (err %d)", err);
+		shell_error(sh, "bt_has_client_discover (err %d)", err);
 	}
 
 	return (shell_status_t)err;
 }
 
-static shell_status_t cmd_has_client_read_presets(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client_read_presets(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	int err;
 	const uint8_t index = shell_strtoul(argv[1], 16, &err);
 	const uint8_t count = shell_strtoul(argv[2], 10, &err);
 
 	if (err < 0) {
-		shell_error(shell, "Invalid command parameter (err %d)", err);
+		shell_error(sh, "Invalid command parameter (err %d)", err);
 		return (shell_status_t)err;
 	}
 
 	if (default_conn == NULL) {
-		shell_error(shell, "Not connected");
+		shell_error(sh, "Not connected");
 		return kStatus_SHELL_Error;
 	}
 
 	if (!inst) {
-		shell_error(shell, "No instance discovered");
+		shell_error(sh, "No instance discovered");
 		return kStatus_SHELL_Error;
 	}
 
 	err = bt_has_client_presets_read(inst, index, count);
 	if (err != 0) {
-		shell_error(shell, "bt_has_client_discover (err %d)", err);
+		shell_error(sh, "bt_has_client_discover (err %d)", err);
 	}
 
 	return (shell_status_t)err;
 }
 
-static shell_status_t cmd_has_client_preset_set(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client_preset_set(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	bool sync = false;
 	uint8_t index;
@@ -142,7 +142,7 @@ static shell_status_t cmd_has_client_preset_set(shell_handle_t shell, int32_t ar
 
 	index = shell_strtoul(argv[1], 16, &err);
 	if (err < 0) {
-		shell_error(shell, "Invalid command parameter (err %d)", err);
+		shell_error(sh, "Invalid command parameter (err %d)", err);
 		return kStatus_SHELL_Error;
 	}
 
@@ -152,31 +152,31 @@ static shell_status_t cmd_has_client_preset_set(shell_handle_t shell, int32_t ar
 		if (!strcmp(arg, "sync")) {
 			sync = true;
 		} else {
-			shell_error(shell, "Invalid argument");
+			shell_error(sh, "Invalid argument");
 			return kStatus_SHELL_Error;
 		}
 	}
 
 	if (default_conn == NULL) {
-		shell_error(shell, "Not connected");
+		shell_error(sh, "Not connected");
 		return kStatus_SHELL_Error;
 	}
 
 	if (!inst) {
-		shell_error(shell, "No instance discovered");
+		shell_error(sh, "No instance discovered");
 		return kStatus_SHELL_Error;
 	}
 
 	err = bt_has_client_preset_set(inst, index, sync);
 	if (err != 0) {
-		shell_error(shell, "bt_has_client_preset_switch (err %d)", err);
+		shell_error(sh, "bt_has_client_preset_switch (err %d)", err);
 		return kStatus_SHELL_Error;
 	}
 
 	return kStatus_SHELL_Success;
 }
 
-static shell_status_t cmd_has_client_preset_next(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client_preset_next(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	bool sync = false;
 	int err;
@@ -187,31 +187,31 @@ static shell_status_t cmd_has_client_preset_next(shell_handle_t shell, int32_t a
 		if (!strcmp(arg, "sync")) {
 			sync = true;
 		} else {
-			shell_error(shell, "Invalid argument");
+			shell_error(sh, "Invalid argument");
 			return kStatus_SHELL_Error;
 		}
 	}
 
 	if (default_conn == NULL) {
-		shell_error(shell, "Not connected");
+		shell_error(sh, "Not connected");
 		return kStatus_SHELL_Error;
 	}
 
 	if (!inst) {
-		shell_error(shell, "No instance discovered");
+		shell_error(sh, "No instance discovered");
 		return kStatus_SHELL_Error;
 	}
 
 	err = bt_has_client_preset_next(inst, sync);
 	if (err != 0) {
-		shell_error(shell, "bt_has_client_preset_next (err %d)", err);
+		shell_error(sh, "bt_has_client_preset_next (err %d)", err);
 		return kStatus_SHELL_Error;
 	}
 
 	return (shell_status_t)err;
 }
 
-static shell_status_t cmd_has_client_preset_prev(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client_preset_prev(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	bool sync = false;
 	int err;
@@ -222,36 +222,36 @@ static shell_status_t cmd_has_client_preset_prev(shell_handle_t shell, int32_t a
 		if (!strcmp(arg, "sync")) {
 			sync = true;
 		} else {
-			shell_error(shell, "Invalid argument");
+			shell_error(sh, "Invalid argument");
 			return kStatus_SHELL_Error;
 		}
 	}
 
 	if (default_conn == NULL) {
-		shell_error(shell, "Not connected");
+		shell_error(sh, "Not connected");
 		return kStatus_SHELL_Error;
 	}
 
 	if (!inst) {
-		shell_error(shell, "No instance discovered");
+		shell_error(sh, "No instance discovered");
 		return kStatus_SHELL_Error;
 	}
 
 	err = bt_has_client_preset_prev(inst, sync);
 	if (err != 0) {
-		shell_error(shell, "bt_has_client_preset_prev (err %d)", err);
+		shell_error(sh, "bt_has_client_preset_prev (err %d)", err);
 		return kStatus_SHELL_Error;
 	}
 
 	return (shell_status_t)err;
 }
 
-static shell_status_t cmd_has_client(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_has_client(shell_handle_t sh, int32_t argc, char *argv[])
 {
 	if (argc > 1) {
-		shell_error(shell, "%s unknown parameter: %s", argv[0], argv[1]);
+		shell_error(sh, "%s unknown parameter: %s", argv[0], argv[1]);
 	} else {
-		shell_error(shell, "%s missing subcomand", argv[0]);
+		shell_error(sh, "%s missing subcomand", argv[0]);
 	}
 
 	return kStatus_SHELL_Error;
@@ -262,11 +262,11 @@ static shell_status_t cmd_has_client(shell_handle_t shell, int32_t argc, char *a
 SHELL_STATIC_SUBCMD_SET_CREATE(has_client_cmds,
 	SHELL_CMD_ARG(init, NULL, HELP_NONE, cmd_has_client_init, 1, 0),
 	SHELL_CMD_ARG(discover, NULL, HELP_NONE, cmd_has_client_discover, 1, 0),
-	SHELL_CMD_ARG(presets-read, NULL, "<start_index_hex> <max_count_dec>",
+	SHELL_CMD_ARG(presets_read, NULL, "<start_index_hex> <max_count_dec>",
 		      cmd_has_client_read_presets, 3, 0),
-	SHELL_CMD_ARG(preset-set, NULL, "<index_hex> [sync]", cmd_has_client_preset_set, 2, 1),
-	SHELL_CMD_ARG(preset-next, NULL, "[sync]", cmd_has_client_preset_next, 1, 1),
-	SHELL_CMD_ARG(preset-prev, NULL, "[sync]", cmd_has_client_preset_prev, 1, 1),
+	SHELL_CMD_ARG(preset_set, NULL, "<index_hex> [sync]", cmd_has_client_preset_set, 2, 1),
+	SHELL_CMD_ARG(preset_next, NULL, "[sync]", cmd_has_client_preset_next, 1, 1),
+	SHELL_CMD_ARG(preset_prev, NULL, "[sync]", cmd_has_client_preset_prev, 1, 1),
 	SHELL_SUBCMD_SET_END
 );
 

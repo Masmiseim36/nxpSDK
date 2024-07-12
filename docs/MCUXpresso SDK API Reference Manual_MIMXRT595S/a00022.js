@@ -1,12 +1,12 @@
 var a00022 =
 [
-    [ "_flexio_config_", "a00022.html#a00322", [
+    [ "_flexio_config_", "a00022.html#a00319", [
       [ "enableFlexio", "a00022.html#ac77723c8f8a7b185c25582432e9b48c7", null ],
       [ "enableInDoze", "a00022.html#a09bc6f3c6e88b38327d85ca57cd49827", null ],
       [ "enableInDebug", "a00022.html#a0853799657fd228f8c8fc3d3a73861f0", null ],
       [ "enableFastAccess", "a00022.html#af30e9fb5dacc57a2500a5efd272f0ab5", null ]
     ] ],
-    [ "_flexio_timer_config", "a00022.html#a00346", [
+    [ "_flexio_timer_config", "a00022.html#a00343", [
       [ "triggerSelect", "a00022.html#a48f04daa2ec2877f42709c9007888dcf", null ],
       [ "triggerPolarity", "a00022.html#a74581f38be56d93a9dd39234e9eb3257", null ],
       [ "triggerSource", "a00022.html#a10746ceb396426e1fb099873d426ee5c", null ],
@@ -23,7 +23,7 @@ var a00022 =
       [ "timerStart", "a00022.html#a7a8ca48609235c265ee28ae33de6047d", null ],
       [ "timerCompare", "a00022.html#ac3160e75d7d7479fc6f11a137d4b9155", null ]
     ] ],
-    [ "_flexio_shifter_config", "a00022.html#a00340", [
+    [ "_flexio_shifter_config", "a00022.html#a00337", [
       [ "timerSelect", "a00022.html#acc348bc26fa3834f1ca56dc13c2cbae7", null ],
       [ "timerPolarity", "a00022.html#a1b44e4266080742e1fa461231e8db166", null ],
       [ "pinConfig", "a00022.html#ae44b30238a8eafdc173ddf569563d47a", null ],
@@ -35,7 +35,7 @@ var a00022 =
       [ "shifterStop", "a00022.html#a1fa8cd4362f8d2d586ef67fb99968808", null ],
       [ "shifterStart", "a00022.html#a2508f04fb12480b2472505a0decb9e6a", null ]
     ] ],
-    [ "_flexio_gpio_config", "a00022.html#a00323", [
+    [ "_flexio_gpio_config", "a00022.html#a00320", [
       [ "pinDirection", "a00022.html#a5089674e5f26054f3766a0566b896376", null ],
       [ "outputLogic", "a00022.html#ad4c76d9098daf1b56d0594cc8b767b1f", null ],
       [ "inputConfig", "a00022.html#a2c0b6ae994e087de9519dc0463c8be5c", null ]

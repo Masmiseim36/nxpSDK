@@ -34,7 +34,18 @@
 
 #include "arm_vec_math_f16.h"
 
+/**
+  @addtogroup vexp
+  @{
+ */
 
+/**
+  @brief         Floating-point vector of exp values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
 void arm_vexp_f16(
   const float16_t * pSrc,
         float16_t * pDst,
@@ -71,7 +82,7 @@ void arm_vexp_f16(
       /* C = log(A) */
   
       /* Calculate log and store result in destination buffer. */
-      *pDst++ = expf(*pSrc++);
+      *pDst++ = (_Float16)expf((float32_t)*pSrc++);
   
       /* Decrement loop counter */
       blkCnt--;
@@ -80,3 +91,6 @@ void arm_vexp_f16(
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 
+/**
+  @} end of vexp group
+ */

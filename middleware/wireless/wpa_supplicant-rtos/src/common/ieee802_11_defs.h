@@ -487,6 +487,7 @@
 #define WLAN_EID_EXT_REJECTED_GROUPS          92
 #define WLAN_EID_EXT_ANTI_CLOGGING_TOKEN      93
 #define WLAN_EID_EXT_PASN_PARAMS              100
+#define WLAN_EID_EXT_AKM_SUITE_SELECTOR       114
 
 /* Extended Capabilities field */
 #define WLAN_EXT_CAPAB_20_40_COEX      0

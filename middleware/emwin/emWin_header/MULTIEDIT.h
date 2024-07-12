@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -98,8 +98,8 @@ Purpose     : MULTIEDIT include
 *  Description
 *    Color indexes used for the cursor of the MULTIEDIT widget.
 */
-#define MULTIEDIT_CI_CURSOR_BK          2                   // Background color for cursor
-#define MULTIEDIT_CI_CURSOR_FG          3                   // Foreground color for cursor
+#define MULTIEDIT_CI_CURSOR_BK          0                   // Background color for cursor
+#define MULTIEDIT_CI_CURSOR_FG          1                   // Foreground color for cursor
 
 /*********************************************************************
 *

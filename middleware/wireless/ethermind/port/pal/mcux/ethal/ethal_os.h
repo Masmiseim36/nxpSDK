@@ -19,6 +19,7 @@
 
 /* --------------------------------------------------- Header File Inclusion */
 #include "EM_platform.h"
+size_t	 strnlen (const char *, size_t);
 
 /* -------------------------------------------- Global Definitions */
 #define EM_SUCCESS                  0x0000U
@@ -271,8 +272,10 @@ UINT64 EM_get_us_timestamp(void);
 
 /* Process termination handling */
 void EM_process_term_notify(void(*handler)(void));
-
+#if defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) \
+		&& (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U)
 void EM_register_sof_handler (void(*handler)(void * task_name));
+#endif /*defined (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK) && (APP_CONFIG_ENABLE_STACK_OVERFLOW_FREERTOS_HOOK == 1U)*/
 UINT32 EM_thread_get_stack_unused (void);
 
 #ifdef __cplusplus

@@ -52,7 +52,7 @@ typedef enum
 
 void HDI_Init(void);
 void HDI_SendChannelSwitchCmd(uint32_t channel);
-void HDI_SendPowerSwitchCmd(uint32_t power);
+// void HDI_SendPowerSwitchCmd(uint32_t power);
 void HDI_SendRadioConfigCmd(hdi_radio_mode_t mode);
 void HDI_IpcInterface(void *buffer, uint32_t size);
 #endif /* _HDI_H_ */

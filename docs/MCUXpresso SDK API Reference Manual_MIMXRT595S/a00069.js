@@ -1,52 +1,23 @@
 var a00069 =
 [
-    [ "_trng_statistical_check_limit", "a00069.html#a00451", [
-      [ "maximum", "a00069.html#a35e227d700d93b82e9a8d9c6bed5ddee", null ],
-      [ "minimum", "a00069.html#a7eab56036ebd5d30bab45ad339ea2139", null ]
+    [ "_usart_dma_handle", "a00069.html#a00450", [
+      [ "base", "a00069.html#a7d5138c2a504c8b913f4da0cc4b8f3d0", null ],
+      [ "callback", "a00069.html#ab0512a619f3d973c9d1757e027fc386f", null ],
+      [ "userData", "a00069.html#a5435c5d5eaabc3fa080687d1816c88bb", null ],
+      [ "rxDataSizeAll", "a00069.html#a26f2f80f90075cbb92e62f00bae86fbd", null ],
+      [ "txDataSizeAll", "a00069.html#a578cf96f011e0a11670a705d35cfa837", null ],
+      [ "txDmaHandle", "a00069.html#adac1e8d3493df7a51793aa4d538d3a26", null ],
+      [ "rxDmaHandle", "a00069.html#aaa38e2f04ef52facaf76073692c64eee", null ],
+      [ "txState", "a00069.html#a84a43b177628b3a6efbc341570fdaf15", null ],
+      [ "rxState", "a00069.html#a382419fdf5e20b6ccb4d2a467ef42688", null ]
     ] ],
-    [ "_trng_user_config", "a00069.html#a00452", [
-      [ "lock", "a00069.html#a29129f1a5b47676d2b1386004161d2bb", null ],
-      [ "clockMode", "a00069.html#a97acdb955a51ea515fe72b7048efd52f", null ],
-      [ "ringOscDiv", "a00069.html#a4ae5348399979e0b535e741417545f52", null ],
-      [ "sampleMode", "a00069.html#a8adf402929396a04de4cf981956e70d0", null ],
-      [ "entropyDelay", "a00069.html#a7070e1295b5735b031e4302103fac77d", null ],
-      [ "sampleSize", "a00069.html#a94f09b210075570590c3bef47fb6889d", null ],
-      [ "sparseBitLimit", "a00069.html#a175eecf4ec28fd2d0f23a5bd8508da65", null ],
-      [ "retryCount", "a00069.html#af3870d8f37e36935d77446fc9d1c1268", null ],
-      [ "longRunMaxLimit", "a00069.html#ae0c1a71abdd377256338df5b3c941c75", null ],
-      [ "monobitLimit", "a00069.html#acbe08ed6f9a5c445f5e0753fadc8bcba", null ],
-      [ "runBit1Limit", "a00069.html#a05e0d98d8f9062199a1179acc97581a4", null ],
-      [ "runBit2Limit", "a00069.html#a6fb88d2407735ebd8df0dfc75902a72e", null ],
-      [ "runBit3Limit", "a00069.html#a1041555f2fbaedadbf7b9ba310a7d72b", null ],
-      [ "runBit4Limit", "a00069.html#a37e6243bb2381d40255c10d860b4fed3", null ],
-      [ "runBit5Limit", "a00069.html#a702e81749fc05e836847f71e6d5f8dd8", null ],
-      [ "runBit6PlusLimit", "a00069.html#a9e629c65f299286641b8b40a9fb93111", null ],
-      [ "pokerLimit", "a00069.html#afb53ed4ec399d9b80ca53d33ac6c6d74", null ],
-      [ "frequencyCountLimit", "a00069.html#ab4f832762f67021a65530caf4dcafe5a", null ]
-    ] ],
-    [ "FSL_TRNG_DRIVER_VERSION", "a00069.html#ga0d809ab2bf96ed21a28c531679c1cffe", null ],
-    [ "trng_sample_mode_t", "a00069.html#ga2de9f7d76b4b85280422205789f314f3", null ],
-    [ "trng_clock_mode_t", "a00069.html#gac029fe64631b9305b9b58f40bbe782ad", null ],
-    [ "trng_ring_osc_div_t", "a00069.html#ga91590689c2d3c009892847a310588dfb", null ],
-    [ "trng_statistical_check_limit_t", "a00069.html#ga13d04154be80fe1b500d9410881a6e32", null ],
-    [ "trng_config_t", "a00069.html#ga61121c5471ea471783aacba6fecce71e", null ],
-    [ "_trng_sample_mode", "a00069.html#ga101a182b6425f63c070d960b23adc28e", [
-      [ "kTRNG_SampleModeVonNeumann", "a00069.html#gga101a182b6425f63c070d960b23adc28eaf9f812a5ba8dddf6800fe42db487f5e7", null ],
-      [ "kTRNG_SampleModeRaw", "a00069.html#gga101a182b6425f63c070d960b23adc28ea2411d65d49169b9244b0c975442ff898", null ],
-      [ "kTRNG_SampleModeVonNeumannRaw", "a00069.html#gga101a182b6425f63c070d960b23adc28ea12725a856bdf7ea64e16156fc1f6792c", null ]
-    ] ],
-    [ "_trng_clock_mode", "a00069.html#gadf8e7ff7c029a63058334f5f381be5af", [
-      [ "kTRNG_ClockModeRingOscillator", "a00069.html#ggadf8e7ff7c029a63058334f5f381be5afa10eb7dda9879280deaab08f87158ebbc", null ],
-      [ "kTRNG_ClockModeSystem", "a00069.html#ggadf8e7ff7c029a63058334f5f381be5afa066582671741cf64617d6cde5d929937", null ]
-    ] ],
-    [ "_trng_ring_osc_div", "a00069.html#gafc4c4e44dc0724bcb166cd9881eaf3ef", [
-      [ "kTRNG_RingOscDiv0", "a00069.html#ggafc4c4e44dc0724bcb166cd9881eaf3efa557465d3f4d88b544fcf818085032b51", null ],
-      [ "kTRNG_RingOscDiv2", "a00069.html#ggafc4c4e44dc0724bcb166cd9881eaf3efaf420c1e0c4bd6a0a181464866ae70764", null ],
-      [ "kTRNG_RingOscDiv4", "a00069.html#ggafc4c4e44dc0724bcb166cd9881eaf3efad03f20e54add497bca2cab5084e409d8", null ],
-      [ "kTRNG_RingOscDiv8", "a00069.html#ggafc4c4e44dc0724bcb166cd9881eaf3efa207ca5ecd9403ce8299085a1bf2f9ca2", null ]
-    ] ],
-    [ "TRNG_GetDefaultConfig", "a00069.html#ga3f90793dd83a0ac2249fdcb8fa762c6a", null ],
-    [ "TRNG_Init", "a00069.html#gaefef4539a93045832f10d28f094d26ea", null ],
-    [ "TRNG_Deinit", "a00069.html#gacdcc7542e374e611c888008a227b878c", null ],
-    [ "TRNG_GetRandomData", "a00069.html#gaac12716aedb0b05e8be3e96433c8ad56", null ]
+    [ "FSL_USART_DMA_DRIVER_VERSION", "a00069.html#ga4d50b0d6519186dc79dbf56a0ef36c30", null ],
+    [ "usart_dma_transfer_callback_t", "a00069.html#ga60203b058d1ee4f2467d0c10e152ecb1", null ],
+    [ "USART_TransferCreateHandleDMA", "a00069.html#ga3108003aa0b8bd3ec34b8235041d1466", null ],
+    [ "USART_TransferSendDMA", "a00069.html#ga767c45246b3981930e391837bf627e68", null ],
+    [ "USART_TransferReceiveDMA", "a00069.html#ga4b68b4d54821ef43a671dabf432a48ae", null ],
+    [ "USART_TransferAbortSendDMA", "a00069.html#ga9e75a5b85d21c16fe3fb1c2acbecfe83", null ],
+    [ "USART_TransferAbortReceiveDMA", "a00069.html#gad31eba091fa591d44443f218c7da1492", null ],
+    [ "USART_TransferGetReceiveCountDMA", "a00069.html#ga350224781deacfd5e1f95da262381858", null ],
+    [ "USART_TransferGetSendCountDMA", "a00069.html#ga836de4ddc9a103584f47cd31c78f9277", null ]
 ];

@@ -65,6 +65,15 @@
 
 #endif /* CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER */
 
+#if (defined(CONFIG_BT_CAP_INITIATOR) && (CONFIG_BT_CAP_INITIATOR > 0)) && \
+    (defined(CONFIG_BT_BAP_UNICAST_CLIENT) && (CONFIG_BT_BAP_UNICAST_CLIENT > 0))
+
+    #ifndef CONFIG_BT_CAP_INITIATOR_UNICAST
+        #define CONFIG_BT_CAP_INITIATOR_UNICAST 1
+    #endif
+
+#endif
+
 /*! @brief Common Audio Profile Initiator Role Support
  * Enabling this will enable the CAP Initiator role.
  */
@@ -87,5 +96,32 @@
         #error CONFIG_BT_CAP_ACCEPTOR depends on CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE >= 4.
     #endif
 #endif /* CONFIG_BT_CAP_INITIATOR */
+
+/*! @brief Common Audio Profile Commander Role Support [EXPERIMENTAL]
+ * Enabling this will enable the CAP Commander role.
+ */
+#ifndef CONFIG_BT_CAP_COMMANDER
+    #define CONFIG_BT_CAP_COMMANDER 0
+#endif
+
+#if (defined(CONFIG_BT_CAP_COMMANDER) && (CONFIG_BT_CAP_COMMANDER > 0))
+
+    #if ( (defined(CONFIG_BT_BAP_BROADCAST_ASSISTANT) && (CONFIG_BT_BAP_BROADCAST_ASSISTANT > 0)) && \
+          (defined(CONFIG_BT_BAP_SCAN_DELEGATOR) && (CONFIG_BT_BAP_SCAN_DELEGATOR > 0)) && \
+          (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0)) ) || \
+        ( (defined(CONFIG_BT_BAP_SCAN_DELEGATOR) && (CONFIG_BT_BAP_SCAN_DELEGATOR > 0)) && \
+          (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0)) ) || \
+        ( (defined(CONFIG_BT_VCP_VOL_CTLR) && (CONFIG_BT_VCP_VOL_CTLR > 0)) && \
+          (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0)) ) || \
+        ( (defined(CONFIG_BT_MICP_MIC_CTLR) && (CONFIG_BT_MICP_MIC_CTLR > 0)) && \
+          (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0)) ) || \
+        (defined(CONFIG_BT_TBS_CLIENT) && (CONFIG_BT_TBS_CLIENT > 0)) || \
+        (defined(CONFIG_BT_MCC) && (CONFIG_BT_MCC > 0))
+        /* PASS. */
+    #else
+        #error CONFIG_BT_CAP_COMMANDER has dependency not satisfied.
+    #endif
+
+#endif /* CONFIG_BT_CAP_COMMANDER */
 
 #endif /* __CONFIG_CAP_H__ */

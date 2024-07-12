@@ -70,12 +70,12 @@ void arm_absmax_q31(
         mve_pred16_t    p = vctp32q(blkCnt);
         q31x4_t         extremIdxVal = vld1q_z_s32(pSrc, p);
 
-        extremIdxVal = vabsq(extremIdxVal);
+        extremIdxVal = vqabsq(extremIdxVal);
         /*
          * Get current max per lane and current index per lane
          * when a max is selected
          */
-        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
+        p0 = vcmpgtq_m(extremIdxVal, extremValVec, p);
 
         extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
         /* store per-lane extrema indexes */

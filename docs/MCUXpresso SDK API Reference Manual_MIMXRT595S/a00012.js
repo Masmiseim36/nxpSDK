@@ -1,6 +1,6 @@
 var a00012 =
 [
-    [ "_codec_i2c_config", "a00012.html#a00299", [
+    [ "_codec_i2c_config", "a00012.html#a00296", [
       [ "codecI2CInstance", "a00012.html#a3ec85738d9527900de39508911dd0169", null ],
       [ "codecI2CSourceClock", "a00012.html#a562815d5c51bef1ccb7f5655173ace47", null ]
     ] ],

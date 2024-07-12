@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -46,6 +46,16 @@
  * Set the initial value for MSS (Maximum Segment Size) to be used.
  */
 void prvSocketSetMSS( FreeRTOS_Socket_t * pxSocket );
+
+/*
+ * Set the initial value for MSS (Maximum Segment Size) to be used.
+ */
+void prvSocketSetMSS_IPV4( FreeRTOS_Socket_t * pxSocket );
+
+/*
+ * Set the initial value for MSS (Maximum Segment Size) to be used.
+ */
+void prvSocketSetMSS_IPV6( FreeRTOS_Socket_t * pxSocket );
 
 /* *INDENT-OFF* */
 #ifdef __cplusplus

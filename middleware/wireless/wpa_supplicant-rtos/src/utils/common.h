@@ -9,7 +9,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#ifndef CONFIG_ZEPHYR
+#ifndef __ZEPHYR__
 #include "fsl_debug_console.h"
 #endif
 
@@ -551,7 +551,7 @@ void int_array_concat(int **res, const int *a);
 void int_array_sort_unique(int *a);
 void int_array_add_unique(int **res, int a);
 
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 #include <zephyr/net/net_ip.h>
 char *inet_ntoa(struct in_addr in);
 #endif

@@ -45,8 +45,8 @@ struct bt_micp_server {
 	uint8_t mute;
 	struct bt_micp_mic_dev_cb *cb;
 	struct bt_gatt_service *service_p;
-	struct k_work_delayable notify_work;
 	struct bt_aics *aics_insts[CONFIG_BT_MICP_MIC_DEV_AICS_INSTANCE_COUNT];
+	struct k_work_delayable notify_work;
 };
 
 static struct bt_micp_server micp_inst;
@@ -118,7 +118,7 @@ static ssize_t write_mute(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
 		micp_inst.mute = *val;
 
-		err = k_work_reschedule(&micp_inst.notify_work, K_NO_WAIT);
+		err = k_work_reschedule(&micp_inst.notify_work, osaWaitNone_c);
 		if (err < 0) {
 			LOG_ERR("Failed to schedule mute state notification err %d", err);
 		}

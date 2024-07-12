@@ -994,6 +994,33 @@
 #define IF_BT_MODULE_STATE(module_name, s) if(g_bt_##module_name == BT_MODULE_STATE_##s)
 #define IFN_BT_MODULE_STATE(module_name, s) if(g_bt_##module_name != BT_MODULE_STATE_##s)
 
+/* Dynamic configuration access */
+#define BT_INIT_CONFIG(config)
+#define BT_CONFIG_LIMITS(x) (x)
+#define BT_CONFIG_ISEQUAL(x, y)    ((x) == (y))
+#define BT_CONFIG_ISNEQUAL(x, y)   ((x) != (y))
+
+/* Global Array definition, declaraion, init and deinit */
+#define BT_DEFINE_GLOBAL_ARRAY(type, var, s) \
+        type var[(s)]
+
+#define BT_DECLARE_GLOBAL_ARRAY(type, var, s) \
+        extern type var[(s)]
+
+#define BT_INIT_GLOBAL_ARRAY(type, var, s, i) \
+        BT_mem_set(var, (i), ((s) * sizeof(type)))
+
+#define BT_DEINIT_GLOBAL_ARRAY(type, var, s)
+
+/* Local Array definition, declaraion, init and deinit */
+#define BT_DEFINE_LOCAL_ARRAY(type, var, s) \
+        type var[(s)]
+
+#define BT_INIT_LOCAL_ARRAY(type, var, s, i) \
+        BT_mem_set(var, (i), ((s) * sizeof(type)))
+
+#define BT_DEINIT_LOCAL_ARRAY(type, var, s)
+
 /* -------------------------------------------- Structures/Data Types */
 
 /**

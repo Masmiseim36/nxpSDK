@@ -1,6 +1,6 @@
 ---
 __variable__:
-  mbedtls_version: 2.28.5
+  mbedtls_version: 2.28.8
 middleware.mbedtls.template:
   section-type: component
   __requires__:
@@ -613,6 +613,7 @@ middleware.mbedtls:
     - source: library/asn1parse.c
     - source: library/asn1write.c
     - source: library/base64.c
+    - source: library/bignum_internal.h
     - source: library/bignum.c
     - source: library/blowfish.c
     - source: library/camellia.c

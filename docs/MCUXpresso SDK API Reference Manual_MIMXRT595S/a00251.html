@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SPI CMSIS driver</title>
+<title>MCUXpresso SDK API Reference Manual: FlexIO: FlexIO Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,72 +98,31 @@ $(document).ready(function(){initNavTree('a00251.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">SPI CMSIS driver<div class="ingroups"><a class="el" href="a00250.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
+<div class="title">FlexIO: FlexIO Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the SPI Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<h1><a class="anchor" id="SPIFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="SPIGetVersionOps"></a>
-SPI CMSIS GetVersion Operation</h2>
-<p>This function group will return the SPI CMSIS Driver version to user.</p>
-<h2><a class="anchor" id="SPIGetCapOps"></a>
-SPI CMSIS GetCapabilities Operation</h2>
-<p>This function group will return the capabilities of this driver.</p>
-<h2><a class="anchor" id="SPIInitResetOps"></a>
-SPI CMSIS Initialize and Uninitialize Operation</h2>
-<p>This function will initialize and uninitialize the instance in master mode or slave mode. And this API must be called before you configure an instance or after you Deinit an instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
-<h2><a class="anchor" id="SPITransOps"></a>
-SPI CMSIS Transfer Operation</h2>
-<p>This function group controls the transfer, master send/receive data, and slave send/receive data.</p>
-<h2><a class="anchor" id="SPIStatusOps"></a>
-SPI CMSIS Status Operation</h2>
-<p>This function group gets the SPI transfer status.</p>
-<h2><a class="anchor" id="SPIControlOps"></a>
-SPI CMSIS Control Operation</h2>
-<p>This function can configure instance as master mode or slave mode, set baudrate for master mode transfer, get current baudrate of master mode transfer,set transfer data bits and other control command.</p>
-<h1><a class="anchor" id="SPITpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="SPIMasterOps"></a>
-Master Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t masterRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t masterTxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*SPI master init*/</span></div>
-<div class="line">DRIVER_MASTER_SPI.Initialize(SPI_MasterSignalEvent_t);</div>
-<div class="line">DRIVER_MASTER_SPI.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">DRIVER_MASTER_SPI.Control(ARM_SPI_MODE_MASTER, TRANSFER_BAUDRATE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Start master transfer */</span></div>
-<div class="line">DRIVER_MASTER_SPI.Transfer(masterTxData, masterRxData, TRANSFER_SIZE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Master power off */</span></div>
-<div class="line">DRIVER_MASTER_SPI.PowerControl(ARM_POWER_OFF);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Master uninitialize */</span></div>
-<div class="line">DRIVER_MASTER_SPI.Uninitialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPSPISlaveOps"></a>
-Slave Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t slaveRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t slaveTxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*SPI slave init*/</span></div>
-<div class="line">DRIVER_SLAVE_SPI.Initialize(SPI_SlaveSignalEvent_t);</div>
-<div class="line">DRIVER_SLAVE_SPI.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">DRIVER_SLAVE_SPI.Control(ARM_SPI_MODE_SLAVE, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Start slave transfer */</span></div>
-<div class="line">DRIVER_SLAVE_SPI.Transfer(slaveTxData, slaveRxData, TRANSFER_SIZE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* slave power off */</span></div>
-<div class="line">DRIVER_SLAVE_SPI.PowerControl(ARM_POWER_OFF);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* slave uninitialize */</span></div>
-<div class="line">DRIVER_SLAVE_SPI.Uninitialize();</div>
-</div><!-- fragment --> </div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FlexIO drivers for the FlexIO module of MCUXpresso SDK devices. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00022"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html">FlexIO Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00023"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html">FlexIO I2C Master Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html">FlexIO I2S Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00025"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html">FlexIO MCU Interface LCD Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00028"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html">FlexIO SPI Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html">FlexIO UART Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

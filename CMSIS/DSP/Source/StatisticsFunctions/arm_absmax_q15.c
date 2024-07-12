@@ -70,12 +70,12 @@ void arm_absmax_q15(
         mve_pred16_t    p = vctp16q(blkCnt);
         q15x8_t         extremIdxVal = vld1q_z_s16(pSrc, p);
 
-        extremIdxVal = vabsq(extremIdxVal);
+        extremIdxVal = vqabsq(extremIdxVal);
         /*
          * Get current max per lane and current index per lane
          * when a max is selected
          */
-        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
+        p0 = vcmpgtq_m(extremIdxVal, extremValVec, p);
 
         extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
         /* store per-lane extrema indexes */

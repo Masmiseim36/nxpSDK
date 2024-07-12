@@ -30,7 +30,7 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
 mlan_status wlan_11ac_cfg_ioctl(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req);
 void wlan_update_11ac_cap(mlan_private *pmpriv);
 #endif
-#ifdef CONFIG_11AC
+#if CONFIG_11AC
 
 t_u8 wlan_get_center_freq_idx(mlan_private *pmpriv, t_u8 band, t_u32 pri_chan, t_u8 chan_bw);
 

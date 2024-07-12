@@ -61,8 +61,6 @@ typedef enum
 /*
  * brief Initialize wake up pin and send vendor specific HCI command to configure controller.
  *
- * DO NOT execute this API before downloading BT firmware.
- *
  * return Zero on success or negative error code otherwise.
  */
 WEAK_FUNC uint8_t controller_low_power_init(void);
@@ -70,8 +68,7 @@ WEAK_FUNC uint8_t controller_low_power_init(void);
 /*
  * brief Check the power state of controller.
  *
- * return CONTROLLER_WAKE means controller is in active state.
- *        CONTROLLER_SLEEP means controller is in sleep state .
+ * return Zero on ready or 1 on not ready.
  */
 WEAK_FUNC uint8_t controller_power_state(void);
 

@@ -54,7 +54,7 @@ extern clk_t voice_seeker_cycles;
 #if (defined(CPU_MIMXRT685SFVKB_dsp))
 #define DEVICE_ID_VS Device_IMXRT600_HIFI4
 #elif (defined(CPU_MIMXRT595SFFOC_dsp))
-#define DEVICE_ID_VS Device_IMXRT500_FusionF1
+#define DEVICE_ID_VS Device_IMXRT500_FUSIONF1
 #endif
 
 #define RDSP_VOICESEEKER_LIGHT_APP_VERSION_MAJOR 0 // Major version the app

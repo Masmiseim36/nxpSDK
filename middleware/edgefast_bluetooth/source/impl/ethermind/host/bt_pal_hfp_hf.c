@@ -940,6 +940,7 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
                 hfp_hf->bt_hf_cb->call_setup(hfp_hf->bt_conn, *(uint8_t *)data);
             }
             sco_audio_play_ringtone_exit_pl();
+#if 0
             BT_hfp_unit_set_gain
             (
                 hfp_hf->handle,
@@ -947,6 +948,7 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
                 hfp_hf->bt_hfp_hp_speaker_volume,
                 (UCHAR)BT_str_len(hfp_hf->bt_hfp_hp_speaker_volume)
             );
+#endif
             sco_audio_set_speaker_volume_pl(atoi((char const *)(const char *)hfp_hf->bt_hfp_hp_speaker_volume));
 
             break;

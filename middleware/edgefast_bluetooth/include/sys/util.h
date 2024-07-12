@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2024 NXP
  * Copyright (c) 2011-2014, Wind River Systems, Inc.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -162,7 +162,7 @@ extern "C" {
  * @retval true If value is within range
  * @retval false If the value is not within range
  */
-#define IN_RANGE(val, min, max) ((val) >= (min) && (val) <= (max))
+#define IN_RANGE(val, min, max) (((val) >= (min)) && ((val) <= (max)))
 
 /**
  * @brief      Convert a single character into a hexadecimal nibble.

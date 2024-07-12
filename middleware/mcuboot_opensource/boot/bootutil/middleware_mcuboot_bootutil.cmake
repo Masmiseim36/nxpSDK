@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_mbedtls)
+if(CONFIG_USE_middleware_mbedtls OR CONFIG_USE_middleware_mcuboot_tinycrypt)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/boot_record.c
@@ -13,8 +13,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/encrypted.c
   ${CMAKE_CURRENT_LIST_DIR}/src/fault_injection_hardening.c
   ${CMAKE_CURRENT_LIST_DIR}/src/fault_injection_hardening_delay_rng_mbedtls.c
-  ${CMAKE_CURRENT_LIST_DIR}/src/image_ec.c
-  ${CMAKE_CURRENT_LIST_DIR}/src/image_ec256.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/image_ecdsa.c
   ${CMAKE_CURRENT_LIST_DIR}/src/image_ed25519.c
   ${CMAKE_CURRENT_LIST_DIR}/src/image_rsa.c
   ${CMAKE_CURRENT_LIST_DIR}/src/image_validate.c

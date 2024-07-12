@@ -489,7 +489,7 @@ void hostapd_dpp_tx_status(struct hostapd_data *hapd, const u8 *dst, const u8 *d
          * indefinitely after successfully transmitted Auth Response to
          * allow new authentication exchanges to be started. */
         eloop_cancel_timeout(hostapd_dpp_auth_conf_wait_timeout, hapd, NULL);
-#if defined(CONFIG_FREERTOS)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
         eloop_register_timeout(5, 0, hostapd_dpp_auth_conf_wait_timeout, hapd, NULL);/* 1 -> 5 for enable debug */
 #else
         eloop_register_timeout(1, 0, hostapd_dpp_auth_conf_wait_timeout, hapd, NULL);

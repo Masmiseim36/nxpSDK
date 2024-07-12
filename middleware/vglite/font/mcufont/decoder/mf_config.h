@@ -36,12 +36,14 @@
  * ASCII: Plain ascii (somewhat works with ISO8859-1 also)
  * UTF8:  UTF8 encoding (variable number of bytes)
  * UTF16: UTF16 encoding (2 bytes per character, compatible with UCS-2)
+ * UTF32: UTF32 encoding (4 bytes per charactor, compatible with UCS-4)
  * WCHAR: Use compiler's wchar_t (usually same as UTF16)
  */
 #define MF_ENCODING_ASCII 0
 #define MF_ENCODING_UTF8  1
 #define MF_ENCODING_UTF16 2
-#define MF_ENCODING_WCHAR 3
+#define MF_ENCODING_UTF32 3
+#define MF_ENCODING_WCHAR 4
 #ifndef MF_ENCODING
 #define MF_ENCODING MF_ENCODING_UTF8
 #endif

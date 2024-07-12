@@ -30,7 +30,7 @@
 
 #include <wlan.h>
 #include <wifi.h>
-
+// coverity[MISRA C-2012 Initializers:SUPPRESS]
 static wlan_chanlist_t chanlist_2g_cfg = {
     .num_chans = 11,
     .chan_info[0] =
@@ -144,7 +144,8 @@ static wlan_chanlist_t chanlist_2g_cfg = {
     .chan_info[53] = {0},
 };
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
+// coverity[MISRA C-2012 Initializers:SUPPRESS]
 static wlan_chanlist_t chanlist_5g_cfg = {
     .num_chans = 28,
     .chan_info[0] =
@@ -344,7 +345,7 @@ static wlan_chanlist_t chanlist_5g_cfg = {
 };
 #endif
 
-#ifdef CONFIG_COMPRESS_TX_PWTBL
+#if CONFIG_COMPRESS_TX_PWTBL
 static const t_u8 rg_rw610_bga[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0x82, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0x03, 0x07, 0x00, 0x02, 0x08, 0x05,
@@ -355,8 +356,8 @@ static const t_u8 rg_rw610_bga[] = {
     0x82, 0x02, 0x41, 0x39, 0xc4, 0x36, 0x63, 0x33, 0x9e, 0xce, 0x67, 0x61, 0x4a, 0x4c, 0xfc, 0x24, 0x1b, 0xa2,
     0xc3, 0x8f, 0xc1, 0x1a, 0x80, 0x38, 0x23, 0x0e, 0x34, 0x80, 0x0d, 0x21, 0x10, 0x40, 0x42, 0x88, 0x0e, 0x08,
     0x54, 0x80};
-static const t_u16 rg_rw610_len_bga = 146;
 
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
 static const t_u8 rg_rw610_qfn[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0x7b, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0x93, 0x06, 0x00, 0x02, 0x08, 0x07,
@@ -366,8 +367,8 @@ static const t_u8 rg_rw610_qfn[] = {
     0x0a, 0x82, 0x81, 0x48, 0x40, 0x18, 0x01, 0x01, 0x0e, 0x4d, 0xc2, 0x80, 0x10, 0x98, 0x20, 0x24, 0x13, 0x9b,
     0x84, 0xa0, 0xa1, 0xb9, 0xd4, 0xe6, 0x03, 0x14, 0xa2, 0x03, 0xa8, 0x40, 0x03, 0xf0, 0x46, 0x92, 0x11, 0x98,
     0x1a, 0x40, 0x06, 0x90, 0x88, 0x20, 0x21, 0x40, 0x07, 0x04, 0x26, 0x07, 0xe0};
-static const t_u16 rg_rw610_len_qfn = 139;
 
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
 static const t_u8 rg_rw610_csp[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0x7f, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0xd3, 0x06, 0x00, 0x02, 0x08, 0x07,
@@ -377,8 +378,8 @@ static const t_u8 rg_rw610_csp[] = {
     0x02, 0x02, 0xa0, 0xb0, 0xa0, 0x06, 0x10, 0x06, 0x00, 0x03, 0xa1, 0x13, 0x29, 0xa0, 0x22, 0x73, 0x04, 0x09,
     0x06, 0xe7, 0x21, 0x29, 0xb0, 0x4e, 0x63, 0x3f, 0x0a, 0x51, 0xe7, 0x40, 0x10, 0x88, 0x20, 0x24, 0x0b, 0xa6,
     0xd0, 0xe5, 0xc7, 0xe0, 0x8d, 0x08, 0x1c, 0x11, 0x97, 0x1a, 0x40, 0x06, 0x90, 0x85, 0x58, 0x21, 0x53};
-static const t_u16 rg_rw610_len_csp = 143;
 
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
 static const t_u8 rg_rw610_EU[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0x8f, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0xd3, 0x07, 0x00, 0x02, 0x08, 0x06,
@@ -389,8 +390,8 @@ static const t_u8 rg_rw610_EU[] = {
     0x02, 0xa3, 0x53, 0x99, 0xdc, 0x68, 0x26, 0x08, 0x09, 0x02, 0xe8, 0x81, 0x1a, 0x35, 0x02, 0x7f, 0x41, 0x08,
     0x80, 0x69, 0x75, 0x19, 0x9d, 0x3c, 0x15, 0x51, 0xa9, 0xc6, 0x42, 0x55, 0x89, 0xd0, 0x46, 0xa2, 0x00, 0x3f,
     0x4f, 0x2b, 0x20, 0x03, 0x4d, 0x90, 0x22, 0x08, 0x08, 0x52, 0xab, 0xa1, 0x08, 0xd9, 0xf8};
-static const t_u16 rg_rw610_EU_len = 159;
 
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
 static const t_u8 rg_rw610_JP[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0x81, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0xf3, 0x06, 0x00, 0x02, 0x08, 0x07,
@@ -401,8 +402,8 @@ static const t_u8 rg_rw610_JP[] = {
     0x85, 0x23, 0xd0, 0xf9, 0xd0, 0x5a, 0x1b, 0x36, 0x9c, 0x51, 0x67, 0xb3, 0xfa, 0x54, 0x30, 0x27, 0x3b, 0x83,
     0x00, 0x0f, 0xc1, 0x1a, 0x78, 0x5a, 0x24, 0x69, 0x00, 0x1a, 0x42, 0x20, 0x80, 0x85, 0x14, 0x21, 0x09, 0x3f,
     0x00};
-static const t_u16 rg_rw610_JP_len = 145;
 
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
 static const t_u8 rg_rw610_CA[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0xa6, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0x43, 0x09, 0x00, 0x02, 0x08, 0x06,
@@ -415,8 +416,8 @@ static const t_u8 rg_rw610_CA[] = {
     0x81, 0x2b, 0xb5, 0x90, 0x58, 0x4e, 0xa7, 0x55, 0x84, 0xd6, 0x2c, 0x16, 0x6a, 0xe5, 0xa6, 0x19, 0x5a, 0xb1,
     0x42, 0x49, 0x13, 0xc9, 0xc5, 0x40, 0x22, 0x05, 0x00, 0x1c, 0xaf, 0x37, 0x50, 0x58, 0x40, 0x09, 0x23, 0x9e,
     0x4f, 0x00};
-static const t_u16 rg_rw610_CA_len = 182;
 
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
 static const t_u8 rg_rw610_WW[] = {
     0x01, 0x00, 0xee, 0x01, 0x06, 0x00, 0x55, 0x53, 0x20, 0x10, 0x00, 0x01, 0x06, 0x02, 0xb2, 0x00, 0x88, 0x88,
     0x03, 0x01, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x53, 0x20, 0x10, 0x03, 0x0a, 0x00, 0x02, 0x08, 0x05,
@@ -429,7 +430,6 @@ static const t_u8 rg_rw610_WW[] = {
     0x82, 0x82, 0x40, 0x1a, 0xcd, 0x6e, 0xc6, 0x13, 0x04, 0x04, 0xa0, 0xb5, 0xa0, 0x8d, 0x9c, 0x03, 0x5f, 0xb0,
     0xc3, 0x2c, 0xa1, 0x18, 0x65, 0x4a, 0xa9, 0x56, 0xb9, 0x5b, 0x23, 0x21, 0x2b, 0xcd, 0x6e, 0x18, 0x00, 0x3f,
     0x57, 0x2e, 0x77, 0xf3, 0x48, 0x00, 0xd3, 0x3d, 0x08, 0x5a, 0xeb, 0x71, 0x1c, 0x00};
-static const t_u16 rg_rw610_WW_len = 194;
 #endif
 
 #ifndef CONFIG_11AX
@@ -621,7 +621,7 @@ static wifi_txpwrlimit_t
             .txpwrlimit_config[39] = {0},
 };
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
 static wifi_txpwrlimit_t
     tx_pwrlimit_5g_cfg =
         {
@@ -1421,7 +1421,7 @@ static wifi_txpwrlimit_t
             .txpwrlimit_config[39] = {0},
 };
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
 static wifi_txpwrlimit_t
     tx_pwrlimit_5g_cfg =
         {
@@ -2497,6 +2497,7 @@ static wifi_txpwrlimit_t
 #endif /* CONFIG_5GHz_SUPPORT */
 #endif /* CONFIG_11AC */
 #else
+// coverity[MISRA C-2012 Initializers :SUPPRESS]
 static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
     .subband   = (wifi_SubBand_t)0x00,
     .num_chans = 14,
@@ -2710,7 +2711,7 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
     .txpwrlimit_config[39] = {0},
 };
 
-#ifdef CONFIG_5GHz_SUPPORT
+#if CONFIG_5GHz_SUPPORT
 static wifi_txpwrlimit_t tx_pwrlimit_5g_cfg = {
     .subband   = (wifi_SubBand_t)0x00,
     .num_chans = 25,
@@ -3244,4 +3245,235 @@ static wifi_txpwrlimit_t tx_pwrlimit_5g_cfg = {
 };
 #endif /* CONFIG_5GHz_SUPPORT */
 #endif /* CONFIG_11AX */
+
+#if CONFIG_11AX
+#if CONFIG_COMPRESS_RU_TX_PWTBL
+const static uint8_t rutxpowerlimit_bga_cfg_set[] = {
+    0x6d, 0x02, 0x65, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x01, 0x11, 0x11, 0x11, 0x12, 0x00,
+    0x00, 0x00, 0x12, 0x12, 0x12, 0x12, 0x00, 0x00, 0x00, 0x11, 0x11, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d,
+    0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11,
+    0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00,
+    0x09, 0x09, 0x09, 0x09, 0x00, 0x00, 0x00, 0x12, 0x12, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0f, 0x12, 0x11,
+    0x11, 0x00, 0x00, 0x00, 0x0b, 0x0e, 0x11, 0x11, 0x00, 0x00, 0x00, 0x13, 0x13, 0x12, 0x10, 0x00};
+
+const static uint8_t rutxpowerlimit_qfn_cfg_set[] = {
+    0x6d, 0x02, 0x65, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x01, 0x11, 0x11, 0x11, 0x12, 0x00,
+    0x00, 0x00, 0x12, 0x12, 0x12, 0x12, 0x00, 0x00, 0x00, 0x11, 0x11, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d,
+    0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11,
+    0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00,
+    0x09, 0x09, 0x09, 0x09, 0x00, 0x00, 0x00, 0x12, 0x12, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0f, 0x12, 0x11,
+    0x11, 0x00, 0x00, 0x00, 0x0b, 0x0e, 0x11, 0x11, 0x00, 0x00, 0x00, 0x14, 0x14, 0x12, 0x10, 0x00};
+
+const static uint8_t rutxpowerlimit_csp_cfg_set[] = {
+    0x6d, 0x02, 0x65, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x01, 0x11, 0x11, 0x11, 0x12, 0x00,
+    0x00, 0x00, 0x12, 0x12, 0x12, 0x12, 0x00, 0x00, 0x00, 0x11, 0x11, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d,
+    0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11,
+    0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0d, 0x0f, 0x11, 0x11, 0x00, 0x00, 0x00,
+    0x09, 0x09, 0x09, 0x09, 0x00, 0x00, 0x00, 0x12, 0x12, 0x11, 0x11, 0x00, 0x00, 0x00, 0x0f, 0x12, 0x11,
+    0x11, 0x00, 0x00, 0x00, 0x0b, 0x0e, 0x11, 0x11, 0x00, 0x00, 0x00, 0x14, 0x14, 0x11, 0x10, 0x00};
+#else
+#define MAX_2G_RU_PWR_CHANNELS 26
+#define MAX_5G_RU_PWR_CHANNELS 69
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
+const static wlan_rutxpwrlimit_t rutxpowerlimit_2g_cfg_set = {
+    .num_chans            = MAX_2G_RU_PWR_CHANNELS,
+    .rupwrlimit_config[0] = {.start_freq = 2407, .width = 20, .chan_num = 1, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[1] = {.start_freq = 2407, .width = 20, .chan_num = 2, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[2] = {.start_freq = 2407, .width = 20, .chan_num = 3, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[3] = {.start_freq = 2407, .width = 20, .chan_num = 4, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[4] = {.start_freq = 2407, .width = 20, .chan_num = 5, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[5] = {.start_freq = 2407, .width = 20, .chan_num = 6, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[6] = {.start_freq = 2407, .width = 20, .chan_num = 7, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[7] = {.start_freq = 2407, .width = 20, .chan_num = 8, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[8] = {.start_freq = 2407, .width = 20, .chan_num = 9, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[9] = {.start_freq = 2407, .width = 20, .chan_num = 10, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[10] = {.start_freq = 2407, .width = 20, .chan_num = 11, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[11] = {.start_freq = 2407, .width = 20, .chan_num = 12, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[12] = {.start_freq = 2407, .width = 20, .chan_num = 13, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[13] = {.start_freq = 2407, .width = 40, .chan_num = 1, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[14] = {.start_freq = 2407, .width = 40, .chan_num = 2, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[15] = {.start_freq = 2407, .width = 40, .chan_num = 3, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[16] = {.start_freq = 2407, .width = 40, .chan_num = 4, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[17] = {.start_freq = 2407, .width = 40, .chan_num = 5, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[18] = {.start_freq = 2407, .width = 40, .chan_num = 6, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[19] = {.start_freq = 2407, .width = 40, .chan_num = 7, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[20] = {.start_freq = 2407, .width = 40, .chan_num = 8, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[21] = {.start_freq = 2407, .width = 40, .chan_num = 9, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[22] = {.start_freq = 2407, .width = 40, .chan_num = 10, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[23] = {.start_freq = 2407, .width = 40, .chan_num = 11, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[24] = {.start_freq = 2407, .width = 40, .chan_num = 12, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[25] = {.start_freq = 2407, .width = 40, .chan_num = 13, .ruPower = {-4, -1, 2, 5, 8, 0}},
+};
+
+#if CONFIG_5GHz_SUPPORT
+// coverity[MISRA C-2012 Rule 2.2:SUPPRESS]
+const static wlan_rutxpwrlimit_t rutxpowerlimit_5g_cfg_set = {
+    .num_chans            = MAX_5G_RU_PWR_CHANNELS,
+    .rupwrlimit_config[0] = {.start_freq = 5000, .width = 20, .chan_num = 36, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[1] = {.start_freq = 5000, .width = 20, .chan_num = 40, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[2] = {.start_freq = 5000, .width = 20, .chan_num = 44, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[3] = {.start_freq = 5000, .width = 20, .chan_num = 48, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[4] = {.start_freq = 5000, .width = 20, .chan_num = 52, .ruPower = {-2, 1, 4, 7, 0, 0}},
+
+    .rupwrlimit_config[5] = {.start_freq = 5000, .width = 20, .chan_num = 56, .ruPower = {-2, 1, 4, 7, 0, 0}},
+
+    .rupwrlimit_config[6] = {.start_freq = 5000, .width = 20, .chan_num = 60, .ruPower = {-2, 1, 4, 7, 0, 0}},
+
+    .rupwrlimit_config[7] = {.start_freq = 5000, .width = 20, .chan_num = 64, .ruPower = {-2, 1, 4, 7, 0, 0}},
+
+    .rupwrlimit_config[8] = {.start_freq = 5000, .width = 20, .chan_num = 100, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[9] = {.start_freq = 5000, .width = 20, .chan_num = 104, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[10] = {.start_freq = 5000, .width = 20, .chan_num = 108, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[11] = {.start_freq = 5000, .width = 20, .chan_num = 112, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[12] = {.start_freq = 5000, .width = 20, .chan_num = 116, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[13] = {.start_freq = 5000, .width = 20, .chan_num = 120, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[14] = {.start_freq = 5000, .width = 20, .chan_num = 124, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[15] = {.start_freq = 5000, .width = 20, .chan_num = 128, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[16] = {.start_freq = 5000, .width = 20, .chan_num = 132, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[17] = {.start_freq = 5000, .width = 20, .chan_num = 136, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[18] = {.start_freq = 5000, .width = 20, .chan_num = 140, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[19] = {.start_freq = 5000, .width = 20, .chan_num = 144, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[20] = {.start_freq = 5000, .width = 20, .chan_num = 149, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[21] = {.start_freq = 5000, .width = 20, .chan_num = 153, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[22] = {.start_freq = 5000, .width = 20, .chan_num = 157, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[23] = {.start_freq = 5000, .width = 20, .chan_num = 161, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[24] = {.start_freq = 5000, .width = 20, .chan_num = 165, .ruPower = {-1, 2, 5, 8, 0, 0}},
+
+    .rupwrlimit_config[25] = {.start_freq = 5000, .width = 40, .chan_num = 36, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[26] = {.start_freq = 5000, .width = 40, .chan_num = 40, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[27] = {.start_freq = 5000, .width = 40, .chan_num = 44, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[28] = {.start_freq = 5000, .width = 40, .chan_num = 48, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[29] = {.start_freq = 5000, .width = 40, .chan_num = 52, .ruPower = {-5, -2, 1, 4, 7, 0}},
+
+    .rupwrlimit_config[30] = {.start_freq = 5000, .width = 40, .chan_num = 56, .ruPower = {-5, -2, 1, 4, 7, 0}},
+
+    .rupwrlimit_config[31] = {.start_freq = 5000, .width = 40, .chan_num = 60, .ruPower = {-5, -2, 1, 4, 7, 0}},
+
+    .rupwrlimit_config[32] = {.start_freq = 5000, .width = 40, .chan_num = 64, .ruPower = {-5, -2, 1, 4, 7, 0}},
+
+    .rupwrlimit_config[33] = {.start_freq = 5000, .width = 40, .chan_num = 100, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[34] = {.start_freq = 5000, .width = 40, .chan_num = 104, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[35] = {.start_freq = 5000, .width = 40, .chan_num = 108, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[36] = {.start_freq = 5000, .width = 40, .chan_num = 112, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[37] = {.start_freq = 5000, .width = 40, .chan_num = 116, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[38] = {.start_freq = 5000, .width = 40, .chan_num = 120, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[39] = {.start_freq = 5000, .width = 40, .chan_num = 124, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[40] = {.start_freq = 5000, .width = 40, .chan_num = 128, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[41] = {.start_freq = 5000, .width = 40, .chan_num = 132, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[42] = {.start_freq = 5000, .width = 40, .chan_num = 136, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[43] = {.start_freq = 5000, .width = 40, .chan_num = 140, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[44] = {.start_freq = 5000, .width = 40, .chan_num = 144, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[45] = {.start_freq = 5000, .width = 40, .chan_num = 149, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[46] = {.start_freq = 5000, .width = 40, .chan_num = 153, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[47] = {.start_freq = 5000, .width = 40, .chan_num = 157, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[48] = {.start_freq = 5000, .width = 40, .chan_num = 161, .ruPower = {-4, -1, 2, 5, 8, 0}},
+
+    .rupwrlimit_config[49] = {.start_freq = 5000, .width = 80, .chan_num = 36, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[50] = {.start_freq = 5000, .width = 80, .chan_num = 40, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[51] = {.start_freq = 5000, .width = 80, .chan_num = 44, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[52] = {.start_freq = 5000, .width = 80, .chan_num = 48, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[53] = {.start_freq = 5000, .width = 80, .chan_num = 52, .ruPower = {-8, -5, -2, 1, 4, 7}},
+
+    .rupwrlimit_config[54] = {.start_freq = 5000, .width = 80, .chan_num = 56, .ruPower = {-8, -5, -2, 1, 4, 7}},
+
+    .rupwrlimit_config[55] = {.start_freq = 5000, .width = 80, .chan_num = 60, .ruPower = {-8, -5, -2, 1, 4, 7}},
+
+    .rupwrlimit_config[56] = {.start_freq = 5000, .width = 80, .chan_num = 64, .ruPower = {-8, -5, -2, 1, 4, 7}},
+
+    .rupwrlimit_config[57] = {.start_freq = 5000, .width = 80, .chan_num = 100, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[58] = {.start_freq = 5000, .width = 80, .chan_num = 104, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[59] = {.start_freq = 5000, .width = 80, .chan_num = 108, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[60] = {.start_freq = 5000, .width = 80, .chan_num = 112, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[61] = {.start_freq = 5000, .width = 80, .chan_num = 116, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[62] = {.start_freq = 5000, .width = 80, .chan_num = 120, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[63] = {.start_freq = 5000, .width = 80, .chan_num = 124, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[64] = {.start_freq = 5000, .width = 80, .chan_num = 128, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[65] = {.start_freq = 5000, .width = 80, .chan_num = 149, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[66] = {.start_freq = 5000, .width = 80, .chan_num = 153, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[67] = {.start_freq = 5000, .width = 80, .chan_num = 157, .ruPower = {-7, -4, -1, 2, 5, 8}},
+
+    .rupwrlimit_config[68] = {.start_freq = 5000, .width = 80, .chan_num = 161, .ruPower = {-7, -4, -1, 2, 5, 8}},
+};
+#endif /* CONFIG_5GHz_SUPPORT */
+#endif /* CONFIG_COMPRESS_RU_TX_PWTBL */
+#endif /* CONFIG_11AX */
+
 #endif /* _WLAN_TXPWRLIMIT_CFG_WW_RW610_H_ */

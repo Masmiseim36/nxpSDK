@@ -2,19 +2,7 @@
  *  FIPS-180-2 compliant SHA-384/512 implementation
  *
  *  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 /*
  *  The SHA-512 Secure Hash Standard was published by NIST in 2002.
@@ -71,6 +59,8 @@ void mbedtls_sha512_free(mbedtls_sha512_context *ctx)
     mbedtls_platform_zeroize(ctx, sizeof(mbedtls_sha512_context));
 }
 
+/* NXP added MBEDTLS_SHA512_CLONE_ALT */
+#if !defined(MBEDTLS_SHA512_CLONE_ALT)
 void mbedtls_sha512_clone(mbedtls_sha512_context *dst,
                           const mbedtls_sha512_context *src)
 {
@@ -79,6 +69,8 @@ void mbedtls_sha512_clone(mbedtls_sha512_context *dst,
 
     *dst = *src;
 }
+#endif /* NXP added MBEDTLS_SHA512_CLONE_ALT */
+
 /* NXP added MBEDTLS_SHA512_STARTS_ALT */
 #if !defined(MBEDTLS_SHA512_STARTS_ALT)
 /*

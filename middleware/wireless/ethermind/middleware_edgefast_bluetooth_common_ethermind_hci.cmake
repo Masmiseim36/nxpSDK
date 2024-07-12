@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_edgefast_bluetooth_pal AND (CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind_hci_uart))
+if(CONFIG_USE_middleware_edgefast_bluetooth_pal AND (CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind_hci_uart OR CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind_hci_platform))
 
 else()
 

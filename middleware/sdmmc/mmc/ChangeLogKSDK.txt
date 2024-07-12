@@ -2,7 +2,11 @@
 @page middleware_log Middleware Change Log
 
 @section mmc MMC Card driver for MCUXpresso SDK
-  The current driver version is 2.5.0.
+  The current driver version is 2.5.1.
+
+  - 2.5.1
+    - Bug Fixes
+      - Fix the decoding of CID register based on JEDEC Standard 84-B51.
 
   - 2.5.0
     - Improvements

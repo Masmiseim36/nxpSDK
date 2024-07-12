@@ -1,14 +1,14 @@
 var a00019 =
 [
-    [ "_dsi_config", "a00019.html#a00314", [
-      [ "kStatus_OTP_InvalidAddress", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562aa81f9e50700f61e4fc0a97f94d23eb00", null ],
-      [ "kStatus_OTP_ProgramFail", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562ad55f5025b32a412b893af5afd8e5de93", null ],
-      [ "kStatus_OTP_CrcFail", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562a96c4495f952291da00f2d8249488d8e4", null ],
-      [ "kStatus_OTP_Error", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562a6b2812dc3a772696674644021963e9e5", null ],
-      [ "kStatus_OTP_EccCheckFail", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562a04c03b460d85fa1a71ec9b190fa69ec0", null ],
-      [ "kStatus_OTP_Locked", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562aa6a221a15bbe35240999f04e44cffdc7", null ],
-      [ "kStatus_OTP_Timeout", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562a365cd204f0eb037f13fcdc9eec986cc4", null ],
-      [ "kStatus_OTP_CrcCheckPass", "a00260.html#gga1f9aebf1de3ebbf4283a4dcf73308562ac1090e0c604ff9bb4f40c88653b482c5", null ],
+    [ "_dsi_config", "a00019.html#a00311", [
+      [ "kStatus_OTP_InvalidAddress", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562aa81f9e50700f61e4fc0a97f94d23eb00", null ],
+      [ "kStatus_OTP_ProgramFail", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562ad55f5025b32a412b893af5afd8e5de93", null ],
+      [ "kStatus_OTP_CrcFail", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562a96c4495f952291da00f2d8249488d8e4", null ],
+      [ "kStatus_OTP_Error", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562a6b2812dc3a772696674644021963e9e5", null ],
+      [ "kStatus_OTP_EccCheckFail", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562a04c03b460d85fa1a71ec9b190fa69ec0", null ],
+      [ "kStatus_OTP_Locked", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562aa6a221a15bbe35240999f04e44cffdc7", null ],
+      [ "kStatus_OTP_Timeout", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562a365cd204f0eb037f13fcdc9eec986cc4", null ],
+      [ "kStatus_OTP_CrcCheckPass", "a00257.html#gga1f9aebf1de3ebbf4283a4dcf73308562ac1090e0c604ff9bb4f40c88653b482c5", null ],
       [ "numLanes", "a00019.html#a2aef122425e1d6903fc384c8ed165f4c", null ],
       [ "enableNonContinuousHsClk", "a00019.html#a01a09748b97685e1af7d757fb5ae8547", null ],
       [ "autoInsertEoTp", "a00019.html#ac1d561b5ddaed16fcedd2520d8e19806", null ],
@@ -17,7 +17,7 @@ var a00019 =
       [ "lrxHostTo_ByteClk", "a00019.html#adc44a629b5842711410dd23caa330fde", null ],
       [ "btaTo_ByteClk", "a00019.html#ad53045de1f82562b47404851d6c06eb8", null ]
     ] ],
-    [ "_dsi_dpi_config", "a00019.html#a00316", [
+    [ "_dsi_dpi_config", "a00019.html#a00313", [
       [ "pixelPayloadSize", "a00019.html#a4f098a8513dbf2a7cb26c818ad78b897", null ],
       [ "dpiColorCoding", "a00019.html#aa72f542087da6ac18240edc252d031db", null ],
       [ "pixelPacket", "a00019.html#a9d484c1500b12190e25b1a3c4cfe3449", null ],
@@ -32,7 +32,7 @@ var a00019 =
       [ "panelHeight", "a00019.html#a3d59905d512e113246c8ec57e58f3b46", null ],
       [ "virtualChannel", "a00019.html#a8dabf8347559868b419f90879fb795b3", null ]
     ] ],
-    [ "_dsi_dphy_config", "a00019.html#a00315", [
+    [ "_dsi_dphy_config", "a00019.html#a00312", [
       [ "txHsBitClk_Hz", "a00019.html#a5321fa9b7b13dc0b2f1137b186afe98c", null ],
       [ "tClkPre_ByteClk", "a00019.html#a5a7c78a49b20fbee162554dee144b6df", null ],
       [ "tClkPost_ByteClk", "a00019.html#a35699412728c69346d855a6674a84a74", null ],
@@ -44,7 +44,7 @@ var a00019 =
       [ "tHsTrail_ByteClk", "a00019.html#adc73c372dd3e1a6620497ccc4eb4e495", null ],
       [ "tClkTrail_ByteClk", "a00019.html#ade8eb271f2889285cc0c761a4c422f83", null ]
     ] ],
-    [ "_dsi_transfer", "a00019.html#a00320", [
+    [ "_dsi_transfer", "a00019.html#a00317", [
       [ "virtualChannel", "a00019.html#a31e7affb3297549e63d05915a8085f0c", null ],
       [ "txDataType", "a00019.html#a2b905ae70e1d631354b3db5905f6a56a", null ],
       [ "flags", "a00019.html#a2c9afe49000bf94970d2e9d0bef83806", null ],
@@ -55,7 +55,7 @@ var a00019 =
       [ "sendDscCmd", "a00019.html#a2f557be05f2feeb54487522fc508c117", null ],
       [ "dscCmd", "a00019.html#aefd087e82ed875700bead9ca29770f31", null ]
     ] ],
-    [ "_dsi_handle", "a00019.html#a00317", [
+    [ "_dsi_handle", "a00019.html#a00314", [
       [ "isBusy", "a00019.html#aaa7e810fa19c414bff3fe46861486c87", null ],
       [ "xfer", "a00019.html#a4dd129d234ee123666f6ecec53837055", null ],
       [ "callback", "a00019.html#a82a35dfa36addf4b4116efefc31260b3", null ],
@@ -231,6 +231,8 @@ var a00019 =
     [ "DSI_EnableInterrupts", "a00019.html#ga9bbef4523c5689103bf602e53b44b0e9", null ],
     [ "DSI_DisableInterrupts", "a00019.html#gabd459c4796d6fd7270e7a4caa0951a6b", null ],
     [ "DSI_GetAndClearInterruptStatus", "a00019.html#gaebb82b7c65de10e4520e4957c858d6c6", null ],
+    [ "DSI_SetDbiPixelFifoSendLevel", "a00019.html#gaba089c04b3cb9dd6fa77e7eaf67a69a3", null ],
+    [ "DSI_SetDbiPixelPayloadSize", "a00019.html#ga9974d7162563ac590777c6927bb6ef8d", null ],
     [ "DSI_SetApbPacketControl", "a00019.html#ga0d03504e1c34404c3600eddf7ad2498d", null ],
     [ "DSI_WriteApbTxPayload", "a00019.html#gac1371a58b6086a50c29fa07cb27a8bd5", null ],
     [ "DSI_WriteApbTxPayloadExt", "a00019.html#gaa9edb9522d8a6e44f3cc27a2b91a2cc4", null ],

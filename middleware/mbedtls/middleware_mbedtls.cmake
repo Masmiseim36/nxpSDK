@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_utility_debug_console AND (CONFIG_USE_middleware_mbedtls_port_ele_s400 OR CONFIG_USE_middleware_mbedtls_port_ele_s400_ecc_opaque))
+if((CONFIG_USE_utility_debug_console OR CONFIG_USE_utility_debug_console_lite) AND (CONFIG_USE_middleware_mbedtls_port_ksdk OR CONFIG_USE_middleware_mbedtls_port_sssapi OR CONFIG_USE_middleware_mbedtls_port_ele_s400 OR CONFIG_USE_middleware_mbedtls_port_ele_s400_ecc_opaque OR CONFIG_USE_middleware_mbedtls_port_els_pkc))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/aes.c

@@ -25,7 +25,7 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -40,7 +40,7 @@ static mlan_operations mlan_sta_ops = {
     /* cmd handler */
     wlan_ops_sta_prepare_cmd,
     /* rx handler */
-    wlan_ops_sta_process_rx_packet,
+    wlan_ops_process_rx_packet,
     /* BSS role: STA */
     MLAN_BSS_ROLE_STA,
 };
@@ -48,7 +48,7 @@ static mlan_operations mlan_uap_ops = {
     /* cmd handler */
     wlan_ops_uap_prepare_cmd,
        /* rx handler */
-    /* wlan_ops_uap_process_rx_packet, */ NULL,
+    wlan_ops_process_rx_packet,
     /* BSS role: uAP */
     MLAN_BSS_ROLE_UAP,
 };
@@ -59,6 +59,9 @@ static mlan_operations *mlan_ops[] = {
     &mlan_uap_ops,
     MNULL,
 };
+#if defined(RW610)
+extern bus_operations imu_ops;
+#endif
 /** Global moal_assert callback */
 t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond) = MNULL;
 #ifdef DEBUG_LEVEL1
@@ -137,6 +140,7 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
     /* MASSERT(pmdevice->callbacks.moal_memmove); */
 
     /* Allocate memory for adapter structure */
+#if !CONFIG_MEM_POOLS
     if ((pmdevice->callbacks.moal_malloc(/* pmdevice->pmoal_handle */ NULL, sizeof(mlan_adapter), MLAN_MEM_DEF,
                                          (t_u8 **)(void **)&pmadapter) != MLAN_STATUS_SUCCESS) ||
         (pmadapter == MNULL))
@@ -144,6 +148,14 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
         ret = MLAN_STATUS_FAILURE;
         goto exit_register;
     }
+#else
+    pmadapter = OSA_MemoryPoolAllocate(pmAdapterMemoryPool);
+    if (pmadapter == MNULL)
+    {
+        ret = MLAN_STATUS_FAILURE;
+        goto exit_register;
+    }
+#endif
 
     (void)__memset(pmadapter, pmadapter, 0, sizeof(mlan_adapter));
 
@@ -159,6 +171,7 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
         if (pmdevice->bss_attr[i].active == MTRUE)
         {
             /* For valid bss_attr, allocate memory for private structure */
+#if !CONFIG_MEM_POOLS
             if ((pcb->moal_malloc(pmadapter->pmoal_handle, sizeof(mlan_private), MLAN_MEM_DEF,
                                   (t_u8 **)(void **)&pmadapter->priv[i]) != MLAN_STATUS_SUCCESS) ||
                 (pmadapter->priv[i] == MNULL))
@@ -166,7 +179,14 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
                 ret = MLAN_STATUS_FAILURE;
                 goto error;
             }
-
+#else
+            pmadapter->priv[i] = OSA_MemoryPoolAllocate(pmPrivateMemoryPool);
+            if (pmadapter->priv[i] == MNULL)
+            {
+                ret = MLAN_STATUS_FAILURE;
+                goto error;
+            }
+#endif
             pmadapter->priv_num++;
             (void)__memset(pmadapter, pmadapter->priv[i], 0, sizeof(mlan_private));
 
@@ -205,6 +225,9 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
         }
     }
 
+#if defined(RW610)
+    (void)__memcpy(pmadapter, &pmadapter->bus_ops, &imu_ops, sizeof(bus_operations));
+#endif
 
     /* Initialize lock variables */
     if (wlan_init_lock_list(pmadapter) != MLAN_STATUS_SUCCESS)
@@ -227,7 +250,21 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
 
 error:
     PRINTM(MINFO, "Leave mlan_register with error\n");
+
+    for (i = 0; i < MLAN_MAX_BSS_NUM; i++)
+    {
+        if (pmadapter->priv[i])
+#if !CONFIG_MEM_POOLS
+            pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->priv[i]);
+#else
+            OSA_MemoryPoolFree(pmPrivateMemoryPool, pmadapter->priv[i]);
+#endif
+    }
+#if !CONFIG_MEM_POOLS
     (void)pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter);
+#else
+    OSA_MemoryPoolFree(pmAdapterMemoryPool, pmadapter);
+#endif
 
 exit_register:
     LEAVE();
@@ -263,6 +300,7 @@ MLAN_API mlan_status mlan_unregister(IN t_void *pmlan_adapter)
     {
         if (pmadapter->priv[i] != MNULL)
         {
+            wlan_delete_station_list(pmadapter->priv[i]);
             (void)pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->priv[i]);
             pmadapter->priv[i] = MNULL;
         }

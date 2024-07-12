@@ -2838,7 +2838,7 @@ void wpa_sm_deinit(struct wpa_sm *sm)
     wpabuf_free(sm->fils_ft_ies);
 #endif /* CONFIG_FILS */
 #ifdef CONFIG_OWE
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     crypto_ecdh_deinit_owe(sm->owe_ecdh);
 #else
     crypto_ecdh_deinit(sm->owe_ecdh);
@@ -4825,12 +4825,12 @@ struct wpabuf *owe_build_assoc_req(struct wpa_sm *sm, u16 group)
         prime_len = 66;
     else
         return NULL;
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     crypto_ecdh_deinit_owe(sm->owe_ecdh);
 #else
     crypto_ecdh_deinit(sm->owe_ecdh);
 #endif
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     sm->owe_ecdh = crypto_ecdh_init_owe(group);
 #else
     sm->owe_ecdh = crypto_ecdh_init(group);
@@ -4838,7 +4838,7 @@ struct wpabuf *owe_build_assoc_req(struct wpa_sm *sm, u16 group)
     if (!sm->owe_ecdh)
         goto fail;
     sm->owe_group = group;
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     pub           = crypto_ecdh_get_pubkey_owe(sm->owe_ecdh, 0);
 #else
     pub           = crypto_ecdh_get_pubkey(sm->owe_ecdh, 0);
@@ -4861,7 +4861,7 @@ struct wpabuf *owe_build_assoc_req(struct wpa_sm *sm, u16 group)
     return ie;
 fail:
     wpabuf_free(pub);
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     crypto_ecdh_deinit_owe(sm->owe_ecdh);
 #else
     crypto_ecdh_deinit(sm->owe_ecdh);
@@ -4924,7 +4924,7 @@ int owe_process_assoc_resp(struct wpa_sm *sm, const u8 *bssid, const u8 *resp_ie
         prime_len = 66;
     else
         return -1;
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     secret = crypto_ecdh_set_peerkey_owe(sm->owe_ecdh, 0, elems.owe_dh + 2, elems.owe_dh_len - 2);
 #else
     secret = crypto_ecdh_set_peerkey(sm->owe_ecdh, 0, elems.owe_dh + 2, elems.owe_dh_len - 2);
@@ -4938,7 +4938,7 @@ int owe_process_assoc_resp(struct wpa_sm *sm, const u8 *bssid, const u8 *resp_ie
     wpa_hexdump_buf_key(MSG_DEBUG, "OWE: DH shared secret", secret);
 
     /* prk = HKDF-extract(C | A | group, z) */
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     pub = crypto_ecdh_get_pubkey_owe(sm->owe_ecdh, 0);
 #else
     pub = crypto_ecdh_get_pubkey(sm->owe_ecdh, 0);

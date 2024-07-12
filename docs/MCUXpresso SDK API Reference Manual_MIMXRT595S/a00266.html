@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PUF: Physical Unclonable Function</title>
+<title>MCUXpresso SDK API Reference Manual: UTICK: MictoTick Timer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,136 +99,79 @@ $(document).ready(function(){initNavTree('a00266.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
+<a href="#files">Files</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PUF: Physical Unclonable Function</div>  </div>
+<div class="title">UTICK: MictoTick Timer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Physical Unclonable Function (PUF) module of MCUXpresso SDK devices. The PUF controller provides a secure key storage without injecting or provisioning device unique PUF root key.</p>
-<p>Blocking synchronous APIs are provided for generating the activation code, intrinsic key generation, storing and reconstructing keys using PUF hardware. The PUF operations are complete (and results are made availabe for further usage) when a function returns. When called, these functions do not return until an PUF operation is complete. These functions use main CPU for simple polling loops to determine operation complete or error status. The driver functions are not re-entrant. These functions provide typical interface to upper layer or application software.</p>
-<h1><a class="anchor" id="PUFInit"></a>
-PUF Driver Initialization and deinitialization</h1>
-<p>PUF Driver is initialized by calling the PUF_Init() function, it resets the PUF module, enables it's clock and enables power to PUF SRAM. PUF Driver is deinitialized by calling the PUF_Deinit() function, it disables PUF module clock, asserts peripheral reset and disables power to PUF SRAM.</p>
-<h1><a class="anchor" id="PUFRtos"></a>
-Comments about API usage in RTOS</h1>
-<p>PUF operations provided by this driver are not re-entrant. Thus, application software shall ensure the PUF module operation is not requested from different tasks or interrupt service routines while an operation is in progress.</p>
-<h1><a class="anchor" id="PUFIsr"></a>
-Comments about API usage in interrupt handler</h1>
-<p>All APIs can be used from interrupt handler although execution time shall be considered (interrupt latency of equal and lower priority interrupts increases).</p>
-<h1><a class="anchor" id="PUFEx"></a>
-PUF Driver Examples</h1>
-<h2><a class="anchor" id="PUFSimpleEx"></a>
-Simple examples</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/puf </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the UTICK module of MCUXpresso SDK devices.</p>
+<p>UTICK driver is created to help user to operate the UTICK module. The UTICK timer can be used as a low power timer. The APIs can be used to enable the UTICK module, initialize it and set the time. UTICK can be used as a wake up source from low power mode.</p>
+<h1><a class="anchor" id="UTICKTpyUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/utick </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga3bdc651e62070fc7cdb52c3f1197fc84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga3bdc651e62070fc7cdb52c3f1197fc84">PUF_GET_KEY_CODE_SIZE_FOR_KEY_SIZE</a>(x)&#160;&#160;&#160;((160u + (((((x) &lt;&lt; 3) + 255u) &gt;&gt; 8) &lt;&lt; 8)) &gt;&gt; 3)</td></tr>
-<tr class="memdesc:ga3bdc651e62070fc7cdb52c3f1197fc84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Key Code size in bytes from key size in bytes at compile time.  <a href="#ga3bdc651e62070fc7cdb52c3f1197fc84">More...</a><br/></td></tr>
-<tr class="separator:ga3bdc651e62070fc7cdb52c3f1197fc84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00220"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html">fsl_utick.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga5905e02be9ed347f883ea4d694eb0baa"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00266.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d">_puf_key_slot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga5905e02be9ed347f883ea4d694eb0baa">puf_key_slot_t</a></td></tr>
-<tr class="memdesc:ga5905e02be9ed347f883ea4d694eb0baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">PUF key slot.  <a href="#ga5905e02be9ed347f883ea4d694eb0baa">More...</a><br/></td></tr>
-<tr class="separator:ga5905e02be9ed347f883ea4d694eb0baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafc6d7333c89e21b1b73e035a01d37eb"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00266.html#gaf9a069d105186556236c0ef23c9ad35f">_utick_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#gaafc6d7333c89e21b1b73e035a01d37eb">utick_mode_t</a></td></tr>
+<tr class="memdesc:gaafc6d7333c89e21b1b73e035a01d37eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK timer operational mode.  <a href="#gaafc6d7333c89e21b1b73e035a01d37eb">More...</a><br/></td></tr>
+<tr class="separator:gaafc6d7333c89e21b1b73e035a01d37eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f7c7bdd94699bdc40c684a07f347c3f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a> )(void)</td></tr>
+<tr class="memdesc:ga4f7c7bdd94699bdc40c684a07f347c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK callback function.  <a href="#ga4f7c7bdd94699bdc40c684a07f347c3f">More...</a><br/></td></tr>
+<tr class="separator:ga4f7c7bdd94699bdc40c684a07f347c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d">_puf_key_slot</a> { <br/>
-&#160;&#160;<a class="el" href="a00266.html#gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dabc4b46985695e9640df2093f937be7f2">kPUF_KeySlot0</a> = 0U, 
+<tr class="memitem:gaf9a069d105186556236c0ef23c9ad35f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#gaf9a069d105186556236c0ef23c9ad35f">_utick_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00266.html#ggaf9a069d105186556236c0ef23c9ad35faaeeddd009e9c2424172ad197ead2d97b">kUTICK_Onetime</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00266.html#gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dad944437798712d481221671c3cd08212">kPUF_KeySlot1</a> = 1U
+&#160;&#160;<a class="el" href="a00266.html#ggaf9a069d105186556236c0ef23c9ad35fa865f02b62034aa073e56629375dee16e">kUTICK_Repeat</a> = 0x1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d"><td class="mdescLeft">&#160;</td><td class="mdescRight">PUF key slot.  <a href="a00266.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d">More...</a><br/></td></tr>
-<tr class="separator:ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa156d1cebb38c8a65846c4d9c006012a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"></td></tr>
-<tr class="memdesc:gaa156d1cebb38c8a65846c4d9c006012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PUF status return codes.  <a href="a00266.html#gaa156d1cebb38c8a65846c4d9c006012a">More...</a><br/></td></tr>
-<tr class="separator:gaa156d1cebb38c8a65846c4d9c006012a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaf9a069d105186556236c0ef23c9ad35f"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK timer operational mode.  <a href="a00266.html#gaf9a069d105186556236c0ef23c9ad35f">More...</a><br/></td></tr>
+<tr class="separator:gaf9a069d105186556236c0ef23c9ad35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga7e9f1791013e2efc9bddbb202db774af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga7e9f1791013e2efc9bddbb202db774af">FSL_PUF_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td></tr>
-<tr class="memdesc:ga7e9f1791013e2efc9bddbb202db774af"><td class="mdescLeft">&#160;</td><td class="mdescRight">PUF driver version.  <a href="#ga7e9f1791013e2efc9bddbb202db774af">More...</a><br/></td></tr>
-<tr class="separator:ga7e9f1791013e2efc9bddbb202db774af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba15862a7512fc2a9c3bcccdb8b76bbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#gaba15862a7512fc2a9c3bcccdb8b76bbf">FSL_UTICK_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
+<tr class="memdesc:gaba15862a7512fc2a9c3bcccdb8b76bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK driver version 2.0.5.  <a href="#gaba15862a7512fc2a9c3bcccdb8b76bbf">More...</a><br/></td></tr>
+<tr class="separator:gaba15862a7512fc2a9c3bcccdb8b76bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga612c590e311ff59c5036d9cf9b3d5141"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga612c590e311ff59c5036d9cf9b3d5141">UTICK_Init</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga612c590e311ff59c5036d9cf9b3d5141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an UTICK by turning its bus clock on.  <a href="#ga612c590e311ff59c5036d9cf9b3d5141">More...</a><br/></td></tr>
+<tr class="separator:ga612c590e311ff59c5036d9cf9b3d5141"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga926b042935b415c79beaa6d2552309e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga926b042935b415c79beaa6d2552309e0">UTICK_Deinit</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga926b042935b415c79beaa6d2552309e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a UTICK instance.  <a href="#ga926b042935b415c79beaa6d2552309e0">More...</a><br/></td></tr>
+<tr class="separator:ga926b042935b415c79beaa6d2552309e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1073003f8cf4c006ee7b6258556b4df9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga1073003f8cf4c006ee7b6258556b4df9">UTICK_GetStatusFlags</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga1073003f8cf4c006ee7b6258556b4df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Status Flags.  <a href="#ga1073003f8cf4c006ee7b6258556b4df9">More...</a><br/></td></tr>
+<tr class="separator:ga1073003f8cf4c006ee7b6258556b4df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42e9e599ac4c314382bc0e99f4ca4d52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga42e9e599ac4c314382bc0e99f4ca4d52">UTICK_ClearStatusFlags</a> (UTICK_Type *base)</td></tr>
+<tr class="memdesc:ga42e9e599ac4c314382bc0e99f4ca4d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Status Interrupt Flags.  <a href="#ga42e9e599ac4c314382bc0e99f4ca4d52">More...</a><br/></td></tr>
+<tr class="separator:ga42e9e599ac4c314382bc0e99f4ca4d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b314cad747ef275f03fb8cd11b524ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ga5b314cad747ef275f03fb8cd11b524ee">UTICK_SetTick</a> (UTICK_Type *base, <a class="el" href="a00266.html#gaafc6d7333c89e21b1b73e035a01d37eb">utick_mode_t</a> mode, uint32_t count, <a class="el" href="a00266.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a> cb)</td></tr>
+<tr class="memdesc:ga5b314cad747ef275f03fb8cd11b524ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts UTICK.  <a href="#ga5b314cad747ef275f03fb8cd11b524ee">More...</a><br/></td></tr>
+<tr class="separator:ga5b314cad747ef275f03fb8cd11b524ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1399bca52f347f0db63b88cda0973b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#gaf1399bca52f347f0db63b88cda0973b8">UTICK_HandleIRQ</a> (UTICK_Type *base, <a class="el" href="a00266.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a> cb)</td></tr>
+<tr class="memdesc:gaf1399bca52f347f0db63b88cda0973b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTICK Interrupt Service Handler.  <a href="#gaf1399bca52f347f0db63b88cda0973b8">More...</a><br/></td></tr>
+<tr class="separator:gaf1399bca52f347f0db63b88cda0973b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7e9f1791013e2efc9bddbb202db774af"></a>
+<a class="anchor" id="gaba15862a7512fc2a9c3bcccdb8b76bbf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_PUF_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Version 2.1.6.</p>
-<p>Current version: 2.1.6</p>
-<p>Change log:</p>
-<ul>
-<li>2.0.0<ul>
-<li>Initial version.</li>
-</ul>
-</li>
-<li>2.0.1<ul>
-<li>Fixed puf_wait_usec function optimization issue.</li>
-</ul>
-</li>
-<li>2.0.2<ul>
-<li>Add PUF configuration structure and support for PUF SRAM controller. Remove magic constants.</li>
-</ul>
-</li>
-<li>2.0.3<ul>
-<li>Fix MISRA C-2012 issue.</li>
-</ul>
-</li>
-<li>2.1.0<ul>
-<li>Align driver with PUF SRAM controller registers on LPCXpresso55s16.</li>
-<li>Update initizalition logic .</li>
-</ul>
-</li>
-<li>2.1.1<ul>
-<li>Fix ARMGCC build warning .</li>
-</ul>
-</li>
-<li>2.1.2<ul>
-<li>Update: Add automatic big to little endian swap for user (pre-shared) keys destinated to secret hardware bus (PUF key index 0).</li>
-</ul>
-</li>
-<li>2.1.3<ul>
-<li>Fix MISRA C-2012 issue.</li>
-</ul>
-</li>
-<li>2.1.4<ul>
-<li>Replace register uint32_t ticksCount with volatile uint32_t ticksCount in puf_wait_usec() to prevent optimization out delay loop.</li>
-</ul>
-</li>
-<li>2.1.5<ul>
-<li>Use common SDK delay in puf_wait_usec()</li>
-</ul>
-</li>
-<li>2.1.6<ul>
-<li>Changed wait time in PUF_Init(), when initialization fails it will try PUF_Powercycle() with shorter time. If this shorter time will also fail, initialization will be tried with worst case time as before. </li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-<a class="anchor" id="ga3bdc651e62070fc7cdb52c3f1197fc84"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PUF_GET_KEY_CODE_SIZE_FOR_KEY_SIZE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;((160u + (((((x) &lt;&lt; 3) + 255u) &gt;&gt; 8) &lt;&lt; 8)) &gt;&gt; 3)</td>
+          <td class="memname">#define FSL_UTICK_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -236,12 +179,24 @@ Driver version</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga5905e02be9ed347f883ea4d694eb0baa"></a>
+<a class="anchor" id="gaafc6d7333c89e21b1b73e035a01d37eb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="a00266.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d">_puf_key_slot</a>  <a class="el" href="a00266.html#ga5905e02be9ed347f883ea4d694eb0baa">puf_key_slot_t</a></td>
+          <td class="memname">typedef enum <a class="el" href="a00266.html#gaf9a069d105186556236c0ef23c9ad35f">_utick_mode</a>  <a class="el" href="a00266.html#gaafc6d7333c89e21b1b73e035a01d37eb">utick_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4f7c7bdd94699bdc40c684a07f347c3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* utick_callback_t)(void)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -249,35 +204,195 @@ Driver version</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d"></a>
+<a class="anchor" id="gaf9a069d105186556236c0ef23c9ad35f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00266.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d">_puf_key_slot</a></td>
+          <td class="memname">enum <a class="el" href="a00266.html#gaf9a069d105186556236c0ef23c9ad35f">_utick_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dabc4b46985695e9640df2093f937be7f2"></a>kPUF_KeySlot0</em>&nbsp;</td><td class="fielddoc">
-<p>PUF key slot 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf9a069d105186556236c0ef23c9ad35faaeeddd009e9c2424172ad197ead2d97b"></a>kUTICK_Onetime</em>&nbsp;</td><td class="fielddoc">
+<p>Trigger once. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dad944437798712d481221671c3cd08212"></a>kPUF_KeySlot1</em>&nbsp;</td><td class="fielddoc">
-<p>PUF key slot 1. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf9a069d105186556236c0ef23c9ad35fa865f02b62034aa073e56629375dee16e"></a>kUTICK_Repeat</em>&nbsp;</td><td class="fielddoc">
+<p>Trigger repeatedly. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaa156d1cebb38c8a65846c4d9c006012a"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga612c590e311ff59c5036d9cf9b3d5141"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">void UTICK_Init </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga926b042935b415c79beaa6d2552309e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function shuts down Utick bus clock</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1073003f8cf4c006ee7b6258556b4df9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t UTICK_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This returns the status flag</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status register value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga42e9e599ac4c314382bc0e99f4ca4d52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This clears intr status flag</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5b314cad747ef275f03fb8cd11b524ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_SetTick </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00266.html#gaafc6d7333c89e21b1b73e035a01d37eb">utick_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00266.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function starts a repeat/onetime countdown with an optional callback</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+    <tr><td class="paramname">mode</td><td>UTICK timer mode (ie kUTICK_onetime or kUTICK_repeat) </td></tr>
+    <tr><td class="paramname">count</td><td>UTICK timer mode (ie kUTICK_onetime or kUTICK_repeat) </td></tr>
+    <tr><td class="paramname">cb</td><td>UTICK callback (can be left as NULL if none, otherwise should be a void func(void)) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf1399bca52f347f0db63b88cda0973b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTICK_HandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">UTICK_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00266.html#ga4f7c7bdd94699bdc40c684a07f347c3f">utick_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function handles the interrupt and refers to the callback array in the driver to callback user (as per request in <a class="el" href="a00266.html#ga5b314cad747ef275f03fb8cd11b524ee" title="Starts UTICK. ">UTICK_SetTick()</a>). if no user callback is scheduled, the interrupt will simply be cleared.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>UTICK peripheral base address. </td></tr>
+    <tr><td class="paramname">cb</td><td>callback scheduled for this instance of UTICK </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>

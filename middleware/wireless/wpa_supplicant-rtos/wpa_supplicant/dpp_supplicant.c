@@ -2193,7 +2193,7 @@ static void wpas_dpp_rx_reconfig_auth_req(
     wpa_msg(wpa_s, MSG_INFO, DPP_EVENT_TX "dst=" MACSTR " freq=%u type=%d", MAC2STR(src), freq,
             DPP_PA_RECONFIG_AUTH_RESP);
     if (offchannel_send_action(wpa_s, freq, src, wpa_s->own_addr, broadcast, wpabuf_head(auth->reconfig_resp_msg),
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
                                wpabuf_len(auth->reconfig_resp_msg), 2000, wpas_dpp_tx_status, 0) < 0) /* need remain_on_chan to 2s to wait auth_resp */
 #else
                                wpabuf_len(auth->reconfig_resp_msg), 500, wpas_dpp_tx_status, 0) < 0)
@@ -3115,7 +3115,7 @@ static void wpas_dpp_gas_status_handler(void *ctx, struct wpabuf *resp, int ok)
         wpabuf_free(resp);
         eloop_cancel_timeout(wpas_dpp_config_result_wait_timeout, wpa_s, NULL);
 
-#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
         eloop_register_timeout(9, 0, wpas_dpp_config_result_wait_timeout, wpa_s, NULL);/* 2 -> 3 for debug enable when send gas_resp and wait conf result */
 #else
         eloop_register_timeout(2, 0, wpas_dpp_config_result_wait_timeout, wpa_s, NULL);
@@ -3706,7 +3706,7 @@ static void wpas_dpp_chirp_tx_status(struct wpa_supplicant *wpa_s,
     }
 
     wpa_printf(MSG_DEBUG, "DPP: Chirp send completed - wait for response");
-#if defined(CONFIG_FREERTOS)
+#if defined(CONFIG_FREERTOS) || defined(__ZEPHYR__)
     if (eloop_register_timeout(5, 0, wpas_dpp_chirp_timeout, wpa_s, NULL) < 0) /* 2 -> 5 for debug enable when send gas_resp and wait conf result */
 #else
     if (eloop_register_timeout(2, 0, wpas_dpp_chirp_timeout, wpa_s, NULL) < 0)

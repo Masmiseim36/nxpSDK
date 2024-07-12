@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -24,11 +24,6 @@
  * http://aws.amazon.com/freertos
  * http://www.FreeRTOS.org
  */
-
-/*
- * tcp_mem_stats.h
- */
-
 
 #ifndef TCP_MEM_STATS_H
 
@@ -74,7 +69,7 @@
     #endif /* ipconfigUSE_TCP_MEM_STATS != 0 */
 
     #ifdef __cplusplus
-        } /* extern "C" */
+}         /* extern "C" */
     #endif
 
 #endif /* TCP_MEM_STATS_H */

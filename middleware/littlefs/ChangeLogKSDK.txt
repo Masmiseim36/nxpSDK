@@ -4,6 +4,12 @@
 @section little fail-safe filesystem for MCUXpresso SDK
   The current version littlefs filesystem is 2.5.0_rev0.
 
+  - 2.9.1_rev0
+    - littlefs updated to version 2.9.1
+
+  - 2.8.0_rev0
+    - littlefs updated to version 2.8.0
+
   - 2.5.0_rev0
     - littlefs updated to version 2.5.0
 

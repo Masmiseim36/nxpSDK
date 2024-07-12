@@ -1,10 +1,10 @@
 var a00033 =
 [
-    [ "_gpio_pin_config", "a00033.html#a00360", [
+    [ "_gpio_pin_config", "a00033.html#a00357", [
       [ "pinDirection", "a00033.html#ae01198d65e4be510c4468dce75b6d779", null ],
       [ "outputLogic", "a00033.html#a70ede6dc868ff6dd15987ba62c5d574b", null ]
     ] ],
-    [ "_gpio_interrupt_config", "a00033.html#a00359", null ],
+    [ "_gpio_interrupt_config", "a00033.html#a00356", null ],
     [ "FSL_GPIO_DRIVER_VERSION", "a00033.html#ga5aa5229cbd041b11bcf8417ba12896b2", null ],
     [ "gpio_pin_direction_t", "a00033.html#gaf7d75755774a0f20385fbdda546f1f1d", null ],
     [ "gpio_pin_config_t", "a00033.html#ga9279df0a87f2432dc3c5d596028223b7", null ],

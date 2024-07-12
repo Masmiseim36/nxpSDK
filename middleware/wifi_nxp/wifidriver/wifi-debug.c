@@ -7,11 +7,11 @@
  *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
-#include <wm_os.h>
+#include <osa.h>
 
 #include <wifi-debug.h>
 
-#ifdef CONFIG_WIFI_EXTRA_DEBUG
+#if CONFIG_WIFI_EXTRA_DEBUG
 static const char *const status_table[] = {
     [0]  = "Successful",
     [1]  = "Unspecified failure",
@@ -79,7 +79,7 @@ const char *get_status_str(uint16_t status)
 
 void wifi_show_assoc_fail_reason(int status)
 {
-#ifdef CONFIG_WIFI_EXTRA_DEBUG
+#if CONFIG_WIFI_EXTRA_DEBUG
     (void)PRINTF("[wifi] Assoc Status: %s\n\r", get_status_str(status));
 
     switch (status)

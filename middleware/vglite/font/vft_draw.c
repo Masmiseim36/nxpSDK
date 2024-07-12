@@ -2,7 +2,7 @@
 *
 *    The MIT License (MIT)
 *
-*    Copyright 2020 NXP
+*    Copyright 2020, 2024 NXP
 *    All Rights Reserved.
 *
 *    Permission is hereby granted, free of charge, to any person obtaining
@@ -49,6 +49,11 @@
 #define GLYPH_CACHE_SIZE 16
 #define ENABLE_TEXT_WRAP 0
 #define HALT_ALLOCATOR_ERROR 1
+#define CHECK_INVALID_MBC 0
+
+#if VG_ENCODING == VG_ENCODING_UTF8
+int vft_get_mbc_char(const vg_char* text, uint32_t* unicode);
+#endif
 
 /** Data structures */
 typedef struct glyph_cache_desc {
@@ -185,7 +190,7 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
                       vg_lite_font_t font, 
                       vg_lite_matrix_t *matrix,
                       vg_lite_font_attributes_t  * attributes,
-                      char *text)
+                      vg_char *text)
 {
     font_face_desc_t *font_face;
     glyph_desc_t* g1 = NULL;
@@ -211,14 +216,21 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
      */
     if ( attributes->alignment == eTextAlignCenter ||
          attributes->alignment == eTextAlignRight ) {
-        char *t2 = text;
+        vg_char *t2 = text;
         int dx = 0;
-        uint16_t ug2; /* Unicode glyph */
+        uint32_t ug2; /* Unicode glyph */
         int kx;
 
         /* Case of center alignement */
         while (*t2 != '\0') {
+#if VG_ENCODING == VG_ENCODING_UTF8
+            int char_len;
+            char_len = vft_get_mbc_char(t2, &ug2);
+            if (char_len < 0)
+              return -1;
+#else
             ug2 = *t2;
+#endif
             kx = 0;
             g2 = vft_find_glyph(font_face, ug2);
             if (g1 != NULL && g2 != NULL) {
@@ -226,7 +238,11 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
             }
 
             dx += ((g2->horiz_adv_x + kx )* font_scale);
+#if VG_ENCODING == VG_ENCODING_UTF8
+            t2 += char_len;
+#else
             t2++;
+#endif
         }
 
         if ( attributes->alignment == eTextAlignCenter) {
@@ -238,7 +254,7 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
 
     /* Compute pixels that will cover this vector path */
     while (*text != '\0') {
-        uint16_t ug2; /* Unicode glyph */
+        uint32_t ug2; /* Unicode glyph */
         int kx;
         
         if (text_wrap == 0) {
@@ -253,7 +269,14 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
 
         /* Read unicode character */
         kx = 0;
+#if VG_ENCODING == VG_ENCODING_UTF8
+        int char_len;
+        char_len = vft_get_mbc_char(text, &ug2);
+        if (char_len < 0)
+            break;
+#else
         ug2 = *text;
+#endif
         g2 = vft_find_glyph(font_face, ug2);
         if (g1 != NULL && g2 != NULL) {
             kx = vft_glyph_distance(g1, g2);
@@ -273,7 +296,11 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
 
         /* Compute glyph size in horizontal dimension */
         g1 = g2;
+#if VG_ENCODING == VG_ENCODING_UTF8
+        text += char_len;
+#else
         text++;
+#endif
              
         error = vg_lite_draw(rt, vft_cache_lookup(g2),
                              fill_rule,
@@ -290,7 +317,7 @@ int vg_lite_vtf_draw_text(vg_lite_buffer_t *rt, int x, int y,
     
     attributes->last_dx += 2; /* Space between 2 text strings */
 
-    return 0;
+    return error;
 }
 
 void load_font_face(font_face_desc_t* font_face, uint8_t* buf, int font_face_offset)
@@ -460,3 +487,89 @@ void vft_unload(font_face_desc_t* font_face)
     glyph_cache_free();
     //VFT_FREE(font_face);
 }
+
+#if VG_ENCODING == VG_ENCODING_UTF8
+
+#if CHECK_INVALID_MBC
+#define VALIDATE_MBC(x) if (((x) & 0xC0) != 0x80) return -1;
+#define VALIDATE_MBC_START(x) if ((x) < 0xC0 || (x) > 0xFE) return -1;
+#else
+#define VALIDATE_MBC(x)
+#define VALIDATE_MBC_START(x)
+#endif
+
+/* Read a MBC character from buffer */
+int vft_get_mbc_char(const char* text, uint32_t* unicode)
+{
+    int len;
+    const uint8_t* mb_char = (const uint8_t*)text;
+    
+    if (!mb_char || (*mb_char) == 0) return 0;
+
+    uint8_t b = *(mb_char++);
+
+    if (b < 0x80)
+    {
+        *unicode = b;
+        return 1;
+    }
+
+    VALIDATE_MBC_START(b);
+
+    if (b < 0xE0)
+    {
+        *unicode = b & 0x1F;
+        len = 2;
+    }
+    else if (b < 0xF0)
+    {
+        *unicode = b & 0x0F;
+        len = 3;
+    }
+    else if (b < 0xF8)
+    {
+        *unicode = b & 0x07;
+        len = 4;
+    }
+    else if (b < 0xFC)
+    {
+        *unicode = b & 0x03;
+        len = 5;
+    }
+    else
+    {
+        *unicode = b & 0x01;
+        len = 6;
+    }
+
+    switch (len)
+    {
+        case 6:
+            b = *(mb_char++);
+            VALIDATE_MBC(b);
+            *unicode = (*unicode << 6) + (b & 0x3F);
+        case 5:
+            b = *(mb_char++);
+            VALIDATE_MBC(b);
+            *unicode = (*unicode << 6) + (b & 0x3F);
+        case 4:
+            b = *(mb_char++);
+            VALIDATE_MBC(b);
+            *unicode = (*unicode << 6) + (b & 0x3F);
+        case 3:
+            b = *(mb_char++);
+            VALIDATE_MBC(b);
+            *unicode = (*unicode << 6) + (b & 0x3F);
+        case 2:
+            b = *(mb_char++);
+            VALIDATE_MBC(b);
+            *unicode = (*unicode << 6) + (b & 0x3F);
+            break;
+        default:
+            break;
+    }
+
+    return len;
+}
+#endif
+

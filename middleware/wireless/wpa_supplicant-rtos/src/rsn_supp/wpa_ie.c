@@ -207,6 +207,10 @@ static int wpa_gen_wpa_ie_rsn(u8 *rsn_ie,
     {
         RSN_SELECTOR_PUT(pos, RSN_AUTH_KEY_MGMT_SAE);
     }
+    else if (key_mgmt == WPA_KEY_MGMT_SAE_EXT_KEY)
+    {
+        RSN_SELECTOR_PUT(pos, RSN_AUTH_KEY_MGMT_SAE_EXT_KEY);
+    }
     else if (key_mgmt == WPA_KEY_MGMT_FT_SAE)
     {
         RSN_SELECTOR_PUT(pos, RSN_AUTH_KEY_MGMT_FT_SAE);

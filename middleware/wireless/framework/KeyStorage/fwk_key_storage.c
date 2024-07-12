@@ -17,8 +17,9 @@
  * Definitions
  ******************************************************************************/
 
-#define KS_SIZE_TMP_KEY    15
-#define KS_MAX_CHAR_NUMBER 15
+#define KS_SIZE_TMP_KEY         15
+#define KS_MAX_CHAR_NUMBER      15
+#define KS_VALUE_SIZE_THRESHOLD 256
 
 /* Indication of the type of the key */
 #define FILE_INT 0
@@ -231,8 +232,16 @@ static void KS_GetFileName(void *ks_handle_p, char *suffix, char *file_name, uin
     strcpy(file_name, prefix);
     strcat(file_name, suffix);
 
+    /* If no key was provided for analysis, just return the file name made of
+     * the prefix and the suffix */
+    if (!key_string)
+    {
+        return;
+    }
+
     /* DIVISION OF FILES:
      * - One file for the integer keys;
+     * - Separate files for custom string keys (not starting with 'f', 'g' or 'w');
      * - One file for the string keys NOT starting with 'f' ('g', 'w');
      * - As many files, for the string keys starting with 'f', as the combination of the number of fabrics the device
      * is commissioned to and the possible third characters the string keys starting with 'f' have.
@@ -257,9 +266,17 @@ static void KS_GetFileName(void *ks_handle_p, char *suffix, char *file_name, uin
         lim1             = strchr(key_string, div_char);
         lim2             = strchr(lim1 + 1, div_char);
         fabric_extracted = strndup(lim1 + 1, (lim2 - lim1 - 1));
+        if (fabric_extracted == NULL)
+        {
+            /* If a memory problem was encountered, just return an empty file
+             * name. Hopefully this will trigger an error in the caller */
+            file_name[0] = 0;
+            return;
+        }
         strcat(file_name, "_");
         strcat(file_name, fabric_extracted);
         fabric_number = (uint16_t)atoi(fabric_extracted);
+        free(fabric_extracted);
         if (fabric_number > num_fabrics)
         {
             num_fabrics = fabric_number;
@@ -292,10 +309,41 @@ static void KS_GetFileName(void *ks_handle_p, char *suffix, char *file_name, uin
             }
         }
     }
-    assert(strlen(file_name) <= FC_FILE_NAME_SIZE_MAX);
+
+    if (file_type == FILE_STR && key_string[0] != 'f' && key_string[0] != 'g' && key_string[0] != 'w')
+    {
+        uint16_t key_size = strlen(key_string);
+        uint16_t i, j;
+
+        /* This seems to be a custom key. For custom keys we will try to use
+         * individual files as much as possible. Because the first letters of
+         * custom keys are most probably the same, we will add the LAST letters
+         * of the key name to the "file_name" for added entropy. This has
+         * higher chances to produce different file names for different keys. */
+
+        /* Add the last characters of the "key_string" to the "file_name" to
+         * create a file name of the maximum length supported by the FileCache.
+         * Skip '/' characters in the key name in this process. */
+        i              = strlen(file_name);
+        file_name[i++] = '_';
+        j              = key_size - (FC_FILE_NAME_SIZE_MAX - 1 - i);
+        while (j < key_size)
+        {
+            if (key_string[j] != '/')
+            {
+                file_name[i++] = key_string[j];
+            }
+
+            j++;
+        }
+        file_name[i] = 0;
+    }
+
+    assert(strlen(file_name) < FC_FILE_NAME_SIZE_MAX);
 }
 
-static void *KS_OpenWaitLoop(void *fc_ctx_p, char *file_name, uint8_t **buf, uint16_t buf_len, uint16_t new_value_space)
+static void *KS_OpenWaitLoop(
+    void *fc_ctx_p, char *file_name, uint8_t **buf, uint16_t *buf_len, uint16_t new_value_space)
 {
     int      i;
     uint16_t req_buf_size;
@@ -308,9 +356,9 @@ static void *KS_OpenWaitLoop(void *fc_ctx_p, char *file_name, uint8_t **buf, uin
 
     /* Add to the current size, the size of the new value */
     /* Try to allocate more space than needed to have the chance to allocate an other key later */
-    req_buf_size = buf_len + (new_value_space * 2);
-    /* Check if there is enough space to open the buffer with the updated size */
-    file_hdl = FC_Open(fc_ctx_p, file_name, buf, &req_buf_size, 0);
+    *buf_len += (new_value_space < KS_VALUE_SIZE_THRESHOLD) ? (new_value_space * 2) : new_value_space;
+    req_buf_size = *buf_len; /* Check if there is enough space to open the buffer with the updated size */
+    file_hdl     = FC_Open(fc_ctx_p, file_name, buf, buf_len, 0);
 #if (KS_OPEN_WAIT_LOOP_MAX_ITERATIONS_N != 0)
     if ((file_hdl == NULL) && (KS_OPEN_WAIT_LOOP_MAX_ITERATIONS_N != 0) && (KS_OPEN_WAIT_LOOP_MS != 0))
     {
@@ -319,11 +367,11 @@ static void *KS_OpenWaitLoop(void *fc_ctx_p, char *file_name, uint8_t **buf, uin
         {
             /* Wait to give time to write in flash and leave space in scratch RAM to open a new buffer */
             /* Every time in the FC_Open req_buf_size is updated with the available size */
-            req_buf_size = buf_len + new_value_space;
+            *buf_len = req_buf_size;
             /* Delay the task to have the time to write in flash and leave space
             Try to open the buffer until it succeed or reach the max number of iterations */
             OSA_TimeDelay(KS_OPEN_WAIT_LOOP_MS);
-            file_hdl = FC_Open(fc_ctx_p, file_name, buf, &req_buf_size, 0);
+            file_hdl = FC_Open(fc_ctx_p, file_name, buf, buf_len, 0);
             i++;
         } while ((file_hdl == NULL) && (i < KS_OPEN_WAIT_LOOP_MAX_ITERATIONS_N));
     }
@@ -342,7 +390,7 @@ static ks_error_t KS_DeleteKey(void *ks_handle_p, void *key_p, int key_len, char
     void *       value_l;
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     ks_handle_t *ks_hdl_p;
 
     ret        = KS_ERROR_KEY_NOT_FOUND;
@@ -353,10 +401,11 @@ static ks_error_t KS_DeleteKey(void *ks_handle_p, void *key_p, int key_len, char
 
     /* Open file, search for the key in the file, close file */
     KS_GetFileName(ks_handle_p, key_namespace, file_name, file_type, (char *)key_p);
-    FC_GetFileSize(file_name, &buf_len);
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
 
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, 0);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, 0);
     if (file_hdl == NULL)
     {
         /* There is not enough space to open the buffer */
@@ -372,19 +421,19 @@ static ks_error_t KS_DeleteKey(void *ks_handle_p, void *key_p, int key_len, char
             /* The key is an integer */
             int *key;
             key     = (int *)key_p;
-            value_l = KS_SearchKeyIntoBuffer(buf, buf_len, *key, &rm_val_sz, &buf_off);
+            value_l = KS_SearchKeyIntoBuffer(buf, buf_payload, *key, &rm_val_sz, &buf_off);
             while (value_l != NULL)
             {
                 int next_position;
                 int data_len;
-                KS_BufferShift(buf, &buf_len, key_len, rm_val_sz, 0, buf_off);
+                KS_BufferShift(buf, &buf_payload, key_len, rm_val_sz, 0, buf_off);
                 ret        = KS_ERROR_NONE;
                 close_file = FC_CLOSE_AND_SAVE_TO_QUEUE;
-                if (buf_len > 0)
+                if (buf_payload > 0)
                 {
                     /* Next position from which start to search for the key in the buffer */
                     next_position = buf_off - key_len - sizeof(int);
-                    data_len      = buf_len - next_position;
+                    data_len      = buf_payload - next_position;
                     value_l       = KS_SearchKeyIntoBuffer(buf + next_position, data_len, *key, &rm_val_sz, &buf_off);
                     buf_off += next_position;
                 }
@@ -400,19 +449,19 @@ static ks_error_t KS_DeleteKey(void *ks_handle_p, void *key_p, int key_len, char
             /* The key is a string */
             char *key_buf;
             key_buf = (char *)key_p;
-            value_l = KS_SearchStringKeyIntoBuffer(buf, buf_len, key_buf, key_len, &rm_val_sz, &buf_off);
+            value_l = KS_SearchStringKeyIntoBuffer(buf, buf_payload, key_buf, key_len, &rm_val_sz, &buf_off);
             while (value_l != NULL)
             {
                 int next_position;
                 int data_len;
-                KS_BufferShift(buf, &buf_len, key_len, rm_val_sz, 0, buf_off);
+                KS_BufferShift(buf, &buf_payload, key_len, rm_val_sz, 0, buf_off);
                 ret        = KS_ERROR_NONE;
                 close_file = FC_CLOSE_AND_SAVE_TO_QUEUE;
-                if (buf_len > 0)
+                if (buf_payload > 0)
                 {
                     /* Next position from which start to search for the key in the buffer */
                     next_position = buf_off - key_len - sizeof(int);
-                    data_len      = buf_len - next_position;
+                    data_len      = buf_payload - next_position;
                     value_l = KS_SearchStringKeyIntoBuffer(buf + next_position, data_len, key_buf, key_len, &rm_val_sz,
                                                            &buf_off);
                     buf_off += next_position;
@@ -424,7 +473,7 @@ static ks_error_t KS_DeleteKey(void *ks_handle_p, void *key_p, int key_len, char
                 }
             }
         }
-        FC_Close(file_hdl, buf_len, close_file);
+        FC_Close(file_hdl, buf_payload, close_file);
     }
 
     return ret;
@@ -460,8 +509,8 @@ void *KS_Init(ks_config_t *ks_config_p)
     {
         fc_config_p                 = (fc_config_t *)(ks_ctx_p + 1);
         fc_config_p->folder_name    = ks_config_p->KS_name;
-        fc_config_p->scracth_ram_p  = (void *)(fc_config_p + 1);
-        fc_config_p->scracth_ram_sz = ks_config_p->size;
+        fc_config_p->scratch_ram_p  = (void *)(fc_config_p + 1);
+        fc_config_p->scratch_ram_sz = ks_config_p->size;
 
         ret = FC_InitConfig(fc_config_p);
         if (ret != NULL)
@@ -540,7 +589,7 @@ ks_error_t KS_AddKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     void *       file_hdl;
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     uint16_t     new_value_space;
     ks_handle_t *ks_hdl_p;
 
@@ -552,12 +601,13 @@ ks_error_t KS_AddKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     fc_ctx_p = ks_hdl_p->fc_context_p;
 
     KS_GetFileName(ks_handle_p, key_namespace, file_name, FILE_INT, NULL);
-    FC_GetFileSize(file_name, &buf_len);
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
     /* Space required to store the new value, offset and key */
     new_value_space = 2 * sizeof(int) + val_sz;
 
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, new_value_space);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, new_value_space);
     if (file_hdl == NULL)
     {
         /* If even after waiting the buffer hasn't been opened, there is no space to store the new key */
@@ -565,8 +615,18 @@ ks_error_t KS_AddKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     }
     else
     {
-        KS_AddKeyToBuffer(buf, &buf_len, new_value_space, key, value, val_sz);
-        FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
+        /* Is the buffer large enough to store the new key? */
+        if (buf_len - buf_payload >= new_value_space)
+        {
+            /* There is enough room in the buffer to add the key */
+            KS_AddKeyToBuffer(buf, &buf_payload, new_value_space, key, value, val_sz);
+            FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
+        }
+        else
+        {
+            ret = KS_ERROR_BUF_TOO_SMALL;
+            FC_Close(file_hdl, 0, FC_CLOSE_ONLY);
+        }
     }
 
     return ret;
@@ -581,7 +641,7 @@ ks_error_t KS_GetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     void *       value_l;
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     ks_handle_t *ks_hdl_p;
 
     /* If the key is not found return an error status */
@@ -592,11 +652,12 @@ ks_error_t KS_GetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     assert(ks_handle_p != NULL);
     fc_ctx_p = ks_hdl_p->fc_context_p;
     KS_GetFileName(ks_handle_p, key_namespace, file_name, FILE_INT, NULL);
-    FC_GetFileSize(file_name, &buf_len);
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
 
     /* Open file, search for the key in the file, close file */
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, 0);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, 0);
     if (file_hdl == NULL)
     {
         /* There is not enough space to open the buffer */
@@ -604,16 +665,23 @@ ks_error_t KS_GetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     }
     else
     {
-        value_l = KS_SearchKeyIntoBuffer(buf, buf_len, key, val_sz, &buf_off);
-        /* The length of the read value should not be greater than the size of the buffer */
-        if (*val_sz > buf_sz)
-        {
-            *val_sz = buf_sz;
-        }
+        value_l = KS_SearchKeyIntoBuffer(buf, buf_payload, key, val_sz, &buf_off);
         if (value_l != NULL)
         {
             ret = KS_ERROR_NONE;
-            memcpy(value_p, value_l, *val_sz);
+
+            if (*val_sz > buf_sz)
+            {
+                ret     = KS_ERROR_BUF_TOO_SMALL;
+                *val_sz = buf_sz;
+            }
+
+            /* Copy the data associated with the key only when there is
+             * something to copy. */
+            if (*val_sz > 0)
+            {
+                memcpy(value_p, value_l, *val_sz);
+            }
         }
         FC_Close(file_hdl, 0, FC_CLOSE_ONLY);
     }
@@ -628,7 +696,7 @@ ks_error_t KS_AddKeyString(void *ks_handle_p, char *key_buf, int key_len, char *
     void *       file_hdl;
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     uint16_t     new_value_space;
     ks_handle_t *ks_hdl_p;
 
@@ -640,12 +708,13 @@ ks_error_t KS_AddKeyString(void *ks_handle_p, char *key_buf, int key_len, char *
     fc_ctx_p = ks_hdl_p->fc_context_p;
 
     KS_GetFileName(ks_handle_p, key_namespace, file_name, FILE_STR, key_buf);
-    FC_GetFileSize(file_name, &buf_len);
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
     /* Space required to store the new value, offset and key */
     new_value_space = sizeof(int) + key_len + val_sz;
 
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, new_value_space);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, new_value_space);
     if (file_hdl == NULL)
     {
         /* If even after waiting the buffer hasn't been opened, there is no space to store the new key */
@@ -653,8 +722,18 @@ ks_error_t KS_AddKeyString(void *ks_handle_p, char *key_buf, int key_len, char *
     }
     else
     {
-        KS_AddStringKeyToBuffer(buf, &buf_len, new_value_space, key_buf, key_len, value, val_sz);
-        FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
+        /* Is the buffer large enough to store the new key? */
+        if (buf_len - buf_payload >= new_value_space)
+        {
+            /* There is enough room in the buffer to add the key */
+            KS_AddStringKeyToBuffer(buf, &buf_payload, new_value_space, key_buf, key_len, value, val_sz);
+            FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
+        }
+        else
+        {
+            ret = KS_ERROR_BUF_TOO_SMALL;
+            FC_Close(file_hdl, 0, FC_CLOSE_ONLY);
+        }
     }
 
     return ret;
@@ -670,7 +749,7 @@ ks_error_t KS_GetKeyString(
     void *       value_l;
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     ks_handle_t *ks_hdl_p;
 
     /* If the key is not found return an error status */
@@ -681,11 +760,12 @@ ks_error_t KS_GetKeyString(
     assert(ks_handle_p != NULL);
     fc_ctx_p = ks_hdl_p->fc_context_p;
     KS_GetFileName(ks_handle_p, key_namespace, file_name, FILE_STR, key_buf);
-    FC_GetFileSize(file_name, &buf_len);
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
 
     /* Open file, search for the key in the file, close file */
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, 0);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, 0);
 
     if (file_hdl == NULL)
     {
@@ -694,16 +774,23 @@ ks_error_t KS_GetKeyString(
     }
     else
     {
-        value_l = KS_SearchStringKeyIntoBuffer(buf, buf_len, key_buf, key_len, val_sz, &buf_off);
-        /* The length of the read value should not be greater than the size of the buffer */
-        if (*val_sz > buf_sz)
-        {
-            *val_sz = buf_sz;
-        }
+        value_l = KS_SearchStringKeyIntoBuffer(buf, buf_payload, key_buf, key_len, val_sz, &buf_off);
         if (value_l != NULL)
         {
             ret = KS_ERROR_NONE;
-            memcpy(value_p, value_l, *val_sz);
+
+            if (*val_sz > buf_sz)
+            {
+                ret     = KS_ERROR_BUF_TOO_SMALL;
+                *val_sz = buf_sz;
+            }
+
+            /* Copy the data associated with the key only when there is
+             * something to copy. */
+            if (*val_sz > 0)
+            {
+                memcpy(value_p, value_l, *val_sz);
+            }
         }
         FC_Close(file_hdl, 0, FC_CLOSE_ONLY);
     }
@@ -723,8 +810,7 @@ ks_error_t KS_SetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
     uint16_t     new_buf_size;
-    uint16_t     old_buf_size;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     uint16_t     new_value_space;
     uint8_t *    new_value_p;
     ks_handle_t *ks_hdl_p;
@@ -739,12 +825,12 @@ ks_error_t KS_SetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     fc_ctx_p = ks_hdl_p->fc_context_p;
 
     KS_GetFileName(ks_handle_p, key_namespace, file_name, FILE_INT, NULL);
-    FC_GetFileSize(file_name, &buf_len);
-    old_buf_size = buf_len;
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
 
     /* Open a first time the file with the effective size */
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, 0);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, 0);
     if (file_hdl == NULL)
     {
         /* There is not enough space to open the buffer */
@@ -753,31 +839,32 @@ ks_error_t KS_SetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
     else
     {
         /* buf_off is an offset from the beginning of the buffer to localizate the value to replace */
-        value_l = KS_SearchKeyIntoBuffer(buf, buf_len, key, &old_val_sz, &buf_off);
+        value_l = KS_SearchKeyIntoBuffer(buf, buf_payload, key, &old_val_sz, &buf_off);
         /* Delete all the entries associated to the key to set */
         while (value_l != NULL)
         {
-            KS_BufferShift(buf, &buf_len, key_sz, old_val_sz, 0, buf_off);
-            value_l = KS_SearchKeyIntoBuffer(buf, buf_len, key, &old_val_sz, &buf_off);
+            KS_BufferShift(buf, &buf_payload, key_sz, old_val_sz, 0, buf_off);
+            value_l = KS_SearchKeyIntoBuffer(buf, buf_payload, key, &old_val_sz, &buf_off);
         }
         /* Space required to store the new value, offset and key */
         new_value_space = 2 * sizeof(int) + val_sz;
-        new_buf_size    = buf_len + new_value_space;
+        new_buf_size    = buf_payload + new_value_space;
         /* If the updated size of the buffer is less greater or equal than the old one, we're sure that there is enough
          * space */
-        if (new_buf_size <= old_buf_size)
+        if (new_buf_size <= buf_len)
         {
             /* Add new key at the end of the buffer */
-            KS_AddKeyToBuffer(buf, &buf_len, new_value_space, key, new_value_p, val_sz);
-            FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
+            KS_AddKeyToBuffer(buf, &buf_payload, new_value_space, key, new_value_p, val_sz);
+            FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
             ret = KS_ERROR_NONE;
         }
         else
         {
             /* We need to open a larger buffer */
-            FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
+            FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
+            buf_len = buf_payload;
             /* Try to open the file with a bigger size */
-            file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, new_value_space);
+            file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, new_value_space);
             if (file_hdl == NULL)
             {
                 /* If even after waiting the buffer hasn't been opened, there is no space to store the new key */
@@ -785,9 +872,19 @@ ks_error_t KS_SetKeyInt(void *ks_handle_p, int key, char *key_namespace, void *v
             }
             else
             {
-                KS_AddKeyToBuffer(buf, &buf_len, new_value_space, key, new_value_p, val_sz);
-                FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
-                ret = KS_ERROR_NONE;
+                /* Is the buffer large enough to host the new key? */
+                if (buf_len - buf_payload >= new_value_space)
+                {
+                    /* There is enough room in the buffer to add the key */
+                    KS_AddKeyToBuffer(buf, &buf_payload, new_value_space, key, new_value_p, val_sz);
+                    FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
+                    ret = KS_ERROR_NONE;
+                }
+                else
+                {
+                    FC_Close(file_hdl, 0, FC_CLOSE_ONLY);
+                    ret = KS_ERROR_BUF_TOO_SMALL;
+                }
             }
         }
     }
@@ -816,8 +913,7 @@ ks_error_t KS_SetKeyString(
     char         file_name[FC_FILE_NAME_SIZE_MAX];
     uint8_t *    buf;
     uint16_t     new_buf_size;
-    uint16_t     old_buf_size;
-    uint16_t     buf_len;
+    uint16_t     buf_len, buf_payload;
     uint8_t *    new_value_p;
     uint16_t     new_value_space;
     ks_handle_t *ks_hdl_p;
@@ -831,12 +927,12 @@ ks_error_t KS_SetKeyString(
     fc_ctx_p = ks_hdl_p->fc_context_p;
 
     KS_GetFileName(ks_handle_p, key_namespace, file_name, FILE_STR, key_buf);
-    FC_GetFileSize(file_name, &buf_len);
-    old_buf_size = buf_len;
+    FC_GetFileSize(file_name, &buf_payload);
+    buf_len = buf_payload;
 
     /* Open a first time the file with the effective size */
     /* Try to open the buffer and wait if the opening fails */
-    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, 0);
+    file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, 0);
     if (file_hdl == NULL)
     {
         /* There is not enough space to open the buffer */
@@ -845,28 +941,29 @@ ks_error_t KS_SetKeyString(
     else
     {
         /* buf_off is an offset from the beginning of the buffer to localizate the value to replace */
-        value_l = KS_SearchStringKeyIntoBuffer(buf, buf_len, key_buf, key_len, &old_val_sz, &buf_off);
+        value_l = KS_SearchStringKeyIntoBuffer(buf, buf_payload, key_buf, key_len, &old_val_sz, &buf_off);
         /* Delete all the entries associated to the key to set */
         while (value_l != NULL)
         {
-            KS_BufferShift(buf, &buf_len, key_len, old_val_sz, 0, buf_off);
-            value_l = KS_SearchStringKeyIntoBuffer(buf, buf_len, key_buf, key_len, &old_val_sz, &buf_off);
+            KS_BufferShift(buf, &buf_payload, key_len, old_val_sz, 0, buf_off);
+            value_l = KS_SearchStringKeyIntoBuffer(buf, buf_payload, key_buf, key_len, &old_val_sz, &buf_off);
         }
         /* Space required to store the new value, offset and key */
         new_value_space = val_sz + sizeof(int) + key_len;
-        new_buf_size    = buf_len + new_value_space;
-        if (new_buf_size <= old_buf_size)
+        new_buf_size    = buf_payload + new_value_space;
+        if (new_buf_size <= buf_len)
         {
             /* Add new key at the end of the buffer */
-            KS_AddStringKeyToBuffer(buf, &buf_len, new_value_space, key_buf, key_len, new_value_p, val_sz);
-            FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
+            KS_AddStringKeyToBuffer(buf, &buf_payload, new_value_space, key_buf, key_len, new_value_p, val_sz);
+            FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
             ret = KS_ERROR_NONE;
         }
         else
         {
-            FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
+            FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
+            buf_len = buf_payload;
             /* Try to open the file with a bigger size */
-            file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, buf_len, new_value_space);
+            file_hdl = KS_OpenWaitLoop(fc_ctx_p, file_name, &buf, &buf_len, new_value_space);
             if (file_hdl == NULL)
             {
                 /* If even after waiting the buffer hasn't been opened, there is no space to store the new key */
@@ -874,9 +971,19 @@ ks_error_t KS_SetKeyString(
             }
             else
             {
-                KS_AddStringKeyToBuffer(buf, &buf_len, new_value_space, key_buf, key_len, new_value_p, val_sz);
-                FC_Close(file_hdl, buf_len, FC_CLOSE_AND_SAVE_TO_QUEUE);
-                ret = KS_ERROR_NONE;
+                /* Is the buffer large enough to host the new key? */
+                if (buf_len - buf_payload >= new_value_space)
+                {
+                    /* There is enough room in the buffer to add the key */
+                    KS_AddStringKeyToBuffer(buf, &buf_payload, new_value_space, key_buf, key_len, new_value_p, val_sz);
+                    FC_Close(file_hdl, buf_payload, FC_CLOSE_AND_SAVE_TO_QUEUE);
+                    ret = KS_ERROR_NONE;
+                }
+                else
+                {
+                    FC_Close(file_hdl, 0, FC_CLOSE_ONLY);
+                    ret = KS_ERROR_BUF_TOO_SMALL;
+                }
             }
         }
     }

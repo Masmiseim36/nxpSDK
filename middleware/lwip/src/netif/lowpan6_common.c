@@ -9,6 +9,7 @@
 
 /*
  * Copyright (c) 2015 Inico Technologies Ltd.
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

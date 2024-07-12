@@ -126,7 +126,7 @@ static uint8_t character_callback(int16_t x, int16_t y, mf_char character,
 }
 
 /* Callback to render lines. */
-static bool line_callback(const char *line, uint16_t count, void *state)
+static bool line_callback(const vg_char *line, uint16_t count, void *state)
 {
     text_context_t *s = (text_context_t*)state;
 
@@ -148,7 +148,7 @@ static bool line_callback(const char *line, uint16_t count, void *state)
 
 /* Callback to just count the lines.
  * Used to decide the image height */
-bool count_lines(const char *line, uint16_t count, void *state)
+bool count_lines(const vg_char *line, uint16_t count, void *state)
 {
     int *linecount = (int*)state;
     (*linecount)++;
@@ -205,7 +205,7 @@ void matrix_multiply(vg_lite_matrix_t * matrix, vg_lite_matrix_t * mult)
 }
 
 vg_lite_error_t vg_lite_draw_text(vg_lite_buffer_t *target,
-                                  char *text,
+                                  vg_char *text,
                                   vg_lite_font_t font,
                                   int x,
                                   int y,

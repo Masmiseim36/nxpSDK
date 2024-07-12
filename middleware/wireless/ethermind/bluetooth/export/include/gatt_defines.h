@@ -1283,7 +1283,7 @@
 /** Source Audio Locations */
 #define GATT_PAC_SRC_AUDIO_LOC_CHARACTERISTIC                        0x2BCCU
 /** Available Audio Contexts */
-#define GATT_PAC_AVBL_AUDIO_CONTEXTS_CHARACTERISITC                  0x2BCDU
+#define GATT_PAC_AVL_AUDIO_CONTEXTS_CHARACTERISITC                   0x2BCDU
 /** Supported Audio Contexts */
 #define GATT_PAC_SUPP_AUDIO_CONTEXTS_CHARACTERISTIC                  0x2BCEU
 
@@ -1455,8 +1455,8 @@
  * Characteristics 16-bit UUIDs as defined in the Bluetooth Assigned Numbers.
  */
 
-/** Role */
-#define GATT_TMAS_ROLE_CHARACTERISTIC                                0x2B51U
+/** TMAP Role */
+#define GATT_TMAS_TMAP_ROLE_CHARACTERISTIC                           0x2B51U
 
 /** \} */
 

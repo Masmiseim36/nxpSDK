@@ -52,6 +52,7 @@ static int32_t conn_download_normal_fw(const t_u8 *connfw_dl, t_u32 firmwarelen,
     return ret;
 }
 
+
 /*
  * Download firmware to the card through SDIO.
  * The firmware is stored in Flash.
@@ -77,7 +78,7 @@ int32_t firmware_download(const uint8_t *fw_start_addr, const size_t size, void 
         }
     }
 
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
     if ((fw_reload != 0) && (intf->intf_s.fwdnld_intf_check_reload))
     {
         ret = intf->intf_s.fwdnld_intf_check_reload(intf, fw_reload);

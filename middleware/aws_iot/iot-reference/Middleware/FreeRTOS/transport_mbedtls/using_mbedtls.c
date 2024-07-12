@@ -38,17 +38,20 @@
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 
-#include "core_pkcs11_config.h"
-
-
-/* PKCS #11 includes. */
-#include "core_pkcs11.h"
-
 /* TLS transport header. */
 #include "using_mbedtls.h"
 
+#ifndef MBEDTLS_USE_PSA_CRYPTO
+/* PKCS #11 includes. */
+#include "core_pkcs11_config.h"
+#include "core_pkcs11.h"
 #include "pkcs11.h"
 #include "core_pki_utils.h"
+#else
+typedef unsigned long int CK_ULONG;
+typedef CK_ULONG          CK_RV;
+#define CKR_OK            0x00000000UL
+#endif
 
 
 /**************************************************/
@@ -697,8 +700,8 @@ static TlsTransportStatus_t tlsSetup( NetworkContext_t * pNetworkContext,
     configASSERT( pNetworkCredentials != NULL );
     configASSERT( pNetworkCredentials->pRootCa != NULL );
 #ifdef MBEDTLS_USE_PSA_CRYPTO
-	configASSERT( pNetworkCredentials->keyId != NULL );
-    configASSERT( pNetworkCredentials->certId != NULL );
+    configASSERT( pNetworkCredentials->keyId != 0 );
+    configASSERT( pNetworkCredentials->certId != 0 );
 #else
     configASSERT( pNetworkCredentials->pClientCertLabel != NULL );
     configASSERT( pNetworkCredentials->pPrivateKeyLabel != NULL );
@@ -902,6 +905,42 @@ static TlsTransportStatus_t tlsSetup( NetworkContext_t * pNetworkContext,
         }
     }
 #endif /* ifdef MBEDTLS_SSL_MAX_FRAGMENT_LENGTH */
+
+    // fix required to allow Azure MQTT connection
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+    static int allowed_ciphersuites_sha_384[] = {
+        MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
+        MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,
+        MBEDTLS_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+        MBEDTLS_TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,
+        MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+        MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,
+        MBEDTLS_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+        MBEDTLS_TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,
+        0
+    };
+    static int allowed_ciphersuites_sha_256[] = {
+        MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
+        MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,
+        MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+        MBEDTLS_TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,
+        MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+        MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+        MBEDTLS_TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,
+		0
+    };
+    switch (mbedtls_pk_get_bitlen(&pNetworkContext->sslContext.privKey))
+    {
+        case 256:
+            mbedtls_ssl_conf_ciphersuites(&pNetworkContext->sslContext.config, allowed_ciphersuites_sha_256);
+            break;
+        case 384:
+            mbedtls_ssl_conf_ciphersuites(&pNetworkContext->sslContext.config, allowed_ciphersuites_sha_384);
+            break;
+        default:
+            LogError("mbedtls_pk_get_bitlen: unhandled bitlen: %d", mbedtls_pk_get_bitlen(&pNetworkContext->sslContext.privKey));
+    }
+#endif
 
     if( returnStatus == TLS_TRANSPORT_SUCCESS )
     {

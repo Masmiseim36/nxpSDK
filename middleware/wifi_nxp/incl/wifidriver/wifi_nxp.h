@@ -13,13 +13,13 @@
 
 #include <stdio.h>
 #include <wm_net.h>
-#ifdef CONFIG_WPA_SUPP
+#if CONFIG_WPA_SUPP
 
 #include <drivers/driver_freertos.h>
 
 typedef struct freertos_wpa_supp_dev_callbk_fns rtos_wpa_supp_dev_callbk_fns;
 
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_AP
 typedef struct freertos_hostapd_dev_callbk_fns rtos_hostapd_dev_callbk_fns;
 #endif
 
@@ -31,7 +31,7 @@ typedef struct freertos_wpa_supp_dev_ops rtos_wpa_supp_dev_ops;
 
 typedef struct zep_wpa_supp_dev_callbk_fns rtos_wpa_supp_dev_callbk_fns;
 
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_AP
 typedef struct zep_hostapd_dev_callbk_fns rtos_hostapd_dev_callbk_fns;
 #endif
 
@@ -62,7 +62,7 @@ struct wifi_nxp_ctx_rtos
     unsigned int remain_on_channel_freq;
     unsigned int remain_on_channel_duration;
     bool remain_on_chan_is_canceled;
-#ifdef CONFIG_WPA_SUPP_AP
+#if CONFIG_WPA_SUPP_AP
     rtos_hostapd_dev_callbk_fns hostapd_callbk_fns;
     int mgmt_tx_status;
     uint8_t *last_mgmt_tx_data;

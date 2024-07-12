@@ -3,10 +3,23 @@
 
 @section lwip lwIP for MCUXpresso SDK
   Lightweight IP (lwIP) is a small independent implementation of the TCP/IP protocol suite.
-  Source code included in this SDK is based on version 2.2.0 taken from 3rd party lwIP GIT repository.
+  Source code included in this SDK is based on development version 2.2.1 taken from 3rd party lwIP GIT repository.
   The webpage https://git.savannah.nongnu.org/cgit/lwip.git allows to browse the repository and also contains URLs for its cloning.
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
+
+  - 2.2.1_rev1
+    - New features:
+      - Ported lwIP 2.2.1.dev (2024-02-19, branch: master, SHA-1: d0efd9ef7ba08e54b46b1060e2b4629a4907391b) to MCUXpresso SDK.
+      - Added ETH_MAX_RX_PKTS_AT_ONCE macro. See port/README.md for details.
+      - In port/netc_ethernetif.c, added NETC_VSI_NUM_USED macro to support using VSI. A thread of SI
+        message handling will be started to handle VSI-PSI messages.
+    - Bug fixes:
+      - Added the missing implementation for IP_FORWARD_ALLOW_TX_ON_RX_NETIF option in the function ip6_forward.
+        Therefore IPv6 packets could be sent back out on the netif where they where originally received from.
+      - NETC adaptation layer: Do not call xEventGroupSetBits from ISR.
+    - Ethernet adaptation layers: Default value of priority of the receive task (ETH_RX_TASK_PRIO) is set lower
+      than the priority of the FreeRTOS daemon task (timer task).
 
   - 2.2.0_rev11
     - New features:

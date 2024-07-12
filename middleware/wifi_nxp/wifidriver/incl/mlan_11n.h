@@ -79,7 +79,7 @@ void wlan_11n_delete_bastream(mlan_private *priv, t_u8 *del_ba);
 int wlan_get_rxreorder_tbl(mlan_private *priv, rx_reorder_tbl *buf);
 /** get tx ba stream table */
 int wlan_get_txbastream_tbl(mlan_private *priv, tx_ba_stream_tbl *buf);
-#ifdef AMSDU_IN_AMPDU
+#if CONFIG_AMSDU_IN_AMPDU
 /** Minimum number of AMSDU */
 #define MIN_NUM_AMSDU 2
 /** AMSDU Aggr control cmd resp */
@@ -337,7 +337,7 @@ static int wlan_is_11n_enabled(mlan_private *priv, t_u8 *ra)
  *
  *  @return 	    MTRUE or MFALSE
  */
-#ifdef AMSDU_IN_AMPDU
+#if CONFIG_AMSDU_IN_AMPDU
 INLINE
 static bool wlan_is_amsdu_allowed(mlan_private *priv, t_u8 interface, t_u8 pkt_cnt, t_u8 tid)
 {

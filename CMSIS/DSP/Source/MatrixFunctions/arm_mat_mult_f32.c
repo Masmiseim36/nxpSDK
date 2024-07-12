@@ -28,6 +28,10 @@
 
 #include "dsp/matrix_functions.h"
 
+#if defined(ARM_MATH_NEON)
+#define GROUPOFROWS 8
+#endif
+
 /**
  * @ingroup groupMatrix
  */
@@ -37,7 +41,27 @@
  *
  * Multiplies two matrices.
  *
- * \image html MatrixMultiplication.gif "Multiplication of two 3 x 3 matrices"
+ * @par Multiplication of two 3x3 matrices:
+ * 
+ * \f[
+ * \begin{pmatrix}
+ *  a_{1,1} & a_{1,2} & a_{1,3} \\
+ *  a_{2,1} & a_{2,2} & a_{2,3} \\
+ *  a_{3,1} & a_{3,2} & a_{3,3} \\
+ * \end{pmatrix}
+ * 
+ * \begin{pmatrix}
+ *  b_{1,1} & b_{1,2} & b_{1,3} \\
+ *  b_{2,1} & b_{2,2} & b_{2,3} \\
+ *  b_{3,1} & b_{3,2} & b_{3,3} \\
+ * \end{pmatrix}
+ * =
+ * \begin{pmatrix}
+ *  a_{1,1} b_{1,1}+a_{1,2} b_{2,1}+a_{1,3} b_{3,1} & a_{1,1} b_{1,2}+a_{1,2} b_{2,2}+a_{1,3} b_{3,2} & a_{1,1} b_{1,3}+a_{1,2} b_{2,3}+a_{1,3} b_{3,3} \\
+ *  a_{2,1} b_{1,1}+a_{2,2} b_{2,1}+a_{2,3} b_{3,1} & a_{2,1} b_{1,2}+a_{2,2} b_{2,2}+a_{2,3} b_{3,2} & a_{2,1} b_{1,3}+a_{2,2} b_{2,3}+a_{2,3} b_{3,3} \\
+ *  a_{3,1} b_{1,1}+a_{3,2} b_{2,1}+a_{3,3} b_{3,1} & a_{3,1} b_{1,2}+a_{3,2} b_{2,2}+a_{3,3} b_{3,2} & a_{3,1} b_{1,3}+a_{3,2} b_{2,3}+a_{3,3} b_{3,3} \\
+ * \end{pmatrix}
+ * \f]
 
  * Matrix multiplication is only defined if the number of columns of the
  * first matrix equals the number of rows of the second matrix.
@@ -54,14 +78,7 @@
  * @{
  */
 
-/**
- * @brief Floating-point matrix multiplication.
- * @param[in]       *pSrcA points to the first input matrix structure
- * @param[in]       *pSrcB points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
- * @return     		The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
- */
+
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -258,6 +275,14 @@ __STATIC_INLINE arm_status arm_mat_mult_f32_4x4_mve(
 }
 
 
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
@@ -512,9 +537,14 @@ arm_status arm_mat_mult_f32(
 #else
 
 #if defined(ARM_MATH_NEON)
-
-#define GROUPOFROWS 8
-
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
@@ -531,7 +561,7 @@ arm_status arm_mat_mult_f32(
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
 
 
-  uint16_t col, i = 0U, j, row = numRowsA, rowCnt, colCnt;      /* loop counters */
+  uint32_t col, i = 0U, j, row = numRowsA, rowCnt, colCnt;      /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
   float32x4_t a0V, a1V, a2V, a3V, a4V, a5V, a6V, a7V;
@@ -843,6 +873,14 @@ arm_status arm_mat_mult_f32(
   return (status);
 }
 #else
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,

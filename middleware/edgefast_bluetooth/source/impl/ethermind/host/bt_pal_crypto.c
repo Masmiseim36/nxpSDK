@@ -32,6 +32,8 @@
 #include "mbedtls/ctr_drbg.h"
 static mbedtls_entropy_context entropy;
 static mbedtls_ctr_drbg_context rng_ctx;
+SDK_ALIGN(static uint8_t out_aes_crypt_buff[MAX(16U, EDGEFAST_BT_CACHE_LINESIZE)], MAX(16U, EDGEFAST_BT_CACHE_LINESIZE));
+static OSA_MUTEX_HANDLE_DEFINE(aes_crypt_mutex_handle);
 #endif /* CONFIG_BT_AES_128_ENCRYPT_SW */
 #else
 #include "BT_common.h"
@@ -110,20 +112,34 @@ static int bt_aes_128_encrypt(const uint8_t in[16],
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #if CONFIG_BT_AES_128_ENCRYPT_SW
 	mbedtls_aes_context ctx;
-
+    osa_status_t ret;
+    static uint8_t mutex_initialized = 0;
+    if (mutex_initialized == 0)
+    {
+        ret = OSA_MutexCreate((osa_semaphore_handle_t)(aes_crypt_mutex_handle));
+        if (KOSA_StatusSuccess != ret)
+        {
+            return -ENOBUFS;
+        }
+        mutex_initialized = 1;
+    }
+    (void)OSA_MutexLock((osa_mutex_handle_t)aes_crypt_mutex_handle, osaWaitForever_c);   
 	mbedtls_aes_init(&ctx);
 
 	if(0 != mbedtls_aes_setkey_enc(&ctx, (const unsigned char *)key, 128))
 	{
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
 		return -1;
 	}
 
-	if(0 != mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_ENCRYPT, (const unsigned char *)in, (unsigned char *)out))
+	if(0 != mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_ENCRYPT, (const unsigned char *)in, (unsigned char *)out_aes_crypt_buff))
 	{
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
 		return -1;
 	}
-
+    (void)memcpy(out, (unsigned char *)out_aes_crypt_buff, 16);
 	mbedtls_aes_free(&ctx);
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)aes_crypt_mutex_handle);
 
     return 0;
 #else

@@ -8,14 +8,14 @@
 #ifndef DRIVER_FREERTOS_H
 #define DRIVER_FREERTOS_H
 
-#ifndef CONFIG_ZEPHYR
+#ifndef __ZEPHYR__
 #include "lwip/netif.h"
 #endif
 
 #include "driver.h"
 #include "wpa_supplicant_i.h"
 #include "bss.h"
-#ifdef CONFIG_ZEPHYR
+#ifdef __ZEPHYR__
 #include "l2_packet/l2_packet.h"
 #else
 #include "l2_packet.h"
@@ -104,6 +104,10 @@ struct freertos_wpa_supp_dev_callbk_fns
     void (*signal_change)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 
     void (*ecsa_complete)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
+
+    void (*dfs_cac_started)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
+
+    void (*dfs_cac_finished)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 };
 
 struct freertos_hostapd_dev_callbk_fns
@@ -125,6 +129,10 @@ struct freertos_hostapd_dev_callbk_fns
     void (*mgmt_tx_status)(struct freertos_drv_if_ctx *if_ctx, const u8 *frame, size_t len, bool ack);
 
     void (*ecsa_complete)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
+
+    void (*dfs_cac_started)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
+
+    void (*dfs_cac_finished)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 };
 
 struct freertos_wpa_supp_dev_ops
@@ -152,6 +160,9 @@ struct freertos_wpa_supp_dev_ops
                    const unsigned char *key,
                    size_t key_len,
                    enum key_flag key_flag);
+    int (*del_key)(void *if_priv,
+                   const unsigned char *addr,
+                   int key_idx);
     int (*set_rekey_info)(void *if_priv, const u8 *kek, size_t kek_len, const u8 *kck, size_t kck_len, const u8 *replay_ctr);
     int (*set_supp_port)(void *if_priv, int authorized, char *bssid);
     int (*set_country)(void *priv, const char *alpha2);
@@ -188,6 +199,7 @@ struct freertos_wpa_supp_dev_ops
     int (*deinit_ap)(void *if_priv);
     int (*set_acl)(void *if_priv, struct hostapd_acl_params *params);
     int (*dpp_listen)(void *priv, bool enable);
+    bool (*get_modes)(void *if_priv);
 };
 
 #endif /* DRIVER_FREERTOS_H */

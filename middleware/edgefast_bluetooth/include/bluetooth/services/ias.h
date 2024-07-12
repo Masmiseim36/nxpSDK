@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Codecoup
- * Copyright (c) 2023 NXP
+ * Copyright (c) 2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,6 +18,8 @@
  * as a part of ongoing development.
  */
 
+#include <bluetooth/conn.h>
+//#include <zephyr/sys/iterable_sections.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,7 +27,7 @@ extern "C" {
 
 enum bt_ias_alert_lvl {
 	/** No alerting should be done on device */
-	BT_IAS_ALERT_LVL_NO_ALERT ,
+	BT_IAS_ALERT_LVL_NO_ALERT,
 
 	/** Device shall alert */
 	BT_IAS_ALERT_LVL_MILD_ALERT,

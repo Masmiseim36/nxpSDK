@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: casper_driver</title>
+<title>MCUXpresso SDK API Reference Manual: I2C: Inter-Integrated Circuit Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,322 +99,240 @@ $(document).ready(function(){initNavTree('a00240.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">casper_driver<div class="ingroups"><a class="el" href="a00239.html">CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</a></div></div>  </div>
+<div class="title">I2C: Inter-Integrated Circuit Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga70e0187aa8acac29294311518b8bc3fb"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00240.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#ga70e0187aa8acac29294311518b8bc3fb">casper_operation_t</a></td></tr>
-<tr class="memdesc:ga70e0187aa8acac29294311518b8bc3fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="#ga70e0187aa8acac29294311518b8bc3fb">More...</a><br/></td></tr>
-<tr class="separator:ga70e0187aa8acac29294311518b8bc3fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb3f0a23391e5fed42912a2775e12d44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb3f0a23391e5fed42912a2775e12d44"></a>
-typedef enum <a class="el" href="a00240.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#gaeb3f0a23391e5fed42912a2775e12d44">casper_algo_t</a></td></tr>
-<tr class="memdesc:gaeb3f0a23391e5fed42912a2775e12d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation. <br/></td></tr>
-<tr class="separator:gaeb3f0a23391e5fed42912a2775e12d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a> { , <br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baab5a78d5173f379c5149add08650f14c5">kCASPER_OpMul6464Sum</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baad04571c7b185686fd776a80806d6524d">kCASPER_OpMul6464FullSum</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baad0fbf9a74a2cb155f031bc3c2caa251f">kCASPER_OpMul6464Reduce</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baac73be9788e2abbbf2b011b7a3ad0ee25">kCASPER_OpAdd64</a> = 0x08, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa46c350d401f6bb4c3fac8b5ca7df66b1">kCASPER_OpSub64</a> = 0x09, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baac6ffac25f046cb6c565ce7ffa543dbe0">kCASPER_OpDouble64</a> = 0x0A, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa80db615b18d5ed2319c85a4fe6caa2eb">kCASPER_OpXor64</a> = 0x0B, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa007fe02bbaf6b290d2024beaf9618e33">kCASPER_OpRSub64</a> = 0x0C, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa405a717b5a196ce6f0c5167d43f6e08e">kCASPER_OpShiftLeft32</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa61a1a07e6c0adc7b367ef5dc195adc22">kCASPER_OpShiftRight32</a> = 0x11, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa5b64b93e087ab8b9002440b264cad30d">kCASPER_OpCopy</a> = 0x14, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa8e860749586cc0a33405334a931f291e">kCASPER_OpRemask</a> = 0x15, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baabdc1e3361e8415354fac33b3993b1491">kCASPER_OpFill</a> = 0x16, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa34940e0777601a076a1715f859228f88">kCASPER_OpZero</a> = 0x17, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa9507d1f5ad0b8219f9bd461eeb27752e">kCASPER_OpCompare</a> = 0x18, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#ggad58a4d789b7a583e7793b2ab3cf698baa10df9918e9754e22740900ecc145c43d">kCASPER_OpCompareFast</a> = 0x19
-<br/>
- }</td></tr>
-<tr class="memdesc:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="a00240.html#gad58a4d789b7a583e7793b2ab3cf698ba">More...</a><br/></td></tr>
-<tr class="separator:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ce07816cd7f6acdead0b975579144e0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00240.html#gga4ce07816cd7f6acdead0b975579144e0a8e86050a24be31a0c3e4c7f0fc801045">kCASPER_ECC_P256</a> = 0x01, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#gga4ce07816cd7f6acdead0b975579144e0a3fbcdf27711f1c8c8271899ac4aaab89">kCASPER_ECC_P384</a> = 0x02, 
-<br/>
-&#160;&#160;<a class="el" href="a00240.html#gga4ce07816cd7f6acdead0b975579144e0a4a45988d4ca3b926783296346a862ad2">kCASPER_ECC_P521</a> = 0x03
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4ce07816cd7f6acdead0b975579144e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation.  <a href="a00240.html#ga4ce07816cd7f6acdead0b975579144e0">More...</a><br/></td></tr>
-<tr class="separator:ga4ce07816cd7f6acdead0b975579144e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa1948fcf9c7301808a765341b4fa72a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#gaa1948fcf9c7301808a765341b4fa72a8">CASPER_Init</a> (CASPER_Type *base)</td></tr>
-<tr class="memdesc:gaa1948fcf9c7301808a765341b4fa72a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock and disables reset for CASPER peripheral.  <a href="#gaa1948fcf9c7301808a765341b4fa72a8">More...</a><br/></td></tr>
-<tr class="separator:gaa1948fcf9c7301808a765341b4fa72a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#ga44e39a60b2116a93d89fb2d06ec8c290">CASPER_Deinit</a> (CASPER_Type *base)</td></tr>
-<tr class="memdesc:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables clock for CASPER peripheral.  <a href="#ga44e39a60b2116a93d89fb2d06ec8c290">More...</a><br/></td></tr>
-<tr class="separator:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga38fa16be20cbb761a11dea0791a186fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00240.html#ga38fa16be20cbb761a11dea0791a186fe">FSL_CASPER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 4))</td></tr>
-<tr class="memdesc:ga38fa16be20cbb761a11dea0791a186fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER driver version.  <a href="#ga38fa16be20cbb761a11dea0791a186fe">More...</a><br/></td></tr>
-<tr class="separator:ga38fa16be20cbb761a11dea0791a186fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Integrated Circuit (I2C) module of MCUXpresso SDK devices.</p>
+<p>The I2C driver includes functional APIs and transactional APIs.</p>
+<p>Functional APIs are feature/property target low-level APIs. Functional APIs can be used for the I2C master/slave initialization/configuration/operation for optimization/customization purpose. Using the functional APIs requires the knowledge of the I2C master peripheral and how to organize functional APIs to meet the application requirements. The I2C functional operation groups provide the functional APIs set.</p>
+<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code using the functional APIs or accessing the hardware registers.</p>
+<p>Transactional APIs support asynchronous transfer. This means that the functions <a class="el" href="a00036.html#gac7f76a04b6f6873c52ad176d58901fe9" title="Performs a non-blocking transaction on the I2C bus. ">I2C_MasterTransferNonBlocking()</a> set up the interrupt non-blocking transfer. When the transfer completes, the upper layer is notified through a callback function with the status.</p>
+<h1><a class="anchor" id="I2CTpyUC"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="I2CMasterOpsFunctional"></a>
+Master Operation in functional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00036.html#a00360">i2c_master_config_t</a> masterConfig;</div>
+<div class="line">uint8_t status;</div>
+<div class="line"><a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
+<div class="line"><a class="code" href="a00036.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Init I2C master. */</span></div>
+<div class="line"><a class="code" href="a00036.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Send start and slave address. */</span></div>
+<div class="line"><a class="code" href="a00036.html#ga7664234966e4162e952b6d57efcaa8a6">I2C_MasterStart</a>(EXAMPLE_I2C_MASTER_BASEADDR, 7-bit slave address, <a class="code" href="a00036.html#gga1625497320644ba123718bafdd2c1f39a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>/<a class="code" href="a00036.html#gga1625497320644ba123718bafdd2c1f39a3a7bb24dc8d1c1be8925603eeafe9b30">kI2C_Read</a>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Wait address sent out. */</span></div>
+<div class="line"><span class="keywordflow">while</span>(!((status = I2C_GetStatusFlag(EXAMPLE_I2C_MASTER_BASEADDR)) &amp; kI2C_IntPendingFlag))</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(status &amp; kI2C_ReceiveNakFlag)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00">kStatus_I2C_Nak</a>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">result = <a class="code" href="a00036.html#ga3b4d71b59e118adc63afbc5434e5e7dd">I2C_MasterWriteBlocking</a>(EXAMPLE_I2C_MASTER_BASEADDR, txBuff, BUFFER_SIZE, <a class="code" href="a00036.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(result)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* If error occours, send STOP. */</span></div>
+<div class="line">    <a class="code" href="a00036.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a>(EXAMPLE_I2C_MASTER_BASEADDR, kI2CStop);</div>
+<div class="line">    <span class="keywordflow">return</span> result;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">while</span>(!(I2C_GetStatusFlag(EXAMPLE_I2C_MASTER_BASEADDR) &amp; kI2C_IntPendingFlag))</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Wait all data sent out, send STOP. */</span></div>
+<div class="line"><a class="code" href="a00036.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a>(EXAMPLE_I2C_MASTER_BASEADDR, kI2CStop);</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransIRQ"></a>
+Master Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00036.html#a00362">i2c_master_handle_t</a> g_m_handle;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line"><a class="code" href="a00036.html#a00360">i2c_master_config_t</a> masterConfig;</div>
+<div class="line">uint8_t status;</div>
+<div class="line"><a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
+<div class="line"><a class="code" href="a00036.html#a00363">i2c_master_transfer_t</a> masterXfer;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_master_callback(I2C_Type *base, <a class="code" href="a00036.html#a00362">i2c_master_handle_t</a> *handle, <a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* Signal transfer success when received success status. */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
+<div class="line">    {</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
+<div class="line"><a class="code" href="a00036.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Init I2C master. */</span></div>
+<div class="line"><a class="code" href="a00036.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
+<div class="line"></div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#aa6d93caa78fc9bf0f0aac10f66b8eba1">slaveAddress</a> = I2C_MASTER_SLAVE_ADDR_7BIT;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a7bd3afcf89b78d9397b2f0c55f9deb27">direction</a> = <a class="code" href="a00036.html#gga1625497320644ba123718bafdd2c1f39a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a7a4f43a16e63d9f286bc41b6255b5e3f">subaddress</a> = NULL;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a0c2c6dde8d11db7793fdea90f1b34afb">subaddressSize</a> = 0;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a083727a4268398628225a68cad8c4a50">data</a> = txBuff;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a7034b157201c46c116dc251e3b56412d">dataSize</a> = BUFFER_SIZE;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a84861e140902bd67ae901b2f4c53bfc0">flags</a> = <a class="code" href="a00036.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00036.html#ga31e3de02b57801c6896e6045c4a31268">I2C_MasterTransferCreateHandle</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_handle, i2c_master_callback, NULL);</div>
+<div class="line"><a class="code" href="a00036.html#gac7f76a04b6f6873c52ad176d58901fe9">I2C_MasterTransferNonBlocking</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_handle, &amp;masterXfer);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransDMA"></a>
+Master Operation in DMA transactional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00037.html#a00361">i2c_master_dma_handle_t</a> g_m_dma_handle;</div>
+<div class="line"><a class="code" href="a00016.html#a00305">dma_handle_t</a> dmaHandle;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line"><a class="code" href="a00036.html#a00360">i2c_master_config_t</a> masterConfig;</div>
+<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
+<div class="line"><a class="code" href="a00036.html#a00363">i2c_master_transfer_t</a> masterXfer;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_master_callback(I2C_Type *base, <a class="code" href="a00037.html#a00361">i2c_master_dma_handle_t</a> *handle, <a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* Signal transfer success when received success status. */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
+<div class="line">    {</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
+<div class="line"><a class="code" href="a00036.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Init I2C master. */</span></div>
+<div class="line"><a class="code" href="a00036.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
+<div class="line"></div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#aa6d93caa78fc9bf0f0aac10f66b8eba1">slaveAddress</a> = I2C_MASTER_SLAVE_ADDR_7BIT;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a7bd3afcf89b78d9397b2f0c55f9deb27">direction</a> = <a class="code" href="a00036.html#gga1625497320644ba123718bafdd2c1f39a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a7a4f43a16e63d9f286bc41b6255b5e3f">subaddress</a> = NULL;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a0c2c6dde8d11db7793fdea90f1b34afb">subaddressSize</a> = 0;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a083727a4268398628225a68cad8c4a50">data</a> = txBuff;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a7034b157201c46c116dc251e3b56412d">dataSize</a> = BUFFER_SIZE;</div>
+<div class="line">masterXfer.<a class="code" href="a00036.html#a84861e140902bd67ae901b2f4c53bfc0">flags</a> = <a class="code" href="a00036.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00016.html#gaa0293771d55ee1a7c42a8ffecb0728e7">DMA_EnableChannel</a>(EXAMPLE_DMA, EXAMPLE_I2C_MASTER_CHANNEL);</div>
+<div class="line"><a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(&amp;dmaHandle, EXAMPLE_DMA, EXAMPLE_I2C_MASTER_CHANNEL);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00037.html#ga83d8463e42b12e7b797a3f928f51b3cb">I2C_MasterTransferCreateHandleDMA</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_dma_handle, i2c_master_callback, NULL, &amp;dmaHandle);</div>
+<div class="line"><a class="code" href="a00037.html#ga8643ea43510b8d97b94db05766444cd2">I2C_MasterTransferDMA</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_dma_handle, &amp;masterXfer);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsFunctional"></a>
+Slave Operation in functional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00038.html#a00365">i2c_slave_config_t</a> slaveConfig;</div>
+<div class="line">uint8_t status;</div>
+<div class="line"><a class="code" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00236.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a>(&amp;slaveConfig); <span class="comment">/*default configuration 7-bit addressing mode*/</span></div>
+<div class="line">slaveConfig.slaveAddr = 7-bit address</div>
+<div class="line">slaveConfig.addressingMode = kI2C_Address7bit/kI2C_RangeMatch;</div>
+<div class="line"><a class="code" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;slaveConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Wait address match. */</span></div>
+<div class="line"><span class="keywordflow">while</span>(!((status = I2C_GetStatusFlag(EXAMPLE_I2C_SLAVE_BASEADDR)) &amp; kI2C_AddressMatchFlag))</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Slave transmit, master reading from slave. */</span></div>
+<div class="line"><span class="keywordflow">if</span> (status &amp; kI2C_TransferDirectionFlag)</div>
+<div class="line">{</div>
+<div class="line">    result = <a class="code" href="a00038.html#ga280404c6b1ede542f2c1c20bd382869c">I2C_SlaveWriteBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">else</span></div>
+<div class="line">{</div>
+<div class="line">    <a class="code" href="a00038.html#ga89baaf8bc82b19c837032665e89a1707">I2C_SlaveReadBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">return</span> result;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsTransIRQ"></a>
+Slave Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00038.html#a00365">i2c_slave_config_t</a> slaveConfig;</div>
+<div class="line"><a class="code" href="a00038.html#a00366">i2c_slave_handle_t</a> g_s_handle;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_slave_callback(I2C_Type *base, <a class="code" href="a00038.html#a00367">i2c_slave_transfer_t</a> *xfer, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">switch</span> (xfer-&gt;<a class="code" href="a00038.html#a461d482d4a91765e8820b55b17e7e53c">event</a>)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">/*  Transmit request */</span></div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa">kI2C_SlaveTransmitEvent</a>:</div>
+<div class="line">            <span class="comment">/*  Update information for transmit process */</span></div>
+<div class="line">            xfer-&gt;data = g_slave_buff;</div>
+<div class="line">            xfer-&gt;dataSize = I2C_DATA_LENGTH;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/*  Receive request */</span></div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de">kI2C_SlaveReceiveEvent</a>:</div>
+<div class="line">            <span class="comment">/*  Update information for received process */</span></div>
+<div class="line">            xfer-&gt;data = g_slave_buff;</div>
+<div class="line">            xfer-&gt;dataSize = I2C_DATA_LENGTH;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/*  Transfer done */</span></div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a>:</div>
+<div class="line">            g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">default</span>:</div>
+<div class="line">            g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a>(&amp;slaveConfig); <span class="comment">/*default configuration 7-bit addressing mode*/</span></div>
+<div class="line">slaveConfig.slaveAddr = 7-bit address</div>
+<div class="line">slaveConfig.addressingMode = kI2C_Address7bit/kI2C_RangeMatch;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;slaveConfig);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00038.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9">I2C_SlaveTransferCreateHandle</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;g_s_handle, i2c_slave_callback, NULL);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00038.html#gaa387d81ea08a9d4b39cfeb3dfec505f7">I2C_SlaveTransferNonBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;g_s_handle, <a class="code" href="a00038.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --> <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00243"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html">I2C CMSIS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00037"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html">I2C DMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00241"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html">I2C Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00242"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00242.html">I2C FreeRTOS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00036"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00036.html">I2C Master Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00038"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html">I2C Slave Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga38fa16be20cbb761a11dea0791a186fe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_CASPER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 4))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Version 2.2.4.</p>
-<p>Current version: 2.2.4</p>
-<p>Change log:</p>
-<ul>
-<li>Version 2.0.0<ul>
-<li>Initial version</li>
-</ul>
-</li>
-<li>Version 2.0.1<ul>
-<li>Bug fix KPSDK-24531 double_scalar_multiplication() result may be all zeroes for some specific input</li>
-</ul>
-</li>
-<li>Version 2.0.2<ul>
-<li>Bug fix KPSDK-25015 CASPER_MEMCPY hard-fault on LPC55xx when both source and destination buffers are outside of CASPER_RAM</li>
-</ul>
-</li>
-<li>Version 2.0.3<ul>
-<li>Bug fix KPSDK-28107 RSUB, FILL and ZERO operations not implemented in enum _casper_operation.</li>
-</ul>
-</li>
-<li>Version 2.0.4<ul>
-<li>For GCC compiler, enforce O1 optimize level, specifically to remove strict-aliasing option. This driver is very specific and requires -fno-strict-aliasing.</li>
-</ul>
-</li>
-<li>Version 2.0.5<ul>
-<li>Fix sign-compare warning.</li>
-</ul>
-</li>
-<li>Version 2.0.6<ul>
-<li>Fix IAR Pa082 warning.</li>
-</ul>
-</li>
-<li>Version 2.0.7<ul>
-<li>Fix MISRA-C 2012 issue.</li>
-</ul>
-</li>
-<li>Version 2.0.8<ul>
-<li>Add feature macro for CASPER_RAM_OFFSET.</li>
-</ul>
-</li>
-<li>Version 2.0.9<ul>
-<li>Remove unused function Jac_oncurve().</li>
-<li>Fix ECC384 build.</li>
-</ul>
-</li>
-<li>Version 2.0.10<ul>
-<li>Fix MISRA-C 2012 issue.</li>
-</ul>
-</li>
-<li>Version 2.1.0<ul>
-<li>Add ECC NIST P-521 elliptic curve.</li>
-</ul>
-</li>
-<li>Version 2.2.0<ul>
-<li>Rework driver to support multiple curves at once.</li>
-</ul>
-</li>
-<li>Version 2.2.1<ul>
-<li>Fix MISRA-C 2012 issue.</li>
-</ul>
-</li>
-<li>Version 2.2.2<ul>
-<li>Enable hardware interleaving to RAMX0 and RAMX1 for CASPER by feature macro FSL_FEATURE_CASPER_RAM_HW_INTERLEAVE</li>
-</ul>
-</li>
-<li>Version 2.2.3<ul>
-<li>Added macro into CASPER_Init and CASPER_Deinit to support devices without clock and reset control.</li>
-</ul>
-</li>
-<li>Version 2.2.4<ul>
-<li>Fix MISRA-C 2012 issue. </li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga70e0187aa8acac29294311518b8bc3fb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00240.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a>  <a class="el" href="a00240.html#ga70e0187aa8acac29294311518b8bc3fb">casper_operation_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gad58a4d789b7a583e7793b2ab3cf698ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00240.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baab5a78d5173f379c5149add08650f14c5"></a>kCASPER_OpMul6464Sum</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing r=a*b using 64x64=128. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baad04571c7b185686fd776a80806d6524d"></a>kCASPER_OpMul6464FullSum</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but assume inner j loop. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baad0fbf9a74a2cb155f031bc3c2caa251f"></a>kCASPER_OpMul6464Reduce</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but sum all of w. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baac73be9788e2abbbf2b011b7a3ad0ee25"></a>kCASPER_OpAdd64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking 1 or more of J loop, doing c,r[-1]=r+a*b using 64x64=128, but skip 1st write. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa46c350d401f6bb4c3fac8b5ca7df66b1"></a>kCASPER_OpSub64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking add with off_AB, and in/out off_RES doing c,r=r+a+c using 64+64=65. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baac6ffac25f046cb6c565ce7ffa543dbe0"></a>kCASPER_OpDouble64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking subtract with off_AB, and in/out off_RES doing r=r-a using 64-64=64, with last borrow implicit if any. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa80db615b18d5ed2319c85a4fe6caa2eb"></a>kCASPER_OpXor64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking add to self with off_RES doing c,r=r+r+c using 64+64=65. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa007fe02bbaf6b290d2024beaf9618e33"></a>kCASPER_OpRSub64</em>&nbsp;</td><td class="fielddoc">
-<p>Walking XOR with off_AB, and in/out off_RES doing r=r^a using 64^64=64. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa405a717b5a196ce6f0c5167d43f6e08e"></a>kCASPER_OpShiftLeft32</em>&nbsp;</td><td class="fielddoc">
-<p>Walking subtract with off_AB, and in/out off_RES using r=a-r. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa61a1a07e6c0adc7b367ef5dc195adc22"></a>kCASPER_OpShiftRight32</em>&nbsp;</td><td class="fielddoc">
-<p>Walking shift left doing r1,r=(b*D)|r1, where D is 2^amt and is loaded by app (off_CD not used) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa5b64b93e087ab8b9002440b264cad30d"></a>kCASPER_OpCopy</em>&nbsp;</td><td class="fielddoc">
-<p>Walking shift right doing r,r1=(b*D)|r1, where D is 2^(32-amt) and is loaded by app (off_CD not used) and off_RES starts at MSW. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa8e860749586cc0a33405334a931f291e"></a>kCASPER_OpRemask</em>&nbsp;</td><td class="fielddoc">
-<p>Copy from ABoff to resoff, 64b at a time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baabdc1e3361e8415354fac33b3993b1491"></a>kCASPER_OpFill</em>&nbsp;</td><td class="fielddoc">
-<p>Copy and mask from ABoff to resoff, 64b at a time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa34940e0777601a076a1715f859228f88"></a>kCASPER_OpZero</em>&nbsp;</td><td class="fielddoc">
-<p>Fill RESOFF using 64 bits at a time with value in A and B. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa9507d1f5ad0b8219f9bd461eeb27752e"></a>kCASPER_OpCompare</em>&nbsp;</td><td class="fielddoc">
-<p>Fill RESOFF using 64 bits at a time of 0s. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa10df9918e9754e22740900ecc145c43d"></a>kCASPER_OpCompareFast</em>&nbsp;</td><td class="fielddoc">
-<p>Compare two arrays, running all the way to the end. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga4ce07816cd7f6acdead0b975579144e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00240.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a8e86050a24be31a0c3e4c7f0fc801045"></a>kCASPER_ECC_P256</em>&nbsp;</td><td class="fielddoc">
-<p>ECC_P256. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a3fbcdf27711f1c8c8271899ac4aaab89"></a>kCASPER_ECC_P384</em>&nbsp;</td><td class="fielddoc">
-<p>ECC_P384. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a4a45988d4ca3b926783296346a862ad2"></a>kCASPER_ECC_P521</em>&nbsp;</td><td class="fielddoc">
-<p>ECC_P521. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa1948fcf9c7301808a765341b4fa72a8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CASPER_Init </td>
-          <td>(</td>
-          <td class="paramtype">CASPER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable clock and disable reset for CASPER.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CASPER base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga44e39a60b2116a93d89fb2d06ec8c290"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CASPER_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">CASPER_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Disable clock and enable reset.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CASPER base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

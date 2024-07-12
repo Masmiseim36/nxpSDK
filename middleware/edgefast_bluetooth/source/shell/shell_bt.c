@@ -5,7 +5,7 @@
  */
 
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  * Copyright (c) 2017 Intel Corporation
  * Copyright (c) 2018 Nordic Semiconductor ASA
  *
@@ -47,7 +47,9 @@
 
 #include "shell_bt.h"
 #include "shell_hci.h"
-
+#if (defined(CONFIG_BT_IND_RESET) && (CONFIG_BT_IND_RESET > 0U))  
+#include "controller_ind_reset.h"
+#endif /*#define CONFIG_BT_IND_RESET*/
 static bool no_settings_load;
 
 uint8_t selected_id = BT_ID_DEFAULT;
@@ -139,6 +141,66 @@ static void print_le_addr(const char *desc, const bt_addr_le_t *addr)
 }
 #endif
 
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && (CONFIG_BT_TRANSMIT_POWER_CONTROL > 0))
+static const char *tx_power_flag2str(int8_t flag)
+{
+	switch (flag) {
+	case 0:
+		return "Neither Max nor Min Tx Power";
+	case 1:
+		return "Tx Power Level is at minimum";
+	case 2:
+		return "Tx Power Level is at maximum";
+	/* Current Tx Power Level is the only available one*/
+	case 3:
+		return "Tx Power Level is at minimum & maximum.";
+	default:
+		return "Unknown";
+	}
+}
+
+static const char *tx_power_report_reason2str(uint8_t reason)
+{
+	switch (reason) {
+	case BT_HCI_LE_TX_POWER_REPORT_REASON_LOCAL_CHANGED:
+		return "Local Tx Power changed";
+	case BT_HCI_LE_TX_POWER_REPORT_REASON_REMOTE_CHANGED:
+		return "Remote Tx Power changed";
+	case BT_HCI_LE_TX_POWER_REPORT_REASON_READ_REMOTE_COMPLETED:
+		return "Completed to read remote Tx Power";
+	default:
+		return "Unknown";
+	}
+}
+
+static const char *tx_pwr_ctrl_phy2str(enum bt_conn_le_tx_power_phy phy)
+{
+	switch (phy) {
+	case BT_CONN_LE_TX_POWER_PHY_NONE:
+		return "None";
+	case BT_CONN_LE_TX_POWER_PHY_1M:
+		return "LE 1M";
+	case BT_CONN_LE_TX_POWER_PHY_2M:
+		return "LE 2M";
+	case BT_CONN_LE_TX_POWER_PHY_CODED_S8:
+		return "LE Coded S8";
+	case BT_CONN_LE_TX_POWER_PHY_CODED_S2:
+		return "LE Coded S2";
+	default:
+		return "Unknown";
+	}
+}
+
+static const char *enabled2str(bool enabled)
+{
+	if (enabled) {
+		return "Enabled";
+	} else {
+		return "Disabled";
+	}
+}
+
+#endif /* CONFIG_BT_TRANSMIT_POWER_CONTROL */
 #if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL> 0))
 static shell_status_t cmd_scan_off(shell_handle_t shell);
 static shell_status_t cmd_connect_le(shell_handle_t shell, int32_t argc, char *argv[]);
@@ -165,6 +227,37 @@ static struct bt_scan_filter {
 static const char scan_response_label[] = "[DEVICE]: ";
 static bool scan_verbose_output;
 
+/* armgcc and mcux not defined strncasecmp(), so we need implement one. */
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION))) || \
+    (defined(__GNUC__) || (defined(_LINKER) && defined(__GCC_LINKER_CMD__)))
+
+static int my_strncasecmp(const char*s1, const char*s2, int n)
+{
+	if(n == 0)
+	{
+		return 0;
+	}
+    
+	do {
+		if(tolower(*s1) != tolower(*s2))
+		{
+			return (int)(tolower(*s1) - tolower(*s2));
+		}
+
+		if(*s1++ == 0)
+		{
+			break;
+		}
+
+		s2++;
+
+	} while(--n != 0);
+    
+	return 0;
+}
+
+#endif
+
 /**
  * @brief Compares two strings without case sensitivy
  *
@@ -190,7 +283,13 @@ static bool is_substring(const char *substr, const char *str)
 				return false;
 			}
 
+/* armgcc and mcux not defined strncasecmp(), so we need a implement one. */
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION))) || \
+    (defined(__GNUC__) || (defined(_LINKER) && defined(__GCC_LINKER_CMD__)))
+			if (my_strncasecmp(substr, &str[pos], sub_str_len) == 0) {
+#else
 			if (strncasecmp(substr, &str[pos], sub_str_len) == 0) {
+#endif
 				return true;
 			}
 		}
@@ -430,9 +529,9 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	bt_data_parse(buf, data_cb, name);
 	bt_addr_le_to_str(info->addr, le_addr, sizeof(le_addr));
 
-	shell_print(ctx_shell, "[DEVICE]: %s, AD evt type %u, RSSI %i %s "
+	PRINTF("[DEVICE]: %s, AD evt type %u, RSSI %i %s "
 		    "C:%u S:%u D:%d SR:%u E:%u Prim: %s, Secn: %s, "
-		    "Interval: 0x%04x (%u us), SID: 0x%x",
+		    "Interval: 0x%04x (%u us), SID: 0x%x\n",
 		    le_addr, info->adv_type, info->rssi, name,
 		    (info->adv_props & BT_GAP_ADV_PROP_CONNECTABLE) != 0,
 		    (info->adv_props & BT_GAP_ADV_PROP_SCANNABLE) != 0,
@@ -454,20 +553,30 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	
 	/* Store address for later use */
 #if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL> 0))
-	auto_connect.addr_set = true;
-	bt_addr_le_copy(&auto_connect.addr, info->addr);
+	if ((info->adv_props & BT_GAP_ADV_PROP_CONNECTABLE) != 0U) {
+		struct bt_conn *conn = bt_conn_lookup_addr_le(selected_id, info->addr);
 
-	/* Use the above auto_connect.addr address to automatically connect */
-	if ((info->adv_props & BT_GAP_ADV_PROP_CONNECTABLE) != 0U && auto_connect.connect_name) {
-		auto_connect.connect_name = false;
+		/* Only store auto-connect address for devices we are not already connected to */
+		if (conn == NULL) {
+			/* Store address for later use */
+			auto_connect.addr_set = true;
+			bt_addr_le_copy(&auto_connect.addr, info->addr);
 
-		cmd_scan_off(ctx_shell);
+			/* Use the above auto_connect.addr address to automatically connect */
+			if (auto_connect.connect_name) {
+				auto_connect.connect_name = false;
 
-		/* "name" is what would be in argv[0] normally */
-		cmd_scan_filter_clear_name(ctx_shell, 1, (char *[]){ "name" });
+				cmd_scan_off(ctx_shell);
 
-		/* "connect" is what would be in argv[0] normally */
-		cmd_connect_le(ctx_shell, 1, (char *[]){ "connect" });
+				/* "name" is what would be in argv[0] normally */
+				cmd_scan_filter_clear_name(ctx_shell, 1, (char *[]){"name"});
+
+				/* "connect" is what would be in argv[0] normally */
+				cmd_connect_le(ctx_shell, 1, (char *[]){"connect"});
+			}
+		} else {
+			bt_conn_unref(conn);
+		}
 	}
 #endif /* CONFIG_BT_CENTRAL */
 }
@@ -835,6 +944,17 @@ void le_phy_updated(struct bt_conn *conn,
 }
 #endif
 
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && (CONFIG_BT_TRANSMIT_POWER_CONTROL > 0))
+void tx_power_report(struct bt_conn *conn,
+		    const struct bt_conn_le_tx_power_report *report)
+{
+	shell_print(ctx_shell, "Tx Power Report: Reason: %s, PHY: %s, Tx Power Level: %d",
+		    tx_power_report_reason2str(report->reason), tx_pwr_ctrl_phy2str(report->phy),
+		    report->tx_power_level);
+	shell_print(ctx_shell, "Tx Power Level Flag Info: %s, Delta: %d",
+		    tx_power_flag2str(report->tx_power_level_flag), report->delta);
+}
+#endif
 static struct bt_conn_cb conn_callbacks = {
 	.connected = connected,
 	.disconnected = disconnected,
@@ -854,6 +974,9 @@ static struct bt_conn_cb conn_callbacks = {
 #endif
 #if (defined(CONFIG_BT_USER_PHY_UPDATE) && (CONFIG_BT_USER_PHY_UPDATE > 0))
 	.le_phy_updated = le_phy_updated,
+#endif
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && (CONFIG_BT_TRANSMIT_POWER_CONTROL > 0))
+	.tx_power_report = tx_power_report,
 #endif
 };
 #endif /* CONFIG_BT_CONN */
@@ -1138,13 +1261,16 @@ static shell_status_t cmd_appearance(shell_handle_t shell, int32_t argc, char *a
 	const char *val;
 
 	val = argv[1];
-	if (strlen(val) != 6 || strncmp(val, "0x", 2) ||
-	    !hex2bin(&val[2], strlen(&val[2]), ((uint8_t *)&app), sizeof(app))) {
-		shell_error(shell, "Argument must be 0x followed by exactly 4 hex digits.");
-		return kStatus_SHELL_Error;
+	if (strlen(val) != 6 || strncmp(val, "0x", 2)) {
+		shell_error(sh, "Argument must be 0x followed by exactly 4 hex digits.");
+		return -EINVAL;
 	}
 
-	app = sys_be16_to_cpu(app);
+	app = shell_strtoul(val, 16, &err);
+	if (err) {
+		shell_error(sh, "Argument must be 0x followed by exactly 4 hex digits.");
+		return -EINVAL;
+	}
 
 	err = bt_set_appearance(app);
 	if (err) {
@@ -2638,7 +2764,100 @@ static shell_status_t cmd_per_adv_set_info_transfer(shell_handle_t shell, int32_
 	return (shell_status_t)err;
 }
 #endif /* CONFIG_BT_PER_ADV_SYNC_TRANSFER_SENDER && CONFIG_BT_PER_ADV */
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && (CONFIG_BT_TRANSMIT_POWER_CONTROL > 0))
+static shell_status_t cmd_read_remote_tx_power(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	if (argc < 3) {
+		int err = 0;
+		enum bt_conn_le_tx_power_phy phy = (enum bt_conn_le_tx_power_phy)strtoul((const char *)argv[1], NULL, 16);
 
+		err = bt_conn_le_get_remote_tx_power_level(default_conn, phy);
+
+		if (!err) {
+			shell_print(shell, "Read Remote TX Power for PHY %s",
+				    tx_pwr_ctrl_phy2str(phy));
+		} else {
+			shell_print(shell, "error %d", err);
+		}
+	} else {
+		shell_help(sh);
+		return kStatus_SHELL_PrintCmdHelp;
+	}
+	return kStatus_SHELL_Success;
+}
+
+static shell_status_t cmd_read_local_tx_power(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	int err = 0;
+
+	if (argc < 3) {
+		struct bt_conn_le_tx_power tx_power_level;
+
+		tx_power_level.phy = strtoul(argv[1], NULL, 16);
+
+		int8_t unachievable_current_level = -100;
+		/* Arbitrary, these are output parameters.*/
+		tx_power_level.current_level = unachievable_current_level;
+		tx_power_level.max_level = 6;
+
+		if (default_conn == NULL) {
+			shell_error(shell, "Conn handle error, at least one connection is required.");
+			return (shell_status_t)ENOEXEC;
+		}
+		err = bt_conn_le_get_tx_power_level(default_conn, &tx_power_level);
+		if (err) {
+			shell_print(shell, "Commad returned error error %d", err);
+			return (shell_status_t)err;
+		}
+		if (tx_power_level.current_level == unachievable_current_level) {
+			shell_print(shell, "We received no current tx power level.");
+			return (shell_status_t)EIO;
+		}
+		shell_print(shell, "Read local TX Power: current level: %d, PHY: %s, Max Level: %d",
+			    tx_power_level.current_level,
+			    tx_pwr_ctrl_phy2str((enum bt_conn_le_tx_power_phy)tx_power_level.phy),
+			    tx_power_level.max_level);
+	} else {
+		shell_help(shell);
+		return kStatus_SHELL_PrintCmdHelp;
+	}
+
+	return (shell_status_t)err;
+}
+
+static shell_status_t cmd_set_power_report_enable(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	if (argc < 4) {
+		int err = 0;
+		bool local_enable = 0;
+		bool remote_enable = 0;
+
+		if (*argv[1] == '1') {
+			local_enable = 1;
+		}
+		if (*argv[2] == '1') {
+			remote_enable = 1;
+		}
+		if (default_conn == NULL) {
+			shell_error(shell, "Conn handle error, at least one connection is required.");
+			return (shell_status_t)-ENOEXEC;
+		}
+		err = bt_conn_le_set_tx_power_report_enable(default_conn, local_enable,
+							     remote_enable);
+		if (!err) {
+			shell_print(shell, "Tx Power Report: local: %s, remote: %s",
+				    enabled2str(local_enable), enabled2str(remote_enable));
+		} else {
+			shell_print(shell, "error %d", err);
+		}
+	} else {
+		shell_help(sh);
+		return kStatus_SHELL_PrintCmdHelp;
+	}
+	return kStatus_SHELL_Success;
+}
+
+#endif
 #if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0))
 #if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0))
 static shell_status_t cmd_connect_le(shell_handle_t shell, int32_t argc, char *argv[])
@@ -3924,9 +4143,12 @@ static shell_status_t cmd_auth_passkey_notify(shell_handle_t shell, int32_t argc
 
 	err = 0;
 	type = shell_strtoul(argv[1], 0, &err);
-	if (err || !IN_RANGE(type, BT_CONN_AUTH_KEYPRESS_ENTRY_STARTED,
-			     BT_CONN_AUTH_KEYPRESS_ENTRY_COMPLETED)) {
-		shell_error(shell, "<type> must be a value in range of enum bt_conn_auth_keypress");
+	if (err ||
+	    (type != BT_CONN_AUTH_KEYPRESS_ENTRY_STARTED &&
+	     type != BT_CONN_AUTH_KEYPRESS_DIGIT_ENTERED &&
+	     type != BT_CONN_AUTH_KEYPRESS_DIGIT_ERASED && type != BT_CONN_AUTH_KEYPRESS_CLEARED &&
+	     type != BT_CONN_AUTH_KEYPRESS_ENTRY_COMPLETED)) {
+		shell_error(sh, "<type> must be a value of enum bt_conn_auth_keypress");
 		return (shell_status_t)EINVAL;
 	}
 
@@ -4008,6 +4230,27 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_scan_filter_clear_cmds,
 );
 #endif /* CONFIG_BT_OBSERVER */
 
+#if (defined(CONFIG_BT_IND_RESET) && (CONFIG_BT_IND_RESET > 0U))
+static shell_status_t cmd_bt_ind_reset(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	const char *reset_type;
+
+	reset_type = argv[1];
+	if (!
+            strcmp(reset_type, "inband")) {
+                controler_ind_reset(IND_RESET_INBAND);
+	} else if (!strcmp(reset_type, "oob")) {
+                controler_ind_reset(IND_RESET_OOB);
+        } else if (!strcmp(reset_type, "disable")) {
+                controler_ind_reset(IND_RESET_DISABLE);
+	} else {
+		shell_help(shell);
+		return kStatus_SHELL_PrintCmdHelp;
+	}
+
+	return kStatus_SHELL_Success;
+}
+#endif /* CONFIG_BT_IND_RESET */
 SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 	SHELL_CMD_ARG(init, NULL, "[no-settings-load], [sync]",
 		      cmd_init, 1, 2),
@@ -4041,6 +4284,12 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 		      cmd_default_handler),
 	SHELL_CMD_ARG(scan-verbose-output, NULL, "<value: on, off>", cmd_scan_verbose_output, 2, 0),
 #endif /* CONFIG_BT_OBSERVER */
+#if (defined(CONFIG_BT_TRANSMIT_POWER_CONTROL) && (CONFIG_BT_TRANSMIT_POWER_CONTROL > 0))
+	SHELL_CMD_ARG(read-remote-tx-power, NULL, HELP_NONE, cmd_read_remote_tx_power, 2, 0),
+	SHELL_CMD_ARG(read-local-tx-power, NULL, HELP_NONE, cmd_read_local_tx_power, 2, 0),
+	SHELL_CMD_ARG(set-power-report-enable, NULL, HELP_NONE, cmd_set_power_report_enable, 3, 0),
+#endif
+
 #if (defined(CONFIG_BT_BROADCASTER) && (CONFIG_BT_BROADCASTER > 0))
 	SHELL_CMD_ARG(advertise, NULL,
 		      "<type: off, on, scan, nconn> [mode: discov, non_discov] "
@@ -4203,6 +4452,9 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 		      4, 0),
 	SHELL_CMD_ARG(test_end, NULL, HELP_NONE, cmd_test_end, 1, 0),
 #endif /* CONFIG_BT_CTLR_DTM */
+#if (defined(CONFIG_BT_IND_RESET) && (CONFIG_BT_IND_RESET > 0U))
+        SHELL_CMD_ARG(ind_reset, NULL, HELP_NONE, cmd_bt_ind_reset, 2, 0),
+#endif /*#define CONFIG_BT_IND_RESET*/
 	SHELL_SUBCMD_SET_END
 );
 
@@ -4243,11 +4495,11 @@ void bt_CommandInit(shell_handle_t shell)
 #if (defined(CONFIG_BT_CAP_INITIATOR) && (CONFIG_BT_CAP_INITIATOR > 0))
 	bt_ShellCapInitiatorInit(shell);
 #endif
-#if (defined(CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER) && (CONFIG_BT_CAP_ACCEPTOR_SET_MEMBER > 0))
+#if (defined(CONFIG_BT_CAP_ACCEPTOR) && (CONFIG_BT_CAP_ACCEPTOR > 0))
 	bt_ShellCapAcceptorInit(shell);
 #endif
-#if (defined(CONFIG_BT_CSIP_SET_COORDINATOR) && (CONFIG_BT_CSIP_SET_COORDINATOR > 0))
-	bt_ShellCsipSetCoordinatorInit(shell);
+#if (defined(CONFIG_BT_CAP_COMMANDER) && (CONFIG_BT_CAP_COMMANDER > 0))
+	bt_ShellCapCommanderInit(shell);
 #endif
 #if (defined(CONFIG_BT_CSIP_SET_MEMBER) && (CONFIG_BT_CSIP_SET_MEMBER > 0))
 	bt_ShellCsipSetMemberInit(shell);

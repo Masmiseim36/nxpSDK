@@ -10,6 +10,13 @@
 #ifndef ZEPHYR_INCLUDE_BLUETOOTH_AVRCP_H_
 #define ZEPHYR_INCLUDE_BLUETOOTH_AVRCP_H_
 
+/**
+ * @brief Audio/Video Remote Control Profile (AVRCP)
+ * @defgroup bt_avrcp Audio/Video Remote Control Profile (AVRCP)
+ * @ingroup bluetooth
+ * @{
+ */
+
 /** AVRCP cover art PSM */
 #define BT_AVRCP_COVER_ART_PSM (0x1005)
 
@@ -1506,5 +1513,10 @@ int bt_avrcp_response_cover_art(uint8_t handle, uint8_t cmd, uint8_t response, v
 #endif
 
 #endif
+
+/**
+ * @}
+ */
+ 
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_AVRCP_H_ */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,10 +21,10 @@
  * Title:        arm_relu_q15.c
  * Description:  Q15 version of ReLU
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        31 January 2023
+ * $Revision:    V.1.1.1
  *
- * Target Processor:  Cortex-M cores
+ * Target :  Arm(R) M-Profile Architecture
  *
  * -------------------------------------------------------------------- */
 
@@ -32,7 +32,7 @@
 #include "arm_nnsupportfunctions.h"
 
 /**
- *  @ingroup groupNN
+ *  @ingroup Public
  */
 
 /**
@@ -40,39 +40,35 @@
  * @{
  */
 
-/**
- * @brief Q15 RELU function
- * @param[in,out]   data        pointer to input
- * @param[in]       size        number of elements
+/*
+ * Q15 ReLu function
  *
- * @details
- *
- * Optimized relu with QSUB instructions.
+ * Refer header file for details.
  *
  */
 
-void arm_relu_q15(q15_t *data, uint16_t size)
+void arm_relu_q15(int16_t *data, uint16_t size)
 {
 
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for M cores with DSP extension */
 
     uint16_t i = size >> 1;
-    q15_t *input = data;
-    q15_t *output = data;
-    q31_t in;
-    q31_t buf;
-    q31_t mask;
+    int16_t *input = data;
+    int16_t *output = data;
+    int32_t in;
+    int32_t buf;
+    int32_t mask;
 
     while (i)
     {
-        in = read_q15x2_ia(&input);
+        in = arm_nn_read_q15x2_ia((const int16_t **)&input);
 
         /* extract the first bit */
-        buf = __ROR(in & 0x80008000, 15);
+        buf = ROR(in & 0x80008000, 15);
 
         /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
-        mask = __QSUB16(0x00000000, buf);
+        mask = QSUB16(0x00000000, buf);
 
         arm_nn_write_q15x2_ia(&output, in & (~mask));
         i--;

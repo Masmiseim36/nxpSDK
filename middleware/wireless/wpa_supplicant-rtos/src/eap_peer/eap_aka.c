@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#if defined(CONFIG_EAP_AKA) || defined(CONFIG_EAP_AKA_PRIME)
+#if (CONFIG_EAP_AKA) || (CONFIG_EAP_AKA_PRIME)
 
 #include "utils/common.h"
 #include "pcsc_funcs.h"

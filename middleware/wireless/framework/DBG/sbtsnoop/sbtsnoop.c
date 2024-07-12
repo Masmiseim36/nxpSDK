@@ -72,7 +72,7 @@ void sbtsnoop_fopen(void)
         sbtsnoop_fclose();
     }
     btsnoop_enable = true;
-    sbtsnoop_fwrite((void*)btsnoop_hdr, 16U);
+    sbtsnoop_fwrite((const void*)btsnoop_hdr, 16U);
     sbtsnoop_log_printf("[SBTSNOOP] Serial BTSNOOP file opened\r\n");
 }
 
@@ -83,17 +83,17 @@ void sbtsnoop_fclose(void)
     sbtsnoop_log_printf("[SBTSNOOP] Serial BTSNOOP file closed\r\n");
 }
 
-void sbtsnoop_fwrite(void* pkt, uint16_t size)
+void sbtsnoop_fwrite(const void* pkt, uint16_t size)
 {
     if(btsnoop_enable)
     {
         if( (btsnoop_log_index + size) > SBTSNOOP_LOG_SIZE )
         {
-            /* log array is full, we need to dump current content and continu to log
+            /* log array is full, we need to dump current content and continue logging
              * to avoid information loss */
             sbtsnoop_fread();
         }
-        (void)memcpy(&btsnoop_log[btsnoop_log_index], (uint8_t*)pkt, size);
+        (void)memcpy(&btsnoop_log[btsnoop_log_index], (const uint8_t*)pkt, size);
         btsnoop_log_index += size;
     }
 }

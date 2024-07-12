@@ -129,8 +129,6 @@ include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
@@ -138,6 +136,8 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
 
@@ -179,8 +179,6 @@ add_executable(dsp_audio_demo_bm_fusionf1.elf
 "${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h"
@@ -203,6 +201,8 @@ add_executable(dsp_audio_demo_bm_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 )
 
 

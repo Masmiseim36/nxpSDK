@@ -32,19 +32,6 @@
   @ingroup groupMath
  */
 
-/**
-  @defgroup BasicNegate Vector Negate
-
-  Negates the elements of a vector.
-
-  <pre>
-      pDst[n] = -pSrc[n],   0 <= n < blockSize.
-  </pre>
-
-  The functions support in-place computation allowing the source and
-  destination pointers to reference the same memory buffer.
-  There are separate functions for floating-point, Q7, Q15, and Q31 data types.
- */
 
 /**
   @addtogroup BasicNegate
@@ -124,13 +111,13 @@ void arm_negate_f16(
     /* C = -A */
 
     /* Negate and store result in destination buffer. */
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
     /* Decrement loop counter */
     blkCnt--;
@@ -151,7 +138,7 @@ void arm_negate_f16(
     /* C = -A */
 
     /* Negate and store result in destination buffer. */
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
     /* Decrement loop counter */
     blkCnt--;

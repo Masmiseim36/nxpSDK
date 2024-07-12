@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.34 - Graphical user interface for embedded applications **
+** emWin V6.38 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -89,39 +89,41 @@ void  LCDSIM_SetRGBOrder(unsigned RGBOrder);
 *
 *************************************************************
 */
-void LCDSIM_FillRect(int x0, int y0, int x1, int y1, int Index, int LayerIndex);
-int  LCDSIM_GetModifyCnt(int LayerIndex);
-int  LCDSIM_GetModifyCntInfo(int LayerIndex);
-int  LCDSIM_GetPixelColor(int x, int y, int LayerIndex);
-int  LCDSIM_GetPixelIndex(int x, int y, int LayerIndex);
-int  LCDSIM_GetXSizeEx(int LayerIndex);
-int  LCDSIM_GetYSizeEx(int LayerIndex);
-int  LCDSIM_GetXSizeMax(void);
-int  LCDSIM_GetYSizeMax(void);
-int  LCDSIM_GetVXSizeEx(int LayerIndex);
-int  LCDSIM_GetVYSizeEx(int LayerIndex);
-int  LCDSIM_Index2Color(int Index, int LayerIndex);
-int  LCDSIM_RLUT_GetPixelIndex(int x, int y, int LayerIndex);
-void LCDSIM_RLUT_SetPixelIndex(int x, int y, int Index, int LayerIndex);
-void LCDSIM_SetLUTEntry(U8 Pos, LCD_COLOR color, int LayerIndex);
-void LCDSIM_SetPixelIndex(int x, int y, int Index, int LayerIndex);
-void LCDSIM_SetPixelColor(int x, int y, LCD_COLOR PixelColor, int LayerIndex);
-void LCDSIM_SetSubPixel(int x, int y, U8 Value, int LayerIndex);
-void LCDSIM_SetPixelPhys(int x, int y, int Index, int LayerIndex);
-int  LCDSIM_GetPixelPhys(int xPhys, int yPhys, int LayerIndex);
-void LCDSIM_FillRectPhys(int x0Phys, int y0Phys, int x1Phys, int y1Phys, int Index, int LayerIndex);
-void LCDSIM_SetOrg(int x, int y, int LayerIndex);
-void LCDSIM_SetAlpha(int Alpha, int LayerIndex);
-int  LCDSIM_GetAlpha(int LayerIndex);
-void LCDSIM_SetLayerPos(int xPos, int yPos, int LayerIndex);
-void LCDSIM_SetLayerVis(int OnOff, int LayerIndex);
-void LCDSIM_SetSize(int LayerIndex, int xSize, int ySize);
-void LCDSIM_SetTransMode(int LayerIndex, int TransMode);
-void LCDSIM_SetChroma(int LayerIndex, LCD_COLOR ChromaMin, LCD_COLOR ChromaMax);
-void LCDSIM_SetCompositeColor(U32 Color);
-void LCDSIM_SetCompositeSize(int xSize, int ySize);
-void LCDSIM_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst);
-void LCDSIM_Invalidate(int LayerIndex);
+void   LCDSIM_FillRect(int x0, int y0, int x1, int y1, int Index, int LayerIndex);
+int    LCDSIM_GetModifyCnt(int LayerIndex);
+int    LCDSIM_GetModifyCntInfo(int LayerIndex);
+int    LCDSIM_GetPixelColor(int x, int y, int LayerIndex);
+int    LCDSIM_GetPixelIndex(int x, int y, int LayerIndex);
+int    LCDSIM_GetXSizeEx(int LayerIndex);
+int    LCDSIM_GetYSizeEx(int LayerIndex);
+int    LCDSIM_GetXSizeMax(void);
+int    LCDSIM_GetYSizeMax(void);
+int    LCDSIM_GetVXSizeEx(int LayerIndex);
+int    LCDSIM_GetVYSizeEx(int LayerIndex);
+int    LCDSIM_Index2Color(int Index, int LayerIndex);
+int    LCDSIM_RLUT_GetPixelIndex(int x, int y, int LayerIndex);
+void   LCDSIM_RLUT_SetPixelIndex(int x, int y, int Index, int LayerIndex);
+void   LCDSIM_SetLUTEntry(U8 Pos, LCD_COLOR color, int LayerIndex);
+void   LCDSIM_SetPixelIndex(int x, int y, int Index, int LayerIndex);
+void   LCDSIM_SetPixelColor(int x, int y, LCD_COLOR PixelColor, int LayerIndex);
+void   LCDSIM_SetSubPixel(int x, int y, U8 Value, int LayerIndex);
+void   LCDSIM_SetPixelPhys(int x, int y, int Index, int LayerIndex);
+int    LCDSIM_GetPixelPhys(int xPhys, int yPhys, int LayerIndex);
+void   LCDSIM_FillRectPhys(int x0Phys, int y0Phys, int x1Phys, int y1Phys, int Index, int LayerIndex);
+void   LCDSIM_SetOrg(int x, int y, int LayerIndex);
+void   LCDSIM_SetAlpha(int Alpha, int LayerIndex);
+int    LCDSIM_GetAlpha(int LayerIndex);
+void   LCDSIM_SetLayerPos(int xPos, int yPos, int LayerIndex);
+void   LCDSIM_SetLayerVis(int OnOff, int LayerIndex);
+void   LCDSIM_SetSize(int LayerIndex, int xSize, int ySize);
+void   LCDSIM_SetTransMode(int LayerIndex, int TransMode);
+void   LCDSIM_SetChroma(int LayerIndex, LCD_COLOR ChromaMin, LCD_COLOR ChromaMax);
+void   LCDSIM_SetCompositeColor(U32 Color);
+void   LCDSIM_SetCompositeSize(int xSize, int ySize);
+void   LCDSIM_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst);
+void   LCDSIM_Invalidate(int LayerIndex);
+void * LCDSIM_GetBufferPtr(int LayerIndex);
+void   LCDSIM_SetBackBufferIndex(int LayerIndex, int BufferIndex);
 
 /********************************************************************
 *

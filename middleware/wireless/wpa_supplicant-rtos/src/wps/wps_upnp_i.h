@@ -79,7 +79,7 @@ struct subscription
 {
     struct dl_list list;
     struct upnp_wps_device_sm *sm;     /* parent */
-#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(CONFIG_NATIVE_WINDOWS) || defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     time_t timeout_time;               /* when to age out the subscription */
 #endif
     unsigned next_subscriber_sequence; /* number our messages */

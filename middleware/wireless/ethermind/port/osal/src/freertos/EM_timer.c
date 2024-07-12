@@ -185,6 +185,8 @@ EM_RESULT EM_start_timer
         return EM_TIMER_TIMEOUT_ZERO_NOT_ALLOWED;
     }
 
+    EM_mem_set(current_timer.static_data, 0, EM_TIMER_STATIC_DATA_SIZE);
+
     if (0U != data_length)
     {
         if (data_length > EM_TIMER_STATIC_DATA_SIZE)

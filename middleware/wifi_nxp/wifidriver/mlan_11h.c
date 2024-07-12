@@ -17,7 +17,7 @@ Change Log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -214,4 +214,60 @@ t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel)
     return required;
 }
 
+#if CONFIG_ECSA
+/**
+ *  @brief try to get a non-dfs channel
+ *
+ *  @param priv    Void pointer to mlan_private
+ *
+ *  @param chan    pointer to channel
+ *
+ *  @return MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE or MLAN_STATUS_PENDING
+ */
+mlan_status wlan_get_non_dfs_chan(mlan_private *priv, t_u8 *chan)
+{
+    mlan_status ret = MLAN_STATUS_FAILURE;
+    t_u32 i;
+    t_u32 entry;
+    t_u8 def_chan           = 0;
+    region_chan_t *chn_tbl  = MNULL;
+    pmlan_adapter pmadapter = priv->adapter;
+
+    ENTER();
+
+    /* get the channel table first */
+    for (i = 0; i < MAX_REGION_CHANNEL_NUM; i++)
+    {
+        if (pmadapter->region_channel[i].valid)
+        {
+            chn_tbl = &pmadapter->region_channel[i];
+
+            if (!chn_tbl || !chn_tbl->pcfp)
+            {
+                goto done;
+            }
+
+            for (entry = 0; entry < chn_tbl->num_cfp; entry++)
+            {
+                if (chn_tbl->pcfp[entry].passive_scan_or_radar_detect == MFALSE)
+                {
+                    def_chan = (t_u8)chn_tbl->pcfp[entry].channel;
+                    break;
+                }
+            }
+
+            if (entry == chn_tbl->num_cfp)
+            {
+                goto done;
+            }
+        }
+    }
+
+    *chan = def_chan;
+    ret   = MLAN_STATUS_SUCCESS;
+done:
+    LEAVE();
+    return ret;
+}
+#endif
 

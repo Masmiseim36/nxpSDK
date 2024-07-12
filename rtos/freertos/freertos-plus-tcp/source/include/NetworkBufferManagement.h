@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
@@ -33,6 +33,13 @@
     extern "C" {
 #endif
 /* *INDENT-ON* */
+
+#include "FreeRTOS_IP.h"
+
+/* _HT_ Two macro's needed while debugging/testing, please ignore. */
+
+#define BUFFER_FROM_WHERE_DECL
+#define BUFFER_FROM_WHERE_CALL( aWhere )
 
 /* NOTE PUBLIC API FUNCTIONS. */
 BaseType_t xNetworkBuffersInitialise( void );

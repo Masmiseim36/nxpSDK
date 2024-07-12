@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_lwip_template AND (CONFIG_USE_middleware_lwip_usb_ethernetif OR CONFIG_USE_middleware_lwip_netc_ethernetif OR CONFIG_USE_middleware_lwip_eoe_ethernetif OR CONFIG_USE_middleware_wifi))
+if(CONFIG_USE_middleware_lwip_template AND (CONFIG_USE_middleware_lwip_usb_ethernetif OR CONFIG_USE_middleware_lwip_enet_ethernetif OR CONFIG_USE_middleware_lwip_kinetis_ethernetif OR CONFIG_USE_middleware_lwip_netc_ethernetif OR CONFIG_USE_middleware_lwip_empty_ethernetif OR CONFIG_USE_middleware_lwip_eoe_ethernetif OR CONFIG_USE_middleware_lwip_mcx_ethernetif OR CONFIG_USE_middleware_wifi))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/port/sys_arch.c

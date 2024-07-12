@@ -143,12 +143,12 @@ static void wmm_ac_del_req(struct wpa_supplicant *wpa_s, int failed)
 static void wmm_ac_addts_req_timeout(void *eloop_ctx, void *timeout_ctx)
 {
     struct wpa_supplicant *wpa_s = eloop_ctx;
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     struct wmm_ac_addts_request *addts_req = timeout_ctx;
 
     wpa_printf(MSG_DEBUG, "Timeout getting ADDTS response (tsid=%d up=%d)", wmm_ac_get_tsid(&addts_req->tspec),
                wmm_ac_get_user_priority(&addts_req->tspec));
-#endif /* CONFIG_ZEPHYR , CONFIG_FREERTOS */
+#endif /* __ZEPHYR__ , CONFIG_FREERTOS */
 
     wmm_ac_del_req(wpa_s, 1);
 }

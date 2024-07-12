@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V3.1.0
+ * FreeRTOS+TCP <DEVELOPMENT BRANCH>
  * Copyright (C) 2022 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -79,10 +79,6 @@
 /* Run time stats gathering configuration options. */
 
 #define configGENERATE_RUN_TIME_STATS             1
-
-/* Co-routine related configuration options. */
-#define configUSE_CO_ROUTINES                     1
-#define configMAX_CO_ROUTINE_PRIORITIES           ( 2 )
 
 /* This demo makes use of one or more example stats formatting functions.  These
  * format the raw data provided by the uxTaskGetSystemState() function in to human

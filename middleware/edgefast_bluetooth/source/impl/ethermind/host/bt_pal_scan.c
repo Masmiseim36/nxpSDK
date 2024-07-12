@@ -825,7 +825,7 @@ static void bt_hci_le_per_adv_report_common(struct net_buf *buf)
 
 	info.tx_power = evt->tx_power;
 	info.rssi = evt->rssi;
-	info.cte_type = BIT(evt->cte_type);
+	info.cte_type = bt_get_df_cte_type(evt->cte_type);
 	info.addr = &per_adv_sync->addr;
 	info.sid = per_adv_sync->sid;
 #if (defined(CONFIG_BT_PER_ADV_SYNC_RSP) && (CONFIG_BT_PER_ADV_SYNC_RSP > 0))
@@ -1321,7 +1321,7 @@ void bt_hci_le_biginfo_adv_report(struct net_buf *buf)
 	biginfo.max_pdu = sys_le16_to_cpu(evt->max_pdu);
 	biginfo.sdu_interval = sys_get_le24(evt->sdu_interval);
 	biginfo.max_sdu = sys_le16_to_cpu(evt->max_sdu);
-	biginfo.phy = evt->phy;
+	biginfo.phy = bt_get_phy(evt->phy);
 	biginfo.framing = evt->framing;
 	biginfo.encryption = evt->encryption ? true : false;
 

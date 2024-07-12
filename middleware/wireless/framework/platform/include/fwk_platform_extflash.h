@@ -70,11 +70,11 @@ int PLATFORM_EraseExternalFlash(uint32_t address, uint32_t size);
  *
  * \param[out] dest output buffer where the data is stored, provided by the caller
  * \param[in] length size of the data to read
- * \param[in] address address to start reading from
- * \param[in] requestFastRead request fast read or not (if the feature is supported)
+ * \param[in] offset offset relative to start of flash to start reading from
+ * \param[in] requestFastRead direct read from flash offset (unused because of remap)
  * \return 0  on success, other on failure
  */
-int PLATFORM_ReadExternalFlash(uint8_t *dest, uint32_t length, uint32_t address, bool requestFastRead);
+int PLATFORM_ReadExternalFlash(uint8_t *dest, uint32_t length, uint32_t offset, bool requestFastRead);
 
 /*!
  * \brief Write data to the external flash
@@ -95,12 +95,14 @@ int PLATFORM_WriteExternalFlash(uint8_t *data, uint32_t length, uint32_t address
 int PLATFORM_IsExternalFlashBusy(bool *isBusy);
 
 /*!
- * \brief Tell whether Flash Sector is blank
+ * \brief Tell whether Flash area is blank
  *
- * \param[in] address
- * \return true if sector containing address is all 0xff
+ * \param[in] address address from which to start check
+ * \param[in] len     length of area
+ *
+ * \return true if area in range [address..address+len[ is containing all 0xff.
  */
-bool PLATFORM_IsExternalFlashSectorBlank(uint32_t address);
+bool PLATFORM_ExternalFlashAreaIsBlank(uint32_t address, uint32_t len);
 
 /*!
  * \brief Tell whether Flash Page is blank
@@ -109,6 +111,14 @@ bool PLATFORM_IsExternalFlashSectorBlank(uint32_t address);
  * \return true if page containing address if all 0xff
  */
 bool PLATFORM_IsExternalFlashPageBlank(uint32_t address);
+
+/*!
+ * \brief Tell whether Flash Sector is blank
+ *
+ * \param[in] address
+ * \return true if sector containing address is all 0xff
+ */
+bool PLATFORM_IsExternalFlashSectorBlank(uint32_t address);
 
 /*!
  * @}  end of FWK_Platform_Flash addtogroup

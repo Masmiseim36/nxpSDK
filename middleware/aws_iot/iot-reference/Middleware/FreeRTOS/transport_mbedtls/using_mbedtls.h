@@ -54,9 +54,10 @@
 #include "mbedtls/error.h"
 #include "lwip/sockets.h"
 
-
+#ifndef MBEDTLS_USE_PSA_CRYPTO
 /* PKCS #11 includes. */
 #include "core_pkcs11.h"
+#endif
 
 /**
  * Socket type for LWIP sockets.
@@ -78,12 +79,13 @@ typedef struct SSLContext
 #ifdef MBEDTLS_USE_PSA_CRYPTO
 	mbedtls_ctr_drbg_context drbgCtx;	  /**< @brief DRBG context. */
 	mbedtls_entropy_context entropyCtx;   /**< @brief Entropy context. */
-#endif
+#else
     /* PKCS#11. */
     CK_FUNCTION_LIST_PTR pxP11FunctionList;
     CK_SESSION_HANDLE xP11Session;
     CK_OBJECT_HANDLE xP11PrivateKey;
     CK_KEY_TYPE xKeyType;
+#endif
 } SSLContext_t;
 
 /* @brief Definition of the network context for the transport interface

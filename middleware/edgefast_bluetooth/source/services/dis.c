@@ -140,7 +140,8 @@ BT_GATT_SERVICE_DEFINE(dis_svc,
 
 );
 
-#if defined(CONFIG_BT_SETTINGS) && defined(CONFIG_BT_DIS_SETTINGS)
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0)) && \
+    (defined(CONFIG_BT_DIS_SETTINGS) && (CONFIG_BT_DIS_SETTINGS > 0))
 static int dis_set(const char *name, size_t len_rd,
 		   settings_read_cb read_cb, void *store)
 {

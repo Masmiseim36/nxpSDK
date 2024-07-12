@@ -16,7 +16,7 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -164,7 +164,7 @@ mlan_status wlan_process_rx_packet(pmlan_adapter pmadapter, pmlan_buffer pmbuf)
  *
  *   @return        MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
-mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer pmbuf)
+mlan_status wlan_ops_process_rx_packet(IN t_void *adapter, IN pmlan_buffer pmbuf)
 {
     pmlan_adapter pmadapter = (pmlan_adapter)adapter;
     mlan_status ret         = MLAN_STATUS_SUCCESS;
@@ -174,6 +174,7 @@ mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer p
     t_u8 ta[MLAN_MAC_ADDR_LENGTH] = {0};
     t_u16 rx_pkt_type             = 0;
     ENTER();
+    TxBAStreamTbl *ptx_tbl = NULL;
 
     prx_pd = (RxPD *)(void *)(pmbuf->pbuf + pmbuf->data_offset);
     /* Endian conversion */
@@ -206,10 +207,10 @@ mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer p
         /* Check if this is mgmt packet and needs to forwarded to app as an
            event */
         /* fixme */
-        PRINTM(MMSG, "Is a management packet expected here?\n\r");
-        (void)os_enter_critical_section();
+        wifi_e("Is a management packet expected here?");
         while (true)
         {
+            OSA_TimeDelay(10);
         }
     }
 
@@ -218,12 +219,20 @@ mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer p
     dump_mac_addr("Dest: ", prx_pkt->eth803_hdr.dest_addr);
 #endif /* DUMP_PACKET_MAC */
 
+    if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP)
+    {
+        /* txbastream table also is used as connected STAs data base */
+        ptx_tbl = wlan_11n_get_txbastream_tbl(priv, prx_pkt->eth803_hdr.src_addr);
+    }
+
     /*
-     * If the packet is not an unicast packet then send the packet
-     * directly to os. Don't pass thru rx reordering
+     * If 11n isn't enabled, or if the packet is not an unicast packet for STA case,
+     * then send the packet directly to os. Don't pass thru rx reordering
      */
-    if (!IS_11N_ENABLED(priv) ||
-        __memcmp(priv->adapter, priv->curr_addr, prx_pkt->eth803_hdr.dest_addr, MLAN_MAC_ADDR_LENGTH))
+    if (((GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_STA) &&
+         ((!IS_11N_ENABLED(priv)) ||
+          __memcmp(priv->adapter, priv->curr_addr, prx_pkt->eth803_hdr.dest_addr, MLAN_MAC_ADDR_LENGTH))) ||
+        ((GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP) && ptx_tbl && (!ptx_tbl->ampdu_supported[0])))
     {
         (void)wlan_process_rx_packet(pmadapter, pmbuf);
         goto done;
@@ -231,6 +240,11 @@ mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer p
 
     if (queuing_ra_based(priv) == MTRUE)
     {
+        if ((GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP) && ptx_tbl && (rx_pkt_type != PKT_TYPE_BAR) &&
+            (prx_pd->priority < MAX_NUM_TID))
+        {
+            ptx_tbl->rx_seq[prx_pd->priority] = prx_pd->seq_num;
+        }
         (void)__memcpy(pmadapter, ta, prx_pkt->eth803_hdr.src_addr, MLAN_MAC_ADDR_LENGTH);
     }
     else

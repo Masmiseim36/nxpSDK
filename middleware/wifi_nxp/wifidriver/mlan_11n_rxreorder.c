@@ -16,7 +16,7 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 #include <wm_net.h>
 
 /* Always keep this include at the end of all include files */
@@ -53,18 +53,33 @@ static mlan_status wlan_11n_dispatch_amsdu_pkt(mlan_private *priv, pmlan_buffer 
         pmbuf->data_offset += prx_pd->rx_pkt_offset;
 
         (void)__memcpy(priv->adapter, amsdu_inbuf, pmbuf->pbuf, sizeof(RxPD));
+#if defined(SDK_OS_FREE_RTOS)
         net_stack_buffer_copy_partial(pmbuf->lwip_pbuf, amsdu_inbuf + pmbuf->data_offset, prx_pd->rx_pkt_length, 0);
-#ifndef CONFIG_TX_RX_ZERO_COPY
-        os_mem_free(pmbuf->pbuf);
+#endif
+#if !CONFIG_TX_RX_ZERO_COPY
+#if !CONFIG_MEM_POOLS
+        OSA_MemoryFree(pmbuf->pbuf);
+        net_stack_buffer_free(pmbuf->lwip_pbuf);
+#else
+        OSA_MemoryPoolFree(buf_128_MemoryPool, pmbuf->pbuf);
+#endif
 #endif
         pmbuf->pbuf = amsdu_inbuf;
 
         (void)wlan_11n_deaggregate_pkt(priv, pmbuf);
-#ifndef CONFIG_TX_RX_ZERO_COPY
-        os_mem_free(pmbuf);
-#endif
+
+#if CONFIG_TX_RX_ZERO_COPY
         /* Free the net stack buffer after deaggregation and delivered to stack */
+#if defined(SDK_OS_FREE_RTOS)
         net_stack_buffer_free(pmbuf->lwip_pbuf);
+#endif
+#else
+#if !CONFIG_MEM_POOLS
+        OSA_MemoryFree(pmbuf);
+#else
+        OSA_MemoryPoolFree(buf_128_MemoryPool, pmbuf);
+#endif
+#endif
         LEAVE();
         return MLAN_STATUS_SUCCESS;
     }
@@ -215,10 +230,17 @@ static mlan_status wlan_11n_free_rxreorder_pkt(t_void *priv, RxReorderTbl *rx_re
         pmpriv->adapter->callbacks.moal_spin_unlock(pmpriv->adapter->pmoal_handle, pmpriv->rx_pkt_lock);
         if (rx_tmp_ptr != NULL)
         {
+#if defined(SDK_OS_FREE_RTOS)
             net_stack_buffer_free(((pmlan_buffer)rx_tmp_ptr)->lwip_pbuf);
-#ifndef CONFIG_TX_RX_ZERO_COPY
-            os_mem_free(((pmlan_buffer)rx_tmp_ptr)->pbuf);
-            os_mem_free(rx_tmp_ptr);
+#endif
+#if !CONFIG_TX_RX_ZERO_COPY
+#if !CONFIG_MEM_POOLS
+            OSA_MemoryFree(((pmlan_buffer)rx_tmp_ptr)->pbuf);
+            OSA_MemoryFree(rx_tmp_ptr);
+#else
+            OSA_MemoryPoolFree(buf_128_MemoryPool, ((pmlan_buffer)rx_tmp_ptr)->pbuf);
+            OSA_MemoryPoolFree(buf_128_MemoryPool, rx_tmp_ptr);
+#endif
 #endif
         }
     }
@@ -313,8 +335,28 @@ static mlan_status wlan_11n_scan_and_dispatch(t_void *priv, RxReorderTbl *rx_reo
 static t_void wlan_11n_delete_rxreorder_tbl_entry(mlan_private *priv, RxReorderTbl *rx_reor_tbl_ptr)
 {
     pmlan_adapter pmadapter = priv->adapter;
+    osa_status_t ret = KOSA_StatusSuccess;
 
     ENTER();
+
+    if (rx_reor_tbl_ptr == MNULL)
+    {
+        LEAVE();
+        return;
+    }
+
+    /* Get and unlick the delete node using lock */
+    ret = OSA_SemaphoreWait((osa_semaphore_handle_t)priv->rx_reorder_tbl_lock, osaWaitForever_c);
+    if (ret != KOSA_StatusSuccess)
+    {
+        PRINTM(MWARN, "%s: rx_reorder_tbl_lock not ready: %d", __func__, ret);
+        return;
+    }
+    PRINTM(MDAT_D, "Delete rx_reor_tbl_ptr: %p\n", rx_reor_tbl_ptr);
+    rx_reor_tbl_ptr = (RxReorderTbl *)(void *)util_dequeue_list(priv->adapter->pmoal_handle, &priv->rx_reorder_tbl_ptr,
+                            priv->adapter->callbacks.moal_spin_lock,
+                            priv->adapter->callbacks.moal_spin_unlock);
+    OSA_SemaphorePost((osa_semaphore_handle_t)priv->rx_reorder_tbl_lock);
 
     if (rx_reor_tbl_ptr == MNULL)
     {
@@ -328,22 +370,20 @@ static t_void wlan_11n_delete_rxreorder_tbl_entry(mlan_private *priv, RxReorderT
         (void)wlan_11n_dispatch_pkt_until_start_win(
             priv, rx_reor_tbl_ptr, (rx_reor_tbl_ptr->start_win + rx_reor_tbl_ptr->win_size) & (MAX_TID_VALUE - 1));
 
-    if (rx_reor_tbl_ptr->timer_context.timer != NULL)
-    {
-        if (rx_reor_tbl_ptr->timer_context.timer_is_set != MFALSE)
-        {
-            (void)priv->adapter->callbacks.moal_stop_timer(pmadapter->pmoal_handle,
-                                                           rx_reor_tbl_ptr->timer_context.timer);
-        }
-        (void)priv->adapter->callbacks.moal_free_timer(pmadapter->pmoal_handle, &rx_reor_tbl_ptr->timer_context.timer);
-    }
+    (void)priv->adapter->callbacks.moal_stop_timer(pmadapter->pmoal_handle, rx_reor_tbl_ptr->timer_context.timer);
+    (void)priv->adapter->callbacks.moal_free_timer(pmadapter->pmoal_handle, &rx_reor_tbl_ptr->timer_context.timer);
 
-    PRINTM(MDAT_D, "Delete rx_reor_tbl_ptr: %p\n", rx_reor_tbl_ptr);
-    util_unlink_list(pmadapter->pmoal_handle, &priv->rx_reorder_tbl_ptr, (pmlan_linked_list)(void *)rx_reor_tbl_ptr,
-                     pmadapter->callbacks.moal_spin_lock, pmadapter->callbacks.moal_spin_unlock);
-
+#if !CONFIG_MEM_POOLS
     (void)pmadapter->callbacks.moal_mfree(pmadapter->pmoal_handle, (t_u8 *)rx_reor_tbl_ptr->rx_reorder_ptr);
+#else
+    OSA_MemoryPoolFree(buf_256_MemoryPool, rx_reor_tbl_ptr->rx_reorder_ptr);
+#endif
+
+#if !CONFIG_MEM_POOLS
     (void)pmadapter->callbacks.moal_mfree(pmadapter->pmoal_handle, (t_u8 *)rx_reor_tbl_ptr);
+#else
+    OSA_MemoryPoolFree(buf_128_MemoryPool, rx_reor_tbl_ptr);
+#endif
 
     LEAVE();
 }
@@ -379,12 +419,12 @@ static t_s16 wlan_11n_find_last_seqnum(RxReorderTbl *rx_reorder_tbl_ptr)
  *
  *  @return 	   	    N/A
  */
-static t_void wlan_flush_data(os_timer_arg_t tmr_handle)
+static t_void wlan_flush_data(osa_timer_arg_t tmr_handle)
 {
     /* Note: Giving tmr_handle as a parameter in callback is a feature
        of FreeRTOS. Hence, we have to change the default mlan code here
        to get the actual context expected by it */
-    reorder_tmr_cnxt_t *reorder_cnxt = (reorder_tmr_cnxt_t *)os_timer_get_context(&tmr_handle);
+    reorder_tmr_cnxt_t *reorder_cnxt = (reorder_tmr_cnxt_t *)OSA_TimerGetContext(&tmr_handle);
     t_u16 startWin_u                 = 0U;
     t_s16 startWin                   = 0;
 
@@ -452,8 +492,13 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
                "%s: seq_num %d, tid %d, ta %02x:%02x:%02x:%02x:"
                "%02x:%02x, win_size %d\n",
                __FUNCTION__, seq_num, tid, ta[0], ta[1], ta[2], ta[3], ta[4], ta[5], win_size);
+#if !CONFIG_MEM_POOLS
         if ((pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, sizeof(RxReorderTbl), MLAN_MEM_DEF,
                                               (t_u8 **)(void **)&new_node)) != MLAN_STATUS_SUCCESS)
+#else
+        new_node = OSA_MemoryPoolAllocate(buf_128_MemoryPool);
+        if (new_node == MNULL)
+#endif
         {
             PRINTM(MERROR, "Rx reorder memory allocation failed\n");
             LEAVE();
@@ -467,6 +512,15 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
         new_node->pkt_count = 0;
         if (queuing_ra_based(priv) == MTRUE)
         {
+            if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_UAP)
+            {
+                TxBAStreamTbl *ptx_tbl = NULL;
+                /* txbastream table also is used as connected STAs data base */
+                if ((ptx_tbl = wlan_11n_get_txbastream_tbl(priv, ta)))
+                {
+                    last_seq = ptx_tbl->rx_seq[tid];
+                }
+            }
         }
         else
         {
@@ -478,13 +532,22 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
         new_node->check_start_win = MTRUE;
         new_node->bitmap          = 0;
 
+#if !CONFIG_MEM_POOLS
         if ((pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, 4U * win_size, MLAN_MEM_DEF,
                                               (t_u8 **)&new_node->rx_reorder_ptr)) != MLAN_STATUS_SUCCESS)
+#else
+        new_node->rx_reorder_ptr = OSA_MemoryPoolAllocate(buf_256_MemoryPool);
+        if (new_node->rx_reorder_ptr == MNULL)
+#endif
         {
             PRINTM(MERROR,
                    "Rx reorder table memory allocation"
                    "failed\n");
+#if !CONFIG_MEM_POOLS
             (void)pmadapter->callbacks.moal_mfree(pmadapter->pmoal_handle, (t_u8 *)new_node);
+#else
+            OSA_MemoryPoolFree(buf_128_MemoryPool, new_node);
+#endif
             LEAVE();
             return;
         }
@@ -497,7 +560,6 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
 
         (void)pmadapter->callbacks.moal_init_timer(pmadapter->pmoal_handle, &new_node->timer_context.timer,
                                                    wlan_flush_data, &new_node->timer_context);
-
         for (i = 0; i < win_size; ++i)
         {
             new_node->rx_reorder_ptr[i] = MNULL;
@@ -627,7 +689,7 @@ mlan_status wlan_cmd_11n_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND *cm
         padd_ba_rsp->status_code = wlan_cpu_to_le16(ADDBA_RSP_STATUS_ACCEPT);
     }
     padd_ba_rsp->block_ack_param_set &= ~BLOCKACKPARAM_WINSIZE_MASK;
-#ifdef AMSDU_IN_AMPDU
+#if CONFIG_AMSDU_IN_AMPDU
     /* To be done: change priv->aggr_prio_tbl[tid].amsdu for specific AMSDU support by CLI cmd */
     if (!priv->add_ba_param.rx_amsdu)
 #endif
@@ -688,7 +750,7 @@ mlan_status wlan_cmd_11n_uap_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND
     else
         padd_ba_rsp->status_code = wlan_cpu_to_le16(ADDBA_RSP_STATUS_ACCEPT);
 
-#ifdef AMSDU_IN_AMPDU
+#if CONFIG_AMSDU_IN_AMPDU
         /* To be done: change priv->aggr_prio_tbl[tid].amsdu for specific AMSDU support by CLI cmd */
 #if 0
     if (!priv->add_ba_param.rx_amsdu || (priv->aggr_prio_tbl[tid].amsdu == BA_STREAM_NOT_ALLOWED))
@@ -696,8 +758,8 @@ mlan_status wlan_cmd_11n_uap_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND
     if (!priv->add_ba_param.rx_amsdu)
 #endif
 #endif
-    /* We do not support AMSDU inside AMPDU, hence reset the bit */
-    padd_ba_rsp->block_ack_param_set &= ~BLOCKACKPARAM_AMSDU_SUPP_MASK;
+        /* We do not support AMSDU inside AMPDU, hence reset the bit */
+        padd_ba_rsp->block_ack_param_set &= ~BLOCKACKPARAM_AMSDU_SUPP_MASK;
 
     if (!wifi_uap_ampdu_rx_enable_per_tid_is_allowed(tid))
     {

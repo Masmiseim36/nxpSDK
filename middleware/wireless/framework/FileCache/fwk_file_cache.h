@@ -24,7 +24,7 @@ extern "C" {
  * - Allocate a RAM buffer from the scratch memory and synchronize the data with a file in the file system (Open API)
  * - Allow the caller to do read, write onto the buffer without restriction
  * - Write the updated data into the file system and free the allocated buffer (Close API). The write can be done
- * immediatly, or save into a write queue, the data being written in the file system when FC_Process() is called,
+ * immediately, or save into a write queue, the data being written in the file system when FC_Process() is called,
  * typically from Idle task
  * - Protect from concurrent access the writing of the buffer into the file system
  *
@@ -64,7 +64,7 @@ extern "C" {
  * \brief Defines the maximum size of the file name inside the buffer descriptor structure
  */
 #ifndef FC_FILE_NAME_SIZE_MAX
-#define FC_FILE_NAME_SIZE_MAX 16
+#define FC_FILE_NAME_SIZE_MAX 16U
 #endif
 
 /**
@@ -74,14 +74,12 @@ extern "C" {
 #define FC_CLOSE_AND_SAVE_IMMEDIATELY (1)
 #define FC_CLOSE_AND_SAVE_TO_QUEUE    (2)
 
-#define FC_FILE_CACHE_SIZE \
-    256 /** used by file system as file cache in RAM, one per configuration, located in scratch area */
-#define FC_CONTEXT_SIZE                                                                  \
-    (20 + FC_FILE_CACHE_SIZE) /** used by file system as context and file cache, one per \
-                           configuration, located in scratch area */
-#define FC_FILE_DESC_SIZE                                                                                              \
-    (12 + FC_FILE_NAME_SIZE_MAX) /** used by file system as file descriptor in RAM, one per buffer, located in scratch \
-       area */
+/** Size used by file system as file cache in RAM, one per configuration, located in scratch area */
+#define FC_FILE_CACHE_SIZE 256U
+/** Size of context used by file system comprising file cache, one per configuration, located in scratch area */
+#define FC_CONTEXT_SIZE (20U + FC_FILE_CACHE_SIZE)
+/** File name max size used by file system as file descriptor in RAM, one per buffer, located in scratch area */
+#define FC_FILE_DESC_SIZE (13U + FC_FILE_NAME_SIZE_MAX)
 
 /**
  * \brief Provides the RAM buffer management to file system configuration when calling FC_InitConfig()
@@ -89,19 +87,19 @@ extern "C" {
 typedef struct fc_config_s
 {
     const char *folder_name;   // for future use, not supported for now
-    void *      scracth_ram_p; /* Pointer to an allocated RAM space for buffer pool */
-    uint16_t scracth_ram_sz; /* Size of the Allocated RAM space , should be ((( <your_buffer_size> + FC_FILE_DESC_SIZE)
+    void *      scratch_ram_p; /* Pointer to an allocated RAM space for buffer pool */
+    uint16_t scratch_ram_sz; /* Size of the Allocated RAM space , should be ((( <your_buffer_size> + FC_FILE_DESC_SIZE)
                               * <your_buffer_number> ) + FC_CONTEXT_SIZE) */
 } fc_config_t;
 
 /**
  * \brief Register new buffer configuration
  *
- * \param config : configuration structure containing scratch RAM area for context, file descriptor and buffer
+ * \param fc_config_p : configuration structure containing scratch RAM area for context, file descriptor and buffer
  * management
  * \return void* fc_context_p : handle to context for this configuration, to be used for FC_Open() API
  */
-void *FC_InitConfig(const fc_config_t *config);
+void *FC_InitConfig(const fc_config_t *fc_config_p);
 
 /**
  * \brief Deinitialize the FileCache configuration for the specified context

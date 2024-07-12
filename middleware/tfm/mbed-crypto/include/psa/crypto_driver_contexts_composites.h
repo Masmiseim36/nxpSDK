@@ -49,6 +49,10 @@
 #include <libtestdriver1/include/psa/crypto.h>
 #endif
 
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+#include "els_pkc_crypto_composites.h"
+#endif
+
 #if defined(PSA_CRYPTO_DRIVER_TEST)
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1) && \
     defined(LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_MAC)
@@ -136,6 +140,10 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_CC3XX)               //NXP TFM
     cc3xx_mac_operation_t cc3xx_driver_ctx;
 #endif
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    els_pkc_transparent_mac_operation_t transparent_els_pkc_driver_ctx;
+    els_pkc_opaque_mac_operation_t opaque_els_pkc_driver_ctx;
+#endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
 } psa_driver_mac_context_t;
 
 typedef union {
@@ -147,6 +155,10 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_CC3XX)              //NXP TFM
     cc3xx_aead_operation_t cc3xx_driver_ctx;
 #endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    els_pkc_transparent_aead_operation_t transparent_els_pkc_driver_ctx;
+    els_pkc_opaque_aead_operation_t opaque_els_pkc_driver_ctx;
+#endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
 } psa_driver_aead_context_t;
 
 typedef union {

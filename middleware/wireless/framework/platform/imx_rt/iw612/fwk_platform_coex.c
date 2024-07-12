@@ -16,6 +16,7 @@
 #include "firmware_dnld.h"
 #include "fwdnld_intf_abs.h"
 #include "fsl_os_abstraction.h"
+#include "fwk_platform.h"
 
 /* -------------------------------------------------------------------------- */
 /*                               Private macros                               */
@@ -49,6 +50,10 @@
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define __WEAK_FUNC __attribute__((weak))
 #endif
+
+#define PLATFORM_IOEXP_I2C_ADDR_7BIT            0x20U
+#define PLATFORM_IOEXP_CONFIGURATION_REG        0x03U
+#define PLATFORM_IOEXP_CONFIGURATION_SPI_ENABLE 0xFEU
 
 /* -------------------------------------------------------------------------- */
 /*                                Private types                               */
@@ -126,6 +131,13 @@ int PLATFORM_InitControllers(uint8_t controllersMask)
 
             /* Waiting for the RCP chip starts up */
             OSA_TimeDelay(PLATFORM_CONFIG_DEFAULT_RESET_DELAY_MS);
+
+            if ((controllersMask & conn802_15_4_c) != 0)
+            {
+                /* Configure IO_Expander to enable SPI interface through M.2 connector */
+                PLATFORM_IOEXP_I2C_program(PLATFORM_IOEXP_I2C_ADDR_7BIT, PLATFORM_IOEXP_CONFIGURATION_REG,
+                                           PLATFORM_IOEXP_CONFIGURATION_SPI_ENABLE);
+            }
 
             isOtControllerUp = true;
         } while (false);

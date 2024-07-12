@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: USART FreeRTOS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: WWDT: Windowed Watchdog Timer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,184 +101,285 @@ $(document).ready(function(){initNavTree('a00072.html','');});
   <div class="summary">
 <a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">USART FreeRTOS Driver<div class="ingroups"><a class="el" href="a00252.html">USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
+<div class="title">WWDT: Windowed Watchdog Timer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Watchdog module (WDOG) of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="WWDTFunc"></a>
+Function groups</h1>
+<h2><a class="anchor" id="WWDTInit"></a>
+Initialization and deinitialization</h2>
+<p>The function <a class="el" href="a00072.html#gadc47d88ae20552f9cd9999e6f8fc5ebe" title="Initializes the WWDT. ">WWDT_Init()</a> initializes the watchdog timer with specified configurations. The configurations include timeout value and whether to enable watchdog after init. The function <a class="el" href="a00072.html#gacfd7070829029279f3b3bfb763b86914" title="Initializes WWDT configure structure. ">WWDT_GetDefaultConfig()</a> gets the default configurations.</p>
+<p>The function <a class="el" href="a00072.html#gaae4415d32cd0f67908d0ab9494736742" title="Shuts down the WWDT. ">WWDT_Deinit()</a> disables the watchdog and the module clock.</p>
+<h2><a class="anchor" id="WWDTStatus"></a>
+Status</h2>
+<p>Provides functions to get and clear the WWDT status.</p>
+<h2><a class="anchor" id="WWDTInterrupt"></a>
+Interrupt</h2>
+<p>Provides functions to enable/disable WWDT interrupts and get current enabled interrupts.</p>
+<h2><a class="anchor" id="WWDTRefresh"></a>
+Watch dog Refresh</h2>
+<p>The function <a class="el" href="a00072.html#gab1745efaa7c33fab66a552fd45e01d83" title="Refreshes the WWDT timer. ">WWDT_Refresh()</a> feeds the WWDT.</p>
+<h1><a class="anchor" id="WWDTTypUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/wwdt </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00154"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html">fsl_usart_freertos.h</a></td></tr>
+<tr class="memitem:a00222"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html">fsl_wwdt.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00487"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00487">rtos_usart_config</a></td></tr>
-<tr class="memdesc:a00487"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEX USART configuration structure.  <a href="a00072.html#a00487">More...</a><br/></td></tr>
-<tr class="separator:a00487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00456"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00456">_usart_rtos_handle</a></td></tr>
-<tr class="memdesc:a00456"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEX USART FreeRTOS handle.  <a href="a00072.html#a00456">More...</a><br/></td></tr>
-<tr class="separator:a00456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00471"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00471">_wwdt_config</a></td></tr>
+<tr class="memdesc:a00471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes WWDT configuration structure.  <a href="a00072.html#a00471">More...</a><br/></td></tr>
+<tr class="separator:a00471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gafe53adee4959375e828ab8f7d0c4ace3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe53adee4959375e828ab8f7d0c4ace3"></a>
-typedef struct <a class="el" href="a00072.html#a00456">_usart_rtos_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a></td></tr>
-<tr class="memdesc:gafe53adee4959375e828ab8f7d0c4ace3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEX USART FreeRTOS handle. <br/></td></tr>
-<tr class="separator:gafe53adee4959375e828ab8f7d0c4ace3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade4f744368e9723e83fdefb72e88e692"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00072.html#a00471">_wwdt_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a></td></tr>
+<tr class="memdesc:gade4f744368e9723e83fdefb72e88e692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes WWDT configuration structure.  <a href="#gade4f744368e9723e83fdefb72e88e692">More...</a><br/></td></tr>
+<tr class="separator:gade4f744368e9723e83fdefb72e88e692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaca0e9724bd1f25336527ea66c77e476f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gaca0e9724bd1f25336527ea66c77e476f">_wwdt_status_flags_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184">kWWDT_TimeoutFlag</a> = WWDT_MOD_WDTOF_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e">kWWDT_WarningFlag</a> = WWDT_MOD_WDINT_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaca0e9724bd1f25336527ea66c77e476f"><td class="mdescLeft">&#160;</td><td class="mdescRight">WWDT status flags.  <a href="a00072.html#gaca0e9724bd1f25336527ea66c77e476f">More...</a><br/></td></tr>
+<tr class="separator:gaca0e9724bd1f25336527ea66c77e476f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga76b62468480f39084a7b0c5785e6a9f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga76b62468480f39084a7b0c5785e6a9f2">FSL_USART_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
-<tr class="memdesc:ga76b62468480f39084a7b0c5785e6a9f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART FreeRTOS driver version.  <a href="#ga76b62468480f39084a7b0c5785e6a9f2">More...</a><br/></td></tr>
-<tr class="separator:ga76b62468480f39084a7b0c5785e6a9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf661d1e3e19a80b873c54fdbad5e966a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gaf661d1e3e19a80b873c54fdbad5e966a">FSL_WWDT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 9))</td></tr>
+<tr class="memdesc:gaf661d1e3e19a80b873c54fdbad5e966a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines WWDT driver version.  <a href="#gaf661d1e3e19a80b873c54fdbad5e966a">More...</a><br/></td></tr>
+<tr class="separator:gaf661d1e3e19a80b873c54fdbad5e966a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-USART RTOS Operation</h2></td></tr>
-<tr class="memitem:ga304a1b0f3f224c3fa97043015a632aa6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga304a1b0f3f224c3fa97043015a632aa6">USART_RTOS_Init</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle, <a class="el" href="a00070.html#a00455">usart_handle_t</a> *t_handle, const struct <a class="el" href="a00072.html#a00487">rtos_usart_config</a> *cfg)</td></tr>
-<tr class="memdesc:ga304a1b0f3f224c3fa97043015a632aa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a USART instance for operation in RTOS.  <a href="#ga304a1b0f3f224c3fa97043015a632aa6">More...</a><br/></td></tr>
-<tr class="separator:ga304a1b0f3f224c3fa97043015a632aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga053c811eb6768cd6949e8e7126f6527a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga053c811eb6768cd6949e8e7126f6527a">USART_RTOS_Deinit</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:ga053c811eb6768cd6949e8e7126f6527a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a USART instance for operation.  <a href="#ga053c811eb6768cd6949e8e7126f6527a">More...</a><br/></td></tr>
-<tr class="separator:ga053c811eb6768cd6949e8e7126f6527a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Refresh sequence</h2></td></tr>
+<tr class="memitem:ga56228a5472034e453003e7f375c824ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56228a5472034e453003e7f375c824ab"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga56228a5472034e453003e7f375c824ab">WWDT_FIRST_WORD_OF_REFRESH</a>&#160;&#160;&#160;(0xAAU)</td></tr>
+<tr class="memdesc:ga56228a5472034e453003e7f375c824ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">First word of refresh sequence. <br/></td></tr>
+<tr class="separator:ga56228a5472034e453003e7f375c824ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab483f5384985a23bb28889b3c31da9ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab483f5384985a23bb28889b3c31da9ee"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gab483f5384985a23bb28889b3c31da9ee">WWDT_SECOND_WORD_OF_REFRESH</a>&#160;&#160;&#160;(0x55U)</td></tr>
+<tr class="memdesc:gab483f5384985a23bb28889b3c31da9ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second word of refresh sequence. <br/></td></tr>
+<tr class="separator:gab483f5384985a23bb28889b3c31da9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-USART transactional Operation</h2></td></tr>
-<tr class="memitem:gac5ba10a31fbee50135f110fc126db666"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gac5ba10a31fbee50135f110fc126db666">USART_RTOS_Send</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle, uint8_t *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:gac5ba10a31fbee50135f110fc126db666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data in the background.  <a href="#gac5ba10a31fbee50135f110fc126db666">More...</a><br/></td></tr>
-<tr class="separator:gac5ba10a31fbee50135f110fc126db666"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa74ca6b91bf6592492b2777efc52fa7e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gaa74ca6b91bf6592492b2777efc52fa7e">USART_RTOS_Receive</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle, uint8_t *buffer, uint32_t length, size_t *received)</td></tr>
-<tr class="memdesc:gaa74ca6b91bf6592492b2777efc52fa7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data.  <a href="#gaa74ca6b91bf6592492b2777efc52fa7e">More...</a><br/></td></tr>
-<tr class="separator:gaa74ca6b91bf6592492b2777efc52fa7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+WWDT Initialization and De-initialization</h2></td></tr>
+<tr class="memitem:gacfd7070829029279f3b3bfb763b86914"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gacfd7070829029279f3b3bfb763b86914">WWDT_GetDefaultConfig</a> (<a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *config)</td></tr>
+<tr class="memdesc:gacfd7070829029279f3b3bfb763b86914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes WWDT configure structure.  <a href="#gacfd7070829029279f3b3bfb763b86914">More...</a><br/></td></tr>
+<tr class="separator:gacfd7070829029279f3b3bfb763b86914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc47d88ae20552f9cd9999e6f8fc5ebe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gadc47d88ae20552f9cd9999e6f8fc5ebe">WWDT_Init</a> (WWDT_Type *base, const <a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *config)</td></tr>
+<tr class="memdesc:gadc47d88ae20552f9cd9999e6f8fc5ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the WWDT.  <a href="#gadc47d88ae20552f9cd9999e6f8fc5ebe">More...</a><br/></td></tr>
+<tr class="separator:gadc47d88ae20552f9cd9999e6f8fc5ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae4415d32cd0f67908d0ab9494736742"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gaae4415d32cd0f67908d0ab9494736742">WWDT_Deinit</a> (WWDT_Type *base)</td></tr>
+<tr class="memdesc:gaae4415d32cd0f67908d0ab9494736742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the WWDT.  <a href="#gaae4415d32cd0f67908d0ab9494736742">More...</a><br/></td></tr>
+<tr class="separator:gaae4415d32cd0f67908d0ab9494736742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+WWDT Functional Operation</h2></td></tr>
+<tr class="memitem:ga2620dd2baf891f32359fbe85faaca563"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga2620dd2baf891f32359fbe85faaca563">WWDT_Enable</a> (WWDT_Type *base)</td></tr>
+<tr class="memdesc:ga2620dd2baf891f32359fbe85faaca563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the WWDT module.  <a href="#ga2620dd2baf891f32359fbe85faaca563">More...</a><br/></td></tr>
+<tr class="separator:ga2620dd2baf891f32359fbe85faaca563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga358bab6648d05345bda057a72cfb5547"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga358bab6648d05345bda057a72cfb5547">WWDT_Disable</a> (WWDT_Type *base)</td></tr>
+<tr class="memdesc:ga358bab6648d05345bda057a72cfb5547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the WWDT module.  <a href="#ga358bab6648d05345bda057a72cfb5547">More...</a><br/></td></tr>
+<tr class="separator:ga358bab6648d05345bda057a72cfb5547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c5dae412d14eba38f2b63abb9f982d6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga1c5dae412d14eba38f2b63abb9f982d6">WWDT_GetStatusFlags</a> (WWDT_Type *base)</td></tr>
+<tr class="memdesc:ga1c5dae412d14eba38f2b63abb9f982d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all WWDT status flags.  <a href="#ga1c5dae412d14eba38f2b63abb9f982d6">More...</a><br/></td></tr>
+<tr class="separator:ga1c5dae412d14eba38f2b63abb9f982d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5666008b33bf327c80afb90e0733512e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga5666008b33bf327c80afb90e0733512e">WWDT_ClearStatusFlags</a> (WWDT_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga5666008b33bf327c80afb90e0733512e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear WWDT flag.  <a href="#ga5666008b33bf327c80afb90e0733512e">More...</a><br/></td></tr>
+<tr class="separator:ga5666008b33bf327c80afb90e0733512e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac575fb8568458aa8acbbed14d5aa5ffd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gac575fb8568458aa8acbbed14d5aa5ffd">WWDT_SetWarningValue</a> (WWDT_Type *base, uint32_t warningValue)</td></tr>
+<tr class="memdesc:gac575fb8568458aa8acbbed14d5aa5ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the WWDT warning value.  <a href="#gac575fb8568458aa8acbbed14d5aa5ffd">More...</a><br/></td></tr>
+<tr class="separator:gac575fb8568458aa8acbbed14d5aa5ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2351329bb1ff6b966decec266d7ec16"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gad2351329bb1ff6b966decec266d7ec16">WWDT_SetTimeoutValue</a> (WWDT_Type *base, uint32_t timeoutCount)</td></tr>
+<tr class="memdesc:gad2351329bb1ff6b966decec266d7ec16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the WWDT timeout value.  <a href="#gad2351329bb1ff6b966decec266d7ec16">More...</a><br/></td></tr>
+<tr class="separator:gad2351329bb1ff6b966decec266d7ec16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66b5c37906be6083f083a436eebbe778"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga66b5c37906be6083f083a436eebbe778">WWDT_SetWindowValue</a> (WWDT_Type *base, uint32_t windowValue)</td></tr>
+<tr class="memdesc:ga66b5c37906be6083f083a436eebbe778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WWDT window value.  <a href="#ga66b5c37906be6083f083a436eebbe778">More...</a><br/></td></tr>
+<tr class="separator:ga66b5c37906be6083f083a436eebbe778"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1745efaa7c33fab66a552fd45e01d83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gab1745efaa7c33fab66a552fd45e01d83">WWDT_Refresh</a> (WWDT_Type *base)</td></tr>
+<tr class="memdesc:gab1745efaa7c33fab66a552fd45e01d83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the WWDT timer.  <a href="#gab1745efaa7c33fab66a552fd45e01d83">More...</a><br/></td></tr>
+<tr class="separator:gab1745efaa7c33fab66a552fd45e01d83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00487" id="a00487"></a>
+<a name="a00471" id="a00471"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct rtos_usart_config</td>
+          <td class="memname">struct _wwdt_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac2c11e2f563e88fd7235fd1c04c43695"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2c11e2f563e88fd7235fd1c04c43695"></a>
-USART_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ac2c11e2f563e88fd7235fd1c04c43695">base</a></td></tr>
-<tr class="memdesc:ac2c11e2f563e88fd7235fd1c04c43695"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART base address. <br/></td></tr>
-<tr class="separator:ac2c11e2f563e88fd7235fd1c04c43695"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e5bade020ab0937c336700835e0b534"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e5bade020ab0937c336700835e0b534"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a7e5bade020ab0937c336700835e0b534">srcclk</a></td></tr>
-<tr class="memdesc:a7e5bade020ab0937c336700835e0b534"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART source clock in Hz. <br/></td></tr>
-<tr class="separator:a7e5bade020ab0937c336700835e0b534"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add54d5367186b402624be17d78b85f5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add54d5367186b402624be17d78b85f5c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#add54d5367186b402624be17d78b85f5c">baudrate</a></td></tr>
-<tr class="memdesc:add54d5367186b402624be17d78b85f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired communication speed. <br/></td></tr>
-<tr class="separator:add54d5367186b402624be17d78b85f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07bf211da1c7475ae952bc3c92d668fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07bf211da1c7475ae952bc3c92d668fe"></a>
-<a class="el" href="a00070.html#gafd66e4e7133327cb2a1df4e24d8f4cb6">usart_parity_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a07bf211da1c7475ae952bc3c92d668fe">parity</a></td></tr>
-<tr class="memdesc:a07bf211da1c7475ae952bc3c92d668fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parity setting. <br/></td></tr>
-<tr class="separator:a07bf211da1c7475ae952bc3c92d668fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd3500c39b73d6acbbbf5f4192376dc9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd3500c39b73d6acbbbf5f4192376dc9"></a>
-<a class="el" href="a00070.html#ga4b8e5ed1a787d428e84a5a550fedc417">usart_stop_bit_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#acd3500c39b73d6acbbbf5f4192376dc9">stopbits</a></td></tr>
-<tr class="memdesc:acd3500c39b73d6acbbbf5f4192376dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of stop bits to use. <br/></td></tr>
-<tr class="separator:acd3500c39b73d6acbbbf5f4192376dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ee13e3eb1fe35fc47e6732632305038"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ee13e3eb1fe35fc47e6732632305038"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a7ee13e3eb1fe35fc47e6732632305038">buffer</a></td></tr>
-<tr class="memdesc:a7ee13e3eb1fe35fc47e6732632305038"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for background reception. <br/></td></tr>
-<tr class="separator:a7ee13e3eb1fe35fc47e6732632305038"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a13bc07966a8b84553e6010d4ea0e34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a13bc07966a8b84553e6010d4ea0e34"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a0a13bc07966a8b84553e6010d4ea0e34">buffer_size</a></td></tr>
-<tr class="memdesc:a0a13bc07966a8b84553e6010d4ea0e34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffer for background reception. <br/></td></tr>
-<tr class="separator:a0a13bc07966a8b84553e6010d4ea0e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2401c8e97f8eced0fdca7ffdabacbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a2401c8e97f8eced0fdca7ffdabacbc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a4a2401c8e97f8eced0fdca7ffdabacbc">enableWwdt</a></td></tr>
+<tr class="memdesc:a4a2401c8e97f8eced0fdca7ffdabacbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables WWDT. <br/></td></tr>
+<tr class="separator:a4a2401c8e97f8eced0fdca7ffdabacbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ff22b44e352c0182bdd87b9ff61ee2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ff22b44e352c0182bdd87b9ff61ee2e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a6ff22b44e352c0182bdd87b9ff61ee2e">enableWatchdogReset</a></td></tr>
+<tr class="memdesc:a6ff22b44e352c0182bdd87b9ff61ee2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Watchdog timeout will cause a chip reset false: Watchdog timeout will not cause a chip reset <br/></td></tr>
+<tr class="separator:a6ff22b44e352c0182bdd87b9ff61ee2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf57c281f83db946ed4553f513f00061"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf57c281f83db946ed4553f513f00061"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#adf57c281f83db946ed4553f513f00061">enableWatchdogProtect</a></td></tr>
+<tr class="memdesc:adf57c281f83db946ed4553f513f00061"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Enable watchdog protect i.e timeout value can only be changed after counter is below warning &amp; window values false: Disable watchdog protect; timeout value can be changed at any time <br/></td></tr>
+<tr class="separator:adf57c281f83db946ed4553f513f00061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa664f6d30e5b267bf960ad09fb36275f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa664f6d30e5b267bf960ad09fb36275f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aa664f6d30e5b267bf960ad09fb36275f">enableLockOscillator</a></td></tr>
+<tr class="memdesc:aa664f6d30e5b267bf960ad09fb36275f"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Disabling or powering down the watchdog oscillator is prevented Once set, this bit can only be cleared by a reset false: Do not lock oscillator <br/></td></tr>
+<tr class="separator:aa664f6d30e5b267bf960ad09fb36275f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c0d3a959ecac990eed2c9cfc1a0f09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7c0d3a959ecac990eed2c9cfc1a0f09"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ad7c0d3a959ecac990eed2c9cfc1a0f09">windowValue</a></td></tr>
+<tr class="memdesc:ad7c0d3a959ecac990eed2c9cfc1a0f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window value, set this to 0xFFFFFF if windowing is not in effect. <br/></td></tr>
+<tr class="separator:ad7c0d3a959ecac990eed2c9cfc1a0f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab55d5525745d39713c954d1296e2a9df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab55d5525745d39713c954d1296e2a9df"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ab55d5525745d39713c954d1296e2a9df">timeoutValue</a></td></tr>
+<tr class="memdesc:ab55d5525745d39713c954d1296e2a9df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value. <br/></td></tr>
+<tr class="separator:ab55d5525745d39713c954d1296e2a9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a350a5289fd77fc6f5b2834a66726d80e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a350a5289fd77fc6f5b2834a66726d80e">warningValue</a></td></tr>
+<tr class="memdesc:a350a5289fd77fc6f5b2834a66726d80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog time counter value that will generate a warning interrupt.  <a href="#a350a5289fd77fc6f5b2834a66726d80e">More...</a><br/></td></tr>
+<tr class="separator:a350a5289fd77fc6f5b2834a66726d80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbab700e360be852f9b80ab4a37d8f68"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#acbab700e360be852f9b80ab4a37d8f68">clockFreq_Hz</a></td></tr>
+<tr class="memdesc:acbab700e360be852f9b80ab4a37d8f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog clock source frequency.  <a href="#acbab700e360be852f9b80ab4a37d8f68">More...</a><br/></td></tr>
+<tr class="separator:acbab700e360be852f9b80ab4a37d8f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a350a5289fd77fc6f5b2834a66726d80e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _wwdt_config::warningValue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set this to 0 for no warning </p>
 
 </div>
 </div>
-<a name="a00456" id="a00456"></a>
+<a class="anchor" id="acbab700e360be852f9b80ab4a37d8f68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _usart_rtos_handle</td>
+          <td class="memname">uint32_t _wwdt_config::clockFreq_Hz</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:adc027d47fa85140e7b3db5dbb40966dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc027d47fa85140e7b3db5dbb40966dc"></a>
-USART_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#adc027d47fa85140e7b3db5dbb40966dc">base</a></td></tr>
-<tr class="memdesc:adc027d47fa85140e7b3db5dbb40966dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART base address. <br/></td></tr>
-<tr class="separator:adc027d47fa85140e7b3db5dbb40966dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91e74bc39d7b39179e7527bce1df602f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91e74bc39d7b39179e7527bce1df602f"></a>
-<a class="el" href="a00070.html#ga5f095da5c95e5137fd47b284217dbe74">usart_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a91e74bc39d7b39179e7527bce1df602f">txTransfer</a></td></tr>
-<tr class="memdesc:a91e74bc39d7b39179e7527bce1df602f"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer structure. <br/></td></tr>
-<tr class="separator:a91e74bc39d7b39179e7527bce1df602f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca6f85a82e4bb8b599c7091fc7144c2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca6f85a82e4bb8b599c7091fc7144c2b"></a>
-<a class="el" href="a00070.html#ga5f095da5c95e5137fd47b284217dbe74">usart_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aca6f85a82e4bb8b599c7091fc7144c2b">rxTransfer</a></td></tr>
-<tr class="memdesc:aca6f85a82e4bb8b599c7091fc7144c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer structure. <br/></td></tr>
-<tr class="separator:aca6f85a82e4bb8b599c7091fc7144c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7ac308760bf10b54fa30bd0385843a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7ac308760bf10b54fa30bd0385843a2"></a>
-SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aa7ac308760bf10b54fa30bd0385843a2">rxSemaphore</a></td></tr>
-<tr class="memdesc:aa7ac308760bf10b54fa30bd0385843a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX semaphore for resource sharing. <br/></td></tr>
-<tr class="separator:aa7ac308760bf10b54fa30bd0385843a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f90db802f6c60b1ace2719106332f61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f90db802f6c60b1ace2719106332f61"></a>
-SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a6f90db802f6c60b1ace2719106332f61">txSemaphore</a></td></tr>
-<tr class="memdesc:a6f90db802f6c60b1ace2719106332f61"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX semaphore for resource sharing. <br/></td></tr>
-<tr class="separator:a6f90db802f6c60b1ace2719106332f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe3985cdaa339dcaf71d076962418f50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe3985cdaa339dcaf71d076962418f50"></a>
-EventGroupHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#abe3985cdaa339dcaf71d076962418f50">rxEvent</a></td></tr>
-<tr class="memdesc:abe3985cdaa339dcaf71d076962418f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX completion event. <br/></td></tr>
-<tr class="separator:abe3985cdaa339dcaf71d076962418f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add5efe27cd4ea2dca0d9c41cbb80789e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add5efe27cd4ea2dca0d9c41cbb80789e"></a>
-EventGroupHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#add5efe27cd4ea2dca0d9c41cbb80789e">txEvent</a></td></tr>
-<tr class="memdesc:add5efe27cd4ea2dca0d9c41cbb80789e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX completion event. <br/></td></tr>
-<tr class="separator:add5efe27cd4ea2dca0d9c41cbb80789e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adab1b63867f17750ac02bc4f1bda8ea7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adab1b63867f17750ac02bc4f1bda8ea7"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#adab1b63867f17750ac02bc4f1bda8ea7">t_state</a></td></tr>
-<tr class="memdesc:adab1b63867f17750ac02bc4f1bda8ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transactional state of the underlying driver. <br/></td></tr>
-<tr class="separator:adab1b63867f17750ac02bc4f1bda8ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga76b62468480f39084a7b0c5785e6a9f2"></a>
+<a class="anchor" id="gaf661d1e3e19a80b873c54fdbad5e966a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_USART_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
+          <td class="memname">#define FSL_WWDT_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 9))</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gade4f744368e9723e83fdefb72e88e692"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00072.html#a00471">_wwdt_config</a>  <a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaca0e9724bd1f25336527ea66c77e476f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00072.html#gaca0e9724bd1f25336527ea66c77e476f">_wwdt_status_flags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the WWDT status flags for use in the WWDT functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184"></a>kWWDT_TimeoutFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Time-out flag, set when the timer times out. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e"></a>kWWDT_WarningFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Warning interrupt flag, set when timer is below the value WDWARNINT. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga304a1b0f3f224c3fa97043015a632aa6"></a>
+<a class="anchor" id="gacfd7070829029279f3b3bfb763b86914"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int USART_RTOS_Init </td>
+          <td class="memname">void WWDT_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the WWDT configure structure to default value. The default value are: </p>
+<div class="fragment"><div class="line">*  config-&gt;enableWwdt = <span class="keyword">true</span>;</div>
+<div class="line">*  config-&gt;enableWatchdogReset = <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;enableWatchdogProtect = <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;enableLockOscillator = <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;windowValue = 0xFFFFFFU;</div>
+<div class="line">*  config-&gt;timeoutValue = 0xFFFFFFU;</div>
+<div class="line">*  config-&gt;warningValue = 0;</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Pointer to WWDT config structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692" title="Describes WWDT configuration structure. ">wwdt_config_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadc47d88ae20552f9cd9999e6f8fc5ebe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WWDT_Init </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00070.html#a00455">usart_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>t_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const struct <a class="el" href="a00072.html#a00487">rtos_usart_config</a> *&#160;</td>
-          <td class="paramname"><em>cfg</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00072.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -287,62 +388,160 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function initializes the WWDT. When called, the WWDT runs according to the configuration.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00072.html#a00471">wwdt_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00072.html#gacfd7070829029279f3b3bfb763b86914">WWDT_GetDefaultConfig</a>(&amp;config);</div>
+<div class="line">*   config.<a class="code" href="a00072.html#ab55d5525745d39713c954d1296e2a9df">timeoutValue</a> = 0x7ffU;</div>
+<div class="line">*   <a class="code" href="a00072.html#gadc47d88ae20552f9cd9999e6f8fc5ebe">WWDT_Init</a>(wwdt_base,&amp;config);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS USART handle, the pointer to allocated space for RTOS context. </td></tr>
-    <tr><td class="paramname">t_handle</td><td>The pointer to allocated space where to store transactional layer internal state. </td></tr>
-    <tr><td class="paramname">cfg</td><td>The pointer to the parameters required to configure the USART after initialization. </td></tr>
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+    <tr><td class="paramname">config</td><td>The configuration of WWDT </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 succeed, others fail. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga053c811eb6768cd6949e8e7126f6527a"></a>
+<a class="anchor" id="gaae4415d32cd0f67908d0ab9494736742"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int USART_RTOS_Deinit </td>
+          <td class="memname">void WWDT_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function deinitializes the USART module, sets all register values to reset value, and releases the resources.</p>
+<p>This function shuts down the WWDT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS USART handle. </td></tr>
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gac5ba10a31fbee50135f110fc126db666"></a>
+<a class="anchor" id="ga2620dd2baf891f32359fbe85faaca563"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WWDT_Enable </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function write value into WWDT_MOD register to enable the WWDT, it is a write-once bit; once this bit is set to one and a watchdog feed is performed, the watchdog timer will run permanently.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga358bab6648d05345bda057a72cfb5547"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WWDT_Disable </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00281.html#_deprecated000016">Deprecated:</a></b></dt><dd>Do not use this function. It will be deleted in next release version, for once the bit field of WDEN written with a 1, it can not be re-written with a 0.</dd></dl>
+<p>This function write value into WWDT_MOD register to disable the WWDT.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1c5dae412d14eba38f2b63abb9f982d6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t WWDT_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function gets all status flags.</p>
+<p>Example for getting Timeout Flag: </p>
+<div class="fragment"><div class="line">*   uint32_t status;</div>
+<div class="line">*   status = <a class="code" href="a00072.html#ga1c5dae412d14eba38f2b63abb9f982d6">WWDT_GetStatusFlags</a>(wwdt_base) &amp; <a class="code" href="a00072.html#ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184">kWWDT_TimeoutFlag</a>;</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00072.html#gaca0e9724bd1f25336527ea66c77e476f" title="WWDT status flags. ">_wwdt_status_flags_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5666008b33bf327c80afb90e0733512e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int USART_RTOS_Send </td>
+          <td class="memname">void WWDT_ClearStatusFlags </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -351,45 +550,38 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sends data. It is a synchronous API. If the hardware buffer is full, the task is in the blocked state.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function clears WWDT status flag.</p>
+<p>Example for clearing warning flag: </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00072.html#ga5666008b33bf327c80afb90e0733512e">WWDT_ClearStatusFlags</a>(wwdt_base, <a class="code" href="a00072.html#ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e">kWWDT_WarningFlag</a>);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS USART handle. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The pointer to buffer to send. </td></tr>
-    <tr><td class="paramname">length</td><td>The number of bytes to send. </td></tr>
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00072.html#gaca0e9724bd1f25336527ea66c77e476f" title="WWDT status flags. ">_wwdt_status_flags_t</a> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa74ca6b91bf6592492b2777efc52fa7e"></a>
+<a class="anchor" id="gac575fb8568458aa8acbbed14d5aa5ffd"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int USART_RTOS_Receive </td>
+          <td class="memname">static void WWDT_SetWarningValue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>received</em>&#160;</td>
+          <td class="paramname"><em>warningValue</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -397,14 +589,124 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function receives data from USART. It is a synchronous API. If data is immediately available, it is returned immediately and the number of bytes received.</p>
+<p>The WDWARNINT register determines the watchdog timer counter value that will generate a watchdog interrupt. When the watchdog timer counter is no longer greater than the value defined by WARNINT, an interrupt will be generated after the subsequent WDCLK.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS USART handle. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The pointer to buffer where to write received data. </td></tr>
-    <tr><td class="paramname">length</td><td>The number of bytes to receive. </td></tr>
-    <tr><td class="paramname">received</td><td>The pointer to a variable of size_t where the number of received data is filled. </td></tr>
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+    <tr><td class="paramname">warningValue</td><td>WWDT warning value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad2351329bb1ff6b966decec266d7ec16"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WWDT_SetTimeoutValue </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeoutCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function sets the timeout value. Every time a feed sequence occurs the value in the TC register is loaded into the Watchdog timer. Writing a value below 0xFF will cause 0xFF to be loaded into the TC register. Thus the minimum time-out interval is TWDCLK*256*4. If enableWatchdogProtect flag is true in wwdt_config_t config structure, any attempt to change the timeout value before the watchdog counter is below the warning and window values will cause a watchdog reset and set the WDTOF flag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+    <tr><td class="paramname">timeoutCount</td><td>WWDT timeout value, count of WWDT clock tick. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga66b5c37906be6083f083a436eebbe778"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WWDT_SetWindowValue </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>windowValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The WINDOW register determines the highest TV value allowed when a watchdog feed is performed. If a feed sequence occurs when timer value is greater than the value in WINDOW, a watchdog event will occur. To disable windowing, set windowValue to 0xFFFFFF (maximum possible timer value) so windowing is not in effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
+    <tr><td class="paramname">windowValue</td><td>WWDT window value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab1745efaa7c33fab66a552fd45e01d83"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WWDT_Refresh </td>
+          <td>(</td>
+          <td class="paramtype">WWDT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function feeds the WWDT. This function should be called before WWDT timer is in timeout. Otherwise, a reset is asserted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
   </table>
   </dd>
 </dl>

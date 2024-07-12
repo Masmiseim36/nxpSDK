@@ -72,6 +72,15 @@
 
 #endif /* FSL_FEATURE_SOC_CASPER_COUNT */
 
+/* If HW Acceleration is expected to be provided by psa_crypto_driver_wrapper, then no need to enable ALT implementation
+However, as a temporary solution, ALT can also be enabled in combination with psa_crypto_driver_wrapper. 
+It will help in following cases: 
+1- Still support needs to be added via psa_crypto_driver_wrapper, or
+2- Failures in during psa_crypto_driver_wrapper execution. 
+In case of fallback, if alt is enabled, module can exercise alt implementation otherwise, simply use SW. 
+At the moment, alt implementation is not enabled while HW Acceleration is provided by psa_crypto_driver_wrapper */
+#if !defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+
 /* Enable ELS */
 #if defined(ELS)
     #ifndef MBEDTLS_MCUX_ELS
@@ -110,6 +119,8 @@
     #endif
 #endif /* PKC */
 
+#endif /* !defined (PSA_CRYPTO_DRIVER_ELS_PKC) */
+
 #if defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)
     #include "sss_crypto.h"
 
@@ -117,6 +128,18 @@
         #define MBEDTLS_MCUX_SSS_AES      (1)
     #endif
 #endif
+
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+
+/* Enable ELS if TRNG is not available on device */
+#if !defined(FSL_FEATURE_SOC_TRNG_COUNT) && defined(ELS)
+    #ifndef MBEDTLS_MCUX_ELS
+        #define MBEDTLS_MCUX_ELS        (1)     /* Enable use of ELS. */
+    #endif
+#endif
+
+#endif /* defined (PSA_CRYPTO_DRIVER_ELS_PKC) */
+
 /* Entropy */
 #if (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)) || \
     (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) || \

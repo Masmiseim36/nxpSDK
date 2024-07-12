@@ -334,7 +334,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, __FPU_PRESENT=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/image;../source/model;..;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../devices/MIMXRT595S/drivers;../../../../../components/uart;../../../../../devices/MIMXRT595S;../../../flash_config;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/image;../source/model;..;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../devices/MIMXRT595S/drivers;../../../../../components/uart;../../../../../devices/MIMXRT595S;../../../flash_config;../../../../../devices/MIMXRT595S/utilities/str;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -569,16 +569,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -597,6 +587,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2528,7 +2528,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, __FPU_PRESENT=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/image;../source/model;..;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../devices/MIMXRT595S/drivers;../../../../../components/uart;../../../../../devices/MIMXRT595S;../../../flash_config;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/image;../source/model;..;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../devices/MIMXRT595S/drivers;../../../../../components/uart;../../../../../devices/MIMXRT595S;../../../flash_config;../../../../../devices/MIMXRT595S/utilities/str;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2763,16 +2763,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2791,6 +2781,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

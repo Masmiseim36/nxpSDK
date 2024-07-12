@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('a00234.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -107,54 +108,64 @@ $(document).ready(function(){initNavTree('a00234.html','');});
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga70e0187aa8acac29294311518b8bc3fb"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00234.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#ga70e0187aa8acac29294311518b8bc3fb">casper_operation_t</a></td></tr>
+<tr class="memdesc:ga70e0187aa8acac29294311518b8bc3fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="#ga70e0187aa8acac29294311518b8bc3fb">More...</a><br/></td></tr>
+<tr class="separator:ga70e0187aa8acac29294311518b8bc3fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb3f0a23391e5fed42912a2775e12d44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb3f0a23391e5fed42912a2775e12d44"></a>
+typedef enum <a class="el" href="a00234.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#gaeb3f0a23391e5fed42912a2775e12d44">casper_algo_t</a></td></tr>
+<tr class="memdesc:gaeb3f0a23391e5fed42912a2775e12d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation. <br/></td></tr>
+<tr class="separator:gaeb3f0a23391e5fed42912a2775e12d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaf965305106f4a638921120e2f1acc385"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#gaf965305106f4a638921120e2f1acc385">casper_operation_t</a> { , <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385ab5a78d5173f379c5149add08650f14c5">kCASPER_OpMul6464Sum</a>, 
+<tr class="memitem:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a> { , <br/>
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baab5a78d5173f379c5149add08650f14c5">kCASPER_OpMul6464Sum</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385ad04571c7b185686fd776a80806d6524d">kCASPER_OpMul6464FullSum</a>, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baad04571c7b185686fd776a80806d6524d">kCASPER_OpMul6464FullSum</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385ad0fbf9a74a2cb155f031bc3c2caa251f">kCASPER_OpMul6464Reduce</a>, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baad0fbf9a74a2cb155f031bc3c2caa251f">kCASPER_OpMul6464Reduce</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385ac73be9788e2abbbf2b011b7a3ad0ee25">kCASPER_OpAdd64</a> = 0x08, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baac73be9788e2abbbf2b011b7a3ad0ee25">kCASPER_OpAdd64</a> = 0x08, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a46c350d401f6bb4c3fac8b5ca7df66b1">kCASPER_OpSub64</a> = 0x09, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa46c350d401f6bb4c3fac8b5ca7df66b1">kCASPER_OpSub64</a> = 0x09, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385ac6ffac25f046cb6c565ce7ffa543dbe0">kCASPER_OpDouble64</a> = 0x0A, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baac6ffac25f046cb6c565ce7ffa543dbe0">kCASPER_OpDouble64</a> = 0x0A, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a80db615b18d5ed2319c85a4fe6caa2eb">kCASPER_OpXor64</a> = 0x0B, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa80db615b18d5ed2319c85a4fe6caa2eb">kCASPER_OpXor64</a> = 0x0B, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a007fe02bbaf6b290d2024beaf9618e33">kCASPER_OpRSub64</a> = 0x0C, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa007fe02bbaf6b290d2024beaf9618e33">kCASPER_OpRSub64</a> = 0x0C, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a405a717b5a196ce6f0c5167d43f6e08e">kCASPER_OpShiftLeft32</a>, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa405a717b5a196ce6f0c5167d43f6e08e">kCASPER_OpShiftLeft32</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a61a1a07e6c0adc7b367ef5dc195adc22">kCASPER_OpShiftRight32</a> = 0x11, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa61a1a07e6c0adc7b367ef5dc195adc22">kCASPER_OpShiftRight32</a> = 0x11, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a5b64b93e087ab8b9002440b264cad30d">kCASPER_OpCopy</a> = 0x14, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa5b64b93e087ab8b9002440b264cad30d">kCASPER_OpCopy</a> = 0x14, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a8e860749586cc0a33405334a931f291e">kCASPER_OpRemask</a> = 0x15, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa8e860749586cc0a33405334a931f291e">kCASPER_OpRemask</a> = 0x15, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385abdc1e3361e8415354fac33b3993b1491">kCASPER_OpFill</a> = 0x16, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baabdc1e3361e8415354fac33b3993b1491">kCASPER_OpFill</a> = 0x16, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a34940e0777601a076a1715f859228f88">kCASPER_OpZero</a> = 0x17, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa34940e0777601a076a1715f859228f88">kCASPER_OpZero</a> = 0x17, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a9507d1f5ad0b8219f9bd461eeb27752e">kCASPER_OpCompare</a> = 0x18, 
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa9507d1f5ad0b8219f9bd461eeb27752e">kCASPER_OpCompare</a> = 0x18, 
 <br/>
-&#160;&#160;<a class="el" href="a00234.html#ggaf965305106f4a638921120e2f1acc385a10df9918e9754e22740900ecc145c43d">kCASPER_OpCompareFast</a> = 0x19
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf965305106f4a638921120e2f1acc385"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="a00234.html#gaf965305106f4a638921120e2f1acc385">More...</a><br/></td></tr>
-<tr class="separator:gaf965305106f4a638921120e2f1acc385"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60876721ddc68aea63524d3078b59185"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#ga60876721ddc68aea63524d3078b59185">casper_algo_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00234.html#gga60876721ddc68aea63524d3078b59185a8e86050a24be31a0c3e4c7f0fc801045">kCASPER_ECC_P256</a> = 0x01, 
-<br/>
-&#160;&#160;<a class="el" href="a00234.html#gga60876721ddc68aea63524d3078b59185a3fbcdf27711f1c8c8271899ac4aaab89">kCASPER_ECC_P384</a> = 0x02, 
-<br/>
-&#160;&#160;<a class="el" href="a00234.html#gga60876721ddc68aea63524d3078b59185a4a45988d4ca3b926783296346a862ad2">kCASPER_ECC_P521</a> = 0x03
+&#160;&#160;<a class="el" href="a00234.html#ggad58a4d789b7a583e7793b2ab3cf698baa10df9918e9754e22740900ecc145c43d">kCASPER_OpCompareFast</a> = 0x19
 <br/>
  }</td></tr>
-<tr class="memdesc:ga60876721ddc68aea63524d3078b59185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation.  <a href="a00234.html#ga60876721ddc68aea63524d3078b59185">More...</a><br/></td></tr>
-<tr class="separator:ga60876721ddc68aea63524d3078b59185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="a00234.html#gad58a4d789b7a583e7793b2ab3cf698ba">More...</a><br/></td></tr>
+<tr class="separator:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ce07816cd7f6acdead0b975579144e0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00234.html#gga4ce07816cd7f6acdead0b975579144e0a8e86050a24be31a0c3e4c7f0fc801045">kCASPER_ECC_P256</a> = 0x01, 
+<br/>
+&#160;&#160;<a class="el" href="a00234.html#gga4ce07816cd7f6acdead0b975579144e0a3fbcdf27711f1c8c8271899ac4aaab89">kCASPER_ECC_P384</a> = 0x02, 
+<br/>
+&#160;&#160;<a class="el" href="a00234.html#gga4ce07816cd7f6acdead0b975579144e0a4a45988d4ca3b926783296346a862ad2">kCASPER_ECC_P521</a> = 0x03
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga4ce07816cd7f6acdead0b975579144e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation.  <a href="a00234.html#ga4ce07816cd7f6acdead0b975579144e0">More...</a><br/></td></tr>
+<tr class="separator:ga4ce07816cd7f6acdead0b975579144e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -167,7 +178,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga38fa16be20cbb761a11dea0791a186fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#ga38fa16be20cbb761a11dea0791a186fe">FSL_CASPER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 3))</td></tr>
+<tr class="memitem:ga38fa16be20cbb761a11dea0791a186fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00234.html#ga38fa16be20cbb761a11dea0791a186fe">FSL_CASPER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 4))</td></tr>
 <tr class="memdesc:ga38fa16be20cbb761a11dea0791a186fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER driver version.  <a href="#ga38fa16be20cbb761a11dea0791a186fe">More...</a><br/></td></tr>
 <tr class="separator:ga38fa16be20cbb761a11dea0791a186fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -177,12 +188,12 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_CASPER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 3))</td>
+          <td class="memname">#define FSL_CASPER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Version 2.2.3.</p>
-<p>Current version: 2.2.3</p>
+<p>Version 2.2.4.</p>
+<p>Current version: 2.2.4</p>
 <p>Change log:</p>
 <ul>
 <li>Version 2.0.0<ul>
@@ -247,93 +258,110 @@ Driver version</h2></td></tr>
 </ul>
 </li>
 <li>Version 2.2.3<ul>
-<li>Added macro into CASPER_Init and CASPER_Deinit to support devices without clock and reset control. </li>
+<li>Added macro into CASPER_Init and CASPER_Deinit to support devices without clock and reset control.</li>
+</ul>
+</li>
+<li>Version 2.2.4<ul>
+<li>Fix MISRA-C 2012 issue. </li>
 </ul>
 </li>
 </ul>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf965305106f4a638921120e2f1acc385"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga70e0187aa8acac29294311518b8bc3fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00234.html#gaf965305106f4a638921120e2f1acc385">casper_operation_t</a></td>
+          <td class="memname">typedef enum <a class="el" href="a00234.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a>  <a class="el" href="a00234.html#ga70e0187aa8acac29294311518b8bc3fb">casper_operation_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gad58a4d789b7a583e7793b2ab3cf698ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00234.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ab5a78d5173f379c5149add08650f14c5"></a>kCASPER_OpMul6464Sum</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baab5a78d5173f379c5149add08650f14c5"></a>kCASPER_OpMul6464Sum</em>&nbsp;</td><td class="fielddoc">
 <p>Walking 1 or more of J loop, doing r=a*b using 64x64=128. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ad04571c7b185686fd776a80806d6524d"></a>kCASPER_OpMul6464FullSum</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baad04571c7b185686fd776a80806d6524d"></a>kCASPER_OpMul6464FullSum</em>&nbsp;</td><td class="fielddoc">
 <p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but assume inner j loop. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ad0fbf9a74a2cb155f031bc3c2caa251f"></a>kCASPER_OpMul6464Reduce</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baad0fbf9a74a2cb155f031bc3c2caa251f"></a>kCASPER_OpMul6464Reduce</em>&nbsp;</td><td class="fielddoc">
 <p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but sum all of w. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ac73be9788e2abbbf2b011b7a3ad0ee25"></a>kCASPER_OpAdd64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baac73be9788e2abbbf2b011b7a3ad0ee25"></a>kCASPER_OpAdd64</em>&nbsp;</td><td class="fielddoc">
 <p>Walking 1 or more of J loop, doing c,r[-1]=r+a*b using 64x64=128, but skip 1st write. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a46c350d401f6bb4c3fac8b5ca7df66b1"></a>kCASPER_OpSub64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa46c350d401f6bb4c3fac8b5ca7df66b1"></a>kCASPER_OpSub64</em>&nbsp;</td><td class="fielddoc">
 <p>Walking add with off_AB, and in/out off_RES doing c,r=r+a+c using 64+64=65. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385ac6ffac25f046cb6c565ce7ffa543dbe0"></a>kCASPER_OpDouble64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baac6ffac25f046cb6c565ce7ffa543dbe0"></a>kCASPER_OpDouble64</em>&nbsp;</td><td class="fielddoc">
 <p>Walking subtract with off_AB, and in/out off_RES doing r=r-a using 64-64=64, with last borrow implicit if any. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a80db615b18d5ed2319c85a4fe6caa2eb"></a>kCASPER_OpXor64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa80db615b18d5ed2319c85a4fe6caa2eb"></a>kCASPER_OpXor64</em>&nbsp;</td><td class="fielddoc">
 <p>Walking add to self with off_RES doing c,r=r+r+c using 64+64=65. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a007fe02bbaf6b290d2024beaf9618e33"></a>kCASPER_OpRSub64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa007fe02bbaf6b290d2024beaf9618e33"></a>kCASPER_OpRSub64</em>&nbsp;</td><td class="fielddoc">
 <p>Walking XOR with off_AB, and in/out off_RES doing r=r^a using 64^64=64. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a405a717b5a196ce6f0c5167d43f6e08e"></a>kCASPER_OpShiftLeft32</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa405a717b5a196ce6f0c5167d43f6e08e"></a>kCASPER_OpShiftLeft32</em>&nbsp;</td><td class="fielddoc">
 <p>Walking subtract with off_AB, and in/out off_RES using r=a-r. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a61a1a07e6c0adc7b367ef5dc195adc22"></a>kCASPER_OpShiftRight32</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa61a1a07e6c0adc7b367ef5dc195adc22"></a>kCASPER_OpShiftRight32</em>&nbsp;</td><td class="fielddoc">
 <p>Walking shift left doing r1,r=(b*D)|r1, where D is 2^amt and is loaded by app (off_CD not used) </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a5b64b93e087ab8b9002440b264cad30d"></a>kCASPER_OpCopy</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa5b64b93e087ab8b9002440b264cad30d"></a>kCASPER_OpCopy</em>&nbsp;</td><td class="fielddoc">
 <p>Walking shift right doing r,r1=(b*D)|r1, where D is 2^(32-amt) and is loaded by app (off_CD not used) and off_RES starts at MSW. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a8e860749586cc0a33405334a931f291e"></a>kCASPER_OpRemask</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa8e860749586cc0a33405334a931f291e"></a>kCASPER_OpRemask</em>&nbsp;</td><td class="fielddoc">
 <p>Copy from ABoff to resoff, 64b at a time. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385abdc1e3361e8415354fac33b3993b1491"></a>kCASPER_OpFill</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baabdc1e3361e8415354fac33b3993b1491"></a>kCASPER_OpFill</em>&nbsp;</td><td class="fielddoc">
 <p>Copy and mask from ABoff to resoff, 64b at a time. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a34940e0777601a076a1715f859228f88"></a>kCASPER_OpZero</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa34940e0777601a076a1715f859228f88"></a>kCASPER_OpZero</em>&nbsp;</td><td class="fielddoc">
 <p>Fill RESOFF using 64 bits at a time with value in A and B. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a9507d1f5ad0b8219f9bd461eeb27752e"></a>kCASPER_OpCompare</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa9507d1f5ad0b8219f9bd461eeb27752e"></a>kCASPER_OpCompare</em>&nbsp;</td><td class="fielddoc">
 <p>Fill RESOFF using 64 bits at a time of 0s. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf965305106f4a638921120e2f1acc385a10df9918e9754e22740900ecc145c43d"></a>kCASPER_OpCompareFast</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa10df9918e9754e22740900ecc145c43d"></a>kCASPER_OpCompareFast</em>&nbsp;</td><td class="fielddoc">
 <p>Compare two arrays, running all the way to the end. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga60876721ddc68aea63524d3078b59185"></a>
+<a class="anchor" id="ga4ce07816cd7f6acdead0b975579144e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00234.html#ga60876721ddc68aea63524d3078b59185">casper_algo_t</a></td>
+          <td class="memname">enum <a class="el" href="a00234.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga60876721ddc68aea63524d3078b59185a8e86050a24be31a0c3e4c7f0fc801045"></a>kCASPER_ECC_P256</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a8e86050a24be31a0c3e4c7f0fc801045"></a>kCASPER_ECC_P256</em>&nbsp;</td><td class="fielddoc">
 <p>ECC_P256. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga60876721ddc68aea63524d3078b59185a3fbcdf27711f1c8c8271899ac4aaab89"></a>kCASPER_ECC_P384</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a3fbcdf27711f1c8c8271899ac4aaab89"></a>kCASPER_ECC_P384</em>&nbsp;</td><td class="fielddoc">
 <p>ECC_P384. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga60876721ddc68aea63524d3078b59185a4a45988d4ca3b926783296346a862ad2"></a>kCASPER_ECC_P521</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a4a45988d4ca3b926783296346a862ad2"></a>kCASPER_ECC_P521</em>&nbsp;</td><td class="fielddoc">
 <p>ECC_P521. </p>
 </td></tr>
 </table>

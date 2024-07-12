@@ -11,7 +11,7 @@
 #ifndef RTOS_SUPP_MGMT_H
 #define RTOS_SUPP_MGMT_H
 
-#ifndef CONFIG_ZEPHYR
+#ifndef __ZEPHYR__
 #include <lwip/netif.h>
 #include <lwip/netifapi.h>
 #endif
@@ -30,7 +30,7 @@ enum requested_ops
     AUTOCONNECT,
     ROAM,
     FT_DS,
-#ifdef CONFIG_WPA_SUPP_WPS
+#if CONFIG_WPA_SUPP_WPS
     WPS_PBC,
     WPS_PIN,
     WPS_CANCEL,
@@ -39,7 +39,7 @@ enum requested_ops
     STOP
 };
 
-#ifdef CONFIG_11K
+#if CONFIG_11K
 #define RRM_EVENT_NEIGHBOR_REP_COMPLETED "neighbor report parse completed"
 #endif
 
@@ -119,7 +119,7 @@ int wpa_supp_notify_assoc(const struct netif *dev);
 
 int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled);
 
-#ifdef CONFIG_WPA_SUPP_WPS
+#if CONFIG_WPA_SUPP_WPS
 int wpa_supp_start_wps_pbc(const struct netif *dev, int is_ap);
 int wpa_supp_start_wps_pin(const struct netif *dev, const char *pin, int is_ap);
 int wpa_supp_wps_pin_valid(const struct netif *dev, const unsigned char *pin);
@@ -127,7 +127,7 @@ int wpa_supp_wps_generate_pin(const struct netif *dev, unsigned int *pin);
 int wpa_supp_cancel_wps(const struct netif *dev, int is_ap);
 #endif
 
-#ifdef CONFIG_WPA_SUPP_DPP
+#if CONFIG_WPA_SUPP_DPP
 int wpa_supp_dpp_configurator_add(const struct netif *dev, int is_ap, const char *cmd);
 
 void wpa_supp_dpp_configurator_params(const struct netif *dev, int is_ap, const char *cmd);
@@ -178,6 +178,8 @@ int wpa_supp_stop_ap(const struct netif *dev, struct wlan_network *network);
 int wpa_supp_req_status(enum requested_ops ops);
 
 int wpa_supp_set_mac_acl(const struct netif *dev, int filter_mode, char mac_count, unsigned char *mac_addr);
+
+int wpa_supp_deauth_sta(struct netif *dev, const u8* sta_addr);
 
 int wpa_supp_deinit(void);
 

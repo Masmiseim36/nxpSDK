@@ -189,8 +189,6 @@ include_directories(${ProjDirPath}/../../../../../../components/uart)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_fusionf1)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
@@ -202,6 +200,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
 
@@ -250,8 +250,6 @@ add_executable(dsp_nn_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_fusionf1/rpmsg_platform.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt500_fusionf1/rpmsg_platform.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_memory.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c"
@@ -307,6 +305,8 @@ add_executable(dsp_nn_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
 )
 
 

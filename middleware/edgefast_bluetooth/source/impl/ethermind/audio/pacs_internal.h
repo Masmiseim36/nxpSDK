@@ -45,4 +45,3 @@ struct bt_pacs_context {
 	uint16_t  src;
 } STRUCT_PACKED_POST;
 
-bool bt_pacs_context_available(enum bt_audio_dir dir, uint16_t context);

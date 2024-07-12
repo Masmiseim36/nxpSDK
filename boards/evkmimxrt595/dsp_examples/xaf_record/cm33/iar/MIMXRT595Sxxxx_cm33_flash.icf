@@ -49,7 +49,7 @@ define symbol m_interrupts_start               = 0x08001000;
 define symbol m_interrupts_end                 = 0x0800117F;
 
 define symbol m_text_start                     = 0x08001180;
-define symbol m_text_end                       = 0x083FFFFF;
+define symbol m_text_end                       = 0x087FFFFF;
 
 define symbol m_interrupts_ram_start           = 0x20280000;
 define symbol m_interrupts_ram_end             = 0x20280000 + __ram_vector_table_offset__;

@@ -66,8 +66,8 @@
      2U * sizeof(uint8_t))
 
 #define LEGACY_PROD_DATA_PADDING_SZ 63U
-#define LEGACY_PROD_DATA_LEN                                                                 \
-    (PROD_DATA_ID_STRING_SZ + BLE_MAC_ADDR_SZ + IEEE_802_15_4_SZ + +(2U * sizeof(uint8_t)) + \
+#define LEGACY_PROD_DATA_LEN                                                                \
+    (PROD_DATA_ID_STRING_SZ + BLE_MAC_ADDR_SZ + IEEE_802_15_4_SZ + (2U * sizeof(uint8_t)) + \
      LEGACY_PROD_DATA_PADDING_SZ + sizeof(uint16_t))
 
 /*
@@ -112,9 +112,9 @@ hardwareParameters_t;
 /*! \brief  factory data parameter structure content.
  *
  * Data structure containing factory data.
- * The structur only contains the 1rst byte of the app factory data. The length is open and left to the app
+ * The structure only contains the 1rst byte of the app factory data. The length is open and left to the app
  * discretion (up to 2kB). Head room for a terminating 2 byte CRC16 must be reserved in RAM in the
- * programing buffer.
+ * programming buffer.
  */
 typedef PACKED_STRUCT extendedAppFactoryData_tag
 {
@@ -159,7 +159,7 @@ extendedAppFactoryData_t;
  *
  * \return error code:
  *         - 0 : The structure in argument is correctly filled with HW parameters
- *         - 1 : The structure in flash does not start with the indentification word or
+ *         - 1 : The structure in flash does not start with the identification word or
  *             the CRC is not correct => The data structure in RAM is filled with 0xFF
  ********************************************************************************** */
 uint32_t NV_ReadHWParameters(hardwareParameters_t **pHwParams);
@@ -172,7 +172,7 @@ uint32_t NV_ReadHWParameters(hardwareParameters_t **pHwParams);
  * If you want to change one data from the structure with a read, in a first time you
  *      have to call the read function before hand so as to perform a copy in RAM.
  * Additionally if App Factory Data are colocated in the same sector (gHwParamsAppFactoryDataExtension_d)
- * and HW Paramaters need to be rewritten, following a crystal calibration for instance, their contents is
+ * and HW Parameters need to be rewritten, following a crystal calibration for instance, their contents is
  * liable to be lost. When the App Factory Data are programmed before a board calibration, preserving the
  * their contents is done by defining gHwParamsAppFactoryDataPreserveOnHwParamUpdate_d as 1.
  * Otherwise reprogramming App Factory Data is required.
@@ -189,7 +189,7 @@ uint32_t NV_ReadHWParameters(hardwareParameters_t **pHwParams);
  *      } </pre>
  *
  * \return error code of the Flash erase/write functions :
- *         - 0 : The structure in RAM has been succesfully copied in Flash
+ *         - 0 : The structure in RAM has been successfully copied in Flash
  *         - Other values : There was a problem when attempting to erase
  *           the previous structure stored in Flash or there was a problem when
  *           trying to copy the RAM structure in Flash
@@ -201,7 +201,7 @@ uint32_t NV_WriteHWParameters(void);
  * \brief  Program Application Factory Data in flash.
  *
  * \details The implementation assumes that App Factory Data are colocated in the same
- *  flash  sector as HWParameters. WHenver Whenen Factory Data are not mirrored in RAM.
+ *  flash  sector as HWParameters. Whenever Factory Data are not mirrored in RAM.
  *
  * \param src_data  pointer on a RAM buffer containing the App Factory Data structure.
  * \param extended_data_len  length in bytes of App Factory Data payload
@@ -231,6 +231,13 @@ extendedAppFactoryData_t *Nv_GetAppFactoryData(void);
  *
  ********************************************************************************** */
 void HWParametersReset(void);
+
+/*! *********************************************************************************
+ * \brief  Erase current version of HW Parameters.
+ * Used mostly in unit tests.
+ *
+ ********************************************************************************** */
+void HWParametersErase(void);
 
 /*!
  * @} end of HWParameter addtogroup

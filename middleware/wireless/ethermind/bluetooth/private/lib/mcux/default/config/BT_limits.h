@@ -1839,7 +1839,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define OPP_NUM_CLIENT_ENTITIES                                 1U
+#define OPP_NUM_CLIENT_ENTITIES                                 3U
 
 
 /*

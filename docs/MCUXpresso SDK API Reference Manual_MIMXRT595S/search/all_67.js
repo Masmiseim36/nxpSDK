@@ -2,10 +2,10 @@ var searchData=
 [
   ['g_5fclkinfreq',['g_clkinFreq',['../a00010.html#ga49f0b6eb5fa54a25d3e4427b232b40d3',1,'fsl_clock.h']]],
   ['g_5fmclkfreq',['g_mclkFreq',['../a00010.html#ga6edcdb0fb35348c975da4dd2b3f5f69e',1,'fsl_clock.h']]],
-  ['g_5fserialhandle',['g_serialHandle',['../a00270.html#gaad3c4240a1364156a239471ccdb9aa0b',1,'fsl_debug_console.h']]],
+  ['g_5fserialhandle',['g_serialHandle',['../a00267.html#gaad3c4240a1364156a239471ccdb9aa0b',1,'fsl_debug_console.h']]],
   ['g_5fxtalfreq',['g_xtalFreq',['../a00010.html#gaa8b59ed5be618b5e5339efcbc4564e78',1,'fsl_clock.h']]],
   ['gainshft',['gainshft',['../a00017.html#ac84a16b61f1aefdf5d216e8d168afa28',1,'_dmic_channel_config']]],
-  ['genericcmd6timeout',['genericCMD6Timeout',['../a00049.html#a26edb9fa4327e6021bf43c33b951d727',1,'_mmc_extended_csd']]],
+  ['genericcmd6timeout',['genericCMD6Timeout',['../a00048.html#a26edb9fa4327e6021bf43c33b951d727',1,'_mmc_extended_csd']]],
   ['gpio_5fclocks',['GPIO_CLOCKS',['../a00010.html#gac86986db423673c1d9b46882ccd6b3a9',1,'fsl_clock.h']]],
   ['gpio_5finterrupt_5fconfig_5ft',['gpio_interrupt_config_t',['../a00033.html#ga7175ba73c1f8a60ae37f70808ac0c3dd',1,'fsl_gpio.h']]],
   ['gpio_5finterrupt_5findex_5ft',['gpio_interrupt_index_t',['../a00033.html#gaa31e3c93cde11b84204dacf01c4bbd17',1,'fsl_gpio.h']]],
@@ -20,6 +20,6 @@ var searchData=
   ['gpio_5fportinit',['GPIO_PortInit',['../a00033.html#ga6fabd21856d350fc0b60ffea3bbca200',1,'fsl_gpio.h']]],
   ['gpio_5fportset',['GPIO_PortSet',['../a00033.html#ga7206f7b805b8a3c68044345dbbba0a41',1,'fsl_gpio.h']]],
   ['gpio_5fporttoggle',['GPIO_PortToggle',['../a00033.html#ga07e3b8c21dad1debec7986f214a70975',1,'fsl_gpio.h']]],
-  ['greensize',['greenSize',['../a00048.html#a6f429ad0eedabd5660d554eb6bf252e4',1,'_lcdif_dither_config']]],
+  ['greensize',['greenSize',['../a00047.html#a6f429ad0eedabd5660d554eb6bf252e4',1,'_lcdif_dither_config']]],
   ['gpio_3a_20general_20purpose_20i_2fo',['GPIO: General Purpose I/O',['../a00033.html',1,'']]]
 ];

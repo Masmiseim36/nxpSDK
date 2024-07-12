@@ -16,7 +16,7 @@ Change log:
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
-#include <wm_os.h>
+#include <osa.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -152,7 +152,7 @@ done:
     return ret;
 }
 
-#ifdef AMSDU_IN_AMPDU
+#if CONFIG_AMSDU_IN_AMPDU
 int wlan_11n_form_amsdu_pkt(t_u8 *amsdu_buf, t_u8 *data, int pkt_len, int *pad)
 {
     int dt_offset, amsdu_buf_offset;
@@ -180,7 +180,7 @@ int wlan_11n_form_amsdu_pkt(t_u8 *amsdu_buf, t_u8 *data, int pkt_len, int *pad)
     amsdu_buf_offset += sizeof(t_u16);
     memcpy(amsdu_buf + amsdu_buf_offset, &snap, LLC_SNAP_LEN);
     amsdu_buf_offset += LLC_SNAP_LEN;
-#ifdef CONFIG_IMU_GDMA
+#if CONFIG_IMU_GDMA
     HAL_ImuGdmaCopyData(amsdu_buf + amsdu_buf_offset, data + dt_offset, pkt_len - dt_offset);
 #else
     memcpy(amsdu_buf + amsdu_buf_offset, data + dt_offset, pkt_len - dt_offset);

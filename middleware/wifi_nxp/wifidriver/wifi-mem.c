@@ -9,7 +9,7 @@
  */
 #include <mlan_api.h>
 #include <string.h>
-#include <wm_os.h>
+#include <osa.h>
 
 #include <wifi-debug.h>
 
@@ -31,7 +31,8 @@ void *wifi_mem_malloc_cmdrespbuf(void)
 
 void *wifi_malloc_eventbuf(size_t size)
 {
-    void *ptr = os_mem_alloc(size);
+#if !CONFIG_MEM_POOLS
+    void *ptr = OSA_MemoryAllocate(size);
 
     if (ptr != NULL)
     {
@@ -41,19 +42,26 @@ void *wifi_malloc_eventbuf(size_t size)
     {
         w_mem_e("[evtbuf] Alloc: S: %d FAILED", size);
     }
+#else
+    void *ptr = OSA_MemoryPoolAllocate(buf_2048_MemoryPool);
+#endif
 
     return ptr;
 }
 
 void wifi_free_eventbuf(void *buffer)
 {
+#if !CONFIG_MEM_POOLS
     w_mem_d("[evtbuf] Free: A: %p\n\r", buffer);
-    os_mem_free(buffer);
+    OSA_MemoryFree(buffer);
+#else
+    OSA_MemoryPoolFree(buf_2048_MemoryPool, buffer);
+#endif
 }
 
 mlan_status wrapper_moal_malloc(IN t_void *pmoal_handle, IN t_u32 size, IN t_u32 flag, OUT t_u8 **ppbuf)
 {
-    *ppbuf = os_mem_alloc(size);
+    *ppbuf = OSA_MemoryAllocate(size);
 
 
     if (*ppbuf != NULL)
@@ -75,6 +83,6 @@ mlan_status wrapper_moal_malloc(IN t_void *pmoal_handle, IN t_u32 size, IN t_u32
 mlan_status wrapper_moal_mfree(IN t_void *pmoal_handle, IN t_u8 *pbuf)
 {
     w_mem_d("[mlan] Free: A: %p", pbuf);
-    os_mem_free(pbuf);
+    OSA_MemoryFree(pbuf);
     return MLAN_STATUS_SUCCESS;
 }

@@ -338,7 +338,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *       AVCTP_DISCONNECT_IND event
  *
  *
- *  \section Section_5 AVCTP Message Recieved Indication
+ *  \section Section_5 AVCTP Message Received Indication
  *  The AVCTP will call the Event Notification Callback for this event when
  *  AVCTP recieves AVCTP control message packet.
  *
@@ -346,7 +346,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *         This parameter will be set to AVCTP_MESSAGE_IND.
  *  \param [in] event_result
  *         This parameter will always be set to 0x0000, i.e. API_SUCCESS.
- *         When AVCTP has recieved the AVCTP control message packet
+ *         When AVCTP has received the AVCTP control message packet
  *         successfully.
  *         For AVCTP control response packet with invalid profile ID bit is
  *         set, this will have the AVCTP error code.
@@ -354,7 +354,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *         This parameter is a pointer to AVCTP_HANDLE describing the profile
  *         responsible for this event.
  *  \param [in] event_data
- *         This parameter is the AVCTP control message packet. The fisrt byte
+ *         This parameter is the AVCTP control message packet. The first byte
  *         of this will contain the AVCTP control packet header that will have
  *         Transcation Label, Message Type. AVCTP provides utility macros
  *         to extract these parameters from the AVCTP control packet header.

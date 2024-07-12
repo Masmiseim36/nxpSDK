@@ -243,7 +243,7 @@ static inline int wpa_drv_get_capa(struct wpa_supplicant *wpa_s, struct wpa_driv
 
 static inline void wpa_drv_poll(struct wpa_supplicant *wpa_s)
 {
-#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
+#if !(defined(__ZEPHYR__) || defined(CONFIG_FREERTOS))
     if (wpa_s->driver->poll)
     {
         wpa_s->driver->poll(wpa_s->drv_priv);

@@ -32,7 +32,7 @@ CMSIS_Include_common:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_dsp:
   section-type: component
   meta-name: platform.Include_dsp
@@ -58,7 +58,7 @@ CMSIS_Include_dsp:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm0:
   section-type: component
   meta-name: platform.Include_core_cm0
@@ -83,7 +83,7 @@ CMSIS_Include_core_cm0:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm0plus:
   section-type: component
   meta-name: platform.Include_core_cm0plus
@@ -109,7 +109,7 @@ CMSIS_Include_core_cm0plus:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm3:
   section-type: component
   meta-name: platform.Include_core_cm3
@@ -135,7 +135,7 @@ CMSIS_Include_core_cm3:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm4:
   section-type: component
   meta-name: platform.Include_core_cm4
@@ -161,7 +161,7 @@ CMSIS_Include_core_cm4:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm7:
   section-type: component
   meta-name: platform.Include_core_cm7
@@ -187,7 +187,7 @@ CMSIS_Include_core_cm7:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_sc000:
   section-type: component
   meta-name: platform.Include_core_sc000
@@ -211,7 +211,7 @@ CMSIS_Include_core_sc000:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_sc300:
   section-type: component
   meta-name: platform.Include_core_sc300
@@ -235,7 +235,7 @@ CMSIS_Include_core_sc300:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm23:
   section-type: component
   meta-name: platform.Include_core_cm23
@@ -263,7 +263,7 @@ CMSIS_Include_core_cm23:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_cm33:
   section-type: component
   meta-name: platform.Include_core_cm33
@@ -291,7 +291,7 @@ CMSIS_Include_core_cm33:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Include_core_ca7:
   section-type: component
   meta-name: platform.Include_core_ca7
@@ -332,7 +332,7 @@ CMSIS_Include_core_ca7:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS:
   section-type: component
   meta-name: platform.CMSIS
@@ -352,7 +352,7 @@ CMSIS:
     CMSIS_Include_dsp
   component_info:
     manifest:
-      version: 5.6.0
+      version: 5.9.0
       type: CMSIS
       full_name: Cmsis # This value is temporarily added, please replace it with suitable value and then remove this comment.
       description: Cmsis # This value is temporarily added, please replace it with suitable value and then remove this comment.
@@ -602,7 +602,7 @@ CMSIS_Driver_Include.Common:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.CAN:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -629,7 +629,7 @@ CMSIS_Driver_Include.CAN:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.Ethernet:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -656,7 +656,7 @@ CMSIS_Driver_Include.Ethernet:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.Ethernet_MAC:
   __requires__:
   - CMSIS_Driver_Include.Ethernet
@@ -683,7 +683,7 @@ CMSIS_Driver_Include.Ethernet_MAC:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.Ethernet_PHY:
   __requires__:
   - CMSIS_Driver_Include.Ethernet
@@ -710,7 +710,7 @@ CMSIS_Driver_Include.Ethernet_PHY:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.Flash:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -737,7 +737,7 @@ CMSIS_Driver_Include.Flash:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.I2C:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -764,7 +764,7 @@ CMSIS_Driver_Include.I2C:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.GPIO:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -818,7 +818,7 @@ CMSIS_Driver_Include.MCI:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.NAND:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -845,7 +845,7 @@ CMSIS_Driver_Include.NAND:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.SAI:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -872,7 +872,7 @@ CMSIS_Driver_Include.SAI:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.SPI:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -899,7 +899,7 @@ CMSIS_Driver_Include.SPI:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.USART:
   __requires__:
   - CMSIS_Driver_Include.Common
@@ -926,7 +926,7 @@ CMSIS_Driver_Include.USART:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.USB:
   section-type: component
   __requires__:
@@ -953,7 +953,7 @@ CMSIS_Driver_Include.USB:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.USB_Device:
   __requires__:
   - CMSIS_Driver_Include.USB
@@ -980,7 +980,7 @@ CMSIS_Driver_Include.USB_Device:
       pack_name: CMSIS
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.WiFi:
   section-type: component
   __requires__:
@@ -1007,7 +1007,7 @@ CMSIS_Driver_Include.WiFi:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_Driver_Include.USB_Host:
   __requires__:
   - CMSIS_Driver_Include.USB
@@ -1034,7 +1034,7 @@ CMSIS_Driver_Include.USB_Host:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM0l_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM0l_math
@@ -1064,7 +1064,7 @@ CMSIS_DSP_Lib.arm_cortexM0l_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM0b_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM0b_math
@@ -1090,7 +1090,7 @@ CMSIS_DSP_Lib.arm_cortexM0b_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM3l_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM3l_math
@@ -1120,7 +1120,7 @@ CMSIS_DSP_Lib.arm_cortexM3l_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM3b_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM3b_math
@@ -1146,7 +1146,7 @@ CMSIS_DSP_Lib.arm_cortexM3b_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM4l_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM4l_math
@@ -1176,7 +1176,7 @@ CMSIS_DSP_Lib.arm_cortexM4l_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM4b_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM4b_math
@@ -1202,7 +1202,7 @@ CMSIS_DSP_Lib.arm_cortexM4b_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM4lf_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM4lf_math
@@ -1232,7 +1232,7 @@ CMSIS_DSP_Lib.arm_cortexM4lf_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM4bf_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM4bf_math
@@ -1258,7 +1258,7 @@ CMSIS_DSP_Lib.arm_cortexM4bf_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM7l_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM7l_math
@@ -1288,7 +1288,7 @@ CMSIS_DSP_Lib.arm_cortexM7l_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM7b_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM7b_math
@@ -1314,7 +1314,7 @@ CMSIS_DSP_Lib.arm_cortexM7b_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM7lfdp_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM7lfdp_math
@@ -1344,7 +1344,7 @@ CMSIS_DSP_Lib.arm_cortexM7lfdp_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM7bfdp_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM7bfdp_math
@@ -1370,7 +1370,7 @@ CMSIS_DSP_Lib.arm_cortexM7bfdp_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM7lfsp_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM7lfsp_math
@@ -1400,7 +1400,7 @@ CMSIS_DSP_Lib.arm_cortexM7lfsp_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_cortexM7bfsp_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_cortexM7bfsp_math
@@ -1426,7 +1426,7 @@ CMSIS_DSP_Lib.arm_cortexM7bfsp_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_ARMv8MBLl_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_ARMv8MBLl_math
@@ -1456,7 +1456,7 @@ CMSIS_DSP_Lib.arm_ARMv8MBLl_math:
       sub: ''
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_ARMv8MMLl_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_ARMv8MMLl_math
@@ -1486,7 +1486,7 @@ CMSIS_DSP_Lib.arm_ARMv8MMLl_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_ARMv8MMLld_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_ARMv8MMLld_math
@@ -1516,7 +1516,7 @@ CMSIS_DSP_Lib.arm_ARMv8MMLld_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_ARMv8MMLldfsp_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_ARMv8MMLldfsp_math
@@ -1546,7 +1546,7 @@ CMSIS_DSP_Lib.arm_ARMv8MMLldfsp_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 CMSIS_DSP_Lib.arm_ARMv8MMLlfsp_math:
   section-type: component
   meta-name: platform.CMSIS_DSP_Lib.arm_ARMv8MMLlfsp_math
@@ -1576,7 +1576,7 @@ CMSIS_DSP_Lib.arm_ARMv8MMLlfsp_math:
       group: DSP
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 
 
 CMSIS_RTOS2_Common:
@@ -1670,7 +1670,7 @@ CMSIS_RTOS2_Common:
       group: RTOS2
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 
 CMSIS_RTOS2_NonSecure:
   section-type: component
@@ -1727,7 +1727,7 @@ CMSIS_RTOS2_NonSecure:
       group: RTOS2
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 
 CMSIS_RTOS2_Secure:
   section-type: component
@@ -1784,7 +1784,7 @@ CMSIS_RTOS2_Secure:
       group: RTOS2
       pack_url: http://www.keil.com/pack/
       pack_vendor: ARM
-      pack_version: 5.6.0
+      pack_version: 5.9.0
 
 cmsis.core_cm0.support:
   section-type: component_support

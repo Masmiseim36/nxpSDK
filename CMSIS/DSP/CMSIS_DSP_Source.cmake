@@ -32,6 +32,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/Source/SupportFunctions/SupportFunctionsF16.c
   ${CMAKE_CURRENT_LIST_DIR}/Source/TransformFunctions/TransformFunctions.c
   ${CMAKE_CURRENT_LIST_DIR}/Source/TransformFunctions/TransformFunctionsF16.c
+  ${CMAKE_CURRENT_LIST_DIR}/Source/WindowFunctions/WindowFunctions.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

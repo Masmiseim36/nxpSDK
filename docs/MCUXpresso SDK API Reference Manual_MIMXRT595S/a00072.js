@@ -1,28 +1,32 @@
 var a00072 =
 [
-    [ "rtos_usart_config", "a00072.html#a00487", [
-      [ "base", "a00072.html#ac2c11e2f563e88fd7235fd1c04c43695", null ],
-      [ "srcclk", "a00072.html#a7e5bade020ab0937c336700835e0b534", null ],
-      [ "baudrate", "a00072.html#add54d5367186b402624be17d78b85f5c", null ],
-      [ "parity", "a00072.html#a07bf211da1c7475ae952bc3c92d668fe", null ],
-      [ "stopbits", "a00072.html#acd3500c39b73d6acbbbf5f4192376dc9", null ],
-      [ "buffer", "a00072.html#a7ee13e3eb1fe35fc47e6732632305038", null ],
-      [ "buffer_size", "a00072.html#a0a13bc07966a8b84553e6010d4ea0e34", null ]
+    [ "_wwdt_config", "a00072.html#a00471", [
+      [ "enableWwdt", "a00072.html#a4a2401c8e97f8eced0fdca7ffdabacbc", null ],
+      [ "enableWatchdogReset", "a00072.html#a6ff22b44e352c0182bdd87b9ff61ee2e", null ],
+      [ "enableWatchdogProtect", "a00072.html#adf57c281f83db946ed4553f513f00061", null ],
+      [ "enableLockOscillator", "a00072.html#aa664f6d30e5b267bf960ad09fb36275f", null ],
+      [ "windowValue", "a00072.html#ad7c0d3a959ecac990eed2c9cfc1a0f09", null ],
+      [ "timeoutValue", "a00072.html#ab55d5525745d39713c954d1296e2a9df", null ],
+      [ "warningValue", "a00072.html#a350a5289fd77fc6f5b2834a66726d80e", null ],
+      [ "clockFreq_Hz", "a00072.html#acbab700e360be852f9b80ab4a37d8f68", null ]
     ] ],
-    [ "_usart_rtos_handle", "a00072.html#a00456", [
-      [ "base", "a00072.html#adc027d47fa85140e7b3db5dbb40966dc", null ],
-      [ "txTransfer", "a00072.html#a91e74bc39d7b39179e7527bce1df602f", null ],
-      [ "rxTransfer", "a00072.html#aca6f85a82e4bb8b599c7091fc7144c2b", null ],
-      [ "rxSemaphore", "a00072.html#aa7ac308760bf10b54fa30bd0385843a2", null ],
-      [ "txSemaphore", "a00072.html#a6f90db802f6c60b1ace2719106332f61", null ],
-      [ "rxEvent", "a00072.html#abe3985cdaa339dcaf71d076962418f50", null ],
-      [ "txEvent", "a00072.html#add5efe27cd4ea2dca0d9c41cbb80789e", null ],
-      [ "t_state", "a00072.html#adab1b63867f17750ac02bc4f1bda8ea7", null ]
+    [ "FSL_WWDT_DRIVER_VERSION", "a00072.html#gaf661d1e3e19a80b873c54fdbad5e966a", null ],
+    [ "WWDT_FIRST_WORD_OF_REFRESH", "a00072.html#ga56228a5472034e453003e7f375c824ab", null ],
+    [ "WWDT_SECOND_WORD_OF_REFRESH", "a00072.html#gab483f5384985a23bb28889b3c31da9ee", null ],
+    [ "wwdt_config_t", "a00072.html#gade4f744368e9723e83fdefb72e88e692", null ],
+    [ "_wwdt_status_flags_t", "a00072.html#gaca0e9724bd1f25336527ea66c77e476f", [
+      [ "kWWDT_TimeoutFlag", "a00072.html#ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184", null ],
+      [ "kWWDT_WarningFlag", "a00072.html#ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e", null ]
     ] ],
-    [ "FSL_USART_FREERTOS_DRIVER_VERSION", "a00072.html#ga76b62468480f39084a7b0c5785e6a9f2", null ],
-    [ "usart_rtos_handle_t", "a00072.html#gafe53adee4959375e828ab8f7d0c4ace3", null ],
-    [ "USART_RTOS_Init", "a00072.html#ga304a1b0f3f224c3fa97043015a632aa6", null ],
-    [ "USART_RTOS_Deinit", "a00072.html#ga053c811eb6768cd6949e8e7126f6527a", null ],
-    [ "USART_RTOS_Send", "a00072.html#gac5ba10a31fbee50135f110fc126db666", null ],
-    [ "USART_RTOS_Receive", "a00072.html#gaa74ca6b91bf6592492b2777efc52fa7e", null ]
+    [ "WWDT_GetDefaultConfig", "a00072.html#gacfd7070829029279f3b3bfb763b86914", null ],
+    [ "WWDT_Init", "a00072.html#gadc47d88ae20552f9cd9999e6f8fc5ebe", null ],
+    [ "WWDT_Deinit", "a00072.html#gaae4415d32cd0f67908d0ab9494736742", null ],
+    [ "WWDT_Enable", "a00072.html#ga2620dd2baf891f32359fbe85faaca563", null ],
+    [ "WWDT_Disable", "a00072.html#ga358bab6648d05345bda057a72cfb5547", null ],
+    [ "WWDT_GetStatusFlags", "a00072.html#ga1c5dae412d14eba38f2b63abb9f982d6", null ],
+    [ "WWDT_ClearStatusFlags", "a00072.html#ga5666008b33bf327c80afb90e0733512e", null ],
+    [ "WWDT_SetWarningValue", "a00072.html#gac575fb8568458aa8acbbed14d5aa5ffd", null ],
+    [ "WWDT_SetTimeoutValue", "a00072.html#gad2351329bb1ff6b966decec266d7ec16", null ],
+    [ "WWDT_SetWindowValue", "a00072.html#ga66b5c37906be6083f083a436eebbe778", null ],
+    [ "WWDT_Refresh", "a00072.html#gab1745efaa7c33fab66a552fd45e01d83", null ]
 ];

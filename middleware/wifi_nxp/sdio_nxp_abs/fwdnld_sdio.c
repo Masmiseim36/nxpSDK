@@ -8,7 +8,7 @@
  *
  */
 #include <string.h>
-#include <fsl_os_abstraction.h>
+#include <osa.h>
 #include "fwdnld_intf_abs.h"
 #include "fwdnld_sdio.h"
 #include "mlan_sdio_defs.h"
@@ -25,6 +25,7 @@ fwdnld_sdio_intf_specific sdio_intf_specific_g;
  */
 static fwdnld_intf_ret_t wlan_set_fw_dnld_size(void)
 {
+
     uint32_t resp;
 
     bool rv = sdio_drv_creg_write(FN1_BLOCK_SIZE_0, 0, 0, &resp);
@@ -70,7 +71,7 @@ static bool wlan_sdio_check_fw_status(t_u32 card_poll)
     return false;
 }
 
-#ifdef CONFIG_WIFI_IND_DNLD
+#if CONFIG_WIFI_IND_DNLD
 
 /**  @brief This function disables the host interrupts mask.
  *
@@ -222,7 +223,7 @@ static fwdnld_intf_ret_t sdio_post_fwdnld_check_conn_ready(fwdnld_intf_t *intf, 
     }
 }
 
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
 static fwdnld_intf_ret_t sdio_fwdnld_check_reload(fwdnld_intf_t *intf, uint8_t fw_reload)
 {
     t_u32 poll_num = 10;
@@ -290,7 +291,7 @@ static fwdnld_intf_ret_t sdio_interface_send(fwdnld_intf_t *intf,
                 break;
             }
 
-            // (void)PRINTF("len %d =>", len);
+            // (void)PRINTF("len %d =>\r\n", *len);
             if (*len != 0U)
             {
                 break;
@@ -364,7 +365,7 @@ fwdnld_intf_t *sdio_init_interface(void *settings)
     sdio_intf_g.intf_s.fwdnld_intf_send        = sdio_interface_send;
     sdio_intf_g.intf_s.fwdnld_intf_prepare     = sdio_prep_for_fwdnld;
     sdio_intf_g.intf_s.fwdnld_intf_check_ready = sdio_post_fwdnld_check_conn_ready;
-#if defined(CONFIG_WIFI_IND_DNLD)
+#if (CONFIG_WIFI_IND_DNLD)
     sdio_intf_g.intf_s.fwdnld_intf_check_reload = sdio_fwdnld_check_reload;
 #endif
     sdio_intf_g.intf_s.outbuf        = wifi_get_sdio_outbuf(&sdio_intf_g.intf_s.outbuf_len);

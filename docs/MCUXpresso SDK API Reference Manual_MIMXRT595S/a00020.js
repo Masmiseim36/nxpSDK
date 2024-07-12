@@ -1,6 +1,6 @@
 var a00020 =
 [
-    [ "_dsi_smartdma_write_mem_transfer", "a00020.html#a00319", [
+    [ "_dsi_smartdma_write_mem_transfer", "a00020.html#a00316", [
       [ "inputFormat", "a00020.html#af01acbfbda7e4a83a2eafa18fddc0d57", null ],
       [ "outputFormat", "a00020.html#a11ffbe06a39e554ed08fe4518fcd6fca", null ],
       [ "data", "a00020.html#a13eed1fe2b28ded52ce31a228fe88c92", null ],
@@ -12,7 +12,7 @@ var a00020 =
       [ "virtualChannel", "a00020.html#afb943a15eb0effe3d6f898962e41b909", null ],
       [ "disablePixelByteSwap", "a00020.html#a72e46e333b7e39f22c27cd9b6405ade4", null ]
     ] ],
-    [ "_dsi_smartdma_handle", "a00020.html#a00318", [
+    [ "_dsi_smartdma_handle", "a00020.html#a00315", [
       [ "dsi", "a00020.html#a42e73e82de98d589af3c373e6f18a3dc", null ],
       [ "isBusy", "a00020.html#a4808aacf374fd4a24b72c942a36fb1c0", null ],
       [ "callback", "a00020.html#ad51847574da609cd064bfb85ada7c213", null ],

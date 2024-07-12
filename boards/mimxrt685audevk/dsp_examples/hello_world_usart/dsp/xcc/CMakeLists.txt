@@ -153,11 +153,11 @@ include_directories(${ProjDirPath}/../../../../../../components/uart)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
 
@@ -173,8 +173,6 @@ add_executable(dsp_hello_world_usart_hifi4.elf
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c"
@@ -194,6 +192,8 @@ add_executable(dsp_hello_world_usart_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
@@ -201,6 +201,12 @@ add_executable(dsp_hello_world_usart_hifi4.elf
 )
 
 
+TARGET_LINK_LIBRARIES(dsp_hello_world_usart_hifi4.elf -Wl,--start-group)
+target_link_libraries(dsp_hello_world_usart_hifi4.elf debug xos)
+
+target_link_libraries(dsp_hello_world_usart_hifi4.elf optimized xos)
+
+TARGET_LINK_LIBRARIES(dsp_hello_world_usart_hifi4.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_hello_world_usart_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_hello_world_usart_hifi4.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_literal_${CMAKE_BUILD_TYPE}.bin

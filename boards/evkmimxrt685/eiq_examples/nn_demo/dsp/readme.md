@@ -13,12 +13,11 @@ All the layer examples are executed in 2 flavours: synchronous and asynchronous.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
 - Xtensa C Compiler  14.01
-- Xtensa Xplorer  10.1.11
 
 Hardware requirements
 =====================

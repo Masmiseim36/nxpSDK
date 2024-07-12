@@ -15,6 +15,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/bignum_core.c
   ${CMAKE_CURRENT_LIST_DIR}/library/bignum_mod.c
   ${CMAKE_CURRENT_LIST_DIR}/library/bignum_mod_raw.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/block_cipher.c
   ${CMAKE_CURRENT_LIST_DIR}/library/camellia.c
   ${CMAKE_CURRENT_LIST_DIR}/library/ccm.c
   ${CMAKE_CURRENT_LIST_DIR}/library/chacha20.c
@@ -48,6 +49,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/padlock.c
   ${CMAKE_CURRENT_LIST_DIR}/library/pem.c
   ${CMAKE_CURRENT_LIST_DIR}/library/pk.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/pk_ecc.c
   ${CMAKE_CURRENT_LIST_DIR}/library/pk_wrap.c
   ${CMAKE_CURRENT_LIST_DIR}/library/pkcs5.c
   ${CMAKE_CURRENT_LIST_DIR}/library/pkcs12.c
@@ -56,6 +58,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/platform.c
   ${CMAKE_CURRENT_LIST_DIR}/library/platform_util.c
   ${CMAKE_CURRENT_LIST_DIR}/library/poly1305.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/psa_util.c
   ${CMAKE_CURRENT_LIST_DIR}/library/ripemd160.c
   ${CMAKE_CURRENT_LIST_DIR}/library/rsa.c
   ${CMAKE_CURRENT_LIST_DIR}/library/rsa_alt_helpers.c

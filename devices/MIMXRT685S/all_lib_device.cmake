@@ -220,6 +220,9 @@
 #  # description: Component mem_manager_light
 #  set(CONFIG_USE_component_mem_manager_light true)
 
+#  # description: Component mem_manager_freertos
+#  set(CONFIG_USE_component_mem_manager_freertos true)
+
 #  # description: Component messaging
 #  set(CONFIG_USE_component_messaging true)
 
@@ -358,11 +361,14 @@
 #  # description: I2C Driver
 #  set(CONFIG_USE_driver_flexcomm_i2c true)
 
-#  # description: I2C Driver
+#  # description: FLEXCOMM I2C FreeRTOS Driver
 #  set(CONFIG_USE_driver_flexcomm_i2c_freertos true)
 
 #  # description: I2S Driver
 #  set(CONFIG_USE_driver_flexcomm_i2s true)
+
+#  # description: I3C DMA Driver
+#  set(CONFIG_USE_driver_i3c_dma true)
 
 #  # description: I3C Driver
 #  set(CONFIG_USE_driver_i3c true)
@@ -409,7 +415,7 @@
 #  # description: SPI Driver
 #  set(CONFIG_USE_driver_flexcomm_spi true)
 
-#  # description: SPI Driver
+#  # description: FLEXCOMM SPI FreeRTOS Driver
 #  set(CONFIG_USE_driver_flexcomm_spi_freertos true)
 
 #  # description: TRNG Driver
@@ -418,7 +424,7 @@
 #  # description: USART Driver
 #  set(CONFIG_USE_driver_flexcomm_usart true)
 
-#  # description: USART Driver
+#  # description: FLEXCOMM USART FreeRTOS Driver
 #  set(CONFIG_USE_driver_flexcomm_usart_freertos true)
 
 #  # description: WWDT Driver
@@ -502,9 +508,13 @@
 #  # description: DSP Audio Streamer
 #  set(CONFIG_USE_middleware_dsp_audio_streamer_testxa_af_hostless true)
 
+#set.middleware.cjson
+#  # description: CJSON library
+#  set(CONFIG_USE_middleware_cjson true)
+
 #set.middleware.wifi
-#  # description: NXP WLAN common files
-#  set(CONFIG_USE_middleware_wifi_common_files true)
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_wifi_wifi_bt_config_template true)
 
 #  # description: NXP Wi-Fi Interface Abstraction Layer
 #  set(CONFIG_USE_middleware_wifi_fwdnld_intf_abs true)
@@ -512,8 +522,23 @@
 #  # description: Template configuration file to be edited by user.
 #  set(CONFIG_USE_middleware_wifi_template true)
 
+#  # description: NXP WLAN OSA
+#  set(CONFIG_USE_middleware_wifi_osa_free_rtos true)
+
+#  # description: NXP WLAN OSA
+#  set(CONFIG_USE_middleware_wifi_osa true)
+
+#  # description: NXP WLAN common files
+#  set(CONFIG_USE_middleware_wifi_common_files true)
+
 #  # description: NXP WLAN f/w dnld driver
 #  set(CONFIG_USE_middleware_wifi_fwdnld true)
+
+#  # description: NXP WLAN OSA
+#  set(CONFIG_USE_middleware_wifi_net_free_rtos true)
+
+#  # description: NXP WLAN OSA
+#  set(CONFIG_USE_middleware_wifi_net true)
 
 #  # description: NXP Wi-Fi driver
 #  set(CONFIG_USE_middleware_wifi_wifidriver true)
@@ -530,6 +555,21 @@
 #  # description: Middlware Wi-Fi CLI
 #  set(CONFIG_USE_middleware_wifi_cli true)
 
+#  # description: Middlware Wi-Fi WMCRYPTO
+#  set(CONFIG_USE_middleware_wifi_wmcrypto true)
+
+#  # description: Middlware Wi-Fi WMTIME
+#  set(CONFIG_USE_middleware_wifi_wmtime true)
+
+#  # description: Middlware Wi-Fi WPS
+#  set(CONFIG_USE_middleware_wifi_wps true)
+
+#  # description: Middlware Wi-Fi NCP_SUPP_WMCRYPTO
+#  set(CONFIG_USE_middleware_wifi_ncp_supp_wmcrypto true)
+
+#  # description: Middlware Wi-Fi Location Service
+#  set(CONFIG_USE_middleware_wifi_wls true)
+
 #  # description: Edgefast Wi-Fi NXP is a blocking layer for Wi-Fi NXP
 #  set(CONFIG_USE_middleware_edgefast_wifi_nxp true)
 
@@ -539,40 +579,6 @@
 
 #  # description: emWin library
 #  set(CONFIG_USE_middleware_emwin true)
-
-#set.middleware.fatfs
-#  # description: FatFs template MMC
-#  set(CONFIG_USE_middleware_fatfs_template_mmc true)
-
-#  # description: FatFs template NAND
-#  set(CONFIG_USE_middleware_fatfs_template_nand true)
-
-#  # description: FatFs template RAM
-#  set(CONFIG_USE_middleware_fatfs_template_ram true)
-
-#  # description: FatFs template SD
-#  set(CONFIG_USE_middleware_fatfs_template_sd true)
-
-#  # description: FatFs template SDSPI
-#  set(CONFIG_USE_middleware_fatfs_template_sdspi true)
-
-#  # description: FatFs template USB
-#  set(CONFIG_USE_middleware_fatfs_template_usb true)
-
-#  # description: FatFs
-#  set(CONFIG_USE_middleware_fatfs true)
-
-#  # description: FatFs_MMC
-#  set(CONFIG_USE_middleware_fatfs_mmc true)
-
-#  # description: FatFs_RAM
-#  set(CONFIG_USE_middleware_fatfs_ram true)
-
-#  # description: FatFs_SD
-#  set(CONFIG_USE_middleware_fatfs_sd true)
-
-#  # description: FatFs_USB
-#  set(CONFIG_USE_middleware_fatfs_usb true)
 
 #set.middleware.freertos-aws_iot
 #  # description: Algorithm for calculating exponential backoff with jitter for network retry attempts.
@@ -684,7 +690,10 @@
 #  # description: FreeRTOS heap 5
 #  set(CONFIG_USE_middleware_freertos-kernel_heap_5 true)
 
-#  # description: FreeRTOS MPU wrappers
+#  # description: new V2 FreeRTOS MPU wrappers introduced in V10.6.0
+#  set(CONFIG_USE_middleware_freertos-kernel_mpu_wrappers_v2 true)
+
+#  # description: old FreeRTOS MPU wrappers used before V10.6.0
 #  set(CONFIG_USE_middleware_freertos-kernel_mpu_wrappers true)
 
 #  # description: FreeRTOS cm33 TrustZone secure port
@@ -701,8 +710,14 @@
 #  # description: lwIP Template
 #  set(CONFIG_USE_middleware_lwip_template true)
 
+#  # description: Empty ethernet interface
+#  set(CONFIG_USE_middleware_lwip_empty_ethernetif true)
+
 #  # description: lwIP - A Lightweight TCP/IP Stack
 #  set(CONFIG_USE_middleware_lwip true)
+
+#  # description: EtherCAT EOE ethernet interface
+#  set(CONFIG_USE_middleware_lwip_eoe_ethernetif true)
 
 #  # description: lwIP HTTP Daemon Implementation Support Files
 #  set(CONFIG_USE_middleware_lwip_apps_httpd_support true)
@@ -746,6 +761,15 @@
 #set.middleware.mcuboot
 #  # description: mcuboot
 #  set(CONFIG_USE_middleware_mcuboot true)
+
+#  # description: TinyCrypt fork in MCUBoot repository
+#  set(CONFIG_USE_middleware_mcuboot_tinycrypt true)
+
+#  # description: Encrypted XIP abstraction for MCUBoot
+#  set(CONFIG_USE_middleware_mcuboot_encrypted_xip true)
+
+#  # description: MCUBoot's subset of MbedTLS for ASN.1 parsing
+#  set(CONFIG_USE_middleware_mcuboot_mbedtls-asn1 true)
 
 #  # description: mcuboot
 #  set(CONFIG_USE_middleware_mcuboot_bootutil true)
@@ -865,6 +889,15 @@
 #  # description: erpc_doc
 #  set(CONFIG_USE_middleware_multicore_erpc_doc true)
 
+#  # description: erpc_zephyr
+#  set(CONFIG_USE_middleware_multicore_erpc_zephyr true)
+
+#  # description: erpc_java
+#  set(CONFIG_USE_middleware_multicore_erpc_java true)
+
+#  # description: erpc_examples
+#  set(CONFIG_USE_middleware_multicore_erpc_examples true)
+
 #  # description: eRPC
 #  set(CONFIG_USE_middleware_multicore_erpc true)
 
@@ -885,6 +918,9 @@
 
 #  # description: RPMsg-Lite for MIMXRT685-AUD-EVK FreeRTOS application
 #  set(CONFIG_USE_middleware_multicore_rpmsg_lite_mimxrt685audevk_freertos true)
+
+#  # description: RPMsg-Lite Zephyr environment sources
+#  set(CONFIG_USE_middleware_multicore_rpmsg_lite_zephyr true)
 
 #  # description: RPMsg-Lite
 #  set(CONFIG_USE_middleware_multicore_rpmsg_lite true)
@@ -959,23 +995,17 @@
 #  # description: mbedTLS port library common files for MCUX
 #  set(CONFIG_USE_middleware_mbedtls3x_port_config true)
 
-#  # description: OS Abstraction Layer for utilities for MCUX mbed port
-#  set(CONFIG_USE_middleware_mbedtls3x_port_osal true)
+#  # description: mbedTLS port library common files for MCUX
+#  set(CONFIG_USE_middleware_mbedtls3x_port_psa_crypto_config true)
 
 #  # description: mbedTLS test suite
 #  set(CONFIG_USE_middleware_mbedtls3x_tests true)
 
-#  # description: mbedTLS crypto library
-#  set(CONFIG_USE_middleware_mbedtls3x_crypto true)
+#  # description: mbedTLS crypto library without PSA
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto_no_psa true)
 
 #  # description: mbedTLS X.509 library
 #  set(CONFIG_USE_middleware_mbedtls3x_x509 true)
-
-#  # description: OS Abstraction Layer for utilities for MCUX mbed with Free RTOS
-#  set(CONFIG_USE_middleware_mbedtls3x_port_osal_frtos true)
-
-#  # description: OS Abstraction Layer for utilities for baremetal MCUX mbed port
-#  set(CONFIG_USE_middleware_mbedtls3x_port_osal_baremetal true)
 
 #  # description: mbedTLS port library for entropy for all RNG and TRNG based devices
 #  set(CONFIG_USE_middleware_mbedtls3x_port_rng true)
@@ -983,8 +1013,20 @@
 #  # description: PSA ITS simulator over stdio files.
 #  set(CONFIG_USE_middleware_mbedtls3x_crypto_storage_default true)
 
+#  # description: PSA ITS simulator over objects in RAM.
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto_storage_ram true)
+
+#  # description: mbedTLS crypto library
+#  set(CONFIG_USE_middleware_mbedtls3x_crypto true)
+
+#  # description: mbedTLS SSL library without PSA
+#  set(CONFIG_USE_middleware_mbedtls3x_ssl_no_psa true)
+
 #  # description: mbedTLS SSL library
 #  set(CONFIG_USE_middleware_mbedtls3x_ssl true)
+
+#  # description: mbedTLS library v3.x without PSA
+#  set(CONFIG_USE_middleware_mbedtls3x_no_psa true)
 
 #  # description: mbedTLS library v3.x
 #  set(CONFIG_USE_middleware_mbedtls3x true)
@@ -996,6 +1038,12 @@
 #  # description: els_pkc config
 #  set(CONFIG_USE_middleware_mbedtls_els_pkc_config true)
 
+#  # description: mbedTLS test suite
+#  set(CONFIG_USE_middleware_mbedtls_tests true)
+
+#  # description: mbedTLS 3rdparty code
+#  set(CONFIG_USE_middleware_mbedtls_3rdparty true)
+
 #  # description: mbedTLS port library for KPSDK
 #  set(CONFIG_USE_middleware_mbedtls_port_ksdk true)
 
@@ -1003,11 +1051,14 @@
 #  set(CONFIG_USE_middleware_mbedtls true)
 
 #set.middleware.mbedcrypto
+#  # description: mbedTLS port library common files for MCUX
+#  set(CONFIG_USE_middleware_mbedcrypto_port_config true)
+
+#  # description: mbedTLS port library for entropy for all RNG and TRNG based devices
+#  set(CONFIG_USE_middleware_mbedcrypto_port_rng true)
+
 #  # description: Middleware mbedcrypto unused_files
 #  set(CONFIG_USE_middleware_mbedcrypto_unused_files true)
-
-#  # description: Mbed Crypto library with default psa driver wrapper
-#  set(CONFIG_USE_middleware_mbedcrypto_psa_driver_wrapper_default true)
 
 #  # description: Mbed Crypto library
 #  set(CONFIG_USE_middleware_mbedcrypto true)
@@ -1016,8 +1067,8 @@
 #  set(CONFIG_USE_middleware_mbedcrypto_port true)
 
 #set.middleware.psatest
-#  # description: PSA Test Suite Non Secure
-#  set(CONFIG_USE_middleware_psatest_ns true)
+#  # description: Component to disable weak ecc r1 curve tests
+#  set(CONFIG_USE_middleware_psatest_ns_disable_weak_ecc_r1_curve_tests true)
 
 #  # description: PSA Test Suite Non Secure Small Profile
 #  set(CONFIG_USE_middleware_psatest_ns_crypto_profile_small true)
@@ -1040,6 +1091,12 @@
 #  # description: Middleware psatest unused_files
 #  set(CONFIG_USE_middleware_psatest_unused_files true)
 
+#  # description: PSA Test Suite Non Secure
+#  set(CONFIG_USE_middleware_psatest_ns true)
+
+#  # description: PSA Test Suite Non Secure target dev_apis
+#  set(CONFIG_USE_middleware_psatest_ns_tgt_dev_apis_nxp true)
+
 #  # description: PSA Test Suite Crypto Non Secure
 #  set(CONFIG_USE_middleware_psatest_ns_crypto true)
 
@@ -1047,8 +1104,11 @@
 #  set(CONFIG_USE_middleware_psatest_ns_initial_attestation true)
 
 #set.middleware.tfm
-#  # description: TFM Platform Service
-#  set(CONFIG_USE_middleware_tfm_s_platform true)
+#  # description: TFM Library
+#  set(CONFIG_USE_middleware_tfm_s_platform_common true)
+
+#  # description: TFM Platform Service for RW61x
+#  set(CONFIG_USE_middleware_tfm_s_platform_sp_common true)
 
 #  # description: CQBOR library
 #  set(CONFIG_USE_middleware_tfm_qcbor true)
@@ -1059,8 +1119,8 @@
 #  # description: TFM Secure Storage Service
 #  set(CONFIG_USE_middleware_tfm_s_ps true)
 
-#  # description: TFM Internal Trusted Storage Service
-#  set(CONFIG_USE_middleware_tfm_s_its true)
+#  # description: TFM Internal Trusted Storage Service Load Info
+#  set(CONFIG_USE_middleware_tfm_s_its_load_info_common true)
 
 #  # description: TFM NS Large Profile
 #  set(CONFIG_USE_middleware_tfm_ns_profile_large true)
@@ -1070,6 +1130,9 @@
 
 #  # description: TFM NS Small Profile
 #  set(CONFIG_USE_middleware_tfm_ns_profile_small true)
+
+#  # description: TFM NS OS wrapper common files
+#  set(CONFIG_USE_middleware_tfm_ns_os_wrapper_common true)
 
 #  # description: TFM Tests Non Secure
 #  set(CONFIG_USE_middleware_tfmtests_ns true)
@@ -1149,6 +1212,9 @@
 #  # description: TFM CMSIS USART driver
 #  set(CONFIG_USE_middleware_tfm_usart true)
 
+#  # description: TFM Platform Service
+#  set(CONFIG_USE_middleware_tfm_s_platform true)
+
 #  # description: TFM Large Profile
 #  set(CONFIG_USE_middleware_tfm_s_profile_large true)
 
@@ -1170,11 +1236,20 @@
 #  # description: TFM Initial Attestation Service
 #  set(CONFIG_USE_middleware_tfm_s_initial_attestation true)
 
+#  # description: TFM Internal Trusted Storage Service
+#  set(CONFIG_USE_middleware_tfm_s_its true)
+
 #  # description: TFM Non Secure
 #  set(CONFIG_USE_middleware_tfm_ns true)
 
 #  # description: TFM Non Secure board configuration
 #  set(CONFIG_USE_middleware_tfm_ns_mimxrt685audevk true)
+
+#  # description: TFM NS OS wrapper for bare metal
+#  set(CONFIG_USE_middleware_tfm_ns_os_wrapper_baremetal true)
+
+#  # description: TFM NS OS wrapper for RTOS
+#  set(CONFIG_USE_middleware_tfm_ns_os_wrapper_rtos true)
 
 #  # description: TFM Test Secure Framework profile large
 #  set(CONFIG_USE_middleware_tfm_s_test_profile_large true)
@@ -1316,6 +1391,9 @@
 #  # description: Middleware usb host cdc
 #  set(CONFIG_USE_middleware_usb_host_cdc true)
 
+#  # description: Middleware usb host cdc_ecm
+#  set(CONFIG_USE_middleware_usb_host_cdc_ecm true)
+
 #  # description: Middleware usb host cdc_rndis
 #  set(CONFIG_USE_middleware_usb_host_cdc_rndis true)
 
@@ -1362,15 +1440,24 @@
 #  # description: Middleware usb pd common_header
 #  set(CONFIG_USE_middleware_usb_pd_common_header true)
 
-#set.middleware.vit
-#  # description: Voice intelligent technology HiFi4 models
-#  set(CONFIG_USE_middleware_vit_hifi4_models true)
+#set.component.osa
+#  # description: Component osa_zephyr
+#  set(CONFIG_USE_component_osa_zephyr true)
 
-#  # description: Voice intelligent technology FusionF1 models
-#  set(CONFIG_USE_middleware_vit_fusionf1_models true)
+#  # description: Component common_task
+#  set(CONFIG_USE_component_common_task true)
 
-#  # description: Voice intelligent technology library
-#  set(CONFIG_USE_middleware_vit_hifi4 true)
+#  # description: Component osa_bm
+#  set(CONFIG_USE_component_osa_bm true)
+
+#  # description: Component osa_free_rtos
+#  set(CONFIG_USE_component_osa_free_rtos true)
+
+#  # description: Component osa
+#  set(CONFIG_USE_component_osa true)
+
+#  # description: Component osa interface
+#  set(CONFIG_USE_component_osa_interface true)
 
 #set.middleware.lvgl
 #  # description: lvgl template
@@ -1422,8 +1509,17 @@
 #  # description: edgefast_bluetooth le_audio.tmap
 #  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_tmap true)
 
+#  # description: edgefast_bluetooth le_audio.gmap
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_gmap true)
+
+#  # description: edgefast_bluetooth le_audio.pbp
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_pbp true)
+
 #  # description: edgefast_bluetooth PAL configuration template
 #  set(CONFIG_USE_middleware_edgefast_bluetooth_config_template true)
+
+#  # description: edgefast_bluetooth ind_reset
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_controller_ind_reset true)
 
 #  # description: edgefast_bluetooth liblc3codec
 #  set(CONFIG_USE_middleware_edgefast_bluetooth_liblc3codec true)
@@ -1587,6 +1683,12 @@
 #  # description: BLE libraries for bt_ble Host stack
 #  set(CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_lib_lc3_cm33 true)
 
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkmimxrt685 true)
+
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_mcux_linker_template_evkmimxrt685 true)
+
 #set.middleware.eiq
 #  # description: Flatbuffers library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers true)
@@ -1603,11 +1705,11 @@
 #  # description: A mixed-radix Fast Fourier Transform library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_kissfft true)
 
-#  # description: Xtensa HiFi4 NN library
-#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 true)
-
 #  # description: CMSIS-NN library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn true)
+
+#  # description: Xtensa HiFi4 NN library
+#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 true)
 
 #  # description: TensorFlow Lite Micro library with reference kernel implementations
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_reference true)
@@ -1617,9 +1719,6 @@
 
 #  # description: TensorFlow Lite Micro library binary with core specific kernel implementations
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_binary true)
-
-#  # description: TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations
-#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu true)
 
 #  # description: Xtensa HiFi4 NN library binary
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary true)
@@ -1635,6 +1734,31 @@
 
 #  # description: TensorFlow Lite Micro word detection library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_examples_microspeech true)
+
+#set.middleware.maestro_framework
+#  # description: maestro_framework template
+#  set(CONFIG_USE_middleware_maestro_framework_template true)
+
+#  # description: MCU Maestro Audio Framework Doc
+#  set(CONFIG_USE_middleware_maestro_framework_doc true)
+
+#  # description: MCU Maestro Audio Framework Codecs
+#  set(CONFIG_USE_middleware_maestro_framework_codecs true)
+
+#  # description: MCU Maestro Audio Framework Streamer Core
+#  set(CONFIG_USE_middleware_maestro_framework true)
+
+#  # description: MCU Maestro Audio Framework Opus
+#  set(CONFIG_USE_middleware_maestro_framework_opus true)
+
+#  # description: MCU Maestro Audio Framework Opusfile
+#  set(CONFIG_USE_middleware_maestro_framework_opusfile true)
+
+#  # description: MCU Maestro Audio Framework Ogg
+#  set(CONFIG_USE_middleware_maestro_framework_ogg true)
+
+#  # description: MCU Maestro Audio Framework ASRC
+#  set(CONFIG_USE_middleware_maestro_framework_asrc true)
 
 #set.middleware.issdk
 #  # description: ISSDK Serial to MQTT bridge application
@@ -1718,6 +1842,9 @@
 #  # description: ISSDK GPIO Driver for i.MXRT685
 #  set(CONFIG_USE_middleware_issdk_drivers_gpio_imxrt600 true)
 
+#  # description: ISSDK GPIO Driver for MIMXRT798S
+#  set(CONFIG_USE_middleware_issdk_drivers_gpio_imxrt700 true)
+
 #  # description: ISSDK GPIO Driver for i.MXRT1180
 #  set(CONFIG_USE_middleware_issdk_drivers_gpio_imxrt1180 true)
 
@@ -1734,9 +1861,6 @@
 #  # description: FreeMASTER driver code for 32bit platforms, enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN, USB and BDM/JTAG physical interface.
 #  set(CONFIG_USE_middleware_fmstr_platform_gen32le true)
 
-#  # description: FreeMASTER configuration file template. Contains placeholders and TODOs which need to be filled by user or by using Peripherals ConfigTool.
-#  set(CONFIG_USE_middleware_fmstr_template_cfg_gen32le true)
-
 #set.middleware.codecs_hifi4
 #  # description: DSP Audio Streamer HiFi4 codecs
 #  set(CONFIG_USE_middleware_dsp_audio_streamer_hifi4_dec true)
@@ -1748,6 +1872,34 @@
 #set.middleware.wireless.wpa_supplicant
 #  # description: Wpa supplicant rtos
 #  set(CONFIG_USE_middleware_wireless_wpa_supplicant_rtos true)
+
+#set.middleware.fatfs
+#  # description: FatFs
+#  set(CONFIG_USE_middleware_fatfs true)
+
+#  # description: FatFs_MMC
+#  set(CONFIG_USE_middleware_fatfs_mmc true)
+
+#  # description: FatFs_RAM
+#  set(CONFIG_USE_middleware_fatfs_ram true)
+
+#  # description: FatFs_SD
+#  set(CONFIG_USE_middleware_fatfs_sd true)
+
+#  # description: FatFs template MMC
+#  set(CONFIG_USE_middleware_fatfs_template_mmc true)
+
+#  # description: FatFs template RAM
+#  set(CONFIG_USE_middleware_fatfs_template_ram true)
+
+#  # description: FatFs template SD
+#  set(CONFIG_USE_middleware_fatfs_template_sd true)
+
+#  # description: FatFs template USB
+#  set(CONFIG_USE_middleware_fatfs_template_usb true)
+
+#  # description: FatFs_USB
+#  set(CONFIG_USE_middleware_fatfs_usb true)
 
 #set.middleware.corehttp
 #  # description: Client implementation of the HTTP/1.1 specification for embedded devices.
@@ -1761,28 +1913,19 @@
 #  # description: HTTP parser in LLVM IR
 #  set(CONFIG_USE_middleware_llhttp true)
 
+#set.middleware.vit
+#  # description: Voice intelligent technology library
+#  set(CONFIG_USE_middleware_vit_hifi4-rt685 true)
+
+#  # description: Voice intelligent technology HiFi4 models
+#  set(CONFIG_USE_middleware_vit_hifi4-rt685_models true)
+
 #set.middleware.voice_seeker
 #  # description: Voice seeker library for HiFi4
 #  set(CONFIG_USE_middleware_voice_seeker_hifi4 true)
 
 #  # description: Voice seeker memory utilities for RT685_HiFi4
 #  set(CONFIG_USE_middleware_voice_seeker_rdsp_utilities_public_hifi4 true)
-
-#set.component.osa
-#  # description: Component common_task
-#  set(CONFIG_USE_component_common_task true)
-
-#  # description: Component osa_bm
-#  set(CONFIG_USE_component_osa_bm true)
-
-#  # description: Component osa_free_rtos
-#  set(CONFIG_USE_component_osa_free_rtos true)
-
-#  # description: Component osa
-#  set(CONFIG_USE_component_osa true)
-
-#  # description: Component osa interface
-#  set(CONFIG_USE_component_osa_interface true)
 
 list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/.
@@ -1792,6 +1935,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../CMSIS/NN
   ${CMAKE_CURRENT_LIST_DIR}/../../CMSIS/RTOS2
   ${CMAKE_CURRENT_LIST_DIR}/../../CMSIS/RTOS2/Include
+  ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt685/edgefast_bluetooth_examples/template
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt685/flash_config
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt685/project_template
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt685_om13790host/project_template
@@ -1860,6 +2004,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/aws_iot/jobs
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/aws_iot/ota
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/bm
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/cjson
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/dsp
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/edgefast_bluetooth
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/edgefast_bluetooth/lib
@@ -1877,10 +2022,18 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/lvgl
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/lvgl/lvgl_sdk
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/lwip
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/maestro
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/maestro/mcu-audio/asrc
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/maestro/mcu-audio/ogg
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/maestro/mcu-audio/opus
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/maestro/mcu-audio/opusfile
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mbedtls
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mbedtls3x
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mcuboot_opensource
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mcuboot_opensource/boot/bootutil
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mcuboot_opensource/ext/mbedtls-asn1
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mcuboot_opensource/ext/nxp_encrypted_xip
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/mcuboot_opensource/ext/tinycrypt/lib
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/multicore
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/pkcs11
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/sdmmc
@@ -1967,6 +2120,7 @@ include_if_use(component_lpc_crc_adapter.MIMXRT685S)
 include_if_use(component_lpc_gpio_adapter.MIMXRT685S)
 include_if_use(component_lpcrtc.MIMXRT685S)
 include_if_use(component_mem_manager.MIMXRT685S)
+include_if_use(component_mem_manager_freertos.MIMXRT685S)
 include_if_use(component_mem_manager_light.MIMXRT685S)
 include_if_use(component_messaging.MIMXRT685S)
 include_if_use(component_mflash_common.MIMXRT685S)
@@ -1979,6 +2133,7 @@ include_if_use(component_osa)
 include_if_use(component_osa_bm)
 include_if_use(component_osa_free_rtos)
 include_if_use(component_osa_interface)
+include_if_use(component_osa_zephyr)
 include_if_use(component_ostimer_adapter.MIMXRT685S)
 include_if_use(component_panic.MIMXRT685S)
 include_if_use(component_power_manager_MIMXRT685S.MIMXRT685S)
@@ -2041,6 +2196,7 @@ include_if_use(driver_fxos8700cq.MIMXRT685S)
 include_if_use(driver_hashcrypt.MIMXRT685S)
 include_if_use(driver_i2s_bridge.MIMXRT685S)
 include_if_use(driver_i3c.MIMXRT685S)
+include_if_use(driver_i3c_dma.MIMXRT685S)
 include_if_use(driver_iap.MIMXRT685S)
 include_if_use(driver_icm42688p.MIMXRT685S)
 include_if_use(driver_ili9341.MIMXRT685S)
@@ -2082,6 +2238,7 @@ include_if_use(middleware_aws_iot_jobs)
 include_if_use(middleware_aws_iot_ota)
 include_if_use(middleware_aws_iot_ota_freertos)
 include_if_use(middleware_baremetal.MIMXRT685S)
+include_if_use(middleware_cjson)
 include_if_use(middleware_dsp_audio_streamer_hifi4_dec)
 include_if_use(middleware_dsp_audio_streamer_libxa_af_hostless)
 include_if_use(middleware_dsp_audio_streamer_testxa_af_hostless)
@@ -2103,6 +2260,7 @@ include_if_use(middleware_edgefast_bluetooth_common_ethermind_hci_uart)
 include_if_use(middleware_edgefast_bluetooth_common_ethermind_lc3)
 include_if_use(middleware_edgefast_bluetooth_config_ethermind)
 include_if_use(middleware_edgefast_bluetooth_config_template)
+include_if_use(middleware_edgefast_bluetooth_controller_ind_reset)
 include_if_use(middleware_edgefast_bluetooth_extension_common_ethermind)
 include_if_use(middleware_edgefast_bluetooth_k32w061_controller)
 include_if_use(middleware_edgefast_bluetooth_le_audio_aics)
@@ -2112,16 +2270,19 @@ include_if_use(middleware_edgefast_bluetooth_le_audio_cap)
 include_if_use(middleware_edgefast_bluetooth_le_audio_ccid)
 include_if_use(middleware_edgefast_bluetooth_le_audio_config_template)
 include_if_use(middleware_edgefast_bluetooth_le_audio_csip)
+include_if_use(middleware_edgefast_bluetooth_le_audio_gmap)
 include_if_use(middleware_edgefast_bluetooth_le_audio_has)
 include_if_use(middleware_edgefast_bluetooth_le_audio_mcc)
 include_if_use(middleware_edgefast_bluetooth_le_audio_mcs)
 include_if_use(middleware_edgefast_bluetooth_le_audio_micp)
 include_if_use(middleware_edgefast_bluetooth_le_audio_mpl)
+include_if_use(middleware_edgefast_bluetooth_le_audio_pbp)
 include_if_use(middleware_edgefast_bluetooth_le_audio_tbs)
 include_if_use(middleware_edgefast_bluetooth_le_audio_tmap)
 include_if_use(middleware_edgefast_bluetooth_le_audio_vcp)
 include_if_use(middleware_edgefast_bluetooth_le_audio_vocs)
 include_if_use(middleware_edgefast_bluetooth_liblc3codec)
+include_if_use(middleware_edgefast_bluetooth_mcux_linker_template_evkmimxrt685)
 include_if_use(middleware_edgefast_bluetooth_mcux_linker_template_mimxrt685audevk)
 include_if_use(middleware_edgefast_bluetooth_pal)
 include_if_use(middleware_edgefast_bluetooth_pal_crypto_ethermind)
@@ -2146,6 +2307,7 @@ include_if_use(middleware_edgefast_bluetooth_profile_ots)
 include_if_use(middleware_edgefast_bluetooth_profile_pxr)
 include_if_use(middleware_edgefast_bluetooth_profile_tip)
 include_if_use(middleware_edgefast_bluetooth_profile_wu)
+include_if_use(middleware_edgefast_bluetooth_sdio_template_evkmimxrt685)
 include_if_use(middleware_edgefast_bluetooth_sdio_template_mimxrt685audevk)
 include_if_use(middleware_edgefast_bluetooth_shell)
 include_if_use(middleware_edgefast_bluetooth_shell_ble)
@@ -2156,7 +2318,6 @@ include_if_use(middleware_edgefast_wifi_nxp)
 include_if_use(middleware_eiq_tensorflow_lite_micro)
 include_if_use(middleware_eiq_tensorflow_lite_micro_binary)
 include_if_use(middleware_eiq_tensorflow_lite_micro_cmsis_nn)
-include_if_use(middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu)
 include_if_use(middleware_eiq_tensorflow_lite_micro_examples_microspeech)
 include_if_use(middleware_eiq_tensorflow_lite_micro_headers)
 include_if_use(middleware_eiq_tensorflow_lite_micro_reference)
@@ -2176,15 +2337,12 @@ include_if_use(middleware_fatfs_mmc)
 include_if_use(middleware_fatfs_ram)
 include_if_use(middleware_fatfs_sd)
 include_if_use(middleware_fatfs_template_mmc)
-include_if_use(middleware_fatfs_template_nand)
 include_if_use(middleware_fatfs_template_ram)
 include_if_use(middleware_fatfs_template_sd)
-include_if_use(middleware_fatfs_template_sdspi)
 include_if_use(middleware_fatfs_template_usb)
 include_if_use(middleware_fatfs_usb)
 include_if_use(middleware_fmstr)
 include_if_use(middleware_fmstr_platform_gen32le)
-include_if_use(middleware_fmstr_template_cfg_gen32le)
 include_if_use(middleware_freertos-kernel)
 include_if_use(middleware_freertos-kernel_cm33_non_trustzone)
 include_if_use(middleware_freertos-kernel_cm33_trustzone_non_secure)
@@ -2197,6 +2355,7 @@ include_if_use(middleware_freertos-kernel_heap_3)
 include_if_use(middleware_freertos-kernel_heap_4)
 include_if_use(middleware_freertos-kernel_heap_5)
 include_if_use(middleware_freertos-kernel_mpu_wrappers)
+include_if_use(middleware_freertos-kernel_mpu_wrappers_v2)
 include_if_use(middleware_freertos-kernel_template)
 include_if_use(middleware_freertos_backoffalgorithm)
 include_if_use(middleware_freertos_corehttp)
@@ -2225,6 +2384,7 @@ include_if_use(middleware_issdk_drivers_gpio_imx8)
 include_if_use(middleware_issdk_drivers_gpio_imxrt)
 include_if_use(middleware_issdk_drivers_gpio_imxrt1180)
 include_if_use(middleware_issdk_drivers_gpio_imxrt600)
+include_if_use(middleware_issdk_drivers_gpio_imxrt700)
 include_if_use(middleware_issdk_drivers_host)
 include_if_use(middleware_issdk_drivers_systick_utils)
 include_if_use(middleware_issdk_sensor_allregdefs)
@@ -2272,29 +2432,47 @@ include_if_use(middleware_lwip_contrib_tcpecho)
 include_if_use(middleware_lwip_contrib_tcpecho_raw)
 include_if_use(middleware_lwip_contrib_udpecho)
 include_if_use(middleware_lwip_contrib_udpecho_raw)
+include_if_use(middleware_lwip_empty_ethernetif)
+include_if_use(middleware_lwip_eoe_ethernetif)
 include_if_use(middleware_lwip_template)
+include_if_use(middleware_maestro_framework)
+include_if_use(middleware_maestro_framework_asrc)
+include_if_use(middleware_maestro_framework_codecs)
+include_if_use(middleware_maestro_framework_doc)
+include_if_use(middleware_maestro_framework_ogg)
+include_if_use(middleware_maestro_framework_opus)
+include_if_use(middleware_maestro_framework_opusfile)
+include_if_use(middleware_maestro_framework_template)
 include_if_use(middleware_mbedcrypto)
 include_if_use(middleware_mbedcrypto_port)
-include_if_use(middleware_mbedcrypto_psa_driver_wrapper_default)
+include_if_use(middleware_mbedcrypto_port_config)
+include_if_use(middleware_mbedcrypto_port_rng)
 include_if_use(middleware_mbedcrypto_unused_files)
 include_if_use(middleware_mbedtls)
 include_if_use(middleware_mbedtls3x)
 include_if_use(middleware_mbedtls3x_crypto)
+include_if_use(middleware_mbedtls3x_crypto_no_psa)
 include_if_use(middleware_mbedtls3x_crypto_storage_default)
+include_if_use(middleware_mbedtls3x_crypto_storage_ram)
+include_if_use(middleware_mbedtls3x_no_psa)
 include_if_use(middleware_mbedtls3x_port_config)
-include_if_use(middleware_mbedtls3x_port_osal)
-include_if_use(middleware_mbedtls3x_port_osal_baremetal)
-include_if_use(middleware_mbedtls3x_port_osal_frtos)
+include_if_use(middleware_mbedtls3x_port_psa_crypto_config)
 include_if_use(middleware_mbedtls3x_port_rng)
 include_if_use(middleware_mbedtls3x_ssl)
+include_if_use(middleware_mbedtls3x_ssl_no_psa)
 include_if_use(middleware_mbedtls3x_template)
 include_if_use(middleware_mbedtls3x_tests)
 include_if_use(middleware_mbedtls3x_x509)
+include_if_use(middleware_mbedtls_3rdparty)
 include_if_use(middleware_mbedtls_els_pkc_config)
 include_if_use(middleware_mbedtls_port_ksdk)
 include_if_use(middleware_mbedtls_template)
+include_if_use(middleware_mbedtls_tests)
 include_if_use(middleware_mcuboot)
 include_if_use(middleware_mcuboot_bootutil)
+include_if_use(middleware_mcuboot_encrypted_xip)
+include_if_use(middleware_mcuboot_mbedtls-asn1)
+include_if_use(middleware_mcuboot_tinycrypt)
 include_if_use(middleware_multicore)
 include_if_use(middleware_multicore_erpc)
 include_if_use(middleware_multicore_erpc_common)
@@ -2333,6 +2511,9 @@ include_if_use(middleware_multicore_erpc_eRPC_spi_master_transport)
 include_if_use(middleware_multicore_erpc_eRPC_spi_slave_c_wrapper)
 include_if_use(middleware_multicore_erpc_eRPC_spi_slave_transport)
 include_if_use(middleware_multicore_erpc_eRPC_uart_cmsis_transport)
+include_if_use(middleware_multicore_erpc_examples)
+include_if_use(middleware_multicore_erpc_java)
+include_if_use(middleware_multicore_erpc_zephyr)
 include_if_use(middleware_multicore_rpmsg_lite)
 include_if_use(middleware_multicore_rpmsg_lite_azurertos)
 include_if_use(middleware_multicore_rpmsg_lite_bm)
@@ -2344,6 +2525,7 @@ include_if_use(middleware_multicore_rpmsg_lite_mimxrt685audevk_bm)
 include_if_use(middleware_multicore_rpmsg_lite_mimxrt685audevk_freertos)
 include_if_use(middleware_multicore_rpmsg_lite_mimxrt685audevk_hifi4_bm)
 include_if_use(middleware_multicore_rpmsg_lite_xos)
+include_if_use(middleware_multicore_rpmsg_lite_zephyr)
 include_if_use(middleware_naturedsp_naturedsp_hifi4)
 include_if_use(middleware_pkcs11)
 include_if_use(middleware_psatest_ns)
@@ -2351,10 +2533,12 @@ include_if_use(middleware_psatest_ns_crypto)
 include_if_use(middleware_psatest_ns_crypto_profile_large)
 include_if_use(middleware_psatest_ns_crypto_profile_medium)
 include_if_use(middleware_psatest_ns_crypto_profile_small)
+include_if_use(middleware_psatest_ns_disable_weak_ecc_r1_curve_tests)
 include_if_use(middleware_psatest_ns_initial_attestation)
 include_if_use(middleware_psatest_ns_internal_trusted_storage)
 include_if_use(middleware_psatest_ns_protected_storage)
 include_if_use(middleware_psatest_ns_t_cose)
+include_if_use(middleware_psatest_ns_tgt_dev_apis_nxp)
 include_if_use(middleware_psatest_unused_files)
 include_if_use(middleware_qcbor_unused_files)
 include_if_use(middleware_sdmmc_common)
@@ -2375,6 +2559,9 @@ include_if_use(middleware_tfm_flash_iap)
 include_if_use(middleware_tfm_ns)
 include_if_use(middleware_tfm_ns_evkmimxrt685)
 include_if_use(middleware_tfm_ns_mimxrt685audevk)
+include_if_use(middleware_tfm_ns_os_wrapper_baremetal)
+include_if_use(middleware_tfm_ns_os_wrapper_common)
+include_if_use(middleware_tfm_ns_os_wrapper_rtos)
 include_if_use(middleware_tfm_ns_profile_large)
 include_if_use(middleware_tfm_ns_profile_medium)
 include_if_use(middleware_tfm_ns_profile_small)
@@ -2405,8 +2592,11 @@ include_if_use(middleware_tfm_s_initial_attestation)
 include_if_use(middleware_tfm_s_initial_attestation_asymmetric)
 include_if_use(middleware_tfm_s_initial_attestation_symmetric)
 include_if_use(middleware_tfm_s_its)
+include_if_use(middleware_tfm_s_its_load_info_common)
 include_if_use(middleware_tfm_s_mimxrt685audevk)
 include_if_use(middleware_tfm_s_platform)
+include_if_use(middleware_tfm_s_platform_common)
+include_if_use(middleware_tfm_s_platform_sp_common)
 include_if_use(middleware_tfm_s_profile_large)
 include_if_use(middleware_tfm_s_profile_medium)
 include_if_use(middleware_tfm_s_profile_small)
@@ -2454,6 +2644,7 @@ include_if_use(middleware_usb_device_stack_external)
 include_if_use(middleware_usb_device_video_external)
 include_if_use(middleware_usb_host_audio)
 include_if_use(middleware_usb_host_cdc)
+include_if_use(middleware_usb_host_cdc_ecm)
 include_if_use(middleware_usb_host_cdc_rndis)
 include_if_use(middleware_usb_host_common_header)
 include_if_use(middleware_usb_host_hid)
@@ -2474,9 +2665,8 @@ include_if_use(middleware_usb_pd_config_header)
 include_if_use(middleware_usb_pd_phy_ptn5110)
 include_if_use(middleware_usb_phy)
 include_if_use(middleware_usb_phydcd_config_header)
-include_if_use(middleware_vit_fusionf1_models)
-include_if_use(middleware_vit_hifi4)
-include_if_use(middleware_vit_hifi4_models)
+include_if_use(middleware_vit_hifi4-rt685)
+include_if_use(middleware_vit_hifi4-rt685_models)
 include_if_use(middleware_voice_seeker_hifi4)
 include_if_use(middleware_voice_seeker_rdsp_utilities_public_hifi4)
 include_if_use(middleware_wifi)
@@ -2485,9 +2675,19 @@ include_if_use(middleware_wifi_common_files)
 include_if_use(middleware_wifi_fwdnld)
 include_if_use(middleware_wifi_fwdnld_intf_abs)
 include_if_use(middleware_wifi_mlan_sdio)
+include_if_use(middleware_wifi_ncp_supp_wmcrypto)
+include_if_use(middleware_wifi_net)
+include_if_use(middleware_wifi_net_free_rtos)
+include_if_use(middleware_wifi_osa)
+include_if_use(middleware_wifi_osa_free_rtos)
 include_if_use(middleware_wifi_sdio)
 include_if_use(middleware_wifi_template)
+include_if_use(middleware_wifi_wifi_bt_config_template)
 include_if_use(middleware_wifi_wifidriver)
+include_if_use(middleware_wifi_wls)
+include_if_use(middleware_wifi_wmcrypto)
+include_if_use(middleware_wifi_wmtime)
+include_if_use(middleware_wifi_wps)
 include_if_use(middleware_wireless_wpa_supplicant_rtos)
 include_if_use(utilities_misc_utilities.MIMXRT685S)
 include_if_use(utility_assert.MIMXRT685S)

@@ -1,14 +1,22 @@
 var a00246 =
 [
-    [ "DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN", "a00246.html#ga028eff2428680ec9e47eed17d7ad6180", null ],
-    [ "DEBUG_CONSOLE_RECEIVE_BUFFER_LEN", "a00246.html#gadad6011e61c820f396b1c13568dbfe16", null ],
-    [ "DEBUG_CONSOLE_TX_RELIABLE_ENABLE", "a00246.html#gab2823ff7917ffeaaccf805f739116ec1", null ],
-    [ "DEBUG_CONSOLE_RX_ENABLE", "a00246.html#ga27259eda6262948659d081ea4b7ad2fe", null ],
-    [ "DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN", "a00246.html#ga9777b06b434b336e5a2c1b21421c9ea3", null ],
-    [ "DEBUG_CONSOLE_SCANF_MAX_LOG_LEN", "a00246.html#gab2afcebb59f366867a49bb888b8d043d", null ],
-    [ "DEBUG_CONSOLE_SYNCHRONIZATION_BM", "a00246.html#ga1cbe5dd480860843788779e39d1d0d1e", null ],
-    [ "DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS", "a00246.html#ga9589914d5a8b1cfedf834d52a6574496", null ],
-    [ "DEBUG_CONSOLE_SYNCHRONIZATION_MODE", "a00246.html#ga7b85f4e4309413064a69c99e7327d3f2", null ],
-    [ "DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION", "a00246.html#ga5cc1f7845683fbde63e9619f38aac2d1", null ],
-    [ "BOARD_USE_VIRTUALCOM", "a00246.html#ga74776e2523880761897d8b57199e5596", null ]
+    [ "Semihosting", "a00244.html", null ],
+    [ "DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN", "a00246.html#gabb8f0adbec02f143b4f84d2eb42126df", null ],
+    [ "DEBUGCONSOLE_REDIRECT_TO_SDK", "a00246.html#gac33031f28afa29dc8fe1718bbc86ee23", null ],
+    [ "DEBUGCONSOLE_DISABLE", "a00246.html#gaf8f85fd102e4aedcee3d061dc2d3e0c2", null ],
+    [ "SDK_DEBUGCONSOLE", "a00246.html#ga7fdd594efdc8374ecd8684ed758d6cec", null ],
+    [ "PRINTF_FLOAT_ENABLE", "a00246.html#ga926f5c4b8929e99c9f977ad4c48928fd", null ],
+    [ "SCANF_FLOAT_ENABLE", "a00246.html#gacab0122ff00951d58b47d95d95c4d119", null ],
+    [ "PRINTF_ADVANCED_ENABLE", "a00246.html#ga299a157e550c253df33f18180f21605e", null ],
+    [ "SCANF_ADVANCED_ENABLE", "a00246.html#ga58226e74553b7976713f08ab6cd1ead3", null ],
+    [ "PRINTF", "a00246.html#gae1649fc947ca37a86917a08354f48d1a", null ],
+    [ "DbgConsole_Init", "a00246.html#ga12e50ee0450679fd8ca950a89338d366", null ],
+    [ "DbgConsole_Deinit", "a00246.html#gad80e7aa70bbb3fce1a9168621372833e", null ],
+    [ "DbgConsole_EnterLowpower", "a00246.html#ga9ce272e795c2b235265d3dfb50669bee", null ],
+    [ "DbgConsole_ExitLowpower", "a00246.html#ga21831f5ee970f3a1f13ff375405f3592", null ],
+    [ "DbgConsole_Printf", "a00246.html#ga7f9e0678f4c708ed5640b0823c07dc35", null ],
+    [ "DbgConsole_Vprintf", "a00246.html#ga48560c409b88fbe195e140aa20c5307b", null ],
+    [ "DbgConsole_Putchar", "a00246.html#ga8afb1b704fd0d836e6bd5aae3a417d65", null ],
+    [ "DbgConsole_Scanf", "a00246.html#ga53b115907016172dcf58fcffab144a6d", null ],
+    [ "DbgConsole_Getchar", "a00246.html#ga11898c5015274863741c4f3f4d9edc08", null ]
 ];

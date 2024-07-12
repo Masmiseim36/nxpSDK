@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: WWDT: Windowed Watchdog Timer Driver</title>
+<title>MCUXpresso SDK API Reference Manual: tfa2_device Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,617 +99,557 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">WWDT: Windowed Watchdog Timer Driver</div>  </div>
+<div class="title">tfa2_device Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Watchdog module (WDOG) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="WWDTFunc"></a>
-Function groups</h1>
-<h2><a class="anchor" id="WWDTInit"></a>
-Initialization and deinitialization</h2>
-<p>The function <a class="el" href="a00064.html#gadc47d88ae20552f9cd9999e6f8fc5ebe" title="Initializes the WWDT. ">WWDT_Init()</a> initializes the watchdog timer with specified configurations. The configurations include timeout value and whether to enable watchdog after init. The function <a class="el" href="a00064.html#gacfd7070829029279f3b3bfb763b86914" title="Initializes WWDT configure structure. ">WWDT_GetDefaultConfig()</a> gets the default configurations.</p>
-<p>The function <a class="el" href="a00064.html#gaae4415d32cd0f67908d0ab9494736742" title="Shuts down the WWDT. ">WWDT_Deinit()</a> disables the watchdog and the module clock.</p>
-<h2><a class="anchor" id="WWDTStatus"></a>
-Status</h2>
-<p>Provides functions to get and clear the WWDT status.</p>
-<h2><a class="anchor" id="WWDTInterrupt"></a>
-Interrupt</h2>
-<p>Provides functions to enable/disable WWDT interrupts and get current enabled interrupts.</p>
-<h2><a class="anchor" id="WWDTRefresh"></a>
-Watch dog Refresh</h2>
-<p>The function <a class="el" href="a00064.html#gab1745efaa7c33fab66a552fd45e01d83" title="Refreshes the WWDT timer. ">WWDT_Refresh()</a> feeds the WWDT.</p>
-<h1><a class="anchor" id="WWDTTypUC"></a>
-Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/wwdt </p>
+
+<p><code>#include &lt;tfa2_dev.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00206"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html">fsl_wwdt.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:a00406"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00406">_wwdt_config</a></td></tr>
-<tr class="memdesc:a00406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes WWDT configuration structure.  <a href="a00064.html#a00406">More...</a><br/></td></tr>
-<tr class="separator:a00406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gade4f744368e9723e83fdefb72e88e692"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00064.html#a00406">_wwdt_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a></td></tr>
-<tr class="memdesc:gade4f744368e9723e83fdefb72e88e692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes WWDT configuration structure.  <a href="#gade4f744368e9723e83fdefb72e88e692">More...</a><br/></td></tr>
-<tr class="separator:gade4f744368e9723e83fdefb72e88e692"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaca0e9724bd1f25336527ea66c77e476f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaca0e9724bd1f25336527ea66c77e476f">_wwdt_status_flags_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184">kWWDT_TimeoutFlag</a> = WWDT_MOD_WDTOF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00064.html#ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e">kWWDT_WarningFlag</a> = WWDT_MOD_WDINT_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:gaca0e9724bd1f25336527ea66c77e476f"><td class="mdescLeft">&#160;</td><td class="mdescRight">WWDT status flags.  <a href="a00064.html#gaca0e9724bd1f25336527ea66c77e476f">More...</a><br/></td></tr>
-<tr class="separator:gaca0e9724bd1f25336527ea66c77e476f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:gaf661d1e3e19a80b873c54fdbad5e966a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaf661d1e3e19a80b873c54fdbad5e966a">FSL_WWDT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 9))</td></tr>
-<tr class="memdesc:gaf661d1e3e19a80b873c54fdbad5e966a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines WWDT driver version.  <a href="#gaf661d1e3e19a80b873c54fdbad5e966a">More...</a><br/></td></tr>
-<tr class="separator:gaf661d1e3e19a80b873c54fdbad5e966a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Refresh sequence</h2></td></tr>
-<tr class="memitem:ga56228a5472034e453003e7f375c824ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56228a5472034e453003e7f375c824ab"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga56228a5472034e453003e7f375c824ab">WWDT_FIRST_WORD_OF_REFRESH</a>&#160;&#160;&#160;(0xAAU)</td></tr>
-<tr class="memdesc:ga56228a5472034e453003e7f375c824ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">First word of refresh sequence. <br/></td></tr>
-<tr class="separator:ga56228a5472034e453003e7f375c824ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab483f5384985a23bb28889b3c31da9ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab483f5384985a23bb28889b3c31da9ee"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab483f5384985a23bb28889b3c31da9ee">WWDT_SECOND_WORD_OF_REFRESH</a>&#160;&#160;&#160;(0x55U)</td></tr>
-<tr class="memdesc:gab483f5384985a23bb28889b3c31da9ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second word of refresh sequence. <br/></td></tr>
-<tr class="separator:gab483f5384985a23bb28889b3c31da9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-WWDT Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:gacfd7070829029279f3b3bfb763b86914"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gacfd7070829029279f3b3bfb763b86914">WWDT_GetDefaultConfig</a> (<a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *config)</td></tr>
-<tr class="memdesc:gacfd7070829029279f3b3bfb763b86914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes WWDT configure structure.  <a href="#gacfd7070829029279f3b3bfb763b86914">More...</a><br/></td></tr>
-<tr class="separator:gacfd7070829029279f3b3bfb763b86914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc47d88ae20552f9cd9999e6f8fc5ebe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gadc47d88ae20552f9cd9999e6f8fc5ebe">WWDT_Init</a> (WWDT_Type *base, const <a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *config)</td></tr>
-<tr class="memdesc:gadc47d88ae20552f9cd9999e6f8fc5ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the WWDT.  <a href="#gadc47d88ae20552f9cd9999e6f8fc5ebe">More...</a><br/></td></tr>
-<tr class="separator:gadc47d88ae20552f9cd9999e6f8fc5ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae4415d32cd0f67908d0ab9494736742"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaae4415d32cd0f67908d0ab9494736742">WWDT_Deinit</a> (WWDT_Type *base)</td></tr>
-<tr class="memdesc:gaae4415d32cd0f67908d0ab9494736742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the WWDT.  <a href="#gaae4415d32cd0f67908d0ab9494736742">More...</a><br/></td></tr>
-<tr class="separator:gaae4415d32cd0f67908d0ab9494736742"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-WWDT Functional Operation</h2></td></tr>
-<tr class="memitem:ga2620dd2baf891f32359fbe85faaca563"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga2620dd2baf891f32359fbe85faaca563">WWDT_Enable</a> (WWDT_Type *base)</td></tr>
-<tr class="memdesc:ga2620dd2baf891f32359fbe85faaca563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the WWDT module.  <a href="#ga2620dd2baf891f32359fbe85faaca563">More...</a><br/></td></tr>
-<tr class="separator:ga2620dd2baf891f32359fbe85faaca563"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga358bab6648d05345bda057a72cfb5547"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga358bab6648d05345bda057a72cfb5547">WWDT_Disable</a> (WWDT_Type *base)</td></tr>
-<tr class="memdesc:ga358bab6648d05345bda057a72cfb5547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the WWDT module.  <a href="#ga358bab6648d05345bda057a72cfb5547">More...</a><br/></td></tr>
-<tr class="separator:ga358bab6648d05345bda057a72cfb5547"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1c5dae412d14eba38f2b63abb9f982d6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1c5dae412d14eba38f2b63abb9f982d6">WWDT_GetStatusFlags</a> (WWDT_Type *base)</td></tr>
-<tr class="memdesc:ga1c5dae412d14eba38f2b63abb9f982d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all WWDT status flags.  <a href="#ga1c5dae412d14eba38f2b63abb9f982d6">More...</a><br/></td></tr>
-<tr class="separator:ga1c5dae412d14eba38f2b63abb9f982d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5666008b33bf327c80afb90e0733512e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga5666008b33bf327c80afb90e0733512e">WWDT_ClearStatusFlags</a> (WWDT_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga5666008b33bf327c80afb90e0733512e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear WWDT flag.  <a href="#ga5666008b33bf327c80afb90e0733512e">More...</a><br/></td></tr>
-<tr class="separator:ga5666008b33bf327c80afb90e0733512e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac575fb8568458aa8acbbed14d5aa5ffd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gac575fb8568458aa8acbbed14d5aa5ffd">WWDT_SetWarningValue</a> (WWDT_Type *base, uint32_t warningValue)</td></tr>
-<tr class="memdesc:gac575fb8568458aa8acbbed14d5aa5ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the WWDT warning value.  <a href="#gac575fb8568458aa8acbbed14d5aa5ffd">More...</a><br/></td></tr>
-<tr class="separator:gac575fb8568458aa8acbbed14d5aa5ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2351329bb1ff6b966decec266d7ec16"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gad2351329bb1ff6b966decec266d7ec16">WWDT_SetTimeoutValue</a> (WWDT_Type *base, uint32_t timeoutCount)</td></tr>
-<tr class="memdesc:gad2351329bb1ff6b966decec266d7ec16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the WWDT timeout value.  <a href="#gad2351329bb1ff6b966decec266d7ec16">More...</a><br/></td></tr>
-<tr class="separator:gad2351329bb1ff6b966decec266d7ec16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66b5c37906be6083f083a436eebbe778"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga66b5c37906be6083f083a436eebbe778">WWDT_SetWindowValue</a> (WWDT_Type *base, uint32_t windowValue)</td></tr>
-<tr class="memdesc:ga66b5c37906be6083f083a436eebbe778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WWDT window value.  <a href="#ga66b5c37906be6083f083a436eebbe778">More...</a><br/></td></tr>
-<tr class="separator:ga66b5c37906be6083f083a436eebbe778"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1745efaa7c33fab66a552fd45e01d83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab1745efaa7c33fab66a552fd45e01d83">WWDT_Refresh</a> (WWDT_Type *base)</td></tr>
-<tr class="memdesc:gab1745efaa7c33fab66a552fd45e01d83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the WWDT timer.  <a href="#gab1745efaa7c33fab66a552fd45e01d83">More...</a><br/></td></tr>
-<tr class="separator:gab1745efaa7c33fab66a552fd45e01d83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a07e33aced171fc35f619614a24166f3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a07e33aced171fc35f619614a24166f3c">dev_idx</a></td></tr>
+<tr class="separator:a07e33aced171fc35f619614a24166f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7f99a229adb94e266bd256178c50212"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad7f99a229adb94e266bd256178c50212">buffer_size</a></td></tr>
+<tr class="separator:ad7f99a229adb94e266bd256178c50212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab852d604a860e4602241f553fded8a6e"><td class="memItemLeft" align="right" valign="top">short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab852d604a860e4602241f553fded8a6e">slave_address</a></td></tr>
+<tr class="separator:ab852d604a860e4602241f553fded8a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a65c5533b8d5fc6e4a359c6668baa9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a40a65c5533b8d5fc6e4a359c6668baa9">rev</a></td></tr>
+<tr class="separator:a40a65c5533b8d5fc6e4a359c6668baa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ef7a15e2cd0769a1caeb7fbdaa904d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a8ef7a15e2cd0769a1caeb7fbdaa904d2">need_hw_init</a></td></tr>
+<tr class="separator:a8ef7a15e2cd0769a1caeb7fbdaa904d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab186e9c9e3fcfb6a5045c367600a2c61"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab186e9c9e3fcfb6a5045c367600a2c61">need_cf_init</a></td></tr>
+<tr class="separator:ab186e9c9e3fcfb6a5045c367600a2c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dfbe0afe3c8269aa555b46d7f2e1924"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9dfbe0afe3c8269aa555b46d7f2e1924">need_sb_config</a></td></tr>
+<tr class="separator:a9dfbe0afe3c8269aa555b46d7f2e1924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bd7044c2a22ab3cee9bc9b3a744b13"><td class="memItemLeft" align="right" valign="top">enum tfa_hb_role&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a56bd7044c2a22ab3cee9bc9b3a744b13">need_hb_config</a></td></tr>
+<tr class="separator:a56bd7044c2a22ab3cee9bc9b3a744b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8094ac1c965c409302425a3b180f09c8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a8094ac1c965c409302425a3b180f09c8">sw_feature_bits</a> [2]</td></tr>
+<tr class="separator:a8094ac1c965c409302425a3b180f09c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77120f6c83e8c2a4a4b36434cef54edd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a77120f6c83e8c2a4a4b36434cef54edd">hw_feature_bits</a></td></tr>
+<tr class="separator:a77120f6c83e8c2a4a4b36434cef54edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6437134f14cd9837482b4cf7a7f7eb6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa6437134f14cd9837482b4cf7a7f7eb6">profile</a></td></tr>
+<tr class="separator:aa6437134f14cd9837482b4cf7a7f7eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05042c1a73c798db868caa4db4f68658"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a05042c1a73c798db868caa4db4f68658">vstep</a></td></tr>
+<tr class="separator:a05042c1a73c798db868caa4db4f68658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d9a2c00dd82e358cd63be4000b1052e"><td class="memItemLeft" align="right" valign="top">enum tfa9xxx_DAI&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a5d9a2c00dd82e358cd63be4000b1052e">daimap</a></td></tr>
+<tr class="separator:a5d9a2c00dd82e358cd63be4000b1052e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b8f4c65c1b6adb637dd02ae7befbc06"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a1b8f4c65c1b6adb637dd02ae7befbc06">tfadsp_event</a></td></tr>
+<tr class="separator:a1b8f4c65c1b6adb637dd02ae7befbc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaee4d08a1c53002ac35bc9e6e6be76fa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aaee4d08a1c53002ac35bc9e6e6be76fa">verbose</a></td></tr>
+<tr class="separator:aaee4d08a1c53002ac35bc9e6e6be76fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a923ff61fdad10c404b558dc5ef0a7067"><td class="memItemLeft" align="right" valign="top">enum tfa_state&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a923ff61fdad10c404b558dc5ef0a7067">state</a></td></tr>
+<tr class="separator:a923ff61fdad10c404b558dc5ef0a7067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7ae98f476e71d6edb8ed576290e01f0"><td class="memItemLeft" align="right" valign="top">struct nxpTfaContainer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad7ae98f476e71d6edb8ed576290e01f0">cnt</a></td></tr>
+<tr class="separator:ad7ae98f476e71d6edb8ed576290e01f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafeffd3b3760ba5e32280ff701314967"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aafeffd3b3760ba5e32280ff701314967">partial_enable</a></td></tr>
+<tr class="separator:aafeffd3b3760ba5e32280ff701314967"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bde043e14a735a3e78bb93b42979586"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a1bde043e14a735a3e78bb93b42979586">data</a></td></tr>
+<tr class="separator:a1bde043e14a735a3e78bb93b42979586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39173caf0f01430edb99f7077223866a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a39173caf0f01430edb99f7077223866a">convert_dsp32</a></td></tr>
+<tr class="separator:a39173caf0f01430edb99f7077223866a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fe7b4190ad819dea841b26fb003774e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a7fe7b4190ad819dea841b26fb003774e">is_probus_device</a></td></tr>
+<tr class="separator:a7fe7b4190ad819dea841b26fb003774e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08717ebb35611618c23fc981b4362cb8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a08717ebb35611618c23fc981b4362cb8">is_extern_dsp_device</a></td></tr>
+<tr class="separator:a08717ebb35611618c23fc981b4362cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524611a07ecf94bb66749b3deab59e58"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a524611a07ecf94bb66749b3deab59e58">tfa_init</a> )(struct <a class="el" href="a00064.html">tfa2_device</a> *tfa)</td></tr>
+<tr class="separator:a524611a07ecf94bb66749b3deab59e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0f0f6deac69deb4ae13f57ee2c08a36"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad0f0f6deac69deb4ae13f57ee2c08a36">bf_clks</a></td></tr>
+<tr class="separator:ad0f0f6deac69deb4ae13f57ee2c08a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d2ebbda42b59383726a267c7451403"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a70d2ebbda42b59383726a267c7451403">bf_manstate</a></td></tr>
+<tr class="separator:a70d2ebbda42b59383726a267c7451403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2db74792ba7073b86cf8da99635bc435"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a2db74792ba7073b86cf8da99635bc435">bf_manaoosc</a></td></tr>
+<tr class="separator:a2db74792ba7073b86cf8da99635bc435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a8ffdae5ce11b49aa10bd6a6ce6899"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa5a8ffdae5ce11b49aa10bd6a6ce6899">bf_noclk</a></td></tr>
+<tr class="separator:aa5a8ffdae5ce11b49aa10bd6a6ce6899"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61dd6458503ab1bc94c7cdb4aecde037"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a61dd6458503ab1bc94c7cdb4aecde037">bf_mtpb</a></td></tr>
+<tr class="separator:a61dd6458503ab1bc94c7cdb4aecde037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9dc70d4efe14b21060379458750b225"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab9dc70d4efe14b21060379458750b225">bf_swprofil</a></td></tr>
+<tr class="separator:ab9dc70d4efe14b21060379458750b225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6145e68d948c4e393b072f3955f11767"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a6145e68d948c4e393b072f3955f11767">bf_swvstep</a></td></tr>
+<tr class="separator:a6145e68d948c4e393b072f3955f11767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9431053a5d24b947b848b19dc5ed12d1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9431053a5d24b947b848b19dc5ed12d1">bf_openmtp</a></td></tr>
+<tr class="separator:a9431053a5d24b947b848b19dc5ed12d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a191d04ce3b583dd43abbd848f61e4b99"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a191d04ce3b583dd43abbd848f61e4b99">bf_lpm1mode</a></td></tr>
+<tr class="separator:a191d04ce3b583dd43abbd848f61e4b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfe54b2fd17405c8dad0ad8fc6ac6f14"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#adfe54b2fd17405c8dad0ad8fc6ac6f14">bf_r25c</a></td></tr>
+<tr class="separator:adfe54b2fd17405c8dad0ad8fc6ac6f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac98ea7b9c2d4328d12dd1a96354877f8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ac98ea7b9c2d4328d12dd1a96354877f8">status_mask</a> [4]</td></tr>
+<tr class="separator:ac98ea7b9c2d4328d12dd1a96354877f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2582a137be91e37035c0136eb9c877da"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a2582a137be91e37035c0136eb9c877da">status_err</a> [4]</td></tr>
+<tr class="separator:a2582a137be91e37035c0136eb9c877da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f956514b396f0963ea07304855d9ba2"><td class="memItemLeft" align="right" valign="top">struct haptic_data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a5f956514b396f0963ea07304855d9ba2">hap_data</a></td></tr>
+<tr class="separator:a5f956514b396f0963ea07304855d9ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00406" id="a00406"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This is the main tfa device context structure, it will carry all information that is needed to handle a single I2C device instance. All functions dealing with the device will need access to the fields herein. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a07e33aced171fc35f619614a24166f3c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _wwdt_config</td>
+          <td class="memname">int tfa2_device::dev_idx</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a4a2401c8e97f8eced0fdca7ffdabacbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a2401c8e97f8eced0fdca7ffdabacbc"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4a2401c8e97f8eced0fdca7ffdabacbc">enableWwdt</a></td></tr>
-<tr class="memdesc:a4a2401c8e97f8eced0fdca7ffdabacbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables WWDT. <br/></td></tr>
-<tr class="separator:a4a2401c8e97f8eced0fdca7ffdabacbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ff22b44e352c0182bdd87b9ff61ee2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ff22b44e352c0182bdd87b9ff61ee2e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a6ff22b44e352c0182bdd87b9ff61ee2e">enableWatchdogReset</a></td></tr>
-<tr class="memdesc:a6ff22b44e352c0182bdd87b9ff61ee2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Watchdog timeout will cause a chip reset false: Watchdog timeout will not cause a chip reset <br/></td></tr>
-<tr class="separator:a6ff22b44e352c0182bdd87b9ff61ee2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf57c281f83db946ed4553f513f00061"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf57c281f83db946ed4553f513f00061"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#adf57c281f83db946ed4553f513f00061">enableWatchdogProtect</a></td></tr>
-<tr class="memdesc:adf57c281f83db946ed4553f513f00061"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Enable watchdog protect i.e timeout value can only be changed after counter is below warning &amp; window values false: Disable watchdog protect; timeout value can be changed at any time <br/></td></tr>
-<tr class="separator:adf57c281f83db946ed4553f513f00061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa664f6d30e5b267bf960ad09fb36275f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa664f6d30e5b267bf960ad09fb36275f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa664f6d30e5b267bf960ad09fb36275f">enableLockOscillator</a></td></tr>
-<tr class="memdesc:aa664f6d30e5b267bf960ad09fb36275f"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Disabling or powering down the watchdog oscillator is prevented Once set, this bit can only be cleared by a reset false: Do not lock oscillator <br/></td></tr>
-<tr class="separator:aa664f6d30e5b267bf960ad09fb36275f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7c0d3a959ecac990eed2c9cfc1a0f09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7c0d3a959ecac990eed2c9cfc1a0f09"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad7c0d3a959ecac990eed2c9cfc1a0f09">windowValue</a></td></tr>
-<tr class="memdesc:ad7c0d3a959ecac990eed2c9cfc1a0f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window value, set this to 0xFFFFFF if windowing is not in effect. <br/></td></tr>
-<tr class="separator:ad7c0d3a959ecac990eed2c9cfc1a0f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab55d5525745d39713c954d1296e2a9df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab55d5525745d39713c954d1296e2a9df"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab55d5525745d39713c954d1296e2a9df">timeoutValue</a></td></tr>
-<tr class="memdesc:ab55d5525745d39713c954d1296e2a9df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value. <br/></td></tr>
-<tr class="separator:ab55d5525745d39713c954d1296e2a9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a350a5289fd77fc6f5b2834a66726d80e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a350a5289fd77fc6f5b2834a66726d80e">warningValue</a></td></tr>
-<tr class="memdesc:a350a5289fd77fc6f5b2834a66726d80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog time counter value that will generate a warning interrupt.  <a href="#a350a5289fd77fc6f5b2834a66726d80e">More...</a><br/></td></tr>
-<tr class="separator:a350a5289fd77fc6f5b2834a66726d80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbab700e360be852f9b80ab4a37d8f68"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#acbab700e360be852f9b80ab4a37d8f68">clockFreq_Hz</a></td></tr>
-<tr class="memdesc:acbab700e360be852f9b80ab4a37d8f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog clock source frequency.  <a href="#acbab700e360be852f9b80ab4a37d8f68">More...</a><br/></td></tr>
-<tr class="separator:acbab700e360be852f9b80ab4a37d8f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a350a5289fd77fc6f5b2834a66726d80e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _wwdt_config::warningValue</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set this to 0 for no warning </p>
+<p>device container index </p>
 
 </div>
 </div>
-<a class="anchor" id="acbab700e360be852f9b80ab4a37d8f68"></a>
+<a class="anchor" id="ad7f99a229adb94e266bd256178c50212"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t _wwdt_config::clockFreq_Hz</td>
+          <td class="memname">int tfa2_device::buffer_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>lowest level max buffer size </p>
 
 </div>
 </div>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaf661d1e3e19a80b873c54fdbad5e966a"></a>
+<a class="anchor" id="ab852d604a860e4602241f553fded8a6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_WWDT_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 9))</td>
+          <td class="memname">short tfa2_device::slave_address</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>I2C slave address (not shifted) </p>
 
 </div>
 </div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gade4f744368e9723e83fdefb72e88e692"></a>
+<a class="anchor" id="a40a65c5533b8d5fc6e4a359c6668baa9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00064.html#a00406">_wwdt_config</a>  <a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a></td>
+          <td class="memname">uint16_t tfa2_device::rev</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>full revid of this device </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaca0e9724bd1f25336527ea66c77e476f"></a>
+<a class="anchor" id="a8ef7a15e2cd0769a1caeb7fbdaa904d2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00064.html#gaca0e9724bd1f25336527ea66c77e476f">_wwdt_status_flags_t</a></td>
+          <td class="memname">int tfa2_device::need_hw_init</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This structure contains the WWDT status flags for use in the WWDT functions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184"></a>kWWDT_TimeoutFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Time-out flag, set when the timer times out. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e"></a>kWWDT_WarningFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Warning interrupt flag, set when timer is below the value WDWARNINT. </p>
-</td></tr>
-</table>
+<p>hardware parameters not initialized </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gacfd7070829029279f3b3bfb763b86914"></a>
+<a class="anchor" id="ab186e9c9e3fcfb6a5045c367600a2c61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void WWDT_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
+          <td class="memname">int tfa2_device::need_cf_init</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the WWDT configure structure to default value. The default value are: </p>
-<div class="fragment"><div class="line">*  config-&gt;enableWwdt = <span class="keyword">true</span>;</div>
-<div class="line">*  config-&gt;enableWatchdogReset = <span class="keyword">false</span>;</div>
-<div class="line">*  config-&gt;enableWatchdogProtect = <span class="keyword">false</span>;</div>
-<div class="line">*  config-&gt;enableLockOscillator = <span class="keyword">false</span>;</div>
-<div class="line">*  config-&gt;windowValue = 0xFFFFFFU;</div>
-<div class="line">*  config-&gt;timeoutValue = 0xFFFFFFU;</div>
-<div class="line">*  config-&gt;warningValue = 0;</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to WWDT config structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692" title="Describes WWDT configuration structure. ">wwdt_config_t</a> </dd></dl>
+<p>CoolFlux not configured/patched </p>
 
 </div>
 </div>
-<a class="anchor" id="gadc47d88ae20552f9cd9999e6f8fc5ebe"></a>
+<a class="anchor" id="a9dfbe0afe3c8269aa555b46d7f2e1924"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void WWDT_Init </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00064.html#gade4f744368e9723e83fdefb72e88e692">wwdt_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">int tfa2_device::need_sb_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the WWDT. When called, the WWDT runs according to the configuration.</p>
-<p>Example: </p>
-<div class="fragment"><div class="line">*   <a class="code" href="a00064.html#a00406">wwdt_config_t</a> config;</div>
-<div class="line">*   <a class="code" href="a00064.html#gacfd7070829029279f3b3bfb763b86914">WWDT_GetDefaultConfig</a>(&amp;config);</div>
-<div class="line">*   config.<a class="code" href="a00064.html#ab55d5525745d39713c954d1296e2a9df">timeoutValue</a> = 0x7ffU;</div>
-<div class="line">*   <a class="code" href="a00064.html#gadc47d88ae20552f9cd9999e6f8fc5ebe">WWDT_Init</a>(wwdt_base,&amp;config);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-    <tr><td class="paramname">config</td><td>The configuration of WWDT </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>SB firmware parameters not configured </p>
 
 </div>
 </div>
-<a class="anchor" id="gaae4415d32cd0f67908d0ab9494736742"></a>
+<a class="anchor" id="a56bd7044c2a22ab3cee9bc9b3a744b13"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void WWDT_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
+          <td class="memname">enum tfa_hb_role tfa2_device::need_hb_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function shuts down the WWDT.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>HB firmware parameters needed </p>
 
 </div>
 </div>
-<a class="anchor" id="ga2620dd2baf891f32359fbe85faaca563"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void WWDT_Enable </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function write value into WWDT_MOD register to enable the WWDT, it is a write-once bit; once this bit is set to one and a watchdog feed is performed, the watchdog timer will run permanently.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga358bab6648d05345bda057a72cfb5547"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void WWDT_Disable </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00259.html#_deprecated000015">Deprecated:</a></b></dt><dd>Do not use this function. It will be deleted in next release version, for once the bit field of WDEN written with a 1, it can not be re-written with a 0.</dd></dl>
-<p>This function write value into WWDT_MOD register to disable the WWDT.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1c5dae412d14eba38f2b63abb9f982d6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t WWDT_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function gets all status flags.</p>
-<p>Example for getting Timeout Flag: </p>
-<div class="fragment"><div class="line">*   uint32_t status;</div>
-<div class="line">*   status = <a class="code" href="a00064.html#ga1c5dae412d14eba38f2b63abb9f982d6">WWDT_GetStatusFlags</a>(wwdt_base) &amp; <a class="code" href="a00064.html#ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184">kWWDT_TimeoutFlag</a>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00064.html#gaca0e9724bd1f25336527ea66c77e476f" title="WWDT status flags. ">_wwdt_status_flags_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5666008b33bf327c80afb90e0733512e"></a>
+<a class="anchor" id="a8094ac1c965c409302425a3b180f09c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void WWDT_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">int tfa2_device::sw_feature_bits[2]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function clears WWDT status flag.</p>
-<p>Example for clearing warning flag: </p>
-<div class="fragment"><div class="line">*   <a class="code" href="a00064.html#ga5666008b33bf327c80afb90e0733512e">WWDT_ClearStatusFlags</a>(wwdt_base, <a class="code" href="a00064.html#ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e">kWWDT_WarningFlag</a>);</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00064.html#gaca0e9724bd1f25336527ea66c77e476f" title="WWDT status flags. ">_wwdt_status_flags_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>cached copy of sw feature bits </p>
 
 </div>
 </div>
-<a class="anchor" id="gac575fb8568458aa8acbbed14d5aa5ffd"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void WWDT_SetWarningValue </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>warningValue</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The WDWARNINT register determines the watchdog timer counter value that will generate a watchdog interrupt. When the watchdog timer counter is no longer greater than the value defined by WARNINT, an interrupt will be generated after the subsequent WDCLK.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-    <tr><td class="paramname">warningValue</td><td>WWDT warning value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad2351329bb1ff6b966decec266d7ec16"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void WWDT_SetTimeoutValue </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>timeoutCount</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function sets the timeout value. Every time a feed sequence occurs the value in the TC register is loaded into the Watchdog timer. Writing a value below 0xFF will cause 0xFF to be loaded into the TC register. Thus the minimum time-out interval is TWDCLK*256*4. If enableWatchdogProtect flag is true in wwdt_config_t config structure, any attempt to change the timeout value before the watchdog counter is below the warning and window values will cause a watchdog reset and set the WDTOF flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-    <tr><td class="paramname">timeoutCount</td><td>WWDT timeout value, count of WWDT clock tick. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga66b5c37906be6083f083a436eebbe778"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void WWDT_SetWindowValue </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>windowValue</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The WINDOW register determines the highest TV value allowed when a watchdog feed is performed. If a feed sequence occurs when timer value is greater than the value in WINDOW, a watchdog event will occur. To disable windowing, set windowValue to 0xFFFFFF (maximum possible timer value) so windowing is not in effect.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-    <tr><td class="paramname">windowValue</td><td>WWDT window value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab1745efaa7c33fab66a552fd45e01d83"></a>
+<a class="anchor" id="a77120f6c83e8c2a4a4b36434cef54edd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void WWDT_Refresh </td>
-          <td>(</td>
-          <td class="paramtype">WWDT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
+          <td class="memname">int tfa2_device::hw_feature_bits</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function feeds the WWDT. This function should be called before WWDT timer is in timeout. Otherwise, a reset is asserted.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>WWDT peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>cached copy of hw feature bits </p>
+
+</div>
+</div>
+<a class="anchor" id="aa6437134f14cd9837482b4cf7a7f7eb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::profile</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>active profile </p>
+
+</div>
+</div>
+<a class="anchor" id="a05042c1a73c798db868caa4db4f68658"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::vstep</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>active vstep </p>
+
+</div>
+</div>
+<a class="anchor" id="a5d9a2c00dd82e358cd63be4000b1052e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum tfa9xxx_DAI tfa2_device::daimap</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>supported audio interface types </p>
+
+</div>
+</div>
+<a class="anchor" id="a1b8f4c65c1b6adb637dd02ae7befbc06"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::tfadsp_event</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>enum tfadsp_event_en is for external registry </p>
+
+</div>
+</div>
+<a class="anchor" id="aaee4d08a1c53002ac35bc9e6e6be76fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::verbose</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>verbosity level for debug print output </p>
+
+</div>
+</div>
+<a class="anchor" id="a923ff61fdad10c404b558dc5ef0a7067"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum tfa_state tfa2_device::state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>last known state or-ed with optional state_modifier </p>
+
+</div>
+</div>
+<a class="anchor" id="ad7ae98f476e71d6edb8ed576290e01f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct nxpTfaContainer* tfa2_device::cnt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>the loaded container file </p>
+
+</div>
+</div>
+<a class="anchor" id="aafeffd3b3760ba5e32280ff701314967"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::partial_enable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>enable partial updates </p>
+
+</div>
+</div>
+<a class="anchor" id="a1bde043e14a735a3e78bb93b42979586"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* tfa2_device::data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>typically pointing to Linux driver structure owning this device </p>
+
+</div>
+</div>
+<a class="anchor" id="a39173caf0f01430edb99f7077223866a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::convert_dsp32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>convert 24 bit DSP messages to 32 bit </p>
+
+</div>
+</div>
+<a class="anchor" id="a7fe7b4190ad819dea841b26fb003774e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::is_probus_device</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>probus device: device without internal DSP </p>
+
+</div>
+</div>
+<a class="anchor" id="a08717ebb35611618c23fc981b4362cb8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tfa2_device::is_extern_dsp_device</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>externel (non Coolflux) DSP device </p>
+
+</div>
+</div>
+<a class="anchor" id="a524611a07ecf94bb66749b3deab59e58"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int(* tfa2_device::tfa_init)(struct <a class="el" href="a00064.html">tfa2_device</a> *tfa)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>init for POR fixes like loading optimal settings </p>
+
+</div>
+</div>
+<a class="anchor" id="ad0f0f6deac69deb4ae13f57ee2c08a36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_clks</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_CLKS Clocks stable for overload </p>
+
+</div>
+</div>
+<a class="anchor" id="a70d2ebbda42b59383726a267c7451403"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_manstate</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_MANSTATE Device Manager status for overload </p>
+
+</div>
+</div>
+<a class="anchor" id="a2db74792ba7073b86cf8da99635bc435"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_manaoosc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_MANAOOSC overload </p>
+
+</div>
+</div>
+<a class="anchor" id="aa5a8ffdae5ce11b49aa10bd6a6ce6899"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_noclk</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_NOCLK overload </p>
+
+</div>
+</div>
+<a class="anchor" id="a61dd6458503ab1bc94c7cdb4aecde037"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_mtpb</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_MTPB overload </p>
+
+</div>
+</div>
+<a class="anchor" id="ab9dc70d4efe14b21060379458750b225"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_swprofil</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_SWPROFIL overload </p>
+
+</div>
+</div>
+<a class="anchor" id="a6145e68d948c4e393b072f3955f11767"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_swvstep</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_SWVSTEP overload </p>
+
+</div>
+</div>
+<a class="anchor" id="a9431053a5d24b947b848b19dc5ed12d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_openmtp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_OPENMTP overload </p>
+
+</div>
+</div>
+<a class="anchor" id="a191d04ce3b583dd43abbd848f61e4b99"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_lpm1mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_LPM1MODE overload </p>
+
+</div>
+</div>
+<a class="anchor" id="adfe54b2fd17405c8dad0ad8fc6ac6f14"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::bf_r25c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX_BF_R25C overload </p>
+
+</div>
+</div>
+<a class="anchor" id="ac98ea7b9c2d4328d12dd1a96354877f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::status_mask[4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>status masks for tfa2_dev_status() </p>
+
+</div>
+</div>
+<a class="anchor" id="a2582a137be91e37035c0136eb9c877da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tfa2_device::status_err[4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>error status for tfa2_dev_status() </p>
+
+</div>
+</div>
+<a class="anchor" id="a5f956514b396f0963ea07304855d9ba2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct haptic_data tfa2_device::hap_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>haptic specific data </p>
 
 </div>
 </div>

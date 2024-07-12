@@ -1,25 +1,46 @@
 var a00052 =
 [
-    [ "USB Device Configuration", "a00257.html", null ],
-    [ "_serial_port_usb_cdc_config", "a00052.html#a00368", [
-      [ "controllerIndex", "a00052.html#a14bbabeb7c5689a76a6a9fde038406cb", null ]
+    [ "_shell_command", "a00052.html#a00365", [
+      [ "pcCommand", "a00052.html#a02e67ebfd942afb269dbfa8906dabb4a", null ],
+      [ "pcHelpString", "a00052.html#acce9b1b9a25275d44a705457522151b6", null ],
+      [ "pFuncCallBack", "a00052.html#ab6ae0c867566014c33620c413c568a68", null ],
+      [ "cExpectedNumberOfParameters", "a00052.html#a9304a184b0817140b357805e4e324f58", null ],
+      [ "link", "a00052.html#ab656143c38d8fc0338aa2e58e76d73a2", null ]
     ] ],
-    [ "SERIAL_PORT_USB_CDC_HANDLE_SIZE", "a00052.html#ga360a6c81305a4e09848df9aece70ad40", null ],
-    [ "USB_DEVICE_INTERRUPT_PRIORITY", "a00052.html#ga9fb260c0db8e2e75fa339416c82084b9", null ],
-    [ "serial_port_usb_cdc_controller_index_t", "a00052.html#gaaab9e8667ce46684016297a09abee935", null ],
-    [ "serial_port_usb_cdc_config_t", "a00052.html#gafe4f070b4cb1bee1a37fbb2cb89dff9f", null ],
-    [ "_serial_port_usb_cdc_controller_index", "a00052.html#ga655b3e8c0c8f2b005fda4d47e4f48c3d", [
-      [ "kSerialManager_UsbControllerKhci0", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3daba414efbedc13dd6605fdc76daee832f", null ],
-      [ "kSerialManager_UsbControllerKhci1", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da2992ed3c36bb733a2f3760b8a5927fdd", null ],
-      [ "kSerialManager_UsbControllerEhci0", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3daa9a69ebd4f3d306f583cb23ff5bc8aad", null ],
-      [ "kSerialManager_UsbControllerEhci1", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da48e611ec0653efbf4a8b01168b8668b3", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Fs0", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3dafd13021033517524c07c581fa500a83d", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Fs1", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da4fc76a970dded05f11d3adc8c99880c3", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Hs0", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da78c55818f572f8120a85f13337ec9274", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Hs1", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da3e09ecce4e5aee8338fa0d1574139d47", null ],
-      [ "kSerialManager_UsbControllerOhci0", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3dacb150e43e1572c4f7abb9b374783ba30", null ],
-      [ "kSerialManager_UsbControllerOhci1", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da2a98602358806c8f01cdbe42cc4c763c", null ],
-      [ "kSerialManager_UsbControllerIp3516Hs0", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da51d953a091b2650c6b8283e2ce5639ae", null ],
-      [ "kSerialManager_UsbControllerIp3516Hs1", "a00052.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da863a8a6669f791ce5b5207b3d85c6664", null ]
-    ] ]
+    [ "SHELL_NON_BLOCKING_MODE", "a00052.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab", null ],
+    [ "SHELL_AUTO_COMPLETE", "a00052.html#ga30882f4b5fc99cbc21459cc960ef9ffe", null ],
+    [ "SHELL_BUFFER_SIZE", "a00052.html#gaf98219b0fb886040896b83966903a135", null ],
+    [ "SHELL_MAX_ARGS", "a00052.html#ga0800d9fb741c785d0601f0c3d7125f40", null ],
+    [ "SHELL_HISTORY_COUNT", "a00052.html#ga4362aa35752c9abf77387a237faaaea5", null ],
+    [ "SHELL_IGNORE_PARAMETER_COUNT", "a00052.html#ga8c32b818330b7a6b62a5b819703e5e8f", null ],
+    [ "SHELL_HANDLE_SIZE", "a00052.html#gaa4c15d7595f7cf7ee5f837a02cbdf574", null ],
+    [ "SHELL_USE_COMMON_TASK", "a00052.html#ga100ef8e4a639c03682d84fb981ba235b", null ],
+    [ "SHELL_TASK_PRIORITY", "a00052.html#ga5b98f71ea7bd89ef344cac14aa79a1e3", null ],
+    [ "SHELL_TASK_STACK_SIZE", "a00052.html#ga416667c8e6b960d2c1ec518b41a06d62", null ],
+    [ "SHELL_PRINT_COPYRIGHT", "a00052.html#gac4afabd0995de8a6d4c255c03e6ccc42", null ],
+    [ "SHELL_HANDLE_DEFINE", "a00052.html#gafdb2c68b2d83d459fc196ab0f58d7ab3", null ],
+    [ "SHELL_COMMAND_DEFINE", "a00052.html#gacd1f7ee25cd791efee6a45e753ec9824", null ],
+    [ "SHELL_COMMAND", "a00052.html#ga16dd6cfbd9db7dafdaa802eda58564b5", null ],
+    [ "shell_status_t", "a00052.html#ga404a8f9575fa7e73f64e24e4a1876195", null ],
+    [ "shell_handle_t", "a00052.html#ga818c3ca274bd83d1dc870a5618eb21f2", null ],
+    [ "cmd_function_t", "a00052.html#ga7ace1ddfb1e83ac1516ac44be90cf822", null ],
+    [ "shell_command_t", "a00052.html#ga408f7fb32b47f13f37eb195eb51074fe", null ],
+    [ "_shell_status", "a00052.html#gaefa59271a266a79694a5c9574f1db8b5", [
+      [ "kStatus_SHELL_Success", "a00052.html#ggaefa59271a266a79694a5c9574f1db8b5aeb6cf57843c8b47b87ae07417d53df3e", null ],
+      [ "kStatus_SHELL_Error", "a00052.html#ggaefa59271a266a79694a5c9574f1db8b5ae1a9ae61e350888892f4cde21f8dd7f9", null ],
+      [ "kStatus_SHELL_OpenWriteHandleFailed", "a00052.html#ggaefa59271a266a79694a5c9574f1db8b5a25ff80ec847b1028041ae913beec2b5b", null ],
+      [ "kStatus_SHELL_OpenReadHandleFailed", "a00052.html#ggaefa59271a266a79694a5c9574f1db8b5a14f89a732b5c11a35e8c9b91d4e22ad8", null ],
+      [ "kStatus_SHELL_RetUsage", "a00052.html#ggaefa59271a266a79694a5c9574f1db8b5ad139f389943f49d948bbff024d6c5a26", null ]
+    ] ],
+    [ "SHELL_Init", "a00052.html#ga7961e946400cd244c315cfbbd36ae5d1", null ],
+    [ "SHELL_RegisterCommand", "a00052.html#gab5f85f3ba2cc7dd58bc85076c19c5177", null ],
+    [ "SHELL_UnregisterCommand", "a00052.html#ga53355638d856258b0bcb76e308803dab", null ],
+    [ "SHELL_Write", "a00052.html#ga9f182608b5a6107757be5bb8a90ad74c", null ],
+    [ "SHELL_Printf", "a00052.html#gaade5449d8cbfc3cd026667b40c35d29f", null ],
+    [ "SHELL_WriteSynchronization", "a00052.html#ga6466b141fd4f94e78636e4a15c302dda", null ],
+    [ "SHELL_PrintfSynchronization", "a00052.html#ga56c78f6217a822015a9369bf3e52e92a", null ],
+    [ "SHELL_ChangePrompt", "a00052.html#gaca4540dc42f8892cb276691644a247e2", null ],
+    [ "SHELL_PrintPrompt", "a00052.html#gad2a840776dee8490d482a0692fbf2d7e", null ],
+    [ "SHELL_Task", "a00052.html#ga44e3087a3cdea9b62f159e2585dfcd8d", null ],
+    [ "SHELL_checkRunningInIsr", "a00052.html#ga4eeb17b16773359c132f1d40478938ec", null ]
 ];

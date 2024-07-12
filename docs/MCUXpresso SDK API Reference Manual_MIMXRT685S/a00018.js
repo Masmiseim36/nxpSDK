@@ -1,13 +1,13 @@
 var a00018 =
 [
-    [ "_dmic_transfer", "a00018.html#a00288", [
+    [ "_dmic_transfer", "a00018.html#a00285", [
       [ "data", "a00018.html#a5f1d78ebe01073d4e116735f3990874e", null ],
       [ "dataWidth", "a00018.html#a4d8a0294d047fc221c74a1a60b8afff8", null ],
       [ "dataSize", "a00018.html#aaf7335ccb01dfa80f7735e577e3d61ca", null ],
       [ "dataAddrInterleaveSize", "a00018.html#abef5b3c2bbfc6e7e6884d2f4ae496412", null ],
       [ "linkTransfer", "a00018.html#acbaf6afd6c625612e94c3b7d1980aef1", null ]
     ] ],
-    [ "_dmic_dma_handle", "a00018.html#a00287", [
+    [ "_dmic_dma_handle", "a00018.html#a00284", [
       [ "base", "a00018.html#af705e129c07b1c72464c56a1124b6da7", null ],
       [ "rxDmaHandle", "a00018.html#a1fac1e42d4157b358df44cc4d789b8cb", null ],
       [ "callback", "a00018.html#afab421d50fc6679fde9eaf131cd9947b", null ],

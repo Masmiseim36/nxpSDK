@@ -1,4 +1,5 @@
 var a00222 =
 [
-    [ "FLEXCOMM Driver", "a00223.html", "a00223" ]
+    [ "I2S DMA Driver", "a00030.html", "a00030" ],
+    [ "I2S Driver", "a00029.html", "a00029" ]
 ];

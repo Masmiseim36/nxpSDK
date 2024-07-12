@@ -53,6 +53,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DPROTECTED_STORAGE \
     -DPS_TEST \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DDISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS \
     -DQCBOR_DISABLE_FLOAT_HW_USE \
     -DUSEFULBUF_DISABLE_ALL_FLOAT \
     -DQCBOR_DISABLE_PREFERRED_FLOAT \
@@ -71,7 +72,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -105,6 +105,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DPROTECTED_STORAGE \
     -DPS_TEST \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DDISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS \
     -DQCBOR_DISABLE_FLOAT_HW_USE \
     -DUSEFULBUF_DISABLE_ALL_FLOAT \
     -DQCBOR_DISABLE_PREFERRED_FLOAT \
@@ -121,7 +122,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -145,7 +145,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -169,7 +168,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -186,7 +184,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -213,7 +210,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

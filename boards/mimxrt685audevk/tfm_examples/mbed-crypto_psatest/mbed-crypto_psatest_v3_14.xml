@@ -6,7 +6,6 @@
     <definition extID="platform.drivers.hashcrypt.MIMXRT685S"/>
     <definition extID="platform.drivers.trng.MIMXRT685S"/>
     <definition extID="middleware.mbedcrypto.MIMXRT685S"/>
-    <definition extID="middleware.mbedcrypto.psa_driver_wrapper_default.MIMXRT685S"/>
     <definition extID="middleware.psatest.ns.MIMXRT685S"/>
     <definition extID="middleware.psatest.ns.crypto.profile_large.MIMXRT685S"/>
     <definition extID="middleware.psatest.ns.crypto.MIMXRT685S"/>
@@ -31,7 +30,12 @@
     <definition extID="platform.drivers.reset.MIMXRT685S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
     <definition extID="middleware.mbedcrypto.port.MIMXRT685S"/>
+    <definition extID="middleware.mbedcrypto.port.config.MIMXRT685S"/>
+    <definition extID="middleware.mbedcrypto.port.rng.MIMXRT685S"/>
+    <definition extID="middleware.psatest.ns.tgt_dev_apis_nxp.MIMXRT685S"/>
+    <definition extID="middleware.psatest.ns.disable_weak_ecc_r1_curve_tests.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -40,7 +44,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_mbed-crypto_psatest" name="mbed-crypto_psatest" device_core="cm33_MIMXRT685S" dependency="platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S middleware.mbedcrypto.MIMXRT685S middleware.mbedcrypto.psa_driver_wrapper_default.MIMXRT685S middleware.psatest.ns.MIMXRT685S middleware.psatest.ns.crypto.profile_large.MIMXRT685S middleware.psatest.ns.crypto.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.mbedcrypto.port.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" category="mbed-crypto_examples">
+  <example id="mimxrt685audevk_mbed-crypto_psatest" name="mbed-crypto_psatest" device_core="cm33_MIMXRT685S" dependency="platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S middleware.mbedcrypto.MIMXRT685S middleware.psatest.ns.MIMXRT685S middleware.psatest.ns.crypto.profile_large.MIMXRT685S middleware.psatest.ns.crypto.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.mbedcrypto.port.MIMXRT685S middleware.mbedcrypto.port.config.MIMXRT685S middleware.mbedcrypto.port.rng.MIMXRT685S middleware.psatest.ns.tgt_dev_apis_nxp.MIMXRT685S middleware.psatest.ns.disable_weak_ecc_r1_curve_tests.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S utility.str.MIMXRT685S" category="mbed-crypto_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -62,6 +66,7 @@
           <value>CRYPTO</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CRYPTO_HW_ACCELERATOR</value>
+          <value>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</value>
         </option>
         <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
           <value>gnu.c.optimization.level.size</value>
@@ -79,7 +84,7 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-Wno-unused-function -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-Wno-unused-function -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>

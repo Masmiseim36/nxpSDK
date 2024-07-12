@@ -269,8 +269,6 @@ include_directories(${ProjDirPath}/../../../../../../components/uart)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/fft2d)
@@ -284,6 +282,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-l
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy)
 
@@ -318,8 +318,6 @@ add_executable(tflm_kws_hifi4.elf
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c"
@@ -358,6 +356,8 @@ add_executable(tflm_kws_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/delay_flexbuffers_generated_data.h"
 "${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/energy_flexbuffers_generated_data.h"
 "${ProjDirPath}/../../../../../../middleware/eiq/tensorflow-lite/signal/micro/kernels/fft_flexbuffers_generated_data.h"

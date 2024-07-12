@@ -365,7 +365,6 @@
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -374,6 +373,7 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -645,6 +645,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/../../dsp/binary</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -738,22 +739,25 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_literal_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_literal_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_literal_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -831,12 +835,7 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
-          <state>--keep=__dsp_literal_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1040,19 +1039,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -1478,7 +1477,6 @@
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1487,6 +1485,7 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1757,6 +1756,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/../../dsp/binary</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1850,22 +1850,25 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_literal_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_literal_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_literal_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -1943,12 +1946,7 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
-          <state>--keep=__dsp_literal_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2152,19 +2150,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -2587,6 +2585,9 @@
             <group>
               <name>non_secure</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.S</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
               <file>
@@ -2650,7 +2651,16 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -2718,12 +2728,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2737,6 +2741,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

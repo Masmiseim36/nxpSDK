@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: IAP OTP Driver</title>
+<title>MCUXpresso SDK API Reference Manual: OSTIMER: OS Event Timer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,161 +99,286 @@ $(document).ready(function(){initNavTree('a00237.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">IAP OTP Driver<div class="ingroups"><a class="el" href="a00236.html">IAP: In Application Programming Driver</a></div></div>  </div>
+<div class="title">OSTIMER: OS Event Timer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the OSTIMER module of MCUXpresso SDK devices. OSTIMER driver is created to help user to operate the OSTIMER module. The OSTIMER timer can be used as a low power timer. The APIs can be used to enable the OSTIMER module, initialize it and set the match time, get the current timer count. And the raw value in OS timer register is gray-code type, so both decimal and gray-code format API were added for users. OSTIMER can be used as a wake up source from low power mode.</p>
+<h1><a class="anchor" id="OSTIMERFunc"></a>
+Function groups</h1>
+<p>The OSTIMER driver supports operating the module as a time counter.</p>
+<h2><a class="anchor" id="OSTIMERInit"></a>
+Initialization and deinitialization</h2>
+<p>The <a class="el" href="a00237.html#ga575fcffb115c76d2986d8c64a152ea7b" title="Initializes an OSTIMER by turning its bus clock on. ">OSTIMER_Init()</a> function will initialize the OSTIMER and enable the clock for OSTIMER. The <a class="el" href="a00237.html#gacabf48efa9079adc9d71f64c29863f68" title="Deinitializes a OSTIMER instance. ">OSTIMER_Deinit()</a> function will shut down the bus clock of OSTIMER.</p>
+<h2><a class="anchor" id="OSTIMERsTATUS"></a>
+OSTIMER status</h2>
+<p>The function <a class="el" href="a00237.html#ga20486459bd687b67ccbe23a186320fea" title="Get OSTIMER status Flags. ">OSTIMER_GetStatusFlags()</a> will get the current status flag of OSTIMER. The function OSTIMER_ClearStatusFlag() will help clear the status flags.</p>
+<h2><a class="anchor" id="OSTIMERMatchValue"></a>
+OSTIMER set match value</h2>
+<p>For OSTIMER, allow users set the match in two ways, set match value with raw data(gray code) and st the match value with common data(decimal format). <a class="el" href="a00237.html#gac1d3a55e30354fbf5ade50456da6dfcc" title="Set the match raw value for OSTIMER. ">OSTIMER_SetMatchRawValue()</a> is used with gray code and <a class="el" href="a00237.html#gafa080f88a75d1a6e3fbe17482f89fe70" title="Set the match value for OSTIMER. ">OSTIMER_SetMatchValue()</a> is used together with decimal data.</p>
+<h2><a class="anchor" id="OSTIMERTimerCount"></a>
+OSTIMER get timer count</h2>
+<p>The OSTIMER driver allow users to get the timer count in two ways, getting the gray code value by using <a class="el" href="a00237.html#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a" title="Get the capture value from OSTIMER. ">OSTIMER_GetCaptureRawValue()</a> and getting the decimal data by using <a class="el" href="a00237.html#gaedcc9b8f01a37ce8505348300b2af7f1" title="Get current timer count value from OSTIMER. ">OSTIMER_GetCurrentTimerValue()</a>.</p>
+<h1><a class="anchor" id="OSTIMERUseCase"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/ostimer/ </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00179"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html">fsl_ostimer.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gacf52fa3c35d54caf94c639603261ebb4"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> )(void)</td></tr>
+<tr class="memdesc:gacf52fa3c35d54caf94c639603261ebb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ostimer callback function.  <a href="#gacf52fa3c35d54caf94c639603261ebb4">More...</a><br/></td></tr>
+<tr class="separator:gacf52fa3c35d54caf94c639603261ebb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaabfcbcb5ac86a1edac4035264bc7d2b8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"></td></tr>
-<tr class="memdesc:gaabfcbcb5ac86a1edac4035264bc7d2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTP Status Group. <br/></td></tr>
-<tr class="separator:gaabfcbcb5ac86a1edac4035264bc7d2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00">kStatus_OTP_InvalidAddress</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93">kStatus_OTP_ProgramFail</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4">kStatus_OTP_CrcFail</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5">kStatus_OTP_Error</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0">kStatus_OTP_EccCheckFail</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7">kStatus_OTP_Locked</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 6), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4">kStatus_OTP_Timeout</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 7), 
-<br/>
-&#160;&#160;<a class="el" href="a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5">kStatus_OTP_CrcCheckPass</a> = MAKE_STATUS(kStatusGroup_OtpGroup, 8)
-<br/>
+<tr class="memitem:gaac312289965a1d084b78995332c8bcdb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaac312289965a1d084b78995332c8bcdb">_ostimer_flags</a> { <a class="el" href="a00237.html#ggaac312289965a1d084b78995332c8bcdba55d291c3a4ec78cbc55f05847146e8b4">kOSTIMER_MatchInterruptFlag</a> = (OSTIMER_OSEVENT_CTRL_OSTIMER_INTRFLAG_MASK)
  }</td></tr>
-<tr class="memdesc:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTP Error Status definitions.  <a href="a00237.html#ga5d76b81b0ad4c19007a781d4edb8181f">More...</a><br/></td></tr>
-<tr class="separator:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaac312289965a1d084b78995332c8bcdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSTIMER status flags.  <a href="a00237.html#gaac312289965a1d084b78995332c8bcdb">More...</a><br/></td></tr>
+<tr class="separator:gaac312289965a1d084b78995332c8bcdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gab7b9a8dea075fba8f8742ff263c8b298"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gab7b9a8dea075fba8f8742ff263c8b298">IAP_OtpInit</a> (uint32_t src_clk_freq)</td></tr>
-<tr class="memdesc:gab7b9a8dea075fba8f8742ff263c8b298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize OTP controller.  <a href="#gab7b9a8dea075fba8f8742ff263c8b298">More...</a><br/></td></tr>
-<tr class="separator:gab7b9a8dea075fba8f8742ff263c8b298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa3411920d5a6dd4cfbaf0ffc8064349"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaaa3411920d5a6dd4cfbaf0ffc8064349">IAP_OtpDeinit</a> (void)</td></tr>
-<tr class="memdesc:gaaa3411920d5a6dd4cfbaf0ffc8064349"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-Initialize OTP controller.  <a href="#gaaa3411920d5a6dd4cfbaf0ffc8064349">More...</a><br/></td></tr>
-<tr class="separator:gaaa3411920d5a6dd4cfbaf0ffc8064349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee0553e40fa9b328a6ddc248db5e0f41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaee0553e40fa9b328a6ddc248db5e0f41">IAP_OtpFuseRead</a> (uint32_t addr, uint32_t *data)</td></tr>
-<tr class="memdesc:gaee0553e40fa9b328a6ddc248db5e0f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read Fuse value from OTP Fuse Block.  <a href="#gaee0553e40fa9b328a6ddc248db5e0f41">More...</a><br/></td></tr>
-<tr class="separator:gaee0553e40fa9b328a6ddc248db5e0f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccf763b9b621276e1d0f10bbc9aa7124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaccf763b9b621276e1d0f10bbc9aa7124">IAP_OtpFuseProgram</a> (uint32_t addr, uint32_t data, bool lock)</td></tr>
-<tr class="memdesc:gaccf763b9b621276e1d0f10bbc9aa7124"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program value to OTP Fuse block.  <a href="#gaccf763b9b621276e1d0f10bbc9aa7124">More...</a><br/></td></tr>
-<tr class="separator:gaccf763b9b621276e1d0f10bbc9aa7124"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf922b6790f2d0ec29fc1a9f63a42e775"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaf922b6790f2d0ec29fc1a9f63a42e775">IAP_OtpShadowRegisterReload</a> (void)</td></tr>
-<tr class="memdesc:gaf922b6790f2d0ec29fc1a9f63a42e775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reload all shadow registers from OTP fuse block.  <a href="#gaf922b6790f2d0ec29fc1a9f63a42e775">More...</a><br/></td></tr>
-<tr class="separator:gaf922b6790f2d0ec29fc1a9f63a42e775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf19747f602ac5c200bba398f7601b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gadf19747f602ac5c200bba398f7601b88">IAP_OtpCrcCheck</a> (uint32_t start_addr, uint32_t end_addr, uint32_t crc_addr)</td></tr>
-<tr class="memdesc:gadf19747f602ac5c200bba398f7601b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do CRC Check via OTP controller.  <a href="#gadf19747f602ac5c200bba398f7601b88">More...</a><br/></td></tr>
-<tr class="separator:gadf19747f602ac5c200bba398f7601b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3cce0671a425a0af2e1903f758bd7106"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga3cce0671a425a0af2e1903f758bd7106">IAP_OtpCrcCalc</a> (uint32_t *src, uint32_t numberOfWords, uint32_t *crcChecksum)</td></tr>
-<tr class="memdesc:ga3cce0671a425a0af2e1903f758bd7106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the CRC checksum for specified data for OTP.  <a href="#ga3cce0671a425a0af2e1903f758bd7106">More...</a><br/></td></tr>
-<tr class="separator:ga3cce0671a425a0af2e1903f758bd7106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:gab236ace723c08a0a7b8b1df2b34ee375"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gab236ace723c08a0a7b8b1df2b34ee375">FSL_OSTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
+<tr class="memdesc:gab236ace723c08a0a7b8b1df2b34ee375"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSTIMER driver version.  <a href="#gab236ace723c08a0a7b8b1df2b34ee375">More...</a><br/></td></tr>
+<tr class="separator:gab236ace723c08a0a7b8b1df2b34ee375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga575fcffb115c76d2986d8c64a152ea7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga575fcffb115c76d2986d8c64a152ea7b">OSTIMER_Init</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:ga575fcffb115c76d2986d8c64a152ea7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an OSTIMER by turning its bus clock on.  <a href="#ga575fcffb115c76d2986d8c64a152ea7b">More...</a><br/></td></tr>
+<tr class="separator:ga575fcffb115c76d2986d8c64a152ea7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacabf48efa9079adc9d71f64c29863f68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gacabf48efa9079adc9d71f64c29863f68">OSTIMER_Deinit</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:gacabf48efa9079adc9d71f64c29863f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a OSTIMER instance.  <a href="#gacabf48efa9079adc9d71f64c29863f68">More...</a><br/></td></tr>
+<tr class="separator:gacabf48efa9079adc9d71f64c29863f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga781cdfc8f94edec6214964abccb43d59"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga781cdfc8f94edec6214964abccb43d59">OSTIMER_GrayToDecimal</a> (uint64_t gray)</td></tr>
+<tr class="memdesc:ga781cdfc8f94edec6214964abccb43d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate the value from gray-code to decimal.  <a href="#ga781cdfc8f94edec6214964abccb43d59">More...</a><br/></td></tr>
+<tr class="separator:ga781cdfc8f94edec6214964abccb43d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7d0d290d85412702670d7d4b0a87b62"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaf7d0d290d85412702670d7d4b0a87b62">OSTIMER_DecimalToGray</a> (uint64_t dec)</td></tr>
+<tr class="memdesc:gaf7d0d290d85412702670d7d4b0a87b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate the value from decimal to gray-code.  <a href="#gaf7d0d290d85412702670d7d4b0a87b62">More...</a><br/></td></tr>
+<tr class="separator:gaf7d0d290d85412702670d7d4b0a87b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20486459bd687b67ccbe23a186320fea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga20486459bd687b67ccbe23a186320fea">OSTIMER_GetStatusFlags</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:ga20486459bd687b67ccbe23a186320fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get OSTIMER status Flags.  <a href="#ga20486459bd687b67ccbe23a186320fea">More...</a><br/></td></tr>
+<tr class="separator:ga20486459bd687b67ccbe23a186320fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa8ce064965da4ddae0d318f8dd2f7a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaaa8ce064965da4ddae0d318f8dd2f7a5">OSTIMER_ClearStatusFlags</a> (OSTIMER_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaaa8ce064965da4ddae0d318f8dd2f7a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Status Interrupt Flags.  <a href="#gaaa8ce064965da4ddae0d318f8dd2f7a5">More...</a><br/></td></tr>
+<tr class="separator:gaaa8ce064965da4ddae0d318f8dd2f7a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1d3a55e30354fbf5ade50456da6dfcc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gac1d3a55e30354fbf5ade50456da6dfcc">OSTIMER_SetMatchRawValue</a> (OSTIMER_Type *base, uint64_t count, <a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> cb)</td></tr>
+<tr class="memdesc:gac1d3a55e30354fbf5ade50456da6dfcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the match raw value for OSTIMER.  <a href="#gac1d3a55e30354fbf5ade50456da6dfcc">More...</a><br/></td></tr>
+<tr class="separator:gac1d3a55e30354fbf5ade50456da6dfcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa080f88a75d1a6e3fbe17482f89fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gafa080f88a75d1a6e3fbe17482f89fe70">OSTIMER_SetMatchValue</a> (OSTIMER_Type *base, uint64_t count, <a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> cb)</td></tr>
+<tr class="memdesc:gafa080f88a75d1a6e3fbe17482f89fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the match value for OSTIMER.  <a href="#gafa080f88a75d1a6e3fbe17482f89fe70">More...</a><br/></td></tr>
+<tr class="separator:gafa080f88a75d1a6e3fbe17482f89fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1df9495c6a1f63f621510a6f0fd767d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gad1df9495c6a1f63f621510a6f0fd767d">OSTIMER_SetMatchRegister</a> (OSTIMER_Type *base, uint64_t value)</td></tr>
+<tr class="memdesc:gad1df9495c6a1f63f621510a6f0fd767d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value to OSTIMER MATCH register directly.  <a href="#gad1df9495c6a1f63f621510a6f0fd767d">More...</a><br/></td></tr>
+<tr class="separator:gad1df9495c6a1f63f621510a6f0fd767d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31eb0176e79686beb6084fb432eb18d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga31eb0176e79686beb6084fb432eb18d0">OSTIMER_EnableMatchInterrupt</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:ga31eb0176e79686beb6084fb432eb18d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the OSTIMER counter match interrupt.  <a href="#ga31eb0176e79686beb6084fb432eb18d0">More...</a><br/></td></tr>
+<tr class="separator:ga31eb0176e79686beb6084fb432eb18d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf60122d7b4717f4f1703a03e452b724e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaf60122d7b4717f4f1703a03e452b724e">OSTIMER_DisableMatchInterrupt</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:gaf60122d7b4717f4f1703a03e452b724e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the OSTIMER counter match interrupt.  <a href="#gaf60122d7b4717f4f1703a03e452b724e">More...</a><br/></td></tr>
+<tr class="separator:gaf60122d7b4717f4f1703a03e452b724e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8a253a9a44e2073f4ac6673d025aa60"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaa8a253a9a44e2073f4ac6673d025aa60">OSTIMER_GetCurrentTimerRawValue</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:gaa8a253a9a44e2073f4ac6673d025aa60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current timer raw count value from OSTIMER.  <a href="#gaa8a253a9a44e2073f4ac6673d025aa60">More...</a><br/></td></tr>
+<tr class="separator:gaa8a253a9a44e2073f4ac6673d025aa60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedcc9b8f01a37ce8505348300b2af7f1"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gaedcc9b8f01a37ce8505348300b2af7f1">OSTIMER_GetCurrentTimerValue</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:gaedcc9b8f01a37ce8505348300b2af7f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current timer count value from OSTIMER.  <a href="#gaedcc9b8f01a37ce8505348300b2af7f1">More...</a><br/></td></tr>
+<tr class="separator:gaedcc9b8f01a37ce8505348300b2af7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a">OSTIMER_GetCaptureRawValue</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the capture value from OSTIMER.  <a href="#ga8e8b5d2e9d62a5f59fbb0d0de5991b9a">More...</a><br/></td></tr>
+<tr class="separator:ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga877efd24b60e479795af41dc365561c5"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ga877efd24b60e479795af41dc365561c5">OSTIMER_GetCaptureValue</a> (OSTIMER_Type *base)</td></tr>
+<tr class="memdesc:ga877efd24b60e479795af41dc365561c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the capture value from OSTIMER.  <a href="#ga877efd24b60e479795af41dc365561c5">More...</a><br/></td></tr>
+<tr class="separator:ga877efd24b60e479795af41dc365561c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad80c44c301cf21a8d5762de871d22632"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#gad80c44c301cf21a8d5762de871d22632">OSTIMER_HandleIRQ</a> (OSTIMER_Type *base, <a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a> cb)</td></tr>
+<tr class="memdesc:gad80c44c301cf21a8d5762de871d22632"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS timer interrupt Service Handler.  <a href="#gad80c44c301cf21a8d5762de871d22632">More...</a><br/></td></tr>
+<tr class="separator:gad80c44c301cf21a8d5762de871d22632"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga5d76b81b0ad4c19007a781d4edb8181f"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gab236ace723c08a0a7b8b1df2b34ee375"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">#define FSL_OSTIMER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gacf52fa3c35d54caf94c639603261ebb4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* ostimer_callback_t)(void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaac312289965a1d084b78995332c8bcdb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00237.html#gaac312289965a1d084b78995332c8bcdb">_ostimer_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00"></a>kStatus_OTP_InvalidAddress</em>&nbsp;</td><td class="fielddoc">
-<p>Invalid OTP address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93"></a>kStatus_OTP_ProgramFail</em>&nbsp;</td><td class="fielddoc">
-<p>Program Fail. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4"></a>kStatus_OTP_CrcFail</em>&nbsp;</td><td class="fielddoc">
-<p>CrcCheck Fail. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5"></a>kStatus_OTP_Error</em>&nbsp;</td><td class="fielddoc">
-<p>Errors happened during OTP operation. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0"></a>kStatus_OTP_EccCheckFail</em>&nbsp;</td><td class="fielddoc">
-<p>Ecc Check failed during OTP operation. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7"></a>kStatus_OTP_Locked</em>&nbsp;</td><td class="fielddoc">
-<p>OTP Fuse field has been locked. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4"></a>kStatus_OTP_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>OTP operation time out. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5"></a>kStatus_OTP_CrcCheckPass</em>&nbsp;</td><td class="fielddoc">
-<p>OTP CRC Check Pass. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaac312289965a1d084b78995332c8bcdba55d291c3a4ec78cbc55f05847146e8b4"></a>kOSTIMER_MatchInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Match interrupt flag bit, sets if the match value was reached. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gab7b9a8dea075fba8f8742ff263c8b298"></a>
+<a class="anchor" id="ga575fcffb115c76d2986d8c64a152ea7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpInit </td>
+          <td class="memname">void OSTIMER_Init </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>src_clk_freq</em></td><td>)</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function enables OTP Controller clock.</p>
+
+</div>
+</div>
+<a class="anchor" id="gacabf48efa9079adc9d71f64c29863f68"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OSTIMER_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function shuts down OSTIMER bus clock</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">src_clk_freq</td><td>The Frequency of the source clock of OTP controller </td></tr>
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaaa3411920d5a6dd4cfbaf0ffc8064349"></a>
+<a class="anchor" id="ga781cdfc8f94edec6214964abccb43d59"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpDeinit </td>
+          <td class="memname">uint64_t OSTIMER_GrayToDecimal </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>gray</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This functin disables OTP Controller Clock. </p>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gray</td><td>The gray value input. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The decimal value. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaee0553e40fa9b328a6ddc248db5e0f41"></a>
+<a class="anchor" id="gaf7d0d290d85412702670d7d4b0a87b62"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint64_t OSTIMER_DecimalToGray </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>dec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dec</td><td>The decimal value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The gray code of the input value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga20486459bd687b67ccbe23a186320fea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpFuseRead </td>
+          <td class="memname">uint32_t OSTIMER_GetStatusFlags </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addr</em>, </td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This returns the status flag. Currently, only match interrupt flag can be got.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status register value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaaa8ce064965da4ddae0d318f8dd2f7a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OSTIMER_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -262,39 +387,39 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function read fuse data from OTP Fuse block to specified data buffer.</p>
+<p>This clears intrrupt status flag. Currently, only match interrupt flag can be cleared.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">addr</td><td>Fuse address </td></tr>
-    <tr><td class="paramname">data</td><td>Buffer to hold the data read from OTP Fuse block </td></tr>
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Clear bit mask. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success - Data read from OTP Fuse block successfully kStatus_InvalidArgument - data pointer is invalid kStatus_OTP_EccCheckFail - Ecc Check Failed kStatus_OTP_Error - Other Errors </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaccf763b9b621276e1d0f10bbc9aa7124"></a>
+<a class="anchor" id="gac1d3a55e30354fbf5ade50456da6dfcc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpFuseProgram </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OSTIMER_SetMatchRawValue </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addr</em>, </td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>lock</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -303,58 +428,46 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function program data to specified OTP Fuse address.</p>
+<p>This function will set a match value for OSTIMER with an optional callback. And this callback will be called while the data in dedicated pair match register is equals to the value of central EVTIMER. Please note that, the data format is gray-code, if decimal data was desired, please using <a class="el" href="a00237.html#gafa080f88a75d1a6e3fbe17482f89fe70" title="Set the match value for OSTIMER. ">OSTIMER_SetMatchValue()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">addr</td><td>Fuse address </td></tr>
-    <tr><td class="paramname">data</td><td>data to be programmed into OTP Fuse block </td></tr>
-    <tr><td class="paramname">lock</td><td>lock the fuse field or not </td></tr>
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+    <tr><td class="paramname">count</td><td>OSTIMER timer match value.(Value is gray-code format)</td></tr>
+    <tr><td class="paramname">cb</td><td>OSTIMER callback (can be left as NULL if none, otherwise should be a void func(void)). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success - Data has been programmed into OTP Fuse block successfully kStatus_OTP_ProgramFail - Fuse programming failed kStatus_OTP_Locked - The address to be programmed into is locked kStatus_OTP_Error - Other Errors </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>- Set match raw value and enable interrupt Successfully. </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>- Set match raw value fail. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf922b6790f2d0ec29fc1a9f63a42e775"></a>
+<a class="anchor" id="gafa080f88a75d1a6e3fbe17482f89fe70"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpShadowRegisterReload </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OSTIMER_SetMatchValue </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function reloads all the shadow registers from OTP Fuse block</p>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success - Shadow registers' reloadding succeeded. kStatus_OTP_EccCheckFail - Ecc Check Failed kStatus_OTP_Error - Other Errors </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gadf19747f602ac5c200bba398f7601b88"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpCrcCheck </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>start_addr</em>, </td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>end_addr</em>, </td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>crc_addr</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -363,40 +476,256 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function checks whether data in specified fuse address ranges match the crc value in the specified CRC address and return the actual crc value as needed.</p>
+<p>This function will set a match value for OSTIMER with an optional callback. And this callback will be called while the data in dedicated pair match register is equals to the value of central OS TIMER.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">start_addr</td><td>Start address of selected Fuse address range </td></tr>
-    <tr><td class="paramname">end_addr</td><td>End address of selected Fuse address range </td></tr>
-    <tr><td class="paramname">crc_addr</td><td>Address that hold CRC data</td></tr>
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+    <tr><td class="paramname">count</td><td>OSTIMER timer match value.(Value is decimal format, and this value will be translate to Gray code internally.)</td></tr>
+    <tr><td class="paramname">cb</td><td>OSTIMER callback (can be left as NULL if none, otherwise should be a void func(void)). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success CRC check succeeded, CRC value matched. kStatus_InvalidArgument - Invalid Argument kStatus_OTP_EccCheckFail Ecc Check Failed kStatus_OTP_CrcFail CRC Check Failed </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>- Set match value and enable interrupt Successfully. </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>- Set match value fail. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3cce0671a425a0af2e1903f758bd7106"></a>
+<a class="anchor" id="gad1df9495c6a1f63f621510a6f0fd767d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void OSTIMER_SetMatchRegister </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes the input value to OSTIMER MATCH register directly, it does not touch any other registers. Note that, the data format is gray-code. The function <a class="el" href="a00237.html#gaf7d0d290d85412702670d7d4b0a87b62">OSTIMER_DecimalToGray</a> could convert decimal value to gray code.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+    <tr><td class="paramname">value</td><td>OSTIMER timer match value (Value is gray-code format). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga31eb0176e79686beb6084fb432eb18d0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void OSTIMER_EnableMatchInterrupt </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Enable the timer counter match interrupt. The interrupt happens when OSTIMER counter matches the value in MATCH registers.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf60122d7b4717f4f1703a03e452b724e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void OSTIMER_DisableMatchInterrupt </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Disable the timer counter match interrupt. The interrupt happens when OSTIMER counter matches the value in MATCH registers.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa8a253a9a44e2073f4ac6673d025aa60"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint64_t OSTIMER_GetCurrentTimerRawValue </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will get a gray code type timer count value from OS timer register. The raw value of timer count is gray code format.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Raw value of OSTIMER, gray code format. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaedcc9b8f01a37ce8505348300b2af7f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IAP_OtpCrcCalc </td>
+          <td class="memname">uint64_t OSTIMER_GetCurrentTimerValue </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will get a decimal timer count value. The RAW value of timer count is gray code format, will be translated to decimal data internally.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of OSTIMER which will be formated to decimal value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8e8b5d2e9d62a5f59fbb0d0de5991b9a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint64_t OSTIMER_GetCaptureRawValue </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will get a captured gray-code value from OSTIMER. The Raw value of timer capture is gray code format.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Raw value of capture register, data format is gray code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga877efd24b60e479795af41dc365561c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t OSTIMER_GetCaptureValue </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will get a capture decimal-value from OSTIMER. The RAW value of timer capture is gray code format, will be translated to decimal data internally.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OSTIMER peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of capture register, data format is decimal. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad80c44c301cf21a8d5762de871d22632"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OSTIMER_HandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">OSTIMER_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>numberOfWords</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>crcChecksum</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00237.html#gacf52fa3c35d54caf94c639603261ebb4">ostimer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -405,16 +734,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function calculates the CRC checksum for specified data for OTP</p>
+<p>This function handles the interrupt and refers to the callback array in the driver to callback user (as per request in <a class="el" href="a00237.html#gafa080f88a75d1a6e3fbe17482f89fe70" title="Set the match value for OSTIMER. ">OSTIMER_SetMatchValue()</a>). if no user callback is scheduled, the interrupt will simply be cleared.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">src</td><td>the source address of data </td></tr>
-    <tr><td class="paramname">numberOfWords</td><td>number of Fuse words </td></tr>
-    <tr><td class="paramname">crcChecksum</td><td>Buffer to store the CRC checksum</td></tr>
+    <tr><td class="paramname">base</td><td>OS timer peripheral base address. </td></tr>
+    <tr><td class="paramname">cb</td><td>callback scheduled for this instance of OS timer </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success CRC checksum is computed successfully. kStatus_InvalidArgument - Invalid Argument </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>

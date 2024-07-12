@@ -34,6 +34,7 @@
 #if (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)) ||                           \
     (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) ||                             \
     (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) ||                     \
+    (defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)) ||                     \
     (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || (defined(ELS)) || \
     (defined(FSL_FEATURE_SOC_ELE_S4XX)) /* Need to find some suitable feature for ELE 400 Crypto availability */
 

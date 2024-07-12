@@ -21,7 +21,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/codecs/vorbis_dec/hifi4/include/vorbis_dec
 )
 
-if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
+if(CONFIG_TOOLCHAIN STREQUAL xcc)
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
       ${CMAKE_CURRENT_LIST_DIR}/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a

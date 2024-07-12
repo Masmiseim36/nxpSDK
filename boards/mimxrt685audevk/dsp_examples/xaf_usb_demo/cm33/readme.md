@@ -37,17 +37,21 @@ There are limited features in release SRAM target because of memory limitations.
 set appropriate preprocessor define in project settings to 0/1.
 Debug and flash targets have full functionality enabled.
 
+In order to get TRACE debug output from the XAF it is necessary to define XF_TRACE 1 in the project settings.
+It is possible to save the TRACE output into RAM using DUMP_TRACE_TO_BUF 1 define on project level.
+Please see the initalization of the TRACE function in the xaf_main_dsp.c file.
+For more details see XAF documentation.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
+- IAR embedded Workbench  9.60.1
+- Keil MDK  5.39.0
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================

@@ -46,7 +46,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCONFIG_TFM_ENABLE_MEMORY_PROTECT \
     -DTFM_PARTITION_NS_AGENT_TZ \
     -DTFM_PARTITION_IDLE \
-    -DPLATFORM_DEFAULT_NV_COUNTERS \
     -DPLATFORM_DEFAULT_OTP \
     -DPLATFORM_DEFAULT_PROVISIONING \
     -DOTP_WRITEABLE \
@@ -82,6 +81,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DQCBOR_DISABLE_FLOAT_HW_USE \
     -DUSEFULBUF_DISABLE_ALL_FLOAT \
     -DQCBOR_DISABLE_PREFERRED_FLOAT \
+    -DPLATFORM_DEFAULT_NV_COUNTERS \
     -O1 \
     -g \
     -O0 \
@@ -101,7 +101,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -128,7 +127,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCONFIG_TFM_ENABLE_MEMORY_PROTECT \
     -DTFM_PARTITION_NS_AGENT_TZ \
     -DTFM_PARTITION_IDLE \
-    -DPLATFORM_DEFAULT_NV_COUNTERS \
     -DPLATFORM_DEFAULT_OTP \
     -DPLATFORM_DEFAULT_PROVISIONING \
     -DOTP_WRITEABLE \
@@ -164,6 +162,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DQCBOR_DISABLE_FLOAT_HW_USE \
     -DUSEFULBUF_DISABLE_ALL_FLOAT \
     -DQCBOR_DISABLE_PREFERRED_FLOAT \
+    -DPLATFORM_DEFAULT_NV_COUNTERS \
     -Os \
     -mcmse \
     -Wno-unused-variable \
@@ -181,7 +180,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -206,7 +204,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -231,7 +228,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -250,7 +246,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -279,7 +274,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

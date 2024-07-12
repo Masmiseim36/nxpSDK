@@ -1,7 +1,7 @@
 var ringbuffer_8h =
 [
     [ "ringbuf_t", "structringbuf.html", "structringbuf" ],
-    [ "ringbuf_create", "ringbuffer_8h.html#a7ed2c52016fcac4bc77246162d424b22", null ],
+    [ "ringbuf_create", "ringbuffer_8h.html#a57b04ea772872623598f0fdfb86b22c5", null ],
     [ "ringbuf_destroy", "ringbuffer_8h.html#a3967d6caa33ef97e5273baeac4cbf8b5", null ],
     [ "ringbuf_clear", "ringbuffer_8h.html#ae28ef68379b4dd846055244c90de820b", null ],
     [ "ringbuf_get_occupancy", "ringbuffer_8h.html#ab9ffbc5b53abfe413902cc401c580c45", null ],

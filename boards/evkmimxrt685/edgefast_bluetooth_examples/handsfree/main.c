@@ -135,7 +135,7 @@ hal_audio_config_t txSpeakerConfig = {
     .sampleRate_Hz     = (uint32_t)kHAL_AudioSampleRate8KHz,
     .frameLength       = 32,
     .fifoWatermark     = 0,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -162,7 +162,7 @@ hal_audio_config_t rxMicConfig = {
     .sampleRate_Hz     = (uint32_t)kHAL_AudioSampleRate8KHz,
     .frameLength       = 32,
     .fifoWatermark     = 0,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -190,12 +190,12 @@ hal_audio_config_t txMicConfig = {
 #if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1ZM_USD))
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
 #elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD) || \
-       defined(WIFI_IW416_BOARD_MURATA_1XK_USD))
+       defined(WIFI_IW416_BOARD_MURATA_1XK_USD)|| defined(WIFI_IW612_BOARD_MURATA_2EL_USD))
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif
     .fifoWatermark     = 0,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -223,12 +223,12 @@ hal_audio_config_t rxSpeakerConfig = {
 #if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1ZM_USD))
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
 #elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD) || \
-       defined(WIFI_IW416_BOARD_MURATA_1XK_USD))
+       defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW612_BOARD_MURATA_2EL_USD))
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif
     .fifoWatermark     = 0,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -241,6 +241,24 @@ hal_audio_config_t rxSpeakerConfig = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void BOARD_SwitchAudioFrameLen(uint32_t sampleRate)
+{
+  if(8000 == sampleRate)
+  {
+#if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+      rxSpeakerConfig.frameLength = 22;
+      txMicConfig.frameLength = 22;
+#endif
+  }
+  else if(16000 == sampleRate)
+  {
+#if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+      rxSpeakerConfig.frameLength = 128;
+      txMicConfig.frameLength = 128;
+#endif
+  }
+}
+
 
 uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
 {
@@ -325,7 +343,7 @@ uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
         wm8904ScoConfig1.i2cConfig.codecI2CSourceClock = wm8904ScoConfig.i2cConfig.codecI2CSourceClock;
         wm8904ScoConfig1.mclk_HZ                       = wm8904ScoConfig.mclk_HZ;
     }
-
+    BOARD_SwitchAudioFrameLen(sampleRate);
     return CLOCK_GetMclkClkFreq();
 }
 
@@ -389,7 +407,7 @@ void BOARD_I3C_ReleaseBus(void)
 
 
 #if defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || \
-    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
+    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW612_BOARD_MURATA_2EL_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

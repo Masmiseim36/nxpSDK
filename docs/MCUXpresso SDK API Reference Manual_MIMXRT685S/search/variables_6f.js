@@ -1,19 +1,19 @@
 var searchData=
 [
-  ['ocr',['ocr',['../a00039.html#ae64eb8c922a66132a3fe3fee85c02272',1,'_mmc_card::ocr()'],['../a00046.html#ae541aa02691ef02e47e06dc45355315d',1,'_sd_card::ocr()'],['../a00047.html#a9c71a024c630845443b6a5e41ec35930',1,'_sdio_card::ocr()']]],
-  ['offline',['offline',['../a00035.html#a1bdba99be8c955f59d4ea751fee40e5e',1,'_i3c_slave_config::offline()'],['../a00033.html#a81b6d334e852fecc5812846e2b6f7fd8',1,'_i3c_config::offline()']]],
-  ['onechannel',['oneChannel',['../a00030.html#a08c393f7fb7985c1469fc27eece2f444',1,'_i2s_config::oneChannel()'],['../a00030.html#a8f1bd07030d0e210ff1e6f6ad6d719bf',1,'_i2s_handle::oneChannel()']]],
+  ['ocr',['ocr',['../a00038.html#ae64eb8c922a66132a3fe3fee85c02272',1,'_mmc_card::ocr()'],['../a00045.html#ae541aa02691ef02e47e06dc45355315d',1,'_sd_card::ocr()'],['../a00046.html#a9c71a024c630845443b6a5e41ec35930',1,'_sdio_card::ocr()']]],
+  ['offline',['offline',['../a00034.html#a1bdba99be8c955f59d4ea751fee40e5e',1,'_i3c_slave_config::offline()'],['../a00032.html#a81b6d334e852fecc5812846e2b6f7fd8',1,'_i3c_config::offline()']]],
+  ['onechannel',['oneChannel',['../a00029.html#a08c393f7fb7985c1469fc27eece2f444',1,'_i2s_config::oneChannel()'],['../a00029.html#a8f1bd07030d0e210ff1e6f6ad6d719bf',1,'_i2s_handle::oneChannel()']]],
   ['operation',['operation',['../a00022.html#a8b0508e8863390f8240497c234ec9815',1,'_FlexSpiXfer']]],
-  ['operationvoltage',['operationVoltage',['../a00046.html#a61ac121789078102cbcf9918ca209964',1,'_sd_card::operationVoltage()'],['../a00047.html#a336e9f61ba8e793290efced614caf5e2',1,'_sdio_card::operationVoltage()']]],
+  ['operationvoltage',['operationVoltage',['../a00045.html#a61ac121789078102cbcf9918ca209964',1,'_sd_card::operationVoltage()'],['../a00046.html#a336e9f61ba8e793290efced614caf5e2',1,'_sdio_card::operationVoltage()']]],
   ['option_5fsize',['option_size',['../a00022.html#a6bf9b452320f3c187a528d1944e3b305',1,'_serial_nor_config_option']]],
   ['osr',['osr',['../a00017.html#a5891c99c3d8e7b17dd0dce0f5a8faf3c',1,'_dmic_channel_config']]],
   ['outcontrol',['outControl',['../a00015.html#aebc9be7186748d055b9f5a32c241c51e',1,'_ctimer_match_config']]],
-  ['outinitstate',['outInitState',['../a00045.html#a400ce1657acc3dbd5c3e538778a00a3f',1,'_sctimer_config']]],
+  ['outinitstate',['outInitState',['../a00044.html#a400ce1657acc3dbd5c3e538778a00a3f',1,'_sctimer_config']]],
   ['outpininitstate',['outPinInitState',['../a00015.html#a742e587e497d79f10529d45268078d15',1,'_ctimer_match_config']]],
-  ['output',['output',['../a00045.html#a1547afe5bfce5a9e4aa369825317aa19',1,'_sctimer_pwm_signal_param']]],
-  ['outputclock_5fhz',['outputClock_HZ',['../a00063.html#a9ac3339d53ed40e1b38289b38da0ad5b',1,'_wm8904_fll_config']]],
-  ['outputformat',['outputFormat',['../a00043.html#a19f225e61fd28d8858f41de752c160b7',1,'pq_config_t']]],
+  ['output',['output',['../a00044.html#a1547afe5bfce5a9e4aa369825317aa19',1,'_sctimer_pwm_signal_param']]],
+  ['outputclock_5fhz',['outputClock_HZ',['../a00060.html#a9ac3339d53ed40e1b38289b38da0ad5b',1,'_wm8904_fll_config']]],
+  ['outputformat',['outputFormat',['../a00042.html#a19f225e61fd28d8858f41de752c160b7',1,'pq_config_t']]],
   ['outputlogic',['outputLogic',['../a00023.html#a70ede6dc868ff6dd15987ba62c5d574b',1,'_gpio_pin_config']]],
-  ['outputprescale',['outputPrescale',['../a00043.html#abd109972c1d75809d38b0b461aba2319',1,'pq_prescale_t::outputPrescale()'],['../a00043.html#af51ba7ddddac0efbcba16bb7e110cba0',1,'pq_config_t::outputPrescale()']]],
-  ['outputsaturate',['outputSaturate',['../a00043.html#a9df386ce33fd8233bdccdb744e68cd35',1,'pq_prescale_t']]]
+  ['outputprescale',['outputPrescale',['../a00042.html#abd109972c1d75809d38b0b461aba2319',1,'pq_prescale_t::outputPrescale()'],['../a00042.html#af51ba7ddddac0efbcba16bb7e110cba0',1,'pq_config_t::outputPrescale()']]],
+  ['outputsaturate',['outputSaturate',['../a00042.html#a9df386ce33fd8233bdccdb744e68cd35',1,'pq_prescale_t']]]
 ];

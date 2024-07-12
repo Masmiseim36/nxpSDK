@@ -1,36 +1,14 @@
 var a00243 =
 [
-    [ "FSL_SEMA42_DRIVER_VERSION", "a00243.html#ga9d157e87f2444c405d2ebf7fe9a39508", null ],
-    [ "SEMA42_GATE_NUM_RESET_ALL", "a00243.html#gaa2a42c2ffaa2a3b57c39a5e46988d7f3", null ],
-    [ "SEMA42_GATEn", "a00243.html#ga530cd6b85fc81427b81eb16b837b7dfd", null ],
-    [ "sema42_gate_status_t", "a00243.html#ga361bb6f5bed9ff0d80465d85f6ce5a43", [
-      [ "kStatus_SEMA42_Busy", "a00243.html#gga157d5577a5b2f5986037d0d09c7dc77dad5619ab112a016977ca65fb758bf6c17", null ],
-      [ "kStatus_SEMA42_Reseting", "a00243.html#gga157d5577a5b2f5986037d0d09c7dc77dab405b2900737aa815ebc18ea68df56b1", null ]
-    ] ],
-    [ "_sema42_gate_status", "a00243.html#ga9debc9b8b1d7539cc7cdb606eed77cd0", [
-      [ "kSEMA42_Unlocked", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0af9c45d68a643bac3a34b65a5cf1aade6", null ],
-      [ "kSEMA42_LockedByProc0", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a3006dc26747f1eb2b8e1941660f7dc24", null ],
-      [ "kSEMA42_LockedByProc1", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0af4a285b99114632b0b00c85ea7bf1956", null ],
-      [ "kSEMA42_LockedByProc2", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a94c2081e5497a328126e879bf874fbc5", null ],
-      [ "kSEMA42_LockedByProc3", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0ad41b71c7142766ca69c0aade4c3bee53", null ],
-      [ "kSEMA42_LockedByProc4", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a9e984cd6c8ea942d67614cbd8faa7799", null ],
-      [ "kSEMA42_LockedByProc5", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0ad5f2f1cfd86ec744eb9c406baccdeeaf", null ],
-      [ "kSEMA42_LockedByProc6", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a20694487b850dcb86cab5735686d9590", null ],
-      [ "kSEMA42_LockedByProc7", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a94c20f5d4e13f9ed07cf370b3bbe33cb", null ],
-      [ "kSEMA42_LockedByProc8", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0ad614e32d0b0814c1fe69c3e0c92f7f94", null ],
-      [ "kSEMA42_LockedByProc9", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a26fb2f4b8ceeae21a8e93fd069d9f2e4", null ],
-      [ "kSEMA42_LockedByProc10", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0ad888ea149e3b30c04aec2e828f97deee", null ],
-      [ "kSEMA42_LockedByProc11", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a1923aba10a72c8729327a9c8e6a008f1", null ],
-      [ "kSEMA42_LockedByProc12", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0ac2129067e57645365d38996426d8197f", null ],
-      [ "kSEMA42_LockedByProc13", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0a6e63d742de6625c789e49b0586f73c3e", null ],
-      [ "kSEMA42_LockedByProc14", "a00243.html#gga9debc9b8b1d7539cc7cdb606eed77cd0aed15def9132f383c674644194a699ef9", null ]
-    ] ],
-    [ "SEMA42_Init", "a00243.html#ga13685f70a38ed1f8368581b475e963cf", null ],
-    [ "SEMA42_Deinit", "a00243.html#gae646085e5d791b895d478e9ef161c3b3", null ],
-    [ "SEMA42_TryLock", "a00243.html#gab5e2b0d71c6219bcfb381f4b70d7e7b0", null ],
-    [ "SEMA42_Lock", "a00243.html#gaab41e809f563868b6b477a7bb62c9ce2", null ],
-    [ "SEMA42_Unlock", "a00243.html#gac19b80ba254697a9e22b54866226e879", null ],
-    [ "SEMA42_GetGateStatus", "a00243.html#gace62f3aae17c5f6d75764f932f2a673f", null ],
-    [ "SEMA42_ResetGate", "a00243.html#ga6fc8ecf853c6394511d55536d37c7d4f", null ],
-    [ "SEMA42_ResetAllGates", "a00243.html#ga9695921a658471089cddadb8789bb138", null ]
+    [ "DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN", "a00243.html#ga028eff2428680ec9e47eed17d7ad6180", null ],
+    [ "DEBUG_CONSOLE_RECEIVE_BUFFER_LEN", "a00243.html#gadad6011e61c820f396b1c13568dbfe16", null ],
+    [ "DEBUG_CONSOLE_TX_RELIABLE_ENABLE", "a00243.html#gab2823ff7917ffeaaccf805f739116ec1", null ],
+    [ "DEBUG_CONSOLE_RX_ENABLE", "a00243.html#ga27259eda6262948659d081ea4b7ad2fe", null ],
+    [ "DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN", "a00243.html#ga9777b06b434b336e5a2c1b21421c9ea3", null ],
+    [ "DEBUG_CONSOLE_SCANF_MAX_LOG_LEN", "a00243.html#gab2afcebb59f366867a49bb888b8d043d", null ],
+    [ "DEBUG_CONSOLE_SYNCHRONIZATION_BM", "a00243.html#ga1cbe5dd480860843788779e39d1d0d1e", null ],
+    [ "DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS", "a00243.html#ga9589914d5a8b1cfedf834d52a6574496", null ],
+    [ "DEBUG_CONSOLE_SYNCHRONIZATION_MODE", "a00243.html#ga7b85f4e4309413064a69c99e7327d3f2", null ],
+    [ "DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION", "a00243.html#ga5cc1f7845683fbde63e9619f38aac2d1", null ],
+    [ "BOARD_USE_VIRTUALCOM", "a00243.html#ga74776e2523880761897d8b57199e5596", null ]
 ];

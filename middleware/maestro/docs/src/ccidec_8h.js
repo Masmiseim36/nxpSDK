@@ -2,10 +2,9 @@ var ccidec_8h =
 [
     [ "CCIDecInfo", "structCCIDecInfo.html", "structCCIDecInfo" ],
     [ "decoder_callback_FunctionTable_t", "structdecoder__callback__FunctionTable__t.html", "structdecoder__callback__FunctionTable__t" ],
-    [ "NUM_OF_PING_PONG_BUFFER", "ccidec_8h.html#a452453d875c4e50b6433e7ae80a20393", null ],
-    [ "pfnReadCallback", "ccidec_8h.html#aeda3b7b0b13e87e469c6288fa9ec96fb", null ],
-    [ "pfnSeekCallback", "ccidec_8h.html#a25ee6935525c0409a4f9214da4d80522", null ],
-    [ "pfnFtellCallback", "ccidec_8h.html#ac6d9df9742efc10aee076120b1bdbb6a", null ],
+    [ "pfnReadCallback", "ccidec_8h.html#a208309e6955e11301366285a28866ef1", null ],
+    [ "pfnSeekCallback", "ccidec_8h.html#aa607237061cac901f15d7bac20a9a0ca", null ],
+    [ "pfnFtellCallback", "ccidec_8h.html#a199afeeb118148c18585d173e7501073", null ],
     [ "ccidec_sink_pad_activation_handler", "ccidec_8h.html#af8902dbc742f8184f2a6ca2119d10e41", null ],
     [ "ccidec_sink_pad_event_handler", "ccidec_8h.html#ae552fcd7f9d7f6050599e00c3e79c79b", null ],
     [ "ccidec_src_pad_event_handler", "ccidec_8h.html#a0fe3f9915647990f54790f2a830c255b", null ],

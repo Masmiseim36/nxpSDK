@@ -54,7 +54,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -Wno-strict-aliasing</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fmessage-length=0 -funsigned-char -Wno-strict-aliasing</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
           <value>false</value>
@@ -81,7 +81,7 @@
           <value>com.crt.advproject.misc.dialect.gnupp11</value>
         </option>
         <option id="gnu.cpp.compiler.option.other.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wno-sign-compare -Wno-strict-aliasing -Wno-deprecated-declarations</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -fmessage-length=0 -fno-threadsafe-statics -fno-unwind-tables -funsigned-char -Wno-sign-compare -Wno-strict-aliasing -Wno-deprecated-declarations</value>
         </option>
         <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
           <value>true</value>

@@ -2,15 +2,9 @@
 
 /*
  * Copyright (c) 2015-2016 Intel Corporation
+ * Copyright 2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright 2022 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #if defined(EDDYSTONE) && (EDDYSTONE == 1)

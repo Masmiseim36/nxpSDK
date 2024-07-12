@@ -88,7 +88,7 @@ hal_audio_config_t audioTxConfig = {
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = (uint32_t)DEMO_AUDIO_SAMPLING_RATE,
     .fifoWatermark     = 0,
-    .msaterSlave       = kHAL_AudioMaster,
+    .masterSlave       = kHAL_AudioMaster,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
     .frameSyncPolarity = kHAL_AudioBeginAtFallingEdge,
@@ -176,9 +176,10 @@ uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
 }
 
 #if defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
-    defined(WIFI_88W8987_BOARD_AW_CM358MA)  || defined(WIFI_88W8987_BOARD_AW_CM358_USD)  || \
+    defined(WIFI_IW612_BOARD_MURATA_2EL_M2)  || defined(WIFI_88W8987_BOARD_AW_CM358_USD)  || \
     defined(WIFI_IW416_BOARD_AW_AM510MA)  || defined(WIFI_IW416_BOARD_AW_AM510_USD) ||  \
-    defined(WIFI_IW416_BOARD_AW_AM457_USD)  
+    defined(WIFI_IW416_BOARD_AW_AM457_USD)  || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
+    defined(WIFI_88W8987_BOARD_AW_CM358_MA)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

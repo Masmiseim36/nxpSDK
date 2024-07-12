@@ -22,6 +22,10 @@
 #include <xtensa/config/core.h>
 #include <xtensa/xos.h>
 #include "xaf-api.h"
+#if DUMP_TRACE_TO_BUF
+#include "xf-debug.h"
+#define TRACE_BUF_SIZE (512 * 1024)
+#endif
 
 #include "fsl_gpio.h"
 
@@ -256,6 +260,19 @@ int DSP_Main(void *arg, int wake_value)
     rpmsg_lite_wait_for_link_up(dsp->rpmsg, RL_BLOCK);
 
     DSP_PRINTF("[DSP_Main] established RPMsg link\r\n");
+
+#if (XF_TRACE && DUMP_TRACE_TO_BUF)
+    // For trace buffer, to store 512kB of trace messages
+    void * buffer_p = (void *) malloc(TRACE_BUF_SIZE);
+    if (buffer_p != NULL)
+    {
+        TRACE_INIT("Xtensa Audio Framework - \'Playback\' Sample App", buffer_p, TRACE_BUF_SIZE);
+    }
+    else
+    {
+        DSP_PRINTF("[DSP_Main] Trace buffer could not be allocated!\r\n");
+    }
+#endif
 
     SEMA42_Unlock(APP_SEMA42, SEMA_STARTUP_NUM);
 

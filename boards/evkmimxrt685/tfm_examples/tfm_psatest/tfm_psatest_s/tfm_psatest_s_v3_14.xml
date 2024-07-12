@@ -36,13 +36,18 @@
     <definition extID="middleware.tfm.s.initial_attestation.asymmetric.MIMXRT685S"/>
     <definition extID="middleware.tfm.s.its.MIMXRT685S"/>
     <definition extID="middleware.tfm.s.platform.MIMXRT685S"/>
-    <definition extID="middleware.mbedcrypto.psa_driver_wrapper_default.MIMXRT685S"/>
     <definition extID="middleware.mbedcrypto.MIMXRT685S"/>
     <definition extID="middleware.mbedcrypto.port.MIMXRT685S"/>
+    <definition extID="middleware.mbedcrypto.port.config.MIMXRT685S"/>
+    <definition extID="middleware.mbedcrypto.port.rng.MIMXRT685S"/>
     <definition extID="middleware.tfm.s.initial_attestation.MIMXRT685S"/>
     <definition extID="middleware.tfm.qcbor.MIMXRT685S"/>
+    <definition extID="middleware.tfm.s.its.load_info_common.MIMXRT685S"/>
+    <definition extID="middleware.tfm.s.platform.sp_common.MIMXRT685S"/>
     <definition extID="middleware.tfm.s.evkmimxrt685.MIMXRT685S"/>
+    <definition extID="middleware.tfm.s.platform_common.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -51,7 +56,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_tfm_psatest_s" name="tfm_psatest_s" device_core="cm33_MIMXRT685S" dependency="platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S platform.drivers.ctimer.MIMXRT685S middleware.tfm.flash_iap.MIMXRT685S middleware.tfm.usart.MIMXRT685S middleware.tfm.s.profile_large.MIMXRT685S middleware.tfm.s.MIMXRT685S middleware.tfm.s.ps.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.evkmimxrt685.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S platform.drivers.iap.MIMXRT685S middleware.tfm.s.crypto.MIMXRT685S middleware.tfm.s.initial_attestation.asymmetric.MIMXRT685S middleware.tfm.s.its.MIMXRT685S middleware.tfm.s.platform.MIMXRT685S middleware.mbedcrypto.psa_driver_wrapper_default.MIMXRT685S middleware.mbedcrypto.MIMXRT685S middleware.mbedcrypto.port.MIMXRT685S middleware.tfm.s.initial_attestation.MIMXRT685S middleware.tfm.qcbor.MIMXRT685S middleware.tfm.s.evkmimxrt685.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" linked_projects="evkmimxrt685_tfm_psatest_ns" category="tfm_examples">
+  <example id="evkmimxrt685_tfm_psatest_s" name="tfm_psatest_s" device_core="cm33_MIMXRT685S" dependency="platform.drivers.casper.MIMXRT685S platform.drivers.hashcrypt.MIMXRT685S platform.drivers.trng.MIMXRT685S platform.drivers.ctimer.MIMXRT685S middleware.tfm.flash_iap.MIMXRT685S middleware.tfm.usart.MIMXRT685S middleware.tfm.s.profile_large.MIMXRT685S middleware.tfm.s.MIMXRT685S middleware.tfm.s.ps.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.evkmimxrt685.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S platform.drivers.iap.MIMXRT685S middleware.tfm.s.crypto.MIMXRT685S middleware.tfm.s.initial_attestation.asymmetric.MIMXRT685S middleware.tfm.s.its.MIMXRT685S middleware.tfm.s.platform.MIMXRT685S middleware.mbedcrypto.MIMXRT685S middleware.mbedcrypto.port.MIMXRT685S middleware.mbedcrypto.port.config.MIMXRT685S middleware.mbedcrypto.port.rng.MIMXRT685S middleware.tfm.s.initial_attestation.MIMXRT685S middleware.tfm.qcbor.MIMXRT685S middleware.tfm.s.its.load_info_common.MIMXRT685S middleware.tfm.s.platform.sp_common.MIMXRT685S middleware.tfm.s.evkmimxrt685.MIMXRT685S middleware.tfm.s.platform_common.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S utility.str.MIMXRT685S" linked_projects="evkmimxrt685_tfm_psatest_ns" category="tfm_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -63,7 +68,7 @@
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <buildSteps>
-          <preBuildStep>arm-none-eabi-gcc -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -E -P -xc -I../tf-m/platform/ext/target/nxp/evkmimxrt685/partition -I../tf-m/platform/ext/common ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
+          <preBuildStep>arm-none-eabi-gcc -DCONFIG_TFM_PARTITION_META -DENABLE_HEAP -D__ARM_ARCH_8M_MAIN__ -DCONFIG_TFM_USE_TRUSTZONE -E -P -xc -I ../tf-m/platform/ext/target/nxp/evkmimxrt685/partition -I ../tf-m/platform/ext/common ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
         </buildSteps>
         <option id="com.crt.advproject.debugger.security.nonsecureimage" type="string">
           <value>${linked:evkmimxrt685_tfm_psatest_ns}</value>
@@ -84,7 +89,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-Wno-unused-variable -Wno-unused-but-set-variable -Wno-return-type -Wno-bool-operation -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-Wno-unused-variable -Wno-unused-but-set-variable -Wno-return-type -Wno-bool-operation -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -114,7 +119,6 @@
           <value>CONFIG_TFM_ENABLE_MEMORY_PROTECT</value>
           <value>TFM_PARTITION_NS_AGENT_TZ</value>
           <value>TFM_PARTITION_IDLE</value>
-          <value>PLATFORM_DEFAULT_NV_COUNTERS</value>
           <value>PLATFORM_DEFAULT_OTP</value>
           <value>PLATFORM_DEFAULT_PROVISIONING</value>
           <value>OTP_WRITEABLE</value>
@@ -151,6 +155,7 @@
           <value>USEFULBUF_DISABLE_ALL_FLOAT</value>
           <value>QCBOR_DISABLE_PREFERRED_FLOAT</value>
           <value>TARGET_CONFIG_HEADER_FILE='"config_tfm_target.h"'</value>
+          <value>PLATFORM_DEFAULT_NV_COUNTERS</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>

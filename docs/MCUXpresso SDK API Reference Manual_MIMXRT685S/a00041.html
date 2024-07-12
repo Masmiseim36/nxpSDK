@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: OTFAD: On The Fly AES-128 Decryption Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Power Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,488 +100,1090 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">OTFAD: On The Fly AES-128 Decryption Driver</div>  </div>
+<div class="title">Power Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for On The Fly AES-128 Decryption (OTFAD) module of MCUXpresso SDK devices.</p>
-<p>This example code shows how to decrypt ciphertext in external memory using the OTFAD driver.</p>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/otfad </p>
+<p>Power driver provides APIs to control peripherals power and control the system power mode. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00339"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00339">_otfad_encryption_config</a></td></tr>
-<tr class="memdesc:a00339"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure.  <a href="a00041.html#a00339">More...</a><br/></td></tr>
-<tr class="separator:a00339"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00338"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00338">_otfad_config</a></td></tr>
-<tr class="memdesc:a00338"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure.  <a href="a00041.html#a00338">More...</a><br/></td></tr>
-<tr class="separator:a00338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00336"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00336">_power_pad_vrange</a></td></tr>
+<tr class="memdesc:a00336"><td class="mdescLeft">&#160;</td><td class="mdescRight">pad voltage range configuration.  <a href="a00041.html#a00336">More...</a><br/></td></tr>
+<tr class="separator:a00336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gad7b390514bc10f7c22b430b2b411a21a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad7b390514bc10f7c22b430b2b411a21a">PMIC_VDDCORE_RECOVERY_TIME_IGNORE</a>&#160;&#160;&#160;(0xFFFFFFFFU)</td></tr>
+<tr class="memdesc:gad7b390514bc10f7c22b430b2b411a21a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMIC is used but vddcore supply is always above LVD threshold.  <a href="#gad7b390514bc10f7c22b430b2b411a21a">More...</a><br/></td></tr>
+<tr class="separator:gad7b390514bc10f7c22b430b2b411a21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15f4422b6c26f96a9713f34a4f059664"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga15f4422b6c26f96a9713f34a4f059664"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga15f4422b6c26f96a9713f34a4f059664">SYSCTL0_TUPLE_REG</a>(reg)&#160;&#160;&#160;(*((volatile uint32_t *)(((uint32_t)(SYSCTL0)) + (((uint32_t)(reg)) &amp; 0xFFFU))))</td></tr>
+<tr class="memdesc:ga15f4422b6c26f96a9713f34a4f059664"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMIC mode pin configuration API parameter. <br/></td></tr>
+<tr class="separator:ga15f4422b6c26f96a9713f34a4f059664"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga828408bc7f3f0b2dfda7411a0c94b8e7"></a>
-typedef struct <br class="typebreak"/>
-<a class="el" href="a00041.html#a00339">_otfad_encryption_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a></td></tr>
-<tr class="memdesc:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure. <br/></td></tr>
-<tr class="separator:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98b90973600f36ddd230dcad13200323"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga98b90973600f36ddd230dcad13200323"></a>
-typedef struct <a class="el" href="a00041.html#a00338">_otfad_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a></td></tr>
-<tr class="memdesc:ga98b90973600f36ddd230dcad13200323"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure. <br/></td></tr>
-<tr class="separator:ga98b90973600f36ddd230dcad13200323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf37864fe04e16a8e5a5650a77112519"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf37864fe04e16a8e5a5650a77112519"></a>
+typedef enum <a class="el" href="a00041.html#ga15dd3cf9b33be0828e9c1fb5187bb422">_power_mode_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaaf37864fe04e16a8e5a5650a77112519">power_mode_cfg_t</a></td></tr>
+<tr class="memdesc:gaaf37864fe04e16a8e5a5650a77112519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power mode configuration API parameter. <br/></td></tr>
+<tr class="separator:gaaf37864fe04e16a8e5a5650a77112519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad62f7ed6fb8c104ce4a9ced58af49830"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad62f7ed6fb8c104ce4a9ced58af49830"></a>
+typedef enum <a class="el" href="a00041.html#ga818d8c6d69763b8af0f258d3d18d9f6e">_body_bias_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad62f7ed6fb8c104ce4a9ced58af49830">body_bias_mode_t</a></td></tr>
+<tr class="memdesc:gad62f7ed6fb8c104ce4a9ced58af49830"><td class="mdescLeft">&#160;</td><td class="mdescRight">Body Bias mode definition. <br/></td></tr>
+<tr class="separator:gad62f7ed6fb8c104ce4a9ced58af49830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e7b70029d2645b4854b128ceea0616d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0e7b70029d2645b4854b128ceea0616d"></a>
+typedef enum <a class="el" href="a00041.html#ga5794c536c7db70cf870d853ac49d01a1">_power_pad_vrange_val</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga0e7b70029d2645b4854b128ceea0616d">power_pad_vrange_val_t</a></td></tr>
+<tr class="memdesc:ga0e7b70029d2645b4854b128ceea0616d"><td class="mdescLeft">&#160;</td><td class="mdescRight">pad voltage range value. <br/></td></tr>
+<tr class="separator:ga0e7b70029d2645b4854b128ceea0616d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4638e7555e1252a2ce832a172068845e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4638e7555e1252a2ce832a172068845e"></a>
+typedef struct <a class="el" href="a00041.html#a00336">_power_pad_vrange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga4638e7555e1252a2ce832a172068845e">power_pad_vrange_t</a></td></tr>
+<tr class="memdesc:ga4638e7555e1252a2ce832a172068845e"><td class="mdescLeft">&#160;</td><td class="mdescRight">pad voltage range configuration. <br/></td></tr>
+<tr class="separator:ga4638e7555e1252a2ce832a172068845e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5332af37bb61f8eafad17ba7071b907e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5332af37bb61f8eafad17ba7071b907e"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00041.html#ga0ec9df6a7d8713e608cc09444d138af8">_power_lvd_falling_trip_vol_val</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga5332af37bb61f8eafad17ba7071b907e">power_lvd_falling_trip_vol_val_t</a></td></tr>
+<tr class="memdesc:ga5332af37bb61f8eafad17ba7071b907e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LVD falling trip voltage value. <br/></td></tr>
+<tr class="separator:ga5332af37bb61f8eafad17ba7071b907e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c7e9ac9a64260684ed5b242319ae181"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2c7e9ac9a64260684ed5b242319ae181"></a>
+typedef enum <a class="el" href="a00041.html#ga38633fbd57436df3ffec4934056a380c">_power_part_temp_range</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga2c7e9ac9a64260684ed5b242319ae181">power_part_temp_range_t</a></td></tr>
+<tr class="memdesc:ga2c7e9ac9a64260684ed5b242319ae181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Part temperature range. <br/></td></tr>
+<tr class="separator:ga2c7e9ac9a64260684ed5b242319ae181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea8ae51a5678af127bc5aef00281a96d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaea8ae51a5678af127bc5aef00281a96d"></a>
+typedef enum <a class="el" href="a00041.html#ga92f93883aa540c9cf48070fff67a43a7">_power_volt_op_range</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaea8ae51a5678af127bc5aef00281a96d">power_volt_op_range_t</a></td></tr>
+<tr class="memdesc:gaea8ae51a5678af127bc5aef00281a96d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Voltage operation range. <br/></td></tr>
+<tr class="separator:gaea8ae51a5678af127bc5aef00281a96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4783057bb85cb92f2e0d90a62f2d75c7"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00041.html#gad64f1352fca9441403c90dfcfdfcf1e7">_power_vddcore_src</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga4783057bb85cb92f2e0d90a62f2d75c7">power_vddcore_src_t</a></td></tr>
+<tr class="memdesc:ga4783057bb85cb92f2e0d90a62f2d75c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">VDDCORE supply source.  <a href="#ga4783057bb85cb92f2e0d90a62f2d75c7">More...</a><br/></td></tr>
+<tr class="separator:ga4783057bb85cb92f2e0d90a62f2d75c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga906d31f4a4711dcb8055e0071732eef4"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00041.html#gaf3d4b7573ef8383c02e85328d8f4fe89">_power_control_for_pmic_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga906d31f4a4711dcb8055e0071732eef4">power_control_for_pmic_mode</a></td></tr>
+<tr class="memdesc:ga906d31f4a4711dcb8055e0071732eef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">vddcore or vdd1v8 power on selection for different PMIC mode.  <a href="#ga906d31f4a4711dcb8055e0071732eef4">More...</a><br/></td></tr>
+<tr class="separator:ga906d31f4a4711dcb8055e0071732eef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15f214b2d38f6b142814a0a46ef14b9a"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga15f214b2d38f6b142814a0a46ef14b9a">power_vddcore_set_func_t</a> )(uint32_t millivolt)</td></tr>
+<tr class="memdesc:ga15f214b2d38f6b142814a0a46ef14b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function used to change VDDCORE when the VDDCORE is supplied by external PMIC.  <a href="#ga15f214b2d38f6b142814a0a46ef14b9a">More...</a><br/></td></tr>
+<tr class="separator:ga15f214b2d38f6b142814a0a46ef14b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga2970898e8a43ce21e1cc510d49f1b89d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89dab86672f372b394bddf19bc570929597c">kStatus_OTFAD_ResRegAccessMode</a> = MAKE_STATUS(kStatusGroup_OTFAD, 0), 
+<tr class="memitem:gab5ab4472585bbb5e1a1f56288df2d884"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gab5ab4472585bbb5e1a1f56288df2d884">_pmc_interrupt</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#ggab5ab4472585bbb5e1a1f56288df2d884a1c214a969f306e69992061bff63d0782">kPMC_INT_LVDCORE</a> = PMC_CTRL_LVDCOREIE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89dada2a68470d9b60529fde6beab292e72f">kStatus_OTFAD_AddressError</a> = MAKE_STATUS(kStatusGroup_OTFAD, 1), 
+&#160;&#160;<a class="el" href="a00041.html#ggab5ab4472585bbb5e1a1f56288df2d884a1e2f845ddb49e6845a020da333d1441c">kPMC_INT_HVDCORE</a> = PMC_CTRL_HVDCOREIE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89da94765e8e9e448cfa441e2134f87a842f">kStatus_OTFAD_RegionOverlap</a>, 
+&#160;&#160;<a class="el" href="a00041.html#ggab5ab4472585bbb5e1a1f56288df2d884afb677a105269a8f777683890b0048730">kPMC_INT_HVD1V8</a> = PMC_CTRL_HVD1V8IE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89dab98da10f5a46caedb11ea21bcb4b6328">kStatus_OTFAD_RegionMiss</a>
+&#160;&#160;<a class="el" href="a00041.html#ggab5ab4472585bbb5e1a1f56288df2d884a525e63d51d160338ccee4fd96228b71f">kPMC_INT_AUTOWK</a> = PMC_CTRL_AUTOWKEN_MASK, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga2970898e8a43ce21e1cc510d49f1b89d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status codes for the OTFAD driver.  <a href="a00041.html#ga2970898e8a43ce21e1cc510d49f1b89d">More...</a><br/></td></tr>
-<tr class="separator:ga2970898e8a43ce21e1cc510d49f1b89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa231099d07583c3ed0981e0bb665f55"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55a289054cf51b8d6cb3c32a87884400e17">kOTFAD_Context_0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55abe9a603f23afef05bfdeb1583713f336">kOTFAD_Context_1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55a3769e4cee63954e3dfaceea80109ce08">kOTFAD_Context_2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55ad32231e169446492d32c3674354dbf4d">kOTFAD_Context_3</a> = 3U
+&#160;&#160;<a class="el" href="a00041.html#ggab5ab4472585bbb5e1a1f56288df2d884acebd956840020c4319e60d98d38e0151">kPMC_INT_INTRPAD</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gafa231099d07583c3ed0981e0bb665f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context type.  <a href="a00041.html#gafa231099d07583c3ed0981e0bb665f55">More...</a><br/></td></tr>
-<tr class="separator:gafa231099d07583c3ed0981e0bb665f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga394b3903fbf00ba2b6243f60689a5a5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga394b3903fbf00ba2b6243f60689a5a5fa46b06bacd1a8297969a3a61810b5366f">kOTFAD_NRM</a> = 0x00U, 
+<tr class="memdesc:gab5ab4472585bbb5e1a1f56288df2d884"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC event flags.  <a href="a00041.html#gab5ab4472585bbb5e1a1f56288df2d884">More...</a><br/></td></tr>
+<tr class="separator:gab5ab4472585bbb5e1a1f56288df2d884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga319496d862f975b8d6a5427abb6aceb8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga319496d862f975b8d6a5427abb6aceb8">_pmc_event_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a94d2c4b25d44d9054b7ffdd502173d6c">kPMC_FLAGS_PORCORE</a> = PMC_FLAGS_PORCOREF_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga394b3903fbf00ba2b6243f60689a5a5fafa7c009b2feed9501056ff7ef74bec34">kOTFAD_SVM</a> = 0x02U, 
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a9550f9d1f04132240c63811bf59a8be8">kPMC_FLAGS_POR1V8</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga394b3903fbf00ba2b6243f60689a5a5fafe2dfe963d9f93d97d2f7ebfcc3ccc96">kOTFAD_LDM</a> = 0x03U
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8af11742306aa1f612c0cbc7c755cc18af">kPMC_FLAGS_PORAO18</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a18aca526db1e898f98ce97666483a3cf">kPMC_FLAGS_LVDCORE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8ac9a323f4216c6b3de7a157c5c508b01a">kPMC_FLAGS_HVDCORE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a032b74ee94952c8cbd7f52f3b839abd5">kPMC_FLAGS_HVD1V8</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a95340819c66dc464b43f225fc098c0d7">kPMC_FLAGS_RTC</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a8c2753963a033ba7779b2f26a6c634a5">kPMC_FLAGS_AUTOWK</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a4c85f339744eaf4ee61586daf0c8055d">kPMC_FLAGS_INTNPADF</a> = PMC_FLAGS_INTNPADF_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a193f45102254167599744a8819c0aa21">kPMC_FLAGS_RESETNPAD</a> = PMC_FLAGS_RESETNPADF_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga319496d862f975b8d6a5427abb6aceb8a576657572f8721c1632500fd023949b2">kPMC_FLAGS_DEEPPD</a> = PMC_FLAGS_DEEPPDF_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga394b3903fbf00ba2b6243f60689a5a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD operate mode.  <a href="a00041.html#ga394b3903fbf00ba2b6243f60689a5a5f">More...</a><br/></td></tr>
-<tr class="separator:ga394b3903fbf00ba2b6243f60689a5a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga319496d862f975b8d6a5427abb6aceb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC event flags.  <a href="a00041.html#ga319496d862f975b8d6a5427abb6aceb8">More...</a><br/></td></tr>
+<tr class="separator:ga319496d862f975b8d6a5427abb6aceb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15dd3cf9b33be0828e9c1fb5187bb422"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga15dd3cf9b33be0828e9c1fb5187bb422">_power_mode_config</a> </td></tr>
+<tr class="memdesc:ga15dd3cf9b33be0828e9c1fb5187bb422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power mode configuration API parameter. <br/></td></tr>
+<tr class="separator:ga15dd3cf9b33be0828e9c1fb5187bb422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga818d8c6d69763b8af0f258d3d18d9f6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga818d8c6d69763b8af0f258d3d18d9f6e">_body_bias_mode</a> </td></tr>
+<tr class="memdesc:ga818d8c6d69763b8af0f258d3d18d9f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Body Bias mode definition. <br/></td></tr>
+<tr class="separator:ga818d8c6d69763b8af0f258d3d18d9f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5794c536c7db70cf870d853ac49d01a1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga5794c536c7db70cf870d853ac49d01a1">_power_pad_vrange_val</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga5794c536c7db70cf870d853ac49d01a1a49cee3aa8974ae344b374807da15ebab">kPadVol_171_360</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga5794c536c7db70cf870d853ac49d01a1a194a2a853861af888d8d7830e4643ffb">kPadVol_171_198</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga5794c536c7db70cf870d853ac49d01a1ae6f989a29cbd03f75ce81805328b3fed">kPadVol_300_360</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga5794c536c7db70cf870d853ac49d01a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">pad voltage range value.  <a href="a00041.html#ga5794c536c7db70cf870d853ac49d01a1">More...</a><br/></td></tr>
+<tr class="separator:ga5794c536c7db70cf870d853ac49d01a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ec9df6a7d8713e608cc09444d138af8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga0ec9df6a7d8713e608cc09444d138af8">_power_lvd_falling_trip_vol_val</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a28c6ed354117fff39367f2bb5729bed3">kLvdFallingTripVol_720</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8af1718774e943c9fd9c6c5b4f68863a4d">kLvdFallingTripVol_735</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8acbbdd441e4b229f8842d5593a8ab4d7c">kLvdFallingTripVol_750</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a61f02e3ee486d268e4adaefaf053e0cf">kLvdFallingTripVol_765</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a1f472062d578c4bf0f297a0cd702fbd6">kLvdFallingTripVol_780</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a64e22f441b45b2d3ba306e3f2d4f49e2">kLvdFallingTripVol_795</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a1f48233ed106fd81c077c91c83f04ffd">kLvdFallingTripVol_810</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8afd6391a48bb8420dba5f80ecc56603bf">kLvdFallingTripVol_825</a> = 7U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a2bca26c6626f747ebdd37772f4ceaa9c">kLvdFallingTripVol_840</a> = 8U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a1c0c995fecbab5163d980f54fe140a23">kLvdFallingTripVol_855</a> = 9U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a3bea30df5e262090fa2fd6be47877236">kLvdFallingTripVol_870</a> = 10U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a108892606558147927fe29b6acdfd810">kLvdFallingTripVol_885</a> = 11U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8ad07eded9895eb23a61abc7d88655a71e">kLvdFallingTripVol_900</a> = 12U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8a80ec0a5b82c5314d9a8d4ea1277212e5">kLvdFallingTripVol_915</a> = 13U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8af7ff2b1ff777d169e1d6d994c2bab0e9">kLvdFallingTripVol_930</a> = 14U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga0ec9df6a7d8713e608cc09444d138af8ab805e65397883e277e0d0c4c6bd7d75c">kLvdFallingTripVol_945</a> = 15U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga0ec9df6a7d8713e608cc09444d138af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">LVD falling trip voltage value.  <a href="a00041.html#ga0ec9df6a7d8713e608cc09444d138af8">More...</a><br/></td></tr>
+<tr class="separator:ga0ec9df6a7d8713e608cc09444d138af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38633fbd57436df3ffec4934056a380c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga38633fbd57436df3ffec4934056a380c">_power_part_temp_range</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga38633fbd57436df3ffec4934056a380ca72a549753011c44129b57380209f3911">kPartTemp_0C_P85C</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga38633fbd57436df3ffec4934056a380ca1f5b35d5b355af2e64015841087b1771">kPartTemp_N20C_P85C</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga38633fbd57436df3ffec4934056a380c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Part temperature range.  <a href="a00041.html#ga38633fbd57436df3ffec4934056a380c">More...</a><br/></td></tr>
+<tr class="separator:ga38633fbd57436df3ffec4934056a380c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92f93883aa540c9cf48070fff67a43a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga92f93883aa540c9cf48070fff67a43a7">_power_volt_op_range</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga92f93883aa540c9cf48070fff67a43a7a337bb71864fe05dba4f40854433609ec">kVoltOpLowRange</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga92f93883aa540c9cf48070fff67a43a7ab17d424fe75087c1181b9f350657cdc8">kVoltOpFullRange</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga92f93883aa540c9cf48070fff67a43a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Voltage operation range.  <a href="a00041.html#ga92f93883aa540c9cf48070fff67a43a7">More...</a><br/></td></tr>
+<tr class="separator:ga92f93883aa540c9cf48070fff67a43a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad64f1352fca9441403c90dfcfdfcf1e7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad64f1352fca9441403c90dfcfdfcf1e7">_power_vddcore_src</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#ggad64f1352fca9441403c90dfcfdfcf1e7a71f69b0e3418eec19794d04fc03b0c46">kVddCoreSrc_LDO</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggad64f1352fca9441403c90dfcfdfcf1e7a437c60afa31dc290f0631b52fb6b8e6f">kVddCoreSrc_PMIC</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gad64f1352fca9441403c90dfcfdfcf1e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">VDDCORE supply source.  <a href="a00041.html#gad64f1352fca9441403c90dfcfdfcf1e7">More...</a><br/></td></tr>
+<tr class="separator:gad64f1352fca9441403c90dfcfdfcf1e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3d4b7573ef8383c02e85328d8f4fe89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaf3d4b7573ef8383c02e85328d8f4fe89">_power_control_for_pmic_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#ggaf3d4b7573ef8383c02e85328d8f4fe89a333a9b1956d11fb3f5d39ac52329004c">kVddCoreOnMode1</a> = 0x2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggaf3d4b7573ef8383c02e85328d8f4fe89a7a05aff1439d3fc24c52ab7c00a27f6c">kVddCoreOnMode2</a> = 0x4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggaf3d4b7573ef8383c02e85328d8f4fe89aaf42b9a61a7bf410c9e819958bba4347">kVddCoreOnMode3</a> = 0x8U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggaf3d4b7573ef8383c02e85328d8f4fe89a5da1b33c59dfe0c14bbdd856f691e10e">kVdd1v8OnMode1</a> = 0x20U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggaf3d4b7573ef8383c02e85328d8f4fe89a885d81662994092082afa266c2d3aa2e">kVdd1v8OnMode2</a> = 0x40U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggaf3d4b7573ef8383c02e85328d8f4fe89a6cecbc2aa4dbfa3a06a917e473291bc0">kVdd1v8OnMode3</a> = 0x80U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf3d4b7573ef8383c02e85328d8f4fe89"><td class="mdescLeft">&#160;</td><td class="mdescRight">vddcore or vdd1v8 power on selection for different PMIC mode.  <a href="a00041.html#gaf3d4b7573ef8383c02e85328d8f4fe89">More...</a><br/></td></tr>
+<tr class="separator:gaf3d4b7573ef8383c02e85328d8f4fe89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga8fb07d65f0b0af3e87414a9b5609892e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga8fb07d65f0b0af3e87414a9b5609892e">POWER_PmicPowerModeSelectControl</a> (uint32_t vddSelect)</td></tr>
+<tr class="memdesc:ga8fb07d65f0b0af3e87414a9b5609892e"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to set vddcore or vdd1v8 power on for PMIC modes which is responded to PDRUNCFG0[PMIC_MODE] or PDSLEEPCFG0[PMIC_MODE] select pin values.  <a href="#ga8fb07d65f0b0af3e87414a9b5609892e">More...</a><br/></td></tr>
+<tr class="separator:ga8fb07d65f0b0af3e87414a9b5609892e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf3a138e73725bb8c50290295259bfa4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gacf3a138e73725bb8c50290295259bfa4">POWER_EnablePD</a> (pd_bit_t en)</td></tr>
+<tr class="memdesc:gacf3a138e73725bb8c50290295259bfa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to enable PDRUNCFG bit in the Sysctl0.  <a href="#gacf3a138e73725bb8c50290295259bfa4">More...</a><br/></td></tr>
+<tr class="separator:gacf3a138e73725bb8c50290295259bfa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40a1d0c80f5189e9c56133a2bc15a4c2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga40a1d0c80f5189e9c56133a2bc15a4c2">POWER_DisablePD</a> (pd_bit_t en)</td></tr>
+<tr class="memdesc:ga40a1d0c80f5189e9c56133a2bc15a4c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to disable PDRUNCFG bit in the Sysctl0.  <a href="#ga40a1d0c80f5189e9c56133a2bc15a4c2">More...</a><br/></td></tr>
+<tr class="separator:ga40a1d0c80f5189e9c56133a2bc15a4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9733cfb042126b04d237cc8db40dba0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae9733cfb042126b04d237cc8db40dba0"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gae9733cfb042126b04d237cc8db40dba0">POWER_EnableDeepSleep</a> (void)</td></tr>
+<tr class="memdesc:gae9733cfb042126b04d237cc8db40dba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to enable deep sleep bit in the ARM Core. <br/></td></tr>
+<tr class="separator:gae9733cfb042126b04d237cc8db40dba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabea720a67b6b06b187a5781b9955dc9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabea720a67b6b06b187a5781b9955dc9c"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gabea720a67b6b06b187a5781b9955dc9c">POWER_DisableDeepSleep</a> (void)</td></tr>
+<tr class="memdesc:gabea720a67b6b06b187a5781b9955dc9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to disable deep sleep bit in the ARM Core. <br/></td></tr>
+<tr class="separator:gabea720a67b6b06b187a5781b9955dc9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga487d812dd94e4be1f7933672c238422b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga487d812dd94e4be1f7933672c238422b">POWER_UpdateOscSettlingTime</a> (uint32_t osc_delay)</td></tr>
+<tr class="memdesc:ga487d812dd94e4be1f7933672c238422b"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to update XTAL oscillator settling time .  <a href="#ga487d812dd94e4be1f7933672c238422b">More...</a><br/></td></tr>
+<tr class="separator:ga487d812dd94e4be1f7933672c238422b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga754099e77634433f1607ec9ee6b5b27f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga754099e77634433f1607ec9ee6b5b27f">POWER_UpdatePmicRecoveryTime</a> (uint32_t pmic_delay)</td></tr>
+<tr class="memdesc:ga754099e77634433f1607ec9ee6b5b27f"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to update on-board PMIC vddcore recovery time.  <a href="#ga754099e77634433f1607ec9ee6b5b27f">More...</a><br/></td></tr>
+<tr class="separator:ga754099e77634433f1607ec9ee6b5b27f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96bf2756e7fee5cdcd9ee32f5f86ba5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga96bf2756e7fee5cdcd9ee32f5f86ba5f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga96bf2756e7fee5cdcd9ee32f5f86ba5f">POWER_ApplyPD</a> (void)</td></tr>
+<tr class="memdesc:ga96bf2756e7fee5cdcd9ee32f5f86ba5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to apply updated PMC PDRUNCFG bits in the Sysctl0. <br/></td></tr>
+<tr class="separator:ga96bf2756e7fee5cdcd9ee32f5f86ba5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fe159852a5490f3af643b91bc3ffd3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga7fe159852a5490f3af643b91bc3ffd3f">POWER_ClearEventFlags</a> (uint32_t statusMask)</td></tr>
+<tr class="memdesc:ga7fe159852a5490f3af643b91bc3ffd3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the PMC event flags state.  <a href="#ga7fe159852a5490f3af643b91bc3ffd3f">More...</a><br/></td></tr>
+<tr class="separator:ga7fe159852a5490f3af643b91bc3ffd3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d80ad48eb44d4c62ac1b4e05f19ee42"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga4d80ad48eb44d4c62ac1b4e05f19ee42">POWER_GetEventFlags</a> (void)</td></tr>
+<tr class="memdesc:ga4d80ad48eb44d4c62ac1b4e05f19ee42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the PMC event flags state.  <a href="#ga4d80ad48eb44d4c62ac1b4e05f19ee42">More...</a><br/></td></tr>
+<tr class="separator:ga4d80ad48eb44d4c62ac1b4e05f19ee42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga449ec12cb8524cbf6e2bf2b2a03ce1bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga449ec12cb8524cbf6e2bf2b2a03ce1bd">POWER_EnableInterrupts</a> (uint32_t interruptMask)</td></tr>
+<tr class="memdesc:ga449ec12cb8524cbf6e2bf2b2a03ce1bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the PMC interrupt requests.  <a href="#ga449ec12cb8524cbf6e2bf2b2a03ce1bd">More...</a><br/></td></tr>
+<tr class="separator:ga449ec12cb8524cbf6e2bf2b2a03ce1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40563a8e356c1bb5f1d62775747f2d63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga40563a8e356c1bb5f1d62775747f2d63">POWER_DisableInterrupts</a> (uint32_t interruptMask)</td></tr>
+<tr class="memdesc:ga40563a8e356c1bb5f1d62775747f2d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the PMC interrupt requests.  <a href="#ga40563a8e356c1bb5f1d62775747f2d63">More...</a><br/></td></tr>
+<tr class="separator:ga40563a8e356c1bb5f1d62775747f2d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga028cafb0c4977abd64dfc4376046e716"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga028cafb0c4977abd64dfc4376046e716">POWER_SetAnalogBuffer</a> (bool enable)</td></tr>
+<tr class="memdesc:ga028cafb0c4977abd64dfc4376046e716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the PMC analog buffer for references or ATX2.  <a href="#ga028cafb0c4977abd64dfc4376046e716">More...</a><br/></td></tr>
+<tr class="separator:ga028cafb0c4977abd64dfc4376046e716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab60c903574b2065aca21bd5886ecdcf1"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gab60c903574b2065aca21bd5886ecdcf1">POWER_GetPmicMode</a> (pmic_mode_reg_t reg)</td></tr>
+<tr class="memdesc:gab60c903574b2065aca21bd5886ecdcf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PMIC_MODE pins configure value.  <a href="#gab60c903574b2065aca21bd5886ecdcf1">More...</a><br/></td></tr>
+<tr class="separator:gab60c903574b2065aca21bd5886ecdcf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a0bafa723d0a4ec45fe6ad14bbe2f91"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00041.html#gad62f7ed6fb8c104ce4a9ced58af49830">body_bias_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga6a0bafa723d0a4ec45fe6ad14bbe2f91">POWER_GetBodyBiasMode</a> (pmic_mode_reg_t reg)</td></tr>
+<tr class="memdesc:ga6a0bafa723d0a4ec45fe6ad14bbe2f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get RBB/FBB bit value.  <a href="#ga6a0bafa723d0a4ec45fe6ad14bbe2f91">More...</a><br/></td></tr>
+<tr class="separator:ga6a0bafa723d0a4ec45fe6ad14bbe2f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6bf09385a1955837b34995ba6bd4158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gac6bf09385a1955837b34995ba6bd4158">POWER_SetPadVolRange</a> (const <a class="el" href="a00041.html#ga4638e7555e1252a2ce832a172068845e">power_pad_vrange_t</a> *config)</td></tr>
+<tr class="memdesc:gac6bf09385a1955837b34995ba6bd4158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure pad voltage level.  <a href="#gac6bf09385a1955837b34995ba6bd4158">More...</a><br/></td></tr>
+<tr class="separator:gac6bf09385a1955837b34995ba6bd4158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a3cb038fed2619db8228ae0f2327c1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a3cb038fed2619db8228ae0f2327c1f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga2a3cb038fed2619db8228ae0f2327c1f">POWER_EnterRbb</a> (void)</td></tr>
+<tr class="memdesc:ga2a3cb038fed2619db8228ae0f2327c1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Enter Rbb mode function call. <br/></td></tr>
+<tr class="separator:ga2a3cb038fed2619db8228ae0f2327c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga571cb27ca51e9ccfdb35b5a191bdd3b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga571cb27ca51e9ccfdb35b5a191bdd3b4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga571cb27ca51e9ccfdb35b5a191bdd3b4">POWER_EnterFbb</a> (void)</td></tr>
+<tr class="memdesc:ga571cb27ca51e9ccfdb35b5a191bdd3b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Enter Fbb mode function call. <br/></td></tr>
+<tr class="separator:ga571cb27ca51e9ccfdb35b5a191bdd3b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae264215d0180f0d9bd0ed2864013197"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaae264215d0180f0d9bd0ed2864013197"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaae264215d0180f0d9bd0ed2864013197">POWER_EnterNbb</a> (void)</td></tr>
+<tr class="memdesc:gaae264215d0180f0d9bd0ed2864013197"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC exit Rbb &amp; Fbb mode function call. <br/></td></tr>
+<tr class="separator:gaae264215d0180f0d9bd0ed2864013197"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17b5192a01af90ecd326f0cd8266d44f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga17b5192a01af90ecd326f0cd8266d44f">POWER_SetLdoVoltageForFreq</a> (<a class="el" href="a00041.html#ga2c7e9ac9a64260684ed5b242319ae181">power_part_temp_range_t</a> tempRange, <a class="el" href="a00041.html#gaea8ae51a5678af127bc5aef00281a96d">power_volt_op_range_t</a> voltOpRange, uint32_t cm33Freq, uint32_t dspFreq)</td></tr>
+<tr class="memdesc:ga17b5192a01af90ecd326f0cd8266d44f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deprecated and replaced by <a class="el" href="a00041.html#ga3bce0f4d75853f022d36a1e865b58672" title="PMC Set volatage for particular frequency with given minimum value. POWER_SetVddCoreSupplySrc should ...">POWER_SetVoltageForFreq()</a>! PMC Set Ldo volatage for particular frequency. NOTE: The API is only valid when MAINPLLCLKDIV[7:0] and DSPPLLCLKDIV[7:0] are 0. If LVD falling trip voltage is higher than the required core voltage for particular frequency, LVD voltage will be decreased to safe level to avoid unexpected LVD reset or interrupt event.  <a href="#ga17b5192a01af90ecd326f0cd8266d44f">More...</a><br/></td></tr>
+<tr class="separator:ga17b5192a01af90ecd326f0cd8266d44f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c91598172b667c713ac605654ded908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga9c91598172b667c713ac605654ded908">POWER_SetVddCoreSupplySrc</a> (<a class="el" href="a00041.html#ga4783057bb85cb92f2e0d90a62f2d75c7">power_vddcore_src_t</a> src)</td></tr>
+<tr class="memdesc:ga9c91598172b667c713ac605654ded908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set VDDCORE supply source, PMIC or on-chip regulator.  <a href="#ga9c91598172b667c713ac605654ded908">More...</a><br/></td></tr>
+<tr class="separator:ga9c91598172b667c713ac605654ded908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c2ab1ac72cae98f4cca0e87bf85f38a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga2c2ab1ac72cae98f4cca0e87bf85f38a">POWER_SetPmicCoreSupplyFunc</a> (<a class="el" href="a00041.html#ga15f214b2d38f6b142814a0a46ef14b9a">power_vddcore_set_func_t</a> func)</td></tr>
+<tr class="memdesc:ga2c2ab1ac72cae98f4cca0e87bf85f38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the core supply setting function if PMIC is used. The function is not needed and ignored when using the onchip regulator to supply VDDCORE.  <a href="#ga2c2ab1ac72cae98f4cca0e87bf85f38a">More...</a><br/></td></tr>
+<tr class="separator:ga2c2ab1ac72cae98f4cca0e87bf85f38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bce0f4d75853f022d36a1e865b58672"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga3bce0f4d75853f022d36a1e865b58672">POWER_SetVoltageForFreq</a> (<a class="el" href="a00041.html#ga2c7e9ac9a64260684ed5b242319ae181">power_part_temp_range_t</a> tempRange, <a class="el" href="a00041.html#gaea8ae51a5678af127bc5aef00281a96d">power_volt_op_range_t</a> voltOpRange, uint32_t cm33Freq, uint32_t dspFreq, uint32_t mini_volt)</td></tr>
+<tr class="memdesc:ga3bce0f4d75853f022d36a1e865b58672"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Set volatage for particular frequency with given minimum value. <a class="el" href="a00041.html#ga9c91598172b667c713ac605654ded908" title="Set VDDCORE supply source, PMIC or on-chip regulator. ">POWER_SetVddCoreSupplySrc</a> should be called in advance to tell power driver the supply source. If PMIC is used, the VDDCORE setting function should be set by <a class="el" href="a00041.html#ga2c2ab1ac72cae98f4cca0e87bf85f38a" title="Set the core supply setting function if PMIC is used. The function is not needed and ignored when usi...">POWER_SetPmicCoreSupplyFunc</a> before this API is called. NOTE: The API is only valid when MAINPLLCLKDIV[7:0] and DSPPLLCLKDIV[7:0] are 0. If LVD falling trip voltage is higher than therequired core voltage for particular frequency, LVD voltage will be decreased to safe level to avoid unexpected LVD reset or interrupt event.  <a href="#ga3bce0f4d75853f022d36a1e865b58672">More...</a><br/></td></tr>
+<tr class="separator:ga3bce0f4d75853f022d36a1e865b58672"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbdad7c38f2c3bc2c7132fb2d0900f1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gafbdad7c38f2c3bc2c7132fb2d0900f1a">POWER_SetLvdFallingTripVoltage</a> (<a class="el" href="a00041.html#ga5332af37bb61f8eafad17ba7071b907e">power_lvd_falling_trip_vol_val_t</a> volt)</td></tr>
+<tr class="memdesc:gafbdad7c38f2c3bc2c7132fb2d0900f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set vddcore low voltage detection falling trip voltage.  <a href="#gafbdad7c38f2c3bc2c7132fb2d0900f1a">More...</a><br/></td></tr>
+<tr class="separator:gafbdad7c38f2c3bc2c7132fb2d0900f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8d806330b0b694ed63a0cef7db004b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#ga5332af37bb61f8eafad17ba7071b907e">power_lvd_falling_trip_vol_val_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gac8d806330b0b694ed63a0cef7db004b8">POWER_GetLvdFallingTripVoltage</a> (void)</td></tr>
+<tr class="memdesc:gac8d806330b0b694ed63a0cef7db004b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current vddcore low voltage detection falling trip voltage.  <a href="#gac8d806330b0b694ed63a0cef7db004b8">More...</a><br/></td></tr>
+<tr class="separator:gac8d806330b0b694ed63a0cef7db004b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga877732658756ca9047ff93aed9613d33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga877732658756ca9047ff93aed9613d33"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga877732658756ca9047ff93aed9613d33">POWER_DisableLVD</a> (void)</td></tr>
+<tr class="memdesc:ga877732658756ca9047ff93aed9613d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable low voltage detection, no reset or interrupt is triggered when vddcore voltage drops below threshold. NOTE: This API is for internal use only. Application should not touch it. <br/></td></tr>
+<tr class="separator:ga877732658756ca9047ff93aed9613d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed038c8ef19047f241ef54a3ca0e6d35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaed038c8ef19047f241ef54a3ca0e6d35"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaed038c8ef19047f241ef54a3ca0e6d35">POWER_RestoreLVD</a> (void)</td></tr>
+<tr class="memdesc:gaed038c8ef19047f241ef54a3ca0e6d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore low voltage detection setting. NOTE: This API is for internal use only. Application should not touch it. <br/></td></tr>
+<tr class="separator:gaed038c8ef19047f241ef54a3ca0e6d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f37778617cfc1e2b1ebfa1dd2afd15d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga4f37778617cfc1e2b1ebfa1dd2afd15d">POWER_SetPmicMode</a> (uint32_t mode, pmic_mode_reg_t reg)</td></tr>
+<tr class="memdesc:ga4f37778617cfc1e2b1ebfa1dd2afd15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set PMIC_MODE pins configure value.  <a href="#ga4f37778617cfc1e2b1ebfa1dd2afd15d">More...</a><br/></td></tr>
+<tr class="separator:ga4f37778617cfc1e2b1ebfa1dd2afd15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ad77a0ddbf43076a49a207534c6b7f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6ad77a0ddbf43076a49a207534c6b7f8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga6ad77a0ddbf43076a49a207534c6b7f8">POWER_EnterSleep</a> (void)</td></tr>
+<tr class="memdesc:ga6ad77a0ddbf43076a49a207534c6b7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures and enters in SLEEP low power mode. <br/></td></tr>
+<tr class="separator:ga6ad77a0ddbf43076a49a207534c6b7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb3dc44bc91219cf509106420c98a3cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gacb3dc44bc91219cf509106420c98a3cf">POWER_EnterDeepSleep</a> (const uint32_t exclude_from_pd[4])</td></tr>
+<tr class="memdesc:gacb3dc44bc91219cf509106420c98a3cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Deep Sleep function call.  <a href="#gacb3dc44bc91219cf509106420c98a3cf">More...</a><br/></td></tr>
+<tr class="separator:gacb3dc44bc91219cf509106420c98a3cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b00a5839be7a0ef216e0bd4bdeb9ffc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga9b00a5839be7a0ef216e0bd4bdeb9ffc">POWER_EnterDeepPowerDown</a> (const uint32_t exclude_from_pd[4])</td></tr>
+<tr class="memdesc:ga9b00a5839be7a0ef216e0bd4bdeb9ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Deep Power Down function call.  <a href="#ga9b00a5839be7a0ef216e0bd4bdeb9ffc">More...</a><br/></td></tr>
+<tr class="separator:ga9b00a5839be7a0ef216e0bd4bdeb9ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2de1766cd5e830b27c4b8cceeeca905"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gae2de1766cd5e830b27c4b8cceeeca905">POWER_EnterFullDeepPowerDown</a> (const uint32_t exclude_from_pd[4])</td></tr>
+<tr class="memdesc:gae2de1766cd5e830b27c4b8cceeeca905"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMC Full Deep Power Down function call.  <a href="#gae2de1766cd5e830b27c4b8cceeeca905">More...</a><br/></td></tr>
+<tr class="separator:gae2de1766cd5e830b27c4b8cceeeca905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga808fa9aff5474a74f0c78dbd05c8896f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga808fa9aff5474a74f0c78dbd05c8896f">POWER_EnterPowerMode</a> (<a class="el" href="a00041.html#gaaf37864fe04e16a8e5a5650a77112519">power_mode_cfg_t</a> mode, const uint32_t exclude_from_pd[4])</td></tr>
+<tr class="memdesc:ga808fa9aff5474a74f0c78dbd05c8896f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power Library API to enter different power mode.  <a href="#ga808fa9aff5474a74f0c78dbd05c8896f">More...</a><br/></td></tr>
+<tr class="separator:ga808fa9aff5474a74f0c78dbd05c8896f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00a1c5f2555215dc1ac509052e0f3376"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga00a1c5f2555215dc1ac509052e0f3376">EnableDeepSleepIRQ</a> (IRQn_Type interrupt)</td></tr>
+<tr class="memdesc:ga00a1c5f2555215dc1ac509052e0f3376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable specific interrupt for wake-up from deep-sleep mode.  <a href="#ga00a1c5f2555215dc1ac509052e0f3376">More...</a><br/></td></tr>
+<tr class="separator:ga00a1c5f2555215dc1ac509052e0f3376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73a306a0d86cc31334f1825593c613a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga73a306a0d86cc31334f1825593c613a1">DisableDeepSleepIRQ</a> (IRQn_Type interrupt)</td></tr>
+<tr class="memdesc:ga73a306a0d86cc31334f1825593c613a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable specific interrupt for wake-up from deep-sleep mode.  <a href="#ga73a306a0d86cc31334f1825593c613a1">More...</a><br/></td></tr>
+<tr class="separator:ga73a306a0d86cc31334f1825593c613a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac28a380c6f92d302c5d99f30cc126fe5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gac28a380c6f92d302c5d99f30cc126fe5">POWER_GetLibVersion</a> (void)</td></tr>
+<tr class="memdesc:gac28a380c6f92d302c5d99f30cc126fe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power Library API to return the library version.  <a href="#gac28a380c6f92d302c5d99f30cc126fe5">More...</a><br/></td></tr>
+<tr class="separator:gac28a380c6f92d302c5d99f30cc126fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga20f3f7f4a4d28843e4dcba42fe074de4">FSL_OTFAD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td></tr>
-<tr class="memdesc:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga20f3f7f4a4d28843e4dcba42fe074de4">More...</a><br/></td></tr>
-<tr class="separator:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga7ec529b7e632085d191bc1c772efaa2e">OTFAD_GetDefaultConfig</a> (<a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga7ec529b7e632085d191bc1c772efaa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga7ec529b7e632085d191bc1c772efaa2e">More...</a><br/></td></tr>
-<tr class="separator:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga50c3cc55c76ff1feacb5291ff2428a6c">OTFAD_Init</a> (OTFAD_Type *base, const <a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga50c3cc55c76ff1feacb5291ff2428a6c">More...</a><br/></td></tr>
-<tr class="separator:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a04f4e827eaee49fc2dc31e54d05397"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga8a04f4e827eaee49fc2dc31e54d05397">OTFAD_Deinit</a> (OTFAD_Type *base)</td></tr>
-<tr class="memdesc:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the OTFAD. <br/></td></tr>
-<tr class="separator:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga97f6956807f1b567e8cf98a2306a4b1f">OTFAD_GetOperateMode</a> (OTFAD_Type *base)</td></tr>
-<tr class="memdesc:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get operate mode.  <a href="#ga97f6956807f1b567e8cf98a2306a4b1f">More...</a><br/></td></tr>
-<tr class="separator:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7760cfc19871898542641394ca4526d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gac7760cfc19871898542641394ca4526d">OTFAD_GetStatus</a> (OTFAD_Type *base)</td></tr>
-<tr class="memdesc:gac7760cfc19871898542641394ca4526d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get status.  <a href="#gac7760cfc19871898542641394ca4526d">More...</a><br/></td></tr>
-<tr class="separator:gac7760cfc19871898542641394ca4526d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-functional</h2></td></tr>
-<tr class="memitem:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga49d9425e4b8a8d626be9713e5a7c9537">OTFAD_SetEncryptionConfig</a> (OTFAD_Type *base, const <a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module set encryption configuration.  <a href="#ga49d9425e4b8a8d626be9713e5a7c9537">More...</a><br/></td></tr>
-<tr class="separator:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga98b5cbfb4a1e6a8fe8af63df3965161d">OTFAD_GetEncryptionConfig</a> (OTFAD_Type *base, <a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get encryption configuration.  <a href="#ga98b5cbfb4a1e6a8fe8af63df3965161d">More...</a><br/></td></tr>
-<tr class="separator:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga874fd2f27989b88104253600094be09a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga874fd2f27989b88104253600094be09a">OTFAD_HitDetermination</a> (OTFAD_Type *base, uint32_t address, uint8_t *contextIndex)</td></tr>
-<tr class="memdesc:ga874fd2f27989b88104253600094be09a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module do hit determination.  <a href="#ga874fd2f27989b88104253600094be09a">More...</a><br/></td></tr>
-<tr class="separator:ga874fd2f27989b88104253600094be09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga566dde551cccfbff838b7f6f474e525b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga566dde551cccfbff838b7f6f474e525b">FSL_POWER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
+<tr class="memdesc:ga566dde551cccfbff838b7f6f474e525b"><td class="mdescLeft">&#160;</td><td class="mdescRight">power driver version 2.5.0.  <a href="#ga566dde551cccfbff838b7f6f474e525b">More...</a><br/></td></tr>
+<tr class="separator:ga566dde551cccfbff838b7f6f474e525b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00339" id="a00339"></a>
+<a name="a00336" id="a00336"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _otfad_encryption_config</td>
+          <td class="memname">struct _power_pad_vrange</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a1cb78fa06289056ac14f0fc005a1668a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cb78fa06289056ac14f0fc005a1668a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1cb78fa06289056ac14f0fc005a1668a">valid</a></td></tr>
-<tr class="memdesc:a1cb78fa06289056ac14f0fc005a1668a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context is valid or not. <br/></td></tr>
-<tr class="separator:a1cb78fa06289056ac14f0fc005a1668a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb19041cc58492f8a017804a4df4dce8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb19041cc58492f8a017804a4df4dce8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#acb19041cc58492f8a017804a4df4dce8">AESdecryption</a></td></tr>
-<tr class="memdesc:acb19041cc58492f8a017804a4df4dce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES decryption enable. <br/></td></tr>
-<tr class="separator:acb19041cc58492f8a017804a4df4dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b1429dd23d029a4f2836f8339c55b9e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a9b1429dd23d029a4f2836f8339c55b9e">readOnly</a></td></tr>
-<tr class="memdesc:a9b1429dd23d029a4f2836f8339c55b9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write attribute for the entire set of context registers <br/></td></tr>
-<tr class="separator:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac51567d3c9f496bcecedd3e5cfe328f4"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac51567d3c9f496bcecedd3e5cfe328f4">contextIndex</a></td></tr>
-<tr class="memdesc:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context index. <br/></td></tr>
-<tr class="separator:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab87136c486c1734105d8d43fa946be43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab87136c486c1734105d8d43fa946be43"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ab87136c486c1734105d8d43fa946be43">startAddr</a></td></tr>
-<tr class="memdesc:ab87136c486c1734105d8d43fa946be43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address. <br/></td></tr>
-<tr class="separator:ab87136c486c1734105d8d43fa946be43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac828c03229990cbc659bca3ff7ac80ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac828c03229990cbc659bca3ff7ac80ec"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac828c03229990cbc659bca3ff7ac80ec">endAddr</a></td></tr>
-<tr class="memdesc:ac828c03229990cbc659bca3ff7ac80ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">End address. <br/></td></tr>
-<tr class="separator:ac828c03229990cbc659bca3ff7ac80ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6427bccbb63e1f833102933d8e4940a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6427bccbb63e1f833102933d8e4940a2"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6427bccbb63e1f833102933d8e4940a2">key</a> [4]</td></tr>
-<tr class="memdesc:a6427bccbb63e1f833102933d8e4940a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption key. <br/></td></tr>
-<tr class="separator:a6427bccbb63e1f833102933d8e4940a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4a4171419d04f3e330ddd5781432cec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4a4171419d04f3e330ddd5781432cec"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af4a4171419d04f3e330ddd5781432cec">counter</a> [2]</td></tr>
-<tr class="memdesc:af4a4171419d04f3e330ddd5781432cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption counter. <br/></td></tr>
-<tr class="separator:af4a4171419d04f3e330ddd5781432cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafad8d49fb0beb70c3c7166f744f0973"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aafad8d49fb0beb70c3c7166f744f0973">Vdde0Range</a>: 2</td></tr>
+<tr class="memdesc:aafad8d49fb0beb70c3c7166f744f0973"><td class="mdescLeft">&#160;</td><td class="mdescRight">VDDE0 voltage range for VDDIO_0.  <a href="#aafad8d49fb0beb70c3c7166f744f0973">More...</a><br/></td></tr>
+<tr class="separator:aafad8d49fb0beb70c3c7166f744f0973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26bc815c50066f061c78127c4f9281f1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a26bc815c50066f061c78127c4f9281f1">Vdde1Range</a>: 2</td></tr>
+<tr class="memdesc:a26bc815c50066f061c78127c4f9281f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">VDDE1 voltage range for VDDIO_1.  <a href="#a26bc815c50066f061c78127c4f9281f1">More...</a><br/></td></tr>
+<tr class="separator:a26bc815c50066f061c78127c4f9281f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a637326a5426601843845cdc3074c1c01"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a637326a5426601843845cdc3074c1c01">Vdde2Range</a>: 2</td></tr>
+<tr class="memdesc:a637326a5426601843845cdc3074c1c01"><td class="mdescLeft">&#160;</td><td class="mdescRight">VDDE2 voltage range for VDDIO_2.  <a href="#a637326a5426601843845cdc3074c1c01">More...</a><br/></td></tr>
+<tr class="separator:a637326a5426601843845cdc3074c1c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a838319084362d60e40dc5c18fcc5fc46"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a838319084362d60e40dc5c18fcc5fc46">__pad0__</a>: 26</td></tr>
+<tr class="memdesc:a838319084362d60e40dc5c18fcc5fc46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved.  <a href="#a838319084362d60e40dc5c18fcc5fc46">More...</a><br/></td></tr>
+<tr class="separator:a838319084362d60e40dc5c18fcc5fc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="aafad8d49fb0beb70c3c7166f744f0973"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _power_pad_vrange::Vdde0Range</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="a00041.html#ga0e7b70029d2645b4854b128ceea0616d">power_pad_vrange_val_t</a> </p>
 
 </div>
 </div>
-<a name="a00338" id="a00338"></a>
+<a class="anchor" id="a26bc815c50066f061c78127c4f9281f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _otfad_config</td>
+          <td class="memname">uint32_t _power_pad_vrange::Vdde1Range</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74de234f0a7a7e7f1b292878cb823dfc"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a74de234f0a7a7e7f1b292878cb823dfc">forceSVM</a></td></tr>
-<tr class="memdesc:a74de234f0a7a7e7f1b292878cb823dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into SVM after a write. <br/></td></tr>
-<tr class="separator:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe2b6482b0a8e35e6562b2ed10d3b9d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#acfe2b6482b0a8e35e6562b2ed10d3b9d">forceLDM</a></td></tr>
-<tr class="memdesc:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into LDM after a write. <br/></td></tr>
-<tr class="separator:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2865c0afcc93d19ad54ec6f440ca46bf"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a2865c0afcc93d19ad54ec6f440ca46bf">restrictedRegAccess</a></td></tr>
-<tr class="memdesc:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricted register access enable. <br/></td></tr>
-<tr class="separator:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5506b60d77173b44913cc06390b753ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5506b60d77173b44913cc06390b753ea"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a5506b60d77173b44913cc06390b753ea">enableOTFAD</a></td></tr>
-<tr class="memdesc:a5506b60d77173b44913cc06390b753ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD has decryption enabled. <br/></td></tr>
-<tr class="separator:a5506b60d77173b44913cc06390b753ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<p><a class="el" href="a00041.html#ga0e7b70029d2645b4854b128ceea0616d">power_pad_vrange_val_t</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a637326a5426601843845cdc3074c1c01"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _power_pad_vrange::Vdde2Range</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="a00041.html#ga0e7b70029d2645b4854b128ceea0616d">power_pad_vrange_val_t</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a838319084362d60e40dc5c18fcc5fc46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _power_pad_vrange::__pad0__</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga20f3f7f4a4d28843e4dcba42fe074de4"></a>
+<a class="anchor" id="ga566dde551cccfbff838b7f6f474e525b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_OTFAD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td>
+          <td class="memname">#define FSL_POWER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad7b390514bc10f7c22b430b2b411a21a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PMIC_VDDCORE_RECOVERY_TIME_IGNORE&#160;&#160;&#160;(0xFFFFFFFFU)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga4783057bb85cb92f2e0d90a62f2d75c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00041.html#gad64f1352fca9441403c90dfcfdfcf1e7">_power_vddcore_src</a>  <a class="el" href="a00041.html#ga4783057bb85cb92f2e0d90a62f2d75c7">power_vddcore_src_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga906d31f4a4711dcb8055e0071732eef4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00041.html#gaf3d4b7573ef8383c02e85328d8f4fe89">_power_control_for_pmic_mode</a>  <a class="el" href="a00041.html#ga906d31f4a4711dcb8055e0071732eef4">power_control_for_pmic_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>vddcore and vdd1v8 are always on in mode0. Refer to PMC-&gt;PMICCFG. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga15f214b2d38f6b142814a0a46ef14b9a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* power_vddcore_set_func_t)(uint32_t millivolt)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Refer to <a class="el" href="a00041.html#ga9c91598172b667c713ac605654ded908" title="Set VDDCORE supply source, PMIC or on-chip regulator. ">POWER_SetVddCoreSupplySrc()</a> </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga2970898e8a43ce21e1cc510d49f1b89d"></a>
+<a class="anchor" id="gab5ab4472585bbb5e1a1f56288df2d884"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00041.html#gab5ab4472585bbb5e1a1f56288df2d884">_pmc_interrupt</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>These enums are meant to be OR'd together to form a bit mask. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89dab86672f372b394bddf19bc570929597c"></a>kStatus_OTFAD_ResRegAccessMode</em>&nbsp;</td><td class="fielddoc">
-<p>Restricted register mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab5ab4472585bbb5e1a1f56288df2d884a1c214a969f306e69992061bff63d0782"></a>kPMC_INT_LVDCORE</em>&nbsp;</td><td class="fielddoc">
+<p>Vddcore Low-Voltage Detector Interrupt Enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89dada2a68470d9b60529fde6beab292e72f"></a>kStatus_OTFAD_AddressError</em>&nbsp;</td><td class="fielddoc">
-<p>End address less than start address. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab5ab4472585bbb5e1a1f56288df2d884a1e2f845ddb49e6845a020da333d1441c"></a>kPMC_INT_HVDCORE</em>&nbsp;</td><td class="fielddoc">
+<p>Vddcore High-Voltage Detector Interrupt Enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89da94765e8e9e448cfa441e2134f87a842f"></a>kStatus_OTFAD_RegionOverlap</em>&nbsp;</td><td class="fielddoc">
-<p>the OTFAD does not support any form of memory region overlap, for system accesses that hit in multiple contexts or no contexts, the fetched data is simply bypassed </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab5ab4472585bbb5e1a1f56288df2d884afb677a105269a8f777683890b0048730"></a>kPMC_INT_HVD1V8</em>&nbsp;</td><td class="fielddoc">
+<p>Vdd1v8 High-Voltage Detector Interrupt Enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89dab98da10f5a46caedb11ea21bcb4b6328"></a>kStatus_OTFAD_RegionMiss</em>&nbsp;</td><td class="fielddoc">
-<p>For accesses that hit in a single context, but not the selected one. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab5ab4472585bbb5e1a1f56288df2d884a525e63d51d160338ccee4fd96228b71f"></a>kPMC_INT_AUTOWK</em>&nbsp;</td><td class="fielddoc">
+<p>PMC automatic wakeup enable and interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab5ab4472585bbb5e1a1f56288df2d884acebd956840020c4319e60d98d38e0151"></a>kPMC_INT_INTRPAD</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt pad deep powerdown and deep sleep wake up &amp; interrupt enable. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gafa231099d07583c3ed0981e0bb665f55"></a>
+<a class="anchor" id="ga319496d862f975b8d6a5427abb6aceb8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00041.html#ga319496d862f975b8d6a5427abb6aceb8">_pmc_event_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>These enums are meant to be OR'd together to form a bit mask. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55a289054cf51b8d6cb3c32a87884400e17"></a>kOTFAD_Context_0</em>&nbsp;</td><td class="fielddoc">
-<p>context 0 </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a94d2c4b25d44d9054b7ffdd502173d6c"></a>kPMC_FLAGS_PORCORE</em>&nbsp;</td><td class="fielddoc">
+<p>POR triggered by the vddcore POR monitor (0 = no, 1 = yes). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55abe9a603f23afef05bfdeb1583713f336"></a>kOTFAD_Context_1</em>&nbsp;</td><td class="fielddoc">
-<p>context 1 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a9550f9d1f04132240c63811bf59a8be8"></a>kPMC_FLAGS_POR1V8</em>&nbsp;</td><td class="fielddoc">
+<p>vdd1v8 power on event detected since last cleared(0 = no, 1 = yes). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55a3769e4cee63954e3dfaceea80109ce08"></a>kOTFAD_Context_2</em>&nbsp;</td><td class="fielddoc">
-<p>context 2 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8af11742306aa1f612c0cbc7c755cc18af"></a>kPMC_FLAGS_PORAO18</em>&nbsp;</td><td class="fielddoc">
+<p>vdd_ao18 power on event detected since last cleared (0 = no, 1 = yes). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55ad32231e169446492d32c3674354dbf4d"></a>kOTFAD_Context_3</em>&nbsp;</td><td class="fielddoc">
-<p>context 3 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a18aca526db1e898f98ce97666483a3cf"></a>kPMC_FLAGS_LVDCORE</em>&nbsp;</td><td class="fielddoc">
+<p>LVD tripped since last time this bit was cleared (0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8ac9a323f4216c6b3de7a157c5c508b01a"></a>kPMC_FLAGS_HVDCORE</em>&nbsp;</td><td class="fielddoc">
+<p>HVD tripped since last time this bit was cleared (0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a032b74ee94952c8cbd7f52f3b839abd5"></a>kPMC_FLAGS_HVD1V8</em>&nbsp;</td><td class="fielddoc">
+<p>vdd1v8 HVD tripped since last time this bit was cleared (0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a95340819c66dc464b43f225fc098c0d7"></a>kPMC_FLAGS_RTC</em>&nbsp;</td><td class="fielddoc">
+<p>RTC wakeup detected since last time flag was cleared (0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a8c2753963a033ba7779b2f26a6c634a5"></a>kPMC_FLAGS_AUTOWK</em>&nbsp;</td><td class="fielddoc">
+<p>PMC Auto wakeup caused a deep sleep wakeup and interrupt (0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a4c85f339744eaf4ee61586daf0c8055d"></a>kPMC_FLAGS_INTNPADF</em>&nbsp;</td><td class="fielddoc">
+<p>Pad interrupt caused a wakeup or interrupt event since the last time this flag was cleared (0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a193f45102254167599744a8819c0aa21"></a>kPMC_FLAGS_RESETNPAD</em>&nbsp;</td><td class="fielddoc">
+<p>Reset pad wakeup caused a wakeup or reset event since the last time this bit was cleared. </p>
+<p>(0 = no, 1 = yes). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga319496d862f975b8d6a5427abb6aceb8a576657572f8721c1632500fd023949b2"></a>kPMC_FLAGS_DEEPPD</em>&nbsp;</td><td class="fielddoc">
+<p>Deep powerdown was entered since the last time this flag was cleared (0 = no, 1 = yes). </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga394b3903fbf00ba2b6243f60689a5a5f"></a>
+<a class="anchor" id="ga5794c536c7db70cf870d853ac49d01a1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00041.html#ga5794c536c7db70cf870d853ac49d01a1">_power_pad_vrange_val</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga394b3903fbf00ba2b6243f60689a5a5fa46b06bacd1a8297969a3a61810b5366f"></a>kOTFAD_NRM</em>&nbsp;</td><td class="fielddoc">
-<p>Normal Mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5794c536c7db70cf870d853ac49d01a1a49cee3aa8974ae344b374807da15ebab"></a>kPadVol_171_360</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage from 1.71V to 3.60V. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga394b3903fbf00ba2b6243f60689a5a5fafa7c009b2feed9501056ff7ef74bec34"></a>kOTFAD_SVM</em>&nbsp;</td><td class="fielddoc">
-<p>Security Violation Mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5794c536c7db70cf870d853ac49d01a1a194a2a853861af888d8d7830e4643ffb"></a>kPadVol_171_198</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage from 1.71V to 1.98V. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga394b3903fbf00ba2b6243f60689a5a5fafe2dfe963d9f93d97d2f7ebfcc3ccc96"></a>kOTFAD_LDM</em>&nbsp;</td><td class="fielddoc">
-<p>Logically Disabled Mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5794c536c7db70cf870d853ac49d01a1ae6f989a29cbd03f75ce81805328b3fed"></a>kPadVol_300_360</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage from 3.00V to 3.60V. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga0ec9df6a7d8713e608cc09444d138af8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00041.html#ga0ec9df6a7d8713e608cc09444d138af8">_power_lvd_falling_trip_vol_val</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a28c6ed354117fff39367f2bb5729bed3"></a>kLvdFallingTripVol_720</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 720mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8af1718774e943c9fd9c6c5b4f68863a4d"></a>kLvdFallingTripVol_735</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 735mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8acbbdd441e4b229f8842d5593a8ab4d7c"></a>kLvdFallingTripVol_750</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 750mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a61f02e3ee486d268e4adaefaf053e0cf"></a>kLvdFallingTripVol_765</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 765mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a1f472062d578c4bf0f297a0cd702fbd6"></a>kLvdFallingTripVol_780</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 780mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a64e22f441b45b2d3ba306e3f2d4f49e2"></a>kLvdFallingTripVol_795</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 795mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a1f48233ed106fd81c077c91c83f04ffd"></a>kLvdFallingTripVol_810</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 810mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8afd6391a48bb8420dba5f80ecc56603bf"></a>kLvdFallingTripVol_825</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 825mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a2bca26c6626f747ebdd37772f4ceaa9c"></a>kLvdFallingTripVol_840</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 840mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a1c0c995fecbab5163d980f54fe140a23"></a>kLvdFallingTripVol_855</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 855mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a3bea30df5e262090fa2fd6be47877236"></a>kLvdFallingTripVol_870</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 870mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a108892606558147927fe29b6acdfd810"></a>kLvdFallingTripVol_885</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 885mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8ad07eded9895eb23a61abc7d88655a71e"></a>kLvdFallingTripVol_900</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 900mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8a80ec0a5b82c5314d9a8d4ea1277212e5"></a>kLvdFallingTripVol_915</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 915mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8af7ff2b1ff777d169e1d6d994c2bab0e9"></a>kLvdFallingTripVol_930</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 930mV. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ec9df6a7d8713e608cc09444d138af8ab805e65397883e277e0d0c4c6bd7d75c"></a>kLvdFallingTripVol_945</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage 945mV. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga38633fbd57436df3ffec4934056a380c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00041.html#ga38633fbd57436df3ffec4934056a380c">_power_part_temp_range</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga38633fbd57436df3ffec4934056a380ca72a549753011c44129b57380209f3911"></a>kPartTemp_0C_P85C</em>&nbsp;</td><td class="fielddoc">
+<p>Part temp range 0C - 85C. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga38633fbd57436df3ffec4934056a380ca1f5b35d5b355af2e64015841087b1771"></a>kPartTemp_N20C_P85C</em>&nbsp;</td><td class="fielddoc">
+<p>Part temp range -20C - 85C. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga92f93883aa540c9cf48070fff67a43a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00041.html#ga92f93883aa540c9cf48070fff67a43a7">_power_volt_op_range</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga92f93883aa540c9cf48070fff67a43a7a337bb71864fe05dba4f40854433609ec"></a>kVoltOpLowRange</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage operation range is (0.7V, 0.8V, 0.9V). </p>
+<p>Maximum supported CM33 frequency is 220MHz for 0C-85C part and 215MHz for -20C-85C part. Maximum supported DSP frequency is 375MHz for 0C-85C part and 355MHz for -20C-85C part. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga92f93883aa540c9cf48070fff67a43a7ab17d424fe75087c1181b9f350657cdc8"></a>kVoltOpFullRange</em>&nbsp;</td><td class="fielddoc">
+<p>Voltage operation range is (0.7V, 0.8V, 0.9V, 1.0V, 1.13V). </p>
+<p>This range can support full CM33/DSP speed clarified in Data Sheet. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gad64f1352fca9441403c90dfcfdfcf1e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00041.html#gad64f1352fca9441403c90dfcfdfcf1e7">_power_vddcore_src</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad64f1352fca9441403c90dfcfdfcf1e7a71f69b0e3418eec19794d04fc03b0c46"></a>kVddCoreSrc_LDO</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is supplied by onchip regulator. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad64f1352fca9441403c90dfcfdfcf1e7a437c60afa31dc290f0631b52fb6b8e6f"></a>kVddCoreSrc_PMIC</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is supplied by external PMIC. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaf3d4b7573ef8383c02e85328d8f4fe89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00041.html#gaf3d4b7573ef8383c02e85328d8f4fe89">_power_control_for_pmic_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>vddcore and vdd1v8 are always on in mode0. Refer to PMC-&gt;PMICCFG. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf3d4b7573ef8383c02e85328d8f4fe89a333a9b1956d11fb3f5d39ac52329004c"></a>kVddCoreOnMode1</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is powered in PMIC mode1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3d4b7573ef8383c02e85328d8f4fe89a7a05aff1439d3fc24c52ab7c00a27f6c"></a>kVddCoreOnMode2</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is powered in PMIC mode2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3d4b7573ef8383c02e85328d8f4fe89aaf42b9a61a7bf410c9e819958bba4347"></a>kVddCoreOnMode3</em>&nbsp;</td><td class="fielddoc">
+<p>VDDCORE is powered in PMIC mode3. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3d4b7573ef8383c02e85328d8f4fe89a5da1b33c59dfe0c14bbdd856f691e10e"></a>kVdd1v8OnMode1</em>&nbsp;</td><td class="fielddoc">
+<p>VDD1V8 is powered in PMIC mode1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3d4b7573ef8383c02e85328d8f4fe89a885d81662994092082afa266c2d3aa2e"></a>kVdd1v8OnMode2</em>&nbsp;</td><td class="fielddoc">
+<p>VDD1V8 is powered in PMIC mode2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3d4b7573ef8383c02e85328d8f4fe89a6cecbc2aa4dbfa3a06a917e473291bc0"></a>kVdd1v8OnMode3</em>&nbsp;</td><td class="fielddoc">
+<p>VDD1V8 is powered in PMIC mode3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7ec529b7e632085d191bc1c772efaa2e"></a>
+<a class="anchor" id="ga8fb07d65f0b0af3e87414a9b5609892e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OTFAD_GetDefaultConfig </td>
+          <td class="memname">void POWER_PmicPowerModeSelectControl </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>vddSelect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If not set, the driver will use default configurations for different PMIC mode. The default configuration is as below. PMIC_MODE: power mode select 0b00 run mode, all supplies on. 0b01 deep sleep mode, all supplies on. 0b10 deep powerdown mode, vddcore off. 0b11 full deep powerdown mode vdd1v8 and vddcore off.</p>
+<p>Note, be cautious to modify the VDD state in different PMIC mode. When the default configuration is changed, use exclude_from_pd[0] to configure the PMIC mode for deep sleep and power down mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vddSelect</td><td>the ORd value of <a class="el" href="a00041.html#ga906d31f4a4711dcb8055e0071732eef4">power_control_for_pmic_mode</a>. Defines run (all supplies on), deep power-down (VDDCORE off), and true deep power-down (VDD1V8 and VDDCORE off). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacf3a138e73725bb8c50290295259bfa4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void POWER_EnablePD </td>
+          <td>(</td>
+          <td class="paramtype">pd_bit_t&#160;</td>
+          <td class="paramname"><em>en</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Note that enabling the bit powers down the peripheral</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">en</td><td>peripheral for which to enable the PDRUNCFG bit </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga40a1d0c80f5189e9c56133a2bc15a4c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void POWER_DisablePD </td>
+          <td>(</td>
+          <td class="paramtype">pd_bit_t&#160;</td>
+          <td class="paramname"><em>en</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Note that disabling the bit powers up the peripheral</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">en</td><td>peripheral for which to disable the PDRUNCFG bit </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga487d812dd94e4be1f7933672c238422b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_UpdateOscSettlingTime </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>osc_delay</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">osc_delay</td><td>: OSC stabilization time in unit of microsecond </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga754099e77634433f1607ec9ee6b5b27f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_UpdatePmicRecoveryTime </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pmic_delay</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>NOTE: If LDO is used instead of PMIC, don't call it. Otherwise it must be called to allow power library to well handle the deep sleep process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pmic_delay</td><td>: PMIC stabilization time in unit of microsecond, or PMIC_VDDCORE_RECOVERY_TIME_IGNORE if not care. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7fe159852a5490f3af643b91bc3ffd3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_ClearEventFlags </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>statusMask</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">statusMask</td><td>: A bitmask of event flags that are to be cleared. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4d80ad48eb44d4c62ac1b4e05f19ee42"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t POWER_GetEventFlags </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>PMC FLAGS register value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga449ec12cb8524cbf6e2bf2b2a03ce1bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interruptMask</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interruptMask</td><td>: A bitmask of of interrupts to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga40563a8e356c1bb5f1d62775747f2d63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interruptMask</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interruptMask</td><td>: A bitmask of of interrupts to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga028cafb0c4977abd64dfc4376046e716"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetAnalogBuffer </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enable</td><td>: Set to true to enable analog buffer for references or ATX2, false to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab60c903574b2065aca21bd5886ecdcf1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t POWER_GetPmicMode </td>
+          <td>(</td>
+          <td class="paramtype">pmic_mode_reg_t&#160;</td>
+          <td class="paramname"><em>reg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>: PDSLEEPCFG0 or PDRUNCFG0 register offset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>PMIC_MODE pins value in PDSLEEPCFG0 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6a0bafa723d0a4ec45fe6ad14bbe2f91"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00041.html#gad62f7ed6fb8c104ce4a9ced58af49830">body_bias_mode_t</a> POWER_GetBodyBiasMode </td>
+          <td>(</td>
+          <td class="paramtype">pmic_mode_reg_t&#160;</td>
+          <td class="paramname"><em>reg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>: PDSLEEPCFG0 or PDRUNCFG0 register offset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current body bias mode </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac6bf09385a1955837b34995ba6bd4158"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetPadVolRange </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00041.html#ga4638e7555e1252a2ce832a172068845e">power_pad_vrange_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Wide voltage range cost more power due to enabled voltage detector.</p>
+<p>NOTE: BE CAUTIOUS TO CALL THIS API. IF THE PAD SUPPLY IS BEYOND THE SET RANGE, SILICON MIGHT BE DAMAGED.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
+    <tr><td class="paramname">config</td><td>pad voltage range configuration. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga50c3cc55c76ff1feacb5291ff2428a6c"></a>
+<a class="anchor" id="ga17b5192a01af90ecd326f0cd8266d44f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OTFAD_Init </td>
+          <td class="memname">bool POWER_SetLdoVoltageForFreq </td>
           <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga2c7e9ac9a64260684ed5b242319ae181">power_part_temp_range_t</a>&#160;</td>
+          <td class="paramname"><em>tempRange</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga97f6956807f1b567e8cf98a2306a4b1f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t OTFAD_GetOperateMode </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac7760cfc19871898542641394ca4526d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t OTFAD_GetStatus </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga49d9425e4b8a8d626be9713e5a7c9537"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_SetEncryptionConfig </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga98b5cbfb4a1e6a8fe8af63df3965161d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_GetEncryptionConfig </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga874fd2f27989b88104253600094be09a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_HitDetermination </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00041.html#gaea8ae51a5678af127bc5aef00281a96d">power_volt_op_range_t</a>&#160;</td>
+          <td class="paramname"><em>voltOpRange</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
+          <td class="paramname"><em>cm33Freq</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>contextIndex</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>dspFreq</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -592,13 +1194,350 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">address</td><td>the physical address space assigned to the QuadSPI(FlexSPI) module. </td></tr>
-    <tr><td class="paramname">contextIndex</td><td>hitted context region index. </td></tr>
+    <tr><td class="paramname">tempRange</td><td>: part temperature range </td></tr>
+    <tr><td class="paramname">voltOpRange</td><td>: voltage operation range. </td></tr>
+    <tr><td class="paramname">cm33Freq</td><td>: CM33 CPU clock frequency value </td></tr>
+    <tr><td class="paramname">dspFreq</td><td>: DSP CPU clock frequency value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status, such as kStatus_Success or kStatus_OTFAD_ResRegAccessMode. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true for success and false for CPU frequency out of specified voltOpRange. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9c91598172b667c713ac605654ded908"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetVddCoreSupplySrc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga4783057bb85cb92f2e0d90a62f2d75c7">power_vddcore_src_t</a>&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">src</td><td>: <a class="el" href="a00041.html#ga4783057bb85cb92f2e0d90a62f2d75c7" title="VDDCORE supply source. ">power_vddcore_src_t</a>, VDDCore supply source </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2c2ab1ac72cae98f4cca0e87bf85f38a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetPmicCoreSupplyFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga15f214b2d38f6b142814a0a46ef14b9a">power_vddcore_set_func_t</a>&#160;</td>
+          <td class="paramname"><em>func</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>: <a class="el" href="a00041.html#ga15f214b2d38f6b142814a0a46ef14b9a" title="Callback function used to change VDDCORE when the VDDCORE is supplied by external PMIC...">power_vddcore_set_func_t</a>, the PMIC core supply voltage set function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3bce0f4d75853f022d36a1e865b58672"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool POWER_SetVoltageForFreq </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga2c7e9ac9a64260684ed5b242319ae181">power_part_temp_range_t</a>&#160;</td>
+          <td class="paramname"><em>tempRange</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00041.html#gaea8ae51a5678af127bc5aef00281a96d">power_volt_op_range_t</a>&#160;</td>
+          <td class="paramname"><em>voltOpRange</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>cm33Freq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>dspFreq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mini_volt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tempRange</td><td>: part temperature range </td></tr>
+    <tr><td class="paramname">voltOpRange</td><td>: voltage operation range. </td></tr>
+    <tr><td class="paramname">cm33Freq</td><td>: CM33 CPU clock frequency value </td></tr>
+    <tr><td class="paramname">dspFreq</td><td>: DSP CPU clock frequency value </td></tr>
+    <tr><td class="paramname">mini_volt</td><td>: minimum voltage in millivolt(mV) for VDDCORE. Should &lt;= 1130mV, 0 means use the core frequency to calculate voltage. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true for success and false for CPU frequency out of specified voltOpRange or failed to set voltage. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafbdad7c38f2c3bc2c7132fb2d0900f1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetLvdFallingTripVoltage </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga5332af37bb61f8eafad17ba7071b907e">power_lvd_falling_trip_vol_val_t</a>&#160;</td>
+          <td class="paramname"><em>volt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">volt</td><td>target LVD voltage to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac8d806330b0b694ed63a0cef7db004b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00041.html#ga5332af37bb61f8eafad17ba7071b907e">power_lvd_falling_trip_vol_val_t</a> POWER_GetLvdFallingTripVoltage </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Current LVD voltage. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4f37778617cfc1e2b1ebfa1dd2afd15d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_SetPmicMode </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pmic_mode_reg_t&#160;</td>
+          <td class="paramname"><em>reg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>: PMIC MODE pin value </td></tr>
+    <tr><td class="paramname">reg</td><td>: PDSLEEPCFG0 or PDRUNCFG0 register offset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>PMIC_MODE pins value in PDSLEEPCFG0 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gacb3dc44bc91219cf509106420c98a3cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_EnterDeepSleep </td>
+          <td>(</td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>exclude_from_pd</em>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">exclude_from_pd</td><td>Bit mask of the PDRUNCFG0 ~ PDRUNCFG3 that needs to be powered on during Deep Sleep mode selected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9b00a5839be7a0ef216e0bd4bdeb9ffc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_EnterDeepPowerDown </td>
+          <td>(</td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>exclude_from_pd</em>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">exclude_from_pd</td><td>Bit mask of the PDRUNCFG0 ~ PDRUNCFG3 that needs to be powered on during Deep Power Down mode selected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae2de1766cd5e830b27c4b8cceeeca905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_EnterFullDeepPowerDown </td>
+          <td>(</td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>exclude_from_pd</em>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">exclude_from_pd</td><td>Bit mask of the PDRUNCFG0 ~ PDRUNCFG3 that needs to be powered on during Full Deep Power Down mode selected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga808fa9aff5474a74f0c78dbd05c8896f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void POWER_EnterPowerMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00041.html#gaaf37864fe04e16a8e5a5650a77112519">power_mode_cfg_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>exclude_from_pd</em>[4]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>Power mode to enter. </td></tr>
+    <tr><td class="paramname">exclude_from_pd</td><td>Bit mask of the PDRUNCFG0 ~ PDRUNCFG3 that needs to be powered on during power mode selected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga00a1c5f2555215dc1ac509052e0f3376"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EnableDeepSleepIRQ </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type&#160;</td>
+          <td class="paramname"><em>interrupt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable the interrupt for wake-up from deep sleep mode. Some interrupts are typically used in sleep mode only and will not occur during deep-sleep mode because relevant clocks are stopped. However, it is possible to enable those clocks (significantly increasing power consumption in the reduced power mode), making these wake-ups possible. </p>
+<dl class="section note"><dt>Note</dt><dd>This function also enables the interrupt in the NVIC (<a class="el" href="a00214.html#ga2b92855a9ebf6eadeed1527b8339d50a" title="Enable specific interrupt. ">EnableIRQ()</a> is called internally). </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interrupt</td><td>The IRQ number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga73a306a0d86cc31334f1825593c613a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DisableDeepSleepIRQ </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type&#160;</td>
+          <td class="paramname"><em>interrupt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disable the interrupt for wake-up from deep sleep mode. Some interrupts are typically used in sleep mode only and will not occur during deep-sleep mode because relevant clocks are stopped. However, it is possible to enable those clocks (significantly increasing power consumption in the reduced power mode), making these wake-ups possible. </p>
+<dl class="section note"><dt>Note</dt><dd>This function also disables the interrupt in the NVIC (<a class="el" href="a00214.html#ga7f9bbd23e70eaf6670d3425683753961" title="Disable specific interrupt. ">DisableIRQ()</a> is called internally). </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interrupt</td><td>The IRQ number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac28a380c6f92d302c5d99f30cc126fe5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t POWER_GetLibVersion </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>version number of the power library </dd></dl>
 
 </div>
 </div>

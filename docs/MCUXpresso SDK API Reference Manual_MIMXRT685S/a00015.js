@@ -1,6 +1,6 @@
 var a00015 =
 [
-    [ "_ctimer_match_config", "a00015.html#a00279", [
+    [ "_ctimer_match_config", "a00015.html#a00276", [
       [ "matchValue", "a00015.html#a5960cac6e983dce00a98f942e22f5832", null ],
       [ "enableCounterReset", "a00015.html#a21541c95f8155a7668f604269630112c", null ],
       [ "enableCounterStop", "a00015.html#a20b9c2ce6be8ecf9f0f640bba9828851", null ],
@@ -8,7 +8,7 @@ var a00015 =
       [ "outPinInitState", "a00015.html#a742e587e497d79f10529d45268078d15", null ],
       [ "enableInterrupt", "a00015.html#a65dfe86005e09a191b64c31726f5b8ad", null ]
     ] ],
-    [ "_ctimer_config", "a00015.html#a00278", [
+    [ "_ctimer_config", "a00015.html#a00275", [
       [ "mode", "a00015.html#ae5118e6ce0406226a78b579332afc0e7", null ],
       [ "input", "a00015.html#ae81716b8893efcbe0a03b7a96215cd66", null ],
       [ "prescale", "a00015.html#acf773fdddb3e5695ae30f4ab45e4b2fd", null ]

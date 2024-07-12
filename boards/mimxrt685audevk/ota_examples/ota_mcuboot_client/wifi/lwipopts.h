@@ -326,7 +326,6 @@ void sys_mark_tcpip_thread(void);
  */
 #define LWIP_RAW 1
 
-#ifdef CONFIG_IPV6
 #define LWIP_IPV6 1
 
 /**
@@ -336,7 +335,6 @@ void sys_mark_tcpip_thread(void);
  */
 
 #define LWIP_NETIF_IPV6_STATUS_CALLBACK LWIP_IPV6
-#endif
 
 /* Enable IPv4 Auto IP	*/
 #ifdef CONFIG_AUTOIP
@@ -480,4 +478,12 @@ void sys_mark_tcpip_thread(void);
 #define TCP_RESOURCE_FAIL_RETRY_LIMIT 50
 
 #define LWIP_COMPAT_MUTEX_ALLOWED 1
+
+#if (LWIP_DNS || LWIP_IGMP || LWIP_IPV6) && !defined(LWIP_RAND)
+/* When using IGMP or IPv6, LWIP_RAND() needs to be defined to a random-function returning an u32_t random value*/
+#include "lwip/arch.h"
+u32_t lwip_rand(void);
+#define LWIP_RAND() lwip_rand()
+#endif
+
 #endif /* __LWIPOPTS_H__ */

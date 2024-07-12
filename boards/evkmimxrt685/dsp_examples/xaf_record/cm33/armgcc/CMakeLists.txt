@@ -46,8 +46,8 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../dsp_config.h"
-"${SdkRootDirPath}/middleware/vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h"
-"${SdkRootDirPath}/middleware/vit/HIFI4/Lib/Inc/PL_memoryRegion.h"
+"${SdkRootDirPath}/middleware/vit/RT600-HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h"
+"${SdkRootDirPath}/middleware/vit/RT600-HIFI4/Lib/Inc/PL_memoryRegion.h"
 "${ProjDirPath}/../main_cm33.c"
 "${ProjDirPath}/../main_cm33.h"
 "${ProjDirPath}/../cmd.c"
@@ -60,7 +60,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../rpmsg_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../incbin.S"
 "${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_data_debug.bin"
 "${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_data_release.bin"
 "${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_literal_debug.bin"
@@ -69,6 +68,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_ncache_release.bin"
 "${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_text_debug.bin"
 "${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary/dsp_text_release.bin"
+"${ProjDirPath}/../incbin.S"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
@@ -83,7 +83,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt685/dsp_examples/xaf_record/dsp/binary
     ${ProjDirPath}/..
-    ${SdkRootDirPath}/middleware/vit/HIFI4/Lib/Inc
+    ${SdkRootDirPath}/middleware/vit/RT600-HIFI4/Lib/Inc
 )
 
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")

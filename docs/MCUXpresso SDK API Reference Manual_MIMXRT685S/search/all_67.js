@@ -2,10 +2,10 @@ var searchData=
 [
   ['g_5fclkinfreq',['g_clkinFreq',['../a00010.html#ga49f0b6eb5fa54a25d3e4427b232b40d3',1,'fsl_clock.h']]],
   ['g_5fmclkfreq',['g_mclkFreq',['../a00010.html#ga6edcdb0fb35348c975da4dd2b3f5f69e',1,'fsl_clock.h']]],
-  ['g_5fserialhandle',['g_serialHandle',['../a00245.html#gaad3c4240a1364156a239471ccdb9aa0b',1,'fsl_debug_console.h']]],
+  ['g_5fserialhandle',['g_serialHandle',['../a00242.html#gaad3c4240a1364156a239471ccdb9aa0b',1,'fsl_debug_console.h']]],
   ['g_5fxtalfreq',['g_xtalFreq',['../a00010.html#gaa8b59ed5be618b5e5339efcbc4564e78',1,'fsl_clock.h']]],
   ['gainshft',['gainshft',['../a00017.html#ac84a16b61f1aefdf5d216e8d168afa28',1,'_dmic_channel_config']]],
-  ['genericcmd6timeout',['genericCMD6Timeout',['../a00038.html#a26edb9fa4327e6021bf43c33b951d727',1,'_mmc_extended_csd']]],
+  ['genericcmd6timeout',['genericCMD6Timeout',['../a00037.html#a26edb9fa4327e6021bf43c33b951d727',1,'_mmc_extended_csd']]],
   ['gpio_5fclocks',['GPIO_CLOCKS',['../a00010.html#gac86986db423673c1d9b46882ccd6b3a9',1,'fsl_clock.h']]],
   ['gpio_5finterrupt_5fconfig_5ft',['gpio_interrupt_config_t',['../a00023.html#ga7175ba73c1f8a60ae37f70808ac0c3dd',1,'fsl_gpio.h']]],
   ['gpio_5finterrupt_5findex_5ft',['gpio_interrupt_index_t',['../a00023.html#gaa31e3c93cde11b84204dacf01c4bbd17',1,'fsl_gpio.h']]],

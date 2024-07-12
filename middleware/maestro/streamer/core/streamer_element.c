@@ -110,6 +110,13 @@ static const ElementInit element_list[] = {
     /*! TYPE_ELEMENT_AUDIO_SINK */
     {sizeof(ElementAudioSink), audiosink_init_element},
 
+#ifdef STREAMER_ENABLE_VIT_SINK
+    /*! TYPE_ELEMENT_VIT_SINK */
+    {sizeof(ElementVitSink), vitsink_init_element},
+#else
+    {0, NULL},
+#endif
+
 #ifdef STREAMER_ENABLE_DECODER
     /*! TYPE_ELEMENT_DECODER */
     {sizeof(ElementDecoder), decoder_init_element},
@@ -120,13 +127,6 @@ static const ElementInit element_list[] = {
 #ifdef STREAMER_ENABLE_ENCODER
     /*! TYPE_ELEMENT_ENCODER */
     {sizeof(ElementEncoder), encoder_init_element},
-#else
-    {0, NULL},
-#endif
-
-#ifdef STREAMER_ENABLE_VIT_SINK
-    /*! TYPE_ELEMENT_VIT_SINK */
-    {sizeof(ElementVitSink), vitsink_init_element},
 #else
     {0, NULL},
 #endif

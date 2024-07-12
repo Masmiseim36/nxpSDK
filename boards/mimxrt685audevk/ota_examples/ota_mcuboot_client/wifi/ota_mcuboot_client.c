@@ -29,6 +29,7 @@
 #include "fsl_shell.h"
 #include "sysflash/sysflash.h"
 #include "flash_map.h"
+#include "flash_helper.h"
 #include "mcuboot_app_support.h"
 
 #ifdef WIFI_MODE
@@ -68,9 +69,10 @@ static SHELL_COMMAND_DEFINE(ota,
                             SHELL_IGNORE_PARAMETER_COUNT);
 
 static SHELL_COMMAND_DEFINE(image,
-                            "\n\"image [info]\"              : Print image information"
-                            "\n\"image test <imageNumber>\"  : Mark secondary image of given number as ready for test"
-                            "\n\"image accept <imageNumber>\": Mark primary image of given number as accepted"
+                            "\n\"image [info]\"          : Print image information"
+                            "\n\"image test [imgNum]\"   : Mark candidate slot of given image number as ready for test"
+                            "\n\"image accept [imgNum]\" : Mark active slot of given image number as accepted"
+                            "\n\"image erase [imgNum]\"  : Erase candidate slot of given image number"
                             "\n",
                             shellCmd_image,
                             SHELL_IGNORE_PARAMETER_COUNT);
@@ -96,59 +98,6 @@ static shell_handle_t s_shellHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-static void print_image_info(void)
-{
-    for (int image = 0; image < MCUBOOT_IMAGE_NUMBER; image++)
-    {
-        status_t status;
-        uint32_t imgstate;
-        const char *name = boot_image_names[image];
-
-        status = bl_get_image_state(image, &imgstate);
-        if (status != kStatus_Success)
-        {
-            PRINTF("Failed to get state of image %u (ret %d)", image, status);
-            return;
-        }
-
-        PRINTF("Image %d; name %s; state %s:\n", image, name, bl_imgstate_to_str(imgstate));
-
-        for (int slot = 0; slot < 2; slot++)
-        {
-            int faid              = image * 2 + slot;
-            struct flash_area *fa = &boot_flash_map[faid];
-            uint32_t slotaddr     = fa->fa_off + BOOT_FLASH_BASE;
-            uint32_t slotsize     = fa->fa_size;
-            static struct image_header ih;
-
-            status = mflash_drv_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih));
-            if (status != kStatus_Success)
-            {
-                PRINTF("Failed to read image header\n");
-                return;
-            }
-            int slotused = ih.ih_magic == IMAGE_MAGIC;
-
-            PRINTF("  Slot %d; slotAddr %x; slotSize %u\n", faid, slotaddr, slotsize);
-
-            if (slotused)
-            {
-                struct image_version *iv = &ih.ih_ver;
-                char versionstr[40];
-
-                snprintf(versionstr, sizeof(versionstr), "%u.%u.%u.%lu", iv->iv_major, iv->iv_minor, iv->iv_revision,
-                         iv->iv_build_num);
-
-                PRINTF("    <IMAGE %s: size %u; version %s>\n", fa->fa_name, ih.ih_img_size, versionstr);
-            }
-            else
-            {
-                PRINTF("    <EMPTY>\n");
-            }
-        }
-    }
-}
 
 #ifdef WIFI_MODE
 static shell_status_t shellCmd_wifi(shell_handle_t shellHandle, int32_t argc, char **argv)
@@ -313,10 +262,11 @@ static shell_status_t shellCmd_ota(shell_handle_t shellHandle, int32_t argc, cha
     PRINTF(
         "Started OTA with:\n"
         "    image = %d\n"
-        "    file = %s\n"
-        "    host = %s\n"
-        "    port = %s\n",
-        image, path, host, port);
+        "   offset = 0x%X\n"
+        "     file = %s\n"
+        "     host = %s\n"
+        "     port = %s\n",
+        image, storage.start, path, host, port);
 
     /* File Download Over TLS */
 
@@ -350,7 +300,8 @@ cleanup:
 
 static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    int image;
+    int image = 0;
+    int ret;
     status_t status;
     uint32_t imgstate;
 
@@ -364,21 +315,26 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
 
     if (argc == 1 || (argc == 2 && !strcmp(argv[1], "info")))
     {
-        print_image_info();
+        bl_print_image_info(flash_sha256);
         return kStatus_SHELL_Success;
     }
 
-    if (argc != 3)
+    if (argc < 2)
     {
         PRINTF("Wrong arguments. See 'help'\n");
         return kStatus_SHELL_Error;
     }
 
-    image = atoi(argv[2]);
-    if (image < 0 || image >= MCUBOOT_IMAGE_NUMBER)
+    if (argc == 3)
     {
-        PRINTF("Image number out of range.\n");
-        return kStatus_SHELL_Error;
+        char *parse_end;
+        image = strtol(argv[2], &parse_end, 10);
+
+        if (image < 0 || image >= MCUBOOT_IMAGE_NUMBER || *parse_end != '\0')
+        {
+            PRINTF("Wrong image number.\n");
+            return kStatus_SHELL_Error;
+        }
     }
 
     status = bl_get_image_state(image, &imgstate);
@@ -388,7 +344,7 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
         return kStatus_SHELL_Error;
     }
 
-    /* image test <imageNumber> */
+    /* image test [imgNum] */
 
     if (!strcmp(argv[1], "test"))
     {
@@ -400,7 +356,7 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
         }
     }
 
-    /* image accept <imageNumber> */
+    /* image accept [imgNum] */
 
     else if (!strcmp(argv[1], "accept"))
     {
@@ -416,6 +372,37 @@ static shell_status_t shellCmd_image(shell_handle_t shellHandle, int32_t argc, c
             PRINTF("FAILED to accept image (status=%d)\n", status);
             return kStatus_SHELL_Error;
         }
+    }
+
+    /* image erase [imgNum] */
+
+    else if (!strcmp(argv[1], "erase"))
+    {
+        partition_t ptn;
+
+        ret = bl_get_update_partition_info(image, &ptn);
+        if (ret != kStatus_Success)
+        {
+            PRINTF("Failed to determine update partition\n");
+            return kStatus_SHELL_Error;
+        }
+
+        uint32_t slotaddr     = ptn.start;
+        uint32_t slotsize     = ptn.size;
+        uint32_t slotcnt      = (slotsize-1 + MFLASH_SECTOR_SIZE) / MFLASH_SECTOR_SIZE;
+
+        PRINTF("Erasing inactive slot...");
+        for (int i=0; i < slotcnt; i++)
+        {
+            ret = mflash_drv_sector_erase(slotaddr);
+            if (ret)
+            {
+                PRINTF("\nFailed to erase sector at 0x%x (ret=%d)\n", slotaddr, ret);
+                return kStatus_SHELL_Error;
+            }
+            slotaddr += MFLASH_SECTOR_SIZE;
+        }
+        PRINTF("done\n");
     }
 
     else

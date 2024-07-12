@@ -3,7 +3,7 @@ var streamer_8c =
     [ "MAX_MSG_RECV_PER_CYCLE", "streamer_8c.html#ac5563268d422f34f512a00ac49efee23", null ],
     [ "OSA_TASK_HANDLE_DEFINE", "streamer_8c.html#a45ad4b1ebff944384a1607c206ba991c", null ],
     [ "streamer_deinit", "streamer_8c.html#a8301fef359e321972d71aae60c7b401a", null ],
-    [ "streamer_create", "streamer_8c.html#a6f0a49e8b4d082d5f07955158aafa24b", null ],
+    [ "streamer_create", "streamer_8c.html#a8e5c5812d2b8cf5d099cf6474e157178", null ],
     [ "streamer_destroy", "streamer_8c.html#ad3e4e6e9194c94d603c7118a159ad1a6", null ],
     [ "streamer_task", "streamer_8c.html#ac333a25b7f2de84d5745aba5357ef44a", null ],
     [ "streamer_init", "streamer_8c.html#a0897c61d75a3287fa69be868ac630e59", null ],

@@ -39,14 +39,14 @@ For user buttons and LEDs assignment on particular board, see chapter "Running t
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  12.2
-- Keil MDK  5.38.1
-- IAR embedded Workbench  9.40.1
-- MCUXpresso  11.8.0
+- GCC ARM Embedded  13.2.1
+- Keil MDK  5.39.0
+- IAR embedded Workbench  9.60.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================

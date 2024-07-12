@@ -37,16 +37,20 @@ There are limited features in release SRAM target because of memory limitations.
 set appropriate preprocessor define in project settings to 0/1 (e.g. XA_VIT_PRE_PROC etc.).
 Debug and flash targets have full functionality enabled.
 
+In order to get TRACE debug output from the XAF it is necessary to define XF_TRACE 1 in the project settings.
+It is possible to save the TRACE output into RAM using DUMP_TRACE_TO_BUF 1 define on project level.
+Please see the initalization of the TRACE function in the xaf_main_dsp.c file.
+For more details see XAF documentation.
+
 For custom VIT model generation (defining own wake words and voice commands) please use https://vit.nxp.com/
 
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  10.1.11
 - Xtensa C Compiler  14.01
 
 Hardware requirements

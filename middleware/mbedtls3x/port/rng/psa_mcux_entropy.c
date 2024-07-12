@@ -20,6 +20,8 @@
 #include "fsl_rng.h"
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
 #include "fsl_rng.h"
+#elif defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)
+#include "sss_crypto.h"
 #endif
 
 static void mbedtls_mcux_rng_init(void)
@@ -100,6 +102,39 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     result = kStatus_Success;
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     result = RNG_GetRandomData(RNG, output, len);
+    
+#elif defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)
+    sss_sscp_rng_t ctx;
+
+    result = CRYPTO_InitHardware();
+    if (result != kStatus_Success) 
+    {
+      return result;
+    }
+    
+    result = sss_sscp_rng_context_init(&g_sssSession, &ctx, 0u);
+    if (result != kStatus_SSS_Success) 
+    {
+      return result;
+    }
+    
+    result = sss_sscp_rng_get_random(&ctx, output, len);
+    if (result != kStatus_SSS_Success) 
+    {
+      return result;
+    }
+    
+    result = sss_sscp_rng_free(&ctx);
+    if (result != kStatus_SSS_Success) 
+    {
+      return result;
+    }
+    
+    if (result == kStatus_SSS_Success) 
+    {
+      result = kStatus_Success;
+    }
+    
 #endif
 
     if (result == kStatus_Success)

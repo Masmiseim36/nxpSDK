@@ -4,19 +4,7 @@
  *  Warning: This file is now auto-generated.
  */
 /*  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
 
@@ -53,14 +41,29 @@
 #include "../3rdparty/p256-m/p256-m_driver_entrypoints.h"
 
 #endif
+/* Headers for tfm_builtin_key transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+#include "tfm_builtin_key_loader.h"
+
+#endif
+/* Headers for cc3xx transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+#include "cc3xx.h"
+
+#endif
+/* Headers for ele_s2xx transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+#include "ele_s2xx.h"
+
+#endif
 /* Headers for ele_s4xx opaque driver */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
-#include "../port/ele_s4xx/ele_s4xx.h"
+#include "ele_s4xx.h"
 
 #endif
 /* Headers for ele_s4xx transparent driver */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
-#include "../port/ele_s4xx/ele_s4xx.h"
+#include "ele_s4xx.h"
 
 #endif
 /* Headers for els_pkc opaque driver */
@@ -84,10 +87,13 @@
 #define MBEDTLS_TEST_OPAQUE_DRIVER_ID (2)
 #define MBEDTLS_TEST_TRANSPARENT_DRIVER_ID (3)
 #define P256_TRANSPARENT_DRIVER_ID (4)
-#define ELE_S4XX_OPAQUE_DRIVER_ID (5)
-#define ELE_S4XX_TRANSPARENT_DRIVER_ID (6)
-#define ELS_PKC_OPAQUE_DRIVER_ID (7)
-#define ELS_PKC_TRANSPARENT_DRIVER_ID (8)
+#define TFM_BUILTIN_KEY_TRANSPARENT_DRIVER_ID (5)
+#define CC3XX_TRANSPARENT_DRIVER_ID (6)
+#define ELE_S2XX_TRANSPARENT_DRIVER_ID (7)
+#define ELE_S4XX_OPAQUE_DRIVER_ID (8)
+#define ELE_S4XX_TRANSPARENT_DRIVER_ID (9)
+#define ELS_PKC_OPAQUE_DRIVER_ID (10)
+#define ELS_PKC_TRANSPARENT_DRIVER_ID (11)
 
 /* END-driver id */
 
@@ -109,6 +115,12 @@ static inline psa_status_t psa_driver_wrapper_init( void )
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
 
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+    status = tfm_builtin_key_loader_init();
+    if (status != PSA_SUCCESS)
+        return ( status );
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
+
 #if defined(MBEDTLS_PSA_CRYPTO_SE_C)
     status = psa_init_all_se_drivers( );
     if( status != PSA_SUCCESS )
@@ -124,6 +136,18 @@ static inline psa_status_t psa_driver_wrapper_init( void )
     if( status != PSA_SUCCESS )
         return( status );
 #endif
+
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+    status = cc3xx_init();
+    if (status != PSA_SUCCESS)
+        return ( status );
+#endif
+
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+    status = ele_s2xx_transparent_init();
+    if (status != PSA_SUCCESS)
+        return ( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
     status = ele_s4xx_transparent_init();
@@ -162,6 +186,14 @@ static inline void psa_driver_wrapper_free( void )
     mbedtls_test_opaque_free( );
 #endif
 
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+    (void)cc3xx_free();
+#endif
+
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+    (void)ele_s2xx_transparent_free();
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
+
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
     (void)ele_s4xx_transparent_free();
     (void)ele_s4xx_opaque_free();
@@ -187,11 +219,14 @@ static inline psa_status_t psa_driver_wrapper_sign_message(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -210,6 +245,21 @@ static inline psa_status_t psa_driver_wrapper_sign_message(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_sign_message(
+                        attributes,
+                        key_buffer,
+                        key_buffer_size,
+                        alg,
+                        input,
+                        input_length,
+                        signature,
+                        signature_size,
+                        signature_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_sign_message(
                         attributes,
@@ -326,11 +376,14 @@ static inline psa_status_t psa_driver_wrapper_verify_message(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -348,6 +401,18 @@ static inline psa_status_t psa_driver_wrapper_verify_message(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_verify_message(
+                        attributes,
+                        key_buffer,
+                        key_buffer_size,
+                        alg,
+                        input,
+                        input_length,
+                        signature,
+                        signature_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_verify_message(
                         attributes,
@@ -358,6 +423,7 @@ static inline psa_status_t psa_driver_wrapper_verify_message(
                         input_length,
                         signature,
                         signature_length );
+
             /* Declared with fallback == true */
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
@@ -457,7 +523,7 @@ static inline psa_status_t psa_driver_wrapper_sign_hash(
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         if( drv->asymmetric == NULL ||
             drv->asymmetric->p_sign == NULL )
@@ -474,11 +540,14 @@ static inline psa_status_t psa_driver_wrapper_sign_hash(
 
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -496,12 +565,24 @@ static inline psa_status_t psa_driver_wrapper_sign_hash(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_sign_hash( attributes,
+                                      key_buffer,
+                                      key_buffer_size,
+                                      alg,
+                                      hash,
+                                      hash_length,
+                                      signature,
+                                      signature_size,
+                                      signature_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined (MBEDTLS_PSA_P256M_DRIVER_ENABLED)
-            if( PSA_KEY_TYPE_IS_ECC( attributes->core.type ) &&
+            if( PSA_KEY_TYPE_IS_ECC( psa_get_key_type(attributes) ) &&
                 PSA_ALG_IS_ECDSA(alg) &&
                 !PSA_ALG_ECDSA_IS_DETERMINISTIC( alg ) &&
-                PSA_KEY_TYPE_ECC_GET_FAMILY(attributes->core.type) == PSA_ECC_FAMILY_SECP_R1 &&
-                attributes->core.bits == 256 )
+                PSA_KEY_TYPE_ECC_GET_FAMILY(psa_get_key_type(attributes)) == PSA_ECC_FAMILY_SECP_R1 &&
+                psa_get_key_bits(attributes) == 256 )
             {
                 status = p256_transparent_sign_hash( attributes,
                                                      key_buffer,
@@ -616,7 +697,7 @@ static inline psa_status_t psa_driver_wrapper_verify_hash(
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         if( drv->asymmetric == NULL ||
             drv->asymmetric->p_verify == NULL )
@@ -633,11 +714,14 @@ static inline psa_status_t psa_driver_wrapper_verify_hash(
 
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -655,12 +739,23 @@ static inline psa_status_t psa_driver_wrapper_verify_hash(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_verify_hash( attributes,
+                                        key_buffer,
+                                        key_buffer_size,
+                                        alg,
+                                        hash,
+                                        hash_length,
+                                        signature,
+                                        signature_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined (MBEDTLS_PSA_P256M_DRIVER_ENABLED)
-            if( PSA_KEY_TYPE_IS_ECC( attributes->core.type ) &&
+            if( PSA_KEY_TYPE_IS_ECC( psa_get_key_type(attributes) ) &&
                 PSA_ALG_IS_ECDSA(alg) &&
                 !PSA_ALG_ECDSA_IS_DETERMINISTIC( alg ) &&
-                PSA_KEY_TYPE_ECC_GET_FAMILY(attributes->core.type) == PSA_ECC_FAMILY_SECP_R1 &&
-                attributes->core.bits == 256 )
+                PSA_KEY_TYPE_ECC_GET_FAMILY(psa_get_key_type(attributes)) == PSA_ECC_FAMILY_SECP_R1 &&
+                psa_get_key_bits(attributes) == 256 )
             {
                 status = p256_transparent_verify_hash( attributes,
                                                        key_buffer,
@@ -814,12 +909,16 @@ static inline psa_status_t psa_driver_wrapper_sign_hash_start(
     size_t key_buffer_size, psa_algorithm_t alg,
     const uint8_t *hash, size_t hash_length )
 {
+    psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION(
-                                                    attributes->core.lifetime );
+                                                    psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 
@@ -835,18 +934,21 @@ static inline psa_status_t psa_driver_wrapper_sign_hash_start(
 
             /* Fell through, meaning no accelerator supports this operation */
             operation->id = PSA_CRYPTO_MBED_TLS_DRIVER_ID;
-            return( mbedtls_psa_sign_hash_start( &operation->ctx.mbedtls_ctx,
-                                                 attributes,
-                                                 key_buffer, key_buffer_size,
-                                                 alg, hash, hash_length ) );
+            status = mbedtls_psa_sign_hash_start( &operation->ctx.mbedtls_ctx,
+                                                  attributes,
+                                                  key_buffer, key_buffer_size,
+                                                  alg, hash, hash_length );
             break;
 
             /* Add cases for opaque driver here */
 
         default:
             /* Key is declared with a lifetime not known to us */
-            return( PSA_ERROR_INVALID_ARGUMENT );
+            status = PSA_ERROR_INVALID_ARGUMENT;
+            break;
     }
+
+    return( status );
 }
 
 static inline psa_status_t psa_driver_wrapper_sign_hash_complete(
@@ -902,12 +1004,16 @@ static inline psa_status_t psa_driver_wrapper_verify_hash_start(
     const uint8_t *hash, size_t hash_length,
     const uint8_t *signature, size_t signature_length )
 {
+    psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION(
-                                                    attributes->core.lifetime );
+                                                    psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 
@@ -923,20 +1029,22 @@ static inline psa_status_t psa_driver_wrapper_verify_hash_start(
 
             /* Fell through, meaning no accelerator supports this operation */
             operation->id = PSA_CRYPTO_MBED_TLS_DRIVER_ID;
-            return( mbedtls_psa_verify_hash_start( &operation->ctx.mbedtls_ctx,
-                                                   attributes,
-                                                   key_buffer, key_buffer_size,
-                                                   alg, hash, hash_length,
-                                                   signature, signature_length
-                                                   ) );
+            status = mbedtls_psa_verify_hash_start( &operation->ctx.mbedtls_ctx,
+                                                    attributes,
+                                                    key_buffer, key_buffer_size,
+                                                    alg, hash, hash_length,
+                                                    signature, signature_length );
             break;
 
             /* Add cases for opaque driver here */
 
         default:
             /* Key is declared with a lifetime not known to us */
-            return( PSA_ERROR_INVALID_ARGUMENT );
+            status = PSA_ERROR_INVALID_ARGUMENT;
+            break;
     }
+
+    return( status );
 }
 
 static inline psa_status_t psa_driver_wrapper_verify_hash_complete(
@@ -999,8 +1107,8 @@ static inline psa_status_t psa_driver_wrapper_get_key_buffer_size_from_key_data(
     size_t *key_buffer_size )
 {
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
-    psa_key_type_t key_type = attributes->core.type;
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
+    psa_key_type_t key_type = psa_get_key_type(attributes);
 
     *key_buffer_size = 0;
     switch( location )
@@ -1034,18 +1142,33 @@ static inline psa_status_t psa_driver_wrapper_get_key_buffer_size_from_key_data(
 
 static inline psa_status_t psa_driver_wrapper_generate_key(
     const psa_key_attributes_t *attributes,
+    const psa_key_production_parameters_t *params, size_t params_data_length,
     uint8_t *key_buffer, size_t key_buffer_size, size_t *key_buffer_length )
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION(attributes->core.lifetime);
+        PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
+
+#if defined(PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_GENERATE)
+    int is_default_production =
+        psa_key_production_parameters_are_default(params, params_data_length);
+    if( location != PSA_KEY_LOCATION_LOCAL_STORAGE && !is_default_production )
+    {
+        /* We don't support passing custom production parameters
+         * to drivers yet. */
+        return PSA_ERROR_NOT_SUPPORTED;
+    }
+#else
+    int is_default_production = 1;
+    (void) is_default_production;
+#endif
 
     /* Try dynamically-registered SE interface first */
 #if defined(MBEDTLS_PSA_CRYPTO_SE_C)
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         size_t pubkey_length = 0; /* We don't support this feature yet */
         if( drv->key_management == NULL ||
@@ -1064,9 +1187,15 @@ static inline psa_status_t psa_driver_wrapper_generate_key(
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
-            /* Transparent drivers are limited to generating asymmetric keys */
-            if( PSA_KEY_TYPE_IS_ASYMMETRIC( attributes->core.type ) )
+            /* Transparent drivers are limited to generating asymmetric keys. */
+            /* We don't support passing custom production parameters
+             * to drivers yet. */
+            if( PSA_KEY_TYPE_IS_ASYMMETRIC( psa_get_key_type(attributes) ) &&
+                is_default_production )
             {
             /* Cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_DRIVER_TEST)
@@ -1077,10 +1206,16 @@ static inline psa_status_t psa_driver_wrapper_generate_key(
                 if( status != PSA_ERROR_NOT_SUPPORTED )
                     break;
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+                status = cc3xx_generate_key(
+                    attributes, key_buffer, key_buffer_size,
+                    key_buffer_length );
+                break;
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(MBEDTLS_PSA_P256M_DRIVER_ENABLED)
-                if( PSA_KEY_TYPE_IS_ECC( attributes->core.type ) &&
-                    attributes->core.type == PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1) &&
-                    attributes->core.bits == 256 )
+                if( PSA_KEY_TYPE_IS_ECC( psa_get_key_type(attributes) ) &&
+                    psa_get_key_type(attributes) == PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1) &&
+                    psa_get_key_bits(attributes) == 256 )
                 {
                     status = p256_transparent_generate_key( attributes,
                                                             key_buffer,
@@ -1112,7 +1247,8 @@ static inline psa_status_t psa_driver_wrapper_generate_key(
 
             /* Software fallback */
             status = psa_generate_key_internal(
-                attributes, key_buffer, key_buffer_size, key_buffer_length );
+                attributes, params, params_data_length,
+                key_buffer, key_buffer_size, key_buffer_length );
             break;
 
         /* Add cases for opaque driver here */
@@ -1156,7 +1292,7 @@ static inline psa_status_t psa_driver_wrapper_destroy_key(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION(attributes->core.lifetime);
+        PSA_KEY_LIFETIME_GET_LOCATION(psa_get_key_lifetime(attributes));
 
     switch( location )
     {
@@ -1207,7 +1343,7 @@ static inline psa_status_t psa_driver_wrapper_import_key(
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         if( drv->key_management == NULL ||
             drv->key_management->p_import == NULL )
@@ -1234,6 +1370,9 @@ static inline psa_status_t psa_driver_wrapper_import_key(
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -1267,6 +1406,8 @@ static inline psa_status_t psa_driver_wrapper_import_key(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif
+
+
 
 
 #if (defined(PSA_CRYPTO_DRIVER_ELS_PKC) )
@@ -1350,7 +1491,7 @@ static inline psa_status_t psa_driver_wrapper_export_key(
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         if( ( drv->key_management == NULL   ) ||
             ( drv->key_management->p_export == NULL ) )
@@ -1368,6 +1509,9 @@ static inline psa_status_t psa_driver_wrapper_export_key(
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             return( psa_export_key_internal( attributes,
                                              key_buffer,
                                              key_buffer_size,
@@ -1424,13 +1568,13 @@ static inline psa_status_t psa_driver_wrapper_copy_key(
 
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
 #if defined(MBEDTLS_PSA_CRYPTO_SE_C)
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         /* Copying to a secure element is not implemented yet. */
         return( PSA_ERROR_NOT_SUPPORTED );
@@ -1487,11 +1631,14 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -1511,7 +1658,38 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
-#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
+
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_cipher_encrypt( attributes,
+                                           key_buffer,
+                                           key_buffer_size,
+                                           alg,
+                                           iv,
+                                           iv_length,
+                                           input,
+                                           input_length,
+                                           output,
+                                           output_size,
+                                           output_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+            status = ele_s2xx_transparent_cipher_encrypt( attributes,
+                                         key_buffer,
+                                         key_buffer_size,
+                                         alg,
+                                         iv,
+                                         iv_length,
+                                         input,
+                                         input_length,
+                                         output,
+                                         output_size,
+                                         output_length );
+            /* Declared with fallback == true */
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */    
+#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)                           //NXP ELE --- BEGIN ---
             status = ele_s4xx_transparent_cipher_encrypt( attributes,
                                          key_buffer,
                                          key_buffer_size,
@@ -1557,7 +1735,6 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt(
                                                 output,
                                                 output_size,
                                                 output_length ) );
-#else
             return( PSA_ERROR_NOT_SUPPORTED );
 #endif /* MBEDTLS_PSA_BUILTIN_CIPHER */
 
@@ -1642,11 +1819,14 @@ static inline psa_status_t psa_driver_wrapper_cipher_decrypt(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -1664,6 +1844,33 @@ static inline psa_status_t psa_driver_wrapper_cipher_decrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_cipher_decrypt( attributes,
+                                           key_buffer,
+                                           key_buffer_size,
+                                           alg,
+                                           input,
+                                           input_length,
+                                           output,
+                                           output_size,
+                                           output_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+            status = ele_s2xx_transparent_cipher_decrypt( attributes,
+                                         key_buffer,
+                                         key_buffer_size,
+                                         alg,
+                                         input,
+                                         input_length,
+                                         output,
+                                         output_size,
+                                         output_length );
+            /* Declared with fallback == true */
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_cipher_decrypt( attributes,
                                          key_buffer,
@@ -1774,11 +1981,14 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt_setup(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -1796,6 +2006,16 @@ static inline psa_status_t psa_driver_wrapper_cipher_encrypt_setup(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_cipher_encrypt_setup(
+                &operation->ctx.cc3xx_driver_ctx,
+                attributes,
+                key_buffer,
+                key_buffer_size,
+                alg );
+            operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
             status = els_pkc_transparent_cipher_encrypt_setup(
                 &operation->ctx.transparent_els_pkc_driver_ctx,
@@ -1877,11 +2097,14 @@ static inline psa_status_t psa_driver_wrapper_cipher_decrypt_setup(
 {
     psa_status_t status = PSA_ERROR_INVALID_ARGUMENT;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -1899,6 +2122,16 @@ static inline psa_status_t psa_driver_wrapper_cipher_decrypt_setup(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_cipher_decrypt_setup(
+                &operation->ctx.cc3xx_driver_ctx,
+                attributes,
+                key_buffer,
+                key_buffer_size,
+                alg );
+            operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
             status = els_pkc_transparent_cipher_decrypt_setup(
                 &operation->ctx.transparent_els_pkc_driver_ctx,
@@ -1998,6 +2231,12 @@ static inline psa_status_t psa_driver_wrapper_cipher_set_iv(
                         &operation->ctx.opaque_test_driver_ctx,
                         iv, iv_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_cipher_set_iv(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        iv, iv_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_cipher_set_iv(
@@ -2052,6 +2291,13 @@ static inline psa_status_t psa_driver_wrapper_cipher_update(
                         input, input_length,
                         output, output_size, output_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_cipher_update(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        input, input_length,
+                        output, output_size, output_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_cipher_update(
@@ -2105,6 +2351,12 @@ static inline psa_status_t psa_driver_wrapper_cipher_finish(
                         &operation->ctx.opaque_test_driver_ctx,
                         output, output_size, output_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_cipher_finish(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        output, output_size, output_length ) );
+#endif /* PSA_CRYPTO_DRIVER_TEST */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_cipher_finish(
@@ -2156,6 +2408,15 @@ static inline psa_status_t psa_driver_wrapper_cipher_abort(
                 sizeof( operation->ctx.opaque_test_driver_ctx ) );
             return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            status = cc3xx_cipher_abort(
+                         &operation->ctx.cc3xx_driver_ctx );
+            mbedtls_platform_zeroize(
+                &operation->ctx.cc3xx_driver_ctx,
+                sizeof( operation->ctx.cc3xx_driver_ctx ) );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return els_pkc_transparent_cipher_abort(
@@ -2192,7 +2453,19 @@ static inline psa_status_t psa_driver_wrapper_hash_compute(
     if( status != PSA_ERROR_NOT_SUPPORTED )
         return( status );
 #endif
-#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
+
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+    status = cc3xx_hash_compute(alg, input, input_length, hash, hash_size,
+            hash_length);
+    return status;
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+    status = ele_s2xx_transparent_hash_compute(alg, input, input_length, hash, hash_size,
+                              hash_length);
+    if( status != PSA_ERROR_NOT_SUPPORTED )
+        return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)                      //NXP ELE --- BEGIN ---
     status = ele_s4xx_transparent_hash_compute(alg, input, input_length, hash, hash_size,
                               hash_length);
     if( status != PSA_ERROR_NOT_SUPPORTED )
@@ -2239,7 +2512,22 @@ static inline psa_status_t psa_driver_wrapper_hash_setup(
     if( status != PSA_ERROR_NOT_SUPPORTED )
         return( status );
 #endif
-#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+    status = cc3xx_hash_setup(&operation->ctx.cc3xx_driver_ctx, alg);
+    operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+    return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+
+    
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+    status = ele_s2xx_transparent_hash_setup( &operation->ctx.ele_driver_ctx, alg );
+    if( status == PSA_SUCCESS )
+        operation->id = ELE_S2XX_TRANSPARENT_DRIVER_ID;
+
+    if( status != PSA_ERROR_NOT_SUPPORTED )
+        return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)                      //NXP ELE --- BEGIN ---
     status = ele_s4xx_transparent_hash_setup( &operation->ctx.ele_driver_ctx, alg );
     if( status == PSA_SUCCESS )
         operation->id = ELE_S4XX_TRANSPARENT_DRIVER_ID;
@@ -2291,6 +2579,21 @@ static inline psa_status_t psa_driver_wrapper_hash_clone(
                         &source_operation->ctx.test_driver_ctx,
                         &target_operation->ctx.test_driver_ctx ) );
 #endif
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            target_operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            return( cc3xx_hash_clone(
+                        &source_operation->ctx.cc3xx_driver_ctx,
+                        &target_operation->ctx.cc3xx_driver_ctx ) );
+
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+        case ELE_S2XX_TRANSPARENT_DRIVER_ID:
+            target_operation->id = ELE_S2XX_TRANSPARENT_DRIVER_ID;
+            return( ele_s2xx_transparent_hash_clone( &source_operation->ctx.ele_driver_ctx,
+                                    &target_operation->ctx.ele_driver_ctx ) );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
         case ELE_S4XX_TRANSPARENT_DRIVER_ID:
             target_operation->id = ELE_S4XX_TRANSPARENT_DRIVER_ID;
@@ -2327,6 +2630,17 @@ static inline psa_status_t psa_driver_wrapper_hash_update(
                         &operation->ctx.test_driver_ctx,
                         input, input_length ) );
 #endif
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_hash_update(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        input, input_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+        case ELE_S2XX_TRANSPARENT_DRIVER_ID:
+            return( ele_s2xx_transparent_hash_update( &operation->ctx.ele_driver_ctx,
+                                     input, input_length ) );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
         case ELE_S4XX_TRANSPARENT_DRIVER_ID:
             return( ele_s4xx_transparent_hash_update( &operation->ctx.ele_driver_ctx,
@@ -2363,6 +2677,17 @@ static inline psa_status_t psa_driver_wrapper_hash_finish(
                         &operation->ctx.test_driver_ctx,
                         hash, hash_size, hash_length ) );
 #endif
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_hash_finish(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        hash, hash_size, hash_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+        case ELE_S2XX_TRANSPARENT_DRIVER_ID:
+            return( ele_s2xx_transparent_hash_finish( &operation->ctx.ele_driver_ctx,
+                                     hash, hash_size, hash_length ) );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
         case ELE_S4XX_TRANSPARENT_DRIVER_ID:
             return( ele_s4xx_transparent_hash_finish( &operation->ctx.ele_driver_ctx,
@@ -2395,6 +2720,15 @@ static inline psa_status_t psa_driver_wrapper_hash_abort(
             return( mbedtls_test_transparent_hash_abort(
                         &operation->ctx.test_driver_ctx ) );
 #endif
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_hash_abort(
+                        &operation->ctx.cc3xx_driver_ctx ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+        case ELE_S2XX_TRANSPARENT_DRIVER_ID:
+            return( ele_s2xx_transparent_hash_abort( &operation->ctx.ele_driver_ctx ) );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
         case ELE_S4XX_TRANSPARENT_DRIVER_ID:
             return( ele_s4xx_transparent_hash_abort( &operation->ctx.ele_driver_ctx ) );
@@ -2419,11 +2753,14 @@ static inline psa_status_t psa_driver_wrapper_aead_encrypt(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 
@@ -2440,6 +2777,29 @@ static inline psa_status_t psa_driver_wrapper_aead_encrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_aead_encrypt(
+                        attributes, key_buffer, key_buffer_size,
+                        alg,
+                        nonce, nonce_length,
+                        additional_data, additional_data_length,
+                        plaintext, plaintext_length,
+                        ciphertext, ciphertext_size, ciphertext_length );
+
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+            status = ele_s2xx_transparent_aead_encrypt(
+                         attributes, key_buffer, key_buffer_size,
+                         alg,
+                         nonce, nonce_length,
+                         additional_data, additional_data_length,
+                         plaintext, plaintext_length,
+                         ciphertext, ciphertext_size, ciphertext_length );
+            /* Declared with fallback == true */
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_aead_encrypt(
                          attributes, key_buffer, key_buffer_size,
@@ -2524,11 +2884,14 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 
@@ -2545,6 +2908,28 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_aead_decrypt(
+                        attributes, key_buffer, key_buffer_size,
+                        alg,
+                        nonce, nonce_length,
+                        additional_data, additional_data_length,
+                        ciphertext, ciphertext_length,
+                        plaintext, plaintext_size, plaintext_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+            status = ele_s2xx_transparent_aead_decrypt(
+                        attributes, key_buffer, key_buffer_size,
+                        alg,
+                        nonce, nonce_length,
+                        additional_data, additional_data_length,
+                        ciphertext, ciphertext_length,
+                        plaintext, plaintext_size, plaintext_length );
+            /* Declared with fallback == true */
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_aead_decrypt(
                         attributes, key_buffer, key_buffer_size,
@@ -2553,6 +2938,7 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt(
                         additional_data, additional_data_length,
                         ciphertext, ciphertext_length,
                         plaintext, plaintext_size, plaintext_length );
+
             /* Declared with fallback == true */
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
@@ -2626,11 +3012,14 @@ static inline psa_status_t psa_driver_wrapper_aead_encrypt_setup(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 
@@ -2646,6 +3035,15 @@ static inline psa_status_t psa_driver_wrapper_aead_encrypt_setup(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            status = cc3xx_aead_encrypt_setup(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    attributes, key_buffer, key_buffer_size,
+                    alg );
+
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
             operation->id = PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID;
             status = els_pkc_transparent_aead_encrypt_setup(
@@ -2701,11 +3099,14 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt_setup(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 
@@ -2722,6 +3123,16 @@ static inline psa_status_t psa_driver_wrapper_aead_decrypt_setup(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            status = cc3xx_aead_decrypt_setup(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    attributes,
+                    key_buffer, key_buffer_size,
+                    alg );
+
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
             operation->id = PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID;
             status = els_pkc_transparent_aead_decrypt_setup(
@@ -2797,6 +3208,12 @@ static inline psa_status_t psa_driver_wrapper_aead_set_nonce(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_set_nonce(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        nonce, nonce_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_set_nonce(
@@ -2843,6 +3260,12 @@ static inline psa_status_t psa_driver_wrapper_aead_set_lengths(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_set_lengths(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    ad_length, plaintext_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)        
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_set_lengths(
@@ -2889,6 +3312,12 @@ static inline psa_status_t psa_driver_wrapper_aead_update_ad(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_update_ad(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    input, input_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_update_ad(
@@ -2940,6 +3369,13 @@ static inline psa_status_t psa_driver_wrapper_aead_update(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_update(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    input, input_length, output, output_size,
+                    output_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)        
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_update(
@@ -2998,6 +3434,13 @@ static inline psa_status_t psa_driver_wrapper_aead_finish(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_finish(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    ciphertext, ciphertext_size,
+                    ciphertext_length, tag, tag_size, tag_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)        
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_finish(
@@ -3076,6 +3519,13 @@ static inline psa_status_t psa_driver_wrapper_aead_verify(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_verify(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    plaintext, plaintext_size,
+                    plaintext_length, tag, tag_length ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)        
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_verify(
@@ -3122,6 +3572,11 @@ static inline psa_status_t psa_driver_wrapper_aead_abort(
         /* Add cases for opaque driver here */
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return( cc3xx_aead_abort(
+                    &operation->ctx.cc3xx_driver_ctx ) );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)        
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_aead_abort(
@@ -3154,11 +3609,14 @@ static inline psa_status_t psa_driver_wrapper_mac_compute(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -3171,6 +3629,21 @@ static inline psa_status_t psa_driver_wrapper_mac_compute(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_mac_compute(attributes, key_buffer, key_buffer_size, alg,
+                input, input_length,
+                mac, mac_size, mac_length);
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)        
+            status = ele_s2xx_transparent_mac_compute(
+                attributes, key_buffer, key_buffer_size, alg,
+                input, input_length,
+                mac, mac_size, mac_length );
+            /* Declared with fallback == true */
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELE_S2XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)        
             status = els_pkc_transparent_mac_compute(
                 attributes, key_buffer, key_buffer_size, alg,
@@ -3246,11 +3719,14 @@ static inline psa_status_t psa_driver_wrapper_mac_sign_setup(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -3267,6 +3743,15 @@ static inline psa_status_t psa_driver_wrapper_mac_sign_setup(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_mac_sign_setup(
+                    &operation->ctx.cc3xx_driver_ctx,
+                    attributes,
+                    key_buffer, key_buffer_size,
+                    alg);
+            operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            return status;
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
             status = els_pkc_transparent_mac_sign_setup(
                 &operation->ctx.transparent_els_pkc_driver_ctx,
@@ -3348,11 +3833,14 @@ static inline psa_status_t psa_driver_wrapper_mac_verify_setup(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -3369,6 +3857,15 @@ static inline psa_status_t psa_driver_wrapper_mac_verify_setup(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_mac_verify_setup(
+                &operation->ctx.cc3xx_driver_ctx,
+                attributes,
+                key_buffer, key_buffer_size,
+                alg);
+            operation->id = PSA_CRYPTO_CC3XX_DRIVER_ID;
+            return status;
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
             status = els_pkc_transparent_mac_verify_setup(
                 &operation->ctx.transparent_els_pkc_driver_ctx,
@@ -3466,6 +3963,10 @@ static inline psa_status_t psa_driver_wrapper_mac_update(
                         &operation->ctx.opaque_test_driver_ctx,
                         input, input_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return(cc3xx_mac_update(&operation->ctx.cc3xx_driver_ctx, input, input_length));
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_mac_update(
@@ -3511,6 +4012,11 @@ static inline psa_status_t psa_driver_wrapper_mac_sign_finish(
                         &operation->ctx.opaque_test_driver_ctx,
                         mac, mac_size, mac_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return(cc3xx_mac_sign_finish(&operation->ctx.cc3xx_driver_ctx,
+                        mac, mac_size, mac_length));
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_mac_sign_finish(
@@ -3556,6 +4062,12 @@ static inline psa_status_t psa_driver_wrapper_mac_verify_finish(
                         &operation->ctx.opaque_test_driver_ctx,
                         mac, mac_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return(cc3xx_mac_verify_finish(
+                        &operation->ctx.cc3xx_driver_ctx,
+                        mac, mac_length));
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_mac_verify_finish(
@@ -3594,6 +4106,10 @@ static inline psa_status_t psa_driver_wrapper_mac_abort(
             return( mbedtls_test_opaque_mac_abort(
                         &operation->ctx.opaque_test_driver_ctx ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+        case PSA_CRYPTO_CC3XX_DRIVER_ID:
+            return(cc3xx_mac_abort(&operation->ctx.cc3xx_driver_ctx));
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_TRANSPARENT_DRIVER_ID:
             return( els_pkc_transparent_mac_abort(
@@ -3620,11 +4136,14 @@ static inline psa_status_t psa_driver_wrapper_asymmetric_encrypt(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -3637,6 +4156,21 @@ static inline psa_status_t psa_driver_wrapper_asymmetric_encrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_asymmetric_encrypt( attributes,
+                                               key_buffer,
+                                               key_buffer_size,
+                                               alg,
+                                               input,
+                                               input_length,
+                                               salt,
+                                               salt_length,
+                                               output,
+                                               output_size,
+                                               output_length );
+            return( status );
+#endif  /* PSA_CRYPTO_DRIVER_CC3XX */
+
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_asymmetric_encrypt( attributes,
                         key_buffer, key_buffer_size, alg, input, input_length,
@@ -3646,6 +4180,7 @@ static inline psa_status_t psa_driver_wrapper_asymmetric_encrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_ELE_S4XX */
+
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
             return( mbedtls_psa_asymmetric_encrypt( attributes,
                         key_buffer, key_buffer_size, alg, input, input_length,
@@ -3687,11 +4222,14 @@ static inline psa_status_t psa_driver_wrapper_asymmetric_decrypt(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -3704,6 +4242,21 @@ static inline psa_status_t psa_driver_wrapper_asymmetric_decrypt(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_asymmetric_decrypt( attributes,
+                                               key_buffer,
+                                               key_buffer_size,
+                                               alg,
+                                               input,
+                                               input_length,
+                                               salt,
+                                               salt_length,
+                                               output,
+                                               output_size,
+                                               output_length );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
             status = ele_s4xx_transparent_asymmetric_decrypt( attributes,
                         key_buffer, key_buffer_size, alg, input, input_length,
@@ -3760,11 +4313,14 @@ static inline psa_status_t psa_driver_wrapper_key_agreement(
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location =
-        PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+        PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
 
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -3777,11 +4333,23 @@ static inline psa_status_t psa_driver_wrapper_key_agreement(
             if( status != PSA_ERROR_NOT_SUPPORTED )
                 return( status );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+            status = cc3xx_key_agreement( attributes,
+                                          key_buffer,
+                                          key_buffer_size,
+                                          peer_key,
+                                          peer_key_length,
+                                          shared_secret,
+                                          shared_secret_size,
+                                          shared_secret_length,
+                                          alg );
+            return( status );
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */
 #if defined(MBEDTLS_PSA_P256M_DRIVER_ENABLED)
-            if( PSA_KEY_TYPE_IS_ECC( attributes->core.type ) &&
+            if( PSA_KEY_TYPE_IS_ECC( psa_get_key_type(attributes) ) &&
                 PSA_ALG_IS_ECDH(alg) &&
-                PSA_KEY_TYPE_ECC_GET_FAMILY(attributes->core.type) == PSA_ECC_FAMILY_SECP_R1 &&
-                attributes->core.bits == 256 )
+                PSA_KEY_TYPE_ECC_GET_FAMILY(psa_get_key_type(attributes)) == PSA_ECC_FAMILY_SECP_R1 &&
+                psa_get_key_bits(attributes) == 256 )
             {
                 status = p256_transparent_key_agreement( attributes,
                                                          key_buffer,
@@ -3796,6 +4364,20 @@ static inline psa_status_t psa_driver_wrapper_key_agreement(
                     return( status );
             }
 #endif /* MBEDTLS_PSA_P256M_DRIVER_ENABLED */
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+            status = els_pkc_transparent_key_agreement( attributes,
+                                          key_buffer,
+                                          key_buffer_size,
+                                          alg,
+                                          peer_key,
+                                          peer_key_length,
+                                          shared_secret,
+                                          shared_secret_size,
+                                          shared_secret_length);
+
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
 
             /* Software Fallback */
@@ -3817,6 +4399,21 @@ static inline psa_status_t psa_driver_wrapper_key_agreement(
                         peer_key_length, shared_secret, shared_secret_size,
                         shared_secret_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_KEY:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_BLOB_STORAGE:
+        case PSA_CRYPTO_ELS_PKC_LOCATION_S50_KEY_GEN_STORAGE:
+            return( els_pkc_opaque_key_agreement( attributes,
+                         key_buffer,
+                         key_buffer_size,
+                         alg,
+                         peer_key,
+                         peer_key_length,
+                         shared_secret,
+                         shared_secret_size,
+                         shared_secret_length) );
+#endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
 
         default:
@@ -3845,6 +4442,9 @@ static inline psa_status_t psa_driver_wrapper_pake_setup(
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
             status = PSA_ERROR_NOT_SUPPORTED;

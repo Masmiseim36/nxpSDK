@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FMEAS: Frequency Measure Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Hashcrypt common functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,155 +99,252 @@ $(document).ready(function(){initNavTree('a00232.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FMEAS: Frequency Measure Driver</div>  </div>
+<div class="title">Hashcrypt common functions<div class="ingroups"><a class="el" href="a00230.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Frequency Measure function of MCUXpresso SDK devices' SYSCON module. <br/>
-It measures frequency of any on-chip or off-chip clock signal. The more precise and higher accuracy clock is selected as a reference clock. The resulting frequency is internally computed from the ratio of value of selected target and reference clock counters. <br/>
-</p>
-<h1><a class="anchor" id="FMEASInit"></a>
-Frequency Measure Driver operation</h1>
-<p><a class="el" href="a00238.html#gaa4f141e3874109e45c2a6f9be027e0ee" title="Attaches a signal. ">INPUTMUX_AttachSignal()</a> function has to be used to select reference and target clock signal sources.</p>
-<p><a class="el" href="a00232.html#gaf1392245996cea51e17175085a0c3cef" title="Starts a frequency measurement cycle. ">FMEAS_StartMeasure()</a> function starts the measurement cycle.</p>
-<p><a class="el" href="a00232.html#ga39ff45995edf620470c1397b1edd83b5" title="Indicates when a frequency measurement cycle is complete. ">FMEAS_IsMeasureComplete()</a> can be polled to check if the measurement cycle has finished.</p>
-<p><a class="el" href="a00232.html#gac6ee7be474a37d4c17120b54fc8b856a" title="Returns the computed value for a frequency measurement cycle. ">FMEAS_GetFrequency()</a> returns the frequency of the target clock. Frequency of the reference clock has to be provided as a parameter.</p>
-<h1><a class="anchor" id="FMEASTypUC"></a>
-Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/fmeas </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00159"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00159.html">fsl_fmeas.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga859c70de1a97b05f61723b64e6f06227"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga859c70de1a97b05f61723b64e6f06227"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga859c70de1a97b05f61723b64e6f06227">HASHCRYPT_MODE_SHA1</a>&#160;&#160;&#160;0x1</td></tr>
+<tr class="memdesc:ga859c70de1a97b05f61723b64e6f06227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm definitions correspond with the values for Mode field in Control register ! <br/></td></tr>
+<tr class="separator:ga859c70de1a97b05f61723b64e6f06227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gafccc8d49b73cba6bb99024890615c07e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafccc8d49b73cba6bb99024890615c07e"></a>
+typedef enum <a class="el" href="a00232.html#ga0c0641fe4726c8047123fe99b1f79a71">_hashcrypt_algo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gafccc8d49b73cba6bb99024890615c07e">hashcrypt_algo_t</a></td></tr>
+<tr class="memdesc:gafccc8d49b73cba6bb99024890615c07e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for Hashcrypt operation. <br/></td></tr>
+<tr class="separator:gafccc8d49b73cba6bb99024890615c07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga0c0641fe4726c8047123fe99b1f79a71"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga0c0641fe4726c8047123fe99b1f79a71">_hashcrypt_algo_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00232.html#gga0c0641fe4726c8047123fe99b1f79a71a521a8aebc98248da4565bbf8fd69ff57">kHASHCRYPT_Sha1</a> = HASHCRYPT_MODE_SHA1, 
+<br/>
+&#160;&#160;<a class="el" href="a00232.html#gga0c0641fe4726c8047123fe99b1f79a71ae14b2fbb186eb7ecb1bfc007a509b3d3">kHASHCRYPT_Sha256</a> = HASHCRYPT_MODE_SHA256, 
+<br/>
+&#160;&#160;<a class="el" href="a00232.html#gga0c0641fe4726c8047123fe99b1f79a71a142430d685b31911c77af2ce8194a51b">kHASHCRYPT_Aes</a> = HASHCRYPT_MODE_AES
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga0c0641fe4726c8047123fe99b1f79a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for Hashcrypt operation.  <a href="a00232.html#ga0c0641fe4726c8047123fe99b1f79a71">More...</a><br/></td></tr>
+<tr class="separator:ga0c0641fe4726c8047123fe99b1f79a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga02f8a8a22a0ac96e7ac823da4cacd585">HASHCRYPT_Init</a> (HASHCRYPT_Type *base)</td></tr>
+<tr class="memdesc:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock and disables reset for HASHCRYPT peripheral.  <a href="#ga02f8a8a22a0ac96e7ac823da4cacd585">More...</a><br/></td></tr>
+<tr class="separator:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga2561c8bc17a4b2143a0cc7c46de64fbe">HASHCRYPT_Deinit</a> (HASHCRYPT_Type *base)</td></tr>
+<tr class="memdesc:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables clock for HASHCRYPT peripheral.  <a href="#ga2561c8bc17a4b2143a0cc7c46de64fbe">More...</a><br/></td></tr>
+<tr class="separator:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga7e2e250eaaf238c7cb05de6a5fad038b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga7e2e250eaaf238c7cb05de6a5fad038b">FSL_FMEAS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="memdesc:ga7e2e250eaaf238c7cb05de6a5fad038b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines LPC Frequency Measure driver version 2.1.1.  <a href="#ga7e2e250eaaf238c7cb05de6a5fad038b">More...</a><br/></td></tr>
-<tr class="separator:ga7e2e250eaaf238c7cb05de6a5fad038b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-FMEAS Functional Operation</h2></td></tr>
-<tr class="memitem:gaf1392245996cea51e17175085a0c3cef"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gaf1392245996cea51e17175085a0c3cef">FMEAS_StartMeasure</a> (FMEAS_SYSCON_Type *base)</td></tr>
-<tr class="memdesc:gaf1392245996cea51e17175085a0c3cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a frequency measurement cycle.  <a href="#gaf1392245996cea51e17175085a0c3cef">More...</a><br/></td></tr>
-<tr class="separator:gaf1392245996cea51e17175085a0c3cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39ff45995edf620470c1397b1edd83b5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga39ff45995edf620470c1397b1edd83b5">FMEAS_IsMeasureComplete</a> (FMEAS_SYSCON_Type *base)</td></tr>
-<tr class="memdesc:ga39ff45995edf620470c1397b1edd83b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates when a frequency measurement cycle is complete.  <a href="#ga39ff45995edf620470c1397b1edd83b5">More...</a><br/></td></tr>
-<tr class="separator:ga39ff45995edf620470c1397b1edd83b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6ee7be474a37d4c17120b54fc8b856a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#gac6ee7be474a37d4c17120b54fc8b856a">FMEAS_GetFrequency</a> (FMEAS_SYSCON_Type *base, uint32_t refClockRate)</td></tr>
-<tr class="memdesc:gac6ee7be474a37d4c17120b54fc8b856a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the computed value for a frequency measurement cycle.  <a href="#gac6ee7be474a37d4c17120b54fc8b856a">More...</a><br/></td></tr>
-<tr class="separator:gac6ee7be474a37d4c17120b54fc8b856a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6de3a130dd77ff83fba428d53188e661"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html#ga6de3a130dd77ff83fba428d53188e661">FSL_HASHCRYPT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 15))</td></tr>
+<tr class="memdesc:ga6de3a130dd77ff83fba428d53188e661"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT driver version.  <a href="#ga6de3a130dd77ff83fba428d53188e661">More...</a><br/></td></tr>
+<tr class="separator:ga6de3a130dd77ff83fba428d53188e661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7e2e250eaaf238c7cb05de6a5fad038b"></a>
+<a class="anchor" id="ga6de3a130dd77ff83fba428d53188e661"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FMEAS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+          <td class="memname">#define FSL_HASHCRYPT_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 15))</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Version 2.2.15.</p>
+<p>Current version: 2.2.15</p>
+<p>Change log:</p>
+<ul>
+<li>Version 2.0.0<ul>
+<li>Initial version</li>
+</ul>
+</li>
+<li>Version 2.0.1<ul>
+<li>Support loading AES key from unaligned address</li>
+</ul>
+</li>
+<li>Version 2.0.2<ul>
+<li>Support loading AES key from unaligned address for different compiler and core variants</li>
+</ul>
+</li>
+<li>Version 2.0.3<ul>
+<li>Remove SHA512 and AES ICB algorithm definitions</li>
+</ul>
+</li>
+<li>Version 2.0.4<ul>
+<li>Add SHA context switch support</li>
+</ul>
+</li>
+<li>Version 2.1.0<ul>
+<li>Update the register name and macro to align with new header.</li>
+</ul>
+</li>
+<li>Version 2.1.1<ul>
+<li>Fix MISRA C-2012.</li>
+</ul>
+</li>
+<li>Version 2.1.2<ul>
+<li>Support loading AES input data from unaligned address.</li>
+</ul>
+</li>
+<li>Version 2.1.3<ul>
+<li>Fix MISRA C-2012.</li>
+</ul>
+</li>
+<li>Version 2.1.4<ul>
+<li>Fix context switch cannot work when switching from AES.</li>
+</ul>
+</li>
+<li>Version 2.1.5<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() to prevent possible optimization issue.</li>
+</ul>
+</li>
+<li>Version 2.2.0<ul>
+<li>Add AES-OFB and AES-CFB mixed IP/SW modes.</li>
+</ul>
+</li>
+<li>Version 2.2.1<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() prevent compiler from reordering memory write when -O2 or higher is used.</li>
+</ul>
+</li>
+<li>Version 2.2.2<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() to fix optimization issue</li>
+</ul>
+</li>
+<li>Version 2.2.3<ul>
+<li>Added check for size in hashcrypt_aes_one_block to prevent overflowing COUNT field in MEMCTRL register, if its bigger than COUNT field do a multiple runs.</li>
+</ul>
+</li>
+<li>Version 2.2.4<ul>
+<li>In all HASHCRYPT_AES_xx functions have been added setting CTRL_MODE bitfield to 0 after processing data, which decreases power consumption.</li>
+</ul>
+</li>
+<li>Version 2.2.5<ul>
+<li>Add data synchronization barrier and instruction synchronization barrier inside hashcrypt_sha_process_message_data() to fix optimization issue</li>
+</ul>
+</li>
+<li>Version 2.2.6<ul>
+<li>Add data synchronization barrier inside <a class="el" href="a00025.html#ga73e2339a36879daa7aa54491387ba103" title="Add data to current HASH. ">HASHCRYPT_SHA_Update()</a> and hashcrypt_get_data() function to fix optimization issue on MDK and ARMGCC release targets</li>
+</ul>
+</li>
+<li>Version 2.2.7<ul>
+<li>Add data synchronization barrier inside <a class="el" href="a00025.html#ga73e2339a36879daa7aa54491387ba103" title="Add data to current HASH. ">HASHCRYPT_SHA_Update()</a> to fix optimization issue on MCUX IDE release target</li>
+</ul>
+</li>
+<li>Version 2.2.8<ul>
+<li>Unify hashcrypt hashing behavior between aligned and unaligned input data</li>
+</ul>
+</li>
+<li>Version 2.2.9<ul>
+<li>Add handling of set ERROR bit in the STATUS register</li>
+</ul>
+</li>
+<li>Version 2.2.10<ul>
+<li>Fix missing error statement in hashcrypt_save_running_hash()</li>
+</ul>
+</li>
+<li>Version 2.2.11<ul>
+<li>Fix incorrect SHA-256 calculation for long messages with reload</li>
+</ul>
+</li>
+<li>Version 2.2.12<ul>
+<li>Fix hardfault issue on the Keil compiler due to unaligned memcpy() input on some optimization levels</li>
+</ul>
+</li>
+<li>Version 2.2.13<ul>
+<li>Added function hashcrypt_seed_prng() which loading random number into PRNG_SEED register before AES operation for SCA protection</li>
+</ul>
+</li>
+<li>Version 2.2.14<ul>
+<li>Modify function hashcrypt_get_data() to prevent issue with unaligned access</li>
+</ul>
+</li>
+<li>Version 2.2.15<ul>
+<li>Add wait on DIGEST BIT inside hashcrypt_sha_one_block() to fix issues with some optimization flags </li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga0c0641fe4726c8047123fe99b1f79a71"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00232.html#ga0c0641fe4726c8047123fe99b1f79a71">_hashcrypt_algo_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0c0641fe4726c8047123fe99b1f79a71a521a8aebc98248da4565bbf8fd69ff57"></a>kHASHCRYPT_Sha1</em>&nbsp;</td><td class="fielddoc">
+<p>SHA_1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0c0641fe4726c8047123fe99b1f79a71ae14b2fbb186eb7ecb1bfc007a509b3d3"></a>kHASHCRYPT_Sha256</em>&nbsp;</td><td class="fielddoc">
+<p>SHA_256. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0c0641fe4726c8047123fe99b1f79a71a142430d685b31911c77af2ce8194a51b"></a>kHASHCRYPT_Aes</em>&nbsp;</td><td class="fielddoc">
+<p>AES. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf1392245996cea51e17175085a0c3cef"></a>
+<a class="anchor" id="ga02f8a8a22a0ac96e7ac823da4cacd585"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FMEAS_StartMeasure </td>
+          <td class="memname">void HASHCRYPT_Init </td>
           <td>(</td>
-          <td class="paramtype">FMEAS_SYSCON_Type *&#160;</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Enable clock and disable reset for HASHCRYPT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>: SYSCON peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>HASHCRYPT base address </td></tr>
   </table>
   </dd>
 </dl>
-<p>Set the reference clock count cycle to 2^20 times </p>
 
 </div>
 </div>
-<a class="anchor" id="ga39ff45995edf620470c1397b1edd83b5"></a>
+<a class="anchor" id="ga2561c8bc17a4b2143a0cc7c46de64fbe"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool FMEAS_IsMeasureComplete </td>
+          <td class="memname">void HASHCRYPT_Deinit </td>
           <td>(</td>
-          <td class="paramtype">FMEAS_SYSCON_Type *&#160;</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Disable clock and enable reset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>: SYSCON peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>HASHCRYPT base address </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a measurement cycle is active, otherwise false. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac6ee7be474a37d4c17120b54fc8b856a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t FMEAS_GetFrequency </td>
-          <td>(</td>
-          <td class="paramtype">FMEAS_SYSCON_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>refClockRate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>: SYSCON peripheral base address. </td></tr>
-    <tr><td class="paramname">refClockRate</td><td>: Reference clock rate used during the frequency measurement cycle.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Frequency in Hz. </dd></dl>
 
 </div>
 </div>

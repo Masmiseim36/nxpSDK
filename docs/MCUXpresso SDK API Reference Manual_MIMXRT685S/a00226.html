@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I2C CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,98 +98,262 @@ $(document).ready(function(){initNavTree('a00226.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">I2C CMSIS Driver<div class="ingroups"><a class="el" href="a00224.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the I2C Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<p>The I2C CMSIS driver includes transactional APIs.</p>
-<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
-<h1><a class="anchor" id="I2CCMSISDriver"></a>
-I2C CMSIS Driver</h1>
-<h2><a class="anchor" id="I2CMasterOpsTransIRQ"></a>
-Master Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral UART driver for the Universal Synchronous Receiver/Transmitter (USART) module of MCUXpresso SDK devices. Driver does not support synchronous mode.</p>
+<p>The USART driver includes two parts: functional APIs and transactional APIs.</p>
+<p>Functional APIs are used for USART initialization/configuration/operation for optimization/customization purpose. Using the functional API requires the knowledge of the USART peripheral and know how to organize functional APIs to meet the application requirements. All functional API use the peripheral base address as the first parameter. USART functional operation groups provide the functional APIs set.</p>
+<p>Transactional APIs can be used to enable the peripheral quickly and in the application if the code size and performance of transactional APIs can satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code. All transactional APIs use the usart_handle_t as the second parameter. Initialize the handle by calling the <a class="el" href="a00057.html#ga9aed876794d5c2ab2e37196242602b89" title="Initializes the USART handle. ">USART_TransferCreateHandle()</a> API.</p>
+<p>Transactional APIs support asynchronous transfer, which means that the functions <a class="el" href="a00057.html#ga7f5a4e7e831ab0dc869637494a57362e" title="Transmits a buffer of data using the interrupt method. ">USART_TransferSendNonBlocking()</a> and <a class="el" href="a00057.html#ga34c6c819c9e2d8608a6d7e63103fa542" title="Receives a buffer of data using an interrupt method. ">USART_TransferReceiveNonBlocking()</a> set up an interrupt for data transfer. When the transfer completes, the upper layer is notified through a callback function with the kStatus_USART_TxIdle and kStatus_USART_RxIdle.</p>
+<p>Transactional receive APIs support the ring buffer. Prepare the memory for the ring buffer and pass in the start address and size while calling the <a class="el" href="a00057.html#ga9aed876794d5c2ab2e37196242602b89" title="Initializes the USART handle. ">USART_TransferCreateHandle()</a>. If passing NULL, the ring buffer feature is disabled. When the ring buffer is enabled, the received data is saved to the ring buffer in the background. The <a class="el" href="a00057.html#ga34c6c819c9e2d8608a6d7e63103fa542" title="Receives a buffer of data using an interrupt method. ">USART_TransferReceiveNonBlocking()</a> function first gets data from the ring buffer. If the ring buffer does not have enough data, the function first returns the data in the ring buffer and then saves the received data to user memory. When all data is received, the upper layer is informed through a callback with the kStatus_USART_RxIdle.</p>
+<p>If the receive ring buffer is full, the upper layer is informed through a callback with the kStatus_USART_RxRingBufferOverrun. In the callback function, the upper layer reads data out from the ring buffer. If not, the oldest data is overwritten by the new data.</p>
+<p>The ring buffer size is specified when creating the handle. Note that one byte is reserved for the ring buffer maintenance. When creating handle using the following code:</p>
+<div class="fragment"><div class="line"><a class="code" href="a00057.html#ga9aed876794d5c2ab2e37196242602b89">USART_TransferCreateHandle</a>(USART0, &amp;handle, USART_UserCallback, NULL);</div>
+</div><!-- fragment --><p>In this example, the buffer size is 32, but only 31 bytes are used for saving data.</p>
+<h1><a class="anchor" id="USARTCase"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="USARTCasePolling"></a>
+USART Send/receive using a polling method</h2>
+<div class="fragment"><div class="line">uint8_t ch;</div>
+<div class="line"><a class="code" href="a00057.html#ga74464f9357e585e42e5f3c909eb6e9b3">USART_GetDefaultConfig</a>(&amp;user_config);</div>
+<div class="line">user_config.baudRate_Bps = 115200U;</div>
+<div class="line">user_config.enableTx = <span class="keyword">true</span>;</div>
+<div class="line">user_config.enableRx = <span class="keyword">true</span>;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00057.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2">USART_Init</a>(USART1,&amp;user_config,120000000U);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">while</span>(1)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    <a class="code" href="a00057.html#ga09c3b588e2099ffa6b999c5ca7fb8d58">USART_ReadBlocking</a>(USART1, &amp;ch, 1);</div>
+<div class="line">    <a class="code" href="a00057.html#ga95abde78d5cbf569f2b6e4d7942b64df">USART_WriteBlocking</a>(USART1, &amp;ch, 1);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="USARTCaseInterrupt"></a>
+USART Send/receive using an interrupt method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00057.html#a00380">usart_handle_t</a> g_usartHandle;</div>
+<div class="line"><a class="code" href="a00057.html#a00378">usart_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00057.html#a00381">usart_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00057.html#a00381">usart_transfer_t</a> receiveXfer;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
+<div class="line">uint8_t sendData[] = [<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>];</div>
+<div class="line">uint8_t receiveData[32];</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> USART_UserCallback(<a class="code" href="a00057.html#a00380">usart_handle_t</a> *handle, <a class="code" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    userData = userData;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00057.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a539a0ebaa0137fdf6d7cc9b984acb13f">kStatus_USART_TxIdle</a> == status)</div>
 <div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">        txFinished = <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">/*Init I2C MASTER*/</span></div>
-<div class="line">EXAMPLE_I2C_MASTER.Initialize(I2C_MasterSignalEvent_t);</div>
 <div class="line"></div>
-<div class="line">EXAMPLE_I2C_MASTER.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">EXAMPLE_I2C_MASTER.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transmit*/</span></div>
-<div class="line">EXAMPLE_I2C_MASTER.MasterTransmit(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransDMA"></a>
-Master Operation in DMA transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00057.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a3cb7112c821c89d7fbb1c048a86756aa">kStatus_USART_RxIdle</a> == status)</div>
 <div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Init DMA*/</span></div>
-<div class="line"><a class="code" href="a00016.html#gade1b5efa61054ce538b37b181dd075bb">DMA_Init</a>(EXAMPLE_DMA);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C MASTER*/</span></div>
-<div class="line">EXAMPLE_I2C_MASTER.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">EXAMPLE_I2C_MASTER.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">EXAMPLE_I2C_MASTER.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">EXAMPLE_I2C_MASTER.MasterReceive(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsTransIRQ"></a>
-Slave Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_SlaveSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">        rxFinished = <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C SLAVE*/</span></div>
-<div class="line">EXAMPLE_I2C_SLAVE.Initialize(I2C_SlaveSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">EXAMPLE_I2C_SLAVE.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config slave addr*/</span></div>
-<div class="line">EXAMPLE_I2C_SLAVE.Control(ARM_I2C_OWN_ADDRESS, I2C_MASTER_SLAVE_ADDR);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">EXAMPLE_I2C_SLAVE.SlaveReceive(g_slave_buff, I2C_DATA_LENGTH);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
+<div class="line"><span class="keywordtype">void</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">//...</span></div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00057.html#ga74464f9357e585e42e5f3c909eb6e9b3">USART_GetDefaultConfig</a>(&amp;user_config);</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a80339c90b740ca4d4417a97328641ec5">baudRate_Bps</a> = 115200U;</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a1d7ec8bb576610aa864cbc0107349a21">enableTx</a> = <span class="keyword">true</span>;</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a370b6e0a9f1c05e037f9e940d7e36694">enableRx</a> = <span class="keyword">true</span>;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00057.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2">USART_Init</a>(USART1, &amp;user_config, 120000000U);</div>
+<div class="line">    <a class="code" href="a00057.html#ga9aed876794d5c2ab2e37196242602b89">USART_TransferCreateHandle</a>(USART1, &amp;g_usartHandle, USART_UserCallback, NULL);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Prepare to send.</span></div>
+<div class="line">    sendXfer.<a class="code" href="a00057.html#af4347f3022beb6cb6d930582eaa7d284">data</a> = sendData</div>
+<div class="line">    sendXfer.<a class="code" href="a00057.html#a772fe840060516d61371497eeda93bca">dataSize</a> = <span class="keyword">sizeof</span>(sendData);</div>
+<div class="line">    txFinished = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Send out.</span></div>
+<div class="line">    <a class="code" href="a00057.html#ga7f5a4e7e831ab0dc869637494a57362e">USART_TransferSendNonBlocking</a>(USART1, &amp;g_usartHandle, &amp;sendXfer);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Wait send finished.</span></div>
+<div class="line">    <span class="keywordflow">while</span> (!txFinished)</div>
+<div class="line">    {</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Prepare to receive.</span></div>
+<div class="line">    receiveXfer.<a class="code" href="a00057.html#af4347f3022beb6cb6d930582eaa7d284">data</a> = receiveData;</div>
+<div class="line">    receiveXfer.<a class="code" href="a00057.html#a772fe840060516d61371497eeda93bca">dataSize</a> = <span class="keyword">sizeof</span>(receiveData);</div>
+<div class="line">    rxFinished = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Receive.</span></div>
+<div class="line">    <a class="code" href="a00057.html#ga34c6c819c9e2d8608a6d7e63103fa542">USART_TransferReceiveNonBlocking</a>(USART1, &amp;g_usartHandle, &amp;receiveXfer, NULL);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Wait receive finished.</span></div>
+<div class="line">    <span class="keywordflow">while</span> (!rxFinished)</div>
+<div class="line">    {</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// ...</span></div>
 <div class="line">}</div>
-<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --> </div><!-- contents -->
+</div><!-- fragment --><h2><a class="anchor" id="USARTCaseRing"></a>
+USART Receive using the ringbuffer feature</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define RING_BUFFER_SIZE 64</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define RX_DATA_SIZE     32</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><a class="code" href="a00057.html#a00380">usart_handle_t</a> g_usartHandle;</div>
+<div class="line"><a class="code" href="a00057.html#a00378">usart_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00057.html#a00381">usart_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00057.html#a00381">usart_transfer_t</a> receiveXfer;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
+<div class="line">uint8_t receiveData[RX_DATA_SIZE];</div>
+<div class="line">uint8_t ringBuffer[RING_BUFFER_SIZE];</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> USART_UserCallback(<a class="code" href="a00057.html#a00380">usart_handle_t</a> *handle, <a class="code" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    userData = userData;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00057.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a3cb7112c821c89d7fbb1c048a86756aa">kStatus_USART_RxIdle</a> == status)</div>
+<div class="line">    {</div>
+<div class="line">        rxFinished = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">size_t</span> bytesRead;</div>
+<div class="line">    <span class="comment">//...</span></div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00057.html#ga74464f9357e585e42e5f3c909eb6e9b3">USART_GetDefaultConfig</a>(&amp;user_config);</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a80339c90b740ca4d4417a97328641ec5">baudRate_Bps</a> = 115200U;</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a1d7ec8bb576610aa864cbc0107349a21">enableTx</a> = <span class="keyword">true</span>;</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a370b6e0a9f1c05e037f9e940d7e36694">enableRx</a> = <span class="keyword">true</span>;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00057.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2">USART_Init</a>(USART1, &amp;user_config, 120000000U);</div>
+<div class="line">    <a class="code" href="a00057.html#ga9aed876794d5c2ab2e37196242602b89">USART_TransferCreateHandle</a>(USART1, &amp;g_usartHandle, USART_UserCallback, NULL);</div>
+<div class="line">    <a class="code" href="a00057.html#ga8500107ace3179c85e66d73fa1f41d16">USART_TransferStartRingBuffer</a>(USART1, &amp;g_usartHandle, ringBuffer, RING_BUFFER_SIZE);</div>
+<div class="line">    <span class="comment">// Now the RX is working in background, receive in to ring buffer.</span></div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Prepare to receive.</span></div>
+<div class="line">    receiveXfer.<a class="code" href="a00057.html#af4347f3022beb6cb6d930582eaa7d284">data</a> = receiveData;</div>
+<div class="line">    receiveXfer.<a class="code" href="a00057.html#a772fe840060516d61371497eeda93bca">dataSize</a> = <span class="keyword">sizeof</span>(receiveData);</div>
+<div class="line">    rxFinished = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Receive.</span></div>
+<div class="line">    <a class="code" href="a00057.html#ga34c6c819c9e2d8608a6d7e63103fa542">USART_TransferReceiveNonBlocking</a>(USART1, &amp;g_usartHandle, &amp;receiveXfer);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (bytesRead = RX_DATA_SIZE) <span class="comment">/* Have read enough data. */</span></div>
+<div class="line">    {</div>
+<div class="line">        ;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> (bytesRead) <span class="comment">/* Received some data, process first. */</span></div>
+<div class="line">        {</div>
+<div class="line">            ;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// Wait receive finished.</span></div>
+<div class="line">        <span class="keywordflow">while</span> (!rxFinished)</div>
+<div class="line">        {</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// ...</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="USARTCaseDma"></a>
+USART Send/Receive using the DMA method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00057.html#a00380">usart_handle_t</a> g_usartHandle;</div>
+<div class="line"><a class="code" href="a00016.html#a00280">dma_handle_t</a> g_usartTxDmaHandle;</div>
+<div class="line"><a class="code" href="a00016.html#a00280">dma_handle_t</a> g_usartRxDmaHandle;</div>
+<div class="line"><a class="code" href="a00057.html#a00378">usart_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00057.html#a00381">usart_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00057.html#a00381">usart_transfer_t</a> receiveXfer;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
+<div class="line">uint8_t sendData[] = [<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>];</div>
+<div class="line">uint8_t receiveData[32];</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> USART_UserCallback(<a class="code" href="a00057.html#a00380">usart_handle_t</a> *handle, <a class="code" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    userData = userData;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00057.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a539a0ebaa0137fdf6d7cc9b984acb13f">kStatus_USART_TxIdle</a> == status)</div>
+<div class="line">    {</div>
+<div class="line">        txFinished = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00057.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a3cb7112c821c89d7fbb1c048a86756aa">kStatus_USART_RxIdle</a> == status)</div>
+<div class="line">    {</div>
+<div class="line">        rxFinished = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">//...</span></div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00057.html#ga74464f9357e585e42e5f3c909eb6e9b3">USART_GetDefaultConfig</a>(&amp;user_config);</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a80339c90b740ca4d4417a97328641ec5">baudRate_Bps</a> = 115200U;</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a1d7ec8bb576610aa864cbc0107349a21">enableTx</a> = <span class="keyword">true</span>;</div>
+<div class="line">    user_config.<a class="code" href="a00057.html#a370b6e0a9f1c05e037f9e940d7e36694">enableRx</a> = <span class="keyword">true</span>;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00057.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2">USART_Init</a>(USART1, &amp;user_config, 120000000U);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Set up the DMA</span></div>
+<div class="line">    <a class="code" href="a00016.html#gade1b5efa61054ce538b37b181dd075bb">DMA_Init</a>(DMA0);</div>
+<div class="line">    <a class="code" href="a00016.html#gaa0293771d55ee1a7c42a8ffecb0728e7">DMA_EnableChannel</a>(DMA0, USART_TX_DMA_CHANNEL);</div>
+<div class="line">    <a class="code" href="a00016.html#gaa0293771d55ee1a7c42a8ffecb0728e7">DMA_EnableChannel</a>(DMA0, USART_RX_DMA_CHANNEL);</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(&amp;g_usartTxDmaHandle, DMA0, USART_TX_DMA_CHANNEL);</div>
+<div class="line">    <a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(&amp;g_usartRxDmaHandle, DMA0, USART_RX_DMA_CHANNEL);</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00058.html#ga3108003aa0b8bd3ec34b8235041d1466">USART_TransferCreateHandleDMA</a>(USART1, &amp;g_usartHandle, USART_UserCallback, NULL, &amp;g_usartTxDmaHandle, &amp;g_usartRxDmaHandle);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Prepare to send.</span></div>
+<div class="line">    sendXfer.<a class="code" href="a00057.html#af4347f3022beb6cb6d930582eaa7d284">data</a> = sendData</div>
+<div class="line">    sendXfer.<a class="code" href="a00057.html#a772fe840060516d61371497eeda93bca">dataSize</a> = <span class="keyword">sizeof</span>(sendData);</div>
+<div class="line">    txFinished = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Send out.</span></div>
+<div class="line">    <a class="code" href="a00058.html#ga767c45246b3981930e391837bf627e68">USART_TransferSendDMA</a>(USART1, &amp;g_usartHandle, &amp;sendXfer);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Wait send finished.</span></div>
+<div class="line">    <span class="keywordflow">while</span> (!txFinished)</div>
+<div class="line">    {</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Prepare to receive.</span></div>
+<div class="line">    receiveXfer.<a class="code" href="a00057.html#af4347f3022beb6cb6d930582eaa7d284">data</a> = receiveData;</div>
+<div class="line">    receiveXfer.<a class="code" href="a00057.html#a772fe840060516d61371497eeda93bca">dataSize</a> = <span class="keyword">sizeof</span>(receiveData);</div>
+<div class="line">    rxFinished = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Receive.</span></div>
+<div class="line">    <a class="code" href="a00058.html#ga4b68b4d54821ef43a671dabf432a48ae">USART_TransferReceiveDMA</a>(USART1, &amp;g_usartHandle, &amp;receiveXfer);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Wait receive finished.</span></div>
+<div class="line">    <span class="keywordflow">while</span> (!rxFinished)</div>
+<div class="line">    {</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// ...</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00228"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html">USART CMSIS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00058"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00058.html">USART DMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00057"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html">USART Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00227"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html">USART FreeRTOS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

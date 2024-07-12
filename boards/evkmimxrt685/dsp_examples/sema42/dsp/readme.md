@@ -16,11 +16,10 @@ after it received the flag.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  10.1.11
 - Xtensa C Compiler  14.01
 
 Hardware requirements

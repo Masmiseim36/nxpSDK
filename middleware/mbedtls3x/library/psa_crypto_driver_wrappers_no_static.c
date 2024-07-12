@@ -4,19 +4,7 @@
  *  Warning: This file is now auto-generated.
  */
 /*  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
 
@@ -52,14 +40,29 @@
 #include "../3rdparty/p256-m/p256-m_driver_entrypoints.h"
 
 #endif
+/* Headers for tfm_builtin_key transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+#include "tfm_builtin_key_loader.h"
+
+#endif
+/* Headers for cc3xx transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+#include "cc3xx.h"
+
+#endif
+/* Headers for ele_s2xx transparent driver */
+#if defined(PSA_CRYPTO_DRIVER_ELE_S2XX)
+#include "ele_s2xx.h"
+
+#endif
 /* Headers for ele_s4xx opaque driver */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
-#include "../port/ele_s4xx/ele_s4xx.h"
+#include "ele_s4xx.h"
 
 #endif
 /* Headers for ele_s4xx transparent driver */
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
-#include "../port/ele_s4xx/ele_s4xx.h"
+#include "ele_s4xx.h"
 
 #endif
 /* Headers for els_pkc opaque driver */
@@ -83,10 +86,13 @@
 #define MBEDTLS_TEST_OPAQUE_DRIVER_ID (2)
 #define MBEDTLS_TEST_TRANSPARENT_DRIVER_ID (3)
 #define P256_TRANSPARENT_DRIVER_ID (4)
-#define ELE_S4XX_OPAQUE_DRIVER_ID (5)
-#define ELE_S4XX_TRANSPARENT_DRIVER_ID (6)
-#define ELS_PKC_OPAQUE_DRIVER_ID (7)
-#define ELS_PKC_TRANSPARENT_DRIVER_ID (8)
+#define TFM_BUILTIN_KEY_TRANSPARENT_DRIVER_ID (5)
+#define CC3XX_TRANSPARENT_DRIVER_ID (6)
+#define ELE_S2XX_TRANSPARENT_DRIVER_ID (7)
+#define ELE_S4XX_OPAQUE_DRIVER_ID (8)
+#define ELE_S4XX_TRANSPARENT_DRIVER_ID (9)
+#define ELS_PKC_OPAQUE_DRIVER_ID (10)
+#define ELS_PKC_TRANSPARENT_DRIVER_ID (11)
 
 /* END-driver id */
 
@@ -123,9 +129,9 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
     const psa_key_attributes_t *attributes,
     size_t *key_buffer_size )
 {
-    psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
-    psa_key_type_t key_type = attributes->core.type;
-    size_t key_bits = attributes->core.bits;
+    psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
+    psa_key_type_t key_type = psa_get_key_type(attributes);
+    size_t key_bits = psa_get_key_bits(attributes);
 
     *key_buffer_size = 0;
     switch( location )
@@ -147,6 +153,13 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
             return( ( *key_buffer_size != 0 ) ?
                     PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+            return tfm_builtin_key_loader_get_key_buffer_size(psa_get_key_id(attributes),
+                                                              key_buffer_size);
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
+
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
         case 0x000001:
             *key_buffer_size = ele_s4xx_opaque_size_function(key_type,
@@ -155,6 +168,7 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
                     PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
             break;
 #endif /* PSA_CRYPTO_DRIVER_ELE_S4XX */
+
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_KEY:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
@@ -189,7 +203,7 @@ psa_status_t psa_driver_wrapper_export_public_key(
     const psa_drv_se_t *drv;
     psa_drv_se_context_t *drv_context;
 
-    if( psa_get_se_driver( attributes->core.lifetime, &drv, &drv_context ) )
+    if( psa_get_se_driver( psa_get_key_lifetime(attributes), &drv, &drv_context ) )
     {
         if( ( drv->key_management == NULL ) ||
             ( drv->key_management->p_export_public == NULL ) )
@@ -207,6 +221,9 @@ psa_status_t psa_driver_wrapper_export_public_key(
     switch( location )
     {
         case PSA_KEY_LOCATION_LOCAL_STORAGE:
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+#endif /* defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER) */
             /* Key is stored in the slot in export representation, so
              * cycle through all known transparent accelerators */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
@@ -227,6 +244,21 @@ psa_status_t psa_driver_wrapper_export_public_key(
 
 #if (defined(MBEDTLS_PSA_P256M_DRIVER_ENABLED) )
             status = p256_transparent_export_public_key
+                (attributes,
+                                key_buffer,
+                                key_buffer_size,
+                                data,
+                                data_size,
+                                data_length
+            );
+
+            if( status != PSA_ERROR_NOT_SUPPORTED )
+                return( status );
+#endif
+
+
+#if (defined(PSA_CRYPTO_DRIVER_CC3XX) )
+            status = cc3xx_transparent_export_public_key
                 (attributes,
                                 key_buffer,
                                 key_buffer_size,
@@ -321,10 +353,10 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
     uint8_t *key_buffer, size_t key_buffer_size, size_t *key_buffer_length )
 {
 
-    psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION( attributes->core.lifetime );
+    psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION( psa_get_key_lifetime(attributes) );
     switch( location )
     {
-#if defined(PSA_CRYPTO_DRIVER_TEST)
+#if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
 
 #if (defined(PSA_CRYPTO_DRIVER_TEST) )
         case 0x7fffff:
@@ -340,6 +372,13 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
 
 
 
+#if defined(PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER)
+        case TFM_BUILTIN_KEY_LOADER_KEY_LOCATION:
+            return( tfm_builtin_key_loader_get_builtin_key(
+                        slot_number,
+                        attributes,
+                        key_buffer, key_buffer_size, key_buffer_length ) );
+#endif /* PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER */
 #if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_KEY:
         case PSA_CRYPTO_ELS_PKC_LOCATION_S50_ENC_STORAGE_DATA:
@@ -353,7 +392,7 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
                             key_buffer_length
         ));
 #endif /* PSA_CRYPTO_DRIVER_ELS_PKC */
-#endif /* PSA_CRYPTO_DRIVER_TEST */
+#endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
         default:
             (void) slot_number;
             (void) key_buffer;

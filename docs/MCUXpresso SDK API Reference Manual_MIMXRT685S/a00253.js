@@ -1,24 +1,16 @@
 var a00253 =
 [
-    [ "HAL_CODEC_CS42888_HANDLER_SIZE", "a00253.html#ga6e1a98c1da1cf3d4e216e0cd88275e42", null ],
-    [ "HAL_CODEC_CS42888_Init", "a00253.html#ga6322a862a0ec9af4c568967bab1050ae", null ],
-    [ "HAL_CODEC_CS42888_Deinit", "a00253.html#ga8b695d26d408770842cc1db1a890de08", null ],
-    [ "HAL_CODEC_CS42888_SetFormat", "a00253.html#ga55278264c196bcf67adaec5c4e887c01", null ],
-    [ "HAL_CODEC_CS42888_SetVolume", "a00253.html#ga45e63cee64d7102825364b48e2a17178", null ],
-    [ "HAL_CODEC_CS42888_SetMute", "a00253.html#ga4696410df0b0cd8c88b50882bfbb546b", null ],
-    [ "HAL_CODEC_CS42888_SetPower", "a00253.html#gaa2fc2e8795723a17bd1411adcd389736", null ],
-    [ "HAL_CODEC_CS42888_SetRecord", "a00253.html#gac4169264637d0977800168f8328a1d2e", null ],
-    [ "HAL_CODEC_CS42888_SetRecordChannel", "a00253.html#ga047461f10f6439bbaab7a3d1b32c7d89", null ],
-    [ "HAL_CODEC_CS42888_SetPlay", "a00253.html#ga786ee3e35b7aaace2bc0223579c43d1d", null ],
-    [ "HAL_CODEC_CS42888_ModuleControl", "a00253.html#ga942a8ccfeaa7e26824def528a9564a29", null ],
-    [ "HAL_CODEC_Init", "a00253.html#gafe47075da9b829e30e618a86ac2cc9c6", null ],
-    [ "HAL_CODEC_Deinit", "a00253.html#ga6728d97d2c909d8bff9fee477b0cd9e9", null ],
-    [ "HAL_CODEC_SetFormat", "a00253.html#gaaf073d16e55b2da18b4b801acd03454b", null ],
-    [ "HAL_CODEC_SetVolume", "a00253.html#ga17769c66cf7b5c0f01041e7f36f4c89c", null ],
-    [ "HAL_CODEC_SetMute", "a00253.html#ga6e3171b042e6150ac410abced6123feb", null ],
-    [ "HAL_CODEC_SetPower", "a00253.html#gad630677f451ca311d9f149d34da70637", null ],
-    [ "HAL_CODEC_SetRecord", "a00253.html#ga78612feccab62150fb8ee1ef9eb4b6ed", null ],
-    [ "HAL_CODEC_SetRecordChannel", "a00253.html#gad96c5638cbc67a85bfdb44aa1eee435b", null ],
-    [ "HAL_CODEC_SetPlay", "a00253.html#ga10228c6005d118872915a0412c466a7d", null ],
-    [ "HAL_CODEC_ModuleControl", "a00253.html#gab2e790a1ed09bc9a6b910d94180e5bd4", null ]
+    [ "SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH", "a00253.html#gaff6176ea2af7001a012172a47622e204", null ],
+    [ "SERIAL_USE_CONFIGURE_STRUCTURE", "a00253.html#ga29c0fa5c543615a75f63bdcb7e086b16", null ],
+    [ "serial_port_uart_parity_mode_t", "a00253.html#ga3980002a1791549605701a7822bec4ba", null ],
+    [ "serial_port_uart_stop_bit_count_t", "a00253.html#ga2a0798b3cc6db94c65bf067bcfe73b12", null ],
+    [ "_serial_port_uart_parity_mode", "a00253.html#ga2d84542a7efc9d896f4e8d7221e1ec98", [
+      [ "kSerialManager_UartParityDisabled", "a00253.html#gga2d84542a7efc9d896f4e8d7221e1ec98a208958aa923a2c50ac1192a5085ab8b1", null ],
+      [ "kSerialManager_UartParityEven", "a00253.html#gga2d84542a7efc9d896f4e8d7221e1ec98a7d9d6f05fb6e1099fdfbf1f79a699356", null ],
+      [ "kSerialManager_UartParityOdd", "a00253.html#gga2d84542a7efc9d896f4e8d7221e1ec98a15bc11791c1f07fac71c808d083515db", null ]
+    ] ],
+    [ "_serial_port_uart_stop_bit_count", "a00253.html#ga97aea0fa091f5d31407cd8b94bdc5f35", [
+      [ "kSerialManager_UartOneStopBit", "a00253.html#gga97aea0fa091f5d31407cd8b94bdc5f35a5caed34146b357a7061aaacfe378e039", null ],
+      [ "kSerialManager_UartTwoStopBit", "a00253.html#gga97aea0fa091f5d31407cd8b94bdc5f35a83eb7aee91f3fd8964d283c0057880dc", null ]
+    ] ]
 ];

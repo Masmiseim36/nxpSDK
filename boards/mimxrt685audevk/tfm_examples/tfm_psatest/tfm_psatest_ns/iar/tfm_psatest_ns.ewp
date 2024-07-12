@@ -249,6 +249,7 @@
           <state>PS_TEST</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TARGET_CONFIG_HEADER_FILE="config_tfm_target.h"</state>
+          <state>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</state>
           <state>QCBOR_DISABLE_FLOAT_HW_USE</state>
           <state>USEFULBUF_DISABLE_ALL_FLOAT</state>
           <state>QCBOR_DISABLE_PREFERRED_FLOAT</state>
@@ -398,7 +399,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val</state>
@@ -487,7 +487,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -506,11 +505,13 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/Include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/qcbor/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/qcbor/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/qcbor/inc/qcbor</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -837,7 +838,7 @@
       <name>BUILDACTION</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
+        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
         <postbuild/>
       </data>
     </settings>
@@ -1484,6 +1485,7 @@
           <state>PS_TEST</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>TARGET_CONFIG_HEADER_FILE="config_tfm_target.h"</state>
+          <state>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</state>
           <state>QCBOR_DISABLE_FLOAT_HW_USE</state>
           <state>USEFULBUF_DISABLE_ALL_FLOAT</state>
           <state>QCBOR_DISABLE_PREFERRED_FLOAT</state>
@@ -1633,7 +1635,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val</state>
@@ -1722,7 +1723,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1741,11 +1741,13 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/Include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/qcbor/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/qcbor/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/qcbor/inc/qcbor</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2072,7 +2074,7 @@
       <name>BUILDACTION</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition -I$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
+        <prebuild>"$TOOLKIT_DIR$/bin/iccarm" -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition -I $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns.icf --silent --preprocess=ns $PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/iar/tfm_common_ns_pre.icf</prebuild>
         <postbuild/>
       </data>
     </settings>
@@ -2973,33 +2975,6 @@
       <group>
         <name>targets</name>
         <group>
-          <name>tgt_dev_apis_nxp</name>
-          <group>
-            <name>nspe</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</name>
-            </file>
-          </group>
-        </group>
-        <group>
           <name>common</name>
           <group>
             <name>nspe</name>
@@ -3057,6 +3032,33 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage/pal_protected_storage_intf.h</name>
               </file>
             </group>
+          </group>
+        </group>
+        <group>
+          <name>tgt_dev_apis_nxp</name>
+          <group>
+            <name>nspe</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</name>
+            </file>
           </group>
         </group>
       </group>
@@ -4460,12 +4462,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4479,6 +4475,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

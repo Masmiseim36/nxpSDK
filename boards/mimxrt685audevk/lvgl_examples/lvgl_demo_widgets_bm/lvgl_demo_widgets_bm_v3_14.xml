@@ -36,6 +36,7 @@
     <definition extID="CMSIS_Driver_Include.I2C.MIMXRT685S"/>
     <definition extID="CMSIS_Driver_Include.SPI.MIMXRT685S"/>
     <definition extID="RTE_Device.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="middleware.lvgl.template.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
     <definition extID="iar"/>
@@ -46,7 +47,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_lvgl_demo_widgets_bm" name="lvgl_demo_widgets_bm" device_core="cm33_MIMXRT685S" dependency="driver.ili9341.MIMXRT685S driver.ft6x06.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.flexcomm_spi_dma.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexcomm_spi.MIMXRT685S platform.drivers.flexcomm_spi_cmsis.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.flexcomm_i2c_cmsis.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.flexcomm_i2c_dma.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S utility.debug_console_lite.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S middleware.lvgl.demo.widgets.MIMXRT685S platform.drivers.common.MIMXRT685S middleware.lvgl.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S CMSIS_Driver_Include.I2C.MIMXRT685S CMSIS_Driver_Include.SPI.MIMXRT685S RTE_Device.MIMXRT685S middleware.lvgl.template.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" category="lvgl_examples">
+  <example id="mimxrt685audevk_lvgl_demo_widgets_bm" name="lvgl_demo_widgets_bm" device_core="cm33_MIMXRT685S" dependency="driver.ili9341.MIMXRT685S driver.ft6x06.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.flexcomm_spi_dma.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexcomm_spi.MIMXRT685S platform.drivers.flexcomm_spi_cmsis.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.flexcomm_i2c_cmsis.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.drivers.flexcomm_i2c_dma.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S utility.debug_console_lite.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S middleware.lvgl.demo.widgets.MIMXRT685S platform.drivers.common.MIMXRT685S middleware.lvgl.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S CMSIS_Driver_Include.I2C.MIMXRT685S CMSIS_Driver_Include.SPI.MIMXRT685S RTE_Device.MIMXRT685S utility.str.MIMXRT685S middleware.lvgl.template.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" category="lvgl_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -105,7 +106,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -Wno-format</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin -Wno-format</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>

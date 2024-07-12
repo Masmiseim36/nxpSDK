@@ -352,13 +352,13 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1435,13 +1435,13 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2517,13 +2517,13 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3600,13 +3600,13 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4370,12 +4370,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>

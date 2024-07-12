@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,11 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#include "fwk_platform_lowpower.h"
+#endif /* APP_LOWPOWER_ENABLED */
 
 #include <peripheral_ht.h>
 
@@ -40,6 +45,7 @@
  * Prototypes
  ******************************************************************************/
 extern void BOARD_InitHardware(void);
+extern void APP_InitServices(void);
 
 /*******************************************************************************
  * Variables
@@ -50,7 +56,7 @@ extern void BOARD_InitHardware(void);
  * Code
  ******************************************************************************/
 #if defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || \
-    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
+    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW612_BOARD_MURATA_2EL_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -193,6 +199,11 @@ int main(void)
     CRYPTO_InitHardware();
 #endif /* CONFIG_BT_SMP */
 
+#if (defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0))|| \
+    (defined(APP_USE_SENSORS) && (APP_USE_SENSORS > 0))
+    APP_InitServices();
+#endif
+
     if (xTaskCreate(peripheral_ht_task, "peripheral_ht_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
         PRINTF("peripheral ht task creation failed!\r\n");
@@ -204,3 +215,27 @@ int main(void)
     for (;;)
         ;
 }
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
+{
+    bool abortIdle = false;
+    uint64_t expectedIdleTimeUs, actualIdleTimeUs;
+    uint32_t irqMask = DisableGlobalIRQ();
+
+    /* Disable and prepare systicks for low power. */
+    abortIdle = PWR_SysticksPreProcess((uint32_t)xExpectedIdleTime, &expectedIdleTimeUs);
+
+    if (abortIdle == false)
+    {
+        /* Enter low power with a maximal timeout. */
+        actualIdleTimeUs = PWR_EnterLowPower(expectedIdleTimeUs);
+
+        /* Re enable systicks and compensate systick timebase. */
+        PWR_SysticksPostProcess(expectedIdleTimeUs, actualIdleTimeUs);
+    }
+
+    /* Exit from critical section. */
+    EnableGlobalIRQ(irqMask);
+}
+#endif /* APP_LOWPOWER_ENABLED */

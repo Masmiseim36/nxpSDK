@@ -1,12 +1,12 @@
 var a00016 =
 [
-    [ "_dma_descriptor", "a00016.html#a00282", [
+    [ "_dma_descriptor", "a00016.html#a00279", [
       [ "xfercfg", "a00016.html#a0123b3f48283fb0a2b10398f6cc0d0ba", null ],
       [ "srcEndAddr", "a00016.html#a92876a13dbcac0bfb032bc179aaf447d", null ],
       [ "dstEndAddr", "a00016.html#af8bb95a5682dbdd6d1b508ba2ff4ced9", null ],
       [ "linkToNextDesc", "a00016.html#ab0bf2a9cb04bafbe3c0da9e3f3088902", null ]
     ] ],
-    [ "_dma_xfercfg", "a00016.html#a00285", [
+    [ "_dma_xfercfg", "a00016.html#a00282", [
       [ "valid", "a00016.html#aa6d616697dfdbf2ea0d55ce3d15ae15d", null ],
       [ "reload", "a00016.html#a6265febd7f6c13a94e167da51a1e43b0", null ],
       [ "swtrig", "a00016.html#add83c9ead5464ed2bd4b4c9af0c3939c", null ],
@@ -18,12 +18,12 @@ var a00016 =
       [ "dstInc", "a00016.html#a7581145b400e7c3a2e6f7c48f3ebdcb6", null ],
       [ "transferCount", "a00016.html#a90638d51e3f312f41de139cbbc12b331", null ]
     ] ],
-    [ "_dma_channel_trigger", "a00016.html#a00281", [
+    [ "_dma_channel_trigger", "a00016.html#a00278", [
       [ "type", "a00016.html#a963af37ca31ac5c801494e97c3aab22a", null ],
       [ "burst", "a00016.html#a97d06b60e0daf2045ebc89923aa5bfc1", null ],
       [ "wrap", "a00016.html#a6317266dd520f59972e99892d1745db4", null ]
     ] ],
-    [ "_dma_channel_config", "a00016.html#a00280", [
+    [ "_dma_channel_config", "a00016.html#a00277", [
       [ "srcStartAddr", "a00016.html#acd6d6ce5daa6d4d97a7239b7b0d0eb56", null ],
       [ "dstStartAddr", "a00016.html#a7c94fe018407578d718af8edc8c3764d", null ],
       [ "nextDesc", "a00016.html#a1d237585f6be8749ff73eb0cf194e0ba", null ],
@@ -31,14 +31,14 @@ var a00016 =
       [ "trigger", "a00016.html#a85d3341a4a2c75753e68774b8f2910a0", null ],
       [ "isPeriph", "a00016.html#a88a377a5b22357f131bd48c4b857a823", null ]
     ] ],
-    [ "_dma_transfer_config", "a00016.html#a00284", [
+    [ "_dma_transfer_config", "a00016.html#a00281", [
       [ "srcAddr", "a00016.html#a71bb48be218a43468036baa0a2d6582f", null ],
       [ "dstAddr", "a00016.html#a8f10119722a970f3f1809d66b24b1825", null ],
       [ "nextDesc", "a00016.html#a987f4b6b0b7eaa67c97298d84d506f84", null ],
       [ "xfercfg", "a00016.html#afb87ce88f5cb43e063cea46b25b96845", null ],
       [ "isPeriph", "a00016.html#ace28d6f9062dc6a1b6a7c6c4ef94ccc6", null ]
     ] ],
-    [ "_dma_handle", "a00016.html#a00283", [
+    [ "_dma_handle", "a00016.html#a00280", [
       [ "callback", "a00016.html#af4889548fdba149aa2d1e5cb7dec20ef", null ],
       [ "userData", "a00016.html#abb9f9797349c1860b5693de57c9d1e59", null ],
       [ "base", "a00016.html#a46d0403b6263d5fa4c94ba0265dffdd1", null ],

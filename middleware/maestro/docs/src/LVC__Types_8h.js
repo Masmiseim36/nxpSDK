@@ -32,8 +32,6 @@ var LVC__Types_8h =
     [ "LVM_UINT16_LVWIREFORMAT_LENGTH", "LVC__Types_8h.html#a051efea8392815f9338aae8fd1eee134", null ],
     [ "LVM_INT32_LVWIREFORMAT_LENGTH", "LVC__Types_8h.html#aecef6bba59a6ae4e1567fc33abecaef8", null ],
     [ "LVM_UINT32_LVWIREFORMAT_LENGTH", "LVC__Types_8h.html#a679106a9848c5e272bbfc4219aa3b1aa", null ],
-    [ "LVM_PRINTF_FORMAT_SPECIFIER_INT32", "LVC__Types_8h.html#a1f188c5b148e4739cf2034332907db2c", null ],
-    [ "LVM_PRINTF_FORMAT_SPECIFIER_UINT32", "LVC__Types_8h.html#a6d1e1bda66c79ac87ab196bc74bda330", null ],
     [ "LVM_CHAR", "LVC__Types_8h.html#aea94c62744ad7c57d8fa9b10c0378298", null ],
     [ "LVM_INT8", "LVC__Types_8h.html#aa1d665d4c365643455cfa0e63ae8dac3", null ],
     [ "LVM_UINT8", "LVC__Types_8h.html#afad2e28a65cb949b4d1f2aff95652dad", null ],

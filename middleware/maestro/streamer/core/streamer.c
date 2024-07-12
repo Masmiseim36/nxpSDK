@@ -598,9 +598,10 @@ int32_t streamer_create_pipeline(STREAMER_T *streamer,
 
     for (i = 0; i < elements.num_elements; i++)
     {
-        CHECK_RET(create_element(&streamer->elems[pipeline_id][elements.element_ids[i]],
+        CHECK_RET(create_element(&(streamer->elems[pipeline_id][elements.element_ids[i]]),
                                  type_lookup_table[elements.element_ids[i]].type, 0),
                   "create_element");
+
         CHECK_RET(add_element_pipeline(streamer->pipes[pipeline_id],
                                        streamer->elems[pipeline_id][elements.element_ids[i]], level++),
                   "add_element_pipeline");

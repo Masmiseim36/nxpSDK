@@ -232,7 +232,6 @@
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -363,9 +362,7 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -373,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -732,22 +730,26 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_literal_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
+          <state>__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_literal_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_literal_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -822,14 +824,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
-          <state>--keep=__dsp_literal_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_ncache_debug.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
-          <state>--keep=__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1033,19 +1029,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -1339,7 +1335,6 @@
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1470,9 +1465,7 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1480,6 +1473,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1839,22 +1833,26 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_literal_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
+          <state>__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_literal_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_literal_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -1929,14 +1927,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
-          <state>--keep=__dsp_literal_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_ncache_debug.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
-          <state>--keep=__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2140,19 +2132,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -2445,7 +2437,6 @@
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2576,9 +2567,7 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -2586,6 +2575,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2945,22 +2935,26 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_literal_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
+          <state>__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_literal_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_literal_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -3035,14 +3029,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
-          <state>--keep=__dsp_literal_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
-          <state>--keep=__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -3246,19 +3234,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -3552,7 +3540,6 @@
           <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3683,9 +3670,7 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -3693,6 +3678,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4051,22 +4037,26 @@
         <option>
           <name>IlinkKeepSymbols</name>
           <state/>
+          <state>__dsp_literal_bin</state>
+          <state>__dsp_text_bin</state>
+          <state>__dsp_data_bin</state>
+          <state>__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
-          <state/>
+          <state>__dsp_literal_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
-          <state/>
+          <state>__dsp_literal_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -4141,14 +4131,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
-          <state>--keep=__dsp_literal_bin</state>
-          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
-          <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
-          <state>--keep=__dsp_data_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_ncache_release.bin,__dsp_ncache_bin,__dsp_ncache_section,4</state>
-          <state>--keep=__dsp_ncache_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -4352,19 +4336,19 @@
         </option>
         <option>
           <name>IlinkRawBinaryFile2</name>
-          <state/>
+          <state>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySymbol2</name>
-          <state/>
+          <state>__dsp_text_bin</state>
         </option>
         <option>
           <name>IlinkRawBinarySegment2</name>
-          <state/>
+          <state>__dsp_text_section</state>
         </option>
         <option>
           <name>IlinkRawBinaryAlign2</name>
-          <state/>
+          <state>4</state>
         </option>
         <option>
           <name>IlinkLogCrtRoutineSelection</name>
@@ -4688,19 +4672,19 @@
     </group>
   </group>
   <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
+    </file>
+  </group>
+  <group>
     <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
@@ -4721,18 +4705,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
-  </group>
-  <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
     </file>
   </group>
   <group>

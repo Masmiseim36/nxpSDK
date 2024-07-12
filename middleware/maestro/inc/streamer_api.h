@@ -273,32 +273,35 @@ typedef enum
  */
 typedef enum
 {
-    /* Source elements (with one or more source pads and no sink pads) */
-    TYPE_ELEMENT_FILE_SRC = BUILD_ELEMENT(1, 0, 0),
+    /* _SRC: Source elements (with one or more source pads and no sink pads) */
+    /* _SINK: Sink elements (with no source pads and one sink pad) */
+    /* _DECODER: Decoder element (with one source pad and one sink pad) */
+    /* _ENCODER: Encoder element (with one source pad and one sink pad) */
+    /* _PROC: Process element (with one source pad and one sink pad) */
+
     /*!< @brief File source element */
-    TYPE_ELEMENT_MEM_SRC = BUILD_ELEMENT(1, 0, 1),
+    TYPE_ELEMENT_FILE_SRC = BUILD_ELEMENT(1, 0, 0),
     /*!< @brief Memory source element */
-    TYPE_ELEMENT_NETBUF_SRC = BUILD_ELEMENT(1, 0, 2),
+    TYPE_ELEMENT_MEM_SRC = BUILD_ELEMENT(1, 0, 1),
     /*!< @brief Network buffer source element. Requires CCI usage. */
-    TYPE_ELEMENT_AUDIO_SRC = BUILD_ELEMENT(1, 0, 3),
+    TYPE_ELEMENT_NETBUF_SRC = BUILD_ELEMENT(1, 0, 2),
     /*!< @brief Audio source element */
-    /* Sink elements (with no source pads and one sink pad) */
-    TYPE_ELEMENT_FILE_SINK = BUILD_ELEMENT(0, 1, 4),
+    TYPE_ELEMENT_AUDIO_SRC = BUILD_ELEMENT(1, 0, 3),
     /*!< @brief File sink element */
-    TYPE_ELEMENT_MEM_SINK = BUILD_ELEMENT(0, 1, 5),
+    TYPE_ELEMENT_FILE_SINK = BUILD_ELEMENT(0, 1, 4),
     /*!< @brief Memory sink element */
-    TYPE_ELEMENT_AUDIO_SINK = BUILD_ELEMENT(0, 1, 6),
+    TYPE_ELEMENT_MEM_SINK = BUILD_ELEMENT(0, 1, 5),
     /*!< @brief Audio sink element */
-    /* Decoder element (with one source pad and one sink pad) */
-    TYPE_ELEMENT_DECODER = BUILD_ELEMENT(1, 1, 7),
+    TYPE_ELEMENT_AUDIO_SINK = BUILD_ELEMENT(0, 1, 6),
+    /*!< @brief VIT sink element */
+    TYPE_ELEMENT_VIT_SINK = BUILD_ELEMENT(0, 1, 7),
     /*!< @brief Decoder element */
-    TYPE_ELEMENT_ENCODER = BUILD_ELEMENT(1, 1, 8),
-
-    TYPE_ELEMENT_VIT_SINK = BUILD_ELEMENT(0, 1, 9),
-
+    TYPE_ELEMENT_DECODER = BUILD_ELEMENT(1, 1, 8),
+    /*!< @brief Encoder element */
+    TYPE_ELEMENT_ENCODER = BUILD_ELEMENT(1, 1, 9),
+    /*!< @brief Audio process element */
     TYPE_ELEMENT_AUDIO_PROC = BUILD_ELEMENT(1, 1, 10),
-
-    TYPE_ELEMENT_LAST = 11
+    TYPE_ELEMENT_LAST       = 11
 } StreamElementType;
 
 /**
@@ -308,9 +311,9 @@ typedef enum
 typedef struct
 {
     /** @brief Element type */
-    uint16_t type;
+    StreamElementType type;
     /** @brief Element index */
-    uint16_t element_index;
+    ElementIndex element_index;
 } ElementTypeLookup;
 
 /*!

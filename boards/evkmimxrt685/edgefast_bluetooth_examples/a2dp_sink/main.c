@@ -90,7 +90,7 @@ hal_audio_config_t audioTxConfig = {
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = (uint32_t)DEMO_AUDIO_SAMPLING_RATE,
     .fifoWatermark     = 0,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
     .frameSyncPolarity = kHAL_AudioBeginAtFallingEdge,
@@ -276,7 +276,7 @@ void BOARD_I3C_ReleaseBus(void)
 
 
 #if defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || \
-    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
+    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW612_BOARD_MURATA_2EL_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

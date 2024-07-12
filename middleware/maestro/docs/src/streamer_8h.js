@@ -46,7 +46,6 @@ var streamer_8h =
     [ "STREAMER_DEFAULT_CHUNK_SIZE", "streamer_8h.html#a71256c14306c7037175aec5b688420c6", null ],
     [ "STREAMER_WAVE_FILE_CHUNK_SIZE", "streamer_8h.html#af3d1f51c42ebb06f25271b2e8239a548", null ],
     [ "STREAMER_DEFAULT_UPDATE_DURATION", "streamer_8h.html#a15d4a6007cae295b59e1cee647f51e72", null ],
-    [ "STREAMER_VERSION", "streamer_8h.html#a7903903643038277ac52dfb99b57be7b", null ],
     [ "StreamDataType", "streamer_8h.html#acbbcbc4ce13cb8406841bc0ba1bcbcfc", [
       [ "DATA_TYPE_UINT32", "streamer_8h.html#acbbcbc4ce13cb8406841bc0ba1bcbcfcaeb75b61567450ccd47baf77d95efa3f6", null ],
       [ "DATA_TYPE_UINT16", "streamer_8h.html#acbbcbc4ce13cb8406841bc0ba1bcbcfca245ae0de48bc92048c53ff8bd44fb850", null ],

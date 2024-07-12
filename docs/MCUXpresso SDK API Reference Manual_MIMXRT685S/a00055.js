@@ -1,40 +1,54 @@
 var a00055 =
 [
-    [ "_spi_dma_handle", "a00055.html#a00372", [
-      [ "kStatus_OTP_InvalidAddress", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00", null ],
-      [ "kStatus_OTP_ProgramFail", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93", null ],
-      [ "kStatus_OTP_CrcFail", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4", null ],
-      [ "kStatus_OTP_Error", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa6b2812dc3a772696674644021963e9e5", null ],
-      [ "kStatus_OTP_EccCheckFail", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa04c03b460d85fa1a71ec9b190fa69ec0", null ],
-      [ "kStatus_OTP_Locked", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181faa6a221a15bbe35240999f04e44cffdc7", null ],
-      [ "kStatus_OTP_Timeout", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fa365cd204f0eb037f13fcdc9eec986cc4", null ],
-      [ "kStatus_OTP_CrcCheckPass", "a00237.html#gga5d76b81b0ad4c19007a781d4edb8181fac1090e0c604ff9bb4f40c88653b482c5", null ],
-      [ "txInProgress", "a00055.html#aade83738207535e22c59a962f7970476", null ],
-      [ "rxInProgress", "a00055.html#a238787dc038cb56bec18605afbb9f1fb", null ],
-      [ "bytesPerFrame", "a00055.html#a0ddf5aad428d653cbb8f126c271b6f0b", null ],
-      [ "lastwordBytes", "a00055.html#a94f61830d009de8d210be1f9671e1551", null ],
-      [ "txHandle", "a00055.html#a9fbd87a762e90675082bf0e2effe8942", null ],
-      [ "rxHandle", "a00055.html#aa54af7ea8c13efd7ab848575d2db953a", null ],
-      [ "callback", "a00055.html#adb87c50f78901b9d43b354919d30c854", null ],
-      [ "userData", "a00055.html#ab5a390d46850ba2397ab89b5d692a409", null ],
-      [ "state", "a00055.html#a7e087358c65369ceb5e0ead613560016", null ],
-      [ "transferSize", "a00055.html#a246dd896f39699b628d71b9a80af8b20", null ],
-      [ "instance", "a00055.html#ae7284884e35ae032e2eb576a52b032f8", null ],
-      [ "txNextData", "a00055.html#a368c57bccf1bb14bbc3f54fb02e88ba0", null ],
-      [ "txEndData", "a00055.html#a05553a02ed517b7c9f1838aeef6b37d7", null ],
-      [ "rxNextData", "a00055.html#a3c983d08aceac326cd67cf6deae49dc3", null ],
-      [ "rxEndData", "a00055.html#acbeb91001b817bf41ee1ff91255a0c20", null ],
-      [ "dataBytesEveryTime", "a00055.html#ad3016002862c9980d6256b2056c9207e", null ]
+    [ "_tfa9xxx_audio_format", "a00055.html#a00374", [
+      [ "sampleRate", "a00055.html#a91637be2618314067ae556ab83812ed0", null ],
+      [ "bitWidth", "a00055.html#a30b48986bf325c3aadfb58f55ae0694a", null ]
     ] ],
-    [ "FSL_SPI_DMA_DRIVER_VERSION", "a00055.html#gab72873a3a11fc293023558be553de43c", null ],
-    [ "spi_dma_callback_t", "a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3", null ],
-    [ "SPI_MasterTransferCreateHandleDMA", "a00055.html#gae8aa0229e688aa1b88185d5e9e7bf0b8", null ],
-    [ "SPI_MasterTransferDMA", "a00055.html#ga2bcf43f1d6908810b6b41d2d87bda3a9", null ],
-    [ "SPI_MasterHalfDuplexTransferDMA", "a00055.html#ga761647975e2cfffca46793a6723ffd95", null ],
-    [ "SPI_SlaveTransferCreateHandleDMA", "a00055.html#ga029df430a54021c536661fd17b9c60bb", null ],
-    [ "SPI_SlaveTransferDMA", "a00055.html#ga6848a2579e3e84d48123407448df60ed", null ],
-    [ "SPI_MasterTransferAbortDMA", "a00055.html#gac5f2aabca472a57709db2ef153e031c8", null ],
-    [ "SPI_MasterTransferGetCountDMA", "a00055.html#ga642d1fe963b7f1c28e5d8f4dd5b92861", null ],
-    [ "SPI_SlaveTransferAbortDMA", "a00055.html#ga03ab24789dc4c2438a5daff733ce2cfe", null ],
-    [ "SPI_SlaveTransferGetCountDMA", "a00055.html#gafa44608920f3653a4692f87f4d4220cc", null ]
+    [ "tfa9xxx_config", "a00055.html#a00411", [
+      [ "protocol", "a00055.html#a7d2cd6cdd1b7f29889c1e44dfffead2a", null ],
+      [ "format", "a00055.html#a16e087ab9af599ba4300f2efa097fd7c", null ],
+      [ "slaveAddress", "a00055.html#ae20e137aff48d492b43b16419ad68248", null ],
+      [ "i2cConfig", "a00055.html#af50cbfa36cec4324d4ba5385b442de2c", null ],
+      [ "tfaContainer", "a00055.html#a2bcd87c88e06694c2e01cd3a3fb725f9", null ],
+      [ "deviceIndex", "a00055.html#a29d7790c5905bcb33dcc3a798dc7a4e6", null ]
+    ] ],
+    [ "_tfa9xxx_handle", "a00055.html#a00375", [
+      [ "config", "a00055.html#a90b5f1efdd4cdc7d1fc0d9cd39d1b77b", null ],
+      [ "i2cHandle", "a00055.html#a368b5761d02a39c3191251a7db8c0c2f", null ]
+    ] ],
+    [ "FSL_TFA9XXX_DRIVER_VERSION", "a00055.html#gafdb6eb7579e034ff78420e1f0b0fd54a", null ],
+    [ "TFA9XXX_I2C_HANDLER_SIZE", "a00055.html#ga1fda6a8170e3fe24f8fb27c9a4771eac", null ],
+    [ "TFA9XXX_I2C_BAUDRATE", "a00055.html#gac71cf1d5220a754ccdf2124d2baf9fba", null ],
+    [ "tfa9xxx_protocol_t", "a00055.html#gaa39ebfe4b9ce1e78793cfa866edbf43e", null ],
+    [ "tfa9xxx_audio_format_t", "a00055.html#ga459453e9ac56617d4e84b2e47c8bd158", null ],
+    [ "tfa9xxx_device_t", "a00055.html#ga3610f48b18ea4ced5cbd97717b543b1f", null ],
+    [ "tfa9xxx_config_t", "a00055.html#gaca57eb5fe4a26227fc9421b99a082868", null ],
+    [ "tfa9xxx_handle_t", "a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4", null ],
+    [ "_tfa9xxx_protocol", "a00055.html#gaf96bdd5002e591aa15fc384ecc2f05c9", [
+      [ "kTFA9XXX_BusI2S", "a00055.html#ggaf96bdd5002e591aa15fc384ecc2f05c9aec016d23cd2ee33d7ffd1aa77401ba5a", null ]
+    ] ],
+    [ "_tfa9xxx_sample_rate", "a00055.html#ga8946a7a721cc3f7364db9cc866ab3c65", [
+      [ "kTFA9XXX_AudioSampleRate48KHz", "a00055.html#gga8946a7a721cc3f7364db9cc866ab3c65afdca7f8c2855f2ac09573f45bb6deda2", null ]
+    ] ],
+    [ "_tfa9xxx_audio_bit_width", "a00055.html#ga791042fd6f833e0144c292ae5e34ee4e", [
+      [ "kTFA9XXX_AudioBitWidth16bit", "a00055.html#gga791042fd6f833e0144c292ae5e34ee4ea1b5a4e2776519b3425d5acd3f410d03d", null ]
+    ] ],
+    [ "_tfa98xxx_play_channel", "a00055.html#ga490ea71fcddb804f209f1ca8026067ce", [
+      [ "kTFA9XXX_PlayChannelLeft0", "a00055.html#gga490ea71fcddb804f209f1ca8026067cea8f2e5eeca211ebaab71218a0205ce3ca", null ],
+      [ "kTFA9XXX_PlayChannelRight0", "a00055.html#gga490ea71fcddb804f209f1ca8026067cea73f71cdb3ae52c087e20659b8d91ce18", null ]
+    ] ],
+    [ "TFA9XXX_Init", "a00055.html#gaa73c2c5855c56405c33ef6e40cf9d702", null ],
+    [ "TFA9XXX_Deinit", "a00055.html#ga32bf3a77a358014cffbbb4b641602018", null ],
+    [ "TFA9XXX_SetMute", "a00055.html#gaf9a1f8f5f4b2959c514345efc9ab5e00", null ],
+    [ "TFA9XXX_ConfigDataFormat", "a00055.html#ga1495b678740d2ea25abdb60c347124ac", null ],
+    [ "TFA9XXX_SetVolume", "a00055.html#ga9e95cbcbd8b21dd14480345c666c910e", null ],
+    [ "TFA9XXX_SetPlayChannel", "a00055.html#gad89435440dc3d13a138e90f74ad19e49", null ],
+    [ "TFA9XXX_Start", "a00055.html#ga65aadcf752d494bd7bf86ad1251f6f54", null ],
+    [ "TFA9XXX_Stop", "a00055.html#ga960e6ea9ce122c491d819724f5ceae81", null ],
+    [ "TFA9XXX_Reset", "a00055.html#ga581706ea376e83e64316a85852366350", null ],
+    [ "TFA9XXX_CheckCalibrationStatus", "a00055.html#gac0f159e9905d04866437d811945b9661", null ],
+    [ "TFA9XXX_CalibrateSpeakerBoost", "a00055.html#ga69cafb92c874f088adc49435ade131e4", null ],
+    [ "TFA9XXX_HardcodeCalibrationValue", "a00055.html#ga358370d991c178bdeae34084ff5e8e10", null ],
+    [ "TFA9XXX_GetStatus", "a00055.html#gaa86302a2371b173e8646bb612eb9440f", null ],
+    [ "TFA9XXX_ConvertErrorCode", "a00055.html#gaa1c7a1a13116c62b258b63366850e318", null ]
 ];

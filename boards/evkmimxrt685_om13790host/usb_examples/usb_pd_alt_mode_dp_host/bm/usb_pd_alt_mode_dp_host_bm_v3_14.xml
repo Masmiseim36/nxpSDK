@@ -40,6 +40,7 @@
     <definition extID="component.osa_interface.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
     <definition extID="platform.drivers.inputmux_connections.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -48,7 +49,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" device_core="cm33_MIMXRT685S" dependency="platform.drivers.mrt.MIMXRT685S middleware.usb.pd.phy.ptn5110.MIMXRT685S component.osa_bm.MIMXRT685S middleware.baremetal.MIMXRT685S middleware.usb.pd.MIMXRT685S middleware.usb.pd.altmode.MIMXRT685S component.flexcomm_i2c_adapter.MIMXRT685S component.lists.MIMXRT685S component.lpc_gpio_adapter.MIMXRT685S component.mrt_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.usart_adapter.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flash_config.evkmimxrt685.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.pint.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.utilities.assert.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.osa.MIMXRT685S middleware.usb_pd.config_header.MIMXRT685S middleware.usb_pd.common_header.MIMXRT685S component.osa_interface.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S" category="usb_examples">
+  <example id="evkmimxrt685_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" device_core="cm33_MIMXRT685S" dependency="platform.drivers.mrt.MIMXRT685S middleware.usb.pd.phy.ptn5110.MIMXRT685S component.osa_bm.MIMXRT685S middleware.baremetal.MIMXRT685S middleware.usb.pd.MIMXRT685S middleware.usb.pd.altmode.MIMXRT685S component.flexcomm_i2c_adapter.MIMXRT685S component.lists.MIMXRT685S component.lpc_gpio_adapter.MIMXRT685S component.mrt_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.usart_adapter.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.flash_config.evkmimxrt685.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.pint.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.utilities.assert.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S component.osa.MIMXRT685S middleware.usb_pd.config_header.MIMXRT685S middleware.usb_pd.common_header.MIMXRT685S component.osa_interface.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S utility.str.MIMXRT685S" category="usb_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -71,6 +72,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>MCUXPRESSO_SDK</value>
           <value>SDK_OS_BAREMETAL</value>
+          <value>TIMER_PORT_TYPE_MRT=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
@@ -86,7 +88,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>

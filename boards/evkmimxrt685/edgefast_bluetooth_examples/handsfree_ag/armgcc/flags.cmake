@@ -28,7 +28,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
 ")
 SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     ${CMAKE_C_FLAGS_FLASH_DEBUG} \
-    -include ${ProjDirPath}/../app_config.h \
+    -include ${ProjDirPath}/../app_bluetooth_config.h \
     -DDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DCPU_MIMXRT685SFVKB_cm33 \
@@ -38,9 +38,6 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DGATT_CLIENT \
     -DGATT_DB \
     -DFSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0 \
-    -DSDK_COMPONENT_INTEGRATION=1 \
-    -DgNvStorageIncluded_d=1 \
-    -DgNvTableKeptInRam_d=1 \
     -DIOT_WIFI_ENABLE_SAVE_NETWORK=1 \
     -DFSL_OSA_MAIN_FUNC_ENABLE=0 \
     -DHAL_UART_ADAPTER_FIFO=1 \
@@ -51,7 +48,7 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DSDK_OS_FREE_RTOS \
     -DFSL_OSA_TASK_ENABLE=1 \
     -DSDIO_ENABLED=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1 \
     -DCONFIG_BT_BREDR=1 \
     -DCONFIG_BT_PERIPHERAL=1 \
     -DCONFIG_BT_CENTRAL=1 \
@@ -61,20 +58,24 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DSHELL_TASK_STACK_SIZE=2048 \
     -DSHELL_TASK_PRIORITY=configMAX_PRIORITIES-2 \
     -DLPUART_RING_BUFFER_SIZE=1024U \
-    -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT685SFVKB \
     -DLFS_NO_INTRINSICS=1 \
     -DLFS_NO_ERROR=1 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DBOARD_USE_CODEC=1 \
     -DCODEC_WM8904_ENABLE \
+    -DSDK_I3C_BASED_COMPONENT_USED=1 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DLOG_ENABLE_ASYNC_MODE=1 \
     -DLOG_MAX_ARGUMENT_COUNT=10 \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
-    -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_IGMP=1 \
+    -D_XOPEN_SOURCE=500 \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -85,7 +86,6 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -96,7 +96,7 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
 ")
 SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     ${CMAKE_C_FLAGS_FLASH_RELEASE} \
-    -include ${ProjDirPath}/../app_config.h \
+    -include ${ProjDirPath}/../app_bluetooth_config.h \
     -DNDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DCPU_MIMXRT685SFVKB_cm33 \
@@ -106,9 +106,6 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DGATT_CLIENT \
     -DGATT_DB \
     -DFSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0 \
-    -DSDK_COMPONENT_INTEGRATION=1 \
-    -DgNvStorageIncluded_d=1 \
-    -DgNvTableKeptInRam_d=1 \
     -DIOT_WIFI_ENABLE_SAVE_NETWORK=1 \
     -DFSL_OSA_MAIN_FUNC_ENABLE=0 \
     -DHAL_UART_ADAPTER_FIFO=1 \
@@ -119,7 +116,7 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DSDK_OS_FREE_RTOS \
     -DFSL_OSA_TASK_ENABLE=1 \
     -DSDIO_ENABLED=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1 \
     -DCONFIG_BT_BREDR=1 \
     -DCONFIG_BT_PERIPHERAL=1 \
     -DCONFIG_BT_CENTRAL=1 \
@@ -129,20 +126,24 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DSHELL_TASK_STACK_SIZE=2048 \
     -DSHELL_TASK_PRIORITY=configMAX_PRIORITIES-2 \
     -DLPUART_RING_BUFFER_SIZE=1024U \
-    -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT685SFVKB \
     -DLFS_NO_INTRINSICS=1 \
     -DLFS_NO_ERROR=1 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DBOARD_USE_CODEC=1 \
     -DCODEC_WM8904_ENABLE \
+    -DSDK_I3C_BASED_COMPONENT_USED=1 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DLOG_ENABLE_ASYNC_MODE=1 \
     -DLOG_MAX_ARGUMENT_COUNT=10 \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
-    -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_IGMP=1 \
+    -D_XOPEN_SOURCE=500 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -152,7 +153,6 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -166,8 +166,8 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT685SFVKB_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -178,7 +178,6 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -191,8 +190,8 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT685SFVKB_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -202,7 +201,6 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -218,7 +216,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -235,7 +232,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld -static \
+    -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
@@ -244,7 +241,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -261,5 +257,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld -static \
+    -T\"${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld\" -static \
 ")

@@ -54,7 +54,7 @@ extern void BOARD_InitHardware(void);
  * Code
  ******************************************************************************/
 #if defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || \
-    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
+    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW612_BOARD_MURATA_2EL_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

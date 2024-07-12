@@ -36,9 +36,12 @@
     <definition extID="middleware.tfm.ns.mimxrt685audevk.MIMXRT685S"/>
     <definition extID="CMSIS_Device_API_OSTick.MIMXRT685S"/>
     <definition extID="CMSIS_Device_API_RTOS2.MIMXRT685S"/>
+    <definition extID="middleware.psatest.ns.tgt_dev_apis_nxp.MIMXRT685S"/>
+    <definition extID="middleware.psatest.ns.disable_weak_ecc_r1_curve_tests.MIMXRT685S"/>
     <definition extID="middleware.psatest.ns.t_cose.MIMXRT685S"/>
     <definition extID="middleware.tfm.qcbor.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -47,7 +50,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_tfm_psatest_ns" name="tfm_psatest_ns" device_core="cm33_MIMXRT685S" dependency="middleware.tfm.usart.MIMXRT685S middleware.tfm.ns.profile_large.MIMXRT685S middleware.tfm.ns.MIMXRT685S middleware.psatest.ns.MIMXRT685S middleware.psatest.ns.initial_attestation.MIMXRT685S middleware.psatest.ns.crypto.profile_large.MIMXRT685S middleware.psatest.ns.crypto.MIMXRT685S middleware.psatest.ns.internal_trusted_storage.MIMXRT685S middleware.psatest.ns.protected_storage.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.tfmtests.ns.MIMXRT685S CMSIS_RTOS2_NonSecure.MIMXRT685S middleware.tfm.ns.mimxrt685audevk.MIMXRT685S CMSIS_Device_API_OSTick.MIMXRT685S CMSIS_Device_API_RTOS2.MIMXRT685S middleware.psatest.ns.t_cose.MIMXRT685S middleware.tfm.qcbor.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" linked_projects="mimxrt685audevk_tfm_psatest_s" category="tfm_examples">
+  <example id="mimxrt685audevk_tfm_psatest_ns" name="tfm_psatest_ns" device_core="cm33_MIMXRT685S" dependency="middleware.tfm.usart.MIMXRT685S middleware.tfm.ns.profile_large.MIMXRT685S middleware.tfm.ns.MIMXRT685S middleware.psatest.ns.MIMXRT685S middleware.psatest.ns.initial_attestation.MIMXRT685S middleware.psatest.ns.crypto.profile_large.MIMXRT685S middleware.psatest.ns.crypto.MIMXRT685S middleware.psatest.ns.internal_trusted_storage.MIMXRT685S middleware.psatest.ns.protected_storage.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.tfmtests.ns.MIMXRT685S CMSIS_RTOS2_NonSecure.MIMXRT685S middleware.tfm.ns.mimxrt685audevk.MIMXRT685S CMSIS_Device_API_OSTick.MIMXRT685S CMSIS_Device_API_RTOS2.MIMXRT685S middleware.psatest.ns.tgt_dev_apis_nxp.MIMXRT685S middleware.psatest.ns.disable_weak_ecc_r1_curve_tests.MIMXRT685S middleware.psatest.ns.t_cose.MIMXRT685S middleware.tfm.qcbor.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S utility.str.MIMXRT685S" linked_projects="mimxrt685audevk_tfm_psatest_s" category="tfm_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -59,7 +62,7 @@
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <buildSteps>
-          <preBuildStep>arm-none-eabi-gcc -E -P -xc -I../tf-m/platform/ext/target/nxp/mimxrt685audevk/partition -I../tf-m/platform/ext/common ../tf-m/platform/ext/common/gcc/tfm_common_ns.ld -o ../tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld</preBuildStep>
+          <preBuildStep>arm-none-eabi-gcc -E -P -xc -I ../tf-m/platform/ext/target/nxp/mimxrt685audevk/partition -I ../tf-m/platform/ext/common ../tf-m/platform/ext/common/gcc/tfm_common_ns.ld -o ../tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld</preBuildStep>
         </buildSteps>
         <option id="com.crt.advproject.link.nonsecureobject" type="stringList">
           <value>${workspace_loc:/${linked:mimxrt685audevk_tfm_psatest_s}/${config_name:${ProjName}}/${linked:mimxrt685audevk_tfm_psatest_s}_CMSE_lib.o}</value>
@@ -77,7 +80,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-D __SEMIHOST_HARDFAULT_DISABLE -Wno-unused-variable -Wno-unused-but-set-variable -Wno-return-type -Wno-bool-operation -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-D __SEMIHOST_HARDFAULT_DISABLE -Wno-unused-variable -Wno-unused-but-set-variable -Wno-return-type -Wno-bool-operation -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -112,6 +115,7 @@
           <value>PS_TEST</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>TARGET_CONFIG_HEADER_FILE='"config_tfm_target.h"'</value>
+          <value>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</value>
           <value>QCBOR_DISABLE_FLOAT_HW_USE</value>
           <value>USEFULBUF_DISABLE_ALL_FLOAT</value>
           <value>QCBOR_DISABLE_PREFERRED_FLOAT</value>

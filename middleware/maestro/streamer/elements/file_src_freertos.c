@@ -9,7 +9,14 @@
  * @brief  this file implement file source element.
  */
 
+#if defined(__REDLIB__) || defined(__ICCARM__)
 #include <string.h>
+#elif defined(__NEWLIB__) || defined(__GNUC__)
+#include <strings.h>
+#else
+#error "Standard library set not defined"
+#endif
+
 #include <stdio.h>
 
 #include "audio_cfg.h"

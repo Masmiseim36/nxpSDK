@@ -271,7 +271,7 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
         device_config.paudio_framework_buffer[i] = dsp_xaf_malloc(AUDIO_FRMWK_BUF_SIZE, i);
     }
     device_config.paudio_component_buffer[XAF_MEM_ID_COMP] = dsp_xaf_malloc(AUDIO_COMP_BUF_SIZE, XAF_MEM_ID_COMP);
-    for (int i = XAF_MEM_ID_COMP_FAST; i <= XAF_MEM_ID_COMP_MAX; i++)
+    for (int i = XAF_MEM_ID_COMP + 1; i <= XAF_MEM_ID_COMP_MAX; i++)
     {
         device_config.audio_component_buffer_size[i] = AUDIO_COMP_FAST_BUF_SIZE;
         device_config.paudio_component_buffer[i] = dsp_xaf_malloc(AUDIO_COMP_FAST_BUF_SIZE, i);

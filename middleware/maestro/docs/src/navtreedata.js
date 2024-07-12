@@ -25,96 +25,178 @@
 var NAVTREE =
 [
   [ "Maestro Audio Framework", "index.html", [
-    [ "Getting started with Maestro framework", "index.html", [
-      [ "Introduction", "index.html#autotoc_md1", null ],
-      [ "Supported examples", "index.html#autotoc_md2", [
-        [ "maestro_playback", "index.html#autotoc_md3", null ],
-        [ "maestro_record", "index.html#autotoc_md4", null ],
-        [ "maestro_usb_mic", "index.html#autotoc_md5", null ],
-        [ "maestro_usb_speaker", "index.html#autotoc_md6", null ],
-        [ "maestro_sync", "index.html#autotoc_md7", null ]
-      ] ],
-      [ "Example applications overview", "index.html#autotoc_md8", null ],
-      [ "Commands", "index.html#autotoc_md9", [
-        [ "version", "index.html#autotoc_md10", null ],
-        [ "file", "index.html#autotoc_md11", null ],
-        [ "record_mic", "index.html#autotoc_md12", null ],
-        [ "opus encode", "index.html#autotoc_md13", null ],
-        [ "usb_mic", "index.html#autotoc_md14", null ],
-        [ "usb_speaker", "index.html#autotoc_md15", null ],
-        [ "start", "index.html#autotoc_md16", null ]
-      ] ],
-      [ "Configuration options", "index.html#autotoc_md17", null ],
-      [ "Supported features", "index.html#autotoc_md18", [
-        [ "Codecs", "index.html#autotoc_md19", null ],
-        [ "VIT", "index.html#autotoc_md20", null ],
-        [ "VoiceSeeker", "index.html#autotoc_md21", null ],
-        [ "SSRC", "index.html#autotoc_md22", null ],
-        [ "ASRC", "index.html#autotoc_md23", null ]
-      ] ]
-    ] ],
+    [ "Getting started with Maestro framework", "index.html", "index" ],
     [ "Maestro Audio Framework Programmer's Guide", "md_ProgrammersGuide.html", [
-      [ "Introduction", "md_ProgrammersGuide.html#autotoc_md25", null ],
-      [ "Architecture overview", "md_ProgrammersGuide.html#autotoc_md26", null ],
-      [ "Pipeline", "md_ProgrammersGuide.html#autotoc_md27", null ],
-      [ "Elements and Pads", "md_ProgrammersGuide.html#autotoc_md28", null ],
-      [ "Internal communication", "md_ProgrammersGuide.html#autotoc_md29", null ],
-      [ "Decoders and encoders", "md_ProgrammersGuide.html#autotoc_md30", [
-        [ "Common codec interface", "md_ProgrammersGuide.html#autotoc_md31", null ],
-        [ "Using the CCI to interface with Metadata", "md_ProgrammersGuide.html#autotoc_md32", null ],
-        [ "Using the CCI to interface with Decoders", "md_ProgrammersGuide.html#autotoc_md33", null ],
-        [ "Adding new decoders to the CCI", "md_ProgrammersGuide.html#autotoc_md34", null ],
-        [ "Common encoder interface", "md_ProgrammersGuide.html#autotoc_md35", null ]
+      [ "Introduction", "md_ProgrammersGuide.html#autotoc_md5", null ],
+      [ "Architecture overview", "md_ProgrammersGuide.html#autotoc_md6", null ],
+      [ "Pipeline", "md_ProgrammersGuide.html#autotoc_md7", null ],
+      [ "Elements", "md_ProgrammersGuide.html#autotoc_md8", [
+        [ "Add a new element type", "md_ProgrammersGuide.html#autotoc_md9", null ],
+        [ "Add a new element index", "md_ProgrammersGuide.html#autotoc_md10", null ]
       ] ],
-      [ "Maestro performance", "md_ProgrammersGuide.html#autotoc_md36", [
-        [ "Memory information", "md_ProgrammersGuide.html#autotoc_md37", null ],
-        [ "CPU usage", "md_ProgrammersGuide.html#autotoc_md38", null ]
+      [ "Pads", "md_ProgrammersGuide.html#autotoc_md11", null ],
+      [ "Internal communication", "md_ProgrammersGuide.html#autotoc_md12", null ],
+      [ "Decoders and encoders", "md_ProgrammersGuide.html#autotoc_md13", [
+        [ "Common codec interface", "md_ProgrammersGuide.html#autotoc_md14", null ],
+        [ "Using the CCI to interface with Metadata", "md_ProgrammersGuide.html#autotoc_md15", null ],
+        [ "Using the CCI to interface with Decoders", "md_ProgrammersGuide.html#autotoc_md16", null ],
+        [ "Adding new decoders to the CCI", "md_ProgrammersGuide.html#autotoc_md17", null ],
+        [ "Common encoder interface", "md_ProgrammersGuide.html#autotoc_md18", null ]
       ] ],
-      [ "Opus codec", "md_ProgrammersGuide.html#autotoc_md39", null ],
-      [ "Opus file", "md_ProgrammersGuide.html#autotoc_md40", null ]
+      [ "Maestro performance", "md_ProgrammersGuide.html#autotoc_md19", [
+        [ "Memory information", "md_ProgrammersGuide.html#autotoc_md20", null ],
+        [ "CPU usage", "md_ProgrammersGuide.html#autotoc_md21", null ]
+      ] ],
+      [ "Opus codec", "md_ProgrammersGuide.html#autotoc_md22", null ],
+      [ "Opus file", "md_ProgrammersGuide.html#autotoc_md23", null ]
     ] ],
     [ "CEI encoder", "md_CeiEncoder.html", [
-      [ "Header files", "md_CeiEncoder.html#autotoc_md42", null ],
-      [ "Instantiating the element", "md_CeiEncoder.html#autotoc_md43", null ],
-      [ "Element properties", "md_CeiEncoder.html#autotoc_md44", null ],
-      [ "CEI definition - implementing your own encoder", "md_CeiEncoder.html#autotoc_md45", null ]
+      [ "Header files", "md_CeiEncoder.html#autotoc_md25", null ],
+      [ "Instantiating the element", "md_CeiEncoder.html#autotoc_md26", null ],
+      [ "Element properties", "md_CeiEncoder.html#autotoc_md27", null ],
+      [ "CEI definition - implementing your own encoder", "md_CeiEncoder.html#autotoc_md28", null ]
     ] ],
     [ "AAC decoder", "aacdec_start.html", [
-      [ "AAC decoder features", "aacdec_start.html#autotoc_md46", null ],
-      [ "Specification and reference", "aacdec_start.html#autotoc_md47", null ],
-      [ "Performance", "aacdec_start.html#autotoc_md48", [
-        [ "Memory information", "aacdec_start.html#autotoc_md49", null ],
-        [ "CPU usage", "aacdec_start.html#autotoc_md50", null ]
+      [ "AAC decoder features", "aacdec_start.html#autotoc_md29", null ],
+      [ "Specification and reference", "aacdec_start.html#autotoc_md30", null ],
+      [ "Performance", "aacdec_start.html#autotoc_md31", [
+        [ "Memory information", "aacdec_start.html#autotoc_md32", null ],
+        [ "CPU usage", "aacdec_start.html#autotoc_md33", null ]
       ] ]
     ] ],
     [ "FLAC decoder", "flacdec_start.html", [
-      [ "FLAC decoder features", "flacdec_start.html#autotoc_md51", null ],
-      [ "Specification and reference", "flacdec_start.html#autotoc_md52", [
-        [ "Official website", "flacdec_start.html#autotoc_md53", null ],
-        [ "Inbound licensing", "flacdec_start.html#autotoc_md54", null ]
+      [ "FLAC decoder features", "flacdec_start.html#autotoc_md34", null ],
+      [ "Specification and reference", "flacdec_start.html#autotoc_md35", [
+        [ "Official website", "flacdec_start.html#autotoc_md36", null ],
+        [ "Inbound licensing", "flacdec_start.html#autotoc_md37", null ]
       ] ],
-      [ "Performance", "flacdec_start.html#autotoc_md55", [
-        [ "Memory information", "flacdec_start.html#autotoc_md56", null ],
-        [ "CPU usage", "flacdec_start.html#autotoc_md57", null ],
-        [ "Following test cases are performed:", "flacdec_start.html#autotoc_md58", null ]
+      [ "Performance", "flacdec_start.html#autotoc_md38", [
+        [ "Memory information", "flacdec_start.html#autotoc_md39", null ],
+        [ "CPU usage", "flacdec_start.html#autotoc_md40", null ],
+        [ "Following test cases are performed:", "flacdec_start.html#autotoc_md41", null ]
       ] ]
     ] ],
     [ "MP3 decoder", "mp3dec_start.html", [
-      [ "MP3 decoder features", "mp3dec_start.html#autotoc_md59", null ],
-      [ "Performance", "mp3dec_start.html#autotoc_md60", [
-        [ "Memory information", "mp3dec_start.html#autotoc_md61", null ],
-        [ "CPU usage", "mp3dec_start.html#autotoc_md62", null ]
+      [ "MP3 decoder features", "mp3dec_start.html#autotoc_md42", null ],
+      [ "Performance", "mp3dec_start.html#autotoc_md43", [
+        [ "Memory information", "mp3dec_start.html#autotoc_md44", null ],
+        [ "CPU usage", "mp3dec_start.html#autotoc_md45", null ]
       ] ]
     ] ],
     [ "WAV decoder", "md_wavdec.html", [
-      [ "WAV decoder features", "md_wavdec.html#autotoc_md64", null ],
-      [ "Performance", "md_wavdec.html#autotoc_md65", [
-        [ "Memory information", "md_wavdec.html#autotoc_md66", null ],
-        [ "CPU usage", "md_wavdec.html#autotoc_md67", null ],
-        [ "Following test cases were performed:", "md_wavdec.html#autotoc_md68", null ]
+      [ "WAV decoder features", "md_wavdec.html#autotoc_md47", null ],
+      [ "Performance", "md_wavdec.html#autotoc_md48", [
+        [ "Memory information", "md_wavdec.html#autotoc_md49", null ],
+        [ "CPU usage", "md_wavdec.html#autotoc_md50", null ],
+        [ "Following test cases were performed:", "md_wavdec.html#autotoc_md51", null ]
       ] ]
     ] ],
-    [ "Modules", "modules.html", "modules" ],
+    [ "Maestro playback example", "md_maestro__playback.html", [
+      [ "Table of content", "md_maestro__playback.html#autotoc_md53", null ],
+      [ "Overview", "md_maestro__playback.html#maestro-playback-overview", null ],
+      [ "Hardware requirements", "md_maestro__playback.html#maestro-playback-HW-requirements", null ],
+      [ "Hardware modifications", "md_maestro__playback.html#maestro-playback-HW-modifications", null ],
+      [ "Preparation", "md_maestro__playback.html#maestro-playback-preparation", null ],
+      [ "Running the demo", "md_maestro__playback.html#maestro-playback-running-the-demo", null ],
+      [ "Example configuration", "md_maestro__playback.html#maestro-playback-example-configuration", null ],
+      [ "Functionality", "md_maestro__playback.html#maestro-playback-functionality", null ],
+      [ "States", "md_maestro__playback.html#maestro-playback-states", null ],
+      [ "Commands in detail", "md_maestro__playback.html#maestro-playback-commands-in-detail", [
+        [ "help, version", "md_maestro__playback.html#maestro-playback-help-version", null ],
+        [ "file stop", "md_maestro__playback.html#file-stop", null ],
+        [ "file pause", "md_maestro__playback.html#file-pause", null ],
+        [ "file volume <volume>", "md_maestro__playback.html#file-volume-volume", null ],
+        [ "file seek <seek_time>", "md_maestro__playback.html#file-seek-seek_time", null ],
+        [ "file play <filename>", "md_maestro__playback.html#file-play-filename", null ],
+        [ "file list", "md_maestro__playback.html#file-list", null ],
+        [ "file info", "md_maestro__playback.html#file-info", null ]
+      ] ],
+      [ "Processing Time", "md_maestro__playback.html#maestro-playback-processing-time", null ]
+    ] ],
+    [ "Maestro record example", "md_maestro__record.html", [
+      [ "Table of content", "md_maestro__record.html#autotoc_md55", null ],
+      [ "Overview", "md_maestro__record.html#maestro-record-overview", null ],
+      [ "Hardware requirements", "md_maestro__record.html#maestro-record-HW-requirements", null ],
+      [ "Hardware modifications", "md_maestro__record.html#maestro-record-HW-modifications", null ],
+      [ "Preparation", "md_maestro__record.html#maestro-record-preparation", null ],
+      [ "Running the demo", "md_maestro__record.html#maestro-record-running-the-demo", null ],
+      [ "Example configuration", "md_maestro__record.html#maestro-record-example-configuration", null ],
+      [ "Functionality", "md_maestro__record.html#maestro-record-functionality", null ],
+      [ "States", "md_maestro__record.html#maestro-record-states", null ],
+      [ "Commands in detail", "md_maestro__record.html#maestro-record-commands-in-detail", [
+        [ "help, version", "md_maestro__record.html#maestro-record-help-version", null ],
+        [ "record_mic audio <time>", "md_maestro__record.html#maestro-record-record-mic-audio", null ],
+        [ "record_mic file <time> ; record_mic <file_name> <time>", "md_maestro__record.html#maestro-record-record-mic-file", null ],
+        [ "record_mic vit <time> <language>", "md_maestro__record.html#maestro-record-record-mic-vit", null ],
+        [ "opus_encode", "md_maestro__record.html#maestro-record-opus_encode", null ]
+      ] ],
+      [ "Processing Time", "md_maestro__record.html#maestro-record-processing-time", null ]
+    ] ],
+    [ "Maestro USB microphone example", "md_maestro__usb__mic.html", [
+      [ "Table of content", "md_maestro__usb__mic.html#autotoc_md57", null ],
+      [ "Overview", "md_maestro__usb__mic.html#maestro-usb-mic-overview", null ],
+      [ "Hardware requirements", "md_maestro__usb__mic.html#maestro-usb-mic-HW-requirements", null ],
+      [ "Hardware modifications", "md_maestro__usb__mic.html#maestro-usb-mic-HW-modifications", null ],
+      [ "Preparation", "md_maestro__usb__mic.html#maestro-usb-mic-preparation", null ],
+      [ "Running the demo", "md_maestro__usb__mic.html#maestro-usb-mic-running-the-demo", null ],
+      [ "Example configuration", "md_maestro__usb__mic.html#maestro-usb-mic-example-configuration", null ],
+      [ "Functionality", "md_maestro__usb__mic.html#maestro-usb-mic-functionality", null ],
+      [ "States", "md_maestro__usb__mic.html#maestro-usb-mic-states", null ],
+      [ "Commands in detail", "md_maestro__usb__mic.html#maestro-usb-mic-commands-in-detail", [
+        [ "help, version", "md_maestro__usb__mic.html#maestro-usb-mic-help-version", null ],
+        [ "usb_mic <seconds>", "md_maestro__usb__mic.html#maestro-usb-mic-usb-mic", null ]
+      ] ]
+    ] ],
+    [ "Maestro USB speaker example", "md_maestro__usb__speaker.html", [
+      [ "Table of content", "md_maestro__usb__speaker.html#autotoc_md59", null ],
+      [ "Overview", "md_maestro__usb__speaker.html#maestro-usb-speaker-overview", null ],
+      [ "Hardware requirements", "md_maestro__usb__speaker.html#maestro-usb-speaker-HW-requirements", null ],
+      [ "Hardware modifications", "md_maestro__usb__speaker.html#maestro-usb-speaker-HW-modifications", null ],
+      [ "Preparation", "md_maestro__usb__speaker.html#maestro-usb-speaker-preparation", null ],
+      [ "Running the demo", "md_maestro__usb__speaker.html#maestro-usb-speaker-running-the-demo", null ],
+      [ "Example configuration", "md_maestro__usb__speaker.html#maestro-usb-speaker-example-configuration", null ],
+      [ "Functionality", "md_maestro__usb__speaker.html#maestro-usb-speaker-functionality", null ],
+      [ "States", "md_maestro__usb__speaker.html#maestro-usb-speaker-states", null ],
+      [ "Commands in detail", "md_maestro__usb__speaker.html#maestro-usb-speaker-commands-in-detail", [
+        [ "help, version", "md_maestro__usb__speaker.html#maestro-usb-speaker-help-version", null ],
+        [ "usb_speaker <seconds>", "md_maestro__usb__speaker.html#maestro-usb-speaker-usb-speaker", null ]
+      ] ]
+    ] ],
+    [ "Maestro sync example", "md_maestro__sync.html", [
+      [ "Table of content", "md_maestro__sync.html#autotoc_md61", null ],
+      [ "Overview", "md_maestro__sync.html#maestro-sync-overview", null ],
+      [ "Hardware requirements", "md_maestro__sync.html#maestro-sync-HW-requirements", null ],
+      [ "Hardware modifications", "md_maestro__sync.html#maestro-sync-HW-modifications", null ],
+      [ "Preparation", "md_maestro__sync.html#maestro-sync-preparation", null ],
+      [ "Running the demo", "md_maestro__sync.html#maestro-sync-running-the-demo", null ],
+      [ "Example configuration", "md_maestro__sync.html#maestro-sync-example-configuration", null ],
+      [ "Functionality", "md_maestro__sync.html#maestro-sync-functionality", null ],
+      [ "States", "md_maestro__sync.html#maestro-sync-states", null ],
+      [ "Commands in detail", "md_maestro__sync.html#maestro-sync-commands-in-detail", [
+        [ "help, version", "md_maestro__sync.html#maestro-sync-help-version", null ],
+        [ "start [nosdcard]", "md_maestro__sync.html#maestro-sync-start", null ],
+        [ "stop", "md_maestro__sync.html#maestro-sync-stop", null ],
+        [ "debug [on|off]", "md_maestro__sync.html#maestro-sync-debug-on-off", null ]
+      ] ]
+    ] ],
+    [ "Supported features", "md_supported__features.html", [
+      [ "Decoders", "md_supported__features.html#autotoc_md63", null ],
+      [ "Encoders", "md_supported__features.html#autotoc_md64", null ],
+      [ "Sample rate converters", "md_supported__features.html#autotoc_md65", null ],
+      [ "Additional libraries", "md_supported__features.html#autotoc_md66", null ]
+    ] ],
+    [ "Processing Time", "md_processing__time.html", [
+      [ "Table of content", "md_processing__time.html#autotoc_md68", null ],
+      [ "Maestro playback example", "md_processing__time.html#maestro-playback-times", [
+        [ "Time on each element", "md_processing__time.html#autotoc_md69", null ]
+      ] ],
+      [ "Maestro record example", "md_processing__time.html#maestro-record-times", [
+        [ "Pipeline Microphone -> Speaker", "md_processing__time.html#autotoc_md70", null ],
+        [ "Pipeline Microphone -> VIT", "md_processing__time.html#autotoc_md71", null ],
+        [ "Pipeline Microphone -> Voice seeker -> VIT", "md_processing__time.html#autotoc_md72", null ]
+      ] ]
+    ] ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Fields", "functions.html", [
@@ -141,15 +223,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "LVC__Types_8h.html",
-"audio__sink__pcmrtos_8h.html#a043254bd941a12bd9c487f39e3d74990",
-"decoder_8h.html#a10aab45d4e85d74dffe02b5e0b27ded2",
-"globals_defs_x.html",
-"pad_8h.html#a02291801821c51de06e39c5136db8905aebad261a2b86b1b8fd42cf3aa8ac36c6",
-"streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958",
-"streamer__element__properties_8h.html#a4a97f3d5b16e42e0b55344c550cd0091",
-"structElementNetbufSrc.html",
-"struct__ElementAudioSrc.html#a24a53fd05ab8035693f047d5bc5a63cf",
-"vit__sink_8c.html#abcd2aecfcdc5e56cf91c840acefb5bf9"
+"audio__sink__pcmrtos_8h.html#a84a057191882606dee264c48adeb6b3c",
+"decoder_8h.html#ac0c171bf12339214c64a6380bff78d05",
+"globals_defs_t.html",
+"mem__sink_8h.html#a03e600cb36c8500d5b9eb7f92a13b637",
+"streamer_8h.html#a023c32dedd5015febfa0c1985a193057",
+"streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779baca568b1f38786076bac003834d2d34aee9",
+"structElementTypeLookup.html#a09881986a80dd864476e3085ffe51c02",
+"struct__ElementDecoder.html#a41e210f4b76e8e6d7900e2746e8ebc68"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

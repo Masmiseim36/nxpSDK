@@ -8,7 +8,7 @@ var streamer__api_8h =
     [ "StreamData", "unionStreamData.html", "unionStreamData" ],
     [ "ELEMENT_PROPERTY_T", "structELEMENT__PROPERTY__T.html", "structELEMENT__PROPERTY__T" ],
     [ "STREAMER_MSG_T", "structSTREAMER__MSG__T.html", "structSTREAMER__MSG__T" ],
-    [ "PipelineElements", "structPipelineElements.html", "structPipelineElements" ],
+    [ "PipelineElements", "structPipelineElements.html", null ],
     [ "STREAMER_CREATE_PARAM", "structSTREAMER__CREATE__PARAM.html", "structSTREAMER__CREATE__PARAM" ],
     [ "STREAMER_T", "structSTREAMER__T.html", "structSTREAMER__T" ],
     [ "AF_MESSAGE_SECTION", "streamer__api_8h.html#a6f251974fbcf31c9df41a48f5699b62d", null ],
@@ -117,9 +117,9 @@ var streamer__api_8h =
       [ "TYPE_ELEMENT_FILE_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dab6b1c1da223342164506f3501e978d54", null ],
       [ "TYPE_ELEMENT_MEM_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da5d4fe0f9953a87959aab1094e6711c56", null ],
       [ "TYPE_ELEMENT_AUDIO_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da291eb382314566b4aab19cd040e02513", null ],
+      [ "TYPE_ELEMENT_VIT_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da9fd2d8fc241df9bf2504db685bd6bf16", null ],
       [ "TYPE_ELEMENT_DECODER", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dafec1ea0e119a9861bc1f8ad738faeed8", null ],
       [ "TYPE_ELEMENT_ENCODER", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da950c35297f578657d4886d6ec6e96305", null ],
-      [ "TYPE_ELEMENT_VIT_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da9fd2d8fc241df9bf2504db685bd6bf16", null ],
       [ "TYPE_ELEMENT_AUDIO_PROC", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da09f1ff8c1ea55f0608dda94ea8e727b4", null ],
       [ "TYPE_ELEMENT_LAST", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da991b415db68b7febac5655489eaafec2", null ]
     ] ],
@@ -205,7 +205,7 @@ var streamer__api_8h =
       [ "IMG_RGB_888", "streamer__api_8h.html#a22f6b18e781e3c412e7d243f7de6aa5caf31e54514cf9fc4002f3d6a4101d2397", null ],
       [ "IMG_GRAYSCALE", "streamer__api_8h.html#a22f6b18e781e3c412e7d243f7de6aa5ca39e6c4bfc9522eeea7cc640aa2e2d62a", null ]
     ] ],
-    [ "streamer_create", "streamer__api_8h.html#a6f0a49e8b4d082d5f07955158aafa24b", null ],
+    [ "streamer_create", "streamer__api_8h.html#a8e5c5812d2b8cf5d099cf6474e157178", null ],
     [ "streamer_destroy", "streamer__api_8h.html#ad3e4e6e9194c94d603c7118a159ad1a6", null ],
     [ "streamer_create_pipeline", "streamer__api_8h.html#a47df6189721825d9fa1484c54f75132f", null ],
     [ "streamer_destroy_pipeline", "streamer__api_8h.html#aa9fd155271d1be13af4f4863426e9644", null ],
@@ -217,6 +217,5 @@ var streamer__api_8h =
     [ "streamer_set_property", "streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8", null ],
     [ "streamer_get_property", "streamer__api_8h.html#a658f8d4402d58c392acaa13f2941f210", null ],
     [ "streamer_set_file", "streamer__api_8h.html#a8a8df893844981d514c96e7531f5b1ec", null ],
-    [ "streamer_set_repeat", "streamer__api_8h.html#a7f33f78b4303617006927d7578be435e", null ],
-    [ "is_element_in_pipeline", "streamer__api_8h.html#af69f0380c59f5c3af1a8fb5947263a2d", null ]
+    [ "streamer_set_repeat", "streamer__api_8h.html#a7f33f78b4303617006927d7578be435e", null ]
 ];

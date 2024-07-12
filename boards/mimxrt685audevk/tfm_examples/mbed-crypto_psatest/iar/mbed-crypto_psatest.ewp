@@ -232,6 +232,7 @@
           <state>CRYPTO</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>CRYPTO_HW_ACCELERATOR</state>
+          <state>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -362,7 +363,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
-          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val</state>
@@ -429,14 +429,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1394,6 +1395,7 @@
           <state>CRYPTO</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>CRYPTO_HW_ACCELERATOR</state>
+          <state>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1524,7 +1526,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
-          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val</state>
@@ -1591,14 +1592,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2555,6 +2557,7 @@
           <state>CRYPTO</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>CRYPTO_HW_ACCELERATOR</state>
+          <state>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2685,7 +2688,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
-          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val</state>
@@ -2752,14 +2754,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3717,6 +3720,7 @@
           <state>CRYPTO</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>CRYPTO_HW_ACCELERATOR</state>
+          <state>DISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3847,7 +3851,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
-          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val</state>
@@ -3914,14 +3917,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060</state>
           <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5239,6 +5243,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_ecp.c</name>
       </file>
       <file>
@@ -5334,9 +5341,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/version_features.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_driver_wrappers.c</name>
-      </file>
     </group>
     <group>
       <name>port</name>
@@ -5354,9 +5358,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_pkc.c</name>
@@ -5384,6 +5385,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/ccm_alt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</name>
       </file>
     </group>
   </group>
@@ -5490,6 +5500,30 @@
       <group>
         <name>targets</name>
         <group>
+          <name>common</name>
+          <group>
+            <name>nspe</name>
+            <group>
+              <name>crypto</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto/pal_crypto_config_check.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto/pal_crypto_intf.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto/pal_crypto_intf.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_weak.c</name>
+            </file>
+          </group>
+        </group>
+        <group>
           <name>tgt_dev_apis_nxp</name>
           <group>
             <name>nspe</name>
@@ -5513,30 +5547,6 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>common</name>
-          <group>
-            <name>nspe</name>
-            <group>
-              <name>crypto</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto/pal_crypto_config_check.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto/pal_crypto_intf.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto/pal_crypto_intf.h</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_common.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_weak.c</name>
             </file>
           </group>
         </group>
@@ -6485,12 +6495,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6504,6 +6508,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

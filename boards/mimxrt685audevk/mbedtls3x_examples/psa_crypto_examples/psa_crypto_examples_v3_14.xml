@@ -30,7 +30,10 @@
     <definition extID="middleware.mbedtls3x.crypto.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.ssl.MIMXRT685S"/>
     <definition extID="middleware.mbedtls3x.x509.MIMXRT685S"/>
+    <definition extID="middleware.mbedtls3x.crypto.no_psa.MIMXRT685S"/>
+    <definition extID="middleware.mbedtls3x.ssl.no_psa.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -39,7 +42,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_psa_crypto_examples" name="psa_crypto_examples" device_core="cm33_MIMXRT685S" dependency="middleware.mbedtls3x.port.rng.MIMXRT685S middleware.mbedtls3x.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.mbedtls3x.port.config.MIMXRT685S platform.drivers.trng.MIMXRT685S middleware.mbedtls3x.template.MIMXRT685S middleware.mbedtls3x.crypto.MIMXRT685S middleware.mbedtls3x.ssl.MIMXRT685S middleware.mbedtls3x.x509.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" category="mbedtls3x_examples">
+  <example id="mimxrt685audevk_psa_crypto_examples" name="psa_crypto_examples" device_core="cm33_MIMXRT685S" dependency="middleware.mbedtls3x.port.rng.MIMXRT685S middleware.mbedtls3x.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager_uart.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.mbedtls3x.port.config.MIMXRT685S platform.drivers.trng.MIMXRT685S middleware.mbedtls3x.template.MIMXRT685S middleware.mbedtls3x.crypto.MIMXRT685S middleware.mbedtls3x.ssl.MIMXRT685S middleware.mbedtls3x.x509.MIMXRT685S middleware.mbedtls3x.crypto.no_psa.MIMXRT685S middleware.mbedtls3x.ssl.no_psa.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S utility.str.MIMXRT685S" category="mbedtls3x_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -71,7 +74,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>

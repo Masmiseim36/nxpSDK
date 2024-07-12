@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Reset Driver</title>
+<title>MCUXpresso SDK API Reference Manual: casper_driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,443 +99,316 @@ $(document).ready(function(){initNavTree('a00212.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Reset Driver</div>  </div>
+<div class="title">casper_driver<div class="ingroups"><a class="el" href="a00211.html">CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>Reset driver supports peripheral reset and system reset. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga28a3ed01771ea33df3ec3259fb3154ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28a3ed01771ea33df3ec3259fb3154ef"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga28a3ed01771ea33df3ec3259fb3154ef">RST_CTL0_PSCCTL0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga28a3ed01771ea33df3ec3259fb3154ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset control registers index. <br/></td></tr>
-<tr class="separator:ga28a3ed01771ea33df3ec3259fb3154ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9348fc709c2c5d8910d7fbd5ccf99d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gaa9348fc709c2c5d8910d7fbd5ccf99d4">ADC_RSTS</a></td></tr>
-<tr class="separator:gaa9348fc709c2c5d8910d7fbd5ccf99d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga892f2b445bef23a57e4733a4ed501af8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga892f2b445bef23a57e4733a4ed501af8"></a>
-typedef <a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">RSTCTL_RSTn_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga892f2b445bef23a57e4733a4ed501af8">reset_ip_name_t</a></td></tr>
-<tr class="memdesc:ga892f2b445bef23a57e4733a4ed501af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">IP reset handle. <br/></td></tr>
-<tr class="separator:ga892f2b445bef23a57e4733a4ed501af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70e0187aa8acac29294311518b8bc3fb"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00212.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga70e0187aa8acac29294311518b8bc3fb">casper_operation_t</a></td></tr>
+<tr class="memdesc:ga70e0187aa8acac29294311518b8bc3fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="#ga70e0187aa8acac29294311518b8bc3fb">More...</a><br/></td></tr>
+<tr class="separator:ga70e0187aa8acac29294311518b8bc3fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb3f0a23391e5fed42912a2775e12d44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb3f0a23391e5fed42912a2775e12d44"></a>
+typedef enum <a class="el" href="a00212.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gaeb3f0a23391e5fed42912a2775e12d44">casper_algo_t</a></td></tr>
+<tr class="memdesc:gaeb3f0a23391e5fed42912a2775e12d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation. <br/></td></tr>
+<tr class="separator:gaeb3f0a23391e5fed42912a2775e12d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gae3d168f47d6605a3911a52ddb8beb212"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">RSTCTL_RSTn_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a8353a74aef2f48a8b6df663507e2b605">kDSP_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 1U, 
+<tr class="memitem:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a> { , <br/>
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baab5a78d5173f379c5149add08650f14c5">kCASPER_OpMul6464Sum</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212adcfe3b83e48c854606f7761638879ee4">kPOWERQUAD_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 8U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baad04571c7b185686fd776a80806d6524d">kCASPER_OpMul6464FullSum</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212af48c1696f1690f7e8a900252a7542f5c">kCASPER_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 9U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baad0fbf9a74a2cb155f031bc3c2caa251f">kCASPER_OpMul6464Reduce</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a7563d03b3f2f23eba46f3fe67826158c">kHASHCRYPT_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 10U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baac73be9788e2abbbf2b011b7a3ad0ee25">kCASPER_OpAdd64</a> = 0x08, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a487c14a0623a04a74c934d000121791f">kPUF_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 11U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa46c350d401f6bb4c3fac8b5ca7df66b1">kCASPER_OpSub64</a> = 0x09, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a2df3a5a9dcd7e74f35459190bf57c894">kRNG_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 12U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baac6ffac25f046cb6c565ce7ffa543dbe0">kCASPER_OpDouble64</a> = 0x0A, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ab1352aeeb88c8af08f220480b337ffea">kFLEXSPI_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 16U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa80db615b18d5ed2319c85a4fe6caa2eb">kCASPER_OpXor64</a> = 0x0B, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ad7f551d59f1bed80602720300fadc9b1">kUSBHS_PHY_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 20U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa007fe02bbaf6b290d2024beaf9618e33">kCASPER_OpRSub64</a> = 0x0C, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a66bc9179d1a1d42a751e1cd6a1496fba">kUSBHS_DEVICE_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 21U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa405a717b5a196ce6f0c5167d43f6e08e">kCASPER_OpShiftLeft32</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ae60a0b9cf9bb55b90ec3ec17f01ebb38">kUSBHS_HOST_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 22U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa61a1a07e6c0adc7b367ef5dc195adc22">kCASPER_OpShiftRight32</a> = 0x11, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a264b6d2b44d8272779beb3f4f59ca200">kUSBHS_SRAM_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 23U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa5b64b93e087ab8b9002440b264cad30d">kCASPER_OpCopy</a> = 0x14, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a75b4e2de528c2c9e135148aa19b9eb66">kSCT_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL0 &lt;&lt; 8) | 24U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa8e860749586cc0a33405334a931f291e">kCASPER_OpRemask</a> = 0x15, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a78104c3d883fb337b0aad645814432ea">kSDIO0_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL1 &lt;&lt; 8) | 2U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baabdc1e3361e8415354fac33b3993b1491">kCASPER_OpFill</a> = 0x16, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212acbe4a68bd2c8e3a7cb2aeee7b7110e9b">kSDIO1_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL1 &lt;&lt; 8) | 3U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa34940e0777601a076a1715f859228f88">kCASPER_OpZero</a> = 0x17, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a3d9e3a422cff539e3f87e471a48d2ae3">kACMP0_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL1 &lt;&lt; 8) | 15U, 
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa9507d1f5ad0b8219f9bd461eeb27752e">kCASPER_OpCompare</a> = 0x18, 
 <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212abf23f3e397cbe11cc7fa59490339d022">kADC0_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL1 &lt;&lt; 8) | 16U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212abfe36f73e8f2d8bf2b25a62c1126b566">kSHSGPIO0_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL1 &lt;&lt; 8) | 24U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ac7dd4646b2a63151d770e61401c70297">kUTICK0_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL2 &lt;&lt; 8) | 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a674ec9ab23327a5c3fd3bb6ca7a4a51b">kWWDT0_RST_SHIFT_RSTn</a> = (RST_CTL0_PSCCTL2 &lt;&lt; 8) | 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a64a579f68d87cacfcf9c743953c18990">kFC0_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ad448522e3de2a7aaa050c569e9f4aa20">kFC1_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 9U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a6276b47257c8b2df796f5a63a9e5c8be">kFC2_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a7bab45b1d69cd3c19b2f062c830def28">kFC3_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 11U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a965f73a37d3b6c27c46b5aa65fb219d5">kFC4_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 12U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a0a23fbb6640edbedd45d43ed3ffeed5b">kFC5_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 13U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a27b59cfc36cdf73127a8fd847c666036">kFC6_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 14U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a070264490781e767c3be41d63e77d210">kFC7_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 15U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a8fd2f61dcb11778722fa37086ec75621">kFC14_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 22U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ad70645daf7199383d14297f0eda649df">kFC15_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 23U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a435b7c66b05953b5b6d1c8a99cd0a56d">kDMIC_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 24U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ae2ba25a07450c21dcab0ca5874c2b8e9">kOSEVENT_TIMER_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL0 &lt;&lt; 8) | 27U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ac6a1b0460ab9a8804895b603e934f695">kHSGPIO0_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a2f4a6701ce46b60c7424cba210ec201e">kHSGPIO1_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a7589eda7f526a5f6e864d78c86663050">kHSGPIO2_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a101b2125299c7a02fd70325fc9a6f3b1">kHSGPIO3_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212aa097b00fd2edb9b3b4396743b65cb014">kHSGPIO4_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a0d2c69b46f445c1bdc15bdacebac8c35">kHSGPIO5_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a4e18ec902e1603c0b5a0516d0d34b04e">kHSGPIO6_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a28a79978343758c85b5cbb57d95707aa">kHSGPIO7_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 7U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a194baa96cd93ef108f2724fa98352387">kCRC_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 16U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212aa8646fecb0c3404c0f557234841dbfa6">kDMAC0_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 23U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a427788cd56e61777b5d958e8ff6a97f8">kDMAC1_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 24U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ada9161e7a05c1d9152aa7e0824c62e1f">kMU_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 28U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212af46a56085f4c8d4de527b07de796694e">kSEMA_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 29U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a9f22a83738dacc8e886411f113e1f4db">kFREQME_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL1 &lt;&lt; 8) | 31U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a118c8642e6a3ab1960b368cde1b322aa">kCT32B0_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ae4addb9fce16042ff47fa3594ba9b1dd">kCT32B1_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a1d00aaf39312131480e6c62669b7005d">kCT32B2_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212adb4b55a3a84d25ed2966c49c09d5878e">kCT32B3_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a140e90e3de42901c9c9177badec793c0">kCT32B4_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ab3ddd6dcdf0a23f85308b58b01b3d133">kMRT0_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212ab2d8ab9a135347336672d3d8b190119f">kWWDT1_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a912d414c16677afe0901bee56e107707">kI3C0_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 16U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212abf49da2e42c2fefb522315a6cec3559a">kPINT_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 30U, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212a34dfade4df0208e52219f2c148e3e7b3">kINPUTMUX_RST_SHIFT_RSTn</a> = (RST_CTL1_PSCCTL2 &lt;&lt; 8) | 31U
+&#160;&#160;<a class="el" href="a00212.html#ggad58a4d789b7a583e7793b2ab3cf698baa10df9918e9754e22740900ecc145c43d">kCASPER_OpCompareFast</a> = 0x19
 <br/>
  }</td></tr>
-<tr class="memdesc:gae3d168f47d6605a3911a52ddb8beb212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for peripheral reset control bits.  <a href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">More...</a><br/></td></tr>
-<tr class="separator:gae3d168f47d6605a3911a52ddb8beb212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER operation.  <a href="a00212.html#gad58a4d789b7a583e7793b2ab3cf698ba">More...</a><br/></td></tr>
+<tr class="separator:gad58a4d789b7a583e7793b2ab3cf698ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ce07816cd7f6acdead0b975579144e0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00212.html#gga4ce07816cd7f6acdead0b975579144e0a8e86050a24be31a0c3e4c7f0fc801045">kCASPER_ECC_P256</a> = 0x01, 
+<br/>
+&#160;&#160;<a class="el" href="a00212.html#gga4ce07816cd7f6acdead0b975579144e0a3fbcdf27711f1c8c8271899ac4aaab89">kCASPER_ECC_P384</a> = 0x02, 
+<br/>
+&#160;&#160;<a class="el" href="a00212.html#gga4ce07816cd7f6acdead0b975579144e0a4a45988d4ca3b926783296346a862ad2">kCASPER_ECC_P521</a> = 0x03
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga4ce07816cd7f6acdead0b975579144e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for CASPER operation.  <a href="a00212.html#ga4ce07816cd7f6acdead0b975579144e0">More...</a><br/></td></tr>
+<tr class="separator:ga4ce07816cd7f6acdead0b975579144e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad9df042d0736710d46dcdd0d52d80f85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gad9df042d0736710d46dcdd0d52d80f85">RESET_SetPeripheralReset</a> (<a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">reset_ip_name_t</a> peripheral)</td></tr>
-<tr class="memdesc:gad9df042d0736710d46dcdd0d52d80f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assert reset to peripheral.  <a href="#gad9df042d0736710d46dcdd0d52d80f85">More...</a><br/></td></tr>
-<tr class="separator:gad9df042d0736710d46dcdd0d52d80f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f9c431d066e700ee9e2ab83c11aaed8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga3f9c431d066e700ee9e2ab83c11aaed8">RESET_ClearPeripheralReset</a> (<a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">reset_ip_name_t</a> peripheral)</td></tr>
-<tr class="memdesc:ga3f9c431d066e700ee9e2ab83c11aaed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear reset to peripheral.  <a href="#ga3f9c431d066e700ee9e2ab83c11aaed8">More...</a><br/></td></tr>
-<tr class="separator:ga3f9c431d066e700ee9e2ab83c11aaed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac33f3428cb55ce07ae67802e5f534ffc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gac33f3428cb55ce07ae67802e5f534ffc">RESET_PeripheralReset</a> (<a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">reset_ip_name_t</a> peripheral)</td></tr>
-<tr class="memdesc:gac33f3428cb55ce07ae67802e5f534ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset peripheral module.  <a href="#gac33f3428cb55ce07ae67802e5f534ffc">More...</a><br/></td></tr>
-<tr class="separator:gac33f3428cb55ce07ae67802e5f534ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1948fcf9c7301808a765341b4fa72a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gaa1948fcf9c7301808a765341b4fa72a8">CASPER_Init</a> (CASPER_Type *base)</td></tr>
+<tr class="memdesc:gaa1948fcf9c7301808a765341b4fa72a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock and disables reset for CASPER peripheral.  <a href="#gaa1948fcf9c7301808a765341b4fa72a8">More...</a><br/></td></tr>
+<tr class="separator:gaa1948fcf9c7301808a765341b4fa72a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga44e39a60b2116a93d89fb2d06ec8c290">CASPER_Deinit</a> (CASPER_Type *base)</td></tr>
+<tr class="memdesc:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables clock for CASPER peripheral.  <a href="#ga44e39a60b2116a93d89fb2d06ec8c290">More...</a><br/></td></tr>
+<tr class="separator:ga44e39a60b2116a93d89fb2d06ec8c290"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaf2dd9adbeea910141dc143654a1065db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gaf2dd9adbeea910141dc143654a1065db">FSL_RESET_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
-<tr class="memdesc:gaf2dd9adbeea910141dc143654a1065db"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset driver version 2.1.3.  <a href="#gaf2dd9adbeea910141dc143654a1065db">More...</a><br/></td></tr>
-<tr class="separator:gaf2dd9adbeea910141dc143654a1065db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38fa16be20cbb761a11dea0791a186fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga38fa16be20cbb761a11dea0791a186fe">FSL_CASPER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 4))</td></tr>
+<tr class="memdesc:ga38fa16be20cbb761a11dea0791a186fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">CASPER driver version.  <a href="#ga38fa16be20cbb761a11dea0791a186fe">More...</a><br/></td></tr>
+<tr class="separator:ga38fa16be20cbb761a11dea0791a186fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaf2dd9adbeea910141dc143654a1065db"></a>
+<a class="anchor" id="ga38fa16be20cbb761a11dea0791a186fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_RESET_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
+          <td class="memname">#define FSL_CASPER_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Version 2.2.4.</p>
+<p>Current version: 2.2.4</p>
+<p>Change log:</p>
+<ul>
+<li>Version 2.0.0<ul>
+<li>Initial version</li>
+</ul>
+</li>
+<li>Version 2.0.1<ul>
+<li>Bug fix KPSDK-24531 double_scalar_multiplication() result may be all zeroes for some specific input</li>
+</ul>
+</li>
+<li>Version 2.0.2<ul>
+<li>Bug fix KPSDK-25015 CASPER_MEMCPY hard-fault on LPC55xx when both source and destination buffers are outside of CASPER_RAM</li>
+</ul>
+</li>
+<li>Version 2.0.3<ul>
+<li>Bug fix KPSDK-28107 RSUB, FILL and ZERO operations not implemented in enum _casper_operation.</li>
+</ul>
+</li>
+<li>Version 2.0.4<ul>
+<li>For GCC compiler, enforce O1 optimize level, specifically to remove strict-aliasing option. This driver is very specific and requires -fno-strict-aliasing.</li>
+</ul>
+</li>
+<li>Version 2.0.5<ul>
+<li>Fix sign-compare warning.</li>
+</ul>
+</li>
+<li>Version 2.0.6<ul>
+<li>Fix IAR Pa082 warning.</li>
+</ul>
+</li>
+<li>Version 2.0.7<ul>
+<li>Fix MISRA-C 2012 issue.</li>
+</ul>
+</li>
+<li>Version 2.0.8<ul>
+<li>Add feature macro for CASPER_RAM_OFFSET.</li>
+</ul>
+</li>
+<li>Version 2.0.9<ul>
+<li>Remove unused function Jac_oncurve().</li>
+<li>Fix ECC384 build.</li>
+</ul>
+</li>
+<li>Version 2.0.10<ul>
+<li>Fix MISRA-C 2012 issue.</li>
+</ul>
+</li>
+<li>Version 2.1.0<ul>
+<li>Add ECC NIST P-521 elliptic curve.</li>
+</ul>
+</li>
+<li>Version 2.2.0<ul>
+<li>Rework driver to support multiple curves at once.</li>
+</ul>
+</li>
+<li>Version 2.2.1<ul>
+<li>Fix MISRA-C 2012 issue.</li>
+</ul>
+</li>
+<li>Version 2.2.2<ul>
+<li>Enable hardware interleaving to RAMX0 and RAMX1 for CASPER by feature macro FSL_FEATURE_CASPER_RAM_HW_INTERLEAVE</li>
+</ul>
+</li>
+<li>Version 2.2.3<ul>
+<li>Added macro into CASPER_Init and CASPER_Deinit to support devices without clock and reset control.</li>
+</ul>
+</li>
+<li>Version 2.2.4<ul>
+<li>Fix MISRA-C 2012 issue. </li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
-<a class="anchor" id="gaa9348fc709c2c5d8910d7fbd5ccf99d4"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga70e0187aa8acac29294311518b8bc3fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ADC_RSTS</td>
+          <td class="memname">typedef enum <a class="el" href="a00212.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a>  <a class="el" href="a00212.html#ga70e0187aa8acac29294311518b8bc3fb">casper_operation_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{                        <a class="code" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212abf23f3e397cbe11cc7fa59490339d022">\</a></div>
-<div class="line"><a class="code" href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212abf23f3e397cbe11cc7fa59490339d022">        kADC0_RST_SHIFT_RSTn</a> \</div>
-<div class="line">    } <span class="comment">/* Reset bits for ADC peripheral */</span></div>
-<div class="ttc" id="a00212_html_ggae3d168f47d6605a3911a52ddb8beb212abf23f3e397cbe11cc7fa59490339d022"><div class="ttname"><a href="a00212.html#ggae3d168f47d6605a3911a52ddb8beb212abf23f3e397cbe11cc7fa59490339d022">kADC0_RST_SHIFT_RSTn</a></div><div class="ttdef"><b>Definition:</b> fsl_reset.h:65</div></div>
-</div><!-- fragment --><p>Array initializers with peripheral reset bits </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gae3d168f47d6605a3911a52ddb8beb212"></a>
+<a class="anchor" id="gad58a4d789b7a583e7793b2ab3cf698ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">RSTCTL_RSTn_t</a></td>
+          <td class="memname">enum <a class="el" href="a00212.html#gad58a4d789b7a583e7793b2ab3cf698ba">_casper_operation</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Defines the enumeration for peripheral reset control bits in RSTCTLx registers </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a8353a74aef2f48a8b6df663507e2b605"></a>kDSP_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>DSP reset control </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baab5a78d5173f379c5149add08650f14c5"></a>kCASPER_OpMul6464Sum</em>&nbsp;</td><td class="fielddoc">
+<p>Walking 1 or more of J loop, doing r=a*b using 64x64=128. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212adcfe3b83e48c854606f7761638879ee4"></a>kPOWERQUAD_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>POWERQUAD reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baad04571c7b185686fd776a80806d6524d"></a>kCASPER_OpMul6464FullSum</em>&nbsp;</td><td class="fielddoc">
+<p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but assume inner j loop. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212af48c1696f1690f7e8a900252a7542f5c"></a>kCASPER_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CASPER reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baad0fbf9a74a2cb155f031bc3c2caa251f"></a>kCASPER_OpMul6464Reduce</em>&nbsp;</td><td class="fielddoc">
+<p>Walking 1 or more of J loop, doing c,r=r+a*b using 64x64=128, but sum all of w. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a7563d03b3f2f23eba46f3fe67826158c"></a>kHASHCRYPT_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HASHCRYPT reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baac73be9788e2abbbf2b011b7a3ad0ee25"></a>kCASPER_OpAdd64</em>&nbsp;</td><td class="fielddoc">
+<p>Walking 1 or more of J loop, doing c,r[-1]=r+a*b using 64x64=128, but skip 1st write. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a487c14a0623a04a74c934d000121791f"></a>kPUF_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Physical unclonable function reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa46c350d401f6bb4c3fac8b5ca7df66b1"></a>kCASPER_OpSub64</em>&nbsp;</td><td class="fielddoc">
+<p>Walking add with off_AB, and in/out off_RES doing c,r=r+a+c using 64+64=65. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a2df3a5a9dcd7e74f35459190bf57c894"></a>kRNG_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Random number generator (RNG) reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baac6ffac25f046cb6c565ce7ffa543dbe0"></a>kCASPER_OpDouble64</em>&nbsp;</td><td class="fielddoc">
+<p>Walking subtract with off_AB, and in/out off_RES doing r=r-a using 64-64=64, with last borrow implicit if any. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ab1352aeeb88c8af08f220480b337ffea"></a>kFLEXSPI_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>FLEXSPI reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa80db615b18d5ed2319c85a4fe6caa2eb"></a>kCASPER_OpXor64</em>&nbsp;</td><td class="fielddoc">
+<p>Walking add to self with off_RES doing c,r=r+r+c using 64+64=65. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ad7f551d59f1bed80602720300fadc9b1"></a>kUSBHS_PHY_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>High speed USB PHY reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa007fe02bbaf6b290d2024beaf9618e33"></a>kCASPER_OpRSub64</em>&nbsp;</td><td class="fielddoc">
+<p>Walking XOR with off_AB, and in/out off_RES doing r=r^a using 64^64=64. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a66bc9179d1a1d42a751e1cd6a1496fba"></a>kUSBHS_DEVICE_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>High speed USB Device reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa405a717b5a196ce6f0c5167d43f6e08e"></a>kCASPER_OpShiftLeft32</em>&nbsp;</td><td class="fielddoc">
+<p>Walking subtract with off_AB, and in/out off_RES using r=a-r. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ae60a0b9cf9bb55b90ec3ec17f01ebb38"></a>kUSBHS_HOST_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>High speed USB Host reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa61a1a07e6c0adc7b367ef5dc195adc22"></a>kCASPER_OpShiftRight32</em>&nbsp;</td><td class="fielddoc">
+<p>Walking shift left doing r1,r=(b*D)|r1, where D is 2^amt and is loaded by app (off_CD not used) </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a264b6d2b44d8272779beb3f4f59ca200"></a>kUSBHS_SRAM_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>High speed USB SRAM reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa5b64b93e087ab8b9002440b264cad30d"></a>kCASPER_OpCopy</em>&nbsp;</td><td class="fielddoc">
+<p>Walking shift right doing r,r1=(b*D)|r1, where D is 2^(32-amt) and is loaded by app (off_CD not used) and off_RES starts at MSW. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a75b4e2de528c2c9e135148aa19b9eb66"></a>kSCT_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Standard ctimers reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa8e860749586cc0a33405334a931f291e"></a>kCASPER_OpRemask</em>&nbsp;</td><td class="fielddoc">
+<p>Copy from ABoff to resoff, 64b at a time. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a78104c3d883fb337b0aad645814432ea"></a>kSDIO0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>SDIO0 reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baabdc1e3361e8415354fac33b3993b1491"></a>kCASPER_OpFill</em>&nbsp;</td><td class="fielddoc">
+<p>Copy and mask from ABoff to resoff, 64b at a time. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212acbe4a68bd2c8e3a7cb2aeee7b7110e9b"></a>kSDIO1_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>SDIO1 reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa34940e0777601a076a1715f859228f88"></a>kCASPER_OpZero</em>&nbsp;</td><td class="fielddoc">
+<p>Fill RESOFF using 64 bits at a time with value in A and B. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a3d9e3a422cff539e3f87e471a48d2ae3"></a>kACMP0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Grouped interrupt (PINT) reset control. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa9507d1f5ad0b8219f9bd461eeb27752e"></a>kCASPER_OpCompare</em>&nbsp;</td><td class="fielddoc">
+<p>Fill RESOFF using 64 bits at a time of 0s. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212abf23f3e397cbe11cc7fa59490339d022"></a>kADC0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>ADC0 reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad58a4d789b7a583e7793b2ab3cf698baa10df9918e9754e22740900ecc145c43d"></a>kCASPER_OpCompareFast</em>&nbsp;</td><td class="fielddoc">
+<p>Compare two arrays, running all the way to the end. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212abfe36f73e8f2d8bf2b25a62c1126b566"></a>kSHSGPIO0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Security HSGPIO 0 reset control </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga4ce07816cd7f6acdead0b975579144e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00212.html#ga4ce07816cd7f6acdead0b975579144e0">_casper_algo_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a8e86050a24be31a0c3e4c7f0fc801045"></a>kCASPER_ECC_P256</em>&nbsp;</td><td class="fielddoc">
+<p>ECC_P256. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ac7dd4646b2a63151d770e61401c70297"></a>kUTICK0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Micro-tick timer reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a3fbcdf27711f1c8c8271899ac4aaab89"></a>kCASPER_ECC_P384</em>&nbsp;</td><td class="fielddoc">
+<p>ECC_P384. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a674ec9ab23327a5c3fd3bb6ca7a4a51b"></a>kWWDT0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Windowed Watchdog timer 0 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a64a579f68d87cacfcf9c743953c18990"></a>kFC0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 0 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ad448522e3de2a7aaa050c569e9f4aa20"></a>kFC1_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 1 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a6276b47257c8b2df796f5a63a9e5c8be"></a>kFC2_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 2 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a7bab45b1d69cd3c19b2f062c830def28"></a>kFC3_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 3 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a965f73a37d3b6c27c46b5aa65fb219d5"></a>kFC4_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 4 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a0a23fbb6640edbedd45d43ed3ffeed5b"></a>kFC5_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 5 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a27b59cfc36cdf73127a8fd847c666036"></a>kFC6_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 6 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a070264490781e767c3be41d63e77d210"></a>kFC7_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 7 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a8fd2f61dcb11778722fa37086ec75621"></a>kFC14_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 14 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ad70645daf7199383d14297f0eda649df"></a>kFC15_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Flexcomm Interface 15 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a435b7c66b05953b5b6d1c8a99cd0a56d"></a>kDMIC_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Digital microphone interface reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ae2ba25a07450c21dcab0ca5874c2b8e9"></a>kOSEVENT_TIMER_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Osevent Timer reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ac6a1b0460ab9a8804895b603e934f695"></a>kHSGPIO0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 0 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a2f4a6701ce46b60c7424cba210ec201e"></a>kHSGPIO1_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 1 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a7589eda7f526a5f6e864d78c86663050"></a>kHSGPIO2_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 2 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a101b2125299c7a02fd70325fc9a6f3b1"></a>kHSGPIO3_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 3 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212aa097b00fd2edb9b3b4396743b65cb014"></a>kHSGPIO4_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 4 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a0d2c69b46f445c1bdc15bdacebac8c35"></a>kHSGPIO5_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 5 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a4e18ec902e1603c0b5a0516d0d34b04e"></a>kHSGPIO6_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 6 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a28a79978343758c85b5cbb57d95707aa"></a>kHSGPIO7_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>HSGPIO 7 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a194baa96cd93ef108f2724fa98352387"></a>kCRC_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CRC reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212aa8646fecb0c3404c0f557234841dbfa6"></a>kDMAC0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>DMA Controller 0 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a427788cd56e61777b5d958e8ff6a97f8"></a>kDMAC1_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>DMA Controller 1 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ada9161e7a05c1d9152aa7e0824c62e1f"></a>kMU_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Message Unit reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212af46a56085f4c8d4de527b07de796694e"></a>kSEMA_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Semaphore reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a9f22a83738dacc8e886411f113e1f4db"></a>kFREQME_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Frequency Measure reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a118c8642e6a3ab1960b368cde1b322aa"></a>kCT32B0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CT32B0 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ae4addb9fce16042ff47fa3594ba9b1dd"></a>kCT32B1_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CT32B1 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a1d00aaf39312131480e6c62669b7005d"></a>kCT32B2_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CT32B3 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212adb4b55a3a84d25ed2966c49c09d5878e"></a>kCT32B3_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CT32B4 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a140e90e3de42901c9c9177badec793c0"></a>kCT32B4_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>CT32B4 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ab3ddd6dcdf0a23f85308b58b01b3d133"></a>kMRT0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Multi-rate timer (MRT) reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212ab2d8ab9a135347336672d3d8b190119f"></a>kWWDT1_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Windowed Watchdog timer 1 reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a912d414c16677afe0901bee56e107707"></a>kI3C0_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>I3C reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212abf49da2e42c2fefb522315a6cec3559a"></a>kPINT_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>GPIO Pin interrupt reset control </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae3d168f47d6605a3911a52ddb8beb212a34dfade4df0208e52219f2c148e3e7b3"></a>kINPUTMUX_RST_SHIFT_RSTn</em>&nbsp;</td><td class="fielddoc">
-<p>Peripheral input muxes reset control </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4ce07816cd7f6acdead0b975579144e0a4a45988d4ca3b926783296346a862ad2"></a>kCASPER_ECC_P521</em>&nbsp;</td><td class="fielddoc">
+<p>ECC_P521. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad9df042d0736710d46dcdd0d52d80f85"></a>
+<a class="anchor" id="gaa1948fcf9c7301808a765341b4fa72a8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RESET_SetPeripheralReset </td>
+          <td class="memname">void CASPER_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">reset_ip_name_t</a>&#160;</td>
-          <td class="paramname"><em>peripheral</em></td><td>)</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Asserts reset signal to specified peripheral module.</p>
+<p>Enable clock and disable reset for CASPER.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">peripheral</td><td>Assert reset to this peripheral. The enum argument contains encoding of reset register and reset bit position in the reset register. </td></tr>
+    <tr><td class="paramname">base</td><td>CASPER base address </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3f9c431d066e700ee9e2ab83c11aaed8"></a>
+<a class="anchor" id="ga44e39a60b2116a93d89fb2d06ec8c290"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RESET_ClearPeripheralReset </td>
+          <td class="memname">void CASPER_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">reset_ip_name_t</a>&#160;</td>
-          <td class="paramname"><em>peripheral</em></td><td>)</td>
+          <td class="paramtype">CASPER_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clears reset signal to specified peripheral module, allows it to operate.</p>
+<p>Disable clock and enable reset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">peripheral</td><td>Clear reset to this peripheral. The enum argument contains encoding of reset register and reset bit position in the reset register. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac33f3428cb55ce07ae67802e5f534ffc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RESET_PeripheralReset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00212.html#gae3d168f47d6605a3911a52ddb8beb212">reset_ip_name_t</a>&#160;</td>
-          <td class="paramname"><em>peripheral</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Reset peripheral module.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">peripheral</td><td>Peripheral to reset. The enum argument contains encoding of reset register and reset bit position in the reset register. </td></tr>
+    <tr><td class="paramname">base</td><td>CASPER base address </td></tr>
   </table>
   </dd>
 </dl>

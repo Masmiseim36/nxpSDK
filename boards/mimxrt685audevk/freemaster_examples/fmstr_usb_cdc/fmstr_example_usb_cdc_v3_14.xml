@@ -30,6 +30,7 @@
     <definition extID="middleware.usb.phy.MIMXRT685S"/>
     <definition extID="component.osa.MIMXRT685S"/>
     <definition extID="middleware.usb.common_header.MIMXRT685S"/>
+    <definition extID="utility.str.MIMXRT685S"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT685S"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -39,7 +40,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="mimxrt685audevk_fmstr_example_usb_cdc" name="fmstr_example_usb_cdc" device_core="cm33_MIMXRT685S" dependency="middleware.baremetal.MIMXRT685S middleware.usb.device_controller_ip3511hs.MIMXRT685S middleware.usb.device.controller.driver.MIMXRT685S middleware.fmstr.MIMXRT685S utility.debug_console_lite.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S middleware.fmstr.platform_gen32le.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.usb.device.ip3511hs_config_header.MIMXRT685S middleware.usb.device.common_header.MIMXRT685S middleware.usb.phy.MIMXRT685S component.osa.MIMXRT685S middleware.usb.common_header.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" category="FreeMASTER_examples">
+  <example id="mimxrt685audevk_fmstr_example_usb_cdc" name="fmstr_example_usb_cdc" device_core="cm33_MIMXRT685S" dependency="middleware.baremetal.MIMXRT685S middleware.usb.device_controller_ip3511hs.MIMXRT685S middleware.usb.device.controller.driver.MIMXRT685S middleware.fmstr.MIMXRT685S utility.debug_console_lite.MIMXRT685S platform.utilities.assert_lite.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S component.lists.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S middleware.fmstr.platform_gen32le.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.usb.device.ip3511hs_config_header.MIMXRT685S middleware.usb.device.common_header.MIMXRT685S middleware.usb.phy.MIMXRT685S component.osa.MIMXRT685S middleware.usb.common_header.MIMXRT685S utility.str.MIMXRT685S CMSIS_Include_core_cm.MIMXRT685S" category="FreeMASTER_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -73,7 +74,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -149,14 +150,6 @@
       <files mask="main.c"/>
     </source>
     <source path="source/board" project_relative_path="board" type="src">
-      <files mask="clock_config.c"/>
-      <files mask="board.c"/>
-    </source>
-    <source path="source/board" project_relative_path="board" type="c_include">
-      <files mask="clock_config.h"/>
-      <files mask="board.h"/>
-    </source>
-    <source path="source/board" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
     </source>
     <source path="source/board" project_relative_path="board" type="c_include">
@@ -185,6 +178,14 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="source/board" project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="source/board" project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
     </source>
     <source path="source/example_data" project_relative_path="example_data" type="c_include">
       <files mask="data_example_pmp.h"/>

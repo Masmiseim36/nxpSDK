@@ -169,13 +169,13 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
 
@@ -196,8 +196,6 @@ add_executable(dsp_naturedsp_hifi4.elf
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c"
@@ -205,9 +203,6 @@ add_executable(dsp_naturedsp_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/feature.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/math_stdlib.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/version.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_audio.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_complex.h"
@@ -233,6 +228,8 @@ add_executable(dsp_naturedsp_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"

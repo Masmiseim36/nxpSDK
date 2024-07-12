@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SPI DMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: TFA9xxx Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,156 +99,231 @@ $(document).ready(function(){initNavTree('a00055.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SPI DMA Driver<div class="ingroups"><a class="el" href="a00228.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
+<div class="title">TFA9xxx Driver<div class="ingroups"><a class="el" href="a00249.html">CODEC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the SPI DMA driver. </p>
+<p>The tfa9xxx driver provides a codec control interface. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00149"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html">fsl_spi_dma.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00372"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00372">_spi_dma_handle</a></td></tr>
-<tr class="memdesc:a00372"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00055.html#a00372">More...</a><br/></td></tr>
-<tr class="separator:a00372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00374"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00374">_tfa9xxx_audio_format</a></td></tr>
+<tr class="memdesc:a00374"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx audio format  <a href="a00055.html#a00374">More...</a><br/></td></tr>
+<tr class="separator:a00374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00411"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00411">tfa9xxx_config</a></td></tr>
+<tr class="memdesc:a00411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize structure of TFA9XXX.  <a href="a00055.html#a00411">More...</a><br/></td></tr>
+<tr class="separator:a00411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00375"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00375">_tfa9xxx_handle</a></td></tr>
+<tr class="memdesc:a00375"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx codec handler Application should allocate a buffer with TFA9XXX_HANDLE_SIZE for handle definition, such as uint8_t tfa9xxxHandleBuffer[TFA9XXX_HANDLE_SIZE]; tfa9xxx_handle_t *tfa9xxxHandle = tfa9xxxHandleBuffer;  <a href="a00055.html#a00375">More...</a><br/></td></tr>
+<tr class="separator:a00375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga1fda6a8170e3fe24f8fb27c9a4771eac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1fda6a8170e3fe24f8fb27c9a4771eac"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1fda6a8170e3fe24f8fb27c9a4771eac">TFA9XXX_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00012.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a>)</td></tr>
+<tr class="memdesc:ga1fda6a8170e3fe24f8fb27c9a4771eac"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx handle size <br/></td></tr>
+<tr class="separator:ga1fda6a8170e3fe24f8fb27c9a4771eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac71cf1d5220a754ccdf2124d2baf9fba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac71cf1d5220a754ccdf2124d2baf9fba"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gac71cf1d5220a754ccdf2124d2baf9fba">TFA9XXX_I2C_BAUDRATE</a>&#160;&#160;&#160;(400000U)</td></tr>
+<tr class="memdesc:gac71cf1d5220a754ccdf2124d2baf9fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">TFA9XXX_ I2C baudrate. <br/></td></tr>
+<tr class="separator:gac71cf1d5220a754ccdf2124d2baf9fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> )(SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA callback called at the end of transfer.  <a href="#ga72ce9db8c2a57d66c7b508ca7891f4b3">More...</a><br/></td></tr>
-<tr class="separator:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa39ebfe4b9ce1e78793cfa866edbf43e"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00055.html#gaf96bdd5002e591aa15fc384ecc2f05c9">_tfa9xxx_protocol</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa39ebfe4b9ce1e78793cfa866edbf43e">tfa9xxx_protocol_t</a></td></tr>
+<tr class="memdesc:gaa39ebfe4b9ce1e78793cfa866edbf43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="#gaa39ebfe4b9ce1e78793cfa866edbf43e">More...</a><br/></td></tr>
+<tr class="separator:gaa39ebfe4b9ce1e78793cfa866edbf43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga459453e9ac56617d4e84b2e47c8bd158"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga459453e9ac56617d4e84b2e47c8bd158"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00055.html#a00374">_tfa9xxx_audio_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga459453e9ac56617d4e84b2e47c8bd158">tfa9xxx_audio_format_t</a></td></tr>
+<tr class="memdesc:ga459453e9ac56617d4e84b2e47c8bd158"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx audio format <br/></td></tr>
+<tr class="separator:ga459453e9ac56617d4e84b2e47c8bd158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3610f48b18ea4ced5cbd97717b543b1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3610f48b18ea4ced5cbd97717b543b1f"></a>
+typedef struct <a class="el" href="a00064.html">tfa2_device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga3610f48b18ea4ced5cbd97717b543b1f">tfa9xxx_device_t</a></td></tr>
+<tr class="memdesc:ga3610f48b18ea4ced5cbd97717b543b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx device <br/></td></tr>
+<tr class="separator:ga3610f48b18ea4ced5cbd97717b543b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca57eb5fe4a26227fc9421b99a082868"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca57eb5fe4a26227fc9421b99a082868"></a>
+typedef struct <a class="el" href="a00055.html#a00411">tfa9xxx_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaca57eb5fe4a26227fc9421b99a082868">tfa9xxx_config_t</a></td></tr>
+<tr class="memdesc:gaca57eb5fe4a26227fc9421b99a082868"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize structure of TFA9XXX. <br/></td></tr>
+<tr class="separator:gaca57eb5fe4a26227fc9421b99a082868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b3737f4e56400a76c8c2fd5825c27e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1b3737f4e56400a76c8c2fd5825c27e4"></a>
+typedef struct <a class="el" href="a00055.html#a00375">_tfa9xxx_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a></td></tr>
+<tr class="memdesc:ga1b3737f4e56400a76c8c2fd5825c27e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx codec handler Application should allocate a buffer with TFA9XXX_HANDLE_SIZE for handle definition, such as uint8_t tfa9xxxHandleBuffer[TFA9XXX_HANDLE_SIZE]; tfa9xxx_handle_t *tfa9xxxHandle = tfa9xxxHandleBuffer; <br/></td></tr>
+<tr class="separator:ga1b3737f4e56400a76c8c2fd5825c27e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaf96bdd5002e591aa15fc384ecc2f05c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaf96bdd5002e591aa15fc384ecc2f05c9">_tfa9xxx_protocol</a> { <a class="el" href="a00055.html#ggaf96bdd5002e591aa15fc384ecc2f05c9aec016d23cd2ee33d7ffd1aa77401ba5a">kTFA9XXX_BusI2S</a> = 0
+ }</td></tr>
+<tr class="memdesc:gaf96bdd5002e591aa15fc384ecc2f05c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="a00055.html#gaf96bdd5002e591aa15fc384ecc2f05c9">More...</a><br/></td></tr>
+<tr class="separator:gaf96bdd5002e591aa15fc384ecc2f05c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8946a7a721cc3f7364db9cc866ab3c65"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga8946a7a721cc3f7364db9cc866ab3c65">_tfa9xxx_sample_rate</a> { <a class="el" href="a00055.html#gga8946a7a721cc3f7364db9cc866ab3c65afdca7f8c2855f2ac09573f45bb6deda2">kTFA9XXX_AudioSampleRate48KHz</a> = 48000U
+ }</td></tr>
+<tr class="memdesc:ga8946a7a721cc3f7364db9cc866ab3c65"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio sample rate definition, more sample rates can be supported in the future  <a href="a00055.html#ga8946a7a721cc3f7364db9cc866ab3c65">More...</a><br/></td></tr>
+<tr class="separator:ga8946a7a721cc3f7364db9cc866ab3c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga791042fd6f833e0144c292ae5e34ee4e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga791042fd6f833e0144c292ae5e34ee4e">_tfa9xxx_audio_bit_width</a> { <a class="el" href="a00055.html#gga791042fd6f833e0144c292ae5e34ee4ea1b5a4e2776519b3425d5acd3f410d03d">kTFA9XXX_AudioBitWidth16bit</a> = 16U
+ }</td></tr>
+<tr class="memdesc:ga791042fd6f833e0144c292ae5e34ee4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio bit width, more bit width can be supported in the future  <a href="a00055.html#ga791042fd6f833e0144c292ae5e34ee4e">More...</a><br/></td></tr>
+<tr class="separator:ga791042fd6f833e0144c292ae5e34ee4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga490ea71fcddb804f209f1ca8026067ce"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga490ea71fcddb804f209f1ca8026067ce">_tfa98xxx_play_channel</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga490ea71fcddb804f209f1ca8026067cea8f2e5eeca211ebaab71218a0205ce3ca">kTFA9XXX_PlayChannelLeft0</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga490ea71fcddb804f209f1ca8026067cea73f71cdb3ae52c087e20659b8d91ce18">kTFA9XXX_PlayChannelRight0</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga490ea71fcddb804f209f1ca8026067ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">play channel  <a href="a00055.html#ga490ea71fcddb804f209f1ca8026067ce">More...</a><br/></td></tr>
+<tr class="separator:ga490ea71fcddb804f209f1ca8026067ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa73c2c5855c56405c33ef6e40cf9d702"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa73c2c5855c56405c33ef6e40cf9d702">TFA9XXX_Init</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle, <a class="el" href="a00055.html#gaca57eb5fe4a26227fc9421b99a082868">tfa9xxx_config_t</a> *tfa9xxxConfig)</td></tr>
+<tr class="memdesc:gaa73c2c5855c56405c33ef6e40cf9d702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the TFA, put the TFA to operating state, allocate memory side.  <a href="#gaa73c2c5855c56405c33ef6e40cf9d702">More...</a><br/></td></tr>
+<tr class="separator:gaa73c2c5855c56405c33ef6e40cf9d702"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32bf3a77a358014cffbbb4b641602018"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga32bf3a77a358014cffbbb4b641602018">TFA9XXX_Deinit</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga32bf3a77a358014cffbbb4b641602018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize the TFA, put the TFA to powerdown state.  <a href="#ga32bf3a77a358014cffbbb4b641602018">More...</a><br/></td></tr>
+<tr class="separator:ga32bf3a77a358014cffbbb4b641602018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9a1f8f5f4b2959c514345efc9ab5e00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaf9a1f8f5f4b2959c514345efc9ab5e00">TFA9XXX_SetMute</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle, bool isMute)</td></tr>
+<tr class="memdesc:gaf9a1f8f5f4b2959c514345efc9ab5e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute/Unmute the TFA.  <a href="#gaf9a1f8f5f4b2959c514345efc9ab5e00">More...</a><br/></td></tr>
+<tr class="separator:gaf9a1f8f5f4b2959c514345efc9ab5e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1495b678740d2ea25abdb60c347124ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1495b678740d2ea25abdb60c347124ac">TFA9XXX_ConfigDataFormat</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)</td></tr>
+<tr class="memdesc:ga1495b678740d2ea25abdb60c347124ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the TFA based on I2S format.  <a href="#ga1495b678740d2ea25abdb60c347124ac">More...</a><br/></td></tr>
+<tr class="separator:ga1495b678740d2ea25abdb60c347124ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e95cbcbd8b21dd14480345c666c910e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga9e95cbcbd8b21dd14480345c666c910e">TFA9XXX_SetVolume</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle, uint32_t volume)</td></tr>
+<tr class="memdesc:ga9e95cbcbd8b21dd14480345c666c910e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the volume level.  <a href="#ga9e95cbcbd8b21dd14480345c666c910e">More...</a><br/></td></tr>
+<tr class="separator:ga9e95cbcbd8b21dd14480345c666c910e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad89435440dc3d13a138e90f74ad19e49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gad89435440dc3d13a138e90f74ad19e49">TFA9XXX_SetPlayChannel</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle, uint32_t playChannel)</td></tr>
+<tr class="memdesc:gad89435440dc3d13a138e90f74ad19e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the audio channel for a speaker.  <a href="#gad89435440dc3d13a138e90f74ad19e49">More...</a><br/></td></tr>
+<tr class="separator:gad89435440dc3d13a138e90f74ad19e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65aadcf752d494bd7bf86ad1251f6f54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga65aadcf752d494bd7bf86ad1251f6f54">TFA9XXX_Start</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga65aadcf752d494bd7bf86ad1251f6f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the TFA.  <a href="#ga65aadcf752d494bd7bf86ad1251f6f54">More...</a><br/></td></tr>
+<tr class="separator:ga65aadcf752d494bd7bf86ad1251f6f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga960e6ea9ce122c491d819724f5ceae81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga960e6ea9ce122c491d819724f5ceae81">TFA9XXX_Stop</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga960e6ea9ce122c491d819724f5ceae81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the TFA.  <a href="#ga960e6ea9ce122c491d819724f5ceae81">More...</a><br/></td></tr>
+<tr class="separator:ga960e6ea9ce122c491d819724f5ceae81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga581706ea376e83e64316a85852366350"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga581706ea376e83e64316a85852366350">TFA9XXX_Reset</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga581706ea376e83e64316a85852366350"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the TFA.  <a href="#ga581706ea376e83e64316a85852366350">More...</a><br/></td></tr>
+<tr class="separator:ga581706ea376e83e64316a85852366350"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0f159e9905d04866437d811945b9661"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gac0f159e9905d04866437d811945b9661">TFA9XXX_CheckCalibrationStatus</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle, bool *isTFACalibrated)</td></tr>
+<tr class="memdesc:gac0f159e9905d04866437d811945b9661"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if TFA is calibrated.  <a href="#gac0f159e9905d04866437d811945b9661">More...</a><br/></td></tr>
+<tr class="separator:gac0f159e9905d04866437d811945b9661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69cafb92c874f088adc49435ade131e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga69cafb92c874f088adc49435ade131e4">TFA9XXX_CalibrateSpeakerBoost</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga69cafb92c874f088adc49435ade131e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start Speakerboost Calibration.  <a href="#ga69cafb92c874f088adc49435ade131e4">More...</a><br/></td></tr>
+<tr class="separator:ga69cafb92c874f088adc49435ade131e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga358370d991c178bdeae34084ff5e8e10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga358370d991c178bdeae34084ff5e8e10">TFA9XXX_HardcodeCalibrationValue</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga358370d991c178bdeae34084ff5e8e10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardcode calibration value for DSP usage instead of triggering calibration.  <a href="#ga358370d991c178bdeae34084ff5e8e10">More...</a><br/></td></tr>
+<tr class="separator:ga358370d991c178bdeae34084ff5e8e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa86302a2371b173e8646bb612eb9440f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa86302a2371b173e8646bb612eb9440f">TFA9XXX_GetStatus</a> (<a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gaa86302a2371b173e8646bb612eb9440f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status of a running TFA.  <a href="#gaa86302a2371b173e8646bb612eb9440f">More...</a><br/></td></tr>
+<tr class="separator:gaa86302a2371b173e8646bb612eb9440f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1c7a1a13116c62b258b63366850e318"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa1c7a1a13116c62b258b63366850e318">TFA9XXX_ConvertErrorCode</a> (int32_t rc)</td></tr>
+<tr class="memdesc:gaa1c7a1a13116c62b258b63366850e318"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the return check value from TFA driver to predefined error code.  <a href="#gaa1c7a1a13116c62b258b63366850e318">More...</a><br/></td></tr>
+<tr class="separator:gaa1c7a1a13116c62b258b63366850e318"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gab72873a3a11fc293023558be553de43c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gab72873a3a11fc293023558be553de43c">FSL_SPI_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
-<tr class="memdesc:gab72873a3a11fc293023558be553de43c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA driver version 2.1.1.  <a href="#gab72873a3a11fc293023558be553de43c">More...</a><br/></td></tr>
-<tr class="separator:gab72873a3a11fc293023558be553de43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMA Transactional</h2></td></tr>
-<tr class="memitem:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gae8aa0229e688aa1b88185d5e9e7bf0b8">SPI_MasterTransferCreateHandleDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *txHandle, <a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *rxHandle)</td></tr>
-<tr class="memdesc:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SPI master DMA handle.  <a href="#gae8aa0229e688aa1b88185d5e9e7bf0b8">More...</a><br/></td></tr>
-<tr class="separator:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga2bcf43f1d6908810b6b41d2d87bda3a9">SPI_MasterTransferDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00054.html#ga59314d5596f240cfbe8b9466bd99ed3f">spi_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a non-blocking SPI transfer using DMA.  <a href="#ga2bcf43f1d6908810b6b41d2d87bda3a9">More...</a><br/></td></tr>
-<tr class="separator:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga761647975e2cfffca46793a6723ffd95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga761647975e2cfffca46793a6723ffd95">SPI_MasterHalfDuplexTransferDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00054.html#ga5788e6eb50f5486bfd9aaf9ca6bc2930">spi_half_duplex_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga761647975e2cfffca46793a6723ffd95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfers a block of data using a DMA method.  <a href="#ga761647975e2cfffca46793a6723ffd95">More...</a><br/></td></tr>
-<tr class="separator:ga761647975e2cfffca46793a6723ffd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga029df430a54021c536661fd17b9c60bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga029df430a54021c536661fd17b9c60bb">SPI_SlaveTransferCreateHandleDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *txHandle, <a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *rxHandle)</td></tr>
-<tr class="memdesc:ga029df430a54021c536661fd17b9c60bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SPI slave DMA handle.  <a href="#ga029df430a54021c536661fd17b9c60bb">More...</a><br/></td></tr>
-<tr class="separator:ga029df430a54021c536661fd17b9c60bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6848a2579e3e84d48123407448df60ed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga6848a2579e3e84d48123407448df60ed">SPI_SlaveTransferDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00054.html#ga59314d5596f240cfbe8b9466bd99ed3f">spi_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga6848a2579e3e84d48123407448df60ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a non-blocking SPI transfer using DMA.  <a href="#ga6848a2579e3e84d48123407448df60ed">More...</a><br/></td></tr>
-<tr class="separator:ga6848a2579e3e84d48123407448df60ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5f2aabca472a57709db2ef153e031c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gac5f2aabca472a57709db2ef153e031c8">SPI_MasterTransferAbortDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:gac5f2aabca472a57709db2ef153e031c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort a SPI transfer using DMA.  <a href="#gac5f2aabca472a57709db2ef153e031c8">More...</a><br/></td></tr>
-<tr class="separator:gac5f2aabca472a57709db2ef153e031c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga642d1fe963b7f1c28e5d8f4dd5b92861">SPI_MasterTransferGetCountDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, size_t *count)</td></tr>
-<tr class="memdesc:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master DMA transfer remaining bytes.  <a href="#ga642d1fe963b7f1c28e5d8f4dd5b92861">More...</a><br/></td></tr>
-<tr class="separator:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03ab24789dc4c2438a5daff733ce2cfe"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga03ab24789dc4c2438a5daff733ce2cfe">SPI_SlaveTransferAbortDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:ga03ab24789dc4c2438a5daff733ce2cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort a SPI transfer using DMA.  <a href="#ga03ab24789dc4c2438a5daff733ce2cfe">More...</a><br/></td></tr>
-<tr class="separator:ga03ab24789dc4c2438a5daff733ce2cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa44608920f3653a4692f87f4d4220cc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gafa44608920f3653a4692f87f4d4220cc">SPI_SlaveTransferGetCountDMA</a> (SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, size_t *count)</td></tr>
-<tr class="memdesc:gafa44608920f3653a4692f87f4d4220cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave DMA transfer remaining bytes.  <a href="#gafa44608920f3653a4692f87f4d4220cc">More...</a><br/></td></tr>
-<tr class="separator:gafa44608920f3653a4692f87f4d4220cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdb6eb7579e034ff78420e1f0b0fd54a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gafdb6eb7579e034ff78420e1f0b0fd54a">FSL_TFA9XXX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(8, 1, 2))</td></tr>
+<tr class="memdesc:gafdb6eb7579e034ff78420e1f0b0fd54a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TFA9XXX driver version 8.1.2.  <a href="#gafdb6eb7579e034ff78420e1f0b0fd54a">More...</a><br/></td></tr>
+<tr class="separator:gafdb6eb7579e034ff78420e1f0b0fd54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00372" id="a00372"></a>
+<a name="a00374" id="a00374"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _spi_dma_handle</td>
+          <td class="memname">struct _tfa9xxx_audio_format</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aade83738207535e22c59a962f7970476"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aade83738207535e22c59a962f7970476"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#aade83738207535e22c59a962f7970476">txInProgress</a></td></tr>
-<tr class="memdesc:aade83738207535e22c59a962f7970476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send transfer finished. <br/></td></tr>
-<tr class="separator:aade83738207535e22c59a962f7970476"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a238787dc038cb56bec18605afbb9f1fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a238787dc038cb56bec18605afbb9f1fb"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a238787dc038cb56bec18605afbb9f1fb">rxInProgress</a></td></tr>
-<tr class="memdesc:a238787dc038cb56bec18605afbb9f1fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive transfer finished. <br/></td></tr>
-<tr class="separator:a238787dc038cb56bec18605afbb9f1fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ddf5aad428d653cbb8f126c271b6f0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ddf5aad428d653cbb8f126c271b6f0b"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a0ddf5aad428d653cbb8f126c271b6f0b">bytesPerFrame</a></td></tr>
-<tr class="memdesc:a0ddf5aad428d653cbb8f126c271b6f0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes in a frame for SPI transfer. <br/></td></tr>
-<tr class="separator:a0ddf5aad428d653cbb8f126c271b6f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94f61830d009de8d210be1f9671e1551"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94f61830d009de8d210be1f9671e1551"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a94f61830d009de8d210be1f9671e1551">lastwordBytes</a></td></tr>
-<tr class="memdesc:a94f61830d009de8d210be1f9671e1551"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Bytes of lastword for master. <br/></td></tr>
-<tr class="separator:a94f61830d009de8d210be1f9671e1551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fbd87a762e90675082bf0e2effe8942"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fbd87a762e90675082bf0e2effe8942"></a>
-<a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a9fbd87a762e90675082bf0e2effe8942">txHandle</a></td></tr>
-<tr class="memdesc:a9fbd87a762e90675082bf0e2effe8942"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for SPI send. <br/></td></tr>
-<tr class="separator:a9fbd87a762e90675082bf0e2effe8942"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa54af7ea8c13efd7ab848575d2db953a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa54af7ea8c13efd7ab848575d2db953a"></a>
-<a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#aa54af7ea8c13efd7ab848575d2db953a">rxHandle</a></td></tr>
-<tr class="memdesc:aa54af7ea8c13efd7ab848575d2db953a"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for SPI receive. <br/></td></tr>
-<tr class="separator:aa54af7ea8c13efd7ab848575d2db953a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb87c50f78901b9d43b354919d30c854"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb87c50f78901b9d43b354919d30c854"></a>
-<a class="el" href="a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#adb87c50f78901b9d43b354919d30c854">callback</a></td></tr>
-<tr class="memdesc:adb87c50f78901b9d43b354919d30c854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for SPI DMA transfer. <br/></td></tr>
-<tr class="separator:adb87c50f78901b9d43b354919d30c854"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5a390d46850ba2397ab89b5d692a409"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5a390d46850ba2397ab89b5d692a409"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ab5a390d46850ba2397ab89b5d692a409">userData</a></td></tr>
-<tr class="memdesc:ab5a390d46850ba2397ab89b5d692a409"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Data for SPI DMA callback. <br/></td></tr>
-<tr class="separator:ab5a390d46850ba2397ab89b5d692a409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e087358c65369ceb5e0ead613560016"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e087358c65369ceb5e0ead613560016"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a7e087358c65369ceb5e0ead613560016">state</a></td></tr>
-<tr class="memdesc:a7e087358c65369ceb5e0ead613560016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal state of SPI DMA transfer. <br/></td></tr>
-<tr class="separator:a7e087358c65369ceb5e0ead613560016"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a246dd896f39699b628d71b9a80af8b20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a246dd896f39699b628d71b9a80af8b20"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a246dd896f39699b628d71b9a80af8b20">transferSize</a></td></tr>
-<tr class="memdesc:a246dd896f39699b628d71b9a80af8b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes need to be transfer. <br/></td></tr>
-<tr class="separator:a246dd896f39699b628d71b9a80af8b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7284884e35ae032e2eb576a52b032f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7284884e35ae032e2eb576a52b032f8"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ae7284884e35ae032e2eb576a52b032f8">instance</a></td></tr>
-<tr class="memdesc:ae7284884e35ae032e2eb576a52b032f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of SPI instance. <br/></td></tr>
-<tr class="separator:ae7284884e35ae032e2eb576a52b032f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a368c57bccf1bb14bbc3f54fb02e88ba0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a368c57bccf1bb14bbc3f54fb02e88ba0"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a368c57bccf1bb14bbc3f54fb02e88ba0">txNextData</a></td></tr>
-<tr class="memdesc:a368c57bccf1bb14bbc3f54fb02e88ba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer of next time tx data. <br/></td></tr>
-<tr class="separator:a368c57bccf1bb14bbc3f54fb02e88ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05553a02ed517b7c9f1838aeef6b37d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05553a02ed517b7c9f1838aeef6b37d7"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a05553a02ed517b7c9f1838aeef6b37d7">txEndData</a></td></tr>
-<tr class="memdesc:a05553a02ed517b7c9f1838aeef6b37d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer of end of data. <br/></td></tr>
-<tr class="separator:a05553a02ed517b7c9f1838aeef6b37d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c983d08aceac326cd67cf6deae49dc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c983d08aceac326cd67cf6deae49dc3"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a3c983d08aceac326cd67cf6deae49dc3">rxNextData</a></td></tr>
-<tr class="memdesc:a3c983d08aceac326cd67cf6deae49dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer of next time rx data. <br/></td></tr>
-<tr class="separator:a3c983d08aceac326cd67cf6deae49dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbeb91001b817bf41ee1ff91255a0c20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbeb91001b817bf41ee1ff91255a0c20"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#acbeb91001b817bf41ee1ff91255a0c20">rxEndData</a></td></tr>
-<tr class="memdesc:acbeb91001b817bf41ee1ff91255a0c20"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer of end of rx data. <br/></td></tr>
-<tr class="separator:acbeb91001b817bf41ee1ff91255a0c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3016002862c9980d6256b2056c9207e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3016002862c9980d6256b2056c9207e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ad3016002862c9980d6256b2056c9207e">dataBytesEveryTime</a></td></tr>
-<tr class="memdesc:ad3016002862c9980d6256b2056c9207e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes in a time for DMA transfer, default is DMA_MAX_TRANSFER_COUNT. <br/></td></tr>
-<tr class="separator:ad3016002862c9980d6256b2056c9207e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91637be2618314067ae556ab83812ed0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91637be2618314067ae556ab83812ed0"></a>
+enum <a class="el" href="a00055.html#ga8946a7a721cc3f7364db9cc866ab3c65">_tfa9xxx_sample_rate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a91637be2618314067ae556ab83812ed0">sampleRate</a></td></tr>
+<tr class="memdesc:a91637be2618314067ae556ab83812ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">sample rate <br/></td></tr>
+<tr class="separator:a91637be2618314067ae556ab83812ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30b48986bf325c3aadfb58f55ae0694a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30b48986bf325c3aadfb58f55ae0694a"></a>
+enum <a class="el" href="a00055.html#ga791042fd6f833e0144c292ae5e34ee4e">_tfa9xxx_audio_bit_width</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a30b48986bf325c3aadfb58f55ae0694a">bitWidth</a></td></tr>
+<tr class="memdesc:a30b48986bf325c3aadfb58f55ae0694a"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit width <br/></td></tr>
+<tr class="separator:a30b48986bf325c3aadfb58f55ae0694a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00411" id="a00411"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tfa9xxx_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a7d2cd6cdd1b7f29889c1e44dfffead2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d2cd6cdd1b7f29889c1e44dfffead2a"></a>
+<a class="el" href="a00055.html#gaa39ebfe4b9ce1e78793cfa866edbf43e">tfa9xxx_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a7d2cd6cdd1b7f29889c1e44dfffead2a">protocol</a></td></tr>
+<tr class="memdesc:a7d2cd6cdd1b7f29889c1e44dfffead2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio transfer protocol. <br/></td></tr>
+<tr class="separator:a7d2cd6cdd1b7f29889c1e44dfffead2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16e087ab9af599ba4300f2efa097fd7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16e087ab9af599ba4300f2efa097fd7c"></a>
+<a class="el" href="a00055.html#ga459453e9ac56617d4e84b2e47c8bd158">tfa9xxx_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a16e087ab9af599ba4300f2efa097fd7c">format</a></td></tr>
+<tr class="memdesc:a16e087ab9af599ba4300f2efa097fd7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio format. <br/></td></tr>
+<tr class="separator:a16e087ab9af599ba4300f2efa097fd7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae20e137aff48d492b43b16419ad68248"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae20e137aff48d492b43b16419ad68248"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ae20e137aff48d492b43b16419ad68248">slaveAddress</a></td></tr>
+<tr class="memdesc:ae20e137aff48d492b43b16419ad68248"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx device address <br/></td></tr>
+<tr class="separator:ae20e137aff48d492b43b16419ad68248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af50cbfa36cec4324d4ba5385b442de2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af50cbfa36cec4324d4ba5385b442de2c"></a>
+<a class="el" href="a00012.html#ga7cef6c41744cbf081437214aa3a6acec">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#af50cbfa36cec4324d4ba5385b442de2c">i2cConfig</a></td></tr>
+<tr class="memdesc:af50cbfa36cec4324d4ba5385b442de2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c configuration <br/></td></tr>
+<tr class="separator:af50cbfa36cec4324d4ba5385b442de2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bcd87c88e06694c2e01cd3a3fb725f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bcd87c88e06694c2e01cd3a3fb725f9"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a2bcd87c88e06694c2e01cd3a3fb725f9">tfaContainer</a></td></tr>
+<tr class="memdesc:a2bcd87c88e06694c2e01cd3a3fb725f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa container array <br/></td></tr>
+<tr class="separator:a2bcd87c88e06694c2e01cd3a3fb725f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29d7790c5905bcb33dcc3a798dc7a4e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29d7790c5905bcb33dcc3a798dc7a4e6"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a29d7790c5905bcb33dcc3a798dc7a4e6">deviceIndex</a></td></tr>
+<tr class="memdesc:a29d7790c5905bcb33dcc3a798dc7a4e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa device index, starting from 0, up to TFA9XXX_DEV_NUM - 1 <br/></td></tr>
+<tr class="separator:a29d7790c5905bcb33dcc3a798dc7a4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00375" id="a00375"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _tfa9xxx_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a90b5f1efdd4cdc7d1fc0d9cd39d1b77b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90b5f1efdd4cdc7d1fc0d9cd39d1b77b"></a>
+<a class="el" href="a00055.html#gaca57eb5fe4a26227fc9421b99a082868">tfa9xxx_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a90b5f1efdd4cdc7d1fc0d9cd39d1b77b">config</a></td></tr>
+<tr class="memdesc:a90b5f1efdd4cdc7d1fc0d9cd39d1b77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">tfa9xxx config pointer <br/></td></tr>
+<tr class="separator:a90b5f1efdd4cdc7d1fc0d9cd39d1b77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a368b5761d02a39c3191251a7db8c0c2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a368b5761d02a39c3191251a7db8c0c2f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a368b5761d02a39c3191251a7db8c0c2f">i2cHandle</a> [<a class="el" href="a00055.html#ga1fda6a8170e3fe24f8fb27c9a4771eac">TFA9XXX_I2C_HANDLER_SIZE</a>]</td></tr>
+<tr class="memdesc:a368b5761d02a39c3191251a7db8c0c2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle <br/></td></tr>
+<tr class="separator:a368b5761d02a39c3191251a7db8c0c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab72873a3a11fc293023558be553de43c"></a>
+<a class="anchor" id="gafdb6eb7579e034ff78420e1f0b0fd54a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SPI_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td>
+          <td class="memname">#define FSL_TFA9XXX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(8, 1, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -256,58 +331,108 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga72ce9db8c2a57d66c7b508ca7891f4b3"></a>
+<a class="anchor" id="gaa39ebfe4b9ce1e78793cfa866edbf43e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* spi_dma_callback_t)(SPI_Type *base, <a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *handle, <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef enum <a class="el" href="a00055.html#gaf96bdd5002e591aa15fc384ecc2f05c9">_tfa9xxx_protocol</a>  <a class="el" href="a00055.html#gaa39ebfe4b9ce1e78793cfa866edbf43e">tfa9xxx_protocol_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>TFA9XXX only supports I2S format. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaf96bdd5002e591aa15fc384ecc2f05c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00055.html#gaf96bdd5002e591aa15fc384ecc2f05c9">_tfa9xxx_protocol</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TFA9XXX only supports I2S format. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf96bdd5002e591aa15fc384ecc2f05c9aec016d23cd2ee33d7ffd1aa77401ba5a"></a>kTFA9XXX_BusI2S</em>&nbsp;</td><td class="fielddoc">
+<p>I2S type. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga8946a7a721cc3f7364db9cc866ab3c65"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00055.html#ga8946a7a721cc3f7364db9cc866ab3c65">_tfa9xxx_sample_rate</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8946a7a721cc3f7364db9cc866ab3c65afdca7f8c2855f2ac09573f45bb6deda2"></a>kTFA9XXX_AudioSampleRate48KHz</em>&nbsp;</td><td class="fielddoc">
+<p>Sample rate 48000 Hz. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga791042fd6f833e0144c292ae5e34ee4e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00055.html#ga791042fd6f833e0144c292ae5e34ee4e">_tfa9xxx_audio_bit_width</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga791042fd6f833e0144c292ae5e34ee4ea1b5a4e2776519b3425d5acd3f410d03d"></a>kTFA9XXX_AudioBitWidth16bit</em>&nbsp;</td><td class="fielddoc">
+<p>audio bit width 16 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga490ea71fcddb804f209f1ca8026067ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00055.html#ga490ea71fcddb804f209f1ca8026067ce">_tfa98xxx_play_channel</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga490ea71fcddb804f209f1ca8026067cea8f2e5eeca211ebaab71218a0205ce3ca"></a>kTFA9XXX_PlayChannelLeft0</em>&nbsp;</td><td class="fielddoc">
+<p>codec play channel left 0 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga490ea71fcddb804f209f1ca8026067cea73f71cdb3ae52c087e20659b8d91ce18"></a>kTFA9XXX_PlayChannelRight0</em>&nbsp;</td><td class="fielddoc">
+<p>codec play channel right 0 </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gae8aa0229e688aa1b88185d5e9e7bf0b8"></a>
+<a class="anchor" id="gaa73c2c5855c56405c33ef6e40cf9d702"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferCreateHandleDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_Init </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>txHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>rxHandle</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#gaca57eb5fe4a26227fc9421b99a082868">tfa9xxx_config_t</a> *&#160;</td>
+          <td class="paramname"><em>tfa9xxxConfig</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -316,42 +441,55 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the SPI master DMA handle which can be used for other SPI master transactional APIs. Usually, for a specified SPI instance, user need only call this API once to get the initialized handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPI handle pointer. </td></tr>
-    <tr><td class="paramname">callback</td><td>User callback function called at the end of a transfer. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data for callback. </td></tr>
-    <tr><td class="paramname">txHandle</td><td>DMA handle pointer for SPI Tx, the handle shall be static allocated by users. </td></tr>
-    <tr><td class="paramname">rxHandle</td><td>DMA handle pointer for SPI Rx, the handle shall be static allocated by users. </td></tr>
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
+    <tr><td class="paramname">tfa9xxxConfig</td><td>TFA9XXX configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2bcf43f1d6908810b6b41d2d87bda3a9"></a>
+<a class="anchor" id="ga32bf3a77a358014cffbbb4b641602018"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_Deinit </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf9a1f8f5f4b2959c514345efc9ab5e00"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_SetMute </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00054.html#ga59314d5596f240cfbe8b9466bd99ed3f">spi_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isMute</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -360,47 +498,45 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This interface returned immediately after transfer initiates, users should call SPI_GetTransferStatus to poll the transfer status to check whether SPI transfer finished.</dd></dl>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPI DMA handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>Pointer to dma transfer structure. </td></tr>
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
+    <tr><td class="paramname">isMute</td><td>true is mute, false is unmute.. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully start a transfer. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Input argument is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_SPI_Busy</td><td>SPI is not idle, is running another transfer. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga761647975e2cfffca46793a6723ffd95"></a>
+<a class="anchor" id="ga1495b678740d2ea25abdb60c347124ac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterHalfDuplexTransferDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_ConfigDataFormat </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00054.html#ga5788e6eb50f5486bfd9aaf9ca6bc2930">spi_half_duplex_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mclk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sampleRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bitWidth</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -409,61 +545,35 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function using polling way to do the first half transimission and using DMA way to do the srcond half transimission, the transfer mechanism is half-duplex. When do the second half transimission, code will return right away. When all data is transferred, the callback function is called.</p>
+<p>Assuming TFA_Init() is already called by calling <a class="el" href="a00011.html#ga5d14bc698e079b917832b43b248ea78c" title="Codec initilization. ">CODEC_Init()</a>, the TFA will be in operating state. So before calling TFA_SetFormat(), the TFA needs to be in powerdown state by calling TFA_Stop().</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI base pointer </td></tr>
-    <tr><td class="paramname">handle</td><td>A pointer to the spi_master_dma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>A pointer to the spi_half_duplex_transfer_t structure. </td></tr>
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
+    <tr><td class="paramname">mclk</td><td>The mclk. </td></tr>
+    <tr><td class="paramname">sampleRate</td><td>The sample rate. </td></tr>
+    <tr><td class="paramname">bitWidth</td><td>The bit width. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns <a class="el" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga029df430a54021c536661fd17b9c60bb"></a>
+<a class="anchor" id="ga9e95cbcbd8b21dd14480345c666c910e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferCreateHandleDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_SetVolume </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>txHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>rxHandle</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>volume</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -471,99 +581,34 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function initializes the SPI slave DMA handle which can be used for other SPI master transactional APIs. Usually, for a specified SPI instance, user need only call this API once to get the initialized handle.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPI handle pointer. </td></tr>
-    <tr><td class="paramname">callback</td><td>User callback function called at the end of a transfer. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data for callback. </td></tr>
-    <tr><td class="paramname">txHandle</td><td>DMA handle pointer for SPI Tx, the handle shall be static allocated by users. </td></tr>
-    <tr><td class="paramname">rxHandle</td><td>DMA handle pointer for SPI Rx, the handle shall be static allocated by users. </td></tr>
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
+    <tr><td class="paramname">volume</td><td>volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6848a2579e3e84d48123407448df60ed"></a>
+<a class="anchor" id="gad89435440dc3d13a138e90f74ad19e49"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_SetPlayChannel </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00054.html#ga59314d5596f240cfbe8b9466bd99ed3f">spi_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This interface returned immediately after transfer initiates, users should call SPI_GetTransferStatus to poll the transfer status to check whether SPI transfer finished.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPI DMA handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>Pointer to dma transfer structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully start a transfer. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Input argument is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_SPI_Busy</td><td>SPI is not idle, is running another transfer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac5f2aabca472a57709db2ef153e031c8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPI_MasterTransferAbortDMA </td>
-          <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>playChannel</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -572,37 +617,109 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>By default, I2S channel is configured by the <code>.tfaContainer</code> in <code>tfa9xxx_config_t</code>. So you don't need to call this function. However, if required, calling this function allows overwriting I2S channel selection. This can be useful when the tuning is done, and you simply want to change the I2S channel.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPI DMA handle pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
+    <tr><td class="paramname">playChannel</td><td>_codec_play_channel play channel, available values are kCODEC_PlayChannelSpeakerLeft, kCODEC_PlayChannelSpeakerRight, kCODEC_PlayChannelSpeakerLeft | kCODEC_PlayChannelSpeakerRight. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga642d1fe963b7f1c28e5d8f4dd5b92861"></a>
+<a class="anchor" id="ga65aadcf752d494bd7bf86ad1251f6f54"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferGetCountDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_Start </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start device will initialize if the device is in cold state if already warm then only clocks will be started.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The TFA codec handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga960e6ea9ce122c491d819724f5ceae81"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop will put the TFA in powerdown/standby mode, the next time TFA start will be a warm start.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The TFA9XXX handle structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga581706ea376e83e64316a85852366350"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reset will put the in powerdown/standby mode, the next time TFA start will be a cold start.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The TFA9XXX handle structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac0f159e9905d04866437d811945b9661"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_CheckCalibrationStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>isTFACalibrated</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -611,107 +728,111 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function gets the master DMA transfer remaining bytes.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>A pointer to the spi_dma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">count</td><td>A number of bytes transferred by the non-blocking transaction. </td></tr>
+    <tr><td class="paramname">handle</td><td>The TFA9XXX handle structure. </td></tr>
+    <tr><td class="paramname">isTFACalibrated</td><td>This value stores if TFA is calibrated. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if operation is successfully, otherwise returns error code.. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga03ab24789dc4c2438a5daff733ce2cfe"></a>
+<a class="anchor" id="ga69cafb92c874f088adc49435ade131e4"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SPI_SlaveTransferAbortDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_CalibrateSpeakerBoost </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>The calibration will measure speaker impedance, and calculate the speaker impedance at 25 degree. This value will be used to estimate the real-time temperature.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPI DMA handle pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>The TFA codec handle. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gafa44608920f3653a4692f87f4d4220cc"></a>
+<a class="anchor" id="ga358370d991c178bdeae34084ff5e8e10"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferGetCountDMA </td>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_HardcodeCalibrationValue </td>
           <td>(</td>
-          <td class="paramtype">SPI_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00372">spi_dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function gets the slave DMA transfer remaining bytes.</p>
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPI peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>A pointer to the spi_dma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">count</td><td>A number of bytes transferred by the non-blocking transaction. </td></tr>
+    <tr><td class="paramname">handle</td><td>TFA9XXX handle structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa86302a2371b173e8646bb612eb9440f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1b3737f4e56400a76c8c2fd5825c27e4">tfa9xxx_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The TFA9XXX handle structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa1c7a1a13116c62b258b63366850e318"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> TFA9XXX_ConvertErrorCode </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>rc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rc</td><td>Return check value from TFA driver. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status_t Returns kStatus_Success if success, otherwise returns error code. </dd></dl>
 
 </div>
 </div>

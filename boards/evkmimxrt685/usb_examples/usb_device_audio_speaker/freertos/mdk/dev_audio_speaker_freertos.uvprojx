@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, _DEBUG=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, USING_SAI, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I3C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../../..</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -894,9 +894,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -1104,6 +1119,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -1159,16 +1179,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1182,6 +1192,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1600,10 +1620,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, USING_SAI, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I3C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1621,7 +1641,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../../..</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2163,9 +2183,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -2373,6 +2408,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -2428,16 +2468,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2451,6 +2481,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2869,10 +2909,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, USING_SAI, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I3C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2890,7 +2930,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../../..</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3432,9 +3472,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -3642,6 +3697,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -3697,16 +3757,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3720,6 +3770,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4138,10 +4198,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, USING_SAI, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I3C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/usb/example/boards/evkmimxrt685/usb_device_audio_speaker/freertos;..;../../../..;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT685S/utilities;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4159,7 +4219,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../../..</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4701,9 +4761,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -4911,6 +4986,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -4966,16 +5046,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4989,6 +5059,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

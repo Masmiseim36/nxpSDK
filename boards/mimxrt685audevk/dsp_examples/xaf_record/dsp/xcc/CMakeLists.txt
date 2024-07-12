@@ -307,13 +307,11 @@ include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib)
+include_directories(${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc)
+include_directories(${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/Inc)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console)
 
@@ -367,6 +365,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hi
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private)
 
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/rdsp_memory_utils_public)
@@ -415,9 +415,9 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_dma.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4/rpmsg_platform.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_hifi4/rpmsg_platform.c"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc/PL_memoryRegion.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/Inc/PL_memoryRegion.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/LICENSE"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_cnn_api.h"
@@ -439,8 +439,6 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart_dma.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h"
@@ -594,9 +592,6 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspCycleCounter.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspStatusCodes.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/libVoiceSeekerLight.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/feature.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/math_stdlib.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/version.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_audio.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_complex.h"
@@ -622,15 +617,18 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_en.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_cn.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_de.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_es.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_fr.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_it.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_ja.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_ko.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_tr.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_en.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_cn.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_de.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_es.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_fr.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_it.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_ja.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_ko.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_pt.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_tr.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include/RdspDeviceConfig.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include/RdspPlatforms.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include/RdspTypes.h"
@@ -689,9 +687,9 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_dma.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4/rpmsg_platform.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_hifi4/rpmsg_platform.c"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc/PL_memoryRegion.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/Inc/PL_memoryRegion.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/LICENSE"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_cnn_api.h"
@@ -713,8 +711,6 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart_dma.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h"
@@ -868,9 +864,6 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspCycleCounter.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/RdspStatusCodes.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include/libVoiceSeekerLight.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/feature.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/math_stdlib.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/version.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_audio.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_complex.h"
@@ -896,15 +889,18 @@ add_executable(dsp_xaf_record_hifi4.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_en.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_cn.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_de.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_es.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_fr.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_it.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_ja.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_ko.h"
-"${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/VIT_Model_tr.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_en.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_cn.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_de.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_es.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_fr.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_it.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_ja.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_ko.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_pt.h"
+"${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/VIT_Model_tr.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include/RdspDeviceConfig.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include/RdspPlatforms.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include/RdspTypes.h"
@@ -936,7 +932,7 @@ target_link_libraries(dsp_xaf_record_hifi4.elf optimized xos)
 target_link_libraries(dsp_xaf_record_hifi4.elf optimized m)
 
 
-target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v04_09_00.a)
+target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/libVIT_HIFI4_v04_10_00.a)
 
 
 target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a)
@@ -948,7 +944,7 @@ target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../
 target_link_libraries(dsp_xaf_record_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/libnaturedsp.a)
 
 
-target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v04_09_00.a)
+target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/RT600-HIFI4/Lib/libVIT_HIFI4_v04_10_00.a)
 
 
 target_link_libraries(dsp_xaf_record_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a)

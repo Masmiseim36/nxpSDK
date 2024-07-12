@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/utilities/shell;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -754,28 +754,28 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_shell.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
             </File>
+            <File>
+              <FileName>MIMXRT685S_cm33_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -810,26 +810,6 @@
               <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1304,10 +1284,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/utilities/shell;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1726,28 +1706,28 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_shell.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
             </File>
+            <File>
+              <FileName>MIMXRT685S_cm33_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1782,26 +1762,6 @@
               <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2276,10 +2236,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/utilities/shell;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2698,28 +2658,28 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_shell.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
             </File>
+            <File>
+              <FileName>MIMXRT685S_cm33_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -2754,26 +2714,6 @@
               <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3248,10 +3188,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S/utilities/shell;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../components/codec/cs42448;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT685S/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3670,28 +3610,28 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_shell.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
             </File>
+            <File>
+              <FileName>MIMXRT685S_cm33_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -3726,26 +3666,6 @@
               <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT685S_cm33_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
             </File>
           </Files>
         </Group>

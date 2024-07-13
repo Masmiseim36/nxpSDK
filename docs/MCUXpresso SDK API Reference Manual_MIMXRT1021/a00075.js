@@ -1,34 +1,24 @@
 var a00075 =
 [
-    [ "_spdif_edma_transfer", "a00075.html#a00501", [
-      [ "leftData", "a00075.html#a73cf51a860d8b2a0802021e2d2b00dc0", null ],
-      [ "rightData", "a00075.html#a65eaecba74933b7d202426c1ba10acfc", null ],
-      [ "dataSize", "a00075.html#a0029a1324de139d229a94c97cf7264d7", null ]
+    [ "_tempmon_config", "a00075.html#a00500", [
+      [ "frequency", "a00075.html#a7abc547e53d2bf57d98a8c53aba24d73", null ],
+      [ "highAlarmTemp", "a00075.html#aef9a15b388394ba5b01c773a904e6161", null ],
+      [ "panicAlarmTemp", "a00075.html#a4ee843733473a886d67a422d4a155f64", null ],
+      [ "lowAlarmTemp", "a00075.html#a3b800f87335e6569c4122baecdae621d", null ]
     ] ],
-    [ "_spdif_edma_handle", "a00075.html#a00500", [
-      [ "dmaLeftHandle", "a00075.html#ad53fcc5f37dcd780b5ed46592d2a2d43", null ],
-      [ "dmaRightHandle", "a00075.html#a14ff820b157940e28d96b619b44e5835", null ],
-      [ "nbytes", "a00075.html#ab2da0a7b6e0edb696a64b4cd5e811fd5", null ],
-      [ "count", "a00075.html#ab782e2b28e2cdd342a94f9c3f4db3d67", null ],
-      [ "state", "a00075.html#a2c83c226450e040294b7465ab90bc9f6", null ],
-      [ "callback", "a00075.html#a67abdc63adafff37d7f54bb13ac48a59", null ],
-      [ "userData", "a00075.html#a406a65f0685838550655890f1517f6b8", null ],
-      [ "leftTcd", "a00075.html#a8bcc7f9aac0741bbaa7bad15364b6966", null ],
-      [ "rightTcd", "a00075.html#a6bb2ffffc310417bf133ff190909224f", null ],
-      [ "spdifQueue", "a00075.html#ab444c7c84f3be88f478507d13edf0e57", null ],
-      [ "transferSize", "a00075.html#a690ce6df7b6cd35d3665031951bb1f0c", null ],
-      [ "queueUser", "a00075.html#a0222731e27952445ac95faf435651e72", null ],
-      [ "queueDriver", "a00075.html#af918a94ea924a39a8780b9cdd2e99ded", null ]
+    [ "FSL_TEMPMON_DRIVER_VERSION", "a00075.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba", null ],
+    [ "tempmon_config_t", "a00075.html#ga7d83f2e7eaf7b3833a9ce786a758b867", null ],
+    [ "tempmon_alarm_mode", "a00075.html#gae299ab75db04e087bad01ec6df1b82e6", null ],
+    [ "_tempmon_alarm_mode", "a00075.html#gaa902d39a9a0944943dfa1652a1c191da", [
+      [ "kTEMPMON_HighAlarmMode", "a00075.html#ggaa902d39a9a0944943dfa1652a1c191daa6c34f34b411e7f880a5782d0329f732f", null ],
+      [ "kTEMPMON_PanicAlarmMode", "a00075.html#ggaa902d39a9a0944943dfa1652a1c191daa3cafbb2449dbb58abb5ef078907ba6b0", null ],
+      [ "kTEMPMON_LowAlarmMode", "a00075.html#ggaa902d39a9a0944943dfa1652a1c191daa3b1e1531c3d0529cba956f38568140f5", null ]
     ] ],
-    [ "FSL_SPDIF_EDMA_DRIVER_VERSION", "a00075.html#ga0d52f502d4b64dc5587a12289e6738e4", null ],
-    [ "spdif_edma_callback_t", "a00075.html#ga301f2d0b9a199636f3c105f26ebe0f57", null ],
-    [ "spdif_edma_transfer_t", "a00075.html#ga7bee16bc8fce0bfe7917d082f92ac27e", null ],
-    [ "SPDIF_TransferTxCreateHandleEDMA", "a00075.html#ga9b81a6190c5cc57120dae24864d17b78", null ],
-    [ "SPDIF_TransferRxCreateHandleEDMA", "a00075.html#ga997c6e8067aabb31c06d62dda8e18201", null ],
-    [ "SPDIF_TransferSendEDMA", "a00075.html#ga8f6d1ca1ea0d14799cc268bc0d403b52", null ],
-    [ "SPDIF_TransferReceiveEDMA", "a00075.html#ga6a9055e2562ac1a740005a235add28d2", null ],
-    [ "SPDIF_TransferAbortSendEDMA", "a00075.html#ga427c4b16d4f1fdea087e2ee2bb515565", null ],
-    [ "SPDIF_TransferAbortReceiveEDMA", "a00075.html#ga258da7096dcb32609e5bf8a6ca862ff7", null ],
-    [ "SPDIF_TransferGetSendCountEDMA", "a00075.html#gac8a656d32c96ce22f86298daf8702449", null ],
-    [ "SPDIF_TransferGetReceiveCountEDMA", "a00075.html#ga2372914f14224175a5d10130ce56b779", null ]
+    [ "TEMPMON_Init", "a00075.html#gad74d3cd12c87cd031afefa47a40c4ffa", null ],
+    [ "TEMPMON_Deinit", "a00075.html#ga9300a134aeda04212a2e84d1ccdb3e4a", null ],
+    [ "TEMPMON_GetDefaultConfig", "a00075.html#gad39681b64944bdc56124fc4dcd66a81e", null ],
+    [ "TEMPMON_StartMeasure", "a00075.html#gab591e289ffce94b52811b716f9e00fbb", null ],
+    [ "TEMPMON_StopMeasure", "a00075.html#ga430b69c227f54ee17e8c1f4db14fdf35", null ],
+    [ "TEMPMON_GetCurrentTemperature", "a00075.html#gafd97504a28d73d0ffbd8cd4c8f0810b8", null ],
+    [ "TEMPMON_SetTempAlarm", "a00075.html#gab78940fbc3cc7a3b8e3562a5981803ca", null ]
 ];

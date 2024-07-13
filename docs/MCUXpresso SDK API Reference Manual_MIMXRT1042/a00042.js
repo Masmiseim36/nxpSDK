@@ -1,6 +1,6 @@
 var a00042 =
 [
-    [ "flexspi_edma_handle_t", "a00042.html#a00319", [
+    [ "flexspi_edma_handle_t", "a00042.html#a00316", [
       [ "txDmaHandle", "a00042.html#a3d0d98f2c483c09c5332d82d4811e1e5", null ],
       [ "rxDmaHandle", "a00042.html#a2ea3c9da9a52a5a86aea6bfdf597464c", null ],
       [ "transferSize", "a00042.html#a735f036ea3a12686df32463d71d135db", null ],

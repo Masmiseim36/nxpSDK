@@ -1,10 +1,10 @@
 var a00012 =
 [
-    [ "_clock_usb_pll_config", "a00012.html#a00273", [
+    [ "_clock_usb_pll_config", "a00012.html#a00270", [
       [ "loopDivider", "a00012.html#a9d82f9d38216691211a87b46a66151fd", null ],
       [ "src", "a00012.html#a82470e57f15fb5b6d8bac2432b426e1c", null ]
     ] ],
-    [ "_clock_sys_pll_config", "a00012.html#a00272", [
+    [ "_clock_sys_pll_config", "a00012.html#a00269", [
       [ "loopDivider", "a00012.html#a168c3d5e597b98b6175b47707179784c", null ],
       [ "numerator", "a00012.html#a1216b26b84628c9691939c81303ca086", null ],
       [ "denominator", "a00012.html#a8999da931e775a9b68c059580a48e5e3", null ],
@@ -13,14 +13,14 @@ var a00012 =
       [ "ss_enable", "a00012.html#a164c4dddf5284d8851ae59af44a28d65", null ],
       [ "ss_step", "a00012.html#aca2e91c83b39ed4e684dec51fefcf414", null ]
     ] ],
-    [ "_clock_audio_pll_config", "a00012.html#a00270", [
+    [ "_clock_audio_pll_config", "a00012.html#a00267", [
       [ "loopDivider", "a00012.html#ac5ec9fa5af5f95c54ade27f230dc8913", null ],
       [ "postDivider", "a00012.html#ac41bbdb6cf3c3abdf133c7d801fbf681", null ],
       [ "numerator", "a00012.html#ac34dd639bce5c377db430aed06a685d2", null ],
       [ "denominator", "a00012.html#a0cba8c9b108b063cf0f36fe696b956e9", null ],
       [ "src", "a00012.html#aca7d246169c7aecbd4d90cdde555195c", null ]
     ] ],
-    [ "_clock_enet_pll_config", "a00012.html#a00271", [
+    [ "_clock_enet_pll_config", "a00012.html#a00268", [
       [ "enableClkOutput", "a00012.html#a766b9639fa3d3527b77307e2d3533c4b", null ],
       [ "enableClkOutput500M", "a00012.html#a711edba1ee1bbd3af2c078dddc6129c6", null ],
       [ "enableClkOutput25M", "a00012.html#a36563c6b3dbe124219e92b7e5d4cda7f", null ],

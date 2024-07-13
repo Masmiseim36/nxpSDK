@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -64,7 +63,7 @@
 #define FX_FAULT_TOLERANT_VERSION_MINOR           0x00
 
 /* Define byte offset in boot sector where the cluster number of the Fault Tolerant Log file is.
-   Note that this field (byte 116 to 119) is marked as reserved by FAT 12/16/32/exFAT specification. */
+   Note that this field (byte 116 to 119) is marked as reserved by FAT 12/16/32 specification. */
 #ifndef FX_FAULT_TOLERANT_BOOT_INDEX
 #define FX_FAULT_TOLERANT_BOOT_INDEX              116
 #endif /* FX_FAULT_TOLERANT_BOOT_INDEX */
@@ -368,13 +367,6 @@ UINT _fx_fault_tolerant_add_FAT_log(FX_MEDIA *media_ptr, ULONG cluster, ULONG va
 /* This function adds a directory log entry. */
 UINT _fx_fault_tolerant_add_dir_log(FX_MEDIA *media_ptr, ULONG64 logical_sector, ULONG offset,
                                     UCHAR *data, ULONG data_size);
-#ifdef FX_ENABLE_EXFAT
-/* This function adds a bitmap log entry. */
-UINT _fx_fault_tolerant_add_bitmap_log(FX_MEDIA *media_ptr, ULONG cluster, ULONG value);
-
-/* This function adds a checksum log entry. */
-UINT _fx_fault_tolerant_add_checksum_log(FX_MEDIA *media_ptr, ULONG64 logical_sector, ULONG offset, USHORT checksum);
-#endif /* FX_ENABLE_EXFAT */
 
 /* This function sets the FAT chain. */
 UINT _fx_fault_tolerant_set_FAT_chain(FX_MEDIA *media_ptr, UINT use_bitmap, ULONG insertion_front,

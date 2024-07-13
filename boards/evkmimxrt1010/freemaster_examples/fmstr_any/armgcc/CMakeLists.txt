@@ -72,6 +72,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../source/example_data
 )
 
+set_source_files_properties("${ProjDirPath}/../source/freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_platform_gen32le")
 
 include(${SdkRootDirPath}/devices/MIMXRT1011/all_lib_device.cmake)
 

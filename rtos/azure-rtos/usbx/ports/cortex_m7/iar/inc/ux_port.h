@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */ 
 /*                                                                        */ 
 /*    ux_port.h                                         Cortex-M7/IAR     */ 
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -46,6 +45,10 @@
 /*                                            moved tx_api.h include and  */
 /*                                            typedefs from ux_api.h,     */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added basic types guards,   */
+/*                                            improved SLONG typedef,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -80,7 +83,8 @@
 #if !defined(TX_API_H) && !defined(TX_PORT_H)
 
 #include <stdint.h>
-typedef void                                    VOID;
+#ifndef VOID
+#define VOID                                    void
 typedef char                                    CHAR;
 typedef unsigned char                           UCHAR;
 typedef int                                     INT;
@@ -89,10 +93,16 @@ typedef long                                    LONG;
 typedef unsigned long                           ULONG;
 typedef short                                   SHORT;
 typedef unsigned short                          USHORT;
+#endif
+
+#ifndef ULONG64_DEFINED
 typedef uint64_t                                ULONG64;
+#define ULONG64_DEFINED
+#endif
 
 #ifndef ALIGN_TYPE_DEFINED
 #define ALIGN_TYPE                              ULONG
+#define ALIGN_TYPE_DEFINED
 #endif
 
 #endif
@@ -110,7 +120,10 @@ typedef uint64_t                                ULONG64;
 
 /* Define additional generic USBX types.  */
 
-typedef long                        SLONG;
+#ifndef SLONG_DEFINED
+typedef LONG                        SLONG;
+#define SLONG_DEFINED
+#endif
 
 
 /*  Generic USBX Project constants follow.  */
@@ -242,7 +255,7 @@ VOID    outpl(ULONG,ULONG);
 
 #ifdef  UX_SYSTEM_INIT
 CHAR                            _ux_version_id[] = 
-                                    "Copyright (c) Microsoft Corporation. All rights reserved. * USBX Cortex-M7/IAR Version 6.2.0 *";
+                                    "Copyright (c) 2024 Microsoft Corporation. * USBX Cortex-M7/IAR Version 6.4.1 *";
 #else
 extern  CHAR                    _ux_version_id[];
 #endif

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -40,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _lx_nor_flash_sector_read                           PORTABLE C      */ 
-/*                                                           6.1.7        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -84,6 +83,9 @@
 /*                                            resulting in version 6.1    */
 /*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
 /*                                            resulting in version 6.1.7  */
+/*  10-31-2023     Xiuwen Cai               Modified comment(s),          */
+/*                                            added mapping bitmap cache, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _lx_nor_flash_sector_read(LX_NOR_FLASH *nor_flash, ULONG logical_sector, VOID *buffer)
@@ -179,6 +181,18 @@ ULONG   *sector_address;
                 /* Return status.  */
                 return(LX_ERROR);
             }
+#ifndef LX_NOR_DISABLE_EXTENDED_CACHE
+#ifdef LX_NOR_ENABLE_MAPPING_BITMAP
+
+            /* Determine if the logical sector is within the mapping bitmap.  */
+            if (logical_sector < nor_flash -> lx_nor_flash_extended_cache_mapping_bitmap_max_logical_sector)
+            {
+
+                /* Set the bit in the mapping bitmap.  */
+                nor_flash -> lx_nor_flash_extended_cache_mapping_bitmap[logical_sector >> 5] |= (ULONG)(1 << (logical_sector & 31));
+            }
+#endif
+#endif
 
             /* Increment the number of mapped physical sectors.  */
             nor_flash -> lx_nor_flash_mapped_physical_sectors++;

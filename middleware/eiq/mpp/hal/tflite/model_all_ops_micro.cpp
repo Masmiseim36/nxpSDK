@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,7 +9,7 @@
 #if (HAL_ENABLE_INFERENCE_TFLITE == 1)
 
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
-#ifdef APP_USE_NEUTRON16_MODEL
+#if defined(APP_USE_NEUTRON16_MODEL) || defined(APP_USE_NEUTRON64_MODEL)
 #include "tensorflow/lite/micro/kernels/neutron/neutron.h"
 #endif
 
@@ -130,7 +130,7 @@ tflite::MicroOpResolver __attribute__((weak)) &MODEL_GetOpsResolver()
     s_microOpResolver.AddWhile();
     s_microOpResolver.AddWindow();
     s_microOpResolver.AddZerosLike();
-#ifdef APP_USE_NEUTRON16_MODEL
+#if defined(APP_USE_NEUTRON16_MODEL) || defined(APP_USE_NEUTRON64_MODEL)
     s_microOpResolver.AddCustom(tflite::GetString_NEUTRON_GRAPH(),
         tflite::Register_NEUTRON_GRAPH());
 #endif

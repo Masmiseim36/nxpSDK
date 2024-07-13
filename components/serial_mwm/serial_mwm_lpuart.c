@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2021, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,7 @@
  ******************************************************************************/
 #include "board.h"
 #include "fsl_lpuart_freertos.h"
+#include "serial_mwm_port.h"
 
 /*******************************************************************************
  * Definitions

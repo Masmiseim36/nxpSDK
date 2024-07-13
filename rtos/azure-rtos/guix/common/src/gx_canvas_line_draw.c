@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_line_draw                                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -87,6 +86,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s), fixed a  */
+/*                                            pattern line draw issue,    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_line_draw(GX_VALUE x_start, GX_VALUE y_start, GX_VALUE x_end, GX_VALUE y_end)
@@ -254,11 +256,30 @@ GX_VALUE         brush_width;
             {
                 if (brush -> gx_brush_line_pattern)
                 {
+                    if (clip_rect.gx_rectangle_left > x_start)
+                    {
+                        width = (GX_VALUE)((clip_rect.gx_rectangle_left - x_start) & 0x1F);
+                        context -> gx_draw_context_brush.gx_brush_pattern_mask >>= width;
+                    }
+
                     /* Call display driver's simple horizontal pattern line drawing function.  */
                     display -> gx_display_driver_horizontal_pattern_line_draw(context,
                                                                               clip_rect.gx_rectangle_left,
                                                                               clip_rect.gx_rectangle_right,
                                                                               y_start);
+
+                    if (clip_rect.gx_rectangle_right < x_end)
+                    {
+                        width = (GX_VALUE)((x_end - clip_rect.gx_rectangle_right) & 0x1F);
+                        if ((context -> gx_draw_context_brush.gx_brush_pattern_mask >> width) == 0)
+                        {
+                            context -> gx_draw_context_brush.gx_brush_pattern_mask <<= (32 - width);
+                        }
+                        else
+                        {
+                            context -> gx_draw_context_brush.gx_brush_pattern_mask >>= width;
+                        }
+                    }
                 }
                 else
                 {
@@ -275,11 +296,30 @@ GX_VALUE         brush_width;
             {
                 if (brush -> gx_brush_line_pattern)
                 {
+                    if (clip_rect.gx_rectangle_top > y_start)
+                    {
+                        width = (GX_VALUE)((clip_rect.gx_rectangle_top - y_start) & 0x1F);
+                        context -> gx_draw_context_brush.gx_brush_pattern_mask >>= width;
+                    }
+
                     /* Call display driver's simple vertical line drawing function.  */
                     display -> gx_display_driver_vertical_pattern_line_draw(context,
                                                                             clip_rect.gx_rectangle_top,
                                                                             clip_rect.gx_rectangle_bottom,
                                                                             x_start);
+
+                    if (clip_rect.gx_rectangle_bottom < y_end)
+                    {
+                        width = (GX_VALUE)((y_end - clip_rect.gx_rectangle_bottom) & 0x1F);
+                        if ((context -> gx_draw_context_brush.gx_brush_pattern_mask >> width) == 0)
+                        {
+                            context -> gx_draw_context_brush.gx_brush_pattern_mask <<= (32 - width);
+                        }
+                        else
+                        {
+                            context -> gx_draw_context_brush.gx_brush_pattern_mask >>= width;
+                        }
+                    }
                 }
                 else
                 {

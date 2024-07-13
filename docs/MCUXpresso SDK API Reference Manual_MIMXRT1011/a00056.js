@@ -1,25 +1,88 @@
 var a00056 =
 [
-    [ "USB Device Configuration", "a00245.html", null ],
-    [ "_serial_port_usb_cdc_config", "a00056.html#a00376", [
-      [ "controllerIndex", "a00056.html#a14bbabeb7c5689a76a6a9fde038406cb", null ]
+    [ "_sgtl_audio_format", "a00056.html#a00373", [
+      [ "mclk_HZ", "a00056.html#a38a947cae212e2c07c91e17ba432bced", null ],
+      [ "sampleRate", "a00056.html#a0ac8e8cd01a893684b47e1434361d46d", null ],
+      [ "bitWidth", "a00056.html#adf36766a1bcbd3d5099ff71e0bb97334", null ],
+      [ "sclkEdge", "a00056.html#afa5919b175c7190ac1cb31951f295cf5", null ]
     ] ],
-    [ "SERIAL_PORT_USB_CDC_HANDLE_SIZE", "a00056.html#ga360a6c81305a4e09848df9aece70ad40", null ],
-    [ "USB_DEVICE_INTERRUPT_PRIORITY", "a00056.html#ga9fb260c0db8e2e75fa339416c82084b9", null ],
-    [ "serial_port_usb_cdc_controller_index_t", "a00056.html#gaaab9e8667ce46684016297a09abee935", null ],
-    [ "serial_port_usb_cdc_config_t", "a00056.html#gafe4f070b4cb1bee1a37fbb2cb89dff9f", null ],
-    [ "_serial_port_usb_cdc_controller_index", "a00056.html#ga655b3e8c0c8f2b005fda4d47e4f48c3d", [
-      [ "kSerialManager_UsbControllerKhci0", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3daba414efbedc13dd6605fdc76daee832f", null ],
-      [ "kSerialManager_UsbControllerKhci1", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da2992ed3c36bb733a2f3760b8a5927fdd", null ],
-      [ "kSerialManager_UsbControllerEhci0", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3daa9a69ebd4f3d306f583cb23ff5bc8aad", null ],
-      [ "kSerialManager_UsbControllerEhci1", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da48e611ec0653efbf4a8b01168b8668b3", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Fs0", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3dafd13021033517524c07c581fa500a83d", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Fs1", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da4fc76a970dded05f11d3adc8c99880c3", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Hs0", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da78c55818f572f8120a85f13337ec9274", null ],
-      [ "kSerialManager_UsbControllerLpcIp3511Hs1", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da3e09ecce4e5aee8338fa0d1574139d47", null ],
-      [ "kSerialManager_UsbControllerOhci0", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3dacb150e43e1572c4f7abb9b374783ba30", null ],
-      [ "kSerialManager_UsbControllerOhci1", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da2a98602358806c8f01cdbe42cc4c763c", null ],
-      [ "kSerialManager_UsbControllerIp3516Hs0", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da51d953a091b2650c6b8283e2ce5639ae", null ],
-      [ "kSerialManager_UsbControllerIp3516Hs1", "a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da863a8a6669f791ce5b5207b3d85c6664", null ]
-    ] ]
+    [ "_sgtl_config", "a00056.html#a00374", [
+      [ "route", "a00056.html#ae8e0a67de0bfb62cabceb62177a3a6c8", null ],
+      [ "bus", "a00056.html#ab65d798b15243d3ea37fbefee94ff170", null ],
+      [ "master_slave", "a00056.html#a4c46befc8581a0d5af0266950e2405a3", null ],
+      [ "format", "a00056.html#a960282a5a6515e911f2936b5eeed5b24", null ],
+      [ "slaveAddress", "a00056.html#a2608b29dc436a7a3acbd067d95d59a87", null ],
+      [ "i2cConfig", "a00056.html#a6f3c3705606cd36ed6122b5a0ce50128", null ]
+    ] ],
+    [ "_sgtl_handle", "a00056.html#a00375", [
+      [ "config", "a00056.html#aff102977588ebfd7bb704fa6e78cbf04", null ],
+      [ "i2cHandle", "a00056.html#aa947e0901c2f8abcc1389fd7756aafb8", null ]
+    ] ],
+    [ "FSL_SGTL5000_DRIVER_VERSION", "a00056.html#gacb25f9b960a10309cc4b9b2cb0f0c063", null ],
+    [ "CHIP_ID", "a00056.html#gab0aa3e54cd2934b67b9882957456c391", null ],
+    [ "SGTL5000_HEADPHONE_MAX_VOLUME_VALUE", "a00056.html#ga5b4c16e15a52d1a940e4d47bf3574752", null ],
+    [ "SGTL5000_I2C_ADDR", "a00056.html#ga58ceb20f920b2b006c74eeeae992830a", null ],
+    [ "SGTL_I2C_HANDLER_SIZE", "a00056.html#ga5a006451f9e990a4d3255ed7265ff1ad", null ],
+    [ "SGTL_I2C_BITRATE", "a00056.html#ga7bf82c8b0e6415457b6f42f50af4230d", null ],
+    [ "sgtl_module_t", "a00056.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3", null ],
+    [ "sgtl_route_t", "a00056.html#ga7d97f5b5552db956cdeb7ad0ec70efeb", null ],
+    [ "sgtl_protocol_t", "a00056.html#gabb24e1c0a6f4f885b77508c575382082", null ],
+    [ "sgtl_sclk_edge_t", "a00056.html#gaa442de703d57f173c868a86709eca130", null ],
+    [ "sgtl_audio_format_t", "a00056.html#gac39b9431fec36a8a0d2b18f44213b5c1", null ],
+    [ "sgtl_config_t", "a00056.html#ga04f368cf5c75e66ff28894ec9194a2f8", null ],
+    [ "sgtl_handle_t", "a00056.html#ga9460fe6fb4321e52ff2069361a6f8a12", null ],
+    [ "_sgtl5000_module", "a00056.html#ga8f64b804a9c2ab9412f5a2aa348e0795", [
+      [ "kSGTL_ModuleADC", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795aeff780e31f47de5bd4ae4f7c2247a943", null ],
+      [ "kSGTL_ModuleDAC", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795ac97955a1a57467c8a7a93629468c0ae5", null ],
+      [ "kSGTL_ModuleDAP", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795a6db304a2a1838b8733167b535efd1cc6", null ],
+      [ "kSGTL_ModuleHP", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795a7c3ca8ea568a0109f5858469734f1f22", null ],
+      [ "kSGTL_ModuleI2SIN", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795a5eec6607385362c2f1f67574f98bab7f", null ],
+      [ "kSGTL_ModuleI2SOUT", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795ad549fbd25f776da2e48029e7defb136d", null ],
+      [ "kSGTL_ModuleLineIn", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795a3cf24e3ca184744b13ce10adb648afcd", null ],
+      [ "kSGTL_ModuleLineOut", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795a04e0f93df81aacf8114308d95703248f", null ],
+      [ "kSGTL_ModuleMicin", "a00056.html#gga8f64b804a9c2ab9412f5a2aa348e0795a4d7e27445f7842c7d420a3621ac73e72", null ]
+    ] ],
+    [ "_sgtl_route", "a00056.html#ga2f39070b1aca54ecf0d46af5cda78cc1", [
+      [ "kSGTL_RouteBypass", "a00056.html#gga2f39070b1aca54ecf0d46af5cda78cc1a1ea39c5bbafcc616613e8755b70573e9", null ],
+      [ "kSGTL_RoutePlayback", "a00056.html#gga2f39070b1aca54ecf0d46af5cda78cc1ad379b8e67ddbbb27bc44c6d6f3cf7c0e", null ],
+      [ "kSGTL_RoutePlaybackandRecord", "a00056.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae11f7c67b7d1ab7e4dce3d927be7da00", null ],
+      [ "kSGTL_RoutePlaybackwithDAP", "a00056.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae79c7286d52a67b618e4e23a1f1306b6", null ],
+      [ "kSGTL_RoutePlaybackwithDAPandRecord", "a00056.html#gga2f39070b1aca54ecf0d46af5cda78cc1a53052344996dc1f90cf6457e2b81eb18", null ],
+      [ "kSGTL_RouteRecord", "a00056.html#gga2f39070b1aca54ecf0d46af5cda78cc1a0c28a072be0500106b9b32a16f05f000", null ]
+    ] ],
+    [ "_sgtl_protocol", "a00056.html#ga8edcd60c410ff680100e07e7badbe7b3", [
+      [ "kSGTL_BusI2S", "a00056.html#gga8edcd60c410ff680100e07e7badbe7b3ab56aded98ae08bb3dd4c431e036eb9b7", null ],
+      [ "kSGTL_BusLeftJustified", "a00056.html#gga8edcd60c410ff680100e07e7badbe7b3a99d80a1bbb2ca42f8d8b9ded7d0fe156", null ],
+      [ "kSGTL_BusRightJustified", "a00056.html#gga8edcd60c410ff680100e07e7badbe7b3a742196d31e1ede4eb6d0b1bd6afcdc50", null ],
+      [ "kSGTL_BusPCMA", "a00056.html#gga8edcd60c410ff680100e07e7badbe7b3aae65c2ae38164483661ce81683e2cf6d", null ],
+      [ "kSGTL_BusPCMB", "a00056.html#gga8edcd60c410ff680100e07e7badbe7b3a165348d47026247f859a40813f449cfd", null ],
+      [ "kSGTL_HeadphoneLeft", "a00056.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a4438d9d23b966a384697ac3959ec180c", null ],
+      [ "kSGTL_HeadphoneRight", "a00056.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a7c3a64195b071d4d17957f2de39a45a7", null ],
+      [ "kSGTL_LineoutLeft", "a00056.html#gga56a0f36da7f9eaaf54bd05cc2bf49173aea79ecce1f81bf12000fcf64671502ea", null ],
+      [ "kSGTL_LineoutRight", "a00056.html#gga56a0f36da7f9eaaf54bd05cc2bf49173abe25d4199f174f03f271a2ac335904bb", null ],
+      [ "kSGTL_RecordSourceLineIn", "a00056.html#ggaa156d1cebb38c8a65846c4d9c006012aa358889525fbd4a6d5998c17a2382ac16", null ],
+      [ "kSGTL_RecordSourceMic", "a00056.html#ggaa156d1cebb38c8a65846c4d9c006012aa3c1289899ca6bdbe2ee24346890a19e2", null ],
+      [ "kSGTL_PlaySourceLineIn", "a00056.html#ggaf8654c714018c6241d9ebd01f3fb5a26ad99308b50ee139be94b584a66d999caf", null ],
+      [ "kSGTL_PlaySourceDAC", "a00056.html#ggaf8654c714018c6241d9ebd01f3fb5a26a9c7fa540632ee8e4c733fb4ccebc8601", null ]
+    ] ],
+    [ "_sgtl_sclk_edge", "a00056.html#ga4afcde26974cb123a18b38138dffbb71", [
+      [ "kSGTL_SclkValidEdgeRising", "a00056.html#gga4afcde26974cb123a18b38138dffbb71aa89baee03025ca12e2fd8eb03909724c", null ],
+      [ "kSGTL_SclkValidEdgeFailling", "a00056.html#gga4afcde26974cb123a18b38138dffbb71a0e8f446d380d7f3c859b68ffe5a64a08", null ]
+    ] ],
+    [ "SGTL_Init", "a00056.html#ga5dd1b8225b23f6e47c4abed5bf74709f", null ],
+    [ "SGTL_SetDataRoute", "a00056.html#ga1ef9c339bf1ac795d7e5f3c42cebafb7", null ],
+    [ "SGTL_SetProtocol", "a00056.html#ga8087efbfa0ae9c2644d6191f441d9df0", null ],
+    [ "SGTL_SetMasterSlave", "a00056.html#ga872cb128c9d0445c60dee6dbc044c7b3", null ],
+    [ "SGTL_SetVolume", "a00056.html#ga88af855c5959f6d814bd8f8327e168d5", null ],
+    [ "SGTL_GetVolume", "a00056.html#ga6d0af6998eff44ee5765988e05d68434", null ],
+    [ "SGTL_SetMute", "a00056.html#ga4c3a087636393265417c9435b6fc57c2", null ],
+    [ "SGTL_EnableModule", "a00056.html#ga51bf307e712104f5942d4cf64c60e624", null ],
+    [ "SGTL_DisableModule", "a00056.html#ga26a3dba16af7a79e072f71d179dc00e6", null ],
+    [ "SGTL_Deinit", "a00056.html#ga27221640262b10948a03f3178e379814", null ],
+    [ "SGTL_ConfigDataFormat", "a00056.html#ga120c853dc3a86f5c70c4fbef309b6ef5", null ],
+    [ "SGTL_SetPlay", "a00056.html#ga3052a63c17bdfdfeac94d1011434af5d", null ],
+    [ "SGTL_SetRecord", "a00056.html#gaf929ad37a6dd584cd5f17d52560ef7df", null ],
+    [ "SGTL_WriteReg", "a00056.html#ga1f0eb0cad0476f34f65811b99d58752f", null ],
+    [ "SGTL_ReadReg", "a00056.html#gad044b5a578bac8480229730d610f22b6", null ],
+    [ "SGTL_ModifyReg", "a00056.html#ga43f1ac7cec503ad6e6ea178b6fb691ac", null ]
 ];

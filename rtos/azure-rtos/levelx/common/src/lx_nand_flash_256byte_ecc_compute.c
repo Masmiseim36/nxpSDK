@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -40,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _lx_nand_flash_256byte_ecc_compute                  PORTABLE C      */ 
-/*                                                           6.1.7        */
+/*                                                           6.2.1       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -77,6 +76,9 @@
 /*                                            resulting in version 6.1    */
 /*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
 /*                                            resulting in version 6.1.7  */
+/*  03-08-2023     Xiuwen Cai               Modified comment(s),          */
+/*                                            inverted output,            */
+/*                                            resulting in version 6.2.1 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _lx_nand_flash_256byte_ecc_compute(UCHAR *page_buffer, UCHAR *ecc_buffer)
@@ -226,6 +228,10 @@ USHORT      odd_byte_parity;
 
     /* Pack bit 0.  */    
     ecc_buffer[(0+2)/8] = ((UCHAR)(ecc_buffer[(0+2)/8] | ((even_bit_parity >> 0) & 1) << (0+2)%8) & 0xFF);
+
+    ecc_buffer[0] = (UCHAR)~ecc_buffer[0];
+    ecc_buffer[1] = (UCHAR)~ecc_buffer[1];
+    ecc_buffer[2] = (UCHAR)~ecc_buffer[2];
 
     /* Return success!  */
     return(LX_SUCCESS);

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_hcd_sim_host_uninitialize                       PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -70,6 +69,9 @@
 /*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            added standalone support,   */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2023     Yajun Xia                Modified comment(s),          */
+/*                                            refined memory management,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_hcd_sim_host_uninitialize(UX_HCD_SIM_HOST *hcd_sim_host)
@@ -115,9 +117,14 @@ UINT                    td_index;
 #endif
 
     /* Free TD/ED memories.  */
-    _ux_utility_memory_free(hcd_sim_host -> ux_hcd_sim_host_iso_td_list);
-    _ux_utility_memory_free(hcd_sim_host -> ux_hcd_sim_host_td_list);
-    _ux_utility_memory_free(hcd_sim_host -> ux_hcd_sim_host_ed_list);
+    if (hcd_sim_host -> ux_hcd_sim_host_iso_td_list)
+        _ux_utility_memory_free(hcd_sim_host -> ux_hcd_sim_host_iso_td_list);
+
+    if (hcd_sim_host -> ux_hcd_sim_host_td_list)
+        _ux_utility_memory_free(hcd_sim_host -> ux_hcd_sim_host_td_list);
+
+    if (hcd_sim_host -> ux_hcd_sim_host_ed_list)
+        _ux_utility_memory_free(hcd_sim_host -> ux_hcd_sim_host_ed_list);
 
     /* Free simulated host controller memory.  */
     _ux_utility_memory_free(hcd_sim_host);

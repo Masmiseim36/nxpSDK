@@ -49,7 +49,6 @@ var searchData=
   ['lpuart_5fidle_5fconfig_5ft',['lpuart_idle_config_t',['../a00047.html#ga48780347b56ffcf164d92df6957c8ab4',1,'fsl_lpuart.h']]],
   ['lpuart_5fidle_5ftype_5fselect_5ft',['lpuart_idle_type_select_t',['../a00047.html#gad2f95b94d8a055a75e2099e11df4aece',1,'fsl_lpuart.h']]],
   ['lpuart_5fparity_5fmode_5ft',['lpuart_parity_mode_t',['../a00047.html#gab5b7fa64ce57a2f68327e745f4a3e0b2',1,'fsl_lpuart.h']]],
-  ['lpuart_5frtos_5fconfig_5ft',['lpuart_rtos_config_t',['../a00049.html#gaec3e5cc86ceea303798e171e10f9163a',1,'fsl_lpuart_freertos.h']]],
   ['lpuart_5fstop_5fbit_5fcount_5ft',['lpuart_stop_bit_count_t',['../a00047.html#ga5c25153c13c99b8c63d8e78cdfeea30f',1,'fsl_lpuart.h']]],
   ['lpuart_5ftransfer_5fcallback_5ft',['lpuart_transfer_callback_t',['../a00047.html#ga7ab1637091d166aa8b69517350fb05c8',1,'fsl_lpuart.h']]],
   ['lpuart_5ftransfer_5ft',['lpuart_transfer_t',['../a00047.html#ga1d4707ebc5d49dd655eedb7e5acd27fd',1,'fsl_lpuart.h']]],

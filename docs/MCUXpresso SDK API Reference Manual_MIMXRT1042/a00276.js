@@ -1,7 +1,7 @@
 var a00276 =
 [
-    [ "LPSPI CMSIS Driver", "a00278.html", null ],
-    [ "LPSPI FreeRTOS Driver", "a00277.html", "a00277" ],
-    [ "LPSPI Peripheral driver", "a00047.html", "a00047" ],
-    [ "LPSPI eDMA Driver", "a00048.html", "a00048" ]
+    [ "LPUART CMSIS Driver", "a00278.html", null ],
+    [ "LPUART Driver", "a00051.html", "a00051" ],
+    [ "LPUART FreeRTOS Driver", "a00277.html", null ],
+    [ "LPUART eDMA Driver", "a00052.html", "a00052" ]
 ];

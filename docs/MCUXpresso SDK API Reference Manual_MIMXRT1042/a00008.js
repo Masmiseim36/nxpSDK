@@ -1,6 +1,6 @@
 var a00008 =
 [
-    [ "adc_config_t", "a00008.html#a00337", [
+    [ "adc_config_t", "a00008.html#a00334", [
       [ "enableOverWrite", "a00008.html#a19d83f209fe0268bd19db07a40afc183", null ],
       [ "enableContinuousConversion", "a00008.html#a2a0ab8cefc9823454fe3c2293d1c4add", null ],
       [ "enableHighSpeed", "a00008.html#a29f0906444baf75003692febf409bc07", null ],
@@ -13,16 +13,16 @@ var a00008 =
       [ "clockDriver", "a00008.html#a04a397df8ca708dcff3710d76ccecd61", null ],
       [ "resolution", "a00008.html#a4d83267d7a76c64b2a209c4afc8a30cd", null ]
     ] ],
-    [ "adc_offest_config_t", "a00008.html#a00342", [
+    [ "adc_offest_config_t", "a00008.html#a00339", [
       [ "enableSigned", "a00008.html#a61676f66f36c8cc1c5402b2ba7471e46", null ],
       [ "offsetValue", "a00008.html#a79136d5e9ab922cd1a0d200812e6e832", null ]
     ] ],
-    [ "adc_hardware_compare_config_t", "a00008.html#a00341", [
+    [ "adc_hardware_compare_config_t", "a00008.html#a00338", [
       [ "hardwareCompareMode", "a00008.html#af1db114f296c68ff883b773d45b1964a", null ],
       [ "value1", "a00008.html#a40873953dfaca82e7f8e0346a312e2e0", null ],
       [ "value2", "a00008.html#a6bee6b6b6d9376acf6a05e0a3855a6c9", null ]
     ] ],
-    [ "adc_channel_config_t", "a00008.html#a00336", [
+    [ "adc_channel_config_t", "a00008.html#a00333", [
       [ "channelNumber", "a00008.html#aad852da01296532dca52642ccfda4cbb", null ],
       [ "enableInterruptOnConversionCompleted", "a00008.html#aab4cddcc772816883795e9ac42c5701d", null ]
     ] ],

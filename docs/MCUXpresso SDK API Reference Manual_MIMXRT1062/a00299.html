@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: debug console configuration</title>
+<title>MCUXpresso SDK API Reference Manual: Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,164 +99,56 @@ $(document).ready(function(){initNavTree('a00299.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">debug console configuration<div class="ingroups"><a class="el" href="a00298.html">Debug Console</a></div></div>  </div>
+<div class="title">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>The configuration is used for debug console only.  
-<a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p> .</p>
-<p>Please note, it is not sued for debug console lite. </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga028eff2428680ec9e47eed17d7ad6180"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga028eff2428680ec9e47eed17d7ad6180">DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN</a>&#160;&#160;&#160;(512U)</td></tr>
-<tr class="memdesc:ga028eff2428680ec9e47eed17d7ad6180"><td class="mdescLeft">&#160;</td><td class="mdescRight">If Non-blocking mode is needed, please define it at project setting, otherwise blocking mode is the default transfer mode.  <a href="#ga028eff2428680ec9e47eed17d7ad6180">More...</a><br/></td></tr>
-<tr class="separator:ga028eff2428680ec9e47eed17d7ad6180"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadad6011e61c820f396b1c13568dbfe16"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#gadad6011e61c820f396b1c13568dbfe16">DEBUG_CONSOLE_RECEIVE_BUFFER_LEN</a>&#160;&#160;&#160;(1024U)</td></tr>
-<tr class="memdesc:gadad6011e61c820f396b1c13568dbfe16"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the receive buffer length which is used to store the user input, buffer is enabled automatically when non-blocking transfer is using, This value will affect the RAM's ultilization, should be set per paltform's capability and software requirement.  <a href="#gadad6011e61c820f396b1c13568dbfe16">More...</a><br/></td></tr>
-<tr class="separator:gadad6011e61c820f396b1c13568dbfe16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2823ff7917ffeaaccf805f739116ec1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#gab2823ff7917ffeaaccf805f739116ec1">DEBUG_CONSOLE_TX_RELIABLE_ENABLE</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:gab2823ff7917ffeaaccf805f739116ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether enable the reliable TX function If the macro is zero, the reliable TX function of the debug console is disabled.  <a href="#gab2823ff7917ffeaaccf805f739116ec1">More...</a><br/></td></tr>
-<tr class="separator:gab2823ff7917ffeaaccf805f739116ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27259eda6262948659d081ea4b7ad2fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga27259eda6262948659d081ea4b7ad2fe"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga27259eda6262948659d081ea4b7ad2fe">DEBUG_CONSOLE_RX_ENABLE</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:ga27259eda6262948659d081ea4b7ad2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether enable the RX function If the macro is zero, the receive function of the debug console is disabled. <br/></td></tr>
-<tr class="separator:ga27259eda6262948659d081ea4b7ad2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga9777b06b434b336e5a2c1b21421c9ea3">DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN</a>&#160;&#160;&#160;(128U)</td></tr>
-<tr class="memdesc:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the MAX log length debug console support , that is when you call printf("log", x);, the log length can not bigger than this value.  <a href="#ga9777b06b434b336e5a2c1b21421c9ea3">More...</a><br/></td></tr>
-<tr class="separator:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2afcebb59f366867a49bb888b8d043d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#gab2afcebb59f366867a49bb888b8d043d">DEBUG_CONSOLE_SCANF_MAX_LOG_LEN</a>&#160;&#160;&#160;(20U)</td></tr>
-<tr class="memdesc:gab2afcebb59f366867a49bb888b8d043d"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the buffer support buffer scanf log length, that is when you call scanf("log", &amp;x);, the log length can not bigger than this value.  <a href="#gab2afcebb59f366867a49bb888b8d043d">More...</a><br/></td></tr>
-<tr class="separator:gab2afcebb59f366867a49bb888b8d043d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1cbe5dd480860843788779e39d1d0d1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga1cbe5dd480860843788779e39d1d0d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console synchronization User should not change these macro for synchronization mode, but add the corresponding synchronization mechanism per different software environment.  <a href="#ga1cbe5dd480860843788779e39d1d0d1e">More...</a><br/></td></tr>
-<tr class="separator:ga1cbe5dd480860843788779e39d1d0d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9589914d5a8b1cfedf834d52a6574496"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9589914d5a8b1cfedf834d52a6574496"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga9589914d5a8b1cfedf834d52a6574496">DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:ga9589914d5a8b1cfedf834d52a6574496"><td class="mdescLeft">&#160;</td><td class="mdescRight">synchronization for freertos software <br/></td></tr>
-<tr class="separator:ga9589914d5a8b1cfedf834d52a6574496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b85f4e4309413064a69c99e7327d3f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga7b85f4e4309413064a69c99e7327d3f2">DEBUG_CONSOLE_SYNCHRONIZATION_MODE</a>&#160;&#160;&#160;<a class="el" href="a00299.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a></td></tr>
-<tr class="memdesc:ga7b85f4e4309413064a69c99e7327d3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTOS synchronization mechanism disable If not defined, default is enable, to avoid multitask log print mess.  <a href="#ga7b85f4e4309413064a69c99e7327d3f2">More...</a><br/></td></tr>
-<tr class="separator:ga7b85f4e4309413064a69c99e7327d3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5cc1f7845683fbde63e9619f38aac2d1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga5cc1f7845683fbde63e9619f38aac2d1">DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">echo function support If you want to use the echo function,please define DEBUG_CONSOLE_ENABLE_ECHO at your project setting. <br/></td></tr>
-<tr class="separator:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74776e2523880761897d8b57199e5596"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga74776e2523880761897d8b57199e5596">BOARD_USE_VIRTUALCOM</a>&#160;&#160;&#160;0U</td></tr>
-<tr class="memdesc:ga74776e2523880761897d8b57199e5596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition to select virtual com(USB CDC) as the debug console.  <a href="#ga74776e2523880761897d8b57199e5596">More...</a><br/></td></tr>
-<tr class="separator:ga74776e2523880761897d8b57199e5596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<p>The MCUXpresso SDK provides drivers to access the Secure Digital Card(up to v3.0), Embedded MultiMedia Card(up to v5.0) and sdio card(up to v3.0) based on the SDHC/USDHC/SDIF driver. Here is a simple block diagram about the drivers:</p>
+<pre class="fragment">                ---------------------------
+                |       Application       |
+                ---------------------------
+                            |
+                            v
+                ---------------------------
+                |       Card driver       |
+                ---------------------------
+                            |
+                            v
+                ------------- -------------
+                |host driver| |OSA adapter|
+                ------------- -------------
+                            |
+                            v
+                ----------------------------
+                |  host controller driver  |
+                ----------------------------
+                            |
+                            v
+                ----------------------------
+                |host controller peripheral|
+                ----------------------------
+                            |
+                            v
+                ----------------------------
+                |          card            |
+                ----------------------------</pre> <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00055"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html">MMC Card Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00064"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html">SD Card Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00065"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html">SDIO Card Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00054"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html">SDMMC Common</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00300"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html">SDMMC HOST Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00066"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html">SDMMC OSA</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga028eff2428680ec9e47eed17d7ad6180"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN&#160;&#160;&#160;(512U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Warning: If you want to use non-blocking transfer,please make sure the corresponding IO interrupt is enable, otherwise there is no output. And non-blocking is combine with buffer, no matter bare-metal or rtos. Below shows how to configure in your project if you want to use non-blocking mode. For IAR, right click project and select "Options", define it in "C/C++ Compiler-&gt;Preprocessor-&gt;Defined symbols". For KEIL, click "Options for Target…", define it in "C/C++-&gt;Preprocessor Symbols-&gt;Define". For ARMGCC, open CmakeLists.txt and add the following lines, "SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")" for debug target. "SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")" for release target. For MCUxpresso, right click project and select "Properties", define it in "C/C++ Build-&gt;Settings-&gt;MCU C
-Complier-&gt;Preprocessor".</p>
-<p>define the transmit buffer length which is used to store the multi task log, buffer is enabled automatically when non-blocking transfer is using, This value will affect the RAM's ultilization, should be set per paltform's capability and software requirement. If it is configured too small, log maybe missed , because the log will not be buffered if the buffer is full, and the print will return immediately with -1. And this value should be multiple of 4 to meet memory alignment. </p>
-
-</div>
-</div>
-<a class="anchor" id="gadad6011e61c820f396b1c13568dbfe16"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_RECEIVE_BUFFER_LEN&#160;&#160;&#160;(1024U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If it is configured too small, log maybe missed, because buffer will be overwrited if buffer is too small. And this value should be multiple of 4 to meet memory alignment. </p>
-
-</div>
-</div>
-<a class="anchor" id="gab2823ff7917ffeaaccf805f739116ec1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_TX_RELIABLE_ENABLE&#160;&#160;&#160;(1U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When the macro is zero, the string of PRINTF will be thrown away after the transmit buffer is full. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9777b06b434b336e5a2c1b21421c9ea3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN&#160;&#160;&#160;(128U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro decide the local log buffer length, the buffer locate at stack, the stack maybe overflow if the buffer is too big and current task stack size not big enough. </p>
-
-</div>
-</div>
-<a class="anchor" id="gab2afcebb59f366867a49bb888b8d043d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_SCANF_MAX_LOG_LEN&#160;&#160;&#160;(20U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>As same as the DEBUG_CONSOLE_BUFFER_PRINTF_MAX_LOG_LEN. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga1cbe5dd480860843788779e39d1d0d1e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_SYNCHRONIZATION_BM&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Such as, if another RTOS is used, add: #define DEBUG_CONSOLE_SYNCHRONIZATION_XXXX 3 in this configuration file and implement the synchronization in fsl.log.c.</p>
-<p>synchronization for baremetal software </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7b85f4e4309413064a69c99e7327d3f2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG_CONSOLE_SYNCHRONIZATION_MODE&#160;&#160;&#160;<a class="el" href="a00299.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If other RTOS is used, you can implement the RTOS's specific synchronization mechanism in fsl.log.c If synchronization is disabled, log maybe messed on terminal. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga74776e2523880761897d8b57199e5596"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BOARD_USE_VIRTUALCOM&#160;&#160;&#160;0U</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

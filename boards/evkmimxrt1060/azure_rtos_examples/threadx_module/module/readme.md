@@ -7,11 +7,11 @@ two threads and calling the uart interface to print information.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.40.1
+- IAR embedded Workbench  9.60.1
 
 Hardware requirements
 =====================

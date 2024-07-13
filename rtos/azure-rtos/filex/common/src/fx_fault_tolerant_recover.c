@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -60,7 +59,6 @@
 /*    _fx_fault_tolerant_cleanup_FAT_chain  Cleanup FAT chain             */
 /*    _fx_utility_32_unsigned_read          Read a ULONG from memory      */
 /*    _fx_utility_FAT_entry_write           Write a FAT entry             */
-/*    _fx_utility_exFAT_bitmap_flush        Flush exFAT allocation bitmap */
 /*    _fx_utility_FAT_flush                 Flush written FAT entries     */
 /*                                                                        */
 /*  CALLED BY                                                             */
@@ -146,14 +144,6 @@ FX_FAULT_TOLERANT_FAT_CHAIN *FAT_chain;
 
     /* Flush FAT table. */
 #ifdef FX_FAULT_TOLERANT
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        /* Flush exFAT bitmap.  */
-        _fx_utility_exFAT_bitmap_flush(media_ptr);
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Ensure the new FAT chain is properly written to the media.  */
 

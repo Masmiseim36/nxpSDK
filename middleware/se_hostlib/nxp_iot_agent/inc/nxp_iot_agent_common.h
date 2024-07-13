@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -130,6 +130,9 @@ extern "C" {
 #define IOT_AGENT_PROTOCOL_DDS      (5)
 #define IOT_AGENT_PROTOCOL_COAP     (6)
 
+#define IOT_AGENT_KEYSTORE_ID_SEMSLITE  (1)
+
+
 /** The length of a correlation ID as used by the cloud service.
  *
  * These are UUIDs: 32 hex digits + 4 dashes + \0.
@@ -138,12 +141,12 @@ extern "C" {
 
 // TODO: extract the time measurement from smcomm to be able to use it
 // also without smcomm (for PSA-only approach).
-#if (! NXP_IOT_AGENT_HAVE_SSS)
+#if NXP_IOT_AGENT_HAVE_PSA && ((NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW) || (NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL))
 #undef IOT_AGENT_TIME_MEASUREMENT_ENABLE
 #define IOT_AGENT_TIME_MEASUREMENT_ENABLE     0
 #endif // ! NXP_IOT_AGENT_HAVE_SSS
 
-#if NXP_IOT_AGENT_HAVE_PSA && (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) // TODO we need to move the parsing of simulator blob logic to driver wrapper (see IOTDL-1233)
+#if (NXP_IOT_AGENT_HAVE_PSA && (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)) // TODO we need to move the parsing of simulator blob logic to driver wrapper (see IOTDL-1233)
 #undef psa_import_key
 #else
 #if !NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -30,7 +29,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_remote_certificate_verify            PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -86,10 +85,15 @@
 /*  10-31-2022     Yanwu Cai                Modified comment(s), added    */
 /*                                            custom secret generation,   */
 /*                                            resulting in version 6.2.0  */
+/*  03-08-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            fixed compiler errors when  */
+/*                                            x509 is disabled,           */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_remote_certificate_verify(NX_SECURE_TLS_SESSION *tls_session)
 {
+#ifndef NX_SECURE_DISABLE_X509
 UINT                              status;
 NX_SECURE_X509_CERT              *remote_certificate;
 NX_SECURE_X509_CERTIFICATE_STORE *store;
@@ -156,5 +160,10 @@ ULONG                             current_time;
     }
 
     return(status);
+#else
+    NX_PARAMETER_NOT_USED(tls_session);
+
+    return(NX_NOT_SUPPORTED);
+#endif
 }
 

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_audio_read_thread_entry            PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -84,6 +83,11 @@
 /*  10-31-2022     Yajun Xia                Modified comment(s),          */
 /*                                            added standalone support,   */
 /*                                            resulting in version 6.2.0  */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes  */
+/*                                            with zero copy enabled,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _ux_device_class_audio_read_thread_entry(ULONG audio_stream)
@@ -127,6 +131,13 @@ ULONG                           actual_length;
             /* Get transfer instance.  */
             transfer = &endpoint -> ux_slave_endpoint_transfer_request;
 
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+
+            /* Zero copy: directly use frame buffer.  */
+            transfer -> ux_slave_transfer_request_data_pointer = stream ->
+                    ux_device_class_audio_stream_transfer_pos -> ux_device_class_audio_frame_data;
+#endif
+
             /* Start frame transfer anyway.  */
             status = _ux_device_stack_transfer_request(transfer, max_packet_size, max_packet_size);
 
@@ -146,9 +157,14 @@ ULONG                           actual_length;
             /* Frame received, log it.  */
             stream -> ux_device_class_audio_stream_transfer_pos -> ux_device_class_audio_frame_length = actual_length;
             stream -> ux_device_class_audio_stream_transfer_pos -> ux_device_class_audio_frame_pos = 0;
+
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 0
+
+            /* Copy data from endpoint buffer.  */
             _ux_utility_memory_copy(stream -> ux_device_class_audio_stream_transfer_pos -> ux_device_class_audio_frame_data,
                             transfer -> ux_slave_transfer_request_data_pointer,
                             actual_length); /* Use case of memcpy is verified. */
+#endif
 
             /* For simple, do not advance the transfer position if there is overflow.  */
             next_pos = (UCHAR *)stream -> ux_device_class_audio_stream_transfer_pos;

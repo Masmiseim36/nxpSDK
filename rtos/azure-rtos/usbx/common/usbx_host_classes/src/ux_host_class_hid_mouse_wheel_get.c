@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -100,3 +99,52 @@ UX_HOST_CLASS_HID   *hid;
     return(UX_SUCCESS);    
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_class_hid_mouse_wheel_get                 PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in HID mouse wheel get function call.   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    mouse_instance                        Pointer to mouse instance     */
+/*    mouse_wheel_movement                  Current Mouse wheel movement  */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                                              */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_hid_mouse_wheel_get    Get mouse wheel               */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Chaoqiong Xiao           Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT  _uxe_host_class_hid_mouse_wheel_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
+                                            SLONG *mouse_wheel_movement) 
+{
+
+    /* Sanity checks.  */
+    if ((mouse_instance == UX_NULL) || (mouse_wheel_movement == UX_NULL))
+        return(UX_INVALID_PARAMETER);
+
+    /* Invoke mouse wheel get function.  */
+    return(_ux_host_class_hid_mouse_wheel_get(mouse_instance, mouse_wheel_movement));
+}

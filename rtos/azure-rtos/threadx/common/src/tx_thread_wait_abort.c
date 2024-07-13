@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _tx_thread_wait_abort                               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -68,9 +67,12 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020     William E. Lamie         Initial Version 6.0           */
-/*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
+/*  05-19-2020      William E. Lamie        Initial Version 6.0           */
+/*  09-30-2020      Yuxin Zhou              Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  03-08-2023      Scott Larson            Check if thread is coming out */
+/*                                            of suspension elsewhere,    */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _tx_thread_wait_abort(TX_THREAD  *thread_ptr)
@@ -132,6 +134,18 @@ ULONG           suspension_sequence;
             TX_RESTORE
 #endif
         }
+        else if(thread_ptr -> tx_thread_suspend_cleanup == TX_NULL)
+        {
+            /* Thread is coming out of suspension elsewhere.  */
+
+#ifndef TX_NOT_INTERRUPTABLE
+            /* Increment the disable preemption flag.  */
+            _tx_thread_preempt_disable++;
+
+            /* Restore interrupts.  */
+            TX_RESTORE
+#endif
+        }
         else
         {
 
@@ -167,13 +181,8 @@ ULONG           suspension_sequence;
             TX_RESTORE
 #endif
 
-            /* Call any cleanup routines.  */
-            if (suspend_cleanup != TX_NULL)
-            {
-
-                /* Yes, there is a function to call.  */
-                (suspend_cleanup)(thread_ptr, suspension_sequence);
-            }
+            /* Call cleanup routine.  */
+            (suspend_cleanup)(thread_ptr, suspension_sequence);
         }
 
         /* If the abort of the thread wait was successful, if so resume the thread.  */

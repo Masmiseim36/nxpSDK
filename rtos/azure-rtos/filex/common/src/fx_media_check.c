@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -30,9 +29,6 @@
 #include "fx_directory.h"
 #include "fx_media.h"
 #include "fx_utility.h"
-#ifdef FX_ENABLE_EXFAT
-#include "fx_directory_exFAT.h"
-#endif /* FX_ENABLE_EXFAT */
 
 
 /* Define parameters for FileX media check utility.  */
@@ -184,9 +180,6 @@ TX_TRACE_BUFFER_ENTRY   *trace_event;
 ULONG                    trace_timestamp;
 #endif
 
-#ifdef FX_ENABLE_EXFAT
-    current_errors = 0;
-#endif
 
     /* Check the media to make sure it is open.  */
     if (media_ptr -> fx_media_id != FX_MEDIA_ID)
@@ -306,24 +299,6 @@ ULONG                    trace_timestamp;
         logical_fat[i] =  0;
     }
 
-#ifdef FX_ENABLE_EXFAT
-
-    /* Mark the clusters occupied by Allocation Bitmap table, Up-cast table and the first cluster of root directory. */
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-    ULONG offset = 0;
-
-        for (i = ((media_ptr -> fx_media_root_cluster_32 - FX_FAT_ENTRY_START) >> 3); i; i--)
-        {
-            logical_fat[offset++] = 0xff;
-        }
-
-        for (i = ((media_ptr -> fx_media_root_cluster_32 - FX_FAT_ENTRY_START) & 7); i; i--)
-        {
-            logical_fat[offset] = (UCHAR)((logical_fat[offset] << 1) | 0x1);
-        }
-    }
-#endif /* FX_ENABLE_EXFAT */
 
 #ifdef FX_ENABLE_FAULT_TOLERANT
     if (media_ptr -> fx_media_fault_tolerant_enabled)
@@ -338,15 +313,6 @@ ULONG                    trace_timestamp;
 
             cluster_number = cluster;
 
-#ifdef FX_ENABLE_EXFAT
-
-            /* For the index of the first cluster in exFAT is 2, adjust the number of clusters to fit Allocation Bitmap Table. */
-            /* We will compare logical_fat with Aollcation Bitmap table later to find out lost clusters. */
-            if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-            {
-                cluster_number = cluster - FX_FAT_ENTRY_START;
-            }
-#endif /* FX_ENABLE_EXFAT */
 
             logical_fat[cluster_number >> 3] = (UCHAR)(logical_fat[cluster_number >> 3] | (1 << (cluster_number & 7)));
         }
@@ -354,12 +320,7 @@ ULONG                    trace_timestamp;
 #endif /* FX_ENABLE_FAULT_TOLERANT */
 
     /* If FAT32 is present, determine if the root directory is coherent.  */
-#ifdef FX_ENABLE_EXFAT
-    if ((media_ptr -> fx_media_FAT_type == FX_FAT32) ||
-        (media_ptr -> fx_media_FAT_type == FX_exFAT))
-#else
     if (media_ptr -> fx_media_32_bit_FAT)
-#endif /* FX_ENABLE_EXFAT */
     {
 
         /* A 32-bit FAT is present. We need to walk the clusters of the root directory to determine if
@@ -444,12 +405,7 @@ ULONG                    trace_timestamp;
         {
 
             /* Read a directory entry.  */
-#ifdef FX_ENABLE_EXFAT
-            /* Hash value of the file name is not cared. */
-            status =  _fx_directory_entry_read_ex(media_ptr, temp_dir_ptr, &i, dir_entry_ptr, 0);
-#else
             status =  _fx_directory_entry_read(media_ptr, temp_dir_ptr, &i, dir_entry_ptr);
-#endif /* FX_ENABLE_EXFAT */
 
             /* Determine if the read was successful.  */
             if (status)
@@ -463,11 +419,7 @@ ULONG                    trace_timestamp;
             }
 
             /* Check for the last entry.  */
-#ifdef FX_ENABLE_EXFAT
-            if (dir_entry_ptr -> fx_dir_entry_type == FX_EXFAT_DIR_ENTRY_TYPE_END_MARKER)
-#else
             if (dir_entry_ptr -> fx_dir_entry_name[0] == (CHAR)FX_DIR_ENTRY_DONE)
-#endif /* FX_ENABLE_EXFAT */
             {
 
                 /* Last entry in this directory - no need to check further.  */
@@ -475,11 +427,7 @@ ULONG                    trace_timestamp;
             }
 
             /* Is the entry free?  */
-#ifdef FX_ENABLE_EXFAT
-            if (dir_entry_ptr -> fx_dir_entry_type != FX_EXFAT_DIR_ENTRY_TYPE_FILE_DIRECTORY)
-#else
             if ((dir_entry_ptr -> fx_dir_entry_name[0] == (CHAR)FX_DIR_ENTRY_FREE) && (dir_entry_ptr -> fx_dir_entry_short_name[0] == 0))
-#endif /* FX_ENABLE_EXFAT */
             {
 
                 /* A deleted entry */
@@ -487,55 +435,10 @@ ULONG                    trace_timestamp;
                 continue;
             }
 
-#ifdef FX_ENABLE_EXFAT
 
-            /* Determine whether FAT chain is used. */
-            if (dir_entry_ptr -> fx_dir_entry_dont_use_fat & 1)
-            {
-            ULONG64 remaining_size = dir_entry_ptr -> fx_dir_entry_file_size;
-            ULONG   cluster = dir_entry_ptr -> fx_dir_entry_cluster, cluster_number;
-
-                valid_clusters = 0;
-
-                while (remaining_size)
-                {
-                    if (remaining_size >= bytes_per_cluster)
-                    {
-                        remaining_size -= bytes_per_cluster;
-                    }
-                    else
-                    {
-                        remaining_size = 0;
-                        last_cluster = cluster;
-                    }
-
-                    cluster_number = cluster - FX_FAT_ENTRY_START;
-
-                    /* Is the current cluster already marked? */
-                    if ((logical_fat[cluster_number / 8] >> (cluster_number % 8)) & 0x01)
-                    {
-                        current_errors = FX_FILE_SIZE_ERROR;
-                        last_cluster = dir_entry_ptr -> fx_dir_entry_cluster + valid_clusters;
-                        break;
-                    }
-                    
-                    /* Mark the current cluster. */
-                    logical_fat[cluster_number >> 3] = (UCHAR)(logical_fat[cluster_number >> 3] | (1 << (cluster_number & 7)));
-
-                    valid_clusters++;
-                    cluster++;
-                }
-            }
-            else
-            {
-#endif /* FX_ENABLE_EXFAT */
-
-                /* Look for any cross links or errors in the FAT chain of current directory entry. */
-                current_errors =  _fx_media_check_FAT_chain_check(media_ptr, dir_entry_ptr -> fx_dir_entry_cluster,
-                                                                  &last_cluster, &valid_clusters, logical_fat);
-#ifdef FX_ENABLE_EXFAT
-            }
-#endif /* FX_ENABLE_EXFAT */
+            /* Look for any cross links or errors in the FAT chain of current directory entry. */
+            current_errors =  _fx_media_check_FAT_chain_check(media_ptr, dir_entry_ptr -> fx_dir_entry_cluster,
+                                                              &last_cluster, &valid_clusters, logical_fat);
 
             /* Make them part of the errors reported to the caller.  */
             *errors_detected =  *errors_detected | current_errors;
@@ -710,15 +613,6 @@ ULONG                    trace_timestamp;
                 /* Skip the first two entries of sub-directories.  */
                 i =  2;
 
-#ifdef FX_ENABLE_EXFAT
-
-                /* For exFAT, there is no dir-entries for ".." and ".". */
-                if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-                {
-                    current_directory[current_directory_index].current_directory_entry = 0;
-                    i =  0;
-                }
-#endif /* FX_ENABLE_EXFAT */
             }
             else
             {
@@ -777,24 +671,11 @@ ULONG                    trace_timestamp;
         }
     } while (1);
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
 
-        /* If exFAT is in use, compare the logical_fat with Allocation Bitmap Table directly. */
-        current_errors =  _fx_media_check_exFAT_lost_cluster_check(media_ptr, logical_fat, media_ptr -> fx_media_total_clusters, error_correction_option);
-    }
-    else
-    {
-#endif /* FX_ENABLE_EXFAT */
-
-        /* At this point, all the files and sub-directories have been examined.  We now need to check for
-           lost clusters in the logical FAT.  A lost cluster is basically anything that is not reported in
-           the logical FAT that has a non-zero value in the real FAT.  */
-        current_errors =  _fx_media_check_lost_cluster_check(media_ptr, logical_fat, media_ptr -> fx_media_total_clusters, error_correction_option);
-#ifdef FX_ENABLE_EXFAT
-    }
-#endif /* FX_ENABLE_EXFAT */
+    /* At this point, all the files and sub-directories have been examined.  We now need to check for
+       lost clusters in the logical FAT.  A lost cluster is basically anything that is not reported in
+       the logical FAT that has a non-zero value in the real FAT.  */
+    current_errors =  _fx_media_check_lost_cluster_check(media_ptr, logical_fat, media_ptr -> fx_media_total_clusters, error_correction_option);
 
     /* Incorporate the error returned by the lost FAT check.  */
     *errors_detected =  *errors_detected | current_errors;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP.
+ * Copyright 2021-2024 NXP.
  * NXP Confidential and Proprietary.
  * This software is owned or controlled by NXP and may only be used strictly in
  * accordance with the applicable license terms. By expressly accepting such
@@ -139,6 +139,15 @@ struct _gfx_dev
  *
  */
 int HAL_GfxDev_CPU_Register(gfx_dev_t *dev);
+
+/*!
+ * @brief Register the graphic device with the GPU operations
+ *
+ * @param[in] dev graphic device to register
+ * @return error code (0: success, otherwise: failure)
+ *
+ */
+int HAL_GfxDev_GPU_Register(gfx_dev_t *dev);
 
 /** @} */
 

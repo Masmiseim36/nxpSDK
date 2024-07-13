@@ -15,7 +15,7 @@ endif()
 if(CONFIG_TOOLCHAIN STREQUAL mcux)
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/CortexM7/Lib/libVIT_CM7_v04_09_00.a
+      ${CMAKE_CURRENT_LIST_DIR}/CortexM7/Lib/libVIT_CM7_v04_10_00.a
       -Wl,--end-group
   )
 endif()

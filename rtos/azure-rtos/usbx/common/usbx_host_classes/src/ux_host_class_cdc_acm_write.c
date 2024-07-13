@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -248,3 +247,59 @@ ULONG           transfer_flags;
     return(UX_SUCCESS); 
 }
 
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_class_cdc_acm_write                       PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in CDC ACM write function call.         */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    cdc_acm                               Pointer to CDC ACM class      */
+/*    data_pointer                          Pointer to data to write      */
+/*    requested_length                      Length of data to write       */
+/*    actual_length                         Actual length of data written */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                                              */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_cdc_acm_write          CDC ACM write                 */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Chaoqiong Xiao           Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT  _uxe_host_class_cdc_acm_write(UX_HOST_CLASS_CDC_ACM *cdc_acm, UCHAR *data_pointer, 
+                                    ULONG requested_length, ULONG *actual_length)
+{
+
+    /* Sanity checks.  */
+    if ((cdc_acm == UX_NULL) ||
+        ((data_pointer == UX_NULL) && (requested_length != 0)) ||
+        (actual_length == UX_NULL))
+    {
+        return(UX_INVALID_PARAMETER);
+    }
+
+    /* Invoke CDC ACM write function.  */
+    return(_ux_host_class_cdc_acm_write(cdc_acm, data_pointer, requested_length, actual_length));
+}

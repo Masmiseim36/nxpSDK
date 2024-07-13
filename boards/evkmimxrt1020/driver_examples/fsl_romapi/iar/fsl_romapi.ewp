@@ -345,15 +345,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../xip</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1425,15 +1425,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../xip</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2505,15 +2505,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../xip</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3583,15 +3583,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../xip</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4663,15 +4663,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../xip</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5743,15 +5743,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../xip</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6478,6 +6478,21 @@
     </settings>
   </configuration>
   <group>
+    <name>xip</name>
+    <file>
+      <name>$PROJ_DIR$/../evkmimxrt1020_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../evkmimxrt1020_flexspi_nor_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+  </group>
+  <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../flexspi_romapi.c</name>
@@ -6519,12 +6534,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6535,6 +6544,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -6628,21 +6643,6 @@
     <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/iar/startup_MIMXRT1021.s</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_flexspi_nor_config.h</name>
     </file>
   </group>
   <group>

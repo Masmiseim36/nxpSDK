@@ -357,7 +357,6 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -371,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1454,7 +1454,6 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -1468,6 +1467,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2551,7 +2551,6 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -2565,6 +2564,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3646,7 +3646,6 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -3660,6 +3659,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4743,7 +4743,6 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -4757,6 +4756,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5840,7 +5840,6 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -5854,6 +5853,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6858,12 +6858,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6874,6 +6868,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

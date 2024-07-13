@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP.
+ * Copyright 2022-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -61,7 +61,7 @@ hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Init(
 hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Deinit(const display_dev_t *dev);
 hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Start(display_dev_t *dev);
 hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Stop(display_dev_t *dev);
-hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Blit(const display_dev_t *dev, void *frame, int width, int height);
+hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Blit(const display_dev_t *dev, void *frame, int stripe);
 hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Getbufdesc(const display_dev_t *dev, hw_buf_desc_t *in_buf, mpp_memory_policy_t *policy);
 
 /**** static variables ****/
@@ -279,7 +279,7 @@ hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Stop(display_dev_t *dev)
     return ret;
 }
 
-hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Blit(const display_dev_t *dev, void *frame, int width, int height)
+hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Blit(const display_dev_t *dev, void *frame, int stripe)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
     HAL_LOGD("++HAL_DisplayDev_LcdifRk043fn_Blit\n");

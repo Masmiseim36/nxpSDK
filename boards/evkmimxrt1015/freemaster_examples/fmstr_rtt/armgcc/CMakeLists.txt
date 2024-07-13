@@ -46,8 +46,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../source/main.c"
-"${ProjDirPath}/../source/board/clock_config.c"
-"${ProjDirPath}/../source/board/clock_config.h"
 "${ProjDirPath}/../source/board/pin_mux.c"
 "${ProjDirPath}/../source/board/pin_mux.h"
 "${ProjDirPath}/../source/freemaster_cfg.h"
@@ -56,6 +54,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../source/SEGGER_RTT_Conf.h"
 "${ProjDirPath}/../source/board/board.c"
 "${ProjDirPath}/../source/board/board.h"
+"${ProjDirPath}/../source/board/clock_config.c"
+"${ProjDirPath}/../source/board/clock_config.h"
 "${ProjDirPath}/../source/example_data/data_example_pmp.h"
 "${ProjDirPath}/../source/example_data/data_img_logo.h"
 "${ProjDirPath}/../source/example_data/data_img_file.h"
@@ -70,6 +70,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../source/example_data
 )
 
+set_source_files_properties("${ProjDirPath}/../source/freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_platform_gen32le")
 set_source_files_properties("${ProjDirPath}/../source/SEGGER_RTT_Conf.h" PROPERTIES COMPONENT_CONFIG_FILE "driver_rtt_template.MIMXRT1015")
 
 include(${SdkRootDirPath}/devices/MIMXRT1015/all_lib_device.cmake)

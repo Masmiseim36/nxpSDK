@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -143,14 +142,11 @@ ULONG FAT_sector;
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _fx_utility_exFAT_cluster_state_get   Get state of exFAT cluster    */
-/*    _fx_utility_exFAT_cluster_state_set   Set state of exFAT cluster    */
 /*    _fx_utility_FAT_entry_read            Read a FAT entry              */
 /*    _fx_utility_FAT_entry_write           Write a FAT entry             */
 /*    _fx_utility_16_unsigned_write         Write a USHORT from memory    */
 /*    _fx_utility_32_unsigned_write         Write a ULONG from memory     */
 /*    _fx_utility_32_unsigned_read          Read a ULONG from memory      */
-/*    _fx_utility_exFAT_bitmap_flush        Flush exFAT allocation bitmap */
 /*    _fx_utility_FAT_flush                 Flush written FAT entries     */
 /*    _fx_fault_tolerant_calculate_checksum Compute Checksum of data      */
 /*    _fx_fault_tolerant_write_log_file     Write log file                */
@@ -322,14 +318,6 @@ ULONG                        last_FAT_sector;
                     /* Current FAT entry is located in different sector. Force flush. */
                     /* Flush the cached individual FAT entries */
                     _fx_utility_FAT_flush(media_ptr);
-#ifdef FX_ENABLE_EXFAT
-                    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-                    {
-
-                        /* Flush exFAT bitmap.  */
-                        _fx_utility_exFAT_bitmap_flush(media_ptr);
-                    }
-#endif /* FX_ENABLE_EXFAT */
 
                     /* Update sector of current FAT entry. */
                     last_FAT_sector = FAT_sector;
@@ -344,20 +332,6 @@ ULONG                        last_FAT_sector;
                     return(status);
                 }
 
-#ifdef FX_ENABLE_EXFAT
-                if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-                {
-
-                    /* Free bitmap. */
-                    status = _fx_utility_exFAT_cluster_state_set(media_ptr, cache_ptr[i], FX_EXFAT_BITMAP_CLUSTER_FREE);
-                    if (status != FX_SUCCESS)
-                    {
-
-                        /* Return the error status.  */
-                        return(status);
-                    }
-                }
-#endif /* FX_ENABLE_EXFAT */
             }
 
             /* Increase the available clusters in the media control block. */
@@ -366,14 +340,6 @@ ULONG                        last_FAT_sector;
 
         /* Flush the cached individual FAT entries */
         _fx_utility_FAT_flush(media_ptr);
-#ifdef FX_ENABLE_EXFAT
-        if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-        {
-
-            /* Flush exFAT bitmap.  */
-            _fx_utility_exFAT_bitmap_flush(media_ptr);
-        }
-#endif /* FX_ENABLE_EXFAT */
 
 
         /* Get head cluster. */

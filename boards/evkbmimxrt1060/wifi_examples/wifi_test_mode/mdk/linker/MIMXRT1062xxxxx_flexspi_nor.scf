@@ -127,7 +127,6 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     tcp.o (+RO)
     udp.o (+RO)
     tcpip.o (+RO)
-    sockets.o (+RO)
     tasks.o (+RO)  
     fsl_cache.o (+RO)
     wifi.o (+RO)

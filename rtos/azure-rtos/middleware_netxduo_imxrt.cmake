@@ -5,10 +5,12 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 if(CONFIG_USE_middleware_azure_rtos_nxd)
 
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/ports/netxduo/nx_driver_imxrt_irq.c
-  ${CMAKE_CURRENT_LIST_DIR}/ports/netxduo/nx_driver_imxrt.c
-)
+if(CONFIG_CORE STREQUAL cm7f)
+  target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+      ${CMAKE_CURRENT_LIST_DIR}/ports/netxduo/nx_driver_imxrt_irq.c
+      ${CMAKE_CURRENT_LIST_DIR}/ports/netxduo/nx_driver_imxrt.c
+  )
+endif()
 
 else()
 

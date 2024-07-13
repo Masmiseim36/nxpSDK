@@ -1,5 +1,5 @@
 /*
-* Copyright 2018-2022 NXP
+* Copyright 2018-2022,2024 NXP
 *
 * SPDX-License-Identifier: Apache-2.0
 *
@@ -11,9 +11,6 @@
 
 #include <nxp_iot_agent.h>
 
-#ifdef SEMS_LITE_AGENT_ENABLED
-#include "sems_lite_agent_common.h"
-#endif
 #include "../protobuf/pb.h"
 #include "../protobuf/pb_encode.h"
 #include "../protobuf/pb_decode.h"
@@ -181,13 +178,11 @@ bool handle_request_payload(pb_istream_t *stream, const pb_field_t *field, void 
             type = request->type;
             endpointId = request->endpointId;
         }
-#ifdef SEMS_LITE_AGENT_ENABLED
         else {
             // SEMS Lite agent use fixed type and endpoint id.
             type = IOT_AGENT_KS_SSS_SE05X;
-            endpointId = SEMS_LITE_AGENT_KEYSTORE_ID;
+            endpointId = IOT_AGENT_KEYSTORE_ID_SEMSLITE;
         }
-#endif
 
 		iot_agent_endpoint_cache_table_entry_t* endpoint = find_endpoint_in_cache(
 			dispatcher_context->endpoints, type, endpointId);
@@ -276,7 +271,13 @@ iot_agent_status_t iot_agent_dispatcher(
         }
 
 		// Assemble the response on toplevel...
-		size_t total_length = (size_t)(response_buffer.pos - response_buffer.start);
+		int sub = response_buffer.pos - response_buffer.start;
+		if (sub < 0)
+		{
+			IOT_AGENT_ERROR("Error in length calculation.");
+			return IOT_AGENT_FAILURE;
+		}
+		size_t total_length = (size_t)sub;
 		if (total_length > 0U)
 		{
 			// An then the buffer contents

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_scroll_wheel.h                                   PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -54,6 +53,10 @@
 /*                                            changed prototype for       */
 /*                                            generic_scroll_wheel_scroll,*/
 /*                                            resulting in version 6.2.0  */
+/*  03-08-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            changed return type,        */
+/*                                            resulting in version 6.2.1  */
+/*                                                                        */
 /**************************************************************************/
 
 #ifndef GX_SCROLL_WHEEL_H
@@ -143,7 +146,7 @@ VOID    _gx_generic_scroll_wheel_down_wrap(GX_GENERIC_SCROLL_WHEEL *wheel);
 VOID    _gx_generic_scroll_wheel_draw(GX_GENERIC_SCROLL_WHEEL *wheel);
 UINT    _gx_generic_scroll_wheel_event_process(GX_GENERIC_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT    _gx_generic_scroll_wheel_row_height_set(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE row_height);
-INT     _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift);
+UINT    _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift);
 UINT    _gx_generic_scroll_wheel_total_rows_set(GX_GENERIC_SCROLL_WHEEL *wheel, INT count);
 VOID    _gx_generic_scroll_wheel_up_wrap(GX_GENERIC_SCROLL_WHEEL *wheel);
 GX_BOOL _gx_generic_scroll_wheel_wrap_style_check(GX_GENERIC_SCROLL_WHEEL *wheel);

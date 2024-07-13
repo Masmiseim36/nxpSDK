@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    nx_secure_tls.h                                     PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.4.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -101,6 +100,15 @@
 /*                                            added function to set packet*/
 /*                                            pool,                       */
 /*                                            resulting in version 6.2.0  */
+/*  10-31-2022     Bo Chen                  Modified comment(s), and      */
+/*                                            updated product constants,  */
+/*                                            resulting in version 6.3.0  */
+/*  12-31-2022     Bo Chen                  Modified comment(s), and      */
+/*                                            updated product constants,  */
+/*                                            resulting in version 6.4.0  */
+/*  03-01-2024      Tiejun Zhou             Modified comment(s),          */
+/*                                            update version number,      */
+/*                                            resulting in version 6.4.1  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -163,8 +171,8 @@ extern   "C" {
 
 #define AZURE_RTOS_NETX_SECURE
 #define NETX_SECURE_MAJOR_VERSION                       6
-#define NETX_SECURE_MINOR_VERSION                       2
-#define NETX_SECURE_PATCH_VERSION                       0
+#define NETX_SECURE_MINOR_VERSION                       4
+#define NETX_SECURE_PATCH_VERSION                       1
 
 /* The following symbols are defined for backward compatibility reasons. */
 #define EL_PRODUCT_NETX_SECURE

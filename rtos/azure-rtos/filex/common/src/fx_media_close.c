@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -65,7 +64,6 @@
 /*                                                                        */
 /*    _fx_directory_entry_write             Write the directory entry     */
 /*    _fx_media_abort                       Abort the media on error      */
-/*    _fx_utility_exFAT_bitmap_flush        Flush exFAT allocation bitmap */
 /*    _fx_utility_FAT_flush                 Flush cached FAT entries      */
 /*    _fx_utility_FAT_map_flush             Flush primary FAT changes to  */
 /*                                            secondary FAT(s)            */
@@ -148,19 +146,7 @@ UINT     status;
                 file_ptr -> fx_file_current_file_size;
 
             /* Write the directory entry to the media.  */
-#ifdef FX_ENABLE_EXFAT
-            if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-            {
-
-                status = _fx_directory_exFAT_entry_write(media_ptr, &(file_ptr -> fx_file_dir_entry), UPDATE_STREAM);
-            }
-            else
-            {
-#endif /* FX_ENABLE_EXFAT */
-                status = _fx_directory_entry_write(media_ptr, &(file_ptr -> fx_file_dir_entry));
-#ifdef FX_ENABLE_EXFAT
-            }
-#endif /* FX_ENABLE_EXFAT */
+            status = _fx_directory_entry_write(media_ptr, &(file_ptr -> fx_file_dir_entry));
 
             /* Determine if the status was unsuccessful. */
             if (status != FX_SUCCESS)
@@ -195,15 +181,6 @@ UINT     status;
     /* Flush changed sector(s) in the primary FAT to secondary FATs.  */
     _fx_utility_FAT_map_flush(media_ptr);
 
-#ifdef FX_ENABLE_EXFAT
-    if ((media_ptr -> fx_media_FAT_type == FX_exFAT) &&
-        (FX_TRUE == media_ptr -> fx_media_exfat_bitmap_cache_dirty))
-    {
-
-        /* Flush bitmap.  */
-        _fx_utility_exFAT_bitmap_flush(media_ptr);
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Flush the internal logical sector cache.  */
     status =  _fx_utility_logical_sector_flush(media_ptr, ((ULONG64) 1), (ULONG64) (media_ptr -> fx_media_total_sectors), FX_FALSE);

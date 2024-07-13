@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -492,6 +491,7 @@ ULONG                       tick, diff;
         if (cdc_acm -> ux_host_class_cdc_acm_status == UX_SUCCESS)
         {
 
+            /* We are here only if it's control interface.  */
             /* We scan CDC ACM instances to find the DATA instance.  */
             /* Get class.  */
             cdc_acm_class = cdc_acm -> ux_host_class_cdc_acm_class;
@@ -499,21 +499,22 @@ ULONG                       tick, diff;
             /* Get first instance linked to the class.  */
             cdc_acm_inst = (UX_HOST_CLASS_CDC_ACM *)cdc_acm_class -> ux_host_class_first_instance;
 
-            /* Scan all instances.  */
+            /* Scan all data instances to update control links.  */
             while(cdc_acm_inst)
             {
 
                 /* Get interface of the instance.  */
                 interface_ptr = cdc_acm_inst -> ux_host_class_cdc_acm_interface;
 
-                /* If this data interface is inside the associate list, link it.  */
-                if (cdc_acm -> ux_host_class_cdc_acm_interfaces_bitmap &
-                    (1ul << interface_ptr -> ux_interface_descriptor.bInterfaceNumber))
+                /* If this data interface is inside the associate list on the same device, link it.  */
+                if ((cdc_acm_inst -> ux_host_class_cdc_acm_device ==
+                        cdc_acm -> ux_host_class_cdc_acm_device) &&
+                    (cdc_acm -> ux_host_class_cdc_acm_interfaces_bitmap &
+                        (1ul << interface_ptr -> ux_interface_descriptor.bInterfaceNumber)))
                 {
 
-                    /* Save control instance and we are done.  */
+                    /* Link this control to the data instance.  */
                     cdc_acm_inst -> ux_host_class_cdc_acm_control = cdc_acm;
-                    break;
                 }
 
                 /* Next instance.  */

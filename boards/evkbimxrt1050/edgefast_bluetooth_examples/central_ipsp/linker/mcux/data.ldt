@@ -3,6 +3,5 @@
         *fsl_adapter_flexspi_hyper_flash_config.o(.text*)
         *fsl_clock.o(.text*)
         *fsl_flexspi.o(.text*)
-        *NV_Flash.o(.text*)
         *mflash_drv.o(.text*)
         </#if>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -7,11 +7,11 @@
 #ifndef _IOT_AGENT_DEMO_CONFIG_H_
 #define _IOT_AGENT_DEMO_CONFIG_H_
 
+#include "nxp_iot_agent_common.h"
+
 #if defined(SSS_USE_FTR_FILE)
 #include <fsl_sss_ftr.h>
 #endif
-
-#include "nxp_iot_agent_common.h"
 
 #if NXP_IOT_AGENT_HAVE_SSS
 #include <sm_types.h>
@@ -93,8 +93,8 @@ extern "C" {
 
 // doc: COS over RTP required modification - start
 // CHANGE THIS : fill with key pair and device certificate object IDs as defined on EL2GO when generating them
-#define AWS_SERVICE_KEY_PAIR_ID		0x83000101
-#define AWS_SERVICE_DEVICE_CERT_ID	0x83000102
+#define AWS_SERVICE_KEY_PAIR_ID		0x83000101U
+#define AWS_SERVICE_DEVICE_CERT_ID	0x83000102U
 
 // CHANGE THIS: the AWS hostname to which the device will connect
 #define AWS_HOSTNAME	"aw9969rp3sm22-ats.iot.eu-central-1.amazonaws.com"
@@ -109,8 +109,8 @@ extern "C" {
 #define AWS_SERVICE_ID	101
 
 // CHANGE THIS : fill with key pair and device certificate object IDs as defined on EL2GO when generating them
-#define AZURE_SERVICE_KEY_PAIR_ID	0x83000211
-#define AZURE_SERVICE_DEVICE_CERT_ID	0x83000212
+#define AZURE_SERVICE_KEY_PAIR_ID	0x83000211U
+#define AZURE_SERVICE_DEVICE_CERT_ID	0x83000212U
 
 // CHANGE THIS : set the ID scope and the global endpoint as defined in the Azure DPS account
 #define AZURE_ID_SCOPE	"0ne004510C6"

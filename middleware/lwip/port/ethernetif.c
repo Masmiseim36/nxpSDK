@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020,2022-2023 NXP
+ * Copyright 2016-2020,2022-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -108,7 +108,7 @@ static QueueHandle_t extcb_queue = NULL;
 #endif
 
 #ifndef ETH_RX_TASK_PRIO
-#define ETH_RX_TASK_PRIO ((configMAX_PRIORITIES)-1)
+#define ETH_RX_TASK_PRIO ((configTIMER_TASK_PRIORITY)-1)
 #endif
 
 static TaskHandle_t ethernetif_rx_task = NULL;
@@ -198,16 +198,28 @@ void ethernetif_phy_init(struct ethernetif *ethernetif, const ethernetif_config_
     }
 }
 
-static void fetch_all_received_pkts(struct netif *netif_)
+static void fetch_received_pkts(struct netif *netif_)
 {
-    struct pbuf *p;
-    /* move received packet into a new pbuf */
-    while ((p = ethernetif_linkinput(netif_)) != NULL)
+    /* Move received packets into new pbufs. */
+
+#if !defined(ETH_MAX_RX_PKTS_AT_ONCE) || (ETH_MAX_RX_PKTS_AT_ONCE < 1) || !NO_SYS
+    while (1)
+#else
+    u16_t n;
+    for (n = 0; n < (ETH_MAX_RX_PKTS_AT_ONCE); n++)
+#endif
     {
-        /* pass all packets to ethernet_input, which decides what packets it supports */
+        struct pbuf *p = ethernetif_linkinput(netif_);
+        if (p == NULL)
+        {
+            /* No more received packets available. */
+            break;
+        }
+
+        /* Pass all packets to ethernet_input, which decides what packets it supports */
         if (netif_->input(p, netif_) != (err_t)ERR_OK)
         {
-            LWIP_DEBUGF(NETIF_DEBUG, ("fetch_all_received_pkts: IP input error\n"));
+            LWIP_DEBUGF(NETIF_DEBUG, ("fetch_received_pkts: IP input error\n"));
             ethernetif_pbuf_free_safe(p);
             p = NULL;
         }
@@ -236,7 +248,7 @@ static void rx_task(void *arg)
         {
             if (0U != (bits & netif_to_bitmask(netif_)))
             {
-                fetch_all_received_pkts(netif_);
+                fetch_received_pkts(netif_);
             }
         }
     }
@@ -275,7 +287,7 @@ void ethernetif_input(struct netif *netif_)
         (void)xTaskNotifyGive(ethernetif_rx_task);
     }
 #else
-    fetch_all_received_pkts(netif_);
+    fetch_received_pkts(netif_);
 #endif /* ETH_DO_RX_IN_SEPARATE_TASK */
 }
 

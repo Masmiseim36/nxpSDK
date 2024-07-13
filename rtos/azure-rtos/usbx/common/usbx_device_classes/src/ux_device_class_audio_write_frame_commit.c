@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_audio_write_frame_commit           PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -60,7 +59,7 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    ThreadX                                                             */
+/*    Application                                                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
@@ -72,6 +71,8 @@
 /*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            fixed frame length check,   */
 /*                                            resulting in version 6.1.10 */
+/*  03-08-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_audio_write_frame_commit(UX_DEVICE_CLASS_AUDIO_STREAM *stream, ULONG length)
@@ -129,3 +130,55 @@ UCHAR                       *next_pos;
     return(UX_SUCCESS);
 }
 
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_audio_write_frame_commit          PORTABLE C      */
+/*                                                           6.2.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in setting frame buffer function call.  */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    stream                                Address of audio stream       */
+/*                                            instance                    */
+/*    buffer                                Pointer to buffer to save     */
+/*                                            frame data                  */
+/*    length                                Frame length in bytes         */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_audio_write_frame_commit                           */
+/*                                          Append a frame to FIFO        */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  03-08-2023     Chaoqiong Xiao           Initial Version 6.2.1         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_device_class_audio_write_frame_commit(UX_DEVICE_CLASS_AUDIO_STREAM *stream, ULONG length)
+{
+
+    /* Sanity checks.  */
+    if (stream == UX_NULL || length < 1)
+        return(UX_INVALID_PARAMETER);
+
+    return(_ux_device_class_audio_write_frame_commit(stream, length));
+}

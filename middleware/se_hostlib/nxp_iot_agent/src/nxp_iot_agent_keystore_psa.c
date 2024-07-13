@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,6 +14,7 @@
 #include "nxp_iot_agent_dispatcher.h"
 #include "nxp_iot_agent_time.h"
 
+#include <mbedtls/version.h>
 #include "psa/crypto.h"
 #include "psa_crypto_its.h"
 
@@ -30,25 +31,16 @@
 		+ IOT_AGENT_KEYSTORE_PSA_VERSION_MINOR) * 256U + IOT_AGENT_KEYSTORE_PSA_VERSION_PATCH)
 
 #if defined(NXP_IOT_AGENT_ENABLE_LITE)
-#include <fsl_romapi_iap.h>
-#include <task.h>
 
-#define SYSTEM_IS_XIP_FLEXSPI()                                                                               \
-    ((((uint32_t)SystemCoreClockUpdate >= 0x08000000U) && ((uint32_t)SystemCoreClockUpdate < 0x10000000U)) || \
-     (((uint32_t)SystemCoreClockUpdate >= 0x18000000U) && ((uint32_t)SystemCoreClockUpdate < 0x20000000U)))
-
-#define FCB_ADDRESS             (0x08000400U)
-#define FLEXSPI_INSTANCE        (0U)
-#define FLASH_OPTION_QSPI_SDR   (0xc0000004U)
-
-#define BLOB_BASE_ADDRESS (0x080A0000U)
-#define BLOB_AREA_SIZE    (0x2000U)
+#define BLOB_AREA       0x084B0000U
+#define BLOB_AREA_SIZE  0x2000U
 
 struct BlobBuffer {
     uint8_t data[BLOB_AREA_SIZE];
-    size_t offset;
+    size_t size;
+    size_t count;
 };
-#endif // NXP_IOT_AGENT_ENABLE_LITE
+#endif
 
 const iot_agent_keystore_interface_t iot_agent_keystore_psa_interface =
 {
@@ -61,110 +53,37 @@ const iot_agent_keystore_interface_t iot_agent_keystore_psa_interface =
 	}
 };
 
-#if defined(NXP_IOT_AGENT_ENABLE_LITE)
-static iot_agent_status_t write_to_flash(struct BlobBuffer *blob_buffer)
-{
-    if (0 == blob_buffer->offset)
-    {
-        // Skip writing to flash when there are no object changes
-        return IOT_AGENT_SUCCESS;
-    }
-
-    api_core_context_t context  = {0};
-    uint8_t iap_api_arena[4096] = {0};
-    kp_api_init_param_t params  = {0};
-    params.allocStart           = (uint32_t)&iap_api_arena;
-    params.allocSize            = sizeof(iap_api_arena);
-
-    status_t status = iap_api_init(&context, &params);
-    if (kStatus_Success != status)
-    {
-        return IOT_AGENT_FAILURE;
-    }
-
-    flexspi_nor_config_t flashConfig = {0};
-    if (!SYSTEM_IS_XIP_FLEXSPI())
-    {
-        serial_nor_config_option_t flashConfigOption = {.option0 = {.U = FLASH_OPTION_QSPI_SDR}};
-        status = flexspi_nor_get_config(FLEXSPI_INSTANCE, &flashConfig, &flashConfigOption);
-        if (kStatus_Success != status)
-        {
-            return IOT_AGENT_FAILURE;
-        }
-    }
-    else
-    {
-        flashConfig = *((flexspi_nor_config_t *)FCB_ADDRESS);
-    }
-
-    status = iap_mem_config(&context, (uint32_t *)&flashConfig, kMemoryID_FlexspiNor);
-    if (kStatus_Success != status)
-    {
-        return IOT_AGENT_FAILURE;
-    }
-
-    taskENTER_CRITICAL();
-    status = iap_mem_erase(&context, BLOB_BASE_ADDRESS, BLOB_AREA_SIZE, kMemoryID_FlexspiNor);
-    taskEXIT_CRITICAL();
-    if (kStatus_Success != status)
-    {
-        return IOT_AGENT_FAILURE;
-    }
-
-    taskENTER_CRITICAL();
-    status = iap_mem_write(&context, BLOB_BASE_ADDRESS, blob_buffer->offset, blob_buffer->data, kMemoryID_FlexspiNor);
-    taskEXIT_CRITICAL();
-    if (kStatus_Success != status)
-    {
-        return IOT_AGENT_FAILURE;
-    }
-
-    status = iap_mem_flush(&context);
-    if (kStatus_Success != status)
-    {
-        return IOT_AGENT_FAILURE;
-    }
-
-    if(0 != memcmp((uint8_t *)BLOB_BASE_ADDRESS, blob_buffer->data, blob_buffer->offset))
-    {
-        return IOT_AGENT_FAILURE;
-    }
-
-    return IOT_AGENT_SUCCESS;
-}
-#endif // NXP_IOT_AGENT_ENABLE_LITE
-
 iot_agent_status_t iot_agent_keystore_psa_init(iot_agent_keystore_t* keystore,
 	uint32_t identifier)
 {
-	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	keystore->iface = iot_agent_keystore_psa_interface;
-	keystore->type = IOT_AGENT_KS_PSA;
-	keystore->identifier = identifier;
+    iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+    keystore->iface = iot_agent_keystore_psa_interface;
+    keystore->type = IOT_AGENT_KS_PSA;
+    keystore->identifier = identifier;
 #if defined(NXP_IOT_AGENT_ENABLE_LITE)
     keystore->context = calloc(1, sizeof(struct BlobBuffer));
-    if (keystore->context == NULL) {
-        return IOT_AGENT_FAILURE;
-    }
+    ASSERT_OR_EXIT_STATUS(keystore->context != NULL, IOT_AGENT_ERROR_MEMORY);
 #endif // NXP_IOT_AGENT_ENABLE_LITE
 
     // We call psa_init here to make sure the psa stack is initialized. It may have been done by the
     // caller already, in which case this obsolete but harmless.
     psa_status_t psa_status = psa_crypto_init();
-    PSA_SUCCESS_OR_EXIT_MSG("psa_crypto_init failed: 0x%08x", psa_status);
+    PSA_SUCCESS_OR_EXIT_MSG("psa_crypto_init failed (%d)", psa_status);
+
 exit:
-	return agent_status;
+#if defined(NXP_IOT_AGENT_ENABLE_LITE)
+    if (agent_status != IOT_AGENT_SUCCESS) {
+        free(keystore->context);
+        keystore->context = NULL;
+    }
+#endif // NXP_IOT_AGENT_ENABLE_LITE
+    return agent_status;
 }
 
 
 iot_agent_status_t iot_agent_keystore_psa_destroy(void *context)
 {
-#if defined(NXP_IOT_AGENT_ENABLE_LITE)
-    free(context);
-    context = NULL;
-#else
     IOT_AGENT_UNUSED(context);
-#endif // NXP_IOT_AGENT_ENABLE_LITE
     return IOT_AGENT_SUCCESS;
 }
 
@@ -172,7 +91,15 @@ iot_agent_status_t iot_agent_keystore_psa_destroy(void *context)
 iot_agent_status_t iot_agent_keystore_psa_open_session(void *context)
 {
 #if defined(NXP_IOT_AGENT_ENABLE_LITE)
-    return write_to_flash((struct BlobBuffer *)context);
+    iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+    struct BlobBuffer *blob_buffer = (struct BlobBuffer *)context;
+
+    agent_status = iot_agent_utils_write_to_flash((uint8_t *)BLOB_AREA, BLOB_AREA_SIZE, blob_buffer->data, blob_buffer->size);
+    AGENT_SUCCESS_OR_EXIT_MSG("failed to write blobs to flash");
+
+    IOT_AGENT_INFO("%zx blob(s) written to flash", blob_buffer->count);
+exit:
+    return agent_status;
 #else
     IOT_AGENT_UNUSED(context);
     return IOT_AGENT_SUCCESS;
@@ -208,12 +135,26 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
 	pb_ostream_t *ostream, const pb_field_t* message_type, void *context)
 {
     IOT_AGENT_UNUSED(context);
-    bool result = IOT_AGENT_SUCCESS;
+    bool result = true;
     psa_status_t psa_status = PSA_SUCCESS;
     nxp_iot_PsaRequest request = nxp_iot_PsaRequest_init_default;
     nxp_iot_ResponsePayload response = nxp_iot_ResponsePayload_init_default;
     PB_BYTES_ARRAY_T(1) empty_data = { 0 };
+    nxp_iot_GetVersionResponse* gvr = NULL; 
+    psa_key_id_t destroy_key_id = 0U;
 
+#if defined(NXP_IOT_AGENT_ENABLE_LITE)
+    struct BlobBuffer *blob_buffer = NULL;
+#else
+    psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
+    psa_key_id_t imported_id = 0U;
+#endif
+#if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C) || NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW
+    psa_storage_uid_t uid = 0U;
+    struct psa_storage_info_t storage_info = { 0 };
+    size_t chunk_size = 0U;
+    size_t read_length = 0U;
+#endif
     result = message_type != NULL;
     RESULT_TRUE_OR_EXIT_MSG("message_type is NULL");
 
@@ -221,14 +162,14 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
     RESULT_TRUE_OR_EXIT_MSG("unsupported message type: tag: %u", message_type->tag);
 
     result = pb_decode_delimited(istream, nxp_iot_PsaRequest_fields, &request);
-	RESULT_TRUE_OR_EXIT_MSG("decoding of server message failed: %s\n", PB_GET_ERROR(istream));
+    RESULT_TRUE_OR_EXIT_MSG("decoding of server message failed: %s\n", PB_GET_ERROR(istream));
 
     switch(request.which_command) {
 
         case nxp_iot_PsaRequest_get_version_tag: 
             response.which_message = nxp_iot_ResponsePayload_psa_tag;
             response.message.psa.which_response = nxp_iot_PsaResponse_get_version_tag;
-            nxp_iot_GetVersionResponse* gvr = &response.message.psa.response.get_version;
+            gvr = &response.message.psa.response.get_version;
             gvr->has_crypto_api_version = true;
             gvr->crypto_api_version = (PSA_CRYPTO_API_VERSION_MAJOR << 16) | (PSA_CRYPTO_API_VERSION_MINOR << 8);
             gvr->supported_key_data_formats_count = 1;
@@ -239,10 +180,11 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
 
         case nxp_iot_PsaRequest_destroy_key_tag:
             HAS_FIELD_OR_EXIT(request.command.destroy_key.has_identifier);
-            psa_key_id_t key_id = request.command.destroy_key.identifier;
-            psa_status = psa_destroy_key(key_id);
-        if (psa_status == PSA_ERROR_INVALID_HANDLE) // TODO investigate why psa in psa_crypto_slot_management.c line 372 sets PSA_ERROR_INVALID_HANDLE and how to properly handle this behavior
-            psa_status = PSA_ERROR_DOES_NOT_EXIST;
+            destroy_key_id = request.command.destroy_key.identifier;
+            psa_status = psa_destroy_key(destroy_key_id);
+            if (psa_status == PSA_ERROR_INVALID_HANDLE) {
+                psa_status = PSA_ERROR_DOES_NOT_EXIST;
+            }
             response.which_message = nxp_iot_ResponsePayload_psa_tag;
             response.message.psa.which_response = nxp_iot_PsaResponse_destroy_key_tag;
             response.message.psa.response.destroy_key.has_status = true;
@@ -256,19 +198,23 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
             HAS_FIELD_OR_EXIT(request.command.import_key.has_algorithm);
             HAS_FIELD_OR_EXIT(request.command.import_key.has_key_data_format);
             HAS_FIELD_OR_EXIT(request.command.import_key.has_lifetime);
-            result = request.command.import_key.data->size > 0;
+            result = request.command.import_key.data->size > 0U;
             RESULT_TRUE_OR_EXIT_MSG("key data size is <= 0");
             result = request.command.import_key.key_data_format == nxp_iot_KeyDataFormat_S50;
             RESULT_TRUE_OR_EXIT_MSG("unsupported key data format: 0x%08x", request.command.import_key.key_data_format);
 
 #if defined(NXP_IOT_AGENT_ENABLE_LITE)
-            struct BlobBuffer *blob_buffer = (struct BlobBuffer *)context;
-            memcpy(blob_buffer->data + blob_buffer->offset,
-                   request.command.import_key.data->bytes, request.command.import_key.data->size);
-            blob_buffer->offset += request.command.import_key.data->size;
-#else
-            psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
+            blob_buffer = (struct BlobBuffer *)context;
 
+            result = (blob_buffer->size + request.command.import_key.data->size) <= BLOB_AREA_SIZE;
+            RESULT_TRUE_OR_EXIT_MSG("blob doesn't fit into blob area");
+
+            memcpy(blob_buffer->data + blob_buffer->size,
+                   request.command.import_key.data->bytes, request.command.import_key.data->size);
+            blob_buffer->size += request.command.import_key.data->size;
+
+            blob_buffer->count++;
+#else
             /* Set key attributes */
             psa_set_key_usage_flags(&attributes, request.command.import_key.usage);
             psa_set_key_algorithm(&attributes, request.command.import_key.algorithm);
@@ -278,7 +224,6 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
             psa_set_key_bits(&attributes, request.command.import_key.key_bits);
 
             /* Import the key */
-            psa_key_id_t imported_id;
             psa_status = psa_import_key(&attributes, 
                     request.command.import_key.data->bytes, 
                     request.command.import_key.data->size, &imported_id);
@@ -295,9 +240,8 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
             response.message.psa.which_response = nxp_iot_PsaResponse_read_object_tag;
 
             HAS_FIELD_OR_EXIT(request.command.read_object.has_identifier);
-#if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C)
-            psa_storage_uid_t uid = request.command.read_object.identifier;
-            struct psa_storage_info_t storage_info = { 0 };
+#if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C) || NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW
+            uid = request.command.read_object.identifier;
             psa_status = psa_its_get_info(uid, &storage_info);
             if (psa_status != PSA_SUCCESS) {
                 response.message.psa.response.read_object.has_status = true;
@@ -306,7 +250,7 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
                 break;
             }
 
-            size_t chunk_size = storage_info.size; 
+            chunk_size = storage_info.size; 
             if (request.command.read_object.has_length) {
                 uint32_t remaining = storage_info.size - request.command.read_object.offset;
                 chunk_size = remaining < request.command.read_object.length 
@@ -317,7 +261,6 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
             response.message.psa.response.read_object.data = malloc(PB_BYTES_ARRAY_T_ALLOCSIZE(chunk_size));
             response.message.psa.response.read_object.data->size = chunk_size;
 
-            size_t read_length = 0;
             psa_status = psa_its_get(uid, request.command.read_object.offset, 
                 chunk_size,
                 response.message.psa.response.read_object.data->bytes, 
@@ -335,8 +278,9 @@ bool iot_agent_keystore_psa_handle_request(pb_istream_t *istream,
 
         case nxp_iot_PsaRequest_remove_object_tag:
             HAS_FIELD_OR_EXIT(request.command.read_object.has_identifier);
-#if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C)
-            psa_status = psa_its_remove(request.command.read_object.identifier); // will be enabled later point in time
+#if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C) || NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW
+            psa_status = psa_its_remove(request.command.read_object.identifier);
+#else
             psa_status = PSA_ERROR_NOT_SUPPORTED;
 #endif
             response.which_message = nxp_iot_ResponsePayload_psa_tag;

@@ -39,6 +39,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUXPRESSO_SDK \
     -DSDK_OS_BAREMETAL \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -49,7 +50,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -67,6 +67,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUXPRESSO_SDK \
     -DSDK_OS_BAREMETAL \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -76,7 +77,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -87,6 +87,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -97,7 +98,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -109,6 +109,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -118,7 +119,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -134,7 +134,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -164,7 +163,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

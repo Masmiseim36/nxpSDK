@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP.
+ * Copyright 2020-2024 NXP.
  * NXP Confidential and Proprietary.
  * This software is owned or controlled by NXP and may only be used strictly in
  * accordance with the applicable license terms. By expressly accepting such
@@ -78,7 +78,7 @@ typedef struct _camera_dev_operator
     hal_camera_status_t (*start)(const camera_dev_t *dev); /*!< start the dev */
     hal_camera_status_t (*stop)(const camera_dev_t *dev);  /*!< stop the dev */
     hal_camera_status_t (*enqueue)(const camera_dev_t *dev, void *data); /*!< enqueue a buffer to the dev */
-    hal_camera_status_t (*dequeue)(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format); /*!< dequeue a buffer from the dev (blocking) */
+    hal_camera_status_t (*dequeue)(const camera_dev_t *dev, void **data, int *stripe); /*!< dequeue a buffer from the dev (blocking) */
     hal_camera_status_t (*get_buf_desc)(const camera_dev_t *dev, hw_buf_desc_t *out_buf, mpp_memory_policy_t *policy); /*!< get buffer descriptors and policy */
 } camera_dev_operator_t;
 
@@ -103,6 +103,8 @@ typedef struct
     int swapByte;                /*!< swap byte per two bytes */
     mpp_pixel_format_t format;   /*!< pixel format */
     int framerate;               /*!< frame rate */
+    int stripe_size;             /*!< stripe size in bytes */
+    bool stripe;                 /*!< stripe mode */
 } camera_dev_static_config_t;
 
 /** @brief camera device private capability. */

@@ -351,16 +351,17 @@
           <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1439,16 +1440,17 @@
           <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2527,16 +2529,17 @@
           <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3613,16 +3616,17 @@
           <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4701,16 +4705,17 @@
           <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5789,16 +5794,17 @@
           <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6543,12 +6549,6 @@
   <group>
     <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../source/board/clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../source/board/clock_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../source/board/pin_mux.c</name>
     </file>
     <file>
@@ -6559,6 +6559,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../source/board/board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/board/clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/board/clock_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../source/board/dcd.c</name>
@@ -6795,12 +6801,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6811,6 +6811,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

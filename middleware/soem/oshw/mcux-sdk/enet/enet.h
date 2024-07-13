@@ -3,6 +3,10 @@
  * LICENSE file in the project root for full license information
  */
 
+/*
+ * Copyright 2022-2024 NXP
+ */
+
 #ifndef ____ENET_H___
 #define ____ENET_H___
 #include "soem_enet.h"

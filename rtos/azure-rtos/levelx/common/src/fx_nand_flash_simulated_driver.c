@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -31,6 +30,9 @@
 
 LX_NAND_FLASH       nand_flash;
 
+/* Memory buffer size should be at least 7 * total block count + 2 * page size,
+   that is 7 * 1024 + 2 * 528 = 8224 bytes */
+ULONG               lx_memory_buffer[8224 / sizeof (ULONG)];
 
 /* Define the NAND flash simulation initialization function.  */
 
@@ -68,7 +70,7 @@ VOID  _fx_nand_flash_simulator_driver(FX_MEDIA *media_ptr);
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _fx_nand_simulator_driver                           PORTABLE C      */ 
-/*                                                           6.1.7        */
+/*                                                           6.2.1       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -123,6 +125,9 @@ VOID  _fx_nand_flash_simulator_driver(FX_MEDIA *media_ptr);
 /*                                            resulting in version 6.1    */
 /*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
 /*                                            resulting in version 6.1.7  */
+/*  03-08-2023     Xiuwen Cai               Modified comment(s),          */
+/*                                            changed to use new API,     */
+/*                                            resulting in version 6.2.1 */
 /*                                                                        */
 /**************************************************************************/
 VOID  _fx_nand_flash_simulator_driver(FX_MEDIA *media_ptr)
@@ -349,7 +354,7 @@ UINT    status;
             media_ptr -> fx_media_driver_free_sector_update =  FX_TRUE;
 
             /* Open the NAND flash simulation.  */
-            status =  _lx_nand_flash_open(&nand_flash, "sim nand flash", _lx_nand_flash_simulator_initialize);
+            status =  _lx_nand_flash_open(&nand_flash, "sim nand flash", _lx_nand_flash_simulator_initialize, lx_memory_buffer, sizeof(lx_memory_buffer));
 
             /* Determine if the flash open was successful.  */
             if (status != LX_SUCCESS)

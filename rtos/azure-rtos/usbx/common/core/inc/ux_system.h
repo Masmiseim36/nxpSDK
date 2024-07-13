@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */ 
 /*                                                                        */ 
 /*    ux_system.h                                         PORTABLE C      */ 
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -53,6 +52,9 @@
 /*  04-25-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            added device CCID name,     */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added error checks support, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -70,6 +72,9 @@ UINT  _ux_system_initialize(VOID *regular_memory_pool_start, ULONG regular_memor
                             VOID *cache_safe_memory_pool_start, ULONG cache_safe_memory_size);
 UINT  _ux_system_uninitialize(VOID);
 UINT  _ux_system_tasks_run(VOID);
+
+UINT  _uxe_system_initialize(VOID *regular_memory_pool_start, ULONG regular_memory_size, 
+                            VOID *cache_safe_memory_pool_start, ULONG cache_safe_memory_size);
 #endif
 
 /* Define System component external data references.  */

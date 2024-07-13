@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_audio_uninitialize                 PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -75,6 +74,11 @@
 /*  04-25-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            fixed standalone compile,   */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes  */
+/*                                            with zero copy enabled,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_audio_uninitialize(UX_SLAVE_CLASS_COMMAND *command)
@@ -113,11 +117,20 @@ ULONG                            i;
 #endif
             _ux_utility_memory_free(stream -> ux_device_class_audio_stream_buffer);
 
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+#if defined(UX_DEVICE_CLASS_AUDIO_FEEDBACK_SUPPORT)
+            _ux_utility_memory_free(stream -> ux_device_class_audio_stream_feedback_buffer);
+#endif
+#endif
+
             /* Next stream instance.  */
             stream ++;
         }
 
 #if defined(UX_DEVICE_CLASS_AUDIO_INTERRUPT_SUPPORT)
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+        _ux_utility_memory_free(audio -> ux_device_class_audio_interrupt_buffer);
+#endif
 #if !defined(UX_DEVICE_STANDALONE)
         _ux_device_thread_delete(&audio_class -> ux_slave_class_thread);
         _ux_utility_memory_free(audio_class -> ux_slave_class_thread_stack);

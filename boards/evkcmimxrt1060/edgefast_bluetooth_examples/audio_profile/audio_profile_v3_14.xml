@@ -85,12 +85,17 @@
     <definition extID="middleware.wifi.template.MIMXRT1062"/>
     <definition extID="middleware.wifi.common_files.MIMXRT1062"/>
     <definition extID="component.wifi_bt_module.config.MIMXRT1062"/>
+    <definition extID="middleware.wifi.wifi_bt_config.template.MIMXRT1062"/>
+    <definition extID="middleware.wifi.osa.MIMXRT1062"/>
+    <definition extID="middleware.wifi.osa_free_rtos.MIMXRT1062"/>
+    <definition extID="middleware.wifi.net.MIMXRT1062"/>
     <definition extID="middleware.wifi.fwdnld.MIMXRT1062"/>
     <definition extID="middleware.wifi.fwdnld_intf_abs.MIMXRT1062"/>
+    <definition extID="middleware.wifi.net_free_rtos.MIMXRT1062"/>
+    <definition extID="middleware.lwip.apps.lwiperf.MIMXRT1062"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1062"/>
     <definition extID="middleware.aws_iot.device_shadow.template.MIMXRT1062"/>
     <definition extID="component.log.MIMXRT1062"/>
-    <definition extID="component.log.backend.debugconsole.MIMXRT1062"/>
     <definition extID="utility.str.MIMXRT1062"/>
     <definition extID="middleware.edgefast_bluetooth.template.MIMXRT1062"/>
     <definition extID="middleware.edgefast_bluetooth.br.ethermind.lib.cm7f.MIMXRT1062"/>
@@ -130,7 +135,7 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="mdk"/>
   </externalDefinitions>
-  <example id="evkcmimxrt1060_audio_profile" name="audio_profile" dependency="middleware.maestro_framework.MIMXRT1062 middleware.maestro_framework.codecs.MIMXRT1062 middleware.wifi.sdio.MIMXRT1062 middleware.wifi.wifidriver.MIMXRT1062 middleware.sdmmc.host.usdhc.MIMXRT1062 middleware.sdmmc.sd.MIMXRT1062 component.osa.MIMXRT1062 component.wifi_bt_module.tx_pwr_limits.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.clock.MIMXRT1062 middleware.aws_iot.device_shadow.MIMXRT1062 middleware.edgefast_bluetooth.common.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.config.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.extension.common.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.pal.db_gen.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.porting.MIMXRT1062 middleware.edgefast_bluetooth.br.ethermind.cm7f.MIMXRT1062 middleware.edgefast_bluetooth.pal.MIMXRT1062 middleware.edgefast_bluetooth.porting.atomic.MIMXRT1062 middleware.edgefast_bluetooth.porting.list.MIMXRT1062 middleware.edgefast_bluetooth.porting.net.MIMXRT1062 middleware.edgefast_bluetooth.porting.toolchain.MIMXRT1062 middleware.edgefast_bluetooth.porting.work_queue.MIMXRT1062 middleware.edgefast_wifi_nxp.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos.corejson.MIMXRT1062 middleware.freertos.coremqtt.MIMXRT1062 middleware.freertos.coremqtt-agent.MIMXRT1062 middleware.freertos.corepkcs11.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1062 middleware.iot_reference.kvstore.MIMXRT1062 middleware.iot_reference.logging.MIMXRT1062 middleware.iot_reference.mqtt_agent.MIMXRT1062 middleware.iot_reference.mqtt_agent_interface.MIMXRT1062 middleware.iot_reference.transport_mbedtls.MIMXRT1062 middleware.wifi.MIMXRT1062 middleware.lwip.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.pkcs11.MIMXRT1062 middleware.sdmmc.host.usdhc.freertos.MIMXRT1062 middleware.sdmmc.sdio.MIMXRT1062 middleware.usb.phy.MIMXRT1062 utility.shell.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.serial_manager.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpuart_edma.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkcmimxrt1060.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 middleware.littlefs.MIMXRT1062 component.mflash.evkcmimxrt1060.MIMXRT1062 component.mflash_file.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 middleware.edgefast_bluetooth.common.ethermind.hci_uart.MIMXRT1062 middleware.edgefast_bluetooth.common.ethermind.hci.MIMXRT1062 middleware.edgefast_bluetooth.wifi_nxp.controller.base.MIMXRT1062 middleware.usb.host_controller_ehci.MIMXRT1062 middleware.usb.host.stack.MIMXRT1062 middleware.fatfs.usb.MIMXRT1062 middleware.fatfs.MIMXRT1062 component.igpio_adapter.MIMXRT1062 middleware.edgefast_bluetooth.pal.platform.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.pal.host_msd_fatfs.ethermind.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 middleware.maestro_framework.doc.MIMXRT1062 component.osa_free_rtos.MIMXRT1062 middleware.maestro_framework.template.MIMXRT1062 component.osa_interface.MIMXRT1062 middleware.wifi.mlan_sdio.MIMXRT1062 middleware.wifi.template.MIMXRT1062 middleware.wifi.common_files.MIMXRT1062 component.wifi_bt_module.config.MIMXRT1062 middleware.wifi.fwdnld.MIMXRT1062 middleware.wifi.fwdnld_intf_abs.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.aws_iot.device_shadow.template.MIMXRT1062 component.log.MIMXRT1062 component.log.backend.debugconsole.MIMXRT1062 utility.str.MIMXRT1062 middleware.edgefast_bluetooth.template.MIMXRT1062 middleware.edgefast_bluetooth.br.ethermind.lib.cm7f.MIMXRT1062 middleware.edgefast_bluetooth.config.template.MIMXRT1062 middleware.edgefast_bluetooth.mcux.linker.template.evkcmimxrt1060.MIMXRT1062 middleware.edgefast_bluetooth.pal.crypto.ethermind.MIMXRT1062 middleware.freertos-kernel.template.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.freertos.coremqtt.template.MIMXRT1062 middleware.freertos.corepkcs11.template.MIMXRT1062 middleware.iot_reference.template.MIMXRT1062 middleware.freertos.backoffalgorithm.MIMXRT1062 middleware.lwip.template.MIMXRT1062 middleware.sdmmc.osa.freertos.MIMXRT1062 middleware.sdmmc.usdhc.template.MIMXRT1062 middleware.sdmmc.host.usdhc.cache.MIMXRT1062 platform.drivers.usdhc.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 component.mflash.common.MIMXRT1062 middleware.mbedtls.template.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.trng.MIMXRT1062 middleware.edgefast_bluetooth.sdio.template.evkcmimxrt1060.MIMXRT1062 middleware.usb.host.ehci_config_header.MIMXRT1062 middleware.usb.host.common_header.MIMXRT1062 middleware.fatfs.template_usb.MIMXRT1062 middleware.usb.host_msd.MIMXRT1062" category="edgefast_bluetooth_examples">
+  <example id="evkcmimxrt1060_audio_profile" name="audio_profile" dependency="middleware.maestro_framework.MIMXRT1062 middleware.maestro_framework.codecs.MIMXRT1062 middleware.wifi.sdio.MIMXRT1062 middleware.wifi.wifidriver.MIMXRT1062 middleware.sdmmc.host.usdhc.MIMXRT1062 middleware.sdmmc.sd.MIMXRT1062 component.osa.MIMXRT1062 component.wifi_bt_module.tx_pwr_limits.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.clock.MIMXRT1062 middleware.aws_iot.device_shadow.MIMXRT1062 middleware.edgefast_bluetooth.common.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.config.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.extension.common.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.pal.db_gen.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.porting.MIMXRT1062 middleware.edgefast_bluetooth.br.ethermind.cm7f.MIMXRT1062 middleware.edgefast_bluetooth.pal.MIMXRT1062 middleware.edgefast_bluetooth.porting.atomic.MIMXRT1062 middleware.edgefast_bluetooth.porting.list.MIMXRT1062 middleware.edgefast_bluetooth.porting.net.MIMXRT1062 middleware.edgefast_bluetooth.porting.toolchain.MIMXRT1062 middleware.edgefast_bluetooth.porting.work_queue.MIMXRT1062 middleware.edgefast_wifi_nxp.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos.corejson.MIMXRT1062 middleware.freertos.coremqtt.MIMXRT1062 middleware.freertos.coremqtt-agent.MIMXRT1062 middleware.freertos.corepkcs11.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1062 middleware.iot_reference.kvstore.MIMXRT1062 middleware.iot_reference.logging.MIMXRT1062 middleware.iot_reference.mqtt_agent.MIMXRT1062 middleware.iot_reference.mqtt_agent_interface.MIMXRT1062 middleware.iot_reference.transport_mbedtls.MIMXRT1062 middleware.wifi.MIMXRT1062 middleware.lwip.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.pkcs11.MIMXRT1062 middleware.sdmmc.host.usdhc.freertos.MIMXRT1062 middleware.sdmmc.sdio.MIMXRT1062 middleware.usb.phy.MIMXRT1062 utility.shell.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.serial_manager.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpuart_edma.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkcmimxrt1060.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 middleware.littlefs.MIMXRT1062 component.mflash.evkcmimxrt1060.MIMXRT1062 component.mflash_file.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 middleware.edgefast_bluetooth.common.ethermind.hci_uart.MIMXRT1062 middleware.edgefast_bluetooth.common.ethermind.hci.MIMXRT1062 middleware.edgefast_bluetooth.wifi_nxp.controller.base.MIMXRT1062 middleware.usb.host_controller_ehci.MIMXRT1062 middleware.usb.host.stack.MIMXRT1062 middleware.fatfs.usb.MIMXRT1062 middleware.fatfs.MIMXRT1062 component.igpio_adapter.MIMXRT1062 middleware.edgefast_bluetooth.pal.platform.ethermind.MIMXRT1062 middleware.edgefast_bluetooth.pal.host_msd_fatfs.ethermind.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 middleware.maestro_framework.doc.MIMXRT1062 component.osa_free_rtos.MIMXRT1062 middleware.maestro_framework.template.MIMXRT1062 component.osa_interface.MIMXRT1062 middleware.wifi.mlan_sdio.MIMXRT1062 middleware.wifi.template.MIMXRT1062 middleware.wifi.common_files.MIMXRT1062 component.wifi_bt_module.config.MIMXRT1062 middleware.wifi.wifi_bt_config.template.MIMXRT1062 middleware.wifi.osa.MIMXRT1062 middleware.wifi.osa_free_rtos.MIMXRT1062 middleware.wifi.net.MIMXRT1062 middleware.wifi.fwdnld.MIMXRT1062 middleware.wifi.fwdnld_intf_abs.MIMXRT1062 middleware.wifi.net_free_rtos.MIMXRT1062 middleware.lwip.apps.lwiperf.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.aws_iot.device_shadow.template.MIMXRT1062 component.log.MIMXRT1062 utility.str.MIMXRT1062 middleware.edgefast_bluetooth.template.MIMXRT1062 middleware.edgefast_bluetooth.br.ethermind.lib.cm7f.MIMXRT1062 middleware.edgefast_bluetooth.config.template.MIMXRT1062 middleware.edgefast_bluetooth.mcux.linker.template.evkcmimxrt1060.MIMXRT1062 middleware.edgefast_bluetooth.pal.crypto.ethermind.MIMXRT1062 middleware.freertos-kernel.template.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.freertos.coremqtt.template.MIMXRT1062 middleware.freertos.corepkcs11.template.MIMXRT1062 middleware.iot_reference.template.MIMXRT1062 middleware.freertos.backoffalgorithm.MIMXRT1062 middleware.lwip.template.MIMXRT1062 middleware.sdmmc.osa.freertos.MIMXRT1062 middleware.sdmmc.usdhc.template.MIMXRT1062 middleware.sdmmc.host.usdhc.cache.MIMXRT1062 platform.drivers.usdhc.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 component.mflash.common.MIMXRT1062 middleware.mbedtls.template.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.trng.MIMXRT1062 middleware.edgefast_bluetooth.sdio.template.evkcmimxrt1060.MIMXRT1062 middleware.usb.host.ehci_config_header.MIMXRT1062 middleware.usb.host.common_header.MIMXRT1062 middleware.fatfs.template_usb.MIMXRT1062 middleware.usb.host_msd.MIMXRT1062" category="edgefast_bluetooth_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -175,6 +180,7 @@
           <value>AUDIO_SINK_BUFFER_NUM=2</value>
           <value>CPU_MIMXRT1062DVL6B_cm7</value>
           <value>HAL_UART_DMA_ENABLE=1</value>
+          <value>HAL_AUDIO_DMA_INIT_ENABLE=0</value>
           <value>LFS_NO_INTRINSICS=1</value>
           <value>LFS_NO_ERROR=1</value>
           <value>CONFIG_ARM=1</value>
@@ -184,6 +190,7 @@
           <value>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</value>
           <value>FSL_OSA_MAIN_FUNC_ENABLE=0</value>
           <value>FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096</value>
+          <value>USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1</value>
           <value>MCUXPRESSO_SDK</value>
           <value>CASCFG_PLATFORM_FREERTOS</value>
           <value>FSL_OS_SELECTED=SDK_OS_FREERTOS</value>
@@ -194,10 +201,12 @@
           <value>MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>OSA_USED</value>
           <value>LWIP_DNS=1</value>
           <value>LWIP_NETIF_HOSTNAME=1</value>
-          <value>LWIP_NETIF_STATUS_CALLBACK=1</value>
           <value>LWIP_IGMP=1</value>
+          <value>_XOPEN_SOURCE=500</value>
+          <value>SO_REUSE=1</value>
           <value>MBEDTLS_THREADING_ALT</value>
           <value>MBEDTLS_THREADING_C</value>
           <value>MBEDTLS_CONFIG_FILE='"ksdk_mbedtls_config.h"'</value>
@@ -228,7 +237,7 @@
           <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;0x1000</value>
+          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:SRAM_DTC;End;0x1000</value>
         </option>
         <option id="gnu.c.link.option.other" type="stringList">
           <value>-no-warn-rwx-segments</value>
@@ -246,7 +255,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -329,6 +338,9 @@
       <files mask="main_text.ldt"/>
       <files mask="symbols.ldt"/>
     </source>
+    <source path="../peripheral_ht/linker/mcux" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+      <files mask="main_bss.ldt"/>
+    </source>
     <source path="iar" project_relative_path="evkcmimxrt1060/edgefast_bluetooth_examples/audio_profile/linker/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.icf"/>
     </source>
@@ -364,9 +376,6 @@
       <files mask="app_music_control.h"/>
       <files mask="app_a2dp.h"/>
       <files mask="app_common.h"/>
-      <files mask="audio.conf.h"/>
-      <files mask="audio_cfg.h"/>
-      <files mask="os_cfg.h"/>
       <files mask="app_streamer.h"/>
       <files mask="usb_host_fatfs.h"/>
     </source>
@@ -399,13 +408,14 @@
     <source path="android_app" project_relative_path="source" type="other">
       <files mask="AwsMusicControl.apk" hidden="true"/>
       <files mask="AwsMusicControlPreferences.properties" hidden="true"/>
-      <files mask="build.gradle" hidden="true"/>
       <files mask="gradle.properties" hidden="true"/>
       <files mask="gradlew" hidden="true"/>
       <files mask="settings.gradle" hidden="true"/>
     </source>
-    <source path="android_app/app" project_relative_path="source" type="other">
+    <source path="android_app/app" project_relative_path="source/android_app/app" type="other">
       <files mask="build.gradle" hidden="true"/>
+    </source>
+    <source path="android_app/app" project_relative_path="source" type="other">
       <files mask="proguard-rules.pro" hidden="true"/>
     </source>
     <source path="android_app/app/src/main" project_relative_path="source" type="xml">
@@ -428,22 +438,22 @@
     <source path="android_app/app/src/main/java/com/nxp/awsmusiccontrol/mqtt" project_relative_path="source" type="other">
       <files mask="Connection.java" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/drawable-hdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/drawable-hdpi" project_relative_path="source/drawable-hdpi" type="image">
       <files mask="ic_action_refresh.png" hidden="true"/>
       <files mask="ic_led.png" hidden="true"/>
       <files mask="ic_led_filled.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/drawable-mdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/drawable-mdpi" project_relative_path="source/drawable-mdpi" type="image">
       <files mask="ic_action_refresh.png" hidden="true"/>
       <files mask="ic_led.png" hidden="true"/>
       <files mask="ic_led_filled.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/drawable-xhdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/drawable-xhdpi" project_relative_path="source/drawable-xhdpi" type="image">
       <files mask="ic_action_refresh.png" hidden="true"/>
       <files mask="ic_led.png" hidden="true"/>
       <files mask="ic_led_filled.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/drawable-xxhdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/drawable-xxhdpi" project_relative_path="source/drawable-xxhdpi" type="image">
       <files mask="ic_action_refresh.png" hidden="true"/>
       <files mask="ic_led.png" hidden="true"/>
       <files mask="ic_led_filled.png" hidden="true"/>
@@ -461,23 +471,23 @@
     <source path="android_app/app/src/main/res/menu" project_relative_path="source" type="xml">
       <files mask="main.xml" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/mipmap-hdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/mipmap-hdpi" project_relative_path="source/mipmap-hdpi" type="image">
       <files mask="ic_launcher.png" hidden="true"/>
       <files mask="ic_launcher_round.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/mipmap-mdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/mipmap-mdpi" project_relative_path="source/mipmap-mdpi" type="image">
       <files mask="ic_launcher.png" hidden="true"/>
       <files mask="ic_launcher_round.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/mipmap-xhdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/mipmap-xhdpi" project_relative_path="source/mipmap-xhdpi" type="image">
       <files mask="ic_launcher.png" hidden="true"/>
       <files mask="ic_launcher_round.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/mipmap-xxhdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/mipmap-xxhdpi" project_relative_path="source/mipmap-xxhdpi" type="image">
       <files mask="ic_launcher.png" hidden="true"/>
       <files mask="ic_launcher_round.png" hidden="true"/>
     </source>
-    <source path="android_app/app/src/main/res/mipmap-xxxhdpi" project_relative_path="source" type="image">
+    <source path="android_app/app/src/main/res/mipmap-xxxhdpi" project_relative_path="source/mipmap-xxxhdpi" type="image">
       <files mask="ic_launcher.png" hidden="true"/>
       <files mask="ic_launcher_round.png" hidden="true"/>
     </source>
@@ -487,6 +497,9 @@
       <files mask="drawables.xml" hidden="true"/>
       <files mask="strings.xml" hidden="true"/>
       <files mask="styles.xml" hidden="true"/>
+    </source>
+    <source path="android_app" project_relative_path="source/android_app" type="other">
+      <files mask="build.gradle" hidden="true"/>
     </source>
     <source path="android_app/gradle/wrapper" project_relative_path="source" type="other">
       <files mask="gradle-wrapper.jar" hidden="true"/>

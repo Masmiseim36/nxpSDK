@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -77,15 +77,23 @@ const size_t iot_agent_claimcode_el2go_pub_key_size = sizeof(iot_agent_claimcode
 #endif
 
 #if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#ifdef __ZEPHYR__
+#include <zephyr/kernel.h>
+#include <iot_agent_mqtt_zephyr.h>
+#else
 #ifndef INC_FREERTOS_H /* Header guard of FreeRTOS */
 #include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
 #endif /* INC_FREERTOS_H */
 #include "task.h"
+#include <iot_agent_mqtt_freertos.h>
+#endif
 
 #include <iot_agent_network.h>
 
-#include <iot_agent_mqtt_freertos.h>
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM && !defined(NXP_IOT_AGENT_ENABLE_LITE)
+extern uint32_t tfm_ns_interface_init(void);
+#endif
 
 #if NXP_IOT_AGENT_HAVE_SSS
 static ex_sss_cloud_ctx_t gex_sss_demo_tls_ctx;
@@ -96,7 +104,11 @@ ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx = &gex_sss_demo_tls_ctx;
 
 #include <iot_agent_demo_config.h>
 
+#ifdef __ZEPHYR__
+#define EX_SSS_BOOT_RTOS_STACK_SIZE (1024*32)
+#else
 #define EX_SSS_BOOT_RTOS_STACK_SIZE (1024*8)
+#endif
 #define MAX_UID_DECIMAL_STRING_SIZE 44U
 
 const char * gszEdgeLock2GoDatastoreFilename = "edgelock2go_datastore.bin";
@@ -105,14 +117,16 @@ const uint32_t gKeystoreId = 0x0000BEEFU;
 
 const char * gszKeystoreFilename = "keystore.bin";
 
+void iot_agent_print_uid_integer(char* hexString, size_t len);
 #if NXP_IOT_AGENT_HAVE_SSS
 const char* update_status_report_description(nxp_iot_UpdateStatusReport_UpdateStatus status);
 const char* claim_status_description(nxp_iot_AgentClaimStatus_ClaimStatus status);
 const char* rtp_status_description(nxp_iot_AgentRtpStatus_RtpStatus status);
 const char* csp_status_description(nxp_iot_AgentCspStatus_CspStatus status);
 void print_status_report(const nxp_iot_UpdateStatusReport* status_report);
-void iot_agent_print_uid_integer(char* hexString, size_t len);
 iot_agent_status_t iot_agent_print_uid (sss_se05x_session_t* pSession);
+#else
+iot_agent_status_t iot_agent_print_uid();
 #endif
 
 #if	((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)) && (IOT_AGENT_COS_OVER_RTP_ENABLE == 1)
@@ -140,7 +154,11 @@ typedef struct cli_arguments
     const char **v;
 } cli_arguments_t;
 
+#ifdef __ZEPHYR__
+void agent_start_task(void *args, void*, void*)
+#else
 void agent_start_task(void *args)
+#endif
 {
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
     axTimeMeasurement_t iot_agent_demo_boot_time = { 0 };
@@ -150,15 +168,22 @@ void agent_start_task(void *args)
 
     iot_agent_session_boot_rtos_task();
 
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM && !defined(NXP_IOT_AGENT_ENABLE_LITE)
+    tfm_ns_interface_init();
+#endif
+
     agent_status = network_init();
     AGENT_SUCCESS_OR_EXIT_MSG("Network initialization failed");
 
+#ifdef __ZEPHYR__
+    const k_timeout_t delay = K_SECONDS(2);
+#else
     const TickType_t xDelay = 2 * 1000 / portTICK_PERIOD_MS;
+#endif
 
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
     concludeMeasurement(&iot_agent_demo_boot_time);
-    iot_agent_time.boot_time = getMeasurement(&iot_agent_demo_boot_time);
-    IOT_AGENT_INFO("Performance timing: DEVICE_INIT_TIME : %lums", iot_agent_time.boot_time);
+    IOT_AGENT_INFO("Performance timing: DEVICE_INIT_TIME : %lums", getMeasurement(&iot_agent_demo_boot_time));
 #endif
 
     for (;;)
@@ -182,7 +207,11 @@ void agent_start_task(void *args)
             iot_agent_session_led_failure();
         }
 
+#ifdef __ZEPHYR__
+        k_sleep(delay);
+#else
         vTaskDelay(xDelay);
+#endif
     }
 exit:
     return;
@@ -190,6 +219,9 @@ exit:
 
 #endif
 
+#ifdef __ZEPHYR__
+K_THREAD_STACK_DEFINE(agent_thread_stack_area, EX_SSS_BOOT_RTOS_STACK_SIZE);
+#endif
 int main(int argc, const char *argv[])
 {
 #if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
@@ -200,6 +232,21 @@ int main(int argc, const char *argv[])
     args.c = argc;
     args.v = argv;
 
+#ifdef __ZEPHYR__
+	static struct k_thread agent_thread_data;
+
+	k_tid_t agent_thread_id = k_thread_create(&agent_thread_data,
+		agent_thread_stack_area,
+		K_THREAD_STACK_SIZEOF(agent_thread_stack_area),
+		agent_start_task,
+		(void *)&args, NULL, NULL,
+		0, 0, K_FOREVER
+	);
+
+	k_thread_name_set(agent_thread_id, "agent_start_session_task");
+
+	k_thread_start(agent_thread_id);
+#else
     if (xTaskCreate(&agent_start_task,
         "agent_start_session_task",
         EX_SSS_BOOT_RTOS_STACK_SIZE,
@@ -213,6 +260,7 @@ int main(int argc, const char *argv[])
 
     /* Run RTOS */
     vTaskStartScheduler();
+#endif
 
     return 1;
 #else
@@ -371,7 +419,7 @@ void print_status_report(const nxp_iot_UpdateStatusReport* status_report) {
 			claim_status_description(status_report->claimStatus.status));
 		for (size_t i = 0U; i < status_report->claimStatus.details_count; i++) {
 			nxp_iot_AgentClaimStatus_DetailedClaimStatus* s = &status_report->claimStatus.details[i];
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
 			IOT_AGENT_INFO("    On endpoint 0x%08lx, status for claiming: 0x%04x: %s.", s->endpointId, s->status,
 				claim_status_description(s->status));
 #else
@@ -386,7 +434,7 @@ void print_status_report(const nxp_iot_UpdateStatusReport* status_report) {
 			rtp_status_description(status_report->rtpStatus.status));
 		for (size_t i = 0U; i < status_report->rtpStatus.details_count; i++) {
 			nxp_iot_AgentRtpStatus_RtpObjectStatus* s = &status_report->rtpStatus.details[i];
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
 			IOT_AGENT_INFO("    On endpoint 0x%08lx, for object 0x%08lx, status: 0x%04x: %s.", s->endpointId, s->objectId,
 				s->status, rtp_status_description(s->status));
 #else
@@ -401,18 +449,19 @@ void print_status_report(const nxp_iot_UpdateStatusReport* status_report) {
 			csp_status_description(status_report->cspStatus.status));
 		for (size_t i = 0U; i < status_report->cspStatus.details_count; i++) {
 			nxp_iot_AgentCspStatus_CspServiceStatus* s = &status_report->cspStatus.details[i];
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
 			IOT_AGENT_INFO("    On endpoint 0x%08lx, for service %lu, status: 0x%04x: %s.", s->endpointId,
 				(uint32_t) s->serviceId, s->status, csp_status_description(s->status));
 #else
-			IOT_AGENT_INFO("    On endpoint 0x%08x, for service %d, status: 0x%04x: %s.", s->endpointId,
-				(uint32_t) s->serviceId, s->status, csp_status_description(s->status));
+			if (s->serviceId <= UINT32_MAX) {
+				IOT_AGENT_INFO("    On endpoint 0x%08x, for service %d, status: 0x%04x: %s.", s->endpointId,
+					(uint32_t)s->serviceId, s->status, csp_status_description(s->status));
+			}
 #endif
 		}
 	}
 }
 
-#if NXP_IOT_AGENT_HAVE_SSS
 void iot_agent_print_uid_integer(char* hexString, size_t len) {
 
 	char decimalString[MAX_UID_DECIMAL_STRING_SIZE + 1];
@@ -433,11 +482,12 @@ void iot_agent_print_uid_integer(char* hexString, size_t len) {
 		for (uint8_t j = 0U; j < MAX_UID_DECIMAL_STRING_SIZE; j++) {
 			// pick char
 			uint32_t charWeightedContrib = 0U;
-			char pickChar = *(hexString + len - 1U - i);
+			unsigned char pickChar = *(hexString + len - 1U - i);
+
 			if ((pickChar >= '0') && (pickChar <= '9'))
-				charWeightedContrib = (uint32_t)(pickChar - '0');
+				charWeightedContrib = (((unsigned char)pickChar) - '0');
 			else if ((pickChar >= 'A') && (pickChar <= 'F'))
-				charWeightedContrib = (uint32_t)(pickChar - 'A') + 10U;
+				charWeightedContrib = (((unsigned char)pickChar) - 'A') + 10U;
 			else if ((pickChar >= 'a') && (pickChar <= 'f'))
 				charWeightedContrib = (uint32_t)(pickChar - 'a') + 10U;
 			charWeightedContrib *= weigthValueArray[j];
@@ -467,6 +517,7 @@ void iot_agent_print_uid_integer(char* hexString, size_t len) {
 
 }
 
+#if NXP_IOT_AGENT_HAVE_SSS
 iot_agent_status_t iot_agent_print_uid (sss_se05x_session_t* pSession) {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	uint8_t uid[SE050_MODULE_UNIQUE_ID_LEN];
@@ -490,6 +541,25 @@ iot_agent_status_t iot_agent_print_uid (sss_se05x_session_t* pSession) {
 	}
 	IOT_AGENT_INFO("UID in hex format: %s", uidHexString);
 	iot_agent_print_uid_integer(uidHexString, (((size_t)SE050_MODULE_UNIQUE_ID_LEN) * 2U));
+exit:
+	return agent_status;
+}
+#else
+iot_agent_status_t iot_agent_print_uid() {
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+	uint8_t uid[DEVICEID_LENGTH];
+	char uidHexString[(DEVICEID_LENGTH * 2U) + 1U];
+
+	size_t uidLen = sizeof(uid);
+	agent_status = iot_agent_utils_get_device_id(uid, &uidLen);
+	ASSERT_OR_EXIT_MSG(agent_status == IOT_AGENT_SUCCESS, "iot_agent_utils_get_device_id failed with 0x%08x", agent_status);
+
+	for (uint8_t i = 0U; i < uidLen; i++) {
+		sprintf((uidHexString + (i * 2)), "%02X", uid[i]);
+	}
+	IOT_AGENT_INFO("UID in hex format: %s", uidHexString);
+	iot_agent_print_uid_integer(uidHexString, (uidLen * 2U));
 exit:
 	return agent_status;
 }
@@ -714,6 +784,7 @@ iot_agent_status_t agent_start(int argc, const char* argv[])
 #endif
 #if IOT_AGENT_CLAIMCODE_INJECT_ENABLE
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+	long claimcode_inject_time = 0;
     axTimeMeasurement_t iot_agent_claimcode_inject_time = { 0 };
     initMeasurement(&iot_agent_claimcode_inject_time);
 #endif
@@ -732,7 +803,8 @@ iot_agent_status_t agent_start(int argc, const char* argv[])
 #endif
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
     concludeMeasurement(&iot_agent_claimcode_inject_time);
-    iot_agent_time.claimcode_inject_time = getMeasurement(&iot_agent_claimcode_inject_time);
+    claimcode_inject_time = getMeasurement(&iot_agent_claimcode_inject_time);
+    IOT_AGENT_INFO("Performance timing: CLAIMCODE_INJECT_TIME : %ldms", claimcode_inject_time);
 #endif  //IOT_AGENT_TIME_MEASUREMENT_ENABLE
 #endif  //IOT_AGENT_CLAIMCODE_INJECT_ENABLE
 
@@ -743,11 +815,13 @@ iot_agent_status_t agent_start(int argc, const char* argv[])
 		agent_status = initialize_psa_ext_lib();
     AGENT_SUCCESS_OR_EXIT();
 
-#if NXP_IOT_AGENT_HAVE_SSS
 	// print the uid of the device
+#if NXP_IOT_AGENT_HAVE_SSS
 	agent_status = iot_agent_print_uid((sss_se05x_session_t*)&pCtx->session);
-	AGENT_SUCCESS_OR_EXIT();
+#else
+	agent_status = iot_agent_print_uid();
 #endif
+	AGENT_SUCCESS_OR_EXIT();
 
     /************* Register keystore*************/
 
@@ -817,7 +891,7 @@ iot_agent_status_t agent_start(int argc, const char* argv[])
     concludeMeasurement(&iot_agent_demo_time);
     iot_agent_time.init_time = getMeasurement(&iot_agent_demo_time);
 #if IOT_AGENT_CLAIMCODE_INJECT_ENABLE
-    iot_agent_time.init_time -= iot_agent_time.claimcode_inject_time;
+    iot_agent_time.init_time -= claimcode_inject_time;
 #endif
 #endif
 

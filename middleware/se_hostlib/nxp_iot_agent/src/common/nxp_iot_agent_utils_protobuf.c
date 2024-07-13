@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -57,15 +57,35 @@ bool decode_expect_field(pb_istream_t *stream, const pb_field_t *field, void **a
     expectation_t * expectation = (expectation_t*)(*arg);
 
     uint64_t value;
-    if (!pb_decode_varint(stream, &value))
-        return false;
-
-    if ( (expectation->offset + sizeof(uint16_t)) > expectation->len ){
-        IOT_AGENT_ERROR("received byte stream is too long [%d bytes] to "
-            "fit in buffer with size [%d bytes]", (int)(expectation->offset), (int)(expectation->len));
+    if (!pb_decode_varint(stream, &value)){
         return false;
     }
-    *((uint16_t *)(expectation->buf + expectation->offset)) = (uint16_t)value;
+
+	if (expectation->offset > (SIZE_MAX - sizeof(uint16_t))) {
+		IOT_AGENT_ERROR("Error in received byte stream");
+		return false;
+	}
+	else {
+		if ((expectation->offset + sizeof(uint16_t)) > expectation->len) {
+			IOT_AGENT_ERROR("received byte stream is too long [%d bytes] to "
+				"fit in buffer with size [%d bytes]", (int)(expectation->offset), (int)(expectation->len));
+			return false;
+		}
+	}
+
+	union {
+		uint8_t* pui8;
+		uint16_t* pui16;
+	}u_access;
+
+	u_access.pui8 = (expectation->buf + expectation->offset);
+
+	if (value > UINT16_MAX) {
+		IOT_AGENT_ERROR("Error in casting value variable");
+		return false;
+	}
+
+	*u_access.pui16 = (uint16_t)value;
     expectation->offset += sizeof(uint16_t);
 
     return true;
@@ -73,23 +93,29 @@ bool decode_expect_field(pb_istream_t *stream, const pb_field_t *field, void **a
 
 bool verify_return_value(uint16_t rv, expectation_t *expect)
 {
-    uint16_t expect_value;
-    uint16_t * ptr;
-    if (expect == NULL)
-        return false;
+	uint16_t expect_value;
+	uint16_t * ptr;
+	if (expect == NULL)
+		return false;
 
-    ptr = (uint16_t *)(expect->buf);
-    while((void *)ptr < (void *)(expect->buf + expect->offset)) {
-        expect_value = *ptr;
-        if (rv == expect_value) {
-            IOT_AGENT_DEBUG("Return value is expected");
-            return true;
-        }
-        ptr++;
-    }
+	union {
+		uint8_t* pui8;
+		uint16_t* pui16;
+	}u_access;
 
-    IOT_AGENT_ERROR("Return value is unexpected");
-    return false;
+	u_access.pui8 = expect->buf;
+	ptr = u_access.pui16;
+	while ((void *)ptr < (void *)(expect->buf + expect->offset)) {
+		expect_value = *ptr;
+		if (rv == expect_value) {
+			IOT_AGENT_TRACE("Return value is expected");
+			return true;
+		}
+		ptr++;
+	}
+
+	IOT_AGENT_ERROR("Return value is unexpected");
+	return false;
 }
 
 bool encode_varint_with_fixed_length(size_t number, uint8_t* buffer, size_t buffer_size) {
@@ -101,7 +127,9 @@ bool encode_varint_with_fixed_length(size_t number, uint8_t* buffer, size_t buff
     if (buffer_size > 1U) {
         uint8_t* p = buffer;
         for (size_t i = 0U; i < buffer_size - 1U; i++) {
-            *p++ |= 0x80;
+			if ((p != NULL) && (p < (buffer + buffer_size - 1U))) {
+				*p++ |= 0x80U;
+			}
         }
     }
     return true;
@@ -163,36 +191,49 @@ iot_agent_response_buffer_t* pb_ostream_response_buffer_get_internal_buffer(pb_o
 void pb_response_buffer_consume_bytes(iot_agent_response_buffer_t* response_buffer, size_t len)
 {
     response_buffer->pos += len;
-    response_buffer->remaining -= len;
+	if (response_buffer->remaining >= len)
+	{
+		response_buffer->remaining -= len;
+	}
 }
 
 int byte_array_to_hex_str(const uint8_t* arr, size_t sz, char* str, size_t strlen)
 {
-    size_t i;
-    char* strp = str;
-    char* eos = str + strlen + 1U;
+	size_t i;
+	char* strp = str;
+	char* eos = str + strlen + 1U;
 
-    if (strlen < 1U)
-        return 0;
+	if (strlen < 1U)
+		return 0;
 
-    int wlen = 0;
-    for (i = 0U; i < sz; i++)
-    {
-        /* i use 3 here since we are going to add at most
-        2 chars, and need a null terminator */
-        if (strp + 3 < eos)
-        {
-            strp += sprintf(strp, "%02X", arr[i]);
-            wlen += 2;
-        }
-    }
-    *strp++ = 0x00;
+	size_t wlen = 0U;
+	for (i = 0U; i < sz; i++)
+	{
+		/* i use 3 here since we are going to add at most
+		2 chars, and need a null terminator */
+		if (strp + 3 < eos)
+		{
+			strp += sprintf(strp, "%02X", arr[i]);
+			if (wlen <= (SIZE_MAX - 2U))
+			{
+				wlen += 2U;
+			}
+		}
+	}
+	if (strp < (eos - 1U)) {
+		*strp++ = 0x00;
+	}
     return wlen;
 }
 
 char* pb_bytes_array_to_hex_str(const pb_bytes_array_t* arr)
 {
-    size_t len = (size_t)2U * arr->size + 1U;
+	size_t len = 0U;
+
+	if (arr->size < ((UINT32_MAX - 1U) / 2U)) {
+		len = (size_t)2U * arr->size + 1U;
+	}
+
     char* str = (char*) malloc(len);
     if (str == NULL) return NULL;
     byte_array_to_hex_str(arr->bytes, (size_t)arr->size, str, len);

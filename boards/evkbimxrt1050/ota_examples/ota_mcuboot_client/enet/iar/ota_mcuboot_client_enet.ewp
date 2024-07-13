@@ -229,6 +229,7 @@
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>configTOTAL_HEAP_SIZE=81920</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUBOOT_APPLICATION=1</state>
           <state>USE_RTOS=1</state>
@@ -385,7 +386,6 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corehttp/source/interface</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -399,6 +399,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/llhttp/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -666,6 +667,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1356,6 +1358,7 @@
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>configTOTAL_HEAP_SIZE=81920</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUBOOT_APPLICATION=1</state>
           <state>USE_RTOS=1</state>
@@ -1512,7 +1515,6 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corehttp/source/interface</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1526,6 +1528,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/llhttp/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1793,6 +1796,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2374,9 +2378,6 @@
         <name>$PROJ_DIR$/../bootutil_port/sysflash/sysflash.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../bootutil_port/sbldef.h</name>
-    </file>
   </group>
   <group>
     <name>doc</name>
@@ -2846,6 +2847,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/base64.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/bignum_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/bignum.c</name>
@@ -4080,7 +4084,16 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -4140,12 +4153,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/shell/fsl_shell.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</name>

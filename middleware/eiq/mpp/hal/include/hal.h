@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -36,11 +36,13 @@
  * @param[in] height: Image height
  * @param[in] format: Image format
  * @param[in] lr: Labeled rectangle parameters
+ * @param[in] stripe: stripe number (0=no stripe)
+ * @param[in] stripe_max: max nb of stripes
  * @return 0
  *
  */
 int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_t format,
-                        mpp_labeled_rect_t *lr);
+                        mpp_labeled_rect_t *lr, int stripe, int stripe_max);
 
 /*!
  * @brief Hal setup function for inference engine Tensorflow-Lite Micro
@@ -50,24 +52,6 @@ int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_
  *
  */
 int hal_inference_tflite_setup(vision_algo_dev_t *dev);
-
-/*!
- * @brief Hal setup function for inference engine GLOW.
- *
- * @param[in] dev vision algo device to register
- * @return error code (0: success, otherwise: failure)
- *
- */
-int hal_inference_glow_setup(vision_algo_dev_t *dev);
-
-/*!
- * @brief Hal setup function for inference engine DeepView RT.
- *
- * @param[in] dev vision algo device to register
- * @return error code (0: success, otherwise: failure)
- *
- */
-int hal_inference_dvrt_setup(vision_algo_dev_t *dev);
 
 /*!
  * @brief Register with a display device specified by name.

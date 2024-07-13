@@ -1,20 +1,22 @@
 var searchData=
 [
   ['lastscktopcsdelayinnanosec',['lastSckToPcsDelayInNanoSec',['../a00050.html#abcd52e97b8e950f8f451f89c3423949e',1,'_lpspi_master_config']]],
-  ['leftdata',['leftData',['../a00078.html#a73cf51a860d8b2a0802021e2d2b00dc0',1,'_spdif_edma_transfer']]],
-  ['leftinputsource',['leftInputSource',['../a00085.html#ad19b3b32dfa610eb689406c8567526ee',1,'wm8960_config']]],
-  ['lefttcd',['leftTcd',['../a00078.html#a8bcc7f9aac0741bbaa7bad15364b6966',1,'_spdif_edma_handle']]],
-  ['length',['length',['../a00025.html#a1bdeb9d446a703945b0164475d8ded39',1,'_enet_rx_bd_struct::length()'],['../a00025.html#a95c960e64d90855184b328030e00201e',1,'_enet_tx_bd_struct::length()'],['../a00027.html#a79577000abdd0aead2ccbae8fff1ca66',1,'_flexcan_frame::length()'],['../a00070.html#a18eb3f893e218b84d4d8d0a16627421b',1,'_serial_manager_callback_message::length()']]],
-  ['level',['level',['../a00060.html#a44995982957ed3062dc5e0d9190060a6',1,'_pwm_signal_param']]],
+  ['lasttimedatabytes',['lastTimeDataBytes',['../a00051.html#aee04dbdbdcb8aeb198cb4c2a5e42b38e',1,'_lpspi_master_edma_handle']]],
+  ['lasttimetcd',['lastTimeTCD',['../a00051.html#a850195d76d4de227a0390b88bcc2c44a',1,'_lpspi_master_edma_handle']]],
+  ['leftdata',['leftData',['../a00077.html#a73cf51a860d8b2a0802021e2d2b00dc0',1,'_spdif_edma_transfer']]],
+  ['leftinputsource',['leftInputSource',['../a00084.html#ad19b3b32dfa610eb689406c8567526ee',1,'wm8960_config']]],
+  ['lefttcd',['leftTcd',['../a00077.html#a8bcc7f9aac0741bbaa7bad15364b6966',1,'_spdif_edma_handle']]],
+  ['length',['length',['../a00025.html#a1bdeb9d446a703945b0164475d8ded39',1,'_enet_rx_bd_struct::length()'],['../a00025.html#a95c960e64d90855184b328030e00201e',1,'_enet_tx_bd_struct::length()'],['../a00027.html#a79577000abdd0aead2ccbae8fff1ca66',1,'_flexcan_frame::length()'],['../a00069.html#a18eb3f893e218b84d4d8d0a16627421b',1,'_serial_manager_callback_message::length()']]],
+  ['level',['level',['../a00059.html#a44995982957ed3062dc5e0d9190060a6',1,'_pwm_signal_param']]],
   ['linepitch_5fbytes',['linePitch_Bytes',['../a00017.html#a9a3fc579a852f34bddbf0f3de5141dd9',1,'_csi_config']]],
-  ['link',['link',['../a00074.html#ab656143c38d8fc0338aa2e58e76d73a2',1,'_shell_command']]],
-  ['lock',['lock',['../a00080.html#a29129f1a5b47676d2b1386004161d2bb',1,'_trng_user_config::lock()'],['../a00068.html#a64270c1f8f17f532c6bb8f95dd43b826',1,'_sdmmchost_::lock()'],['../a00056.html#ae2976750b8fba83778c78b2926e1edb9',1,'_mmc_card::lock()'],['../a00065.html#a6c2f73eb9b1c3a6275fcae85019f7d93',1,'_sd_card::lock()'],['../a00066.html#ac3552d927583437062a83e0c190ee0b1',1,'_sdio_card::lock()']]],
-  ['longrunmaxlimit',['longRunMaxLimit',['../a00080.html#ae0c1a71abdd377256338df5b3c941c75',1,'_trng_user_config']]],
+  ['link',['link',['../a00073.html#ab656143c38d8fc0338aa2e58e76d73a2',1,'_shell_command']]],
+  ['lock',['lock',['../a00079.html#a29129f1a5b47676d2b1386004161d2bb',1,'_trng_user_config::lock()'],['../a00067.html#a64270c1f8f17f532c6bb8f95dd43b826',1,'_sdmmchost_::lock()'],['../a00055.html#ae2976750b8fba83778c78b2926e1edb9',1,'_mmc_card::lock()'],['../a00064.html#a6c2f73eb9b1c3a6275fcae85019f7d93',1,'_sd_card::lock()'],['../a00065.html#ac3552d927583437062a83e0c190ee0b1',1,'_sdio_card::lock()']]],
+  ['longrunmaxlimit',['longRunMaxLimit',['../a00079.html#ae0c1a71abdd377256338df5b3c941c75',1,'_trng_user_config']]],
   ['lookuptable',['lookupTable',['../a00043.html#a58e812dd079c63ba07f63867d72db736',1,'_flexspi_mem_config']]],
   ['loopdivider',['loopDivider',['../a00012.html#a0dec5fbdd4648ba882daa3aad33eb203',1,'_clock_arm_pll_config::loopDivider()'],['../a00012.html#a9d82f9d38216691211a87b46a66151fd',1,'_clock_usb_pll_config::loopDivider()'],['../a00012.html#a168c3d5e597b98b6175b47707179784c',1,'_clock_sys_pll_config::loopDivider()'],['../a00012.html#ac5ec9fa5af5f95c54ade27f230dc8913',1,'_clock_audio_pll_config::loopDivider()'],['../a00012.html#ae49c6bd01ee55fee4bb8767a623cda96',1,'_clock_video_pll_config::loopDivider()'],['../a00012.html#a061fafd79bc081b4e421dad7c65ec43d',1,'_clock_enet_pll_config::loopDivider()']]],
-  ['lowalarmtemp',['lowAlarmTemp',['../a00079.html#a3b800f87335e6569c4122baecdae621d',1,'_tempmon_config']]],
+  ['lowalarmtemp',['lowAlarmTemp',['../a00078.html#a3b800f87335e6569c4122baecdae621d',1,'_tempmon_config']]],
   ['lpspisoftwaretcd',['lpspiSoftwareTCD',['../a00051.html#a02c5f5413fb96f62919456e66f5056ff',1,'_lpspi_master_edma_handle::lpspiSoftwareTCD()'],['../a00051.html#a3c1424903ecaad4939aa568c694a83c7',1,'_lpspi_slave_edma_handle::lpspiSoftwareTCD()']]],
   ['lutcustomseq',['lutCustomSeq',['../a00043.html#abe46b0b2e6624c65d7bc94cf567eefab',1,'_flexspi_mem_config']]],
   ['lutcustomseqenable',['lutCustomSeqEnable',['../a00043.html#a67c8b457bfea892b4a691785cc268600',1,'_flexspi_mem_config']]],
-  ['lutmode',['lutMode',['../a00061.html#a94eff04d8d7ca74f82fe60124130e352',1,'_pxp_dither_config']]]
+  ['lutmode',['lutMode',['../a00060.html#a94eff04d8d7ca74f82fe60124130e352',1,'_pxp_dither_config']]]
 ];

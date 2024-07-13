@@ -356,7 +356,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -366,6 +365,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1449,7 +1449,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -1459,6 +1458,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2544,7 +2544,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -2554,6 +2553,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3637,7 +3637,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -3647,6 +3646,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4730,7 +4730,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -4740,6 +4739,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5825,7 +5825,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -5835,6 +5834,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6830,16 +6830,16 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

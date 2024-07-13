@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,11 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#include "fwk_platform_lowpower.h"
+#endif /* APP_LOWPOWER_ENABLED */
 
 #include <peripheral_ht.h>
 
@@ -36,7 +41,8 @@
 #define USB_HOST_INTERRUPT_PRIORITY (3U)
 #endif
 /* MURATA wifi reset pin */
-#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+     defined(WIFI_IW612_BOARD_MURATA_2EL_USD))
 #define MURATA_WIFI_RESET_GPIO     GPIO1
 #define MURATA_WIFI_RESET_GPIO_PIN 24U
 #endif
@@ -46,6 +52,7 @@
  * Prototypes
  ******************************************************************************/
 extern void BOARD_InitHardware(void);
+extern void APP_InitServices(void);
 
 /*******************************************************************************
  * Variables
@@ -57,7 +64,7 @@ extern void BOARD_InitHardware(void);
  ******************************************************************************/
 
 #if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
-     defined(WIFI_IW416_BOARD_MURATA_1XK_USD))
+     defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW612_BOARD_MURATA_2EL_USD))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -174,7 +181,6 @@ int main(void)
     BOARD_InitBootClocks();
 
     BOARD_InitDebugConsole();
-    SCB_DisableDCache();
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
     DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
     edma_config_t config;
@@ -183,13 +189,19 @@ int main(void)
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(dmaBases[0], &config);
 #endif
-#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+     defined(WIFI_IW612_BOARD_MURATA_2EL_USD))
     /* Turn on Bluetooth module */
     GPIO_PinWrite(MURATA_WIFI_RESET_GPIO, MURATA_WIFI_RESET_GPIO_PIN, 1U);
 #endif
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
     CRYPTO_InitHardware();
 #endif /* CONFIG_BT_SMP */
+
+#if (defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0))|| \
+    (defined(APP_USE_SENSORS) && (APP_USE_SENSORS > 0))
+    APP_InitServices();
+#endif
 
     if (xTaskCreate(peripheral_ht_task, "peripheral_ht_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
@@ -202,3 +214,27 @@ int main(void)
     for (;;)
         ;
 }
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
+{
+    bool abortIdle = false;
+    uint64_t expectedIdleTimeUs, actualIdleTimeUs;
+    uint32_t irqMask = DisableGlobalIRQ();
+
+    /* Disable and prepare systicks for low power. */
+    abortIdle = PWR_SysticksPreProcess((uint32_t)xExpectedIdleTime, &expectedIdleTimeUs);
+
+    if (abortIdle == false)
+    {
+        /* Enter low power with a maximal timeout. */
+        actualIdleTimeUs = PWR_EnterLowPower(expectedIdleTimeUs);
+
+        /* Re enable systicks and compensate systick timebase. */
+        PWR_SysticksPostProcess(expectedIdleTimeUs, actualIdleTimeUs);
+    }
+
+    /* Exit from critical section. */
+    EnableGlobalIRQ(irqMask);
+}
+#endif /* APP_LOWPOWER_ENABLED */

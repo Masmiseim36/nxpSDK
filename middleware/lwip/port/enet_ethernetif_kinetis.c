@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -234,7 +234,10 @@ static void ethernet_callback(ENET_Type *base,
             {
                 xResult =
                     xEventGroupSetBitsFromISR(ethernetif->enetTransmitAccessEvent, ethernetif->txFlag, &taskToWake);
-                if ((pdPASS == xResult) && (pdTRUE == taskToWake))
+                LWIP_ASSERT(
+                    "xEventGroupSetBitsFromISR failed, increase configTIMER_QUEUE_LENGTH or configTIMER_TASK_PRIORITY",
+                    pdPASS == xResult);
+                if (pdPASS == xResult)
                 {
                     portYIELD_FROM_ISR(taskToWake);
                 }
@@ -358,7 +361,7 @@ static void *ethernetif_rx_alloc(ENET_Type *base, void *userData, uint8_t ringId
         }
     }
 
-#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     if (buffer == NULL)
     {
         ENET_DisableInterrupts(base, (uint32_t)kENET_RxFrameInterrupt);
@@ -389,7 +392,7 @@ static void ethernetif_rx_free(ENET_Type *base, void *buffer, void *userData, ui
     LWIP_ASSERT("ethernetif_rx_free: freeing unallocated buffer", ethernetif->RxPbufs[idx].buffer_used);
     ethernetif->RxPbufs[idx].buffer_used = false;
 
-#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     ENET_EnableInterrupts(base, (uint32_t)kENET_RxFrameInterrupt);
 #else
     (void)base;

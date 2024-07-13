@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP.
+ * Copyright 2022-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,8 +14,6 @@
 #include "hal_debug.h"
 
 #if (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_CsiMt9m114 == 1)
-#include <FreeRTOS.h>
-#include <task.h>
 #include <stdlib.h>
 
 #include "board.h"
@@ -209,7 +207,7 @@ hal_camera_status_t HAL_CameraDev_CsiMt9m114_Stop(const camera_dev_t *dev)
     return ret;
 }
 
-hal_camera_status_t HAL_CameraDev_CsiMt9m114_Dequeue(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format)
+hal_camera_status_t HAL_CameraDev_CsiMt9m114_Dequeue(const camera_dev_t *dev, void **data, int *stripe)
 {
     hal_camera_status_t ret = kStatus_HAL_CameraSuccess;
     HAL_LOGD("++HAL_CameraDev_CsiMt9m114_Dequeue\n");
@@ -227,7 +225,7 @@ hal_camera_status_t HAL_CameraDev_CsiMt9m114_Dequeue(const camera_dev_t *dev, vo
     }
 
     *data   = (void *)gCurrentBufferAddr;
-    *format = dev->config.format;
+    *stripe = 0;
     HAL_LOGD("--HAL_CameraDev_CsiMt9m114_Dequeue\n");
     return ret;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -75,8 +75,6 @@ typedef struct iot_agent_keystore_t
  *
  * Depending on the type of the keystore this is triggering actions on the keystore's context
  * itself by calling the _destroy() function of the keystore interface.
- *
- * This does not free the context of the keystore.
  *
  * The \p keystore is not usable after a call to iot_agent_keystore_free.
  */

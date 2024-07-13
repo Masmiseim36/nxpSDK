@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -28,7 +28,11 @@
 /**Maximum priority for application tasks
    Tasks created by the application should have a maximum priority otherwise
    scheduling of pipeline processing tasks may be impacted */
-#define MPP_APP_MAX_PRIO    1
+#define MPP_APP_MAX_PRIO        1
+
+/**Maximum priority for pipeline tasks
+   OS must support this number of priorities */
+#define MPP_PIPELINE_MAX_PRIO   MPP_APP_MAX_PRIO + 4
 
 /** Pipeline handle type */
 typedef void* mpp_t ;
@@ -59,8 +63,8 @@ typedef unsigned int mpp_evt_mask_t;
  * The "mpps" created using the flag MPP_EXEC_PREEMPT are preempted after a given
  * time interval by "mpps" that will run-to-completion again. <br>
  * The "mpps" created with the MPP_EXEC_INHERIT flag inherit the same execution flag
- * as the parent(s) in case of split/join operation. <br>
- * Note: It is not possible to request run-to-completion execution when spliting/joining preemptable-execution "mpps".
+ * as the parent(s) in case of split operation. <br>
+ * Note: It is not possible to request run-to-completion execution when spliting preemptable-execution "mpps".
  */
 typedef enum {
     MPP_EXEC_INHERIT = 0,  /*!< inherit from parent(s) */
@@ -139,6 +143,8 @@ typedef enum {
 typedef enum {
     /* 2d frame format */
     MPP_PIXEL_ARGB,         /*!< ARGB 32 bits */
+	MPP_PIXEL_BGRA,         /*!< BGRA 32 bits */
+	MPP_PIXEL_RGBA,         /*!< RGBA 32 bits */
     MPP_PIXEL_RGB,          /*!< RGB 24 bits */
     MPP_PIXEL_RGB565,       /*!< RGB 16 bits */
     MPP_PIXEL_BGR,          /*!< BGR 24 bits */
@@ -166,13 +172,15 @@ typedef struct {
     int width;  /*!< buffer width */
     mpp_pixel_format_t format; /*!< pixel format */
     int fps;    /*!< frames per second */
+    bool stripe; /*!< stripe mode */
 } mpp_camera_params_t;
 
 /** Static image parameters */
 typedef struct {
-    int height;
-    int width;
-    mpp_pixel_format_t format;
+    int height; /*!< buffer height */
+    int width;  /*!< buffer width */
+    mpp_pixel_format_t format;  /*!< pixel format */
+    bool stripe; /*!< stripe mode */
 } mpp_img_params_t;
 
 /** Display parameters */
@@ -186,6 +194,7 @@ typedef struct {
     int bottom; /*!< active rect: setting to 0 will default to fullscreen */
     mpp_rotate_degree_t rotate; /*!< rotate degree */
     mpp_pixel_format_t format;  /*!< pixel format */
+    bool stripe; /*!< stripe mode */
 } mpp_display_params_t;
 
 /** Processing element ids */
@@ -228,8 +237,6 @@ typedef enum {
 typedef enum
 {
     MPP_INFERENCE_TYPE_TFLITE = 0,      /*!< TensorFlow-Lite */
-    MPP_INFERENCE_TYPE_DEEPVIEWRT = 1, /*!< DeepViewRT */
-    MPP_INFERENCE_TYPE_GLOW = 2       /*!< GLOW */
 } mpp_inference_type_t;
 
 /** tensor parameters */
@@ -274,6 +281,7 @@ typedef struct {
     uint16_t right;         /*!< rectangle right position */
     uint16_t tag;           /*!< labeled rectangle tag */
     uint16_t reserved;      /*!< pad for 32 bits alignment */
+    bool stripe;            /*!< stripe mode */
 } mpp_labeled_rect_t;
 
 /** Image area coordinates */
@@ -334,6 +342,8 @@ union {
         mpp_dims_t scale;                   /*!< scaling dimensions */
         mpp_convert_ops_t ops;              /*!< operation selector mask */
         const char* dev_name;               /*!< device name used for graphics */
+        bool stripe_in;                     /*!< input stripe mode */
+        bool stripe_out;                    /*!< output stripe mode */
     } convert;
     /** Resize element's parameters */
     struct {
@@ -360,7 +370,7 @@ union {
     struct {
         const void *model_data; /*!< pointer to model binary */
         mpp_inference_type_t type; /*!< inference type */
-        int model_size;         /*!< model binary size (unused by Glow) */
+        int model_size;         /*!< model binary size */
         float model_input_mean; /*!< model 'mean' of input values, used for normalization */
         float model_input_std;  /*!< model 'standard deviation' of input values, used for normalization */
         mpp_tensor_order_t tensor_order; /*!< model input tensor component order */

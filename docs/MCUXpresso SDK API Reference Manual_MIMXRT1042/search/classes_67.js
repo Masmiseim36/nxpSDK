@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gpio_5fpin_5fconfig_5ft',['gpio_pin_config_t',['../a00044.html#a00438',1,'']]],
-  ['gpt_5fconfig_5ft',['gpt_config_t',['../a00045.html#a00439',1,'']]]
+  ['gpio_5fpin_5fconfig_5ft',['gpio_pin_config_t',['../a00044.html#a00435',1,'']]],
+  ['gpt_5fconfig_5ft',['gpt_config_t',['../a00045.html#a00436',1,'']]]
 ];

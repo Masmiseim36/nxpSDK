@@ -13,10 +13,6 @@
       </member>
       <member>
         <project>dev_msc_disk_freertos</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>dev_msc_disk_freertos</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -40,13 +36,6 @@
       <member>
         <project>dev_msc_disk_freertos</project>
         <configuration>sdram_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>dev_msc_disk_freertos</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

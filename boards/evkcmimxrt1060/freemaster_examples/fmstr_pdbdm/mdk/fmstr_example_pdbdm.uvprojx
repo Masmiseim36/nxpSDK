@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1062DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/template/gen32le;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -405,16 +405,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../source/board/clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../source/board/clock_config.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../source/board/pin_mux.c</FilePath>
@@ -433,6 +423,16 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../source/board/board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/board/clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -620,16 +620,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -648,6 +638,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1312,10 +1312,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/template/gen32le;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1385,16 +1385,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../source/board/clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../source/board/clock_config.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../source/board/pin_mux.c</FilePath>
@@ -1413,6 +1403,16 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../source/board/board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/board/clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -1600,16 +1600,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1628,6 +1618,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2292,10 +2292,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/template/gen32le;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2365,16 +2365,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../source/board/clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../source/board/clock_config.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../source/board/pin_mux.c</FilePath>
@@ -2393,6 +2383,16 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../source/board/board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/board/clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -2580,16 +2580,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2608,6 +2598,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3272,10 +3272,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1062DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/template/gen32le;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3345,16 +3345,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../source/board/clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../source/board/clock_config.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../source/board/pin_mux.c</FilePath>
@@ -3373,6 +3363,16 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../source/board/board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/board/clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -3560,16 +3560,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3588,6 +3578,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4252,10 +4252,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/template/gen32le;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4325,16 +4325,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../source/board/clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../source/board/clock_config.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../source/board/pin_mux.c</FilePath>
@@ -4353,6 +4343,16 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../source/board/board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/board/clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -4540,16 +4540,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4568,6 +4558,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5232,10 +5232,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../source/board;../source/example_data;../../../../../middleware/freemaster/src/common;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/template/gen32le;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5305,16 +5305,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../source/board/clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../source/board/clock_config.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../source/board/pin_mux.c</FilePath>
@@ -5333,6 +5323,16 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../source/board/board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/board/clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -5520,16 +5520,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -5548,6 +5538,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

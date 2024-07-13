@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -31,7 +30,7 @@ static VOID _nx_secure_tls_packet_trim(NX_PACKET *packet_ptr);
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_process_record                       PORTABLE C      */
-/*                                                           6.1.12       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -102,6 +101,9 @@ static VOID _nx_secure_tls_packet_trim(NX_PACKET *packet_ptr);
 /*                                            improved buffer length      */
 /*                                            verification,               */
 /*                                            resulting in version 6.1.12 */
+/*  03-08-2023     Tiejun Zhou              Modified comment(s), and      */
+/*                                            corrected data cleanup,     */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_process_record(NX_SECURE_TLS_SESSION *tls_session, NX_PACKET *packet_ptr,
@@ -588,7 +590,8 @@ NX_PACKET *decrypted_packet;
         }
 
 #ifdef NX_SECURE_KEY_CLEAR
-        if (message_type != NX_SECURE_TLS_APPLICATION_DATA)
+        if ((message_type != NX_SECURE_TLS_APPLICATION_DATA) &&
+            (status != NX_CONTINUE))
         {
             NX_SECURE_MEMSET(packet_data, 0, message_length);
         }

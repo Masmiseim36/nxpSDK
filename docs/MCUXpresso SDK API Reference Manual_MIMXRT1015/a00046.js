@@ -1,6 +1,6 @@
 var a00046 =
 [
-    [ "_lpspi_master_edma_handle", "a00046.html#a00357", [
+    [ "_lpspi_master_edma_handle", "a00046.html#a00354", [
       [ "isPcsContinuous", "a00046.html#aa41a139d51a18f9189b8257b7deded08", null ],
       [ "isByteSwap", "a00046.html#a3bd05ddf3d2cbf2b5a35ba827726b30b", null ],
       [ "fifoSize", "a00046.html#a1a411a8aeb23f712370f9c2ca84464f5", null ],
@@ -9,13 +9,20 @@ var a00046 =
       [ "bytesEachRead", "a00046.html#a8dc44727556a6cd69e1525d3f7f0495e", null ],
       [ "bytesLastRead", "a00046.html#a5ef8ff1198d478cc77dcb15b44c1ee28", null ],
       [ "isThereExtraRxBytes", "a00046.html#a8f8c45daac2507df2e132b26e0b3bc36", null ],
-      [ "txData", "a00046.html#a4d53c745d07f3b681734d37305b3b960", null ],
+      [ "txData", "a00046.html#af08d5938d8e0a36a554577fb7e2f0e71", null ],
       [ "rxData", "a00046.html#a9683cefe7426a92dfbd36d73135fab66", null ],
       [ "txRemainingByteCount", "a00046.html#ac905a6d74fbc2e7b2d608dfea6616367", null ],
       [ "rxRemainingByteCount", "a00046.html#a6c90791ec14cb935974f17c430b86416", null ],
       [ "writeRegRemainingTimes", "a00046.html#a4b292c2724d5b2c99b16ceef8f60fe77", null ],
       [ "readRegRemainingTimes", "a00046.html#a43ad846fccb80f7915e3028c2e705863", null ],
       [ "totalByteCount", "a00046.html#ae91291c4b4a99e346c1e72a0177b814a", null ],
+      [ "lastTimeTCD", "a00046.html#a850195d76d4de227a0390b88bcc2c44a", null ],
+      [ "isMultiDMATransmit", "a00046.html#a4f323367cc01d60020ff459adfc76273", null ],
+      [ "dmaTransmitTime", "a00046.html#a6c89a243881647962c68240a8a3c40c6", null ],
+      [ "lastTimeDataBytes", "a00046.html#aee04dbdbdcb8aeb198cb4c2a5e42b38e", null ],
+      [ "dataBytesEveryTime", "a00046.html#a9b322eb23529d3ba146cb98827628f88", null ],
+      [ "transferConfigRx", "a00046.html#af839d64d023096949c324e29f6b9fb51", null ],
+      [ "transferConfigTx", "a00046.html#a2a80b22dd9c4a1098271c68bfe406734", null ],
       [ "txBuffIfNull", "a00046.html#a26c737cc99c3729020ab95f44fae7ca8", null ],
       [ "rxBuffIfNull", "a00046.html#ab96df245c21726d54f4d6d9dfb16d377", null ],
       [ "transmitCommand", "a00046.html#a50fd9f76ef5f709202ad695200af83fe", null ],
@@ -27,7 +34,7 @@ var a00046 =
       [ "edmaTxDataToTxRegHandle", "a00046.html#aa170b87557f01e8d56ca5028f6c96df6", null ],
       [ "lpspiSoftwareTCD", "a00046.html#a02c5f5413fb96f62919456e66f5056ff", null ]
     ] ],
-    [ "_lpspi_slave_edma_handle", "a00046.html#a00360", [
+    [ "_lpspi_slave_edma_handle", "a00046.html#a00357", [
       [ "isByteSwap", "a00046.html#a01e8c39ff805fe2976c87cdfe72a9ce7", null ],
       [ "fifoSize", "a00046.html#a8bbcdd6904a0582149a6bbc934b7efb7", null ],
       [ "rxWatermark", "a00046.html#a68a5e2d91a877ea183f389f1193b0b4a", null ],
@@ -36,7 +43,7 @@ var a00046 =
       [ "bytesLastRead", "a00046.html#af5b31fa5b7bbec87da6e394e25dab60e", null ],
       [ "isThereExtraRxBytes", "a00046.html#ae30ca6b517a9ab8ff903d4f49de67f87", null ],
       [ "nbytes", "a00046.html#a062641d46358cc81299b44f13e954bea", null ],
-      [ "txData", "a00046.html#a69a6dbe79088a4203aa206df1ef11998", null ],
+      [ "txData", "a00046.html#a5e1d96fa33a2eded82b22575ae82086a", null ],
       [ "rxData", "a00046.html#a50c5068aec3bb0e9f31c02ea441b14cf", null ],
       [ "txRemainingByteCount", "a00046.html#ad62145e0aa8a875374cc3325cf2867ed", null ],
       [ "rxRemainingByteCount", "a00046.html#ac03996666ed1a9781f56508c07a17108", null ],
@@ -54,6 +61,7 @@ var a00046 =
       [ "lpspiSoftwareTCD", "a00046.html#a3c1424903ecaad4939aa568c694a83c7", null ]
     ] ],
     [ "FSL_LPSPI_EDMA_DRIVER_VERSION", "a00046.html#gaa083089fda62238f6cdcd9b6289913c7", null ],
+    [ "DMA_MAX_TRANSFER_COUNT", "a00046.html#gaebe7d948ac31ff020dde038034ae3bbd", null ],
     [ "lpspi_master_edma_handle_t", "a00046.html#ga5e5059737abd91565874d70c4a74e6ea", null ],
     [ "lpspi_slave_edma_handle_t", "a00046.html#gadcc74e390971e456d935c86389d51835", null ],
     [ "lpspi_master_edma_transfer_callback_t", "a00046.html#gac7830d169e650c0f0239bfe22fe044f0", null ],

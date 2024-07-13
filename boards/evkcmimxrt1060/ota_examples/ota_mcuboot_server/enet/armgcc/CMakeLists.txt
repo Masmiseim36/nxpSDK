@@ -56,6 +56,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../mbedtls_config.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
 "${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
@@ -65,13 +71,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
 "${ProjDirPath}/../bootutil_port/flash_map.h"
 "${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
-"${ProjDirPath}/../bootutil_port/sbldef.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -84,14 +83,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="mbedtls_config.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="mbedtls_config.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 include(${SdkRootDirPath}/devices/MIMXRT1062/all_lib_device.cmake)
 

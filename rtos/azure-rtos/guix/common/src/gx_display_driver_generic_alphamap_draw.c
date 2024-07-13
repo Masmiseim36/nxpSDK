@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -376,7 +375,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-//*    [gx_display_driver_pixel_blend]       Basic display driver pixel    */
+/*    [gx_display_driver_pixel_blend]       Basic display driver pixel    */
 /*                                            blend function              */
 /*                                                                        */
 /*  CALLED BY                                                             */

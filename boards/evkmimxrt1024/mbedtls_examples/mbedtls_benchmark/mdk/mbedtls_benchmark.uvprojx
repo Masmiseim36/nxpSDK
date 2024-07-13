@@ -327,10 +327,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/utilities;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/utilities;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1024/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1056,6 +1056,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -1741,16 +1746,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1774,6 +1769,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2238,10 +2243,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/utilities;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/utilities;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1024/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2967,6 +2972,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -3652,16 +3662,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3685,6 +3685,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

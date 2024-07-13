@@ -1,6 +1,6 @@
 Overview
 ========
-The example shows how to use the SD card middleware with Azure RTOS.
+The example shows how to use the SD card middleware.
 
 This example will print the information of the SD card and format it
 in FAT format. Then, do some file operation test - create, write,
@@ -9,14 +9,14 @@ read, close and so on.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
+- IAR embedded Workbench  9.60.1
+- Keil MDK  5.39.0
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================

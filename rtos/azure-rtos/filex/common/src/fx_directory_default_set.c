@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -30,9 +29,6 @@
 #include "fx_file.h"
 #include "fx_utility.h"
 #include "fx_directory.h"
-#ifdef FX_ENABLE_EXFAT
-#include "fx_directory_exFAT.h"
-#endif /* FX_ENABLE_EXFAT */
 
 #ifndef FX_NO_LOCAL_PATH
 FX_LOCAL_PATH_SETUP
@@ -94,9 +90,6 @@ UINT         path_string_capacity;
 FX_PATH     *path_ptr;
 UINT         i;
 
-#ifdef FX_ENABLE_EXFAT
-CHAR         abs_str[FX_MAXIMUM_PATH]; /* TODO: possible will be better to use dynamic memory for exFAT only.  */
-#endif /* FX_ENABLE_EXFAT */
 
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
@@ -131,27 +124,6 @@ CHAR         abs_str[FX_MAXIMUM_PATH]; /* TODO: possible will be better to use d
     /* Setup the path string pointer to the start of the current path.  */
     path_string_ptr =  &(media_ptr -> fx_media_default_path.fx_path_string[0]);
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        /* Get the absolute path.  */
-        if (_fx_utility_absolute_path_get(path_string_ptr, new_path_name, abs_str) == FX_SUCCESS)
-        {
-
-            new_path_name = &(abs_str[0]);
-        }
-        else
-        {
-
-            /* Release media protection.  */
-            FX_UNPROTECT
-
-            /* Invalid Path - Return the error code.  */
-            return(FX_INVALID_PATH);
-        }
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Look for a root directory selection.  */
     if ((!new_path_name) || (((new_path_name[0] == '\\') || (new_path_name[0] == '/')) && (new_path_name[1] == (CHAR)0)))
@@ -419,11 +391,7 @@ CHAR         abs_str[FX_MAXIMUM_PATH]; /* TODO: possible will be better to use d
         }
 
         /* Determine if we are at the root directory.  */
-#ifdef FX_ENABLE_EXFAT
-        if ((!dir_entry.fx_dir_entry_cluster) && (media_ptr -> fx_media_FAT_type != FX_exFAT))
-#else
         if (!dir_entry.fx_dir_entry_cluster)
-#endif
         {
 
             /* Set the current directory back to the root directory.  */

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -29,7 +28,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_session_receive_records              PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -80,6 +79,9 @@
 /*  04-25-2022     Yuxin Zhou               Modified comment(s), added    */
 /*                                            conditional TLS 1.3 build,  */
 /*                                            resulting in version 6.1.11 */
+/*  03-08-2023     Yanwu Cai                Modified comment(s), fixed    */
+/*                                            packet leak in TLS 1.3,     */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_secure_tls_session_receive_records(NX_SECURE_TLS_SESSION *tls_session,
@@ -228,7 +230,11 @@ UCHAR          handshake_finished = NX_FALSE;
         }
 #endif /* NX_SECURE_TLS_CLIENT_DISABLED */
 
-        if (handshake_finished)
+        if (handshake_finished
+#if (NX_SECURE_TLS_TLS_1_3_ENABLED)
+            && status != NX_SECURE_TLS_POST_HANDSHAKE_RECEIVED
+#endif /* (NX_SECURE_TLS_TLS_1_3_ENABLED) */
+            )
         {
             if (tls_session -> nx_secure_record_decrypted_packet == NX_NULL)
             {

@@ -1,19 +1,18 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
 /**************************************************************************/
-/**                                                                       */ 
-/** FileX Component                                                       */ 
+/**                                                                       */
+/** FileX Component                                                       */
 /**                                                                       */
 /**   Application Utility                                                 */
 /**                                                                       */
@@ -33,7 +32,7 @@
 
 typedef struct FX_MEDIA_PARTITION_STRUCT
 {
-    ULONG fx_media_part_start;    
+    ULONG fx_media_part_start;
     ULONG fx_media_part_size;
 } FX_MEDIA_PARTITION;
 
@@ -59,62 +58,62 @@ typedef struct FX_MEDIA_PARTITION_STRUCT
 
 UINT    _fx_partition_offset_calculate(void  *partition_sector, UINT partition,
                                      ULONG *partition_start, ULONG *partition_size);
-UINT    _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table, 
+UINT    _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table,
                                 UINT *count, ULONG sector, UCHAR *sector_buffer);
 UINT    _fx_partition_offset_calculate_extended(FX_MEDIA *media_ptr, void  *partition_sector, UINT partition,
                                      ULONG *partition_start, ULONG *partition_size);
 
-/**************************************************************************/ 
-/*                                                                        */ 
-/*  FUNCTION                                               RELEASE        */ 
-/*                                                                        */ 
-/*    _fx_partition_offset_calculate                      PORTABLE C      */ 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _fx_partition_offset_calculate                      PORTABLE C      */
 /*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
-/*                                                                        */ 
-/*    This function calculates the sector offset to the specified         */ 
-/*    partition.  The buffer containing the partition table is also       */ 
-/*    supplied to this function.  If the buffer supplied is a boot        */ 
-/*    record (which could be the case in non-partition systems), this     */ 
-/*    function returns an offset of zero, the total sectors, and a        */ 
-/*    successful status indicating that the buffer supplied is the boot   */ 
-/*    record.  Otherwise, if a partition is found, this function returns  */ 
-/*    the sector offset to its boot record along with a successful        */ 
-/*    status. If the specified partition is not found or the buffer is    */ 
-/*    not a partition table or boot record, this function returns an      */ 
-/*    error.                                                              */ 
-/*                                                                        */ 
-/*    Note: Empty partitions have a FX_SUCCESS return code, however their */ 
-/*          starting sector is FX_NULL and the size returned is 0.        */ 
-/*                                                                        */ 
-/*  INPUT                                                                 */ 
-/*                                                                        */ 
-/*    partition_sector                      Pointer to buffer containing  */ 
-/*                                            either the partition table  */ 
-/*                                            or the boot sector          */ 
-/*    partition                             Desired partition             */ 
-/*    partition_start                       Return partition start        */ 
-/*    partition_size                        Return partition size         */ 
-/*                                                                        */ 
-/*  OUTPUT                                                                */ 
-/*                                                                        */ 
-/*    return status                                                       */ 
-/*                                                                        */ 
-/*  CALLS                                                                 */ 
-/*                                                                        */ 
-/*     _fx_utility_partition_get            Actual partition parsing      */ 
-/*                                            routine                     */ 
-/*                                                                        */ 
-/*  CALLED BY                                                             */ 
-/*                                                                        */ 
-/*    Application Driver                                                  */ 
-/*                                                                        */ 
-/*  RELEASE HISTORY                                                       */ 
-/*                                                                        */ 
+/*                                                                        */
+/*    This function calculates the sector offset to the specified         */
+/*    partition.  The buffer containing the partition table is also       */
+/*    supplied to this function.  If the buffer supplied is a boot        */
+/*    record (which could be the case in non-partition systems), this     */
+/*    function returns an offset of zero, the total sectors, and a        */
+/*    successful status indicating that the buffer supplied is the boot   */
+/*    record.  Otherwise, if a partition is found, this function returns  */
+/*    the sector offset to its boot record along with a successful        */
+/*    status. If the specified partition is not found or the buffer is    */
+/*    not a partition table or boot record, this function returns an      */
+/*    error.                                                              */
+/*                                                                        */
+/*    Note: Empty partitions have a FX_SUCCESS return code, however their */
+/*          starting sector is FX_NULL and the size returned is 0.        */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    partition_sector                      Pointer to buffer containing  */
+/*                                            either the partition table  */
+/*                                            or the boot sector          */
+/*    partition                             Desired partition             */
+/*    partition_start                       Return partition start        */
+/*    partition_size                        Return partition size         */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    return status                                                       */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*     _fx_utility_partition_get            Actual partition parsing      */
+/*                                            routine                     */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Driver                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
@@ -129,11 +128,11 @@ UINT    _fx_partition_offset_calculate_extended(FX_MEDIA *media_ptr, void  *part
 UINT  _fx_partition_offset_calculate(void  *partition_sector, UINT partition,
                                      ULONG *partition_start, ULONG *partition_size)
 {
-    
-FX_MEDIA_PARTITION  partition_table[4];
-UINT                count;
-ULONG64             total_sectors;
-UCHAR               *partition_sector_ptr;
+
+FX_MEDIA_PARTITION partition_table[4];
+UINT               count;
+ULONG64            total_sectors;
+UCHAR             *partition_sector_ptr;
 
 
     /* Setup working pointer and initialize count.  */
@@ -141,10 +140,10 @@ UCHAR               *partition_sector_ptr;
     count =  0;
 
     /* Check for a real boot sector instead of a partition table.  */
-    if ((partition_sector_ptr[0] == 0xe9) || ((partition_sector_ptr[0] == 0xeb) && (partition_sector_ptr[2] == 0x90)))    
+    if ((partition_sector_ptr[0] == 0xe9) || ((partition_sector_ptr[0] == 0xeb) && (partition_sector_ptr[2] == 0x90)))
     {
-    
-        /* Yes, a real boot sector could be present.  */  
+
+        /* Yes, a real boot sector could be present.  */
 
         /* See if there are good values for sectors per FAT.  */
         if (partition_sector_ptr[0x16] || partition_sector_ptr[0x17] || partition_sector_ptr[0x24] || partition_sector_ptr[0x25] || partition_sector_ptr[0x26] || partition_sector_ptr[0x27])
@@ -165,11 +164,11 @@ UCHAR               *partition_sector_ptr;
             {
 
                 /* Calculate the total sectors, FAT32.  */
-                total_sectors =  (((ULONG) partition_sector_ptr[0x23]) << 24) | 
+                total_sectors =  (((ULONG) partition_sector_ptr[0x23]) << 24) |
                                  (((ULONG) partition_sector_ptr[0x22]) << 16) |
                                  (((ULONG) partition_sector_ptr[0x21]) << 8)  |
                                  ((ULONG) partition_sector_ptr[0x20]);
-            }       
+            }
 
             /* Determine if there is a total sector count.  */
             if (total_sectors)
@@ -193,45 +192,6 @@ UCHAR               *partition_sector_ptr;
                 return(FX_SUCCESS);
             }
         }
-#ifdef FX_ENABLE_EXFAT
-        /* See if there are good values for sectors per exFAT.  */
-        else if (partition_sector_ptr[0x0b] == 0 && partition_sector_ptr[0x0c] == 0)
-        {
-            /* There are values for sectors per exFAT.  */
-
-            /* Calculate the total sectors.  */
-            total_sectors = _fx_utility_64_unsigned_read(&partition_sector_ptr[FX_EF_VOLUME_LENGTH]);
-
-            /* Determine if there is a total sector count.  */
-            if (total_sectors)
-            {
-
-                if (partition_start != FX_NULL)
-                {
-                    /* Return an offset of 0, size of boot record, and a successful status.  */
-                    *partition_start =  0;
-                }
-
-                /* Determine if the total sectors is required.  */
-                if (partition_size != FX_NULL)
-                {
-
-                    if (total_sectors > 0xFFFFFFFF)
-                    {
-
-                        /* Overflow. Just return not found. */
-                        return(FX_NOT_FOUND);
-                    }
-
-                    /* Return the total sectors.  */
-                    *partition_size =  (ULONG)(total_sectors & 0xFFFFFFFF);
-                }
-
-                /* Return success!  */
-                return(FX_SUCCESS);
-            }
-        }
-#endif /* FX_ENABLE_EXFAT */
     }
 
     /* Check signature to make sure the buffer is valid.  */
@@ -241,7 +201,7 @@ UCHAR               *partition_sector_ptr;
         /* Invalid, return an error.  */
         return(FX_NOT_FOUND);
     }
-    
+
     /* Not bootable, look for specific partition.  */
     _fx_utility_partition_get(partition_table, &count, 0, partition_sector_ptr);
 
@@ -270,43 +230,43 @@ UCHAR               *partition_sector_ptr;
 }
 
 
-/**************************************************************************/ 
-/*                                                                        */ 
-/*  FUNCTION                                               RELEASE        */ 
-/*                                                                        */ 
-/*    _fx_utility_partition_get                           PORTABLE C      */ 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _fx_utility_partition_get                           PORTABLE C      */
 /*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
-/*                                                                        */ 
-/*    This function parses the partition sector and completes the         */ 
-/*    supplied partition entry structure.                                 */ 
-/*                                                                        */ 
-/*  INPUT                                                                 */ 
-/*                                                                        */ 
-/*    partition_table                       Pointer to partition table    */ 
-/*    count                                 Number of partitions found    */ 
-/*    sector                                Base sector                   */ 
-/*    sector_buffer                         Buffer containing partition   */ 
-/*                                            table                       */ 
-/*                                                                        */ 
-/*  OUTPUT                                                                */ 
-/*                                                                        */ 
-/*    return status                                                       */ 
-/*                                                                        */ 
-/*  CALLS                                                                 */ 
-/*                                                                        */ 
-/*    None                                                                */ 
-/*                                                                        */ 
-/*  CALLED BY                                                             */ 
-/*                                                                        */ 
-/*    _fx_partition_offset_calculate        Calculate partition offset    */ 
-/*                                                                        */ 
-/*  RELEASE HISTORY                                                       */ 
-/*                                                                        */ 
+/*                                                                        */
+/*    This function parses the partition sector and completes the         */
+/*    supplied partition entry structure.                                 */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    partition_table                       Pointer to partition table    */
+/*    count                                 Number of partitions found    */
+/*    sector                                Base sector                   */
+/*    sector_buffer                         Buffer containing partition   */
+/*                                            table                       */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    return status                                                       */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _fx_partition_offset_calculate        Calculate partition offset    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
@@ -316,15 +276,15 @@ UCHAR               *partition_sector_ptr;
 /*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
-UINT  _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table, 
+UINT  _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table,
                                 UINT *count, ULONG sector, UCHAR *sector_buffer)
 {
 
-UINT    i;
-ULONG   base_sector, value;
+UINT  i;
+ULONG base_sector, value;
 
     /* This parameter has not been supported yet. */
-    FX_PARAMETER_NOT_USED(sector); 
+    FX_PARAMETER_NOT_USED(sector);
 
     /* Initialize base sector.  */
     base_sector =  0;
@@ -360,61 +320,61 @@ ULONG   base_sector, value;
     return(FX_SUCCESS);
 }
 
-/**************************************************************************/ 
-/*                                                                        */ 
-/*  FUNCTION                                               RELEASE        */ 
-/*                                                                        */ 
-/*    _fx_partition_offset_calculate_extended             PORTABLE C      */ 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _fx_partition_offset_calculate_extended             PORTABLE C      */
 /*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Xiuwen Cai, Microsoft Corporation                                   */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
-/*                                                                        */ 
-/*    This function calculates the sector offset to the specified         */ 
-/*    partition.  The buffer containing the partition table is also       */ 
-/*    supplied to this function.  If the buffer supplied is a boot        */ 
-/*    record (which could be the case in non-partition systems), this     */ 
-/*    function returns an offset of zero, the total sectors, and a        */ 
-/*    successful status indicating that the buffer supplied is the boot   */ 
-/*    record.  Otherwise, if a partition is found, this function returns  */ 
-/*    the sector offset to its boot record along with a successful        */ 
-/*    status. If the specified partition is not found or the buffer is    */ 
-/*    not a partition table or boot record, this function returns an      */ 
-/*    error.                                                              */ 
-/*                                                                        */ 
+/*                                                                        */
+/*    This function calculates the sector offset to the specified         */
+/*    partition.  The buffer containing the partition table is also       */
+/*    supplied to this function.  If the buffer supplied is a boot        */
+/*    record (which could be the case in non-partition systems), this     */
+/*    function returns an offset of zero, the total sectors, and a        */
+/*    successful status indicating that the buffer supplied is the boot   */
+/*    record.  Otherwise, if a partition is found, this function returns  */
+/*    the sector offset to its boot record along with a successful        */
+/*    status. If the specified partition is not found or the buffer is    */
+/*    not a partition table or boot record, this function returns an      */
+/*    error.                                                              */
+/*                                                                        */
 /*    Note: Empty partitions have a FX_NOT_FOUND return code.             */
 /*      Use partition index 0 to 3 for primary partition and index 4 to   */
 /*      FX_MAX_PARTITION_COUNT for extended partition.                    */
-/*                                                                        */ 
-/*  INPUT                                                                 */ 
-/*                                                                        */ 
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
 /*    media_ptr                             Media control block pointer   */
-/*    partition_sector                      Pointer to buffer containing  */ 
-/*                                            either the partition table  */ 
-/*                                            or the boot sector          */ 
-/*    partition                             Desired partition             */ 
-/*    partition_start                       Return partition start        */ 
-/*    partition_size                        Return partition size         */ 
-/*                                                                        */ 
-/*  OUTPUT                                                                */ 
-/*                                                                        */ 
-/*    return status                                                       */ 
-/*                                                                        */ 
-/*  CALLS                                                                 */ 
-/*                                                                        */ 
+/*    partition_sector                      Pointer to buffer containing  */
+/*                                            either the partition table  */
+/*                                            or the boot sector          */
+/*    partition                             Desired partition             */
+/*    partition_start                       Return partition start        */
+/*    partition_size                        Return partition size         */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    return status                                                       */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
 /*    _fx_utility_16_unsigned_read          Read a USHORT from memory     */
 /*    _fx_utility_32_unsigned_read          Read a ULONG from memory      */
 /*    _fx_utility_64_unsigned_read          Read a ULONG64 from memory    */
 /*    Media driver                                                        */
-/*                                                                        */ 
-/*  CALLED BY                                                             */ 
-/*                                                                        */ 
-/*    Application Driver                                                  */ 
-/*                                                                        */ 
-/*  RELEASE HISTORY                                                       */ 
-/*                                                                        */ 
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Driver                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  10-31-2022     Xiuwen Cai               Initial Version 6.2.0        */
@@ -423,23 +383,23 @@ ULONG   base_sector, value;
 UINT  _fx_partition_offset_calculate_extended(FX_MEDIA *media_ptr, void  *partition_sector, UINT partition,
                                      ULONG *partition_start, ULONG *partition_size)
 {
-    
-ULONG64             total_sectors;
-UCHAR               *partition_sector_ptr;
-UCHAR               partition_type;
-UINT                i;
-ULONG               base_sector;
-ULONG               base_sector_extended;
+
+ULONG64 total_sectors;
+UCHAR  *partition_sector_ptr;
+UCHAR   partition_type;
+UINT    i;
+ULONG   base_sector;
+ULONG   base_sector_extended;
 
 
     /* Setup working pointer.  */
     partition_sector_ptr =  partition_sector;
 
     /* Check for a real boot sector instead of a partition table.  */
-    if ((partition_sector_ptr[0] == 0xe9) || ((partition_sector_ptr[0] == 0xeb) && (partition_sector_ptr[2] == 0x90)))    
+    if ((partition_sector_ptr[0] == 0xe9) || ((partition_sector_ptr[0] == 0xeb) && (partition_sector_ptr[2] == 0x90)))
     {
-    
-        /* Yes, a real boot sector could be present.  */  
+
+        /* Yes, a real boot sector could be present.  */
 
         /* See if there are good values for sectors per FAT.  */
         if (partition_sector_ptr[0x16] || partition_sector_ptr[0x17] || partition_sector_ptr[0x24] || partition_sector_ptr[0x25] || partition_sector_ptr[0x26] || partition_sector_ptr[0x27])
@@ -455,7 +415,7 @@ ULONG               base_sector_extended;
 
                 /* Get the total sectors, FAT32.  */
                 total_sectors = _fx_utility_32_unsigned_read(&partition_sector_ptr[FX_HUGE_SECTORS]);
-            }       
+            }
 
             /* Determine if there is a total sector count.  */
             if (total_sectors)
@@ -479,45 +439,6 @@ ULONG               base_sector_extended;
                 return(FX_SUCCESS);
             }
         }
-#ifdef FX_ENABLE_EXFAT
-        /* See if there are good values for sectors per exFAT.  */
-        else if (partition_sector_ptr[0x0b] == 0 && partition_sector_ptr[0x0c] == 0)
-        {
-            /* There are values for sectors per exFAT.  */
-
-            /* Calculate the total sectors.  */
-            total_sectors = _fx_utility_64_unsigned_read(&partition_sector_ptr[FX_EF_VOLUME_LENGTH]);
-
-            /* Determine if there is a total sector count.  */
-            if (total_sectors)
-            {
-
-                if (partition_start != FX_NULL)
-                {
-                    /* Return an offset of 0, size of boot record, and a successful status.  */
-                    *partition_start =  0;
-                }
-
-                /* Determine if the total sectors is required.  */
-                if (partition_size != FX_NULL)
-                {
-
-                    if (total_sectors > 0xFFFFFFFF)
-                    {
-
-                        /* Overflow. Just return not found. */
-                        return(FX_NOT_FOUND);
-                    }
-
-                    /* Return the total sectors.  */
-                    *partition_size =  (ULONG)(total_sectors & 0xFFFFFFFF);
-                }
-
-                /* Return success!  */
-                return(FX_SUCCESS);
-            }
-        }
-#endif /* FX_ENABLE_EXFAT */
     }
 
     /* Check signature to make sure the buffer is valid.  */
@@ -527,7 +448,7 @@ ULONG               base_sector_extended;
         /* Invalid, return an error.  */
         return(FX_NOT_FOUND);
     }
-    
+
     /* Not bootable, look for specific partition.  */
 
     /* Check if primary partitions are addressed.  */
@@ -560,7 +481,7 @@ ULONG               base_sector_extended;
         {
 
             /* Not partition here.  */
-            return(FX_NOT_FOUND);            
+            return(FX_NOT_FOUND);
         }
     }
 
@@ -569,7 +490,7 @@ ULONG               base_sector_extended;
     {
 
         /* Return error.  */
-        return(FX_NOT_FOUND);     
+        return(FX_NOT_FOUND);
     }
 
     base_sector = 0;
@@ -591,9 +512,9 @@ ULONG               base_sector_extended;
     {
 
         /* No extended partition.  */
-        return(FX_NOT_FOUND);        
+        return(FX_NOT_FOUND);
     }
-    
+
     base_sector_extended = base_sector;
 
     for (i = 4; i <= partition; i++)
@@ -655,7 +576,7 @@ ULONG               base_sector_extended;
             else
             {
                 /* Not partition here.  */
-                return(FX_NOT_FOUND);            
+                return(FX_NOT_FOUND);
             }
         }
         else
@@ -679,5 +600,5 @@ ULONG               base_sector_extended;
     }
 
     /* Return error.  */
-    return(FX_NOT_FOUND);    
+    return(FX_NOT_FOUND);
 }

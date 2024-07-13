@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -166,4 +165,75 @@ UINT            status;
 
     /* Return completion status.  */
     return(status);
+}
+
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_class_audio_control_request               PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in audio control request function call. */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    audio                                 Pointer to audio class        */
+/*    streaming_control                     0 for control requests        */
+/*                                          1 for streaming requests      */
+/*    request_type                          bmRequestType                 */
+/*    request                               bRequest                      */
+/*    request_value                         wValue can be:                */
+/*                                          (CS << 8)  | CN or            */
+/*                                          (ICN << 8) | OCN or           */
+/*                                          (MU_MIXER_CONTROL << 8) | MCN */
+/*                                          or other specific value.      */
+/*    spec_id                               Entity/Language ID (if used)  */
+/*    parameter                             Pointer to request parameters */
+/*    parameter_size                        Request parameters length     */
+/*    actual_size                           Actual processed size         */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                                              */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_audio_control_request  Get audio control request     */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*    Audio Class                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Chaoqiong Xiao           Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT    _uxe_host_class_audio_control_request(UX_HOST_CLASS_AUDIO *audio,
+                        UINT streaming_control,
+                        UINT request_type, UINT request,
+                        UINT request_value,
+                        UINT spec_id,
+                        UCHAR *parameter, ULONG parameter_size, ULONG *actual_size)
+{
+
+    /* Sanity check.  */
+    if ((audio == UX_NULL))
+        return(UX_INVALID_PARAMETER);
+
+    /* Invoke audio control request function.  */
+    return(_ux_host_class_audio_control_request(audio,
+                            streaming_control,
+                            request_type, request, request_value,
+                            spec_id, parameter, parameter_size, actual_size));
 }

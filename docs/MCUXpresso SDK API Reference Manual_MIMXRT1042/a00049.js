@@ -1,6 +1,6 @@
 var a00049 =
 [
-    [ "lpspi_master_config_t", "a00049.html#a00444", [
+    [ "lpspi_master_config_t", "a00049.html#a00441", [
       [ "baudRate", "a00049.html#a01254e88cf6feef124ab50f204f65c0f", null ],
       [ "bitsPerFrame", "a00049.html#afc83880a5e4d763e80cd757514c96167", null ],
       [ "cpol", "a00049.html#a3c540678d6c2cce2664ba89cc998a1e2", null ],
@@ -16,7 +16,7 @@ var a00049 =
       [ "dataOutConfig", "a00049.html#acc0422bcb70e685bb66f3a216aa66088", null ],
       [ "enableInputDelay", "a00049.html#a1b0faf93c78ceb12d7e12dc036c930c0", null ]
     ] ],
-    [ "lpspi_slave_config_t", "a00049.html#a00445", [
+    [ "lpspi_slave_config_t", "a00049.html#a00442", [
       [ "bitsPerFrame", "a00049.html#a0f74a7ed1b4226f612a3785b07d09c86", null ],
       [ "cpol", "a00049.html#aea9800ee270ac89ec3deb4f2399a92a9", null ],
       [ "cpha", "a00049.html#ac5063bcaacbddbd5753ffe6a2df2a7df", null ],
@@ -26,13 +26,13 @@ var a00049 =
       [ "pinCfg", "a00049.html#ab1b812e03a9b2785efd4e9481c20730c", null ],
       [ "dataOutConfig", "a00049.html#af8879b89ada464a0d8b16c33639e87cf", null ]
     ] ],
-    [ "lpspi_transfer_t", "a00049.html#a00446", [
-      [ "txData", "a00049.html#ad05c41e2213388411ba65b74b2e296e8", null ],
+    [ "lpspi_transfer_t", "a00049.html#a00443", [
+      [ "txData", "a00049.html#a1139c87fdf02b66ba3cfb0046d2cf9a3", null ],
       [ "rxData", "a00049.html#adcb9063db0070da8c7b2be3aad07a901", null ],
       [ "dataSize", "a00049.html#a00cc53b0e0d0013871c255e17a8fe9b0", null ],
       [ "configFlags", "a00049.html#acea70ac01d69df22aa840e5ed44f9c97", null ]
     ] ],
-    [ "lpspi_master_handle_t", "a00049.html#a00326", [
+    [ "lpspi_master_handle_t", "a00049.html#a00323", [
       [ "isPcsContinuous", "a00049.html#a9615ae8b8bdc4f2bd7d22b3b96d0ced4", null ],
       [ "writeTcrInIsr", "a00049.html#a088fc657556d03d009908496438a1e89", null ],
       [ "isByteSwap", "a00049.html#ae03069cfdcf680ee5fd81e077b81bc18", null ],
@@ -42,7 +42,7 @@ var a00049 =
       [ "rxWatermark", "a00049.html#a765fce2e32c6c69d35cc96e2f1302437", null ],
       [ "bytesEachWrite", "a00049.html#a96b6240609ba91a5de282789388aadc4", null ],
       [ "bytesEachRead", "a00049.html#a5801d46c80390b39a0773d4b7fed351c", null ],
-      [ "txData", "a00049.html#ae9740763483ca12b7256968bf862bb44", null ],
+      [ "txData", "a00049.html#a8de2a1cf521e67318eee539c099ed8eb", null ],
       [ "rxData", "a00049.html#a495acfab6f6174047897b9ae65bc083d", null ],
       [ "txRemainingByteCount", "a00049.html#a11a011a2ae2fa26ce188248a388dffe5", null ],
       [ "rxRemainingByteCount", "a00049.html#a61a204896d0204b4438fc50f54d182ac", null ],
@@ -54,13 +54,13 @@ var a00049 =
       [ "callback", "a00049.html#aaa5468f579c64b865d2870a6e28608fb", null ],
       [ "userData", "a00049.html#ad06b10280d203a26ee97ad860360cb3b", null ]
     ] ],
-    [ "lpspi_slave_handle_t", "a00049.html#a00328", [
+    [ "lpspi_slave_handle_t", "a00049.html#a00325", [
       [ "isByteSwap", "a00049.html#aed92e8549294bcdf1ef261ce8f261983", null ],
       [ "fifoSize", "a00049.html#abd595c5df400d5761c3fe88624524bd7", null ],
       [ "rxWatermark", "a00049.html#a0edea4c3bad24d2dc0a0669ca6acc16c", null ],
       [ "bytesEachWrite", "a00049.html#aefa8c0b258a39a808514b1a129b71cf7", null ],
       [ "bytesEachRead", "a00049.html#a360b1761ed7190a69b7378cb26cc5f7b", null ],
-      [ "txData", "a00049.html#a6f303a57110b7f721f321a32048c79f5", null ],
+      [ "txData", "a00049.html#a465d2ada06063fb76c727380381f9ba6", null ],
       [ "rxData", "a00049.html#ac6e8aaec21e77721e3a3c451ecfc67d5", null ],
       [ "txRemainingByteCount", "a00049.html#a93e4e7adeea732e422ff94a30665584d", null ],
       [ "rxRemainingByteCount", "a00049.html#afcdbb7552d9e668ff7bcc6f49e1c46bf", null ],

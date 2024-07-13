@@ -232,6 +232,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -370,10 +371,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -640,6 +641,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1333,6 +1335,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -1471,10 +1474,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1741,6 +1744,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2436,6 +2440,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -2574,10 +2579,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2844,6 +2849,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3538,6 +3544,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -3676,10 +3683,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3946,6 +3953,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4639,6 +4647,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -4777,10 +4786,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5047,6 +5056,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5742,6 +5752,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -5880,10 +5891,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6150,6 +6161,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6902,7 +6914,16 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -7033,12 +7054,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -7046,6 +7061,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

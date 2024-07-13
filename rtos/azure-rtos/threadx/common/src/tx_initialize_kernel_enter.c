@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -49,7 +48,7 @@ TX_SAFETY_CRITICAL_EXCEPTION_HANDLER
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _tx_initialize_kernel_enter                         PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -93,6 +92,10 @@ TX_SAFETY_CRITICAL_EXCEPTION_HANDLER
 /*  04-25-2022      Scott Larson            Modified comment(s),          */
 /*                                            added EPK initialization,   */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023      Xiuwen Cai              Modified comment(s),          */
+/*                                            added random generator      */
+/*                                            initialization,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _tx_initialize_kernel_enter(VOID)
@@ -132,6 +135,9 @@ VOID  _tx_initialize_kernel_enter(VOID)
        initialization is in progress.  Note that this variable is
        later used to represent interrupt nesting.  */
     _tx_thread_system_state =  TX_INITIALIZE_IN_PROGRESS;
+
+    /* Optional random number generator initialization.  */
+    TX_INITIALIZE_RANDOM_GENERATOR_INITIALIZATION
 
     /* Call the application provided initialization function.  Pass the
        first available memory address to it.  */

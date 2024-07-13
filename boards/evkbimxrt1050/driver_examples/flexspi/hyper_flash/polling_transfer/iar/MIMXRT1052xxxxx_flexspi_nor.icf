@@ -81,6 +81,7 @@ initialize by copy {
   object flexspi_hyper_flash_ops.o,
   object fsl_flexspi.o,
   object fsl_clock.o,
+  object I64DivMod.o,
   section .textrw
 };
 do not initialize  { section .noinit };

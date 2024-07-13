@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -216,4 +215,59 @@ UINT            status;
     /* And return the status.  */
     return(status);
 #endif
+}
+
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_stack_transfer_request                    PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in host stack transfer function call.   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    transfer_request                      Pointer to transfer           */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_stack_transfer_request       Issue a transfer request      */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Chaoqiong Xiao           Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT  _uxe_host_stack_transfer_request(UX_TRANSFER *transfer_request)
+{
+
+    /* Sanity checks.  */
+    if (transfer_request == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+    if (transfer_request -> ux_transfer_request_endpoint == UX_NULL)
+        return(UX_ENDPOINT_HANDLE_UNKNOWN);
+    if (transfer_request -> ux_transfer_request_endpoint -> ux_endpoint_device == UX_NULL)
+        return(UX_DEVICE_HANDLE_UNKNOWN);
+    if (UX_DEVICE_HCD_GET(transfer_request -> ux_transfer_request_endpoint -> ux_endpoint_device) == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Invoke transfer request function.  */
+    return(_ux_host_stack_transfer_request(transfer_request));
 }

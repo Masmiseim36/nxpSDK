@@ -10,9 +10,9 @@ lang_namespace = ""
 
 v_major  = "05"
 
-v_minor  = "00"
+v_minor  = "01"
 
-v_dev    = "01"
+v_dev    = "00"
 
 v_meta   = ""
 

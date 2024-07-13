@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021, 2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -7,6 +7,9 @@
 
 #include <network_mbedtls.h>
 
+#ifdef CONFIG_MBEDTLS_DEBUG
+#include "mbedtls/debug.h"
+#endif
 
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_common.h>
@@ -26,7 +29,7 @@ static const mbedtls_ecp_group_id supported_curves [] = {MBEDTLS_ECP_DP_SECP192R
 		MBEDTLS_ECP_DP_SECP521R1,
 		MBEDTLS_ECP_DP_NONE};
 
-void* network_new()
+void* network_new(void)
 {
 	mbedtls_network_context_t* network_ctx = (mbedtls_network_context_t*)NETWORK_malloc(sizeof(mbedtls_network_context_t));
 	if (network_ctx != NULL) {
@@ -54,6 +57,12 @@ void network_free(void* ctx)
 }
 
 
+#ifdef CONFIG_MBEDTLS_DEBUG
+static void network_debug(void *ctx, int level, const char *file, int line, const char *str)
+{
+	mbedtls_printf("MBEDTLS: %s", str);
+}
+#endif
 
 
 int network_configure(void* opaque_ctx, void* opaque_network_config) {
@@ -69,6 +78,11 @@ int network_configure(void* opaque_ctx, void* opaque_network_config) {
 	mbedtls_ctr_drbg_init(&(network_ctx->ctr_drbg));
 	mbedtls_pk_init(&(network_ctx->pkey));
 	mbedtls_net_init(&network_ctx->server_fd);
+
+#ifdef CONFIG_MBEDTLS_DEBUG
+	mbedtls_ssl_conf_dbg(&(network_ctx->conf), network_debug, NULL);
+	mbedtls_debug_set_threshold(4);
+#endif
 
 	mbedtls_entropy_init(&(network_ctx->entropy));
 	if ((ret = mbedtls_ctr_drbg_seed(&(network_ctx->ctr_drbg),
@@ -90,7 +104,11 @@ int network_connect(void* opaque_ctx)
 
 
 	char port_str[32] = { 0 };
-	snprintf(port_str, sizeof(port_str), "%d", network_config->port);
+	if (snprintf(port_str, sizeof(port_str), "%d", network_config->port) < 0)
+	{
+		IOT_AGENT_ERROR("Error in building the port string");
+		return -1;
+	}
 
 	if ((ret = mbedtls_net_connect(&network_context->server_fd,
 		network_config->hostname, port_str,	MBEDTLS_NET_PROTO_TCP)) != 0)
@@ -108,6 +126,19 @@ int network_connect(void* opaque_ctx)
 	}
 
 	{
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+		static int allowed_ciphersuites_sha_256[] = {
+			MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
+			MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,
+			MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+			MBEDTLS_TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,
+			MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+			MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,
+			MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+			MBEDTLS_TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,
+			0
+		};
+#endif
 		static int allowed_ciphersuites_sha_384[] = {
 			MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
 			MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,
@@ -119,9 +150,18 @@ int network_connect(void* opaque_ctx)
 			MBEDTLS_TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,
 			0
 		};
-		if (mbedtls_pk_get_bitlen(&network_context->pkey) == 384)
+		switch (mbedtls_pk_get_bitlen(&network_context->pkey))
 		{
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+			case 256U:
+				mbedtls_ssl_conf_ciphersuites(&network_context->conf, allowed_ciphersuites_sha_256);
+				break;
+#endif
+			case 384U:
 				mbedtls_ssl_conf_ciphersuites(&network_context->conf, allowed_ciphersuites_sha_384);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -132,6 +172,9 @@ int network_connect(void* opaque_ctx)
 	mbedtls_ssl_conf_authmode(&(network_context->conf), MBEDTLS_SSL_VERIFY_NONE);
 #endif
 
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER > 0x03000000) &&  !defined(MBEDTLS_SSL_MAX_CONTENT_LEN)
+#define MBEDTLS_SSL_MAX_CONTENT_LEN (MBEDTLS_SSL_IN_CONTENT_LEN < MBEDTLS_SSL_OUT_CONTENT_LEN ? MBEDTLS_SSL_IN_CONTENT_LEN : MBEDTLS_SSL_OUT_CONTENT_LEN)
+#endif
 #if MBEDTLS_SSL_MAX_CONTENT_LEN < 2048
 #error Not enough memory for TLS records
 #elif MBEDTLS_SSL_MAX_CONTENT_LEN > 16*1024
@@ -221,21 +264,27 @@ int network_verify_server_certificate(void* context, uint8_t* trusted_bytes, siz
 	uint8_t* crl_bytes, size_t crl_size, uint32_t* error)
 {
     int network_status = 0;
-#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 	mbedtls_network_context_t* network_context = (mbedtls_network_context_t*) context;
 	mbedtls_ssl_context *ssl = &((mbedtls_network_context_t*)context)->ssl;
-#endif
+
 	mbedtls_x509_crl crl;
 	mbedtls_x509_crl_init(&crl);
-	mbedtls_x509_crl_parse_der(&crl, (const unsigned char *)crl_bytes, crl_size);
 
-	*error = 0;
+	*error = 0U;
+
+	network_status = mbedtls_x509_crl_parse_der(&crl, (const unsigned char *)crl_bytes, crl_size);
+	if (network_status != 0) {
+		IOT_AGENT_ERROR("Error in parsing CRL.");
+	    goto exit;
+	}
+
 #if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 	network_status = mbedtls_x509_crt_verify(ssl->session->peer_cert, network_context->conf.ca_chain, &crl, NULL, error, NULL, NULL);
 #else
-	//TODO: check which function to use
-#endif //MBEDTLS_VERSION_NUMBER < 0x03010000
-    if (*error != 0) {
+	network_status = mbedtls_x509_crt_verify((mbedtls_x509_crt*)mbedtls_ssl_get_peer_cert(ssl), &network_context->network_config.ca_chain, &crl, NULL, error, NULL, NULL);
+#endif //defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
+
+    if (*error != 0U) {
 		IOT_AGENT_ERROR("Server cert verification with CRL failed. mbedTLS indicates error %u.", *error)
         network_status = MBEDTLS_ERR_X509_CERT_VERIFY_FAILED;
         goto exit;

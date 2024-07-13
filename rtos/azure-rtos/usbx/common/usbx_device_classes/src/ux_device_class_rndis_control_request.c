@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -31,7 +30,8 @@
 
 #if UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH < UX_DEVICE_CLASS_RNDIS_INTERRUPT_RESPONSE_LENGTH ||\
     UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH < UX_DEVICE_CLASS_RNDIS_MAX_CONTROL_RESPONSE_LENGTH
-#error UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH too small, please check
+/* #error UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH too small, please check  */
+/* Build option checked runtime by UX_ASSERT  */
 #endif
 
 /**************************************************************************/ 
@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_device_class_rndis_control_request              PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -93,6 +93,10 @@
 /*                                            fixed parameter/variable    */
 /*                                            names conflict C++ keyword, */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            checked compiling options   */
+/*                                            by runtime UX_ASSERT,       */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_rndis_control_request(UX_SLAVE_CLASS_COMMAND *command)
@@ -106,6 +110,12 @@ ULONG                   request_length;
 ULONG                   rndis_command;
 UX_SLAVE_CLASS          *class_ptr;
 UX_SLAVE_CLASS_RNDIS    *rndis;
+
+    /* Build option check.  */
+    UX_ASSERT((UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH >=
+                UX_DEVICE_CLASS_RNDIS_INTERRUPT_RESPONSE_LENGTH) &&
+              (UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH >=
+                UX_DEVICE_CLASS_RNDIS_MAX_CONTROL_RESPONSE_LENGTH));
 
     /* Get the pointer to the device.  */
     device =  &_ux_system_slave -> ux_system_slave_device;

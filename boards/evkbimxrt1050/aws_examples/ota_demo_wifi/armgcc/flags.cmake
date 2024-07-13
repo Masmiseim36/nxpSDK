@@ -30,7 +30,6 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
-    -include ${ProjDirPath}/../app_config.h \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DDEBUG \
@@ -45,10 +44,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DOSA_USED \
+    -DFSL_OSA_TASK_ENABLE=1 \
     -DLWIP_DNS=1 \
     -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
+    -D_XOPEN_SOURCE=500 \
+    -DSO_REUSE=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DMBEDTLS_THREADING_ALT \
     -DMBEDTLS_THREADING_C \
@@ -62,7 +64,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -73,7 +74,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -include ${ProjDirPath}/../app_config.h \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
@@ -88,10 +88,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DOSA_USED \
+    -DFSL_OSA_TASK_ENABLE=1 \
     -DLWIP_DNS=1 \
     -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
+    -D_XOPEN_SOURCE=500 \
+    -DSO_REUSE=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DMBEDTLS_THREADING_ALT \
     -DMBEDTLS_THREADING_C \
@@ -104,7 +107,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -129,7 +131,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -152,7 +153,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -168,7 +168,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -198,7 +197,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

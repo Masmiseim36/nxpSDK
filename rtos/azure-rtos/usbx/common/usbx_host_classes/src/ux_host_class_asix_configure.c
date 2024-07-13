@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_host_class_asix_configure                       PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -74,6 +73,9 @@
 /*                                            optimized based on compile  */
 /*                                            definitions,                */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            removed interface link,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_asix_configure(UX_HOST_CLASS_ASIX *asix)
@@ -140,20 +142,6 @@ UX_DEVICE               *parent_device;
        active and the interrupt endpoint is now enabled. We have to memorize the first interface since 
        the interrupt endpoint is hooked to it. */
     status =  _ux_host_stack_configuration_interface_get(configuration, 0, 0, &asix -> ux_host_class_asix_interface);
-
-    /* Check status for error.  */
-    if (status == UX_SUCCESS)
-    {
-
-        /* Store the instance in the interface container, this is for the USB stack
-           when it needs to invoke the class.  */        
-        asix -> ux_host_class_asix_interface -> ux_interface_class_instance =  (VOID *) asix;
-
-        /* Store the class container in the interface.  The device has the correct class, duplicate it to the 
-           interface.  */
-        asix -> ux_host_class_asix_interface -> ux_interface_class =  asix -> ux_host_class_asix_device -> ux_device_class ;
-
-    }
 
     /* Return completion status.  */
     return(status);

@@ -356,6 +356,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
@@ -1440,6 +1441,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
@@ -2192,6 +2194,48 @@
     <group>
       <name>netxduo</name>
       <group>
+        <name>tsn</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/CMakeLists.txt</name>
+        </file>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_mrp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_msrp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_mvrp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_shaper.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_srp.h</name>
+          </file>
+        </group>
+        <group>
+          <name>src</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_mrp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_msrp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_mvrp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_shaper.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_srp.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
         <name>common</name>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/netxduo_common_source.c</name>
@@ -2245,6 +2289,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</name>
@@ -3598,9 +3645,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>

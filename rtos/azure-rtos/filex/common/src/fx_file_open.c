@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -124,16 +123,7 @@ UCHAR    not_a_file_attr;
     file_ptr -> fx_file_write_notify = FX_NULL;
 
     /* Determine the type of FAT and setup variables accordingly.  */
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        fat_last        = FX_LAST_CLUSTER_exFAT;
-        not_a_file_attr = FX_DIRECTORY;
-    }
-    else if (media_ptr -> fx_media_FAT_type == FX_FAT32)
-#else
     if (media_ptr -> fx_media_32_bit_FAT)
-#endif /* FX_ENABLE_EXFAT */
     {
         fat_last        = FX_LAST_CLUSTER_1_32;
         not_a_file_attr = FX_DIRECTORY | FX_VOLUME;
@@ -334,174 +324,120 @@ UCHAR    not_a_file_attr;
         /* Calculate the bytes available.  */
         bytes_available =  ((bytes_remaining + bytes_per_cluster - 1) / bytes_per_cluster) * bytes_per_cluster;
 
-#ifdef FX_ENABLE_EXFAT
-        if (bytes_remaining && (file_ptr -> fx_file_dir_entry.fx_dir_entry_dont_use_fat & 1))
-        {
-            cluster_count =
-                (ULONG)((file_ptr -> fx_file_dir_entry.fx_dir_entry_file_size + bytes_per_cluster - 1) /
-                        bytes_per_cluster);
-            file_ptr -> fx_file_consecutive_cluster = cluster_count;
-        }
-#endif /* FX_ENABLE_EXFAT */
     }
     else
 #endif /* FX_DISABLE_FAST_OPEN */
     {
-#ifdef FX_ENABLE_EXFAT
 
-        /* File is open for writing... walk the FAT chain to position to the end.  */
-
-        if (bytes_remaining && (file_ptr -> fx_file_dir_entry.fx_dir_entry_dont_use_fat & 1))
+        /* Follow the link of FAT entries.  */
+        while ((cluster >= FX_FAT_ENTRY_START) && (cluster < media_ptr -> fx_media_fat_reserved))
         {
-            cluster_count =
-                (ULONG)((file_ptr -> fx_file_dir_entry.fx_dir_entry_file_size + bytes_per_cluster - 1) /
-                        bytes_per_cluster);
 
-            last_cluster = cluster + cluster_count - 1;
+            /* Increment the number of clusters.  */
+            cluster_count++;
 
-            file_ptr -> fx_file_consecutive_cluster = cluster_count;
+            /* Read the current cluster entry from the FAT.  */
+            status =  _fx_utility_FAT_entry_read(media_ptr, cluster, &contents);
 
-            file_ptr -> fx_file_current_physical_cluster = last_cluster;
-
-            file_ptr -> fx_file_current_relative_cluster = cluster_count - 1;
-
-            bytes_remaining %= bytes_per_cluster;
-
-            if (!bytes_remaining)
+            /* Check the return value.  */
+            if (status != FX_SUCCESS)
             {
-                if (file_ptr -> fx_file_dir_entry.fx_dir_entry_available_file_size >
-                    file_ptr -> fx_file_dir_entry.fx_dir_entry_file_size)
-                {
-                    file_ptr -> fx_file_current_physical_cluster = last_cluster + 1;
-                    file_ptr -> fx_file_current_relative_cluster++;
-                }
-                else
-                {
-                    bytes_remaining = bytes_per_cluster;
-                }
+
+                /* Release media protection.  */
+                FX_UNPROTECT
+
+                /* Return the error status.  */
+                return(status);
             }
 
-            bytes_available =
-                (ULONG)((file_ptr -> fx_file_dir_entry.fx_dir_entry_available_file_size + bytes_per_cluster - 1) /
-                        bytes_per_cluster);
-            bytes_available *= bytes_per_cluster;
-        }
-        else
-        {
-#endif /* FX_ENABLE_EXFAT */
-
-            /* Follow the link of FAT entries.  */
-            while ((cluster >= FX_FAT_ENTRY_START) && (cluster < media_ptr -> fx_media_fat_reserved))
+            /* Determine if the cluster is invalid (points to itself) or the count exceeds the total number of clusters.  */
+            if ((cluster == contents) || (cluster_count > media_ptr -> fx_media_total_clusters))
             {
 
-                /* Increment the number of clusters.  */
-                cluster_count++;
+                /* Release media protection.  */
+                FX_UNPROTECT
 
-                /* Read the current cluster entry from the FAT.  */
-                status =  _fx_utility_FAT_entry_read(media_ptr, cluster, &contents);
-
-                /* Check the return value.  */
-                if (status != FX_SUCCESS)
-                {
-
-                    /* Release media protection.  */
-                    FX_UNPROTECT
-
-                    /* Return the error status.  */
-                    return(status);
-                }
-
-                /* Determine if the cluster is invalid (points to itself) or the count exceeds the total number of clusters.  */
-                if ((cluster == contents) || (cluster_count > media_ptr -> fx_media_total_clusters))
-                {
-
-                    /* Release media protection.  */
-                    FX_UNPROTECT
-
-                    /* Return the bad status.  */
-                    return(FX_FAT_READ_ERROR);
-                }
+                /* Return the bad status.  */
+                return(FX_FAT_READ_ERROR);
+            }
 
 #ifndef FX_DISABLE_CONSECUTIVE_DETECT
 
-                /* Check if present and next clusters are consecutive */
-                if (cluster + 1 == contents)
-                {
-            
-                    /* Determine if clusters are consecutive so far.  */
-                    if (leading_consecutive)
-                    {
+            /* Check if present and next clusters are consecutive */
+            if (cluster + 1 == contents)
+            {
 
-                        /* Yes, increment the number of leading consecutive clusters.  */
-                        file_ptr -> fx_file_consecutive_cluster++;
-                    }
-                }
-                else
+                /* Determine if clusters are consecutive so far.  */
+                if (leading_consecutive)
                 {
 
-                    /* The clusters are no longer consecutive, clear the consecutive flag.  */
-                    leading_consecutive = 0;
+                    /* Yes, increment the number of leading consecutive clusters.  */
+                    file_ptr -> fx_file_consecutive_cluster++;
                 }
+            }
+            else
+            {
+
+                /* The clusters are no longer consecutive, clear the consecutive flag.  */
+                leading_consecutive = 0;
+            }
 #endif /* FX_DISABLE_CONSECUTIVE_DETECT */
 
-                /* Save the last valid cluster.  */
-                last_cluster =  cluster;
+            /* Save the last valid cluster.  */
+            last_cluster =  cluster;
 
-                /* Setup for the next cluster.  */
-                cluster =  contents;
+            /* Setup for the next cluster.  */
+            cluster =  contents;
 
-                /* Determine if this is the last written cluster.  We need to remember this
-                   for open for writing.  */
-                if (bytes_remaining > bytes_per_cluster)
-                {
-
-                    /* Still more written clusters, just decrement the counter.  */
-                    bytes_remaining =  bytes_remaining - bytes_per_cluster;
-                }
-                else if (!file_ptr -> fx_file_current_physical_cluster)
-                {
-
-                    /* Remember this cluster number.  */
-                    file_ptr -> fx_file_current_physical_cluster =  last_cluster;
-
-                    /* Remember the relative cluster.  */
-                    file_ptr -> fx_file_current_relative_cluster =  cluster_count - 1;
-
-                    /* If the remaining bytes exactly fits the cluster size, check for
-                       a possible adjustment to the next cluster.  */
-                    if ((bytes_remaining == bytes_per_cluster) &&
-                        (cluster >= FX_FAT_ENTRY_START) && (cluster < media_ptr -> fx_media_fat_reserved))
-                    {
-
-                        /* We need to position to next allocated cluster.  */
-                        file_ptr -> fx_file_current_physical_cluster =  cluster;
-                        file_ptr -> fx_file_current_relative_cluster++;
-
-                        /* Clear the remaining bytes.  */
-                        bytes_remaining =  0;
-                    }
-                }
-            }
-
-            /* Determine if the number of clusters is large enough to support the
-               specified file size.  */
-            bytes_available =  ((ULONG64)media_ptr -> fx_media_bytes_per_sector) *
-                ((ULONG64)media_ptr -> fx_media_sectors_per_cluster) *
-                ((ULONG64)cluster_count);
-
-            /* Check the bytes available in the cluster chain against the directory entry file size.  */
-            if ((bytes_available < file_ptr -> fx_file_dir_entry.fx_dir_entry_file_size) ||
-                ((cluster_count) && (contents < fat_last)))
+            /* Determine if this is the last written cluster.  We need to remember this
+               for open for writing.  */
+            if (bytes_remaining > bytes_per_cluster)
             {
-                /* File is corrupt, release media protection.  */
-                FX_UNPROTECT
 
-                /* Return a corrupt file error status.  */
-                return(FX_FILE_CORRUPT);
+                /* Still more written clusters, just decrement the counter.  */
+                bytes_remaining =  bytes_remaining - bytes_per_cluster;
             }
-#ifdef FX_ENABLE_EXFAT
+            else if (!file_ptr -> fx_file_current_physical_cluster)
+            {
+
+                /* Remember this cluster number.  */
+                file_ptr -> fx_file_current_physical_cluster =  last_cluster;
+
+                /* Remember the relative cluster.  */
+                file_ptr -> fx_file_current_relative_cluster =  cluster_count - 1;
+
+                /* If the remaining bytes exactly fits the cluster size, check for
+                   a possible adjustment to the next cluster.  */
+                if ((bytes_remaining == bytes_per_cluster) &&
+                    (cluster >= FX_FAT_ENTRY_START) && (cluster < media_ptr -> fx_media_fat_reserved))
+                {
+
+                    /* We need to position to next allocated cluster.  */
+                    file_ptr -> fx_file_current_physical_cluster =  cluster;
+                    file_ptr -> fx_file_current_relative_cluster++;
+
+                    /* Clear the remaining bytes.  */
+                    bytes_remaining =  0;
+                }
+            }
         }
-#endif /* FX_ENABLE_EXFAT */
+
+        /* Determine if the number of clusters is large enough to support the
+           specified file size.  */
+        bytes_available =  ((ULONG64)media_ptr -> fx_media_bytes_per_sector) *
+            ((ULONG64)media_ptr -> fx_media_sectors_per_cluster) *
+            ((ULONG64)cluster_count);
+
+        /* Check the bytes available in the cluster chain against the directory entry file size.  */
+        if ((bytes_available < file_ptr -> fx_file_dir_entry.fx_dir_entry_file_size) ||
+            ((cluster_count) && (contents < fat_last)))
+        {
+            /* File is corrupt, release media protection.  */
+            FX_UNPROTECT
+
+            /* Return a corrupt file error status.  */
+            return(FX_FILE_CORRUPT);
+        }
     }
 
     /* The file is okay, populate the file control block and complete the

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -231,38 +230,20 @@ ULONG                  trace_timestamp;
 
             /* Increment the number of clusters.  */
             cluster_count++;
-#ifdef FX_ENABLE_EXFAT
-            if (file_ptr -> fx_file_dir_entry.fx_dir_entry_dont_use_fat & 1)
+
+            /* Read the current cluster entry from the FAT.  */
+            status =  _fx_utility_FAT_entry_read(media_ptr, cluster, &contents);
+
+            /* Check the return value.  */
+            if (status != FX_SUCCESS)
             {
-                if (cluster >= file_ptr -> fx_file_last_physical_cluster)
-                {
-                    contents = FX_LAST_CLUSTER_exFAT;
-                }
-                else
-                {
-                    contents = cluster + 1;
-                }
+
+                /* Release media protection.  */
+                FX_UNPROTECT
+
+                /* Return the error status.  */
+                return(status);
             }
-            else
-            {
-#endif /* FX_ENABLE_EXFAT */
-
-                /* Read the current cluster entry from the FAT.  */
-                status =  _fx_utility_FAT_entry_read(media_ptr, cluster, &contents);
-
-                /* Check the return value.  */
-                if (status != FX_SUCCESS)
-                {
-
-                    /* Release media protection.  */
-                    FX_UNPROTECT
-
-                    /* Return the error status.  */
-                    return(status);
-                }
-#ifdef FX_ENABLE_EXFAT
-            }
-#endif /* FX_ENABLE_EXFAT */
 
             /* Save the last valid cluster.  */
             last_cluster =  cluster;
@@ -288,7 +269,7 @@ ULONG                  trace_timestamp;
         /* Check for errors in traversal of the FAT chain.  */
         if (size > (((ULONG64) bytes_per_cluster) * ((ULONG64) cluster_count)))
         {
-        
+
             /* Release media protection.  */
             FX_UNPROTECT
 
@@ -319,19 +300,7 @@ ULONG                  trace_timestamp;
         file_ptr -> fx_file_dir_entry.fx_dir_entry_file_size = file_ptr -> fx_file_current_file_size;
 
         /* Write the directory entry to the media.  */
-#ifdef FX_ENABLE_EXFAT
-        if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-        {
-
-            status = _fx_directory_exFAT_entry_write(media_ptr, &(file_ptr -> fx_file_dir_entry), UPDATE_STREAM);
-        }
-        else
-        {
-#endif /* FX_ENABLE_EXFAT */
-            status =  _fx_directory_entry_write(media_ptr, &(file_ptr -> fx_file_dir_entry));
-#ifdef FX_ENABLE_EXFAT
-        }
-#endif /* FX_ENABLE_EXFAT */
+        status =  _fx_directory_entry_write(media_ptr, &(file_ptr -> fx_file_dir_entry));
 
         /* Check for a good status.  */
         if (status != FX_SUCCESS)

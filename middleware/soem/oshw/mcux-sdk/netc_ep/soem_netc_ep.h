@@ -3,6 +3,10 @@
  * LICENSE file in the project root for full license information
  */
 
+/* 
+ * Copyright 2023-2024 NXP
+ */
+
 #ifndef __SOEM_NETC_H___
 #define __SOEM_NETC_H___
 #include "fsl_phy.h"

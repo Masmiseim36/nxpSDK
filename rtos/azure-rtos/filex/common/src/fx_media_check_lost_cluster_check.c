@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -167,116 +166,3 @@ UINT  status;
     return(error);
 }
 
-#ifdef FX_ENABLE_EXFAT
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    _fx_media_check_exFAT_lost_cluster_check            PORTABLE C      */
-/*                                                           6.1          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    William E. Lamie, Microsoft Corporation                             */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This function examines all clusters in exFAT to see if there are    */
-/*    any unused clusters that are also unavailable.                      */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    media_ptr                             Pointer to a previously       */
-/*                                            opened media                */
-/*    logical_fat                           Pointer to the logical FAT    */
-/*                                            bit map                     */
-/*    total_clusters                        Total number of clusters      */
-/*    error_correction_option               Option for correcting lost    */
-/*                                            cluster errors              */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    error                                 Error code                    */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    _fx_utility_exFAT_bitmap_flush        Flush dirty bitmap clusters   */
-/*    _fx_utility_exFAT_bitmap_cache_update Cache bitmap clusters         */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _fx_check_media                       Check media function          */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     William E. Lamie         Initial Version 6.0           */
-/*  09-30-2020     William E. Lamie         Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*                                                                        */
-/**************************************************************************/
-ULONG  _fx_media_check_exFAT_lost_cluster_check(FX_MEDIA *media_ptr, UCHAR *logical_fat, ULONG total_clusters, ULONG error_correction_option)
-{
-ULONG cluster = FX_FAT_ENTRY_START;
-ULONG cached_bitmap_bytes = media_ptr -> fx_media_exfat_bitmap_cache_size_in_sectors * media_ptr -> fx_media_bytes_per_sector;
-ULONG cached_bitmap_bits = cached_bitmap_bytes << 3;
-ULONG offset = 0;
-UINT status, i;
-
-    /* This parameter has not been supported yet. */
-    FX_PARAMETER_NOT_USED(error_correction_option);
-
-    /* Flush Allocation Bitmap Table first. */
-    status = _fx_utility_exFAT_bitmap_flush(media_ptr);
-    
-    if (FX_SUCCESS != status)
-    {
-        return(status);
-    }
-
-    while (total_clusters)
-    {
-
-        /* Read Allocation Bitmap Table from disk. */
-        status = _fx_utility_exFAT_bitmap_cache_update(media_ptr, cluster);
-
-        if (FX_SUCCESS != status)
-        {
-            return(status);
-        }
-
-        if (total_clusters >= cached_bitmap_bits)
-        {
-            total_clusters -= cached_bitmap_bits;
-
-            /* Compare cached bitmap with logical_fat. */
-            for (i = 0; i < media_ptr -> fx_media_bytes_per_sector; i++)
-            {
-                if (logical_fat[offset + i] != ((UCHAR *)(media_ptr -> fx_media_exfat_bitmap_cache))[i])
-                {
-                    return(FX_LOST_CLUSTER_ERROR);
-                }
-
-                offset += cached_bitmap_bytes;
-                cluster += cached_bitmap_bits;
-            }
-        }
-        else
-        {
-
-            /* Compare cached bitmap with logical_fat. */
-            for (i = 0; i < ((total_clusters + 7) >> 3); i++)
-            {
-                if (logical_fat[offset + i] != ((UCHAR *)(media_ptr -> fx_media_exfat_bitmap_cache))[i])
-                {
-                    return(FX_LOST_CLUSTER_ERROR);
-                }
-            }
-
-            total_clusters = 0;
-        }
-    }
-
-    return(FX_SUCCESS);
-}
-#endif /* FX_ENABLE_EXFAT */

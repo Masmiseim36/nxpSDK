@@ -232,6 +232,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -359,7 +360,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
@@ -369,6 +369,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt1015/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1327,6 +1328,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1454,7 +1456,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
@@ -1464,6 +1465,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt1015/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2509,16 +2511,16 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

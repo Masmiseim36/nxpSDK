@@ -328,10 +328,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1062/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -571,16 +571,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -604,6 +594,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1204,10 +1204,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1062/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1447,16 +1447,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1480,6 +1470,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2080,10 +2080,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1062/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2323,16 +2323,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2356,6 +2346,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2956,10 +2956,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1062/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3199,16 +3199,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3232,6 +3222,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

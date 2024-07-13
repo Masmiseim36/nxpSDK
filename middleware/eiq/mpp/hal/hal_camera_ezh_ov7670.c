@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP.
+ * Copyright 2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -28,6 +28,7 @@
 #include "fsl_inputmux.h"
 #include "hal.h"
 #include "hal_utils.h"
+#include "hal_os.h"
 
 /*******************************************************************************
  * Definitions
@@ -37,6 +38,9 @@
 #define CAMERA_DEV_EzhOv7670_FPS 30   /* camera frame capture rate */
 #define CAMERA_DEV_EzhOv7670_BPP 2   /* camera bytes per pixels for RGB565 */
 #define EZH_STACK_SIZE 64   /* stack size for EZH, see smart_dma driver recommendation */
+#define CAMERA_DEV_EzhOv7670_FPS 30   /* camera frame capture rate */
+#define CAMERA_DEV_STRIPE_DIV 16      /* number of stripes divisions captured by smartDMA */
+#define CAMERA_DEV_ALIGN 4      /* alignment requirement */
 
 /*******************************************************************************
  * Prototypes
@@ -62,6 +66,7 @@ static volatile uint8_t g_smartdma_stack[EZH_STACK_SIZE];
 static volatile int g_data_ready;   /* non-zero when new data signaled by SmartDMA IRQ */
 static uint8_t *g_camera_buffer;   /* destination pixel buffer for camera */
 static camera_device_handle_t g_camdev = {0};
+static volatile uint32_t __attribute((aligned(4))) g_stripe_idx = 0;
 
 /*******************************************************************************
  * Code
@@ -92,7 +97,11 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Init(
     camconfig.pixelFormat = kVIDEO_PixelFormatRGB565;
     camconfig.interface = kCAMERA_InterfaceGatedClock;
 
-    if ((config->width == 320) && (config->height == 240))
+    if ((config->width == 640) && (config->height == 480))
+    {
+        camconfig.resolution = kVIDEO_ResolutionVGA;
+    }
+    else if ((config->width == 320) && (config->height == 240))
     {
         camconfig.resolution = kVIDEO_ResolutionQVGA;
     }
@@ -126,7 +135,21 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Init(
 
     smartdmaParam.cameraParam.smartdma_stack = (uint32_t*)g_smartdma_stack;
     /* allocate Pixels buffer */
-    g_camera_buffer = (uint8_t *) MPP_MALLOC(config->width * camconfig.bytesPerPixel * config->height);
+    int buffheight;
+    uint32_t sdma_api;
+    if (config->stripe)
+    {
+        /* allocate ping-pong stripe buffer */
+        buffheight = config->height / CAMERA_DEV_STRIPE_DIV * 2;
+        sdma_api = kSMARTDMA_FlexIO_CameraDiv16Frame;
+    }
+    else
+    {
+        /* allocate whole frame buffer */
+        buffheight = config->height;
+        sdma_api = kSMARTDMA_FlexIO_CameraWholeFrame;
+    }
+    g_camera_buffer = (uint8_t *) hal_malloc(buffheight * camconfig.bytesPerPixel * config->width);
     if (g_camera_buffer == NULL)
     {
         HAL_LOGE("Malloc camera buffer failed \n");
@@ -134,16 +157,20 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Init(
     }
 
     smartdmaParam.cameraParam.p_buffer = (uint32_t*)g_camera_buffer;
-    SMARTDMA_Boot1(kSMARTDMA_FlexIO_CameraWholeFrame, &smartdmaParam, 0x2);
+    smartdmaParam.cameraParam.p_stripe_index = (uint32_t*) &g_stripe_idx;
+    smartdmaParam.cameraParam.p_buffer_ping_pong = (uint32_t*)g_camera_buffer;
+    SMARTDMA_Boot1(sdma_api, &smartdmaParam, 0x2);
 
     /* save config */
     dev->config.width = config->width;
     dev->config.height = config->height;
     dev->config.framerate = config->fps;
     dev->config.format = config->format;
+    dev->config.stripe = config->stripe;
     dev->cap.callback = callback;
     dev->cap.param    = param;
     dev->config.pitch = config->width * camconfig.bytesPerPixel;
+    dev->config.stripe_size = (config->stripe) ? dev->config.pitch * (dev->config.height / CAMERA_DEV_STRIPE_DIV) : 0;
     strncpy(dev->name, CAMERA_NAME, HAL_DEVICE_NAME_MAX_LENGTH);
 
     HAL_LOGD("--HAL_CameraDev_EzhOv7670_Init\n");
@@ -162,7 +189,7 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Getbufdesc(const camera_dev_t *dev, 
     }
     /* set memory policy */
     *policy = HAL_MEM_ALLOC_OUTPUT;
-    out_buf->alignment = 0;
+    out_buf->alignment = CAMERA_DEV_ALIGN;
     out_buf->cacheable = true;
     out_buf->stride = dev->config.pitch;
     out_buf->nb_lines = dev->config.height;
@@ -178,7 +205,7 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Deinit(camera_dev_t *dev)
     status_t status = kStatus_Success;
 
     SMARTDMA_Deinit();
-    MPP_FREE(g_camera_buffer);
+    hal_free(g_camera_buffer);
     status = CAMERA_DEVICE_Deinit(&g_camdev);
     if (status != kStatus_Success) return kStatus_HAL_CameraError;
 
@@ -211,7 +238,7 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Stop(const camera_dev_t *dev)
     return ret;
 }
 
-hal_camera_status_t HAL_CameraDev_EzhOv7670_Dequeue(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format)
+hal_camera_status_t HAL_CameraDev_EzhOv7670_Dequeue(const camera_dev_t *dev, void **data, int *stripe)
 {
     hal_camera_status_t ret = kStatus_HAL_CameraSuccess;
     HAL_LOGD("++HAL_CameraDev_EzhOv7670_Dequeue\n");
@@ -219,9 +246,23 @@ hal_camera_status_t HAL_CameraDev_EzhOv7670_Dequeue(const camera_dev_t *dev, voi
     // wait for new frame buffer
     while (g_data_ready == 0);
     g_data_ready = 0;
+    if (dev->config.stripe)
+    {
+        int offset;
+        if(g_stripe_idx%2 == 1)
+            offset = dev->config.stripe_size;
+        else
+            offset = 0;
 
-    *data   = (void *)g_camera_buffer;
-    *format = dev->config.format;
+        *data   = (void *)(g_camera_buffer + offset);
+        *stripe = g_stripe_idx + 1;   /* g_stripe_idx starts at 0, stripe starts at 1 */
+    }
+    else
+    {
+        *data   = (void *)g_camera_buffer;
+        *stripe = 0;
+    }
+
     HAL_LOGD("--HAL_CameraDev_EzhOv7670_Dequeue\n");
     return ret;
 }

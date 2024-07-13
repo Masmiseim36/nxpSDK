@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP.
+ * Copyright 2022-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,6 +13,7 @@
 #include "hal_valgo_dev.h"
 #include "hal_debug.h"
 #include "hal.h"
+#include "hal_os.h"
 
 #if (HAL_ENABLE_INFERENCE_TFLITE == 1)
 
@@ -121,7 +122,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Init(vision_algo_dev_t *dev, 
 
     // init the device
     memset(&dev->cap, 0, sizeof(dev->cap));
-    dev->priv_data = MPP_MALLOC(sizeof(tflite_model_param_t));
+    dev->priv_data = hal_malloc(sizeof(tflite_model_param_t));
     tflite_model_param = (tflite_model_param_t *)dev->priv_data;
     if(dev->priv_data == NULL){
         HAL_LOGE("NULL pointer\n");
@@ -148,7 +149,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Init(vision_algo_dev_t *dev, 
             tflite_model_param->out_param.out_tensors[i] = NULL;
             continue;
         }
-        tflite_model_param->out_param.out_tensors[i] = MPP_MALLOC(sizeof(mpp_inference_out_tensor_params_t));
+        tflite_model_param->out_param.out_tensors[i] = hal_malloc(sizeof(mpp_inference_out_tensor_params_t));
         if(tflite_model_param->out_param.out_tensors[i] == NULL){
             HAL_LOGE("NULL pointer\n");
             return kStatus_HAL_ValgoMallocError ;
@@ -194,7 +195,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Deinit(vision_algo_dev_t *dev
     HAL_LOGD("++HAL_VisionAlgoDev_TFLite_Deinit\n");
 
     if (dev->priv_data != NULL) {
-        MPP_FREE(dev->priv_data);
+        hal_free(dev->priv_data);
     }
 
     HAL_LOGD("--HAL_VisionAlgoDev_TFLite_Deinit\n");
@@ -254,7 +255,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_getBufDesc(const vision_algo_
      * TODO: add support for other TFlite models with different component order.
      * For now, this is only assuming NHWC order.
      */
-    in_buf->alignment = 0;
+    in_buf->alignment = HAL_TFLITE_BUFFER_ALIGN;
     in_buf->nb_lines = tflite_model_param->inputDims.data[1]; /* number of lines required is the input height */
     in_buf->cacheable = true;
     in_buf->stride = tflite_model_param->inputDims.data[2] * tflite_model_param->inputDims.data[3]; /* width * channels */

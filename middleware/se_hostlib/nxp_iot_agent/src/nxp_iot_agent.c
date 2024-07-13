@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -63,7 +63,7 @@
 	(((IOT_AGENT_VERSION_MAJOR * 256) + IOT_AGENT_VERSION_MINOR) * 256 \
 		+ IOT_AGENT_VERSION_PATCH)
 
-const iot_agent_endpoint_interface_t iot_agent_endpoint_interface =
+static const iot_agent_endpoint_interface_t iot_agent_endpoint_interface =
 {
 	&iot_agent_get_endpoint_info,
 	&iot_agent_handle_request,
@@ -87,7 +87,7 @@ iot_agent_status_t iot_agent_register_keystore(
 
 	// Check for identifier uniqueness.
 	agent_status = iot_agent_get_datastore_index_by_id(ctx, keystore->identifier, &index);
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
 	ASSERT_OR_EXIT_MSG(agent_status != IOT_AGENT_SUCCESS, "Unable to register keystore with id [0x%08lx], "
 		"a datastore with that id is already registered.", keystore->identifier);
 	agent_status = iot_agent_get_keystore_index_by_id(ctx, keystore->identifier, &index);
@@ -116,7 +116,7 @@ iot_agent_status_t iot_agent_register_datastore(
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	size_t index = 0U;
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
 	ASSERT_OR_EXIT_MSG(datastore->identifier != (uint32_t)nxp_iot_DatastoreIdentifiers_DATASTORE_EDGELOCK2GO_ID,
 		"Unable to register datastore with id [0x%08lx], this id is reserved", datastore->identifier);
 
@@ -198,7 +198,7 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 
 
 	uint8_t* client_certificate_buffer = NULL;
-	size_t client_certificate_size = 0;
+	size_t client_certificate_size = 0U;
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
 	BIO *bio_in = NULL;
@@ -209,6 +209,11 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 #elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
 
 	mbedtls_network_config_t network_config = { 0 };
+
+#if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
+	const uint8_t* pos = NULL;
+	const uint8_t* end_ptr = NULL;
+#endif
 #endif
 
 	ASSERT_OR_EXIT_MSG(service_descriptor->hostname != NULL, "service_descriptor does not contain a hostname.");
@@ -245,20 +250,20 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	}
 #endif
 	else {
-		ASSERT_OR_EXIT_MSG(false, "Unsuported keystore type: %d", keystore->type);
+	    EXIT_STATUS_MSG(IOT_AGENT_FAILURE, "Unsuported keystore type: %d", keystore->type);
 	}
 
 #if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
 	// For the trusted root certificates, we for now always expect to have its contents as bytes.
 	ASSERT_OR_EXIT_MSG(service_descriptor->server_certificate != NULL, "service_descriptor does not contain a server certificate");
 #endif
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1&& !defined(__ZEPHYR__)
 	IOT_AGENT_INFO("Updating device configuration from [%s]:[%lu].", service_descriptor->hostname, service_descriptor->port);
 #else
 	IOT_AGENT_INFO("Updating device configuration from [%s]:[%d].", service_descriptor->hostname, service_descriptor->port);
 #endif
 
-	if (0) {}
+	if (false) {}
 #if NXP_IOT_AGENT_HAVE_SSS
 	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
 		agent_status = iot_agent_keystore_open_session(keystore);
@@ -358,19 +363,20 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 
 #if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
 	mbedtls_x509_crt_init(&network_config.ca_chain);
-	const uint8_t* pos = service_descriptor->server_certificate->bytes;
-	const uint8_t* end = pos + service_descriptor->server_certificate->size;
-	while (pos < end)
+	pos = service_descriptor->server_certificate->bytes;
+	end_ptr = pos + service_descriptor->server_certificate->size;
+	while (pos < end_ptr)
 	{
 		// We expect the certificate to start with a sequence tag, from that we get the length
 		// so we can jump to the next one in the buffer.
 		const uint8_t* start = pos;
-		size_t len = 0;
-		network_status = mbedtls_asn1_get_tag((unsigned char **)&pos, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
+		size_t len = 0U;
+		network_status = mbedtls_asn1_get_tag((unsigned char **)&pos, end_ptr, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
 		ASSERT_OR_EXIT_MSG(network_status == 0, "mbedtls_asn1_get_tag of trusted root ca cert failed with 0x%08x", network_status);
 		pos += len;
-
-		network_status = mbedtls_x509_crt_parse_der(&network_config.ca_chain, start, end - start);
+		ASSERT_OR_EXIT_MSG((end_ptr - start) >= 0, "Error in parsing certificate");
+		size_t sub = end_ptr - start;
+		network_status = mbedtls_x509_crt_parse_der(&network_config.ca_chain, start, sub);
 		ASSERT_OR_EXIT_MSG(network_status == 0, "mbedtls_x509_crt_parse_der of trusted root ca cert failed with 0x%08x", network_status);
 	}
 #endif
@@ -378,7 +384,7 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	network_status = network_configure(dispatcher_context.network_context, &network_config);
 	ASSERT_OR_EXIT_MSG(network_status == 0, "network_configure failed with 0x%08x", network_status);
 
-	if (0) {}
+	if (false) {}
 #if NXP_IOT_AGENT_HAVE_SSS
 	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
 		network_status = sss_mbedtls_associate_keypair(&((mbedtls_network_context_t*)dispatcher_context.network_context)->pkey, &private_key);
@@ -409,7 +415,7 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	ASSERT_OR_EXIT_MSG(network_status == NETWORK_STATUS_OK, "network_connect failed with 0x%08x.", network_status);
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
     concludeMeasurement(&network_connect_time);
-    iot_agent_time.network_connect = getMeasurement(&network_connect_time);
+    iot_agent_time.network_connect_time = getMeasurement(&network_connect_time);
     initMeasurement(&process_provision_time);
 #endif
 
@@ -635,7 +641,7 @@ iot_agent_status_t iot_agent_select_service_by_index(
 		size_t numServices = iot_agent_service_get_number_of_services(datastore);
 		if (remaining < numServices)
 		{
-			size_t offset;
+			size_t offset = 0U;
 			agent_status = iot_agent_service_get_service_offset_by_index(datastore, remaining, &offset, service_descriptor);
 			AGENT_SUCCESS_OR_EXIT();
 
@@ -663,7 +669,7 @@ iot_agent_status_t iot_agent_select_service_by_id(
 	for (size_t i = 0U; i < ctx->numDatastores; i++)
 	{
 		iot_agent_datastore_t* datastore = ctx->datastores[i];
-		size_t offset;
+		size_t offset = 0U;
 		agent_status = iot_agent_service_get_service_offset_by_id(datastore, service_id, &offset, service_descriptor);
 
 		// If we did not find the id in this datastore, continue with the next one.
@@ -766,6 +772,7 @@ iot_agent_status_t iot_agent_get_datastore_by_id(
 	iot_agent_status_t agent_status = iot_agent_get_datastore_index_by_id(ctx, id, &index);
 	AGENT_SUCCESS_OR_EXIT();
 
+	ASSERT_OR_EXIT_MSG(index < NXP_IOT_AGENT_MAX_NUM_DATASTORES, "Datastore index out of bounds.");
 	*datastore = ctx->datastores[index];
 
 exit:
@@ -798,6 +805,7 @@ iot_agent_status_t iot_agent_get_keystore_by_id(
 	iot_agent_status_t agent_status = iot_agent_get_keystore_index_by_id(ctx, id, &index);
 	AGENT_SUCCESS_OR_EXIT();
 
+	ASSERT_OR_EXIT_MSG(index < NXP_IOT_AGENT_MAX_NUM_KEYSTORES, "Keystore index out of bounds.");
 	*keystore = ctx->keystores[index];
 
 exit:
@@ -828,6 +836,12 @@ bool iot_agent_get_endpoint_info(void* context, void* endpoint_information)
 	{
 		return false;
 	}
+
+	if (ostream.bytes_written > SIZE_MAX)
+	{
+		return false;
+	}
+
 	info->additionalData.size = (pb_size_t)ostream.bytes_written;
 
 	return true;
@@ -953,6 +967,7 @@ iot_agent_status_t iot_agent_init_dispatcher(
 	nxp_iot_ServiceDescriptor* service_descriptor,
 	nxp_iot_UpdateStatusReport* status_report)
 {
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
     if ((dispatcher_context == NULL)||(agent_context == NULL))
     {
         IOT_AGENT_ERROR("Dispatcher Initialization Failed");
@@ -981,32 +996,41 @@ iot_agent_status_t iot_agent_init_dispatcher(
 
 	if (agent_context->edgelock2go_datastore != NULL)
 	{
+		ASSERT_OR_EXIT_MSG(agent_context->edgelock2go_datastore->type <= _nxp_iot_EndpointType_MAX,	"Error in the datastore type");
+		ASSERT_OR_EXIT_MSG(num_endpoints < NXP_IOT_AGENT_MAX_NUM_ENDPOINTS, "Endpoint number out of bounds");
 		dispatcher_context->endpoints[num_endpoints].type = (nxp_iot_EndpointType)agent_context->edgelock2go_datastore->type;
 		dispatcher_context->endpoints[num_endpoints].id = agent_context->edgelock2go_datastore->identifier;
 		dispatcher_context->endpoints[num_endpoints].endpoint_interface = agent_context->edgelock2go_datastore->iface.endpoint_interface;
 		dispatcher_context->endpoints[num_endpoints].endpoint_context = agent_context->edgelock2go_datastore->context;
+		ASSERT_OR_EXIT_MSG(num_endpoints < SIZE_MAX, "Wraparound in addition calculation.");
 		num_endpoints++;
 	}
 
     for (size_t i = 0U; i < agent_context->numDatastores; i++)
     {
+		ASSERT_OR_EXIT_MSG(agent_context->datastores[i]->type <= _nxp_iot_EndpointType_MAX,	"Error in the datastore type.");
+		ASSERT_OR_EXIT_MSG(num_endpoints < NXP_IOT_AGENT_MAX_NUM_ENDPOINTS, "Endpoint number out of bounds");
         dispatcher_context->endpoints[num_endpoints].type = (nxp_iot_EndpointType)agent_context->datastores[i]->type;
         dispatcher_context->endpoints[num_endpoints].id = agent_context->datastores[i]->identifier;
         dispatcher_context->endpoints[num_endpoints].endpoint_interface = agent_context->datastores[i]->iface.endpoint_interface;
         dispatcher_context->endpoints[num_endpoints].endpoint_context = agent_context->datastores[i]->context;
+		ASSERT_OR_EXIT_MSG(num_endpoints < SIZE_MAX, "Wraparound in addition calculation.");
         num_endpoints++;
     }
 
     for (size_t i = 0U; i < agent_context->numKeystores; i++)
     {
+		ASSERT_OR_EXIT_MSG(agent_context->keystores[i]->type <= _nxp_iot_EndpointType_MAX, "Error in the keystore type.");
+		ASSERT_OR_EXIT_MSG(num_endpoints < NXP_IOT_AGENT_MAX_NUM_ENDPOINTS, "Endpoint number out of bounds");
         dispatcher_context->endpoints[num_endpoints].type = (nxp_iot_EndpointType)agent_context->keystores[i]->type;
         dispatcher_context->endpoints[num_endpoints].id = agent_context->keystores[i]->identifier;
         dispatcher_context->endpoints[num_endpoints].endpoint_interface = agent_context->keystores[i]->iface.endpoint_interface;
         dispatcher_context->endpoints[num_endpoints].endpoint_context = agent_context->keystores[i]->context;
+		ASSERT_OR_EXIT_MSG(num_endpoints < SIZE_MAX, "Wraparound in addition calculation.");
         num_endpoints++;
 	}
-
-    return IOT_AGENT_SUCCESS;
+exit:
+    return agent_status;
 }
 
 

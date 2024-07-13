@@ -1,9 +1,9 @@
 var a00227 =
 [
-    [ "DCP_AES_BLOCK_SIZE", "a00227.html#ga79352c57e1d42e0798b4d46732ddd0a6", null ],
-    [ "DCP_AES_SetKey", "a00227.html#ga15f23983b967199537cda25d70761d82", null ],
-    [ "DCP_AES_EncryptEcb", "a00227.html#ga24ec493fe8f07ba4489e2f798531862d", null ],
-    [ "DCP_AES_DecryptEcb", "a00227.html#gad92e84b3cfd032400487113232f18bcf", null ],
-    [ "DCP_AES_EncryptCbc", "a00227.html#gac02bf9fce15f0b01521df1c33473a7fe", null ],
-    [ "DCP_AES_DecryptCbc", "a00227.html#ga1fb597b20b09424edd91fa83d684d203", null ]
+    [ "FSL_GPC_DRIVER_VERSION", "a00227.html#ga91a1b6b08dc09200c3b0ee314b362b74", null ],
+    [ "GPC_EnableIRQ", "a00227.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e", null ],
+    [ "GPC_DisableIRQ", "a00227.html#gacfd07601d1a0e90e3b80fffe14830010", null ],
+    [ "GPC_GetIRQStatusFlag", "a00227.html#ga1118000efd3c822329c63a7155bbe12e", null ],
+    [ "GPC_RequestPdram0PowerDown", "a00227.html#ga8270fba73a065a4e14af1bc895e55969", null ],
+    [ "GPC_RequestMEGAPowerOn", "a00227.html#gaac50bee55eb34b329680e6fd0d2a9582", null ]
 ];

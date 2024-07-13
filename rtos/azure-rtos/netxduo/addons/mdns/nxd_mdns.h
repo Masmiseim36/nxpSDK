@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -25,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    nxd_mdns.h                                          PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -52,6 +51,9 @@
 /*  04-25-2022     Yuxin Zhou               Modified comment(s),          */
 /*                                            fixed the issue of timer,   */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Bo Chen                  Modified comment(s), and      */
+/*                                            corrected the symbols check,*/
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -130,9 +132,9 @@ extern   "C" {
 #error "mDNS IPv6 is not supported if IPv6 is not enabled."
 #endif /* FEATURE_NX_IPV6  */
 
-#ifndef NX_IPV6_MULTICAST_ENABLE
+#ifndef NX_ENABLE_IPV6_MULTICAST
 #error "mDNS IPv6 is not supported if IPv6 multicast is not enabled."
-#endif /* NX_IPV6_MULTICAST_ENABLE  */
+#endif /* NX_ENABLE_IPV6_MULTICAST  */
 
 #ifndef NX_MDNS_DISABLE_SERVER
 #ifndef NX_ENABLE_IPV6_ADDRESS_CHANGE_NOTIFY 

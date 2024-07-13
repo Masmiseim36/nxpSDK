@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_ccid_hardware_error                PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -57,13 +56,18 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    USBX Source Code                                                    */
+/*    Application                                                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  03-08-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added standalone support,   */
+/*                                            resulting in version 6.2.1  */
+/*  10-31-2023     Yajun Xia                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_ccid_hardware_error(UX_DEVICE_CLASS_CCID *ccid, ULONG slot, ULONG error)
@@ -82,7 +86,7 @@ UX_DEVICE_CLASS_CCID_RDR_TO_PC_SLOT_STATUS_HEADER   *rsp;
     ccid_slot += slot;
 
     /* Lock states.  */
-    _ux_device_mutex_on(&ccid -> ux_device_class_ccid_mutex);
+    _ux_device_class_ccid_lock(ccid);
 
     /* Check error.  */
     if (!(ccid_slot -> ux_device_class_ccid_slot_flags & UX_DEVICE_CLASS_CCID_FLAG_HW_ERROR))
@@ -118,16 +122,70 @@ UX_DEVICE_CLASS_CCID_RDR_TO_PC_SLOT_STATUS_HEADER   *rsp;
         ccid_slot -> ux_device_class_ccid_slot_flags |= UX_DEVICE_CLASS_CCID_FLAG_NOTIFY_CHANGE;
 
         /* Unlock states.  */
-        _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+        _ux_device_class_ccid_unlock(ccid);
 
         /* Wakeup interrupt notification.  */
         _ux_device_semaphore_put(&ccid -> ux_device_class_ccid_notify_semaphore);
+
+#if defined(UX_DEVICE_STANDALONE)
+        if (ccid -> ux_device_class_ccid_notify_state == UX_DEVICE_CLASS_CCID_NOTIFY_IDLE)
+            ccid -> ux_device_class_ccid_notify_state = UX_DEVICE_CLASS_CCID_NOTIFY_LOCK;
+#endif
         return(UX_SUCCESS);
     }
 
     /* Unlock states.  */
-    _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+    _ux_device_class_ccid_unlock(ccid);
 
     /* Return transfer status.  */
     return(UX_SUCCESS);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_ccid_hardware_error               PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in CCID card hardware error function.   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    ccid                                  Pointer to ccid instance      */
+/*    slot                                  Slot removed                  */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Completion Status                                                   */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_ccid_hardware_error  CCID card hardware error      */
+/*                                          function.                     */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Yajun Xia                Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT  _uxe_device_class_ccid_hardware_error(UX_DEVICE_CLASS_CCID *ccid, ULONG slot, ULONG error)
+{
+
+    /* Sanity check.  */
+    if (ccid == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    return(_ux_device_class_ccid_hardware_error(ccid, slot, error));
 }

@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -26,7 +26,7 @@ iot_agent_status_t iot_agent_datastore_free(iot_agent_datastore_t* datastore)
         {
             agent_status = datastore->iface.destroy(datastore->context);
             if (agent_status != IOT_AGENT_SUCCESS) {
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
             	IOT_AGENT_ERROR("Failed to destroy datastore [type: %lu, id: 0x%08lx]: 0x%08x",
                     datastore->type, datastore->identifier, agent_status);
 #else
@@ -76,6 +76,7 @@ bool datastore_read_callback(pb_istream_t *stream, uint8_t *buf, size_t count)
 	size_t read = count;
 	agent_status = datastore_stream_context->datastore->iface.read(datastore_stream_context->datastore->context,
 		buf, datastore_stream_context->offset, &read);
+	ASSERT_OR_EXIT_MSG(datastore_stream_context->offset <= (SIZE_MAX - read), "Wraparound in addition of offset and read");
 	datastore_stream_context->offset += read;
 
 	AGENT_SUCCESS_OR_EXIT_MSG("Read from datastore failed with 0x%04x", agent_status);

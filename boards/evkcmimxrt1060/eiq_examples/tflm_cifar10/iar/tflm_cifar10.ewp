@@ -375,7 +375,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
@@ -385,6 +384,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -848,7 +848,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/iar/tflm.lib</state>
+          <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/iar/tflm.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1489,7 +1489,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
@@ -1499,6 +1498,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -1962,7 +1962,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/iar/tflm.lib</state>
+          <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/iar/tflm.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2538,12 +2538,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2554,6 +2548,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

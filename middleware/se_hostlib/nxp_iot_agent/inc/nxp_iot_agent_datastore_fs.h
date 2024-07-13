@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -25,11 +25,13 @@
  * @{
  */
 
+#define FILE_POINTER_NUMBER 2U
+
 typedef struct iot_agent_datastore_fs_context_t {
 
 	/** @brief For atomic updates, the datastore holds two file pointers, one that is currently 
 	 * read from and a second one that is written to (as part of a transaction). */
-	FILE* fp[2];
+	FILE* fp[FILE_POINTER_NUMBER];
 
 	/** @brief The filename based on which the files for the datastore are determined. */
 	char* basename;

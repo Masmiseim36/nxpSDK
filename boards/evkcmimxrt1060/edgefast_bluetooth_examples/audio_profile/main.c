@@ -267,7 +267,6 @@ void main(void)
     /*Clock setting for LPI2C*/
     CLOCK_SetMux(kCLOCK_Lpi2cMux, BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER);
-    SCB_DisableDCache();
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
     DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
     edma_config_t config;
@@ -309,7 +308,6 @@ void main(void)
     }
 }
 
-#if 0
 /**
  * @brief Loop forever if stack overflow is detected.
  *
@@ -337,7 +335,6 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
     }
 }
 
-
 /**
  * @brief Warn user if pvPortMalloc fails.
  *
@@ -358,7 +355,6 @@ void vApplicationMallocFailedHook()
     {
     }
 }
-#endif
 
 /*-----------------------------------------------------------*/
 

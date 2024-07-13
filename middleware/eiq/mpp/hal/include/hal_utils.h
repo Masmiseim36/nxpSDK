@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP.
+ * Copyright 2022-2024 NXP.
  * NXP Confidential and Proprietary.
  * This software is owned or controlled by NXP and may only be used strictly in
  * accordance with the applicable license terms. By expressly accepting such
@@ -77,6 +77,8 @@ static inline int get_bitpp(mpp_pixel_format_t type)
 
     switch(type) {
     case MPP_PIXEL_ARGB:
+    case MPP_PIXEL_BGRA:
+    case MPP_PIXEL_RGBA:
     case MPP_PIXEL_YUYV:
     case MPP_PIXEL_GRAY888X:
     case MPP_PIXEL_YUV1P444:

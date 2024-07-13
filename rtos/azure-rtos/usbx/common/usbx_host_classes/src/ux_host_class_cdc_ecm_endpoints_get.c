@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_host_class_cdc_ecm_endpoints_get                PORTABLE C      */
-/*                                                           6.1.9        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -73,6 +72,9 @@
 /*                                            use pre-calculated value    */
 /*                                            instead of wMaxPacketSize,  */
 /*                                            resulting in version 6.1.9  */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            checked endpoint get status,*/
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_cdc_ecm_endpoints_get(UX_HOST_CLASS_CDC_ECM *cdc_ecm)
@@ -131,7 +133,11 @@ UX_INTERFACE    *data_interface;
     {
 
         /* Get interface endpoint.  */
-        _ux_host_stack_interface_endpoint_get(data_interface, endpoint_index, &endpoint);
+        status = _ux_host_stack_interface_endpoint_get(data_interface, endpoint_index, &endpoint);
+
+        /* Check status.  */
+        if (status != UX_SUCCESS)
+            continue;
 
         /* Check if endpoint is bulk and OUT.  */
         if (((endpoint -> ux_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_OUT) &&
@@ -173,7 +179,11 @@ UX_INTERFACE    *data_interface;
     {
 
         /* Get the endpoint handle.  */
-        _ux_host_stack_interface_endpoint_get(data_interface, endpoint_index, &endpoint);
+        status = _ux_host_stack_interface_endpoint_get(data_interface, endpoint_index, &endpoint);
+
+        /* Check status.  */
+        if (status != UX_SUCCESS)
+            continue;
 
         /* Check if endpoint is bulk and IN.  */
         if (((endpoint -> ux_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_IN) &&
@@ -217,7 +227,11 @@ UX_INTERFACE    *data_interface;
     {
 
         /* Get the endpoint handle.  */
-        _ux_host_stack_interface_endpoint_get(cdc_ecm -> ux_host_class_cdc_ecm_interface_control, endpoint_index, &endpoint);
+        status = _ux_host_stack_interface_endpoint_get(cdc_ecm -> ux_host_class_cdc_ecm_interface_control, endpoint_index, &endpoint);
+
+        /* Check status.  */
+        if (status != UX_SUCCESS)
+            continue;
 
         /* Check if endpoint is Interrupt and IN.  */
         if (((endpoint -> ux_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_IN) &&

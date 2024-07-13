@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -65,7 +64,6 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    _fx_utility_exFAT_cluster_state_get                                 */
 /*    _fx_utility_FAT_entry_read                                          */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
@@ -79,16 +77,13 @@
 /**************************************************************************/
 UINT    _fx_fault_tolerant_read_FAT(FX_MEDIA *media_ptr, ULONG cluster, ULONG *value, ULONG log_type)
 {
-ULONG                         logs_remaining;
-UCHAR                        *current_ptr;
-UCHAR                         found = FX_FALSE;
-ULONG                         size;
-USHORT                        type;
-ULONG                         log_len;
-FX_FAULT_TOLERANT_FAT_LOG    *fat_log;
-#ifdef FX_ENABLE_EXFAT
-FX_FAULT_TOLERANT_BITMAP_LOG *bitmap_log;
-#endif
+ULONG                      logs_remaining;
+UCHAR                     *current_ptr;
+UCHAR                      found = FX_FALSE;
+ULONG                      size;
+USHORT                     type;
+ULONG                      log_len;
+FX_FAULT_TOLERANT_FAT_LOG *fat_log;
 
 
     /* Get fault tolerant data. */
@@ -135,40 +130,18 @@ FX_FAULT_TOLERANT_BITMAP_LOG *bitmap_log;
 
             /* This is the log with same type . */
             /* Get the log pointer. */
-#ifdef FX_ENABLE_EXFAT
-            if (type == FX_FAULT_TOLERANT_BITMAP_LOG_TYPE)
+            fat_log = (FX_FAULT_TOLERANT_FAT_LOG *)current_ptr;
+
+            /* Is this FAT log entry the one looking for? */
+            if (_fx_utility_32_unsigned_read((UCHAR *)&fat_log -> fx_fault_tolerant_FAT_log_cluster) == cluster)
             {
-                bitmap_log = (FX_FAULT_TOLERANT_BITMAP_LOG *)current_ptr;
 
-                /* Is this bitmap log entry the one looking for? */
-                if (_fx_utility_32_unsigned_read((UCHAR *)&bitmap_log -> fx_fault_tolerant_bitmap_log_cluster) == cluster)
-                {
+                /* Yes, it is. */
+                *value = _fx_utility_32_unsigned_read((UCHAR *)&fat_log -> fx_fault_tolerant_FAT_log_value);
 
-                    /* Yes, it is. */
-                    *value = _fx_utility_32_unsigned_read((UCHAR *)&bitmap_log -> fx_fault_tolerant_bitmap_log_value);
-
-                    /* Do not return since there may be more than one log for this cluster. */
-                    found = FX_TRUE;
-                }
+                /* Do not return since there may be more than one log for this cluster. */
+                found = FX_TRUE;
             }
-            else
-            {
-#endif /* FX_ENABLE_EXFAT */
-                fat_log = (FX_FAULT_TOLERANT_FAT_LOG *)current_ptr;
-
-                /* Is this FAT log entry the one looking for? */
-                if (_fx_utility_32_unsigned_read((UCHAR *)&fat_log -> fx_fault_tolerant_FAT_log_cluster) == cluster)
-                {
-
-                    /* Yes, it is. */
-                    *value = _fx_utility_32_unsigned_read((UCHAR *)&fat_log -> fx_fault_tolerant_FAT_log_value);
-
-                    /* Do not return since there may be more than one log for this cluster. */
-                    found = FX_TRUE;
-                }
-#ifdef FX_ENABLE_EXFAT
-            }
-#endif /* FX_ENABLE_EXFAT */
         }
 
         /* Decrease the logs_remaining counter. */

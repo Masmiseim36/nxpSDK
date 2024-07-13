@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -187,4 +186,60 @@ UINT                                            status;
 
     /* We get here when all descriptors scanned.  */
     return(UX_SUCCESS);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_class_video_entities_parse                PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in video entities parse function call.  */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    video                                 Pointer to video instance     */
+/*    parse_function                        Parse function for each       */
+/*                                          video class descriptor        */
+/*    arg                                   Parse function argument       */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Completion Status                                                   */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_video_entities_parse   Video entities parse          */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Video Class                                                         */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023        Yajun xia             Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_host_class_video_entities_parse(UX_HOST_CLASS_VIDEO *video,
+        UINT(*parse_function)(VOID  *arg,
+                              UCHAR *packed_interface_descriptor,
+                              UCHAR *packed_entity_descriptor),
+        VOID* arg)
+{
+
+    /* Sanity checks.  */
+    if (video == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Call the actual video entities parse function.  */
+    return(_ux_host_class_video_entities_parse(video, parse_function, arg));
 }

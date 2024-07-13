@@ -335,7 +335,7 @@ int mwm_send(int socket, void *buf, size_t len);
  * @param tolen Size of to
  * @return Number of bytes sent, negative number - error
  */
-int mwm_sendto(int socket, char *buf, int len, mwm_sockaddr_t *to, int tolen);
+int mwm_sendto(int socket, void *buf, int len, mwm_sockaddr_t *to, int tolen);
 
 /*!
  * @brief Receives data.
@@ -349,7 +349,7 @@ int mwm_sendto(int socket, char *buf, int len, mwm_sockaddr_t *to, int tolen);
  * indicates it blocks forever
  * @return Number of bytes received, negative number - error
  */
-int mwm_recv_timeout(int socket, void *buf, size_t len, int timeout_ms);
+int mwm_recv_timeout(int socket, void *buf, size_t len, uint32_t timeout_ms);
 
 /*!
  * @brief Receives data.
@@ -363,7 +363,7 @@ int mwm_recv_timeout(int socket, void *buf, size_t len, int timeout_ms);
  * indicates it blocks forever
  * @return Number of bytes received, negative number - error
  */
-int mwm_recvfrom_timeout(int socket, void *buf, size_t len, int timeout_ms);
+int mwm_recvfrom_timeout(int socket, void *buf, size_t len, uint32_t timeout_ms);
 
 /*!
  * @brief Closes socket.

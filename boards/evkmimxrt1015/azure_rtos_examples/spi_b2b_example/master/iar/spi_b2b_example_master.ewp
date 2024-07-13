@@ -360,7 +360,6 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -371,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1455,7 +1455,6 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1466,6 +1465,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2404,12 +2404,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2423,6 +2417,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

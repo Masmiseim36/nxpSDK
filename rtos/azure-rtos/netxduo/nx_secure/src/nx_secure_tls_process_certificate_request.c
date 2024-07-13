@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_process_certificate_request          PORTABLE C      */
-/*                                                           6.1.12       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -74,11 +73,16 @@
 /*  07-29-2022     Yuxin Zhou               Modified comment(s), improved */
 /*                                            buffer length verification, */
 /*                                            resulting in version 6.1.12 */
+/*  03-08-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            fixed compiler errors when  */
+/*                                            x509 is disabled,           */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_process_certificate_request(NX_SECURE_TLS_SESSION *tls_session,
                                                 UCHAR *packet_buffer, UINT message_length)
 {
+#ifndef NX_SECURE_DISABLE_X509
 UINT  length;
 UINT  cert_types_length;
 UCHAR cert_type;
@@ -326,5 +330,12 @@ UINT extension_type;
 
     return(NX_SUCCESS);
 #endif
+#else
+    NX_PARAMETER_NOT_USED(tls_session);
+    NX_PARAMETER_NOT_USED(packet_buffer);
+    NX_PARAMETER_NOT_USED(message_length);
+
+    return(NX_NOT_SUPPORTED);
+#endif /* NX_SECURE_DISABLE_X509 */
 }
 

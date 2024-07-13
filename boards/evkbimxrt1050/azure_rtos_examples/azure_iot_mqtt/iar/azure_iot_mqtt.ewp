@@ -363,7 +363,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -378,7 +377,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
@@ -393,6 +391,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtp</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtsp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -404,6 +404,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1494,7 +1495,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1509,7 +1509,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
@@ -1524,6 +1523,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtp</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtsp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -1535,6 +1536,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2624,7 +2626,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -2639,7 +2640,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
@@ -2654,6 +2654,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtp</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtsp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -2665,6 +2667,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3755,7 +3758,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -3770,7 +3772,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
@@ -3785,6 +3786,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtp</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtsp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
@@ -3796,6 +3799,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4683,15 +4687,6 @@
           </file>
         </group>
         <group>
-          <name>lwm2m</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</name>
-          </file>
-        </group>
-        <group>
           <name>mdns</name>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns/nxd_mdns.c</name>
@@ -4862,6 +4857,24 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.h</name>
           </file>
         </group>
+        <group>
+          <name>rtp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtp/nx_rtp_sender.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtp/nx_rtp_sender.h</name>
+          </file>
+        </group>
+        <group>
+          <name>rtsp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtsp/nx_rtsp_server.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/rtsp/nx_rtsp_server.h</name>
+          </file>
+        </group>
       </group>
       <group>
         <name>common</name>
@@ -4896,6 +4909,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</name>
@@ -5100,9 +5116,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>
@@ -5363,12 +5376,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -5382,6 +5389,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

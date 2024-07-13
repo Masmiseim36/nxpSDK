@@ -25,6 +25,7 @@
     <definition extID="middleware.usb.phy.MIMXRT1015"/>
     <definition extID="component.osa.MIMXRT1015"/>
     <definition extID="middleware.usb.common_header.MIMXRT1015"/>
+    <definition extID="utility.str.MIMXRT1015"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1015"/>
     <definition extID="device.MIMXRT1015_system.MIMXRT1015"/>
     <definition extID="iar"/>
@@ -35,7 +36,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1015_fmstr_example_usb_cdc" name="fmstr_example_usb_cdc" dependency="middleware.baremetal.MIMXRT1015 middleware.usb.device_controller_ehci.MIMXRT1015 middleware.usb.device.controller.driver.MIMXRT1015 middleware.fmstr.MIMXRT1015 utility.debug_console_lite.MIMXRT1015 platform.utilities.assert_lite.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.common.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 component.lists.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.drivers.xip_device.MIMXRT1015 platform.drivers.xip_board.evkmimxrt1015.MIMXRT1015 middleware.fmstr.platform_gen32le.MIMXRT1015 platform.utilities.misc_utilities.MIMXRT1015 middleware.usb.device.ehci_config_header.MIMXRT1015 middleware.usb.device.common_header.MIMXRT1015 middleware.usb.phy.MIMXRT1015 component.osa.MIMXRT1015 middleware.usb.common_header.MIMXRT1015 CMSIS_Include_core_cm.MIMXRT1015 device.MIMXRT1015_system.MIMXRT1015" category="FreeMASTER_examples">
+  <example id="evkmimxrt1015_fmstr_example_usb_cdc" name="fmstr_example_usb_cdc" dependency="middleware.baremetal.MIMXRT1015 middleware.usb.device_controller_ehci.MIMXRT1015 middleware.usb.device.controller.driver.MIMXRT1015 middleware.fmstr.MIMXRT1015 utility.debug_console_lite.MIMXRT1015 platform.utilities.assert_lite.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.common.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 component.lists.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.drivers.xip_device.MIMXRT1015 platform.drivers.xip_board.evkmimxrt1015.MIMXRT1015 middleware.fmstr.platform_gen32le.MIMXRT1015 platform.utilities.misc_utilities.MIMXRT1015 middleware.usb.device.ehci_config_header.MIMXRT1015 middleware.usb.device.common_header.MIMXRT1015 middleware.usb.phy.MIMXRT1015 component.osa.MIMXRT1015 middleware.usb.common_header.MIMXRT1015 utility.str.MIMXRT1015 CMSIS_Include_core_cm.MIMXRT1015 device.MIMXRT1015_system.MIMXRT1015" category="FreeMASTER_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -70,7 +71,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -144,14 +145,6 @@
       <files mask="main.c"/>
     </source>
     <source path="source/board" project_relative_path="board" type="src">
-      <files mask="clock_config.c"/>
-      <files mask="board.c"/>
-    </source>
-    <source path="source/board" project_relative_path="board" type="c_include">
-      <files mask="clock_config.h"/>
-      <files mask="board.h"/>
-    </source>
-    <source path="source/board" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
     </source>
     <source path="source/board" project_relative_path="board" type="c_include">
@@ -180,6 +173,14 @@
     </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="source/board" project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="source/board" project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
     </source>
     <source path="source/example_data" project_relative_path="example_data" type="c_include">
       <files mask="data_example_pmp.h"/>

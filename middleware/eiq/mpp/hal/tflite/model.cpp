@@ -1,5 +1,5 @@
 /* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
-   Copyright 2021-2023 NXP
+   Copyright 2021-2024 NXP
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,6 +31,11 @@ limitations under the License.
 #include "model.h"
 #include "limits.h"
 
+/* trick to replace 'float division' with 'multiply by integer and bitshift'
+   integer is the inverse multiplied by factor to keep precision */
+#define FAST_DIV_BITS 16
+#define FAST_DIV_FACTOR (1 << FAST_DIV_BITS)
+
 /* TODO replace by dynamic object construction to allow multiple instances to run concurrently */
 static const tflite::Model* s_model = nullptr;
 static tflite::MicroInterpreter* s_interpreter = nullptr;
@@ -40,7 +45,7 @@ extern tflite::MicroOpResolver &MODEL_GetOpsResolver();
 // An area of memory to use for input, output, and intermediate arrays.
 // (Can be adjusted based on the model needs.)
 constexpr int kTensorArenaSize = HAL_TFLM_TENSOR_ARENA_SIZE_KB * 1024;
-static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(16);
+static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(HAL_TFLITE_BUFFER_ALIGN);
 
 status_t MODEL_Init(const void *model_data, int model_size)
 {
@@ -134,6 +139,8 @@ void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_
 {
     int size = dims->data[2] * dims->data[1] * dims->data[3];
     float tmp;
+    int inv_std = FAST_DIV_FACTOR / std;
+    int i_mean = mean;
     switch (type)
     {
         case MPP_TENSOR_TYPE_UINT8:
@@ -141,8 +148,8 @@ void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_
         case MPP_TENSOR_TYPE_INT8:
             for (int i = size - 1; i >= 0; i--)
             {
-                tmp = ((data[i] - SCHAR_MAX) / std) + mean;
-                reinterpret_cast<int8_t*>(data)[i] = (int8_t)tmp;
+                /* optimized form of: ((data[i] - SCHAR_MAX) / std) + mean */
+                data[i] = (int8_t) ((data[i] - SCHAR_MAX) * inv_std >> FAST_DIV_BITS) + i_mean;
             }
             break;
         case MPP_TENSOR_TYPE_FLOAT32:

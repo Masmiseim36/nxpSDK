@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -205,4 +204,67 @@ UCHAR           interface_number;
 
     /* Return completion status.  */
     return(status);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_class_video_control_request               PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in video control request function call. */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    video                                 Pointer to video class        */
+/*    request                               The request to issue          */
+/*    interface_index                       The interface index           */
+/*                                            0: VideoControl interface   */
+/*                                            1: VideoStreaming 1         */
+/*                                            N: VideoStreaming N         */
+/*    entity_id                             The terminal or unit ID       */
+/*    control_selector                      The control selector          */
+/*    parameter                             Pointer to parameter block    */
+/*    parameter_size                        Size of parameter block       */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Completion Status                                                   */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_video_control_request  Video control request         */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*    Video Class                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023        Yajun xia             Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_host_class_video_control_request(UX_HOST_CLASS_VIDEO *video,
+                                        UINT request, UCHAR interface_index,
+                                        UINT entity_id, UINT control_selector,
+                                        UCHAR *parameter, UINT parameter_size)
+{
+
+    /* Sanity checks.  */
+    if (video == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Call the video control request function.  */
+    return(_ux_host_class_video_control_request(video, request, interface_index,
+                                                entity_id, control_selector,
+                                                parameter, parameter_size));
 }

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ocotp_3a_20on_20chip_20one_2dtime_20programmable_20controller_2e',['OCOTP: On Chip One-Time Programmable controller.',['../a00051.html',1,'']]]
+  ['ocotp_3a_20on_20chip_20one_2dtime_20programmable_20controller_2e',['OCOTP: On Chip One-Time Programmable controller.',['../a00050.html',1,'']]]
 ];

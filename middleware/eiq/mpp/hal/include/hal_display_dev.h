@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP.
+ * Copyright 2020-2024 NXP.
  * NXP Confidential and Proprietary.
  * This software is owned or controlled by NXP and may only be used strictly in
  * accordance with the applicable license terms. By expressly accepting such
@@ -60,7 +60,7 @@ typedef struct _display_dev_operator
     hal_display_status_t (*deinit)(const display_dev_t *dev); /*!< deinitialize the dev */
     hal_display_status_t (*start)(display_dev_t *dev);        /*!< start the dev */
     hal_display_status_t (*stop)(display_dev_t *dev);         /*!< stop the dev */
-    hal_display_status_t (*blit)(const display_dev_t *dev, void *frame, int width, int height); /*!< blit a buffer to the dev */
+    hal_display_status_t (*blit)(const display_dev_t *dev, void *frame, int stripe); /*!< blit a buffer to the dev */
     hal_display_status_t (*get_buf_desc)(const display_dev_t *dev, hw_buf_desc_t *in_buf, mpp_memory_policy_t *policy); /*!< get buffer descriptors and policy */
 } display_dev_operator_t;
 
@@ -80,6 +80,8 @@ struct _display_dev_private_capability
     int top;                    /*!< top position */
     int right;                  /*!< right position */
     int bottom;                 /*!< bottom position */
+    int stripe_height;          /*!< stripe height (0 if stripe mode is off) */
+    bool stripe;                /*!< stripe mode */
     mpp_rotate_degree_t rotate; /*!< rotate degree */
     mpp_pixel_format_t format;  /*!< pixel format */
     int nbFrameBuffer;          /*!< number of input buffers */

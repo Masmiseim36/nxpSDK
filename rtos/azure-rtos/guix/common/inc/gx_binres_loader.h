@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_binres_loader.h                                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -46,6 +45,9 @@
 /*                                            defined macros to read      */
 /*                                            integer value,              */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            declared new prototypes,    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -84,6 +86,13 @@ UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEAD
 
 UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *header);
 UINT _gx_binres_language_header_load(GX_BINRES_DATA_INFO *info, GX_LANGUAGE_HEADER *header);
+UINT _gx_binres_one_pixelmap_load(GX_BINRES_DATA_INFO *info, GX_PIXELMAP **returned_pixelmap, USHORT *map_id);
+UINT _gx_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gx_binres_font_buffer_size_get(GX_BINRES_DATA_INFO *info, UINT *buffer_size, GX_BOOL reset_read_offset);
+UINT _gx_binres_one_font_load(GX_BINRES_DATA_INFO *info, GX_FONT **return_font);
+UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADER *header);
+UINT _gx_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
+UINT _gx_binres_standalone_resource_seek(GX_BINRES_DATA_INFO *info, UINT res_index);
 
 /* Define error checking shells for API services.  These are only referenced by the
    application.  */
@@ -95,6 +104,8 @@ UINT _gxe_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****return
 #endif
 UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table);
 UINT _gxe_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
+UINT _gxe_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gxe_binres_font_load(GX_UBYTE *root_address, UINT res_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 #endif
 

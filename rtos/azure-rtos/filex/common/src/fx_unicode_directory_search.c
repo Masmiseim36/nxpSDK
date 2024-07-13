@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -103,7 +102,7 @@ UCHAR _fx_unicode_search_name[FX_MAX_LONG_NAME_LEN * 2];
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_unicode_directory_search(FX_MEDIA *media_ptr, FX_DIR_ENTRY *entry_ptr,
-                                   UCHAR *short_name, ULONG short_name_buffer_length, 
+                                   UCHAR *short_name, ULONG short_name_buffer_length,
                                    UCHAR *unicode_name, ULONG *unicode_name_length, ULONG unicode_name_buffer_length)
 {
 
@@ -392,7 +391,7 @@ CHAR         *short_name_ptr;
             /* A match was found so copy the unicode name and length and return.  */
             /* Copy the length.  */
             *unicode_name_length =  unicode_search_length;
-            
+
             /* Check if the name fit in the buffer.  */
             if (unicode_name_buffer_length < (unicode_search_length + 1) * 2)
             {

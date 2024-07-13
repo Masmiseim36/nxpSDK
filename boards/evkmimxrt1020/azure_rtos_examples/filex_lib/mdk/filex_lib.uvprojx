@@ -347,7 +347,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1021DAG5A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc</IncludePath>
@@ -494,11 +494,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
@@ -582,26 +577,6 @@
               <FileName>fx_directory_entry_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_entry_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_entry_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_entry_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_entry_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_entry_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_free_search.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_free_search.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_unicode_entry_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_unicode_entry_write.c</FilePath>
             </File>
             <File>
               <FileName>fx_directory_first_entry_find.c</FileName>
@@ -949,11 +924,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_media_close_notify_set.c</FilePath>
             </File>
             <File>
-              <FileName>fx_media_exFAT_format.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_media_exFAT_format.c</FilePath>
-            </File>
-            <File>
               <FileName>fx_media_extended_space_available.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_media_extended_space_available.c</FilePath>
@@ -1207,101 +1177,6 @@
               <FileName>fx_utility_absolute_path_get.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_absolute_path_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_allocate_new_cluster.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_allocate_new_cluster.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_cache_prepare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_cache_prepare.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_cache_update.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_cache_update.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_flush.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_flush.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_free_cluster_find.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_free_cluster_find.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_start_sector_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_start_sector_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_cluster_free.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_free.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_cluster_state_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_state_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_cluster_state_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_state_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_geometry_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_geometry_check.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_name_hash_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_name_hash_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_size_calculate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_size_calculate.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_area_checksum_verify.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_checksum_verify.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_area_checksum_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_checksum_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_area_format.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_format.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_sector_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_sector_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_unicode_name_hash_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_unicode_name_hash_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_upcase_table.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_upcase_table.c</FilePath>
             </File>
             <File>
               <FileName>fx_utility_logical_sector_cache_entry_read.c</FileName>
@@ -1602,11 +1477,6 @@
               <FileName>fxe_media_close_notify_set.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fxe_media_close_notify_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>fxe_media_exFAT_format.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fxe_media_exFAT_format.c</FilePath>
             </File>
             <File>
               <FileName>fxe_media_extended_space_available.c</FileName>
@@ -2091,7 +1961,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1021DAG5A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc</IncludePath>
@@ -2238,11 +2108,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
@@ -2326,26 +2191,6 @@
               <FileName>fx_directory_entry_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_entry_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_entry_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_entry_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_entry_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_entry_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_free_search.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_free_search.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT_unicode_entry_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_unicode_entry_write.c</FilePath>
             </File>
             <File>
               <FileName>fx_directory_first_entry_find.c</FileName>
@@ -2693,11 +2538,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_media_close_notify_set.c</FilePath>
             </File>
             <File>
-              <FileName>fx_media_exFAT_format.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_media_exFAT_format.c</FilePath>
-            </File>
-            <File>
               <FileName>fx_media_extended_space_available.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_media_extended_space_available.c</FilePath>
@@ -2951,101 +2791,6 @@
               <FileName>fx_utility_absolute_path_get.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_absolute_path_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_allocate_new_cluster.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_allocate_new_cluster.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_cache_prepare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_cache_prepare.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_cache_update.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_cache_update.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_flush.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_flush.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_free_cluster_find.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_free_cluster_find.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_bitmap_start_sector_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_start_sector_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_cluster_free.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_free.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_cluster_state_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_state_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_cluster_state_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_state_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_geometry_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_geometry_check.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_name_hash_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_name_hash_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_size_calculate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_size_calculate.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_area_checksum_verify.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_checksum_verify.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_area_checksum_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_checksum_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_area_format.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_format.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_system_sector_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_sector_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_unicode_name_hash_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_unicode_name_hash_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility_exFAT_upcase_table.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_upcase_table.c</FilePath>
             </File>
             <File>
               <FileName>fx_utility_logical_sector_cache_entry_read.c</FileName>
@@ -3346,11 +3091,6 @@
               <FileName>fxe_media_close_notify_set.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fxe_media_close_notify_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>fxe_media_exFAT_format.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/src/fxe_media_exFAT_format.c</FilePath>
             </File>
             <File>
               <FileName>fxe_media_extended_space_available.c</FileName>

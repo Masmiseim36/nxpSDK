@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -30,9 +29,6 @@
 #include "fx_directory.h"
 #include "fx_file.h"
 #include "fx_utility.h"
-#ifdef FX_ENABLE_EXFAT
-#include "fx_directory_exFAT.h"
-#endif /* FX_ENABLE_EXFAT */
 #ifdef FX_ENABLE_FAULT_TOLERANT
 #include "fx_fault_tolerant.h"
 #endif /* FX_ENABLE_FAULT_TOLERANT */
@@ -422,16 +418,6 @@ UINT         j;
     new_dir_entry.fx_dir_entry_time =                old_dir_entry.fx_dir_entry_time;
     new_dir_entry.fx_dir_entry_date =                old_dir_entry.fx_dir_entry_date;
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        new_dir_entry.fx_dir_entry_dont_use_fat =           old_dir_entry.fx_dir_entry_dont_use_fat;
-        new_dir_entry.fx_dir_entry_type =                   old_dir_entry.fx_dir_entry_type;
-        new_dir_entry.fx_dir_entry_available_file_size =    old_dir_entry.fx_dir_entry_available_file_size;
-        new_dir_entry.fx_dir_entry_secondary_count =        old_dir_entry.fx_dir_entry_secondary_count;
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Is there a leading dot?  */
     if (new_dir_entry.fx_dir_entry_name[0] == '.')
@@ -448,19 +434,7 @@ UINT         j;
 #endif
 
     /* Now write out the directory entry.  */
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        status = _fx_directory_exFAT_entry_write(media_ptr, &new_dir_entry, UPDATE_FULL);
-    }
-    else
-    {
-#endif /* FX_ENABLE_EXFAT */
-        status =  _fx_directory_entry_write(media_ptr, &new_dir_entry);
-#ifdef FX_ENABLE_EXFAT
-    }
-#endif /* FX_ENABLE_EXFAT */
+    status =  _fx_directory_entry_write(media_ptr, &new_dir_entry);
 
     /* Determine if the write was successful.  */
     if (status != FX_SUCCESS)
@@ -482,19 +456,7 @@ UINT         j;
     old_dir_entry.fx_dir_entry_short_name[0] =  (CHAR)FX_DIR_ENTRY_FREE;
 
     /* Now wipe out the old directory entry.  */
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        status = _fx_directory_exFAT_entry_write(media_ptr, &old_dir_entry, UPDATE_DELETE);
-    }
-    else
-    {
-#endif /* FX_ENABLE_EXFAT */
-        status =  _fx_directory_entry_write(media_ptr, &old_dir_entry);
-#ifdef FX_ENABLE_EXFAT
-    }
-#endif /* FX_ENABLE_EXFAT */
+    status =  _fx_directory_entry_write(media_ptr, &old_dir_entry);
 
 #ifdef FX_ENABLE_FAULT_TOLERANT
     /* Check for a bad status.  */

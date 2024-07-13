@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_ccid_time_extension                PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -57,13 +56,15 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    USBX Source Code                                                    */
+/*    Application                                                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  10-31-2023     Yajun Xia                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_ccid_time_extension(UX_DEVICE_CLASS_CCID *ccid, ULONG slot, ULONG wt)
@@ -125,4 +126,56 @@ UINT                                                status;
 
     /* Return transfer status.  */
     return(status);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_ccid_icc_insert                   PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in CCID device bulk IN time_extension   */
+/*    send function.                                                      */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    ccid                                  Pointer to ccid instance      */
+/*    slot                                  Slot to extend time           */
+/*    wt                                    BWT (T=1) or WWT (T=0)        */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Completion Status                                                   */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_ccid_time_extension  CCID device bulk IN           */
+/*                                          time_extension send function. */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Yajun Xia                Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_device_class_ccid_time_extension(UX_DEVICE_CLASS_CCID *ccid, ULONG slot, ULONG wt)
+{
+
+    /* Sanity checks.  */
+    if ((ccid == UX_NULL) || (slot >= ccid -> ux_device_class_ccid_parameter.ux_device_class_ccid_max_n_slots))
+        return(UX_INVALID_PARAMETER);
+
+    /* Call actual function.  */
+    return(_ux_device_class_ccid_time_extension(ccid, slot, wt));
 }

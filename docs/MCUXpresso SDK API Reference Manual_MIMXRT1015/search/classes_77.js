@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wm8960_5fconfig',['wm8960_config',['../a00070.html#a00423',1,'']]]
+  ['wm8960_5fconfig',['wm8960_config',['../a00069.html#a00419',1,'']]]
 ];

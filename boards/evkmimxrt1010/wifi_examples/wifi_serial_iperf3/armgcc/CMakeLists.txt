@@ -45,10 +45,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../iperf_mwm.c"
 "${ProjDirPath}/../iperf_api.h"
+"${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"

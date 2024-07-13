@@ -1,6 +1,6 @@
 var a00052 =
 [
-    [ "_lpuart_config", "a00052.html#a00444", [
+    [ "_lpuart_config", "a00052.html#a00441", [
       [ "baudRate_Bps", "a00052.html#ae83107a96ce0e34e791aac795a4d04e4", null ],
       [ "parityMode", "a00052.html#a4571e45bcd0dc5e23ef6c9491f415636", null ],
       [ "dataBitsCount", "a00052.html#af78b1ec3d4ad983717c0ddb6fc90a7c3", null ],
@@ -17,20 +17,25 @@ var a00052 =
       [ "enableTx", "a00052.html#ab9558be2149e5a5730eff2d7bb1fdb28", null ],
       [ "enableRx", "a00052.html#ab5249f5987bbb04eb5ae5e9cfb6e5358", null ]
     ] ],
-    [ "_lpuart_transfer", "a00052.html#a00448", [
+    [ "_lpuart_transfer", "a00052.html#a00444", [
       [ "data", "a00052.html#a5f0e6f0be1311cf09de693c9a9ff9c70", null ],
       [ "rxData", "a00052.html#a5f2afdce66073c3fe87da416b90b1a81", null ],
+      [ "rxData16", "a00052.html#a20ed845fbe781fc1534f848c91192304", null ],
       [ "txData", "a00052.html#afcfd36888905a82337dde365b514e7a1", null ],
+      [ "txData16", "a00052.html#a33d28291e76ae914567c545ac77c23f3", null ],
       [ "dataSize", "a00052.html#aaa76dae4246c582cb20524f7c3b1be8b", null ]
     ] ],
-    [ "_lpuart_handle", "a00052.html#a00446", [
+    [ "_lpuart_handle", "a00052.html#a00443", [
       [ "txData", "a00052.html#a4c35a7a6399c868ddb1def8743c146ea", null ],
+      [ "txData16", "a00052.html#a89cf8c1ae5c313e8c8ff0ad323455d1c", null ],
       [ "txDataSize", "a00052.html#a9c7df82f52174be9a8d21f26eba8b63f", null ],
       [ "txDataSizeAll", "a00052.html#a2535ea3d50a0e1ebc64ef678792ca143", null ],
       [ "rxData", "a00052.html#a22f222c17b99b9528dabcc7bc2b2a54b", null ],
+      [ "rxData16", "a00052.html#ac790d57d21b84433eff88de5974cc3c6", null ],
       [ "rxDataSize", "a00052.html#acc516aa43ddb7eeec9288820af1ecd89", null ],
       [ "rxDataSizeAll", "a00052.html#ae577a09ca8d3b9eb73f90d308d842e79", null ],
       [ "rxRingBuffer", "a00052.html#a1100410b5924efeb1a55ec14e15d39f1", null ],
+      [ "rxRingBuffer16", "a00052.html#a6030b1f3d6d1f9c5a5c2e79c1494ee2f", null ],
       [ "rxRingBufferSize", "a00052.html#a08db8e558ba77d8c5ece4f60822f60c3", null ],
       [ "rxRingBufferHead", "a00052.html#a20aadb739214ab07e45cb9226132192e", null ],
       [ "rxRingBufferTail", "a00052.html#a2777d723511750a6b39f5169135a909f", null ],
@@ -38,7 +43,8 @@ var a00052 =
       [ "userData", "a00052.html#ae2ac81d3089f6b9b2772708b49502441", null ],
       [ "txState", "a00052.html#a15865b470edd53b37c580981c718f559", null ],
       [ "rxState", "a00052.html#ac113a769dffef4a25e7ecac12c412893", null ],
-      [ "isSevenDataBits", "a00052.html#a57511414024c9d31dfa339de4b2e1fd5", null ]
+      [ "isSevenDataBits", "a00052.html#a57511414024c9d31dfa339de4b2e1fd5", null ],
+      [ "is16bitData", "a00052.html#a6c52aa7c1abec91ff258c258a8fdda17", null ]
     ] ],
     [ "FSL_LPUART_DRIVER_VERSION", "a00052.html#ga0870fb824ece32739bd35f819f8c408e", null ],
     [ "UART_RETRY_TIMES", "a00052.html#gac0f88b67f77fd05f186a5ec940c340bd", null ],
@@ -149,6 +155,7 @@ var a00052 =
     [ "LPUART_EnableMatchAddress", "a00052.html#gaafe7ddb53960e2f4cd7ba2a01f00982e", null ],
     [ "LPUART_SetRxFifoWatermark", "a00052.html#ga134476bb857ca271e4b65158abf0bc43", null ],
     [ "LPUART_SetTxFifoWatermark", "a00052.html#ga387d3ebb8a051efaf6e5b547bb7bc0f8", null ],
+    [ "LPUART_TransferEnable16Bit", "a00052.html#ga97eaafd4eba9443bcc11212fee90705f", null ],
     [ "LPUART_GetStatusFlags", "a00052.html#gab83db963591b116f90daf3e24118cb09", null ],
     [ "LPUART_ClearStatusFlags", "a00052.html#gac6bcdb29d31a2addb8d80d98855ba147", null ],
     [ "LPUART_EnableInterrupts", "a00052.html#gab5998ebb0dc457f0864c84c16f83d745", null ],
@@ -166,7 +173,9 @@ var a00052 =
     [ "LPUART_GetTxFifoCount", "a00052.html#ga253fd7d22cc9380d92714dd40319474c", null ],
     [ "LPUART_SendAddress", "a00052.html#ga85a7dbe15a9f822847791cebe75d5394", null ],
     [ "LPUART_WriteBlocking", "a00052.html#ga2699958de62ff4832f95bc2dd8c454a5", null ],
+    [ "LPUART_WriteBlocking16bit", "a00052.html#ga01d146f5e1b46526d460c5f7aae3891d", null ],
     [ "LPUART_ReadBlocking", "a00052.html#gae76aba14dbfe94124082785e2c0ecd9d", null ],
+    [ "LPUART_ReadBlocking16bit", "a00052.html#ga9c95aa20caeceb3d709dd7851ce84eb1", null ],
     [ "LPUART_TransferCreateHandle", "a00052.html#ga10eae12610523a624c1016882f8dba5f", null ],
     [ "LPUART_TransferSendNonBlocking", "a00052.html#gafba986c473e5935131e63cb882cf26ff", null ],
     [ "LPUART_TransferStartRingBuffer", "a00052.html#ga5257b77491042af5913a8d91c66318e1", null ],

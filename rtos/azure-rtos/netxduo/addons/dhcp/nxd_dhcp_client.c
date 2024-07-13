@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -3552,7 +3551,7 @@ NX_DHCP_INTERFACE_RECORD *interface_record = NX_NULL;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nxe_dhcp_state_change_notify                       PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -3586,6 +3585,9 @@ NX_DHCP_INTERFACE_RECORD *interface_record = NX_NULL;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Haiqing Zhao             Modified comment(s), and      */
+/*                                            corrected caller checking,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nxe_dhcp_state_change_notify(NX_DHCP *dhcp_ptr, VOID (*dhcp_state_change_notify)(NX_DHCP *dhcp_ptr, UCHAR new_state))
@@ -3599,7 +3601,7 @@ UINT    status;
         return(NX_PTR_ERROR);
     
     /* Check for appropriate caller.  */
-    NX_THREADS_ONLY_CALLER_CHECKING
+    NX_INIT_AND_THREADS_CALLER_CHECKING
 
     /* Call actual DHCP notify service.  */
     status =  _nx_dhcp_state_change_notify(dhcp_ptr, dhcp_state_change_notify);
@@ -6992,7 +6994,7 @@ UINT            name_length;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_dhcp_client_send_with_zero_source_address       PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -7039,6 +7041,9 @@ UINT            name_length;
 /*                                            udp socket send and ip      */
 /*                                            header add,                 */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Tiejun Zhou              Modified comment(s),          */
+/*                                            supported random IP id,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _nx_dhcp_client_send_with_zero_source_address(NX_DHCP *dhcp_ptr, UINT iface_index, NX_PACKET *packet_ptr)
@@ -7177,7 +7182,11 @@ NX_IP_DRIVER    driver_request;
     ip_header_ptr -> nx_ip_header_word_0 =  (NX_IP_VERSION | socket_ptr -> nx_udp_socket_type_of_service | (0xFFFF & packet_ptr -> nx_packet_length));
 
     /* Build the second 32-bit word of the IP header.  */
+#ifdef NX_ENABLE_IP_ID_RANDOMIZATION
+    ip_header_ptr -> nx_ip_header_word_1 =  (((ULONG)NX_RAND()) << NX_SHIFT_BY_16) | socket_ptr -> nx_udp_socket_fragment_enable;
+#else
     ip_header_ptr -> nx_ip_header_word_1 =  (ip_ptr -> nx_ip_packet_id++ << NX_SHIFT_BY_16) | socket_ptr -> nx_udp_socket_fragment_enable;
+#endif /* NX_ENABLE_IP_ID_RANDOMIZATION */
 
     /* Build the third 32-bit word of the IP header.  */
     ip_header_ptr -> nx_ip_header_word_2 =  ((socket_ptr -> nx_udp_socket_time_to_live << NX_IP_TIME_TO_LIVE_SHIFT) | NX_IP_UDP);

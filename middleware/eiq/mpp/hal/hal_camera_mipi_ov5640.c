@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP.
+ * Copyright 2019-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,8 +14,6 @@
 #include "hal_debug.h"
 
 #if (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1)
-#include <FreeRTOS.h>
-#include <task.h>
 #include <stdlib.h>
 
 #include "board.h"
@@ -32,6 +30,7 @@
 #include "display_support.h"
 #include "fsl_common.h"
 #include "hal.h"
+#include "hal_os.h"
 #include "hal_utils.h"
 
 #if defined(__cplusplus)
@@ -287,7 +286,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatXYUV;
         cameraConfig.bytesPerPixel = 4;
         break;
-    case MPP_PIXEL_ARGB:
+    case MPP_PIXEL_BGRA:
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatXRGB8888;
         cameraConfig.bytesPerPixel = 4;
         break;
@@ -302,7 +301,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
     cameraConfig.controlFlags               = CAMERA_DEV_CONTROL_FLAGS;
     cameraConfig.framePerSec                = config->fps;
 
-    NVIC_SetPriority(CSI_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+    NVIC_SetPriority(CSI_IRQn, hal_get_max_syscall_prio() + 1);
     CAMERA_RECEIVER_Init(&cameraReceiver, &cameraConfig, HAL_CameraDev_MipiOv5640_ReceiverCallback, NULL);
 
     MipiOv5640_InitMipiCsi(config);
@@ -312,7 +311,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatYUYV;
         cameraConfig.bytesPerPixel = 2;
         break;
-    case MPP_PIXEL_ARGB:
+    case MPP_PIXEL_BGRA:
         cameraConfig.pixelFormat   = kVIDEO_PixelFormatRGB565;
         cameraConfig.bytesPerPixel = 2;
         break;
@@ -409,7 +408,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Stop(const camera_dev_t *dev)
     return ret;
 }
 
-hal_camera_status_t HAL_CameraDev_MipiOv5640_Dequeue(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format)
+hal_camera_status_t HAL_CameraDev_MipiOv5640_Dequeue(const camera_dev_t *dev, void **data, int *stripe)
 {
     hal_camera_status_t ret = kStatus_HAL_CameraSuccess;
     HAL_LOGD("++HAL_CameraDev_MipiOv5640_Dequeue\n");
@@ -427,7 +426,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Dequeue(const camera_dev_t *dev, vo
     }
 
     *data   = (void *)gCurrentBufferAddr;
-    *format = dev->config.format;
+    *stripe = 0;
     HAL_LOGD("--HAL_CameraDev_MipiOv5640_Dequeue\n");
     return ret;
 }

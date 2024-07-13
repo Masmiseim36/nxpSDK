@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -81,7 +80,7 @@ ULONG       command_length;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_host_class_storage_media_write                  PORTABLE C      */ 
-/*                                                           6.1.10       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -122,6 +121,9 @@ ULONG       command_length;
 /*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            added standalone support,   */
 /*                                            resulting in version 6.1.10 */
+/*  03-08-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            checked device removal,     */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_storage_media_write(UX_HOST_CLASS_STORAGE *storage, ULONG sector_start,
@@ -133,6 +135,8 @@ UINT            status;
         status = _ux_host_class_storage_read_write_run(storage, UX_FALSE,
                                     sector_start, sector_count, data_pointer);
     } while(status == UX_STATE_WAIT);
+    if (status < UX_STATE_IDLE)
+        return(UX_HOST_CLASS_INSTANCE_UNKNOWN);
     return(storage -> ux_host_class_storage_status);
 #else
 UINT            status;
@@ -166,3 +170,55 @@ UINT            media_retry;
 #endif
 }
 
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _ux_host_class_storage_media_write                  PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in storage media write function call.   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    storage                               Pointer to storage class      */
+/*    sector_start                          Starting sector               */
+/*    sector_count                          Number of sectors to write    */
+/*    data_pointer                          Pointer to data to write      */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                                              */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_storage_media_write     write storage media          */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Chaoqiong Xiao           Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT  _uxe_host_class_storage_media_write(UX_HOST_CLASS_STORAGE *storage, ULONG sector_start,
+                                    ULONG sector_count, UCHAR *data_pointer)
+{
+
+    /* Sanity check.  */
+    if (storage == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Invoke storage media write function.  */
+    return(_ux_host_class_storage_media_write(storage, sector_start, sector_count, data_pointer));
+}

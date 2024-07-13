@@ -1,6 +1,6 @@
 var a00043 =
 [
-    [ "serial_nor_config_option_t", "a00043.html#a00518", [
+    [ "serial_nor_config_option_t", "a00043.html#a00514", [
       [ "max_freq", "a00043.html#ab4a57d8d940d2087b5b08f65a975ccc9", null ],
       [ "misc_mode", "a00043.html#ab593fc2c81c4662c4ec2cff4a275f5fc", null ],
       [ "quad_mode_setting", "a00043.html#a7977532540c18274ae2a57e5e26db431", null ],
@@ -16,11 +16,11 @@ var a00043 =
       [ "drive_strength", "a00043.html#a6cc829e3d9e583348145d9d6e2d941b0", null ],
       [ "flash_connection", "a00043.html#a728346cea7f4a888b9dc7c3d9236929b", null ]
     ] ],
-    [ "flexspi_lut_seq_t", "a00043.html#a00433", [
+    [ "flexspi_lut_seq_t", "a00043.html#a00430", [
       [ "seqNum", "a00043.html#aff1517c9311e2e44312c6dd8f06cbdb0", null ],
       [ "seqId", "a00043.html#ab372af7ca830c7dde741839c8c3216d4", null ]
     ] ],
-    [ "flexspi_mem_config_t", "a00043.html#a00434", [
+    [ "flexspi_mem_config_t", "a00043.html#a00431", [
       [ "tag", "a00043.html#a99319a06c3809df78d7cb6fecf26bc19", null ],
       [ "version", "a00043.html#aa49ced79294c5520ed442d6260b5b821", null ],
       [ "reserved0", "a00043.html#ab4cea73af30b9cfea1f1cf57304e7f9f", null ],
@@ -62,7 +62,7 @@ var a00043 =
       [ "lutCustomSeq", "a00043.html#a37f516a14df0cb7a31e66e261da310f3", null ],
       [ "reserved4", "a00043.html#a1f47195d49377256398680d90d916e70", null ]
     ] ],
-    [ "flexspi_nor_config_t", "a00043.html#a00435", [
+    [ "flexspi_nor_config_t", "a00043.html#a00432", [
       [ "memConfig", "a00043.html#a78513beda2ef037851178bac828e30f7", null ],
       [ "pageSize", "a00043.html#a778ff87c62d497a46f5eba64a4319a37", null ],
       [ "sectorSize", "a00043.html#a6f924e5e21868b8371553a03f1c85e23", null ],
@@ -77,7 +77,7 @@ var a00043 =
       [ "blockSize", "a00043.html#aec6195ce139affc45cf05ce4be42c4ea", null ],
       [ "reserve2", "a00043.html#adc8bd60af94a8c51a3bd5edc56803658", null ]
     ] ],
-    [ "flexspi_xfer_t", "a00043.html#a00437", [
+    [ "flexspi_xfer_t", "a00043.html#a00434", [
       [ "operation", "a00043.html#a96151c62f0647e5a512c8877d71283c2", null ],
       [ "baseAddress", "a00043.html#a4de700520c744c3cf8e800e9043ee225", null ],
       [ "seqId", "a00043.html#a02b7b0481bb77341a8fbc33ae1469cd3", null ],

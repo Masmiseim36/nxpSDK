@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */ 
 /*                                                                        */ 
 /*    ux_host_class_cdc_ecm.h                             PORTABLE C      */ 
-/*                                                           6.2.0        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -60,6 +59,9 @@
 /*  10-31-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            supported NX packet chain,  */
 /*                                            resulting in version 6.2.0  */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            optimized USB descriptors,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -311,14 +313,15 @@ typedef struct UX_HOST_CLASS_CDC_ECM_STRUCT
 
 typedef struct UX_HOST_CLASS_ECM_INTERFACE_DESCRIPTOR_STRUCT
 {
-    ULONG           bFunctionLength;
-    ULONG           bDescriptorType;
-    ULONG           bDescriptorSubtype;
-    ULONG           iMACAddress;
+    UCHAR           bFunctionLength;
+    UCHAR           bDescriptorType;
+    UCHAR           bDescriptorSubtype;
+    UCHAR           iMACAddress;
     ULONG           bmEthernetStatistics;
-    ULONG           wMaxSegmentSize;
-    ULONG           wNumberMCFilters;
-    ULONG           bNumberPowerFilters;
+    USHORT          wMaxSegmentSize;
+    USHORT          wNumberMCFilters;
+    UCHAR           bNumberPowerFilters;
+    UCHAR           _align_size[3];
 } UX_HOST_CLASS_ECM_INTERFACE_DESCRIPTOR;
 
 /* Define CDC ECM Class function prototypes.  */

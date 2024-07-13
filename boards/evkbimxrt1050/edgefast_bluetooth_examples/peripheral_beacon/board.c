@@ -254,8 +254,8 @@ void BOARD_ConfigMPU(void)
     extern uint32_t Image$$RW_m_ncache_unused$$ZI$$Limit[];
     uint32_t nonCacheStart = (uint32_t)Image$$RW_m_ncache$$Base;
     uint32_t size          = ((uint32_t)Image$$RW_m_ncache_unused$$Base == nonCacheStart) ?
-                        0 :
-                        ((uint32_t)Image$$RW_m_ncache_unused$$ZI$$Limit - nonCacheStart);
+                                 0 :
+                                 ((uint32_t)Image$$RW_m_ncache_unused$$ZI$$Limit - nonCacheStart);
 #elif defined(__MCUXPRESSO)
     extern uint32_t __base_NCACHE_REGION;
     extern uint32_t __top_NCACHE_REGION;
@@ -313,7 +313,7 @@ void BOARD_ConfigMPU(void)
      *     1             1           1           1              Normal             shareable       outer and inner write
      * back write/read acllocate
      *     2             x           0           0              Device              not shareable
-     *  Above are normal use settings, if your want to see more details or want to config different inner/outter cache
+     *  Above are normal use settings, if your want to see more details or want to config different inner/outer cache
      * policy.
      *  please refer to Table 4-55 /4-56 in arm cortex-M7 generic user guide <dui0646b_cortex_m7_dgug.pdf>
      * param SubRegionDisable  Sub-region disable field. 0=sub-region is enabled, 1=sub-region is disabled.
@@ -360,9 +360,19 @@ void BOARD_ConfigMPU(void)
     MPU->RBAR = ARM_MPU_RBAR(7, 0x20200000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_256KB);
 
+    /* When cache is enabled, Cortex-M7 core may perform speculative accesses
+     * to those memory with Normal type, even software doesn't require explicitly.
+     * So, must not set SDRAM region as Normal type for those cases whose SDRAM
+     * is not initialized, otherwise there may be unpredictable bus hang and finally
+     * system crach.
+     * More details about speculative accesses can be seen on Arm errata 1013783-B.
+     * Here, SKIP_SYSCLK_INIT is used to determine if SDRAM is initialized(accessable).
+    */
+#ifdef SKIP_SYSCLK_INIT
     /* Region 8 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(8, 0x80000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
+#endif
 
     while ((size >> i) > 0x1U)
     {
@@ -386,7 +396,7 @@ void BOARD_ConfigMPU(void)
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_4MB);
 
     /* Enable MPU */
-    ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
+    ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk | MPU_CTRL_HFNMIENA_Msk);
 
     /* Enable I cache and D cache */
     SCB_EnableDCache();

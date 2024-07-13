@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_cdc_acm_bulkout_thread             PORTABLE C      */
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -83,6 +82,11 @@
 /*                                            fixed parameter/variable    */
 /*                                            names conflict C++ keyword, */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added zero copy support,    */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _ux_device_class_cdc_acm_bulkout_thread(ULONG cdc_acm_class)
@@ -125,6 +129,13 @@ UINT                            status;
         /* As long as the device is in the CONFIGURED state.  */
         while (device -> ux_slave_device_state == UX_DEVICE_CONFIGURED)
         {
+
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+
+            /* Use class managed buffer.  */
+            transfer_request -> ux_slave_transfer_request_data_pointer =
+                                UX_DEVICE_CLASS_CDC_ACM_READ_BUFFER(cdc_acm);
+#endif
 
             /* Send the request to the device controller.  */
             status =  _ux_device_stack_transfer_request(transfer_request, endpoint -> ux_slave_endpoint_descriptor.wMaxPacketSize,

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -104,6 +103,10 @@ UX_HOST_CLASS_CDC_ECM_NX_ETHERNET_POOL_ALLOCSIZE_ASSERT
 /*                                            deprecated ECM pool option, */
 /*                                            supported NX packet chain,  */
 /*                                            resulting in version 6.2.0  */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            rejected the CDC ECM data   */
+/*                                            interface not next to ctrl, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_cdc_ecm_activate(UX_HOST_CLASS_COMMAND *command)
@@ -163,8 +166,13 @@ UX_INTERFACE                        *cur_interface;
         if (cur_interface -> ux_interface_descriptor.bInterfaceClass == UX_HOST_CLASS_CDC_CONTROL_CLASS)
         {
 
-            /* Save it.  */
-            control_interface =  cur_interface;
+            /* Is this the right one before current interface?  */
+            if (cur_interface -> ux_interface_next_interface == interface_ptr)
+            {
+
+                /* Save it.  */
+                control_interface =  cur_interface;
+            }
         }
 
         /* Advance current interface.  */

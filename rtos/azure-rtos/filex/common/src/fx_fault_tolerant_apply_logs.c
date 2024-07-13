@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -61,10 +60,8 @@
 /*    _fx_utility_32_unsigned_read          Read a ULONG from memory      */
 /*    _fx_utility_64_unsigned_read          Read a ULONG64 from memory    */
 /*    _fx_utility_FAT_entry_write           Write a FAT entry             */
-/*    _fx_utility_exFAT_cluster_state_set   Set state of exFAT cluster    */
 /*    _fx_fault_tolerant_cleanup_FAT_chain  Cleanup FAT chain             */
 /*    memcpy                                Memory Copy                   */
-/*    _fx_utility_exFAT_bitmap_flush        Flush exFAT allocation bitmap */
 /*    _fx_utility_FAT_flush                 Flush written FAT entries     */
 /*    _fx_utility_logical_sector_flush      Flush written logical sectors */
 /*                                                                        */
@@ -102,12 +99,6 @@ FX_FAULT_TOLERANT_FAT_CHAIN   *FAT_chain;
 FX_FAULT_TOLERANT_LOG_CONTENT *log_content;
 FX_FAULT_TOLERANT_FAT_LOG     *fat_log;
 FX_FAULT_TOLERANT_DIR_LOG     *dir_log;
-#ifdef FX_ENABLE_EXFAT
-FX_FAULT_TOLERANT_BITMAP_LOG  *bitmap_log;
-ULONG                          current_cluster;
-ULONG                          head_cluster;
-ULONG                          tail_cluster;
-#endif /* FX_ENABLE_EXFAT */
 
     /* Set log header, FAT chain and log content pointer. */
     log_header = (FX_FAULT_TOLERANT_LOG_HEADER *)media_ptr -> fx_media_fault_tolerant_memory_buffer;
@@ -172,26 +163,6 @@ ULONG                          tail_cluster;
             }
             break;
 
-#ifdef FX_ENABLE_EXFAT
-        case FX_FAULT_TOLERANT_BITMAP_LOG_TYPE:
-
-            /* This is a bitmap log. */
-            bitmap_log = (FX_FAULT_TOLERANT_BITMAP_LOG *)current_ptr;
-
-            /* Set bitmap entry. */
-            status = _fx_utility_exFAT_cluster_state_set(media_ptr,
-                                                         _fx_utility_32_unsigned_read((UCHAR *)&bitmap_log -> fx_fault_tolerant_bitmap_log_cluster),
-                                                         (UCHAR)_fx_utility_32_unsigned_read((UCHAR *)&bitmap_log -> fx_fault_tolerant_bitmap_log_value));
-
-            if (status != FX_SUCCESS)
-            {
-
-                /* Return the error status.  */
-                return(status);
-            }
-            break;
-
-#endif /* FX_ENABLE_EXFAT */
         case FX_FAULT_TOLERANT_DIR_LOG_TYPE:
 
             /* This is a DIR log. */
@@ -260,47 +231,13 @@ ULONG                          tail_cluster;
     {
 
         /* Free old link of FAT. */
-#ifdef FX_ENABLE_EXFAT
-        if (FAT_chain -> fx_fault_tolerant_FAT_chain_flag & FX_FAULT_TOLERANT_FLAG_BITMAP_USED)
+        status = _fx_fault_tolerant_cleanup_FAT_chain(media_ptr, FX_FAULT_TOLERANT_FAT_CHAIN_CLEANUP);
+        if (status != FX_SUCCESS)
         {
 
-            /* Process FAT chain. */
-            /* Get head and tail cluster from FAT chain. */
-            head_cluster = _fx_utility_32_unsigned_read((UCHAR *)&FAT_chain -> fx_fault_tolerant_FAT_chain_head_original);
-            tail_cluster = _fx_utility_32_unsigned_read((UCHAR *)&FAT_chain -> fx_fault_tolerant_FAT_chain_insertion_back);
-
-            if ((head_cluster >= FX_FAT_ENTRY_START) && (head_cluster < media_ptr -> fx_media_fat_reserved))
-            {
-                for (current_cluster = head_cluster; current_cluster < tail_cluster; current_cluster++)
-                {
-
-                    /* Free bitmap. */
-                    status = _fx_utility_exFAT_cluster_state_set(media_ptr, current_cluster, FX_EXFAT_BITMAP_CLUSTER_FREE);
-                    if (status != FX_SUCCESS)
-                    {
-
-                        /* Return the error status.  */
-                        return(status);
-                    }
-
-                    /* Increase the available clusters in the media control block. */
-                    media_ptr -> fx_media_available_clusters++;
-                }
-            }
+            /* Return the error status.  */
+            return(status);
         }
-        else
-        {
-#endif /* FX_ENABLE_EXFAT */
-            status = _fx_fault_tolerant_cleanup_FAT_chain(media_ptr, FX_FAULT_TOLERANT_FAT_CHAIN_CLEANUP);
-            if (status != FX_SUCCESS)
-            {
-
-                /* Return the error status.  */
-                return(status);
-            }
-#ifdef FX_ENABLE_EXFAT
-        }
-#endif /* FX_ENABLE_EXFAT */
     }
 
     /* Flush the internal logical sector cache.  */
@@ -316,14 +253,6 @@ ULONG                          tail_cluster;
 
     /* Flush FAT table. */
 #ifdef FX_FAULT_TOLERANT
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        /* Flush exFAT bitmap.  */
-        _fx_utility_exFAT_bitmap_flush(media_ptr);
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Ensure the new FAT chain is properly written to the media.  */
 

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -93,16 +92,8 @@ FX_FAULT_TOLERANT_FAT_CHAIN *FAT_chain;
     /* Set FAT chain pointer. */
     FAT_chain = (FX_FAULT_TOLERANT_FAT_CHAIN *)(media_ptr -> fx_media_fault_tolerant_memory_buffer + FX_FAULT_TOLERANT_FAT_CHAIN_OFFSET);
 
-#ifdef FX_ENABLE_EXFAT
-    /* Check flag for bitmap. */
-    if (use_bitmap == FX_TRUE)
-    {
-        flag |= FX_FAULT_TOLERANT_FLAG_BITMAP_USED;
-    }
-#else
     /* Parameters not used. Avoid compiler warnings. */
     FX_PARAMETER_NOT_USED(use_bitmap);
-#endif /* FX_ENABLE_EXFAT */
 
 
     /* Reset checksum first. */

@@ -352,7 +352,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -365,6 +364,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1444,7 +1444,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -1457,6 +1456,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2536,7 +2536,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -2549,6 +2548,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3626,7 +3626,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -3639,6 +3638,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4718,7 +4718,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -4731,6 +4730,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5810,7 +5810,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -5823,6 +5822,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6708,12 +6708,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6724,6 +6718,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

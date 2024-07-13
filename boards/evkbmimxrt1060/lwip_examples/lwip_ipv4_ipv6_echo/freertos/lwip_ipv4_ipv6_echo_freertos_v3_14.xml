@@ -88,7 +88,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -149,14 +149,6 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
       <files mask="build_flexspi_nor_debug.bat"/>
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
@@ -201,27 +193,15 @@
       <files mask="readme.md"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT1062/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1062xxxxx_ram.icf"/>
-      <files mask="MIMXRT1062xxxxx_sdram.icf"/>
       <files mask="MIMXRT1062xxxxx_flexspi_nor.icf"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1062/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1062xxxxx_ram.scf"/>
-      <files mask="MIMXRT1062xxxxx_sdram.scf"/>
       <files mask="MIMXRT1062xxxxx_flexspi_nor.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1062xxxxx_ram.ld"/>
-      <files mask="MIMXRT1062xxxxx_sdram.ld"/>
       <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>
     </source>
-    <source path="iar" project_relative_path="evkbmimxrt1060" type="other" toolchain="iar">
-      <files mask="evkbmimxrt1060.mac"/>
-      <files mask="evkbmimxrt1060_sdram_init.mac"/>
-    </source>
     <source path="mdk" project_relative_path="evkbmimxrt1060" type="configuration" toolchain="mdk">
-      <files mask="evkbmimxrt1060_ram.ini"/>
-      <files mask="evkbmimxrt1060_sdram_init.ini"/>
       <files mask="evkbmimxrt1060_flexspi_nor.ini"/>
     </source>
   </example>

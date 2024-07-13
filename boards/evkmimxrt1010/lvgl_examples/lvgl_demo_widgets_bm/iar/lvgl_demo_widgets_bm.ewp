@@ -355,7 +355,6 @@
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
@@ -369,6 +368,7 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/template</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1449,7 +1449,6 @@
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
@@ -1463,6 +1462,7 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/template</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2241,7 +2241,7 @@
     </file>
   </group>
   <group>
-    <name>lcd</name>
+    <name>lcdc</name>
     <file>
       <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.h</name>
     </file>
@@ -2351,12 +2351,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2367,6 +2361,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

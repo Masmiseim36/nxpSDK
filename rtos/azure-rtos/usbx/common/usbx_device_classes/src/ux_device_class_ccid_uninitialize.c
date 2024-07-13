@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_ccid_uninitialize                  PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -66,6 +65,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_ccid_uninitialize(UX_SLAVE_CLASS_COMMAND *command)
@@ -103,6 +106,11 @@ ULONG                                   i;
         _ux_device_mutex_delete(&ccid -> ux_device_class_ccid_mutex);
         _ux_device_semaphore_delete(&ccid -> ux_device_class_ccid_notify_semaphore);
         _ux_device_mutex_delete(&ccid -> ux_device_class_ccid_response_mutex);
+#endif
+
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+        /* Free the bulk in endpoint memory.  */
+        _ux_utility_memory_free(ccid -> ux_device_class_ccid_endpoint_buffer);
 #endif
 
         /* Free instance memory.  */

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qtmr_3a_20quad_20timer_20driver',['QTMR: Quad Timer Driver',['../a00054.html',1,'']]]
+  ['qtmr_3a_20quad_20timer_20driver',['QTMR: Quad Timer Driver',['../a00053.html',1,'']]]
 ];

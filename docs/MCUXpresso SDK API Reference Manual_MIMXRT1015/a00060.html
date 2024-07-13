@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SGTL5000 Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Shell</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,423 +102,500 @@ $(document).ready(function(){initNavTree('a00060.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SGTL5000 Driver<div class="ingroups"><a class="el" href="a00249.html">CODEC Driver</a></div></div>  </div>
+<div class="title">Shell</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The sgtl5000 driver provides a codec control interface. </p>
-<table class="memberdecls">
+<p>This section describes the programming interface of the Shell middleware.</p>
+<p>Shell controls MCUs by commands via the specified communication peripheral based on the debug console driver.</p>
+<h1><a class="anchor" id="ShellFunGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="ShellInit"></a>
+Initialization</h2>
+<p>To initialize the Shell middleware, call the <span style="color:red"><a class="el" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a></span> function with these parameters. This function automatically enables the middleware.</p>
+<div class="fragment"><div class="line"><a class="code" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> <a class="code" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(<a class="code" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="code" href="a00056.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <span class="keywordtype">char</span> *prompt);</div>
+</div><!-- fragment --><p>Then, after the initialization was successful, call a command to control MCUs.</p>
+<p>This example shows how to call the <a class="el" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a> given the user configuration structure.</p>
+<div class="fragment"><div class="line"><a class="code" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="ShellAdvFeature"></a>
+Advanced Feature</h2>
+<ul>
+<li>Support to get a character from standard input devices. <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_GetChar(shell_context_handle_t *shellContextHandle, uint8_t *ch);</div>
+</div><!-- fragment --></li>
+</ul>
+<div style="width:800px;"> <table class="doxtable">
+<tr>
+<th>Commands  </th><th>Description  </th></tr>
+<tr>
+<td>help  </td><td>List all the registered commands.   </td></tr>
+<tr>
+<td>exit  </td><td>Exit program.   </td></tr>
+</table>
+</div><h2><a class="anchor" id="SHELLOper"></a>
+Shell Operation</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+<div class="line"><a class="code" href="a00060.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a>((s_shellHandle);</div>
+</div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00394"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a00394">_sgtl_audio_format</a></td></tr>
-<tr class="memdesc:a00394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio format configuration.  <a href="a00060.html#a00394">More...</a><br/></td></tr>
-<tr class="separator:a00394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00395"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a00395">_sgtl_config</a></td></tr>
-<tr class="memdesc:a00395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initailize structure of sgtl5000.  <a href="a00060.html#a00395">More...</a><br/></td></tr>
-<tr class="separator:a00395"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00396"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a00396">_sgtl_handle</a></td></tr>
-<tr class="memdesc:a00396"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL codec handler.  <a href="a00060.html#a00396">More...</a><br/></td></tr>
-<tr class="separator:a00396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00393"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a00393">_shell_command</a></td></tr>
+<tr class="memdesc:a00393"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00060.html#a00393">More...</a><br/></td></tr>
+<tr class="separator:a00393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gab0aa3e54cd2934b67b9882957456c391"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gab0aa3e54cd2934b67b9882957456c391">CHIP_ID</a>&#160;&#160;&#160;0x0000U</td></tr>
-<tr class="memdesc:gab0aa3e54cd2934b67b9882957456c391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the register address of sgtl5000.  <a href="#gab0aa3e54cd2934b67b9882957456c391">More...</a><br/></td></tr>
-<tr class="separator:gab0aa3e54cd2934b67b9882957456c391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b4c16e15a52d1a940e4d47bf3574752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b4c16e15a52d1a940e4d47bf3574752"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga5b4c16e15a52d1a940e4d47bf3574752">SGTL5000_HEADPHONE_MAX_VOLUME_VALUE</a>&#160;&#160;&#160;0x7FU</td></tr>
-<tr class="memdesc:ga5b4c16e15a52d1a940e4d47bf3574752"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL5000 volume setting range. <br/></td></tr>
-<tr class="separator:ga5b4c16e15a52d1a940e4d47bf3574752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58ceb20f920b2b006c74eeeae992830a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga58ceb20f920b2b006c74eeeae992830a">SGTL5000_I2C_ADDR</a>&#160;&#160;&#160;0x0A</td></tr>
-<tr class="memdesc:ga58ceb20f920b2b006c74eeeae992830a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL5000 I2C address.  <a href="#ga58ceb20f920b2b006c74eeeae992830a">More...</a><br/></td></tr>
-<tr class="separator:ga58ceb20f920b2b006c74eeeae992830a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a006451f9e990a4d3255ed7265ff1ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a006451f9e990a4d3255ed7265ff1ad"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga5a006451f9e990a4d3255ed7265ff1ad">SGTL_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00014.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a></td></tr>
-<tr class="memdesc:ga5a006451f9e990a4d3255ed7265ff1ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl handle size <br/></td></tr>
-<tr class="separator:ga5a006451f9e990a4d3255ed7265ff1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bf82c8b0e6415457b6f42f50af4230d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7bf82c8b0e6415457b6f42f50af4230d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga7bf82c8b0e6415457b6f42f50af4230d">SGTL_I2C_BITRATE</a>&#160;&#160;&#160;100000U</td></tr>
-<tr class="memdesc:ga7bf82c8b0e6415457b6f42f50af4230d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl i2c baudrate <br/></td></tr>
-<tr class="separator:ga7bf82c8b0e6415457b6f42f50af4230d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">SHELL_NON_BLOCKING_MODE</a>&#160;&#160;&#160;<a class="el" href="a00056.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td></tr>
+<tr class="memdesc:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether use non-blocking mode.  <a href="#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">More...</a><br/></td></tr>
+<tr class="separator:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga30882f4b5fc99cbc21459cc960ef9ffe">SHELL_AUTO_COMPLETE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set on/off auto-complete feature.  <a href="#ga30882f4b5fc99cbc21459cc960ef9ffe">More...</a><br/></td></tr>
+<tr class="separator:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf98219b0fb886040896b83966903a135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="memdesc:gaf98219b0fb886040896b83966903a135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set console buffer size.  <a href="#gaf98219b0fb886040896b83966903a135">More...</a><br/></td></tr>
+<tr class="separator:gaf98219b0fb886040896b83966903a135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga0800d9fb741c785d0601f0c3d7125f40">SHELL_MAX_ARGS</a>&#160;&#160;&#160;(8U)</td></tr>
+<tr class="memdesc:ga0800d9fb741c785d0601f0c3d7125f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum arguments in command.  <a href="#ga0800d9fb741c785d0601f0c3d7125f40">More...</a><br/></td></tr>
+<tr class="separator:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4362aa35752c9abf77387a237faaaea5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="memdesc:ga4362aa35752c9abf77387a237faaaea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum count of history commands.  <a href="#ga4362aa35752c9abf77387a237faaaea5">More...</a><br/></td></tr>
+<tr class="separator:ga4362aa35752c9abf77387a237faaaea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c32b818330b7a6b62a5b819703e5e8f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga8c32b818330b7a6b62a5b819703e5e8f">SHELL_IGNORE_PARAMETER_COUNT</a>&#160;&#160;&#160;(0xFF)</td></tr>
+<tr class="memdesc:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to bypass arguments check. <br/></td></tr>
+<tr class="separator:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a></td></tr>
+<tr class="memdesc:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle size of the shell module.  <a href="#gaa4c15d7595f7cf7ee5f837a02cbdf574">More...</a><br/></td></tr>
+<tr class="separator:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga100ef8e4a639c03682d84fb981ba235b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga100ef8e4a639c03682d84fb981ba235b">SHELL_USE_COMMON_TASK</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga100ef8e4a639c03682d84fb981ba235b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to determine whether use common task.  <a href="#ga100ef8e4a639c03682d84fb981ba235b">More...</a><br/></td></tr>
+<tr class="separator:ga100ef8e4a639c03682d84fb981ba235b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga5b98f71ea7bd89ef344cac14aa79a1e3">SHELL_TASK_PRIORITY</a>&#160;&#160;&#160;(2U)</td></tr>
+<tr class="memdesc:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task priority.  <a href="#ga5b98f71ea7bd89ef344cac14aa79a1e3">More...</a><br/></td></tr>
+<tr class="separator:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga416667c8e6b960d2c1ec518b41a06d62">SHELL_TASK_STACK_SIZE</a>&#160;&#160;&#160;(1000U)</td></tr>
+<tr class="memdesc:ga416667c8e6b960d2c1ec518b41a06d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task stack size.  <a href="#ga416667c8e6b960d2c1ec518b41a06d62">More...</a><br/></td></tr>
+<tr class="separator:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4afabd0995de8a6d4c255c03e6ccc42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gac4afabd0995de8a6d4c255c03e6ccc42">SHELL_PRINT_COPYRIGHT</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:gac4afabd0995de8a6d4c255c03e6ccc42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether print copyright.  <a href="#gac4afabd0995de8a6d4c255c03e6ccc42">More...</a><br/></td></tr>
+<tr class="separator:gac4afabd0995de8a6d4c255c03e6ccc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00060.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
+<tr class="memdesc:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell handle.  <a href="#gafdb2c68b2d83d459fc196ab0f58d7ab3">More...</a><br/></td></tr>
+<tr class="separator:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(command, descriptor, callback, paramCount)</td></tr>
+<tr class="memdesc:gacd1f7ee25cd791efee6a45e753ec9824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell command structure.  <a href="#gacd1f7ee25cd791efee6a45e753ec9824">More...</a><br/></td></tr>
+<tr class="separator:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(command)&#160;&#160;&#160;&amp;g_shellCommand##command</td></tr>
+<tr class="memdesc:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the shell command pointer.  <a href="#ga16dd6cfbd9db7dafdaa802eda58564b5">More...</a><br/></td></tr>
+<tr class="separator:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga8daa03b90ec34beec5c4a9bcc5b0cbd3"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00060.html#ga8f64b804a9c2ab9412f5a2aa348e0795">_sgtl5000_module</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a></td></tr>
-<tr class="memdesc:ga8daa03b90ec34beec5c4a9bcc5b0cbd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modules in Sgtl5000 board.  <a href="#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">More...</a><br/></td></tr>
-<tr class="separator:ga8daa03b90ec34beec5c4a9bcc5b0cbd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d97f5b5552db956cdeb7ad0ec70efeb"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00060.html#ga2f39070b1aca54ecf0d46af5cda78cc1">_sgtl_route</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga7d97f5b5552db956cdeb7ad0ec70efeb">sgtl_route_t</a></td></tr>
-<tr class="memdesc:ga7d97f5b5552db956cdeb7ad0ec70efeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sgtl5000 data route.  <a href="#ga7d97f5b5552db956cdeb7ad0ec70efeb">More...</a><br/></td></tr>
-<tr class="separator:ga7d97f5b5552db956cdeb7ad0ec70efeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb24e1c0a6f4f885b77508c575382082"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00060.html#ga8edcd60c410ff680100e07e7badbe7b3">_sgtl_protocol</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gabb24e1c0a6f4f885b77508c575382082">sgtl_protocol_t</a></td></tr>
-<tr class="memdesc:gabb24e1c0a6f4f885b77508c575382082"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="#gabb24e1c0a6f4f885b77508c575382082">More...</a><br/></td></tr>
-<tr class="separator:gabb24e1c0a6f4f885b77508c575382082"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa442de703d57f173c868a86709eca130"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa442de703d57f173c868a86709eca130"></a>
-typedef enum <a class="el" href="a00060.html#ga4afcde26974cb123a18b38138dffbb71">_sgtl_sclk_edge</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaa442de703d57f173c868a86709eca130">sgtl_sclk_edge_t</a></td></tr>
-<tr class="memdesc:gaa442de703d57f173c868a86709eca130"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL SCLK valid edge. <br/></td></tr>
-<tr class="separator:gaa442de703d57f173c868a86709eca130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac39b9431fec36a8a0d2b18f44213b5c1"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00060.html#a00394">_sgtl_audio_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gac39b9431fec36a8a0d2b18f44213b5c1">sgtl_audio_format_t</a></td></tr>
-<tr class="memdesc:gac39b9431fec36a8a0d2b18f44213b5c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio format configuration.  <a href="#gac39b9431fec36a8a0d2b18f44213b5c1">More...</a><br/></td></tr>
-<tr class="separator:gac39b9431fec36a8a0d2b18f44213b5c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04f368cf5c75e66ff28894ec9194a2f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04f368cf5c75e66ff28894ec9194a2f8"></a>
-typedef struct <a class="el" href="a00060.html#a00395">_sgtl_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga04f368cf5c75e66ff28894ec9194a2f8">sgtl_config_t</a></td></tr>
-<tr class="memdesc:ga04f368cf5c75e66ff28894ec9194a2f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initailize structure of sgtl5000. <br/></td></tr>
-<tr class="separator:ga04f368cf5c75e66ff28894ec9194a2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9460fe6fb4321e52ff2069361a6f8a12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9460fe6fb4321e52ff2069361a6f8a12"></a>
-typedef struct <a class="el" href="a00060.html#a00396">_sgtl_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a></td></tr>
-<tr class="memdesc:ga9460fe6fb4321e52ff2069361a6f8a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL codec handler. <br/></td></tr>
-<tr class="separator:ga9460fe6fb4321e52ff2069361a6f8a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga404a8f9575fa7e73f64e24e4a1876195"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga404a8f9575fa7e73f64e24e4a1876195"></a>
+typedef enum <a class="el" href="a00060.html#gaefa59271a266a79694a5c9574f1db8b5">_shell_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a></td></tr>
+<tr class="memdesc:ga404a8f9575fa7e73f64e24e4a1876195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status. <br/></td></tr>
+<tr class="separator:ga404a8f9575fa7e73f64e24e4a1876195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga818c3ca274bd83d1dc870a5618eb21f2"></a>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a></td></tr>
+<tr class="memdesc:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle of the shell module. <br/></td></tr>
+<tr class="separator:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> )(<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td></tr>
+<tr class="memdesc:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command function prototype.  <a href="#ga7ace1ddfb1e83ac1516ac44be90cf822">More...</a><br/></td></tr>
+<tr class="separator:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga408f7fb32b47f13f37eb195eb51074fe"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00060.html#a00393">_shell_command</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a></td></tr>
+<tr class="memdesc:ga408f7fb32b47f13f37eb195eb51074fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="#ga408f7fb32b47f13f37eb195eb51074fe">More...</a><br/></td></tr>
+<tr class="separator:ga408f7fb32b47f13f37eb195eb51074fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga8f64b804a9c2ab9412f5a2aa348e0795"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga8f64b804a9c2ab9412f5a2aa348e0795">_sgtl5000_module</a> { <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795aeff780e31f47de5bd4ae4f7c2247a943">kSGTL_ModuleADC</a> = 0x0, 
+<tr class="memitem:gaefa59271a266a79694a5c9574f1db8b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaefa59271a266a79694a5c9574f1db8b5">_shell_status</a> { <br/>
+&#160;&#160;<a class="el" href="a00060.html#ggaefa59271a266a79694a5c9574f1db8b5aeb6cf57843c8b47b87ae07417d53df3e">kStatus_SHELL_Success</a> = kStatus_Success, 
 <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795ac97955a1a57467c8a7a93629468c0ae5">kSGTL_ModuleDAC</a>, 
+&#160;&#160;<a class="el" href="a00060.html#ggaefa59271a266a79694a5c9574f1db8b5ae1a9ae61e350888892f4cde21f8dd7f9">kStatus_SHELL_Error</a> = MAKE_STATUS(kStatusGroup_SHELL, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795a6db304a2a1838b8733167b535efd1cc6">kSGTL_ModuleDAP</a>, 
+&#160;&#160;<a class="el" href="a00060.html#ggaefa59271a266a79694a5c9574f1db8b5a25ff80ec847b1028041ae913beec2b5b">kStatus_SHELL_OpenWriteHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 2), 
 <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795a7c3ca8ea568a0109f5858469734f1f22">kSGTL_ModuleHP</a>, 
+&#160;&#160;<a class="el" href="a00060.html#ggaefa59271a266a79694a5c9574f1db8b5a14f89a732b5c11a35e8c9b91d4e22ad8">kStatus_SHELL_OpenReadHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 3), 
 <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795a5eec6607385362c2f1f67574f98bab7f">kSGTL_ModuleI2SIN</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795ad549fbd25f776da2e48029e7defb136d">kSGTL_ModuleI2SOUT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795a3cf24e3ca184744b13ce10adb648afcd">kSGTL_ModuleLineIn</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795a04e0f93df81aacf8114308d95703248f">kSGTL_ModuleLineOut</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8f64b804a9c2ab9412f5a2aa348e0795a4d7e27445f7842c7d420a3621ac73e72">kSGTL_ModuleMicin</a>
+&#160;&#160;<a class="el" href="a00060.html#ggaefa59271a266a79694a5c9574f1db8b5ad139f389943f49d948bbff024d6c5a26">kStatus_SHELL_RetUsage</a> = MAKE_STATUS(kStatusGroup_SHELL, 4)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga8f64b804a9c2ab9412f5a2aa348e0795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modules in Sgtl5000 board.  <a href="a00060.html#ga8f64b804a9c2ab9412f5a2aa348e0795">More...</a><br/></td></tr>
-<tr class="separator:ga8f64b804a9c2ab9412f5a2aa348e0795"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f39070b1aca54ecf0d46af5cda78cc1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga2f39070b1aca54ecf0d46af5cda78cc1">_sgtl_route</a> { <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1a1ea39c5bbafcc616613e8755b70573e9">kSGTL_RouteBypass</a> = 0x0, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1ad379b8e67ddbbb27bc44c6d6f3cf7c0e">kSGTL_RoutePlayback</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae11f7c67b7d1ab7e4dce3d927be7da00">kSGTL_RoutePlaybackandRecord</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae79c7286d52a67b618e4e23a1f1306b6">kSGTL_RoutePlaybackwithDAP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1a53052344996dc1f90cf6457e2b81eb18">kSGTL_RoutePlaybackwithDAPandRecord</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1a0c28a072be0500106b9b32a16f05f000">kSGTL_RouteRecord</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga2f39070b1aca54ecf0d46af5cda78cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sgtl5000 data route.  <a href="a00060.html#ga2f39070b1aca54ecf0d46af5cda78cc1">More...</a><br/></td></tr>
-<tr class="separator:ga2f39070b1aca54ecf0d46af5cda78cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8edcd60c410ff680100e07e7badbe7b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga8edcd60c410ff680100e07e7badbe7b3">_sgtl_protocol</a> { <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8edcd60c410ff680100e07e7badbe7b3ab56aded98ae08bb3dd4c431e036eb9b7">kSGTL_BusI2S</a> = 0x0, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8edcd60c410ff680100e07e7badbe7b3a99d80a1bbb2ca42f8d8b9ded7d0fe156">kSGTL_BusLeftJustified</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8edcd60c410ff680100e07e7badbe7b3a742196d31e1ede4eb6d0b1bd6afcdc50">kSGTL_BusRightJustified</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8edcd60c410ff680100e07e7badbe7b3aae65c2ae38164483661ce81683e2cf6d">kSGTL_BusPCMA</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga8edcd60c410ff680100e07e7badbe7b3a165348d47026247f859a40813f449cfd">kSGTL_BusPCMB</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga8edcd60c410ff680100e07e7badbe7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="a00060.html#ga8edcd60c410ff680100e07e7badbe7b3">More...</a><br/></td></tr>
-<tr class="separator:ga8edcd60c410ff680100e07e7badbe7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9420823bfeba78fce625fc105e3b01d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00060.html#ggac9420823bfeba78fce625fc105e3b01da4438d9d23b966a384697ac3959ec180c">kSGTL_HeadphoneLeft</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#ggac9420823bfeba78fce625fc105e3b01da7c3a64195b071d4d17957f2de39a45a7">kSGTL_HeadphoneRight</a> = 1, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#ggac9420823bfeba78fce625fc105e3b01daea79ecce1f81bf12000fcf64671502ea">kSGTL_LineoutLeft</a> = 2, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#ggac9420823bfeba78fce625fc105e3b01dabe25d4199f174f03f271a2ac335904bb">kSGTL_LineoutRight</a> = 3
-<br/>
- }</td></tr>
-<tr class="memdesc:gac9420823bfeba78fce625fc105e3b01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl play channel  <a href="a00060.html#gac9420823bfeba78fce625fc105e3b01d">More...</a><br/></td></tr>
-<tr class="separator:gac9420823bfeba78fce625fc105e3b01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa9be5679ab03d785820f2474c5ccc6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00060.html#ggafa9be5679ab03d785820f2474c5ccc6ea358889525fbd4a6d5998c17a2382ac16">kSGTL_RecordSourceLineIn</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#ggafa9be5679ab03d785820f2474c5ccc6ea3c1289899ca6bdbe2ee24346890a19e2">kSGTL_RecordSourceMic</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gafa9be5679ab03d785820f2474c5ccc6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl record source _sgtl_record_source  <a href="a00060.html#gafa9be5679ab03d785820f2474c5ccc6e">More...</a><br/></td></tr>
-<tr class="separator:gafa9be5679ab03d785820f2474c5ccc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00060.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ad99308b50ee139be94b584a66d999caf">kSGTL_PlaySourceLineIn</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a9c7fa540632ee8e4c733fb4ccebc8601">kSGTL_PlaySourceDAC</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl play source _stgl_play_source  <a href="a00060.html#gae6dceca96ec2c7a1b4aa211264a87ef6">More...</a><br/></td></tr>
-<tr class="separator:gae6dceca96ec2c7a1b4aa211264a87ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4afcde26974cb123a18b38138dffbb71"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga4afcde26974cb123a18b38138dffbb71">_sgtl_sclk_edge</a> { <br/>
-&#160;&#160;<a class="el" href="a00060.html#gga4afcde26974cb123a18b38138dffbb71aa89baee03025ca12e2fd8eb03909724c">kSGTL_SclkValidEdgeRising</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00060.html#gga4afcde26974cb123a18b38138dffbb71a0e8f446d380d7f3c859b68ffe5a64a08">kSGTL_SclkValidEdgeFailling</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4afcde26974cb123a18b38138dffbb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL SCLK valid edge.  <a href="a00060.html#ga4afcde26974cb123a18b38138dffbb71">More...</a><br/></td></tr>
-<tr class="separator:ga4afcde26974cb123a18b38138dffbb71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga5dd1b8225b23f6e47c4abed5bf74709f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga5dd1b8225b23f6e47c4abed5bf74709f">SGTL_Init</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga04f368cf5c75e66ff28894ec9194a2f8">sgtl_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga5dd1b8225b23f6e47c4abed5bf74709f"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl5000 initialize function.  <a href="#ga5dd1b8225b23f6e47c4abed5bf74709f">More...</a><br/></td></tr>
-<tr class="separator:ga5dd1b8225b23f6e47c4abed5bf74709f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ef9c339bf1ac795d7e5f3c42cebafb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga1ef9c339bf1ac795d7e5f3c42cebafb7">SGTL_SetDataRoute</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga7d97f5b5552db956cdeb7ad0ec70efeb">sgtl_route_t</a> route)</td></tr>
-<tr class="memdesc:ga1ef9c339bf1ac795d7e5f3c42cebafb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set audio data route in sgtl5000.  <a href="#ga1ef9c339bf1ac795d7e5f3c42cebafb7">More...</a><br/></td></tr>
-<tr class="separator:ga1ef9c339bf1ac795d7e5f3c42cebafb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8087efbfa0ae9c2644d6191f441d9df0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga8087efbfa0ae9c2644d6191f441d9df0">SGTL_SetProtocol</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#gabb24e1c0a6f4f885b77508c575382082">sgtl_protocol_t</a> protocol)</td></tr>
-<tr class="memdesc:ga8087efbfa0ae9c2644d6191f441d9df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the audio transfer protocol.  <a href="#ga8087efbfa0ae9c2644d6191f441d9df0">More...</a><br/></td></tr>
-<tr class="separator:ga8087efbfa0ae9c2644d6191f441d9df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga872cb128c9d0445c60dee6dbc044c7b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga872cb128c9d0445c60dee6dbc044c7b3">SGTL_SetMasterSlave</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, bool master)</td></tr>
-<tr class="memdesc:ga872cb128c9d0445c60dee6dbc044c7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set sgtl5000 as master or slave.  <a href="#ga872cb128c9d0445c60dee6dbc044c7b3">More...</a><br/></td></tr>
-<tr class="separator:ga872cb128c9d0445c60dee6dbc044c7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga88af855c5959f6d814bd8f8327e168d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga88af855c5959f6d814bd8f8327e168d5">SGTL_SetVolume</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a> module, uint32_t volume)</td></tr>
-<tr class="memdesc:ga88af855c5959f6d814bd8f8327e168d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the volume of different modules in sgtl5000.  <a href="#ga88af855c5959f6d814bd8f8327e168d5">More...</a><br/></td></tr>
-<tr class="separator:ga88af855c5959f6d814bd8f8327e168d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d0af6998eff44ee5765988e05d68434"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga6d0af6998eff44ee5765988e05d68434">SGTL_GetVolume</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a> module)</td></tr>
-<tr class="memdesc:ga6d0af6998eff44ee5765988e05d68434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the volume of different modules in sgtl5000.  <a href="#ga6d0af6998eff44ee5765988e05d68434">More...</a><br/></td></tr>
-<tr class="separator:ga6d0af6998eff44ee5765988e05d68434"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c3a087636393265417c9435b6fc57c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga4c3a087636393265417c9435b6fc57c2">SGTL_SetMute</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a> module, bool mute)</td></tr>
-<tr class="memdesc:ga4c3a087636393265417c9435b6fc57c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute/unmute modules in sgtl5000.  <a href="#ga4c3a087636393265417c9435b6fc57c2">More...</a><br/></td></tr>
-<tr class="separator:ga4c3a087636393265417c9435b6fc57c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga51bf307e712104f5942d4cf64c60e624"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga51bf307e712104f5942d4cf64c60e624">SGTL_EnableModule</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a> module)</td></tr>
-<tr class="memdesc:ga51bf307e712104f5942d4cf64c60e624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable expected devices.  <a href="#ga51bf307e712104f5942d4cf64c60e624">More...</a><br/></td></tr>
-<tr class="separator:ga51bf307e712104f5942d4cf64c60e624"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26a3dba16af7a79e072f71d179dc00e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga26a3dba16af7a79e072f71d179dc00e6">SGTL_DisableModule</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, <a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a> module)</td></tr>
-<tr class="memdesc:ga26a3dba16af7a79e072f71d179dc00e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable expected devices.  <a href="#ga26a3dba16af7a79e072f71d179dc00e6">More...</a><br/></td></tr>
-<tr class="separator:ga26a3dba16af7a79e072f71d179dc00e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27221640262b10948a03f3178e379814"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga27221640262b10948a03f3178e379814">SGTL_Deinit</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:ga27221640262b10948a03f3178e379814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit the sgtl5000 codec.  <a href="#ga27221640262b10948a03f3178e379814">More...</a><br/></td></tr>
-<tr class="separator:ga27221640262b10948a03f3178e379814"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga120c853dc3a86f5c70c4fbef309b6ef5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga120c853dc3a86f5c70c4fbef309b6ef5">SGTL_ConfigDataFormat</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits)</td></tr>
-<tr class="memdesc:ga120c853dc3a86f5c70c4fbef309b6ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the data format of audio data.  <a href="#ga120c853dc3a86f5c70c4fbef309b6ef5">More...</a><br/></td></tr>
-<tr class="separator:ga120c853dc3a86f5c70c4fbef309b6ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3052a63c17bdfdfeac94d1011434af5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga3052a63c17bdfdfeac94d1011434af5d">SGTL_SetPlay</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, uint32_t playSource)</td></tr>
-<tr class="memdesc:ga3052a63c17bdfdfeac94d1011434af5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">select SGTL codec play source.  <a href="#ga3052a63c17bdfdfeac94d1011434af5d">More...</a><br/></td></tr>
-<tr class="separator:ga3052a63c17bdfdfeac94d1011434af5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf929ad37a6dd584cd5f17d52560ef7df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaf929ad37a6dd584cd5f17d52560ef7df">SGTL_SetRecord</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, uint32_t recordSource)</td></tr>
-<tr class="memdesc:gaf929ad37a6dd584cd5f17d52560ef7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">select SGTL codec record source.  <a href="#gaf929ad37a6dd584cd5f17d52560ef7df">More...</a><br/></td></tr>
-<tr class="separator:gaf929ad37a6dd584cd5f17d52560ef7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f0eb0cad0476f34f65811b99d58752f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga1f0eb0cad0476f34f65811b99d58752f">SGTL_WriteReg</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, uint16_t reg, uint16_t val)</td></tr>
-<tr class="memdesc:ga1f0eb0cad0476f34f65811b99d58752f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register to sgtl using I2C.  <a href="#ga1f0eb0cad0476f34f65811b99d58752f">More...</a><br/></td></tr>
-<tr class="separator:ga1f0eb0cad0476f34f65811b99d58752f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad044b5a578bac8480229730d610f22b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gad044b5a578bac8480229730d610f22b6">SGTL_ReadReg</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, uint16_t reg, uint16_t *val)</td></tr>
-<tr class="memdesc:gad044b5a578bac8480229730d610f22b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register from sgtl using I2C.  <a href="#gad044b5a578bac8480229730d610f22b6">More...</a><br/></td></tr>
-<tr class="separator:gad044b5a578bac8480229730d610f22b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43f1ac7cec503ad6e6ea178b6fb691ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga43f1ac7cec503ad6e6ea178b6fb691ac">SGTL_ModifyReg</a> (<a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *handle, uint16_t reg, uint16_t clr_mask, uint16_t val)</td></tr>
-<tr class="memdesc:ga43f1ac7cec503ad6e6ea178b6fb691ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify some bits in the register using I2C.  <a href="#ga43f1ac7cec503ad6e6ea178b6fb691ac">More...</a><br/></td></tr>
-<tr class="separator:ga43f1ac7cec503ad6e6ea178b6fb691ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaefa59271a266a79694a5c9574f1db8b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status.  <a href="a00060.html#gaefa59271a266a79694a5c9574f1db8b5">More...</a><br/></td></tr>
+<tr class="separator:gaefa59271a266a79694a5c9574f1db8b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:gacb25f9b960a10309cc4b9b2cb0f0c063"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gacb25f9b960a10309cc4b9b2cb0f0c063">FSL_SGTL5000_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00226.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="memdesc:gacb25f9b960a10309cc4b9b2cb0f0c063"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.1.1.  <a href="#gacb25f9b960a10309cc4b9b2cb0f0c063">More...</a><br/></td></tr>
-<tr class="separator:gacb25f9b960a10309cc4b9b2cb0f0c063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Shell functional operation</h2></td></tr>
+<tr class="memitem:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00056.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, char *prompt)</td></tr>
+<tr class="memdesc:ga7961e946400cd244c315cfbbd36ae5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the shell module.  <a href="#ga7961e946400cd244c315cfbbd36ae5d1">More...</a><br/></td></tr>
+<tr class="separator:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memdesc:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the shell command.  <a href="#gab5f85f3ba2cc7dd58bc85076c19c5177">More...</a><br/></td></tr>
+<tr class="separator:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memdesc:ga53355638d856258b0bcb76e308803dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the shell command.  <a href="#ga53355638d856258b0bcb76e308803dab">More...</a><br/></td></tr>
+<tr class="separator:ga53355638d856258b0bcb76e308803dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga9f182608b5a6107757be5bb8a90ad74c">SHELL_Write</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga9f182608b5a6107757be5bb8a90ad74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream.  <a href="#ga9f182608b5a6107757be5bb8a90ad74c">More...</a><br/></td></tr>
+<tr class="separator:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaade5449d8cbfc3cd026667b40c35d29f">SHELL_Printf</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
+<tr class="memdesc:gaade5449d8cbfc3cd026667b40c35d29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream.  <a href="#gaade5449d8cbfc3cd026667b40c35d29f">More...</a><br/></td></tr>
+<tr class="separator:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6466b141fd4f94e78636e4a15c302dda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga6466b141fd4f94e78636e4a15c302dda">SHELL_WriteSynchronization</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga6466b141fd4f94e78636e4a15c302dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream with OS synchronization.  <a href="#ga6466b141fd4f94e78636e4a15c302dda">More...</a><br/></td></tr>
+<tr class="separator:ga6466b141fd4f94e78636e4a15c302dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56c78f6217a822015a9369bf3e52e92a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga56c78f6217a822015a9369bf3e52e92a">SHELL_PrintfSynchronization</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
+<tr class="memdesc:ga56c78f6217a822015a9369bf3e52e92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream with OS synchronization.  <a href="#ga56c78f6217a822015a9369bf3e52e92a">More...</a><br/></td></tr>
+<tr class="separator:ga56c78f6217a822015a9369bf3e52e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca4540dc42f8892cb276691644a247e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gaca4540dc42f8892cb276691644a247e2">SHELL_ChangePrompt</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, char *prompt)</td></tr>
+<tr class="memdesc:gaca4540dc42f8892cb276691644a247e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change shell prompt.  <a href="#gaca4540dc42f8892cb276691644a247e2">More...</a><br/></td></tr>
+<tr class="separator:gaca4540dc42f8892cb276691644a247e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2a840776dee8490d482a0692fbf2d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#gad2a840776dee8490d482a0692fbf2d7e">SHELL_PrintPrompt</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
+<tr class="memdesc:gad2a840776dee8490d482a0692fbf2d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print shell prompt.  <a href="#gad2a840776dee8490d482a0692fbf2d7e">More...</a><br/></td></tr>
+<tr class="separator:gad2a840776dee8490d482a0692fbf2d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a> (<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
+<tr class="memdesc:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task function for Shell.  <a href="#ga44e3087a3cdea9b62f159e2585dfcd8d">More...</a><br/></td></tr>
+<tr class="separator:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eeb17b16773359c132f1d40478938ec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ga4eeb17b16773359c132f1d40478938ec">SHELL_checkRunningInIsr</a> (void)</td></tr>
+<tr class="memdesc:ga4eeb17b16773359c132f1d40478938ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if code is running in ISR.  <a href="#ga4eeb17b16773359c132f1d40478938ec">More...</a><br/></td></tr>
+<tr class="separator:ga4eeb17b16773359c132f1d40478938ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00394" id="a00394"></a>
+<a name="a00393" id="a00393"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _sgtl_audio_format</td>
+          <td class="memname">struct _shell_command</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a38a947cae212e2c07c91e17ba432bced"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38a947cae212e2c07c91e17ba432bced"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a38a947cae212e2c07c91e17ba432bced">mclk_HZ</a></td></tr>
-<tr class="memdesc:a38a947cae212e2c07c91e17ba432bced"><td class="mdescLeft">&#160;</td><td class="mdescRight">master clock <br/></td></tr>
-<tr class="separator:a38a947cae212e2c07c91e17ba432bced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ac8e8cd01a893684b47e1434361d46d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ac8e8cd01a893684b47e1434361d46d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a0ac8e8cd01a893684b47e1434361d46d">sampleRate</a></td></tr>
-<tr class="memdesc:a0ac8e8cd01a893684b47e1434361d46d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample rate. <br/></td></tr>
-<tr class="separator:a0ac8e8cd01a893684b47e1434361d46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf36766a1bcbd3d5099ff71e0bb97334"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf36766a1bcbd3d5099ff71e0bb97334"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#adf36766a1bcbd3d5099ff71e0bb97334">bitWidth</a></td></tr>
-<tr class="memdesc:adf36766a1bcbd3d5099ff71e0bb97334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bit width. <br/></td></tr>
-<tr class="separator:adf36766a1bcbd3d5099ff71e0bb97334"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa5919b175c7190ac1cb31951f295cf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa5919b175c7190ac1cb31951f295cf5"></a>
-<a class="el" href="a00060.html#gaa442de703d57f173c868a86709eca130">sgtl_sclk_edge_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#afa5919b175c7190ac1cb31951f295cf5">sclkEdge</a></td></tr>
-<tr class="memdesc:afa5919b175c7190ac1cb31951f295cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">sclk valid edge <br/></td></tr>
-<tr class="separator:afa5919b175c7190ac1cb31951f295cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00395" id="a00395"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _sgtl_config</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae8e0a67de0bfb62cabceb62177a3a6c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00060.html#ga7d97f5b5552db956cdeb7ad0ec70efeb">sgtl_route_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ae8e0a67de0bfb62cabceb62177a3a6c8">route</a></td></tr>
-<tr class="memdesc:ae8e0a67de0bfb62cabceb62177a3a6c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio data route.  <a href="#ae8e0a67de0bfb62cabceb62177a3a6c8">More...</a><br/></td></tr>
-<tr class="separator:ae8e0a67de0bfb62cabceb62177a3a6c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab65d798b15243d3ea37fbefee94ff170"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab65d798b15243d3ea37fbefee94ff170"></a>
-<a class="el" href="a00060.html#gabb24e1c0a6f4f885b77508c575382082">sgtl_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ab65d798b15243d3ea37fbefee94ff170">bus</a></td></tr>
-<tr class="memdesc:ab65d798b15243d3ea37fbefee94ff170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio transfer protocol. <br/></td></tr>
-<tr class="separator:ab65d798b15243d3ea37fbefee94ff170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c46befc8581a0d5af0266950e2405a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a4c46befc8581a0d5af0266950e2405a3">master_slave</a></td></tr>
-<tr class="memdesc:a4c46befc8581a0d5af0266950e2405a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master or slave.  <a href="#a4c46befc8581a0d5af0266950e2405a3">More...</a><br/></td></tr>
-<tr class="separator:a4c46befc8581a0d5af0266950e2405a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a960282a5a6515e911f2936b5eeed5b24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a960282a5a6515e911f2936b5eeed5b24"></a>
-<a class="el" href="a00060.html#gac39b9431fec36a8a0d2b18f44213b5c1">sgtl_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a960282a5a6515e911f2936b5eeed5b24">format</a></td></tr>
-<tr class="memdesc:a960282a5a6515e911f2936b5eeed5b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio format <br/></td></tr>
-<tr class="separator:a960282a5a6515e911f2936b5eeed5b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2608b29dc436a7a3acbd067d95d59a87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2608b29dc436a7a3acbd067d95d59a87"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a2608b29dc436a7a3acbd067d95d59a87">slaveAddress</a></td></tr>
-<tr class="memdesc:a2608b29dc436a7a3acbd067d95d59a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">code device slave address <br/></td></tr>
-<tr class="separator:a2608b29dc436a7a3acbd067d95d59a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f3c3705606cd36ed6122b5a0ce50128"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f3c3705606cd36ed6122b5a0ce50128"></a>
-<a class="el" href="a00014.html#ga7cef6c41744cbf081437214aa3a6acec">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a6f3c3705606cd36ed6122b5a0ce50128">i2cConfig</a></td></tr>
-<tr class="memdesc:a6f3c3705606cd36ed6122b5a0ce50128"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus configuration <br/></td></tr>
-<tr class="separator:a6f3c3705606cd36ed6122b5a0ce50128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02e67ebfd942afb269dbfa8906dabb4a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a02e67ebfd942afb269dbfa8906dabb4a">pcCommand</a></td></tr>
+<tr class="memdesc:a02e67ebfd942afb269dbfa8906dabb4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command that is executed.  <a href="#a02e67ebfd942afb269dbfa8906dabb4a">More...</a><br/></td></tr>
+<tr class="separator:a02e67ebfd942afb269dbfa8906dabb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acce9b1b9a25275d44a705457522151b6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#acce9b1b9a25275d44a705457522151b6">pcHelpString</a></td></tr>
+<tr class="memdesc:acce9b1b9a25275d44a705457522151b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">String that describes how to use the command.  <a href="#acce9b1b9a25275d44a705457522151b6">More...</a><br/></td></tr>
+<tr class="separator:acce9b1b9a25275d44a705457522151b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6ae0c867566014c33620c413c568a68"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00060.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ab6ae0c867566014c33620c413c568a68">pFuncCallBack</a></td></tr>
+<tr class="memdesc:ab6ae0c867566014c33620c413c568a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the callback function that returns the output generated by the command.  <a href="#ab6ae0c867566014c33620c413c568a68">More...</a><br/></td></tr>
+<tr class="separator:ab6ae0c867566014c33620c413c568a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9304a184b0817140b357805e4e324f58"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#a9304a184b0817140b357805e4e324f58">cExpectedNumberOfParameters</a></td></tr>
+<tr class="memdesc:a9304a184b0817140b357805e4e324f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commands expect a fixed number of parameters, which may be zero.  <a href="#a9304a184b0817140b357805e4e324f58">More...</a><br/></td></tr>
+<tr class="separator:a9304a184b0817140b357805e4e324f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab656143c38d8fc0338aa2e58e76d73a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab656143c38d8fc0338aa2e58e76d73a2"></a>
+list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#ab656143c38d8fc0338aa2e58e76d73a2">link</a></td></tr>
+<tr class="memdesc:ab656143c38d8fc0338aa2e58e76d73a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">link of the element <br/></td></tr>
+<tr class="separator:ab656143c38d8fc0338aa2e58e76d73a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ae8e0a67de0bfb62cabceb62177a3a6c8"></a>
+<a class="anchor" id="a02e67ebfd942afb269dbfa8906dabb4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00060.html#ga7d97f5b5552db956cdeb7ad0ec70efeb">sgtl_route_t</a> _sgtl_config::route</td>
+          <td class="memname">const char* _shell_command::pcCommand</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For example "help". It must be all lower case. </p>
+
+</div>
+</div>
+<a class="anchor" id="acce9b1b9a25275d44a705457522151b6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* _shell_command::pcHelpString</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>It should start with the command itself, and end with "\r\n". For example "help: Returns a list of all the commands\r\n". </p>
+
+</div>
+</div>
+<a class="anchor" id="ab6ae0c867566014c33620c413c568a68"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a00060.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> _shell_command::pFuncCallBack</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4c46befc8581a0d5af0266950e2405a3"></a>
+<a class="anchor" id="a9304a184b0817140b357805e4e324f58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool _sgtl_config::master_slave</td>
+          <td class="memname">uint8_t _shell_command::cExpectedNumberOfParameters</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True means master, false means slave. </p>
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00396" id="a00396"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _sgtl_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aff102977588ebfd7bb704fa6e78cbf04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff102977588ebfd7bb704fa6e78cbf04"></a>
-<a class="el" href="a00060.html#ga04f368cf5c75e66ff28894ec9194a2f8">sgtl_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#aff102977588ebfd7bb704fa6e78cbf04">config</a></td></tr>
-<tr class="memdesc:aff102977588ebfd7bb704fa6e78cbf04"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl config pointer <br/></td></tr>
-<tr class="separator:aff102977588ebfd7bb704fa6e78cbf04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa947e0901c2f8abcc1389fd7756aafb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa947e0901c2f8abcc1389fd7756aafb8"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html#aa947e0901c2f8abcc1389fd7756aafb8">i2cHandle</a> [<a class="el" href="a00060.html#ga5a006451f9e990a4d3255ed7265ff1ad">SGTL_I2C_HANDLER_SIZE</a>]</td></tr>
-<tr class="memdesc:aa947e0901c2f8abcc1389fd7756aafb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle <br/></td></tr>
-<tr class="separator:aa947e0901c2f8abcc1389fd7756aafb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gacb25f9b960a10309cc4b9b2cb0f0c063"></a>
+<a class="anchor" id="ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SGTL5000_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00226.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+          <td class="memname">#define SHELL_NON_BLOCKING_MODE&#160;&#160;&#160;<a class="el" href="a00056.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gab0aa3e54cd2934b67b9882957456c391"></a>
+<a class="anchor" id="ga30882f4b5fc99cbc21459cc960ef9ffe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CHIP_ID&#160;&#160;&#160;0x0000U</td>
+          <td class="memname">#define SHELL_AUTO_COMPLETE&#160;&#160;&#160;(1U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga58ceb20f920b2b006c74eeeae992830a"></a>
+<a class="anchor" id="gaf98219b0fb886040896b83966903a135"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SGTL5000_I2C_ADDR&#160;&#160;&#160;0x0A</td>
+          <td class="memname">#define SHELL_BUFFER_SIZE&#160;&#160;&#160;(64U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0800d9fb741c785d0601f0c3d7125f40"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_MAX_ARGS&#160;&#160;&#160;(8U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4362aa35752c9abf77387a237faaaea5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HISTORY_COUNT&#160;&#160;&#160;(3U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa4c15d7595f7cf7ee5f837a02cbdf574"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HANDLE_SIZE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(160U + <a class="code" href="a00060.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a> * <a class="code" href="a00060.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + <a class="code" href="a00060.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + SERIAL_MANAGER_READ_HANDLE_SIZE + <a class="code" href="a00056.html#gac278be51c3508495c1be1a4cff566f3f">\</a></div>
+<div class="line"><a class="code" href="a00056.html#gac278be51c3508495c1be1a4cff566f3f">     SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>)</div>
+<div class="ttc" id="a00060_html_ga4362aa35752c9abf77387a237faaaea5"><div class="ttname"><a href="a00060.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a></div><div class="ttdeci">#define SHELL_HISTORY_COUNT</div><div class="ttdoc">Macro to set maximum count of history commands. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:43</div></div>
+<div class="ttc" id="a00056_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00056.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:114</div></div>
+<div class="ttc" id="a00060_html_gaf98219b0fb886040896b83966903a135"><div class="ttname"><a href="a00060.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a></div><div class="ttdeci">#define SHELL_BUFFER_SIZE</div><div class="ttdoc">Macro to set console buffer size. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:35</div></div>
+</div><!-- fragment --><p>It is the sum of the SHELL_HISTORY_COUNT * SHELL_BUFFER_SIZE + SHELL_BUFFER_SIZE + SERIAL_MANAGER_READ_HANDLE_SIZE + SERIAL_MANAGER_WRITE_HANDLE_SIZE </p>
+
+</div>
+</div>
+<a class="anchor" id="ga100ef8e4a639c03682d84fb981ba235b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_USE_COMMON_TASK&#160;&#160;&#160;(0U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5b98f71ea7bd89ef344cac14aa79a1e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_TASK_PRIORITY&#160;&#160;&#160;(2U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga416667c8e6b960d2c1ec518b41a06d62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_TASK_STACK_SIZE&#160;&#160;&#160;(1000U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gac4afabd0995de8a6d4c255c03e6ccc42"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_PRINT_COPYRIGHT&#160;&#160;&#160;(1U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gafdb2c68b2d83d459fc196ab0f58d7ab3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HANDLE_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00060.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to define a 4 byte aligned shell handle. Then use "(shell_handle_t)name" to get the shell handle.</p>
+<p>The macro should be global and could be optional. You could also define shell handle by yourself.</p>
+<p>This is an example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00060.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(shellHandle);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name string of the shell handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacd1f7ee25cd791efee6a45e753ec9824"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_COMMAND_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">command, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">descriptor, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">callback, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">paramCount&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">\</a></div>
+<div class="line"><a class="code" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">    shell_command_t</a> g_shellCommand##command = {                         \</div>
+<div class="line">        (#command), (descriptor), (callback), (paramCount), {0},        \</div>
+<div class="line">    }</div>
+<div class="ttc" id="a00060_html_ga408f7fb32b47f13f37eb195eb51074fe"><div class="ttname"><a href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a></div><div class="ttdeci">struct _shell_command shell_command_t</div><div class="ttdoc">User command data configuration structure. </div></div>
+</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
+<p>This is a example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00060.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
+<div class="line">* <a class="code" href="a00060.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00060.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
+    <tr><td class="paramname">descriptor</td><td>The description of the command is used for showing the command usage when "help" is typing. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback of the command is used to handle the command line when the input command is matched. </td></tr>
+    <tr><td class="paramname">paramCount</td><td>The max parameter count of the current command. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga16dd6cfbd9db7dafdaa802eda58564b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_COMMAND</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">command</td><td>)</td>
+          <td>&#160;&#160;&#160;&amp;g_shellCommand##command</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to get the shell command pointer. The macro should not be used before the macro SHELL_COMMAND_DEFINE is used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga8daa03b90ec34beec5c4a9bcc5b0cbd3"></a>
+<a class="anchor" id="ga7ace1ddfb1e83ac1516ac44be90cf822"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="a00060.html#ga8f64b804a9c2ab9412f5a2aa348e0795">_sgtl5000_module</a>  <a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a></td>
+          <td class="memname">typedef <a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a>(* cmd_function_t)(<a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga7d97f5b5552db956cdeb7ad0ec70efeb"></a>
+<a class="anchor" id="ga408f7fb32b47f13f37eb195eb51074fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="a00060.html#ga2f39070b1aca54ecf0d46af5cda78cc1">_sgtl_route</a>  <a class="el" href="a00060.html#ga7d97f5b5552db956cdeb7ad0ec70efeb">sgtl_route_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>Only provide some typical data route, not all route listed. Users cannot combine any routes, once a new route is set, the precios one would be replaced. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gabb24e1c0a6f4f885b77508c575382082"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00060.html#ga8edcd60c410ff680100e07e7badbe7b3">_sgtl_protocol</a>  <a class="el" href="a00060.html#gabb24e1c0a6f4f885b77508c575382082">sgtl_protocol_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sgtl5000 only supports I2S format and PCM format. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac39b9431fec36a8a0d2b18f44213b5c1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="a00060.html#a00394">_sgtl_audio_format</a>  <a class="el" href="a00060.html#gac39b9431fec36a8a0d2b18f44213b5c1">sgtl_audio_format_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00060.html#a00393">_shell_command</a>  <a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -526,213 +603,57 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga8f64b804a9c2ab9412f5a2aa348e0795"></a>
+<a class="anchor" id="gaefa59271a266a79694a5c9574f1db8b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00060.html#ga8f64b804a9c2ab9412f5a2aa348e0795">_sgtl5000_module</a></td>
+          <td class="memname">enum <a class="el" href="a00060.html#gaefa59271a266a79694a5c9574f1db8b5">_shell_status</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795aeff780e31f47de5bd4ae4f7c2247a943"></a>kSGTL_ModuleADC</em>&nbsp;</td><td class="fielddoc">
-<p>ADC module in SGTL5000. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5aeb6cf57843c8b47b87ae07417d53df3e"></a>kStatus_SHELL_Success</em>&nbsp;</td><td class="fielddoc">
+<p>Success. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795ac97955a1a57467c8a7a93629468c0ae5"></a>kSGTL_ModuleDAC</em>&nbsp;</td><td class="fielddoc">
-<p>DAC module in SGTL5000. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5ae1a9ae61e350888892f4cde21f8dd7f9"></a>kStatus_SHELL_Error</em>&nbsp;</td><td class="fielddoc">
+<p>Failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795a6db304a2a1838b8733167b535efd1cc6"></a>kSGTL_ModuleDAP</em>&nbsp;</td><td class="fielddoc">
-<p>DAP module in SGTL5000. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5a25ff80ec847b1028041ae913beec2b5b"></a>kStatus_SHELL_OpenWriteHandleFailed</em>&nbsp;</td><td class="fielddoc">
+<p>Open write handle failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795a7c3ca8ea568a0109f5858469734f1f22"></a>kSGTL_ModuleHP</em>&nbsp;</td><td class="fielddoc">
-<p>Headphone module in SGTL5000. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5a14f89a732b5c11a35e8c9b91d4e22ad8"></a>kStatus_SHELL_OpenReadHandleFailed</em>&nbsp;</td><td class="fielddoc">
+<p>Open read handle failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795a5eec6607385362c2f1f67574f98bab7f"></a>kSGTL_ModuleI2SIN</em>&nbsp;</td><td class="fielddoc">
-<p>I2S-IN module in SGTL5000. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795ad549fbd25f776da2e48029e7defb136d"></a>kSGTL_ModuleI2SOUT</em>&nbsp;</td><td class="fielddoc">
-<p>I2S-OUT module in SGTL5000. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795a3cf24e3ca184744b13ce10adb648afcd"></a>kSGTL_ModuleLineIn</em>&nbsp;</td><td class="fielddoc">
-<p>Line-in moudle in SGTL5000. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795a04e0f93df81aacf8114308d95703248f"></a>kSGTL_ModuleLineOut</em>&nbsp;</td><td class="fielddoc">
-<p>Line-out module in SGTL5000. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8f64b804a9c2ab9412f5a2aa348e0795a4d7e27445f7842c7d420a3621ac73e72"></a>kSGTL_ModuleMicin</em>&nbsp;</td><td class="fielddoc">
-<p>Micphone module in SGTL5000. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga2f39070b1aca54ecf0d46af5cda78cc1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00060.html#ga2f39070b1aca54ecf0d46af5cda78cc1">_sgtl_route</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>Only provide some typical data route, not all route listed. Users cannot combine any routes, once a new route is set, the precios one would be replaced. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2f39070b1aca54ecf0d46af5cda78cc1a1ea39c5bbafcc616613e8755b70573e9"></a>kSGTL_RouteBypass</em>&nbsp;</td><td class="fielddoc">
-<p>LINEIN-&gt;Headphone. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f39070b1aca54ecf0d46af5cda78cc1ad379b8e67ddbbb27bc44c6d6f3cf7c0e"></a>kSGTL_RoutePlayback</em>&nbsp;</td><td class="fielddoc">
-<p>I2SIN-&gt;DAC-&gt;Headphone. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f39070b1aca54ecf0d46af5cda78cc1ae11f7c67b7d1ab7e4dce3d927be7da00"></a>kSGTL_RoutePlaybackandRecord</em>&nbsp;</td><td class="fielddoc">
-<p>I2SIN-&gt;DAC-&gt;Headphone, LINEIN-&gt;ADC-&gt;I2SOUT. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f39070b1aca54ecf0d46af5cda78cc1ae79c7286d52a67b618e4e23a1f1306b6"></a>kSGTL_RoutePlaybackwithDAP</em>&nbsp;</td><td class="fielddoc">
-<p>I2SIN-&gt;DAP-&gt;DAC-&gt;Headphone. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f39070b1aca54ecf0d46af5cda78cc1a53052344996dc1f90cf6457e2b81eb18"></a>kSGTL_RoutePlaybackwithDAPandRecord</em>&nbsp;</td><td class="fielddoc">
-<p>I2SIN-&gt;DAP-&gt;DAC-&gt;HP, LINEIN-&gt;ADC-&gt;I2SOUT. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f39070b1aca54ecf0d46af5cda78cc1a0c28a072be0500106b9b32a16f05f000"></a>kSGTL_RouteRecord</em>&nbsp;</td><td class="fielddoc">
-<p>LINEIN-&gt;ADC-&gt;I2SOUT. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga8edcd60c410ff680100e07e7badbe7b3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00060.html#ga8edcd60c410ff680100e07e7badbe7b3">_sgtl_protocol</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sgtl5000 only supports I2S format and PCM format. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8edcd60c410ff680100e07e7badbe7b3ab56aded98ae08bb3dd4c431e036eb9b7"></a>kSGTL_BusI2S</em>&nbsp;</td><td class="fielddoc">
-<p>I2S Type. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8edcd60c410ff680100e07e7badbe7b3a99d80a1bbb2ca42f8d8b9ded7d0fe156"></a>kSGTL_BusLeftJustified</em>&nbsp;</td><td class="fielddoc">
-<p>Left justified. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8edcd60c410ff680100e07e7badbe7b3a742196d31e1ede4eb6d0b1bd6afcdc50"></a>kSGTL_BusRightJustified</em>&nbsp;</td><td class="fielddoc">
-<p>Right Justified. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8edcd60c410ff680100e07e7badbe7b3aae65c2ae38164483661ce81683e2cf6d"></a>kSGTL_BusPCMA</em>&nbsp;</td><td class="fielddoc">
-<p>PCMA. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8edcd60c410ff680100e07e7badbe7b3a165348d47026247f859a40813f449cfd"></a>kSGTL_BusPCMB</em>&nbsp;</td><td class="fielddoc">
-<p>PCMB. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gac9420823bfeba78fce625fc105e3b01d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="_sgtl_play_channel"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac9420823bfeba78fce625fc105e3b01da4438d9d23b966a384697ac3959ec180c"></a>kSGTL_HeadphoneLeft</em>&nbsp;</td><td class="fielddoc">
-<p>headphone left channel </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac9420823bfeba78fce625fc105e3b01da7c3a64195b071d4d17957f2de39a45a7"></a>kSGTL_HeadphoneRight</em>&nbsp;</td><td class="fielddoc">
-<p>headphone right channel </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac9420823bfeba78fce625fc105e3b01daea79ecce1f81bf12000fcf64671502ea"></a>kSGTL_LineoutLeft</em>&nbsp;</td><td class="fielddoc">
-<p>lineout left channel </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac9420823bfeba78fce625fc105e3b01dabe25d4199f174f03f271a2ac335904bb"></a>kSGTL_LineoutRight</em>&nbsp;</td><td class="fielddoc">
-<p>lineout right channel </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gafa9be5679ab03d785820f2474c5ccc6e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafa9be5679ab03d785820f2474c5ccc6ea358889525fbd4a6d5998c17a2382ac16"></a>kSGTL_RecordSourceLineIn</em>&nbsp;</td><td class="fielddoc">
-<p>record source line in </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafa9be5679ab03d785820f2474c5ccc6ea3c1289899ca6bdbe2ee24346890a19e2"></a>kSGTL_RecordSourceMic</em>&nbsp;</td><td class="fielddoc">
-<p>record source single end </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gae6dceca96ec2c7a1b4aa211264a87ef6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6ad99308b50ee139be94b584a66d999caf"></a>kSGTL_PlaySourceLineIn</em>&nbsp;</td><td class="fielddoc">
-<p>play source line in </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae6dceca96ec2c7a1b4aa211264a87ef6a9c7fa540632ee8e4c733fb4ccebc8601"></a>kSGTL_PlaySourceDAC</em>&nbsp;</td><td class="fielddoc">
-<p>play source line in </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga4afcde26974cb123a18b38138dffbb71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00060.html#ga4afcde26974cb123a18b38138dffbb71">_sgtl_sclk_edge</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4afcde26974cb123a18b38138dffbb71aa89baee03025ca12e2fd8eb03909724c"></a>kSGTL_SclkValidEdgeRising</em>&nbsp;</td><td class="fielddoc">
-<p>SCLK valid edge. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4afcde26974cb123a18b38138dffbb71a0e8f446d380d7f3c859b68ffe5a64a08"></a>kSGTL_SclkValidEdgeFailling</em>&nbsp;</td><td class="fielddoc">
-<p>SCLK failling edge. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaefa59271a266a79694a5c9574f1db8b5ad139f389943f49d948bbff024d6c5a26"></a>kStatus_SHELL_RetUsage</em>&nbsp;</td><td class="fielddoc">
+<p>RetUsage for print cmd usage. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga5dd1b8225b23f6e47c4abed5bf74709f"></a>
+<a class="anchor" id="ga7961e946400cd244c315cfbbd36ae5d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_Init </td>
+          <td class="memname"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga04f368cf5c75e66ff28894ec9194a2f8">sgtl_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00056.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
+          <td class="paramname"><em>serialHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>prompt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -741,39 +662,45 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function calls SGTL_I2CInit(), and in this function, some configurations are fixed. The second parameter can be NULL. If users want to change the SGTL5000 settings, a configure structure should be prepared. </p>
-<dl class="section note"><dt>Note</dt><dd>If the codec_config is NULL, it would initialize sgtl5000 using default settings. The default setting: <div class="fragment"><div class="line">* sgtl_init_t codec_config</div>
-<div class="line">* codec_config.route = <a class="code" href="a00060.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae11f7c67b7d1ab7e4dce3d927be7da00">kSGTL_RoutePlaybackandRecord</a></div>
-<div class="line">* codec_config.bus = <a class="code" href="a00060.html#gga8edcd60c410ff680100e07e7badbe7b3ab56aded98ae08bb3dd4c431e036eb9b7">kSGTL_BusI2S</a></div>
-<div class="line">* codec_config.master = slave</div>
+<p>This function must be called before calling all other Shell functions. Call operation the Shell commands with user-defined settings. The example below shows how to set up the Shell and how to call the SHELL_Init function by passing in these parameters. This is an example. </p>
+<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00060.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(s_shellHandle);</div>
+<div class="line">*   <a class="code" href="a00060.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>((<a class="code" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>)s_shellHandle, (<a class="code" href="a00056.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
 <div class="line">* </div>
-</div><!-- fragment --></dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">config</td><td>sgtl5000 configuration structure. If this pointer equals to NULL, it means using the default configuration. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00060.html#gaa4c15d7595f7cf7ee5f837a02cbdf574" title="The handle size of the shell module. ">SHELL_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00060.html#gafdb2c68b2d83d459fc196ab0f58d7ab3" title="Defines the shell handle. ">SHELL_HANDLE_DEFINE(shellHandle)</a>; or uint32_t shellHandle[((SHELL_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
+    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
+    <tr><td class="paramname">prompt</td><td>The string prompt pointer of Shell. Only the global variable can be passed. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Initialization status </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>The shell initialization succeed. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred when the shell is initialized. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_OpenWriteHandleFailed</td><td>Open the write handle failed. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_OpenReadHandleFailed</td><td>Open the read handle failed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1ef9c339bf1ac795d7e5f3c42cebafb7"></a>
+<a class="anchor" id="gab5f85f3ba2cc7dd58bc85076c19c5177"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetDataRoute </td>
+          <td class="memname"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_RegisterCommand </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga7d97f5b5552db956cdeb7ad0ec70efeb">sgtl_route_t</a>&#160;</td>
-          <td class="paramname"><em>route</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *&#160;</td>
+          <td class="paramname"><em>shellCommand</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -782,106 +709,77 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function would set the data route according to route. The route cannot be combined, as all route would enable different modules.</p>
-<dl class="section note"><dt>Note</dt><dd>If a new route is set, the previous route would not work. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function is used to register the shell command by using the command configuration shell_command_config_t. This is a example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00060.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
+<div class="line">* <a class="code" href="a00060.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00060.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">route</td><td>Audio data route in sgtl5000. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully register the command. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8087efbfa0ae9c2644d6191f441d9df0"></a>
+<a class="anchor" id="ga53355638d856258b0bcb76e308803dab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetProtocol </td>
+          <td class="memname"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_UnregisterCommand </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga408f7fb32b47f13f37eb195eb51074fe">shell_command_t</a> *&#160;</td>
+          <td class="paramname"><em>shellCommand</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#gabb24e1c0a6f4f885b77508c575382082">sgtl_protocol_t</a>&#160;</td>
-          <td class="paramname"><em>protocol</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sgtl5000 only supports I2S, I2S left, I2S right, PCM A, PCM B format. </p>
+<p>This function is used to unregister the shell command.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">protocol</td><td>Audio data transfer protocol. </td></tr>
+    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully unregister the command. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga872cb128c9d0445c60dee6dbc044c7b3"></a>
+<a class="anchor" id="ga9f182608b5a6107757be5bb8a90ad74c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SGTL_SetMasterSlave </td>
+          <td class="memname"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_Write </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>master</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">master</td><td>1 represent master, 0 represent slave. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga88af855c5959f6d814bd8f8327e168d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetVolume </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>volume</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -890,34 +788,46 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function would set the volume of sgtl5000 modules. This interface set module volume. The function assume that left channel and right channel has the same volume.</p>
-<p>kSGTL_ModuleADC volume range: 0 - 0xF, 0dB - 22.5dB kSGTL_ModuleDAC volume range: 0x3C - 0xF0, 0dB - -90dB kSGTL_ModuleHP volume range: 0 - 0x7F, 12dB - -51.5dB kSGTL_ModuleLineOut volume range: 0 - 0x1F, 0.5dB steps</p>
+<p>This function is used to send data to the shell output stream.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Sgtl5000 module, such as DAC, ADC and etc. </td></tr>
-    <tr><td class="paramname">volume</td><td>Volume value need to be set. The value is the exact value in register. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6d0af6998eff44ee5765988e05d68434"></a>
+<a class="anchor" id="gaade5449d8cbfc3cd026667b40c35d29f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t SGTL_GetVolume </td>
+          <td class="memname">int SHELL_Printf </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>formatString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -926,174 +836,39 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function gets the volume of sgtl5000 modules. This interface get DAC module volume. The function assume that left channel and right channel has the same volume. </p>
+<p>Call this function to write a formatted output to the shell output stream.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Sgtl5000 module, such as DAC, ADC and etc. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Module value, the value is exact value in register. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4c3a087636393265417c9435b6fc57c2"></a>
+<a class="anchor" id="ga6466b141fd4f94e78636e4a15c302dda"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetMute </td>
+          <td class="memname"><a class="el" href="a00060.html#ga404a8f9575fa7e73f64e24e4a1876195">shell_status_t</a> SHELL_WriteSynchronization </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>mute</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Sgtl5000 module, such as DAC, ADC and etc. </td></tr>
-    <tr><td class="paramname">mute</td><td>True means mute, and false means unmute. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga51bf307e712104f5942d4cf64c60e624"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_EnableModule </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Module expected to enable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga26a3dba16af7a79e072f71d179dc00e6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_DisableModule </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3">sgtl_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Module expected to enable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga27221640262b10948a03f3178e379814"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_Deinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Shut down Sgtl5000 modules. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga120c853dc3a86f5c70c4fbef309b6ef5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_ConfigDataFormat </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mclk</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sample_rate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bits</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1102,34 +877,46 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function would configure the registers about the sample rate, bit depths. </p>
+<p>This function is used to send data to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
-    <tr><td class="paramname">mclk</td><td>Master clock frequency of I2S. </td></tr>
-    <tr><td class="paramname">sample_rate</td><td>Sample rate of audio file running in sgtl5000. Sgtl5000 now supports 8k, 11.025k, 12k, 16k, 22.05k, 24k, 32k, 44.1k, 48k and 96k sample rate. </td></tr>
-    <tr><td class="paramname">bits</td><td>Bit depth of audio file (Sgtl5000 only supports 16bit, 20bit, 24bit and 32 bit in HW). </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3052a63c17bdfdfeac94d1011434af5d"></a>
+<a class="anchor" id="ga56c78f6217a822015a9369bf3e52e92a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetPlay </td>
+          <td class="memname">int SHELL_PrintfSynchronization </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playSource</em>&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>formatString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1138,32 +925,33 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Call this function to write a formatted output to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
-    <tr><td class="paramname">playSource</td><td>play source value, reference _sgtl_play_source.</td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success, else failed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf929ad37a6dd584cd5f17d52560ef7df"></a>
+<a class="anchor" id="gaca4540dc42f8892cb276691644a247e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetRecord </td>
+          <td class="memname">void SHELL_ChangePrompt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>recordSource</em>&#160;</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>prompt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1172,138 +960,90 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Call this function to change shell prompt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
-    <tr><td class="paramname">recordSource</td><td>record source value, reference _sgtl_record_source.</td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">prompt</td><td>The string which will be used for command prompt </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success, else failed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1f0eb0cad0476f34f65811b99d58752f"></a>
+<a class="anchor" id="gad2a840776dee8490d482a0692fbf2d7e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_WriteReg </td>
+          <td class="memname">void SHELL_PrintPrompt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Call this function to print shell prompt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">reg</td><td>The register address in sgtl. </td></tr>
-    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gad044b5a578bac8480229730d610f22b6"></a>
+<a class="anchor" id="ga44e3087a3cdea9b62f159e2585dfcd8d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_ReadReg </td>
+          <td class="memname">void SHELL_Task </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00060.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The task function for Shell; The function should be polled by upper layer. This function does not return until Shell command exit was called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">reg</td><td>The register address in sgtl. </td></tr>
-    <tr><td class="paramname">val</td><td>Value written to. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga43f1ac7cec503ad6e6ea178b6fb691ac"></a>
+<a class="anchor" id="ga4eeb17b16773359c132f1d40478938ec"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_ModifyReg </td>
+          <td class="memname">static bool SHELL_checkRunningInIsr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00060.html#ga9460fe6fb4321e52ff2069361a6f8a12">sgtl_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>clr_mask</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
-    <tr><td class="paramname">reg</td><td>The register address in sgtl. </td></tr>
-    <tr><td class="paramname">clr_mask</td><td>The mask code for the bits want to write. The bit you want to write should be 0. </td></tr>
-    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
+<p>This function is used to check if code running in ISR.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">TRUE</td><td>if code runing in ISR. </td></tr>
   </table>
   </dd>
 </dl>

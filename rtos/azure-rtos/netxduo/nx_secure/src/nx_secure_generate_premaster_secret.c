@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -29,7 +28,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_generate_premaster_secret                PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yanwu Cai, Microsoft Corporation                                    */
@@ -73,6 +72,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  10-31-2022     Yanwu Cai                Initial Version 6.2.0         */
+/*  03-08-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            fixed compiler errors when  */
+/*                                            x509 is disabled,           */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_generate_premaster_secret(const NX_SECURE_TLS_CIPHERSUITE_INFO *ciphersuite, USHORT protocol_version, NX_SECURE_TLS_KEY_MATERIAL *tls_key_material,
@@ -87,16 +90,16 @@ UCHAR                     *psk_data;
 UINT                       psk_length;
 UINT                       index;
 #endif
-#ifdef NX_SECURE_ENABLE_ECC_CIPHERSUITE
+#if defined(NX_SECURE_ENABLE_ECC_CIPHERSUITE) && !defined(NX_SECURE_DISABLE_X509)
 NX_SECURE_X509_CERT       *server_certificate;
 const NX_CRYPTO_METHOD    *curve_method_cert;
 const NX_CRYPTO_METHOD    *ecdh_method;
 NX_SECURE_EC_PUBLIC_KEY   *ec_pubkey;
 VOID                      *handler = NX_NULL;
 NX_CRYPTO_EXTENDED_OUTPUT  extended_output;
-#endif /* NX_SECURE_ENABLE_ECC_CIPHERSUITE */
+#endif /* NX_SECURE_ENABLE_ECC_CIPHERSUITE && !NX_SECURE_DISABLE_X509 */
 
-#ifndef NX_SECURE_ENABLE_ECC_CIPHERSUITE
+#if !defined(NX_SECURE_ENABLE_ECC_CIPHERSUITE) || defined(NX_SECURE_DISABLE_X509)
     NX_PARAMETER_NOT_USED(public_cipher_metadata);
     NX_PARAMETER_NOT_USED(public_cipher_metadata_size);
     NX_PARAMETER_NOT_USED(tls_ecc_curves);
@@ -113,7 +116,7 @@ NX_CRYPTO_EXTENDED_OUTPUT  extended_output;
 #endif
 #endif
 
-#ifdef NX_SECURE_ENABLE_ECC_CIPHERSUITE
+#if defined(NX_SECURE_ENABLE_ECC_CIPHERSUITE) && !defined(NX_SECURE_DISABLE_X509)
     if (ciphersuite -> nx_secure_tls_public_cipher -> nx_crypto_algorithm == NX_CRYPTO_KEY_EXCHANGE_ECDHE)
     {
 
@@ -221,7 +224,7 @@ NX_CRYPTO_EXTENDED_OUTPUT  extended_output;
 
         return(NX_SECURE_TLS_SUCCESS);
     }
-#endif /* NX_SECURE_ENABLE_ECC_CIPHERSUITE */
+#endif /* NX_SECURE_ENABLE_ECC_CIPHERSUITE && !NX_SECURE_DISABLE_X509 */
 
 #ifdef NX_SECURE_ENABLE_PSK_CIPHERSUITES
     /* Check for PSK ciphersuites. */

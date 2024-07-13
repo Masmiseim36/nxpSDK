@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */ 
 /*                                                                        */ 
 /*    fx_port.h                                            Generic        */ 
-/*                                                           6.1.5        */
+/*                                                           6.3.0        */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -48,6 +47,9 @@
 /*  03-02-2021     William E. Lamie         Modified comment(s), and      */
 /*                                            added standalone support,   */
 /*                                            resulting in version 6.1.5  */
+/*  10-31-2023     Xiuwen Cai               Modified comment(s),          */
+/*                                            added basic types guards,   */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -87,6 +89,7 @@ typedef unsigned long long  ULONG64;
 #include <stdint.h>
 #include <stdlib.h>
 
+#ifndef VOID
 #define VOID                                    void
 typedef char                                    CHAR;
 typedef char                                    BOOL;
@@ -97,6 +100,7 @@ typedef long                                    LONG;
 typedef unsigned long                           ULONG;
 typedef short                                   SHORT;
 typedef unsigned short                          USHORT;
+#endif
 
 #ifndef ULONG64_DEFINED
 #define ULONG64_DEFINED
@@ -213,7 +217,7 @@ typedef unsigned long long                      ULONG64;
 
 #ifdef FX_SYSTEM_INIT
 CHAR                            _fx_version_id[] = 
-                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  FileX Generic Version 6.2.0 *";
+                                    "Copyright (c) 2024 Microsoft Corporation.  *  FileX Generic Version 6.4.1 *";
 #else
 extern  CHAR                    _fx_version_id[];
 #endif

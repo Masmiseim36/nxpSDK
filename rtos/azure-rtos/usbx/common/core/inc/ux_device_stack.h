@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -25,7 +24,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */ 
 /*                                                                        */ 
 /*    ux_device_stack.h                                   PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -53,6 +52,9 @@
 /*                                            fixed parameter/variable    */
 /*                                            names conflict C++ keyword, */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added error checks support, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -108,6 +110,21 @@ UINT    _ux_device_stack_uninitialize(VOID);
 
 UINT    _ux_device_stack_tasks_run(VOID);
 UINT    _ux_device_stack_transfer_run(UX_SLAVE_TRANSFER *transfer_request, ULONG slave_length, ULONG host_length);
+
+UINT    _uxe_device_stack_class_register(UCHAR *class_name,
+                                    UINT (*class_entry_function)(struct UX_SLAVE_CLASS_COMMAND_STRUCT *),
+                                    ULONG configuration_number,
+                                    ULONG interface_number,
+                                    VOID *parameter);
+UINT    _uxe_device_stack_class_unregister(UCHAR *class_name,
+                                    UINT (*class_entry_function)(struct UX_SLAVE_CLASS_COMMAND_STRUCT *));
+
+UINT    _uxe_device_stack_initialize(UCHAR * device_framework_high_speed, ULONG device_framework_length_high_speed,
+                                    UCHAR * device_framework_full_speed, ULONG device_framework_length_full_speed,
+                                    UCHAR * string_framework, ULONG string_framework_length,
+                                    UCHAR * language_id_framework, ULONG language_id_framework_length,
+                                    UINT (*ux_system_slave_change_function)(ULONG));
+
 
 /* Determine if a C++ compiler is being used.  If so, complete the standard 
    C conditional started above.  */   

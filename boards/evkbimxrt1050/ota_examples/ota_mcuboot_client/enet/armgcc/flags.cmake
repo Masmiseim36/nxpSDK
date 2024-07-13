@@ -37,6 +37,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1052DVL6B \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DconfigTOTAL_HEAP_SIZE=81920 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUBOOT_APPLICATION=1 \
     -DUSE_RTOS=1 \
@@ -63,7 +64,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -81,6 +81,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1052DVL6B \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DconfigTOTAL_HEAP_SIZE=81920 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUBOOT_APPLICATION=1 \
     -DUSE_RTOS=1 \
@@ -106,7 +107,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -131,7 +131,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -154,7 +153,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -170,7 +168,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -200,7 +197,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

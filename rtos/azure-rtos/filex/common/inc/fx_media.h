@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -62,8 +61,6 @@ UINT _fx_media_format(FX_MEDIA *media_ptr, VOID (*driver)(FX_MEDIA *media), VOID
                       CHAR *volume_name, UINT number_of_fats, UINT directory_entries, UINT hidden_sectors,
                       ULONG total_sectors, UINT bytes_per_sector, UINT sectors_per_cluster,
                       UINT heads, UINT sectors_per_track);
-UINT _fx_media_exFAT_format(FX_MEDIA *media_ptr, VOID (*driver)(FX_MEDIA *media), VOID *driver_info_ptr, UCHAR *memory_ptr, UINT memory_size,
-                            CHAR *volume_name, UINT number_of_fats, ULONG64 hidden_sectors, ULONG64 total_sectors, UINT bytes_per_sector, UINT sectors_per_cluster, UINT volume_serial_number, UINT boundary_unit);
 UINT _fx_media_open(FX_MEDIA *media_ptr, CHAR *media_name,
                     VOID (*media_driver)(FX_MEDIA *), VOID *driver_info_ptr,
                     VOID *memory_ptr, ULONG memory_size);
@@ -87,8 +84,6 @@ UINT _fxe_media_format(FX_MEDIA *media_ptr, VOID (*driver)(FX_MEDIA *media), VOI
                        CHAR *volume_name, UINT number_of_fats, UINT directory_entries, UINT hidden_sectors,
                        ULONG total_sectors, UINT bytes_per_sector, UINT sectors_per_cluster,
                        UINT heads, UINT sectors_per_track);
-UINT _fxe_media_exFAT_format(FX_MEDIA *media_ptr, VOID (*driver)(FX_MEDIA *media), VOID *driver_info_ptr, UCHAR *memory_ptr, UINT memory_size,
-                             CHAR *volume_name, UINT number_of_fats, ULONG64 hidden_sectors, ULONG64 total_sectors, UINT bytes_per_sector, UINT sectors_per_cluster, UINT volume_serial_number, UINT boundary_unit);
 UINT _fxe_media_open(FX_MEDIA *media_ptr, CHAR *media_name,
                      VOID (*media_driver)(FX_MEDIA *), VOID *driver_info_ptr,
                      VOID *memory_ptr, ULONG memory_size, UINT media_control_block_size);
@@ -107,7 +102,6 @@ UINT _fxe_media_extended_space_available(FX_MEDIA *media_ptr, ULONG64 *available
 
 ULONG _fx_media_check_FAT_chain_check(FX_MEDIA *media_ptr, ULONG starting_cluster, ULONG *last_valid_cluster, ULONG *total_valid_clusters, UCHAR *logical_fat);
 ULONG _fx_media_check_lost_cluster_check(FX_MEDIA *media_ptr, UCHAR *logical_fat, ULONG total_clusters, ULONG error_correction_option);
-ULONG _fx_media_check_exFAT_lost_cluster_check(FX_MEDIA *media_ptr, UCHAR *logical_fat, ULONG total_clusters, ULONG error_correction_option);
 UINT  _fx_media_boot_info_extract(FX_MEDIA *media_ptr);
 
 #endif

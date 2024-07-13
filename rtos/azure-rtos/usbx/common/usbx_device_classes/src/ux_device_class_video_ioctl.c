@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_video_ioctl                        PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -45,10 +44,10 @@
 /*                                                                        */
 /*  INPUT                                                                 */
 /*                                                                        */
-/*    video                                   Address of video class      */
-/*                                                instance                */
-/*    ioctl_function                          IOCTL function code         */
-/*    parameter                               Parameter for function      */
+/*    video                                 Address of video class        */
+/*                                              instance                  */
+/*    ioctl_function                        IOCTL function code           */
+/*    parameter                             Parameter for function        */
 /*                                                                        */
 /*  OUTPUT                                                                */
 /*                                                                        */
@@ -59,13 +58,15 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    ThreadX                                                             */
+/*    Application                                                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  10-31-2023     Yajun Xia                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_video_ioctl(UX_DEVICE_CLASS_VIDEO *video, ULONG ioctl_function,
@@ -102,4 +103,56 @@ VOID                                                **pptr_parameter;
     /* Return status to caller.  */
     return(status);
 
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_video_ioctl                       PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in video IOCTL function call.           */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    video                                 Address of video class        */
+/*                                              instance                  */
+/*    ioctl_function                        IOCTL function code           */
+/*    parameter                             Parameter for function        */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                                              */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_video_ioctl          Video IOCTL                   */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Yajun Xia                Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_device_class_video_ioctl(UX_DEVICE_CLASS_VIDEO *video, ULONG ioctl_function,
+                                    VOID *parameter)
+{
+
+    /* Sanity check. */
+    if (video == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Call the actual video IOCTL function.  */
+    return(_ux_device_class_video_ioctl(video, ioctl_function, parameter));
 }

@@ -1,53 +1,28 @@
 var a00055 =
 [
-    [ "_notifier_notification_block", "a00055.html#a00438", [
-      [ "targetConfig", "a00055.html#a018195ff797af865b0d49c0a40c5150a", null ],
-      [ "policy", "a00055.html#aba07cda193bd7b533b525d8272cceeb2", null ],
-      [ "notifyType", "a00055.html#adc67fe829150c3c2a679db904432d7ea", null ]
+    [ "_ocotp_timing", "a00055.html#a00435", [
+      [ "wait", "a00055.html#a209b71517255bb7c7de795f2aa940d74", null ],
+      [ "relax", "a00055.html#afe864c7e56ce16eea8845349a8246a73", null ],
+      [ "strobe_prog", "a00055.html#a6dc87b120b1b5ef51f7aa07b9d21f37b", null ],
+      [ "strobe_read", "a00055.html#aebc7d26f1553dd924b5868a66ec8e417", null ]
     ] ],
-    [ "_notifier_callback_config", "a00055.html#a00436", [
-      [ "callback", "a00055.html#a85eb3076fe6c084c74669e67c62213a7", null ],
-      [ "callbackType", "a00055.html#a3a89d9f29db8d7cd160febde83d28059", null ],
-      [ "callbackData", "a00055.html#a3157da142ad8e9147093b734f7f9c1c8", null ]
+    [ "FSL_OCOTP_DRIVER_VERSION", "a00055.html#ga211ad512cb6afc3a8649a61c4f887dd5", null ],
+    [ "ocotp_timing_t", "a00055.html#ga8f3dfc0636f2758f21ed76d4e7196c4f", [
+      [ "kStatus_OCOTP_AccessError", "a00055.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a6133e2fb03bd09bc490982251048c8de", null ],
+      [ "kStatus_OCOTP_CrcFail", "a00055.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a6c5aa99c2965029cf80feaf36cd0763a", null ],
+      [ "kStatus_OCOTP_ReloadError", "a00055.html#gga56a0f36da7f9eaaf54bd05cc2bf49173aa1a3a69603c6973128021852a03cf9ce", null ],
+      [ "kStatus_OCOTP_ProgramFail", "a00055.html#gga56a0f36da7f9eaaf54bd05cc2bf49173ae3aafd3ae27db94a954965038445d240", null ],
+      [ "kStatus_OCOTP_Locked", "a00055.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a3a38a5c2c3c0f0146c9b773e855812a6", null ]
     ] ],
-    [ "_notifier_handle", "a00055.html#a00437", [
-      [ "configsTable", "a00055.html#a3ecaf5ebe809ffe87e3fd765df0ce8f4", null ],
-      [ "configsNumber", "a00055.html#aa3922e6509dd3d21571e07367e2aa578", null ],
-      [ "callbacksTable", "a00055.html#abf74e82056bd7b4e19ac11ce554b0e6e", null ],
-      [ "callbacksNumber", "a00055.html#a3800d55438441a0091a84516381bba10", null ],
-      [ "errorCallbackIndex", "a00055.html#af91a8551d975e6a2354efc9c8ef3b585", null ],
-      [ "currentConfigIndex", "a00055.html#a482028570c5e46c6ed018885dc45204f", null ],
-      [ "userFunction", "a00055.html#a51562248abd92ea71aea469d7f2599b8", null ],
-      [ "userData", "a00055.html#a6ff25f57ffc4b15c365d03afe1d65ca5", null ]
-    ] ],
-    [ "notifier_policy_t", "a00055.html#ga80f2ccc799b1cca21a091e2b28fbf36c", null ],
-    [ "notifier_notification_type_t", "a00055.html#gad7a79c7191c37e1cf4367bcda45b6943", null ],
-    [ "notifier_callback_type_t", "a00055.html#ga3fdecfea1f1a6b56c8d74c3608ee9657", null ],
-    [ "notifier_user_config_t", "a00055.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
-    [ "notifier_user_function_t", "a00055.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
-    [ "notifier_notification_block_t", "a00055.html#gac3dc913bdf7b5e3b40b347e0f748189a", null ],
-    [ "notifier_callback_t", "a00055.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
-    [ "notifier_callback_config_t", "a00055.html#ga1ed8b5576d410ff76c7707f7fc58435f", null ],
-    [ "notifier_handle_t", "a00055.html#ga5fb6d98190b8a419a8d4b4150b0eae2a", null ],
-    [ "_notifier_status", "a00055.html#gacac871f1b98f53906b07b2663943c784", [
-      [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00055.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
-      [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00055.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
-    ] ],
-    [ "_notifier_policy", "a00055.html#ga876c38aa0c3eb40cd6d9fa62106efd65", [
-      [ "kNOTIFIER_PolicyAgreement", "a00055.html#gga876c38aa0c3eb40cd6d9fa62106efd65a4513243b3cacd0aec289531dfb53e964", null ],
-      [ "kNOTIFIER_PolicyForcible", "a00055.html#gga876c38aa0c3eb40cd6d9fa62106efd65a97a2587e9e4c523dc028778ba1f72dc8", null ]
-    ] ],
-    [ "_notifier_notification_type", "a00055.html#gae4fbfb346e65c17b618dcedb491a864b", [
-      [ "kNOTIFIER_NotifyRecover", "a00055.html#ggae4fbfb346e65c17b618dcedb491a864ba49e6ad28b9d351a051035c8065de5d94", null ],
-      [ "kNOTIFIER_NotifyBefore", "a00055.html#ggae4fbfb346e65c17b618dcedb491a864ba91707ed2be51db6da2a9d6cc6eaee39c", null ],
-      [ "kNOTIFIER_NotifyAfter", "a00055.html#ggae4fbfb346e65c17b618dcedb491a864ba6e89a377b2890077646fc6af6b5c2e00", null ]
-    ] ],
-    [ "_notifier_callback_type", "a00055.html#ga120d15994388722016ef487b8159f3df", [
-      [ "kNOTIFIER_CallbackBefore", "a00055.html#gga120d15994388722016ef487b8159f3dfab9c117f1eccd38f914d0e4d05015d6a1", null ],
-      [ "kNOTIFIER_CallbackAfter", "a00055.html#gga120d15994388722016ef487b8159f3dfa8d5832eddd0d8cf976413aea02f3bfdc", null ],
-      [ "kNOTIFIER_CallbackBeforeAfter", "a00055.html#gga120d15994388722016ef487b8159f3dfada6451efe227571a1442e70ddf36e005", null ]
-    ] ],
-    [ "NOTIFIER_CreateHandle", "a00055.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
-    [ "NOTIFIER_SwitchConfig", "a00055.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],
-    [ "NOTIFIER_GetErrorCallbackIndex", "a00055.html#ga9736632c3beca486ec3f8dab504b839c", null ]
+    [ "OCOTP_Init", "a00055.html#ga54480b3c489116b8cb76053b16f02c89", null ],
+    [ "OCOTP_Deinit", "a00055.html#gaafffa3b5fe3f1f69f077e88ba5a7e107", null ],
+    [ "OCOTP_CheckBusyStatus", "a00055.html#gaa3040092099624ec476dd81bd022712c", null ],
+    [ "OCOTP_CheckErrorStatus", "a00055.html#gaf0ee0166ccd35b0273d468b7eb72c954", null ],
+    [ "OCOTP_ClearErrorStatus", "a00055.html#gad9294be0c39be4dfaa1eea436ac85171", null ],
+    [ "OCOTP_ReloadShadowRegister", "a00055.html#ga7a7b1cd03383fafde15157a06fdda557", null ],
+    [ "OCOTP_ReadFuseShadowRegister", "a00055.html#gaecc991ccf4be0c49286fb13cba97e389", null ],
+    [ "OCOTP_ReadFuseShadowRegisterExt", "a00055.html#gaa1b0f813fa5ca43225d71d9218c48a28", null ],
+    [ "OCOTP_WriteFuseShadowRegister", "a00055.html#ga43636ab96125958c9a14fe82c176e33e", null ],
+    [ "OCOTP_WriteFuseShadowRegisterWithLock", "a00055.html#ga4f837c7b4a66ffe3153f2975fd5c6388", null ],
+    [ "OCOTP_GetVersion", "a00055.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5", null ]
 ];

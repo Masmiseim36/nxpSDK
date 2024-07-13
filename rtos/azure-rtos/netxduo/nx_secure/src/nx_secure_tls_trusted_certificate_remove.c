@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -30,7 +29,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_trusted_certificate_remove           PORTABLE C      */
-/*                                                           6.1.6        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -71,11 +70,16 @@
 /*  04-02-2021     Timothy Stapko           Modified comment(s),          */
 /*                                            updated X.509 return value, */
 /*                                            resulting in version 6.1.6  */
+/*  03-08-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            fixed compiler errors when  */
+/*                                            x509 is disabled,           */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_trusted_certificate_remove(NX_SECURE_TLS_SESSION *tls_session,
                                                UCHAR *common_name, UINT common_name_length)
 {
+#ifndef NX_SECURE_DISABLE_X509
 UINT                              status;
 NX_SECURE_X509_DISTINGUISHED_NAME name;
 
@@ -102,5 +106,12 @@ NX_SECURE_X509_DISTINGUISHED_NAME name;
     }
 
     return(status);
+#else
+    NX_PARAMETER_NOT_USED(tls_session);
+    NX_PARAMETER_NOT_USED(common_name);
+    NX_PARAMETER_NOT_USED(common_name_length);
+
+    return(NX_NOT_SUPPORTED);
+#endif
 }
 

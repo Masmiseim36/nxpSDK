@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */ 
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_device_class_cdc_ecm_activate                   PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -82,6 +81,11 @@
 /*                                            fixed parameter/variable    */
 /*                                            names conflict C++ keyword, */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added zero copy support,    */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_cdc_ecm_activate(UX_SLAVE_CLASS_COMMAND *command)
@@ -134,10 +138,17 @@ ULONG                       physical_address_lsw;
         
                     /* We have found the interrupt endpoint, save it.  */
                     cdc_ecm -> ux_slave_class_cdc_ecm_interrupt_endpoint =  endpoint;
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+
+                    /* Set the endpoint buffer to the endpoint.  */
+                    endpoint -> ux_slave_endpoint_transfer_request.
+                        ux_slave_transfer_request_data_pointer =
+                                UX_DEVICE_CLASS_CDC_ECM_INTERRUPTIN_BUFFER(cdc_ecm);
+#endif
 
                     /* Reset the endpoint buffers.  */
                     _ux_utility_memory_set(cdc_ecm -> ux_slave_class_cdc_ecm_interrupt_endpoint -> ux_slave_endpoint_transfer_request. 
-                                        ux_slave_transfer_request_data_pointer, 0, UX_SLAVE_REQUEST_DATA_MAX_LENGTH); /* Use case of memset is verified. */
+                                        ux_slave_transfer_request_data_pointer, 0, UX_DEVICE_CLASS_CDC_ECM_INTERRUPTIN_BUFFER_SIZE); /* Use case of memset is verified. */
 
                     /* Resume the interrupt endpoint threads.  */
                     _ux_device_thread_resume(&cdc_ecm -> ux_slave_class_cdc_ecm_interrupt_thread); 
@@ -185,18 +196,30 @@ ULONG                       physical_address_lsw;
         
                     /* Look at type.  */
                     if ((endpoint -> ux_slave_endpoint_descriptor.bmAttributes & UX_MASK_ENDPOINT_TYPE) == UX_BULK_ENDPOINT)
-                
+                    {
+
                         /* We have found the bulk in endpoint, save it.  */
                         cdc_ecm -> ux_slave_class_cdc_ecm_bulkin_endpoint =  endpoint;
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && !defined(UX_DEVICE_CLASS_CDC_ECM_ZERO_COPY)
+                        endpoint -> ux_slave_endpoint_transfer_request.ux_slave_transfer_request_data_pointer =
+                                UX_DEVICE_CLASS_CDC_ECM_BULKIN_BUFFER(cdc_ecm);
+#endif
+                    }
                         
                 }
                 else
                 {
                     /* Look at type for out endpoint.  */
                     if ((endpoint -> ux_slave_endpoint_descriptor.bmAttributes & UX_MASK_ENDPOINT_TYPE) == UX_BULK_ENDPOINT)
-                
+                    {
+
                         /* We have found the bulk out endpoint, save it.  */
                         cdc_ecm -> ux_slave_class_cdc_ecm_bulkout_endpoint =  endpoint;
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && !defined(UX_DEVICE_CLASS_CDC_ECM_ZERO_COPY)
+                        endpoint -> ux_slave_endpoint_transfer_request.ux_slave_transfer_request_data_pointer =
+                                UX_DEVICE_CLASS_CDC_ECM_BULKOUT_BUFFER(cdc_ecm);
+#endif
+                    }
                 }                
         
                 /* Next endpoint.  */
@@ -217,11 +240,17 @@ ULONG                       physical_address_lsw;
             /* Wake up the Interrupt thread and send a network notification to the host.  */
             _ux_device_event_flags_set(&cdc_ecm -> ux_slave_class_cdc_ecm_event_flags_group, UX_DEVICE_CLASS_CDC_ECM_NETWORK_NOTIFICATION_EVENT, UX_OR);                
 
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && defined(UX_DEVICE_CLASS_CDC_ECM_ZERO_COPY)
+
+            /* There is no endpoint buffer.  */
+#else
+
             /* Reset the endpoint buffers.  */
             _ux_utility_memory_set(cdc_ecm -> ux_slave_class_cdc_ecm_bulkout_endpoint -> ux_slave_endpoint_transfer_request. 
-                                            ux_slave_transfer_request_data_pointer, 0, UX_SLAVE_REQUEST_DATA_MAX_LENGTH); /* Use case of memset is verified. */
+                                            ux_slave_transfer_request_data_pointer, 0, UX_DEVICE_CLASS_CDC_ECM_BULKOUT_BUFFER_SIZE); /* Use case of memset is verified. */
             _ux_utility_memory_set(cdc_ecm -> ux_slave_class_cdc_ecm_bulkin_endpoint -> ux_slave_endpoint_transfer_request. 
-                                            ux_slave_transfer_request_data_pointer, 0, UX_SLAVE_REQUEST_DATA_MAX_LENGTH); /* Use case of memset is verified. */
+                                            ux_slave_transfer_request_data_pointer, 0, UX_DEVICE_CLASS_CDC_ECM_BULKIN_BUFFER_SIZE); /* Use case of memset is verified. */
+#endif
 
             /* Resume the endpoint threads.  */
             _ux_device_thread_resume(&cdc_ecm -> ux_slave_class_cdc_ecm_bulkout_thread); 

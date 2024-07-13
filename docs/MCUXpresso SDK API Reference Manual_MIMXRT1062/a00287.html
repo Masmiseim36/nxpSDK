@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,101 +98,26 @@ $(document).ready(function(){initNavTree('a00287.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C CMSIS Driver<div class="ingroups"><a class="el" href="a00285.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">LPUART: Low Power Universal Asynchronous Receiver/Transmitter Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the LPI2C Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<p>The LPI2C CMSIS driver includes transactional APIs.</p>
-<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
-<h1><a class="anchor" id="LPI2CCMSISDriver"></a>
-LPI2C CMSIS Driver</h1>
-<h2><a class="anchor" id="LPI2CMasterOpsTransIRQ"></a>
-Master Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">/*Init I2C0*/</span></div>
-<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transmit*/</span></div>
-<div class="line">Driver_I2C0.MasterTransmit(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPI2CMasterOpsTransDMA"></a>
-Master Operation in DMA transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* DMAMux init and EDMA init. */</span></div>
-<div class="line"><a class="code" href="a00280.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(EXAMPLE_LPI2C_DMAMUX_BASEADDR);</div>
-<div class="line"><a class="code" href="a00022.html#a00356">edma_config_t</a> edmaConfig;</div>
-<div class="line"><a class="code" href="a00022.html#ga9851dc5addd6a1fc557bfdb625aa5c19">EDMA_GetDefaultConfig</a>(&amp;edmaConfig);</div>
-<div class="line"><a class="code" href="a00022.html#gaf7588eb4b54499f0f55c698bd98bc1bb">EDMA_Init</a>(EXAMPLE_LPI2C_DMA_BASEADDR, &amp;edmaConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C0*/</span></div>
-<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">Driver_I2C0.MasterReceive(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPI2CSlaveOpsTransIRQ"></a>
-Slave Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_SlaveSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C1*/</span></div>
-<div class="line">Driver_I2C1.Initialize(I2C_SlaveSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C1.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config slave addr*/</span></div>
-<div class="line">Driver_I2C1.Control(ARM_I2C_OWN_ADDRESS, I2C_MASTER_SLAVE_ADDR);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">Driver_I2C1.SlaveReceive(g_slave_buff, I2C_DATA_LENGTH);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --> </div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00289"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html">LPUART CMSIS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00052"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html">LPUART Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00288"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html">LPUART FreeRTOS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00053"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html">LPUART eDMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

@@ -1,14 +1,14 @@
 var a00031 =
 [
     [ "FlexIO eDMA UART Driver", "a00032.html", "a00032" ],
-    [ "_flexio_uart_type", "a00031.html#a00320", [
+    [ "_flexio_uart_type", "a00031.html#a00317", [
       [ "flexioBase", "a00031.html#ae80333106e2b3ed8723a1ba780e3db0e", null ],
       [ "TxPinIndex", "a00031.html#aa876273f088e8eebc92c3ae4be4614a1", null ],
       [ "RxPinIndex", "a00031.html#a85438b6f4b7d88017d4c05dba6f3d83e", null ],
       [ "shifterIndex", "a00031.html#a6881347e0fb8615205715d39066d4965", null ],
       [ "timerIndex", "a00031.html#af763098e90a19b0fb54079bffc418c22", null ]
     ] ],
-    [ "_flexio_uart_config", "a00031.html#a00316", [
+    [ "_flexio_uart_config", "a00031.html#a00313", [
       [ "enableUart", "a00031.html#aed8115cbc75de0df22c5dba0f0875291", null ],
       [ "enableInDoze", "a00031.html#ada3d4a23a3c835d20a2477886dd9a282", null ],
       [ "enableInDebug", "a00031.html#aa5fccdf7ef415464341bd923023ce85d", null ],
@@ -16,13 +16,13 @@ var a00031 =
       [ "baudRate_Bps", "a00031.html#a64b1a3cad4cefb854fb89bb0159fe47a", null ],
       [ "bitCountPerChar", "a00031.html#a6595a9f387022b3561c7fe1314e59150", null ]
     ] ],
-    [ "_flexio_uart_transfer", "a00031.html#a00319", [
+    [ "_flexio_uart_transfer", "a00031.html#a00316", [
       [ "data", "a00031.html#a9e9b2de91956c9b4b118fb7b43a99a27", null ],
       [ "rxData", "a00031.html#a6f8647dc4309a84459e92ac486409e15", null ],
       [ "txData", "a00031.html#a150732435e866d36bdfaa37e4b9d4a20", null ],
       [ "dataSize", "a00031.html#aa4c221e57175b9ef6882283f202acb41", null ]
     ] ],
-    [ "_flexio_uart_handle", "a00031.html#a00318", [
+    [ "_flexio_uart_handle", "a00031.html#a00315", [
       [ "txData", "a00031.html#a3a1998eca5506e4c4cd4f7c719e04911", null ],
       [ "txDataSize", "a00031.html#a99ff65a22c359bc978b7b6315595124b", null ],
       [ "rxData", "a00031.html#ab0c9d76cedee59dc8f0c352eee94ae5c", null ],

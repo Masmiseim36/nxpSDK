@@ -1,7 +1,7 @@
 var a00026 =
 [
     [ "FlexIO eDMA Camera Driver", "a00027.html", "a00027" ],
-    [ "_flexio_camera_type", "a00026.html#a00366", [
+    [ "_flexio_camera_type", "a00026.html#a00363", [
       [ "flexioBase", "a00026.html#a0cc4eb66a5d9fae52d11ed43d3c70a13", null ],
       [ "datPinStartIdx", "a00026.html#a7b91efc2fc69fdcb203b5d79a5391ed1", null ],
       [ "pclkPinIdx", "a00026.html#ac3267ba9e49323621bb07a55419c933b", null ],
@@ -10,13 +10,13 @@ var a00026 =
       [ "shifterCount", "a00026.html#a9e29ce0d904cdb2fffa9453ace11918e", null ],
       [ "timerIdx", "a00026.html#ad1c1e4d8b41f6d3b0907fdf466aabb40", null ]
     ] ],
-    [ "_flexio_camera_config", "a00026.html#a00363", [
+    [ "_flexio_camera_config", "a00026.html#a00360", [
       [ "enablecamera", "a00026.html#a86f38b484553f281631f52a83b898482", null ],
       [ "enableInDoze", "a00026.html#aa02ab61ea07cea94dd5e64c0c1191a95", null ],
       [ "enableInDebug", "a00026.html#ab132d16c3aef55f84f44d6895d873e72", null ],
       [ "enableFastAccess", "a00026.html#af6b7f712cece09735b113fd7396423c3", null ]
     ] ],
-    [ "_flexio_camera_transfer", "a00026.html#a00365", [
+    [ "_flexio_camera_transfer", "a00026.html#a00362", [
       [ "dataAddress", "a00026.html#aac5cf65e62260acd0b45e312fc75573a", null ],
       [ "dataNum", "a00026.html#a9d5c25a3e97e3aac40cc5054ba0cb6ec", null ]
     ] ],

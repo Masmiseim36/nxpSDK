@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -108,7 +107,7 @@ GX_CONST GX_UBYTE *buffer;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_image_decode                       PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -143,6 +142,10 @@ GX_CONST GX_UBYTE *buffer;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            modified jpeg decode        */
+/*                                            function parameter list,    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
@@ -156,7 +159,7 @@ UINT status;
     switch (image_reader -> gx_image_reader_image_type)
     {
     case GX_IMAGE_TYPE_JPG:
-        status = _gx_image_reader_jpeg_decode(image_reader -> gx_image_reader_source_data, image_reader -> gx_image_reader_source_data_size, outmap);
+        status = _gx_image_reader_jpeg_decode(image_reader, outmap);
         break;
 
     case GX_IMAGE_TYPE_PNG:

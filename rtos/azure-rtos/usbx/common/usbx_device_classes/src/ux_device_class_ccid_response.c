@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_ccid_response                      PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -64,6 +63,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  03-08-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added standalone support,   */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_ccid_response(UX_DEVICE_CLASS_CCID *ccid, UCHAR *buffer, ULONG length)
@@ -90,8 +92,19 @@ UINT                            status;
                                 buffer, length); /* Use case of memcpy is verified. */
     }
 
+#if defined(UX_DEVICE_STANDALONE)
+
+    /* Setup transfer struct for running.  */
+    UX_SLAVE_TRANSFER_STATE_RESET(transfer);
+    transfer -> ux_slave_transfer_request_requested_length = length;
+    status = UX_SUCCESS;
+
+    ccid -> ux_device_class_ccid_rsp_state = UX_DEVICE_CLASS_CCID_RSP_START;
+#else
+
     /* Transfer data.  */
     status = _ux_device_stack_transfer_request(transfer, length, length);
+#endif
 
     /* Unlock bulk IN.  */
     _ux_device_mutex_off(&ccid -> ux_device_class_ccid_response_mutex);

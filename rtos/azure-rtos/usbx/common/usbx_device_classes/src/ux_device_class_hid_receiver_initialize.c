@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_hid_receiver_initialize            PORTABLE C      */
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -77,6 +76,9 @@
 /*  07-29-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            added standalone receiver,  */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added zero copy support,    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_hid_receiver_initialize(UX_SLAVE_CLASS_HID *hid,
@@ -96,6 +98,11 @@ UCHAR                                   *memory_events;
 #if !defined(UX_DEVICE_STANDALONE)
 UCHAR                                   *memory_stack;
 #endif
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && defined(UX_DEVICE_CLASS_HID_ZERO_COPY)
+UX_DEVICE_CLASS_HID_RECEIVED_EVENT      *events_head;
+UCHAR                                   *buffer;
+UINT                                    i;
+#endif
 UINT                                    status = UX_SUCCESS;
 
 
@@ -114,10 +121,20 @@ UINT                                    status = UX_SUCCESS;
 #endif
     UX_ASSERT(!UX_OVERFLOW_CHECK_ADD_ULONG(parameter -> ux_device_class_hid_parameter_receiver_event_max_length, sizeof(ULONG)));
 
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && defined(UX_DEVICE_CLASS_HID_ZERO_COPY)
+
+    /* Events structs are in regular memory.  */
+    UX_ASSERT(!UX_OVERFLOW_CHECK_MULV_ULONG(sizeof(UX_DEVICE_CLASS_HID_RECEIVED_EVENT), parameter -> ux_device_class_hid_parameter_receiver_event_max_number));
+    events_size = sizeof(UX_DEVICE_CLASS_HID_RECEIVED_EVENT) * parameter -> ux_device_class_hid_parameter_receiver_event_max_number;
+
+    /* Memory of events are allocated later as cache safe memory.  */
+#else
+
     /* Memory of events.  */
     events_size  = parameter -> ux_device_class_hid_parameter_receiver_event_max_length + sizeof(ULONG);
     UX_ASSERT(!UX_OVERFLOW_CHECK_MULV_ULONG(events_size, parameter -> ux_device_class_hid_parameter_receiver_event_max_number));
     events_size *= parameter -> ux_device_class_hid_parameter_receiver_event_max_number;
+#endif
     UX_ASSERT(!UX_OVERFLOW_CHECK_ADD_ULONG(memory_size, events_size));
     memory_size += events_size;
 
@@ -130,6 +147,37 @@ UINT                                    status = UX_SUCCESS;
     memory_events = memory_stack + UX_DEVICE_CLASS_HID_RECEIVER_THREAD_STACK_SIZE;
 #else
     memory_events = memory_receiver + sizeof(UX_DEVICE_CLASS_HID_RECEIVER);
+#endif
+
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && defined(UX_DEVICE_CLASS_HID_ZERO_COPY)
+
+    /* Allocate cache safe memory.  */
+
+    /* Total buffer size calculate.  */
+    events_size  = parameter -> ux_device_class_hid_parameter_receiver_event_max_length;
+    UX_ASSERT(!UX_OVERFLOW_CHECK_MULV_ULONG(events_size, parameter -> ux_device_class_hid_parameter_receiver_event_max_number));
+    events_size *= parameter -> ux_device_class_hid_parameter_receiver_event_max_number;
+
+    /* Allocate buffer.  */
+    buffer = _ux_utility_memory_allocate(UX_NO_ALIGN, UX_CACHE_SAFE_MEMORY, events_size);
+    if (buffer == UX_NULL)
+    {
+        _ux_utility_memory_free(memory_receiver);
+        return(UX_MEMORY_INSUFFICIENT);
+    }
+
+    /* Assign events buffers.  */
+    events_head = (UX_DEVICE_CLASS_HID_RECEIVED_EVENT *) memory_events;
+    for (i = 0; i < parameter -> ux_device_class_hid_parameter_receiver_event_max_number; i++)
+    {
+
+        /* Assign event buffer.  */
+        events_head -> ux_device_class_hid_received_event_data = buffer;
+
+        /* Move to next event and next buffer.  */
+        buffer += parameter -> ux_device_class_hid_parameter_receiver_event_max_length;
+        events_head ++;
+    }
 #endif
 
     /* Store receiver instance pointer.  */

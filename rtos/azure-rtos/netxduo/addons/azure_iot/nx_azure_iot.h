@@ -1,15 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
-
-/* Version: 6.1 */
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**
  * @file nx_azure_iot.h
@@ -231,17 +228,8 @@ typedef struct NX_AZURE_IOT_THREAD_STRUCT
  *
  * @details This routine creates the Azure IoT subsystem. An internal thread is created to
  *          manage activities related to Azure IoT services. Only one NX_AZURE_IOT instance
- *          is needed to manage instances for Azure IoT hub, IoT Central, Device Provisioning
- *          Services (DPS), and Azure Security Center (ASC).
- * 
- * @remarks This routine enables ASC by default. ASC provides a comprehensive security solution for
- *          Azure RTOS devices in which it collects network information and send it to the IoTHub.
- *          More details can be found https://docs.microsoft.com/en-us/azure/defender-for-iot/iot-security-azure-rtos.
- *          To disable ASC from your application, we provide both compile time and runtime option:
- *              - compile-time : NX_AZURE_DISABLE_IOT_SECURITY_MODULE in NetXDuo header file such as nx_port.h
- *                               when building the middleware.
- *              - runtime : Call UINT nx_azure_iot_security_module_disable(NX_AZURE_IOT *nx_azure_iot_ptr)
- *                          in your application code.
+ *          is needed to manage instances for Azure IoT hub, IoT Central, and Device Provisioning
+ *          Services (DPS).
  * 
  * @param[in] nx_azure_iot_ptr A pointer to a #NX_AZURE_IOT
  * @param[in] name_ptr A pointer to a NULL-terminated string indicating the name of the Azure IoT instance.

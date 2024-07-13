@@ -1,6 +1,6 @@
 var a00044 =
 [
-    [ "_lpi2c_slave_config", "a00044.html#a00353", [
+    [ "_lpi2c_slave_config", "a00044.html#a00350", [
       [ "enableSlave", "a00044.html#ac3fb0e92d308e71ea0a56c5692a9af6b", null ],
       [ "address0", "a00044.html#a51592e118bf9f0e6d0bb38c68b4e8d35", null ],
       [ "address1", "a00044.html#a1c2f9dab27e5669a3279365328908239", null ],
@@ -20,7 +20,7 @@ var a00044 =
       [ "dataValidDelay_ns", "a00044.html#a80b3534a23c4f16f5359625e6f8da332", null ],
       [ "clockHoldTime_ns", "a00044.html#aee288c9f292ce2ff0908e556586465af", null ]
     ] ],
-    [ "_lpi2c_slave_transfer", "a00044.html#a00355", [
+    [ "_lpi2c_slave_transfer", "a00044.html#a00352", [
       [ "event", "a00044.html#a6fd5fcb93c3592681fe6b4ef3a2db4b9", null ],
       [ "receivedAddress", "a00044.html#a3b845478ed4749c2e0dfe072c55adc22", null ],
       [ "data", "a00044.html#ae3e135fc8156ca768309bfc89e6661ff", null ],
@@ -28,7 +28,7 @@ var a00044 =
       [ "completionStatus", "a00044.html#af19f9378df0b63f18134eafd0e37c558", null ],
       [ "transferredCount", "a00044.html#a6118eac86f25540117b453390d4e2a29", null ]
     ] ],
-    [ "_lpi2c_slave_handle", "a00044.html#a00354", [
+    [ "_lpi2c_slave_handle", "a00044.html#a00351", [
       [ "transfer", "a00044.html#a5520be706e136169454d21def1e28614", null ],
       [ "isBusy", "a00044.html#a3b7952f6dfb5ad946c64aea5851549e2", null ],
       [ "wasTransmit", "a00044.html#a7695826229e33cce0433243315541ec2", null ],

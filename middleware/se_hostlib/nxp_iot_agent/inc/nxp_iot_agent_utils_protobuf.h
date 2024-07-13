@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2019, 2021 NXP
+ * Copyright 2018-2019,2021,2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -102,11 +102,11 @@ const pb_field_t* decode_unionmessage_type(pb_istream_t *stream, const pb_field_
  * @param[in] arr: The binary data to convert.
  * @param[in] sz: The length of the binary data to convert.
  * @param[out] str: The resulting hex string.
- * @param[out] str: Maximum length of characters to write to the resulting 
+ * @param[out] strlen: Maximum length of characters to write to the resulting 
  *   hex string (incl. the null termination)
  * @return The number of characters written to the hex string (excl. the null termination)
  */
-int byte_array_to_hex_str(const uint8_t* arr, size_t sz, char* str, size_t len);
+int byte_array_to_hex_str(const uint8_t* arr, size_t sz, char* str, size_t strlen);
 
 
 /**

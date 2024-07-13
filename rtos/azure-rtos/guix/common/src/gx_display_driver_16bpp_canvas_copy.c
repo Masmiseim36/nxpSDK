@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_canvas_copy                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -71,6 +70,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_canvas_copy(GX_CANVAS *canvas, GX_CANVAS *composite)
@@ -81,6 +83,14 @@ USHORT      *read;
 USHORT      *write;
 INT          width;
 INT          row;
+
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    if (canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+    {
+        /* Not supported. */
+        return;
+    }
+#endif
 
     dirty.gx_rectangle_left = dirty.gx_rectangle_top = 0;
     dirty.gx_rectangle_right = (GX_VALUE)(canvas -> gx_canvas_x_resolution - (GX_VALUE)1);

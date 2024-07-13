@@ -84,6 +84,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     flexspi_hyper_flash_ops.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
     fsl_clock.o (+RO +RW +ZI)
+    uldiv.o (+RO +RW +ZI)
+    llushr.o (+RO +RW +ZI)
+    llshl.o (+RO +RW +ZI)
     * (NonCacheable.init)
     * (*NonCacheable)
   }

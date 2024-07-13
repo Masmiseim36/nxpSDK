@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -103,7 +102,7 @@ UCHAR                                       element_hexa_lower;
 
     /* We now need to retrieve the MAC address of the node which is embedded in the ECM descriptor.
        We will parse the entire configuration descriptor of the device and look for the ECM Ethernet Networking Functional Descriptor.  */ 
-    configuration_index = cdc_ecm -> ux_host_class_cdc_ecm_interface_data -> ux_interface_configuration -> ux_configuration_descriptor.bConfigurationValue -1;
+    configuration_index = (ULONG)cdc_ecm -> ux_host_class_cdc_ecm_interface_data -> ux_interface_configuration -> ux_configuration_descriptor.bConfigurationValue -1;
        
     /* We need to get the default control endpoint transfer request pointer.  */
     control_endpoint =  &cdc_ecm -> ux_host_class_cdc_ecm_device -> ux_device_control_endpoint;

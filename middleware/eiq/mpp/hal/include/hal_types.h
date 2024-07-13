@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -40,7 +40,8 @@ typedef struct {
     int nb_lines;           /*!< the number of lines required (set to 0 if the element doesn't require a specific number of lines) */
     int alignment;          /*!< alignment requirement in bytes */
     bool cacheable;         /*!< if true, HW will require cache maintenance */
-    unsigned char *addr;    /*!< the buffer address */
+    unsigned char *addr;    /*!< the aligned buffer address */
+    unsigned char *heap_p;  /*!< pointer to the heap that should be freed */
 } hw_buf_desc_t;
 
 /** maximum length of device name */

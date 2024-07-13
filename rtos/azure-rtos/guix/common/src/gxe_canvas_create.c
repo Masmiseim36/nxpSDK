@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -38,7 +37,7 @@ GX_CALLER_CHECKING_EXTERNS
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gxe_canvas_create                                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +79,10 @@ GX_CALLER_CHECKING_EXTERNS
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s), verify   */
+/*                                            the memory size only when   */
+/*                                            memory_area is provided,    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gxe_canvas_create(GX_CANVAS *canvas, GX_CONST GX_CHAR *name, GX_DISPLAY *display, UINT type,
@@ -109,10 +112,13 @@ UINT pitch;
         return(GX_ALREADY_CREATED);
     }
 
-    pitch = (UINT)(display -> gx_display_driver_row_pitch_get((USHORT)width));
-    if (memory_size < pitch * height)
+    if (memory_area)
     {
-        return GX_INVALID_SIZE;
+        pitch = (UINT)(display -> gx_display_driver_row_pitch_get((USHORT)width));
+        if (memory_size < pitch * height)
+        {
+            return GX_INVALID_SIZE;
+        }
     }
 
     if (type & (~((UINT)(GX_CANVAS_SIMPLE | GX_CANVAS_MANAGED | GX_CANVAS_VISIBLE |

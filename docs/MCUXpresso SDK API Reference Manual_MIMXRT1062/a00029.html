@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('a00029.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO Camera Driver<div class="ingroups"><a class="el" href="a00283.html">FlexIO: FlexIO Driver</a></div></div>  </div>
+<div class="title">FlexIO Camera Driver<div class="ingroups"><a class="el" href="a00279.html">FlexIO: FlexIO Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -118,26 +118,26 @@ Typical use case</h1>
 <h2><a class="anchor" id="CAMERACasePolling"></a>
 FlexIO Camera Receive using eDMA method</h2>
 <div class="fragment"><div class="line"><span class="keyword">volatile</span> uint32_t isEDMAGetOnePictureFinish = <span class="keyword">false</span>;</div>
-<div class="line"><a class="code" href="a00022.html#a00357">edma_handle_t</a> g_edmaHandle;</div>
-<div class="line"><a class="code" href="a00030.html#a00391">flexio_camera_edma_handle_t</a> g_cameraEdmaHandle;</div>
-<div class="line"><a class="code" href="a00022.html#a00356">edma_config_t</a> edmaConfig;</div>
-<div class="line"><a class="code" href="a00029.html#a00393">FLEXIO_CAMERA_Type</a> g_FlexioCameraDevice = {.<a class="code" href="a00029.html#a0cc4eb66a5d9fae52d11ed43d3c70a13">flexioBase</a> = FLEXIO0,</div>
+<div class="line"><a class="code" href="a00022.html#a00354">edma_handle_t</a> g_edmaHandle;</div>
+<div class="line"><a class="code" href="a00030.html#a00388">flexio_camera_edma_handle_t</a> g_cameraEdmaHandle;</div>
+<div class="line"><a class="code" href="a00022.html#a00353">edma_config_t</a> edmaConfig;</div>
+<div class="line"><a class="code" href="a00029.html#a00390">FLEXIO_CAMERA_Type</a> g_FlexioCameraDevice = {.<a class="code" href="a00029.html#a0cc4eb66a5d9fae52d11ed43d3c70a13">flexioBase</a> = FLEXIO0,</div>
 <div class="line">                                       .datPinStartIdx = 24U, <span class="comment">/* fxio_pin 24 -31 are used. */</span></div>
 <div class="line">                                       .pclkPinIdx = 1U,      <span class="comment">/* fxio_pin 1 is used as pclk pin. */</span></div>
 <div class="line">                                       .hrefPinIdx = 18U,     <span class="comment">/* flexio_pin 18 is used as href pin. */</span></div>
 <div class="line">                                       .shifterStartIdx = 0U, <span class="comment">/* Shifter 0 = 7 are used. */</span></div>
 <div class="line">                                       .shifterCount = 8U,</div>
 <div class="line">                                       .timerIdx = 0U};</div>
-<div class="line"><a class="code" href="a00029.html#a00390">flexio_camera_config_t</a> cameraConfig;</div>
+<div class="line"><a class="code" href="a00029.html#a00387">flexio_camera_config_t</a> cameraConfig;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* Configure DMAMUX */</span></div>
-<div class="line"><a class="code" href="a00280.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(DMAMUX0);</div>
+<div class="line"><a class="code" href="a00276.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(DMAMUX0);</div>
 <div class="line"><span class="comment">/* Configure DMA */</span></div>
 <div class="line"><a class="code" href="a00022.html#ga9851dc5addd6a1fc557bfdb625aa5c19">EDMA_GetDefaultConfig</a>(&amp;edmaConfig);</div>
 <div class="line"><a class="code" href="a00022.html#gaf7588eb4b54499f0f55c698bd98bc1bb">EDMA_Init</a>(DMA0, &amp;edmaConfig);</div>
 <div class="line"></div>
-<div class="line"><a class="code" href="a00280.html#gab4cfa329d636dc52dffb7fedef84367e">DMAMUX_SetSource</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF, (g_FlexioCameraDevice.<a class="code" href="a00029.html#a203b446cf0bac1a0252ce546d618183e">shifterStartIdx</a> + 1U));</div>
-<div class="line"><a class="code" href="a00280.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF);</div>
+<div class="line"><a class="code" href="a00276.html#gab4cfa329d636dc52dffb7fedef84367e">DMAMUX_SetSource</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF, (g_FlexioCameraDevice.<a class="code" href="a00029.html#a203b446cf0bac1a0252ce546d618183e">shifterStartIdx</a> + 1U));</div>
+<div class="line"><a class="code" href="a00276.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF);</div>
 <div class="line"><a class="code" href="a00022.html#gae71842684e693908395784e8b7f7ef55">EDMA_CreateHandle</a>(&amp;g_edmaHandle, DMA0, DMA_CHN_FLEXIO_TO_FRAMEBUFF);</div>
 <div class="line"></div>
 <div class="line"><a class="code" href="a00029.html#ga802016ccb9ed8299101f66455b85d7db">FLEXIO_CAMERA_GetDefaultConfig</a>(&amp;cameraConfig);</div>
@@ -157,9 +157,9 @@ FlexIO Camera Receive using eDMA method</h2>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* A callback function is also needed */</span></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_CAMERA_UserCallback(<a class="code" href="a00029.html#a00393">FLEXIO_CAMERA_Type</a> *base,</div>
-<div class="line">                            <a class="code" href="a00030.html#a00391">flexio_camera_edma_handle_t</a> *handle,</div>
-<div class="line">                            <a class="code" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status,</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_CAMERA_UserCallback(<a class="code" href="a00029.html#a00390">FLEXIO_CAMERA_Type</a> *base,</div>
+<div class="line">                            <a class="code" href="a00030.html#a00388">flexio_camera_edma_handle_t</a> *handle,</div>
+<div class="line">                            <a class="code" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status,</div>
 <div class="line">                            <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
@@ -177,15 +177,15 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00393"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00393">_flexio_camera_type</a></td></tr>
-<tr class="memdesc:a00393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure of configuring the FlexIO Camera device.  <a href="a00029.html#a00393">More...</a><br/></td></tr>
-<tr class="separator:a00393"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00390"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00390">_flexio_camera_config</a></td></tr>
-<tr class="memdesc:a00390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO Camera user configuration structure.  <a href="a00029.html#a00390">More...</a><br/></td></tr>
+<tr class="memitem:a00390"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00390">_flexio_camera_type</a></td></tr>
+<tr class="memdesc:a00390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure of configuring the FlexIO Camera device.  <a href="a00029.html#a00390">More...</a><br/></td></tr>
 <tr class="separator:a00390"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00392"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00392">_flexio_camera_transfer</a></td></tr>
-<tr class="memdesc:a00392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO Camera transfer structure.  <a href="a00029.html#a00392">More...</a><br/></td></tr>
-<tr class="separator:a00392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00387"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00387">_flexio_camera_config</a></td></tr>
+<tr class="memdesc:a00387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO Camera user configuration structure.  <a href="a00029.html#a00387">More...</a><br/></td></tr>
+<tr class="separator:a00387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00389"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00389">_flexio_camera_transfer</a></td></tr>
+<tr class="memdesc:a00389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO Camera transfer structure.  <a href="a00029.html#a00389">More...</a><br/></td></tr>
+<tr class="separator:a00389"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -196,15 +196,15 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga8469ec2f5177b9aa71fd65032efc6bf7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8469ec2f5177b9aa71fd65032efc6bf7"></a>
-typedef struct <a class="el" href="a00029.html#a00393">_flexio_camera_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8469ec2f5177b9aa71fd65032efc6bf7">FLEXIO_CAMERA_Type</a></td></tr>
+typedef struct <a class="el" href="a00029.html#a00390">_flexio_camera_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8469ec2f5177b9aa71fd65032efc6bf7">FLEXIO_CAMERA_Type</a></td></tr>
 <tr class="memdesc:ga8469ec2f5177b9aa71fd65032efc6bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure of configuring the FlexIO Camera device. <br/></td></tr>
 <tr class="separator:ga8469ec2f5177b9aa71fd65032efc6bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaea627d9388fe88477f9622c04c84bc84"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
-<a class="el" href="a00029.html#a00390">_flexio_camera_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaea627d9388fe88477f9622c04c84bc84">flexio_camera_config_t</a></td></tr>
+<a class="el" href="a00029.html#a00387">_flexio_camera_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaea627d9388fe88477f9622c04c84bc84">flexio_camera_config_t</a></td></tr>
 <tr class="memdesc:gaea627d9388fe88477f9622c04c84bc84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO Camera user configuration structure.  <a href="#gaea627d9388fe88477f9622c04c84bc84">More...</a><br/></td></tr>
 <tr class="separator:gaea627d9388fe88477f9622c04c84bc84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9f8f31be1073c6d3a85e11d9b23dd93a"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
-<a class="el" href="a00029.html#a00392">_flexio_camera_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga9f8f31be1073c6d3a85e11d9b23dd93a">flexio_camera_transfer_t</a></td></tr>
+<a class="el" href="a00029.html#a00389">_flexio_camera_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga9f8f31be1073c6d3a85e11d9b23dd93a">flexio_camera_transfer_t</a></td></tr>
 <tr class="memdesc:ga9f8f31be1073c6d3a85e11d9b23dd93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO Camera transfer structure.  <a href="#ga9f8f31be1073c6d3a85e11d9b23dd93a">More...</a><br/></td></tr>
 <tr class="separator:ga9f8f31be1073c6d3a85e11d9b23dd93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -229,7 +229,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaf67f7409d83d5806e8dee459e28ea116"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaf67f7409d83d5806e8dee459e28ea116">FSL_FLEXIO_CAMERA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+<tr class="memitem:gaf67f7409d83d5806e8dee459e28ea116"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaf67f7409d83d5806e8dee459e28ea116">FSL_FLEXIO_CAMERA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
 <tr class="memdesc:gaf67f7409d83d5806e8dee459e28ea116"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO Camera driver version 2.1.3.  <a href="#gaf67f7409d83d5806e8dee459e28ea116">More...</a><br/></td></tr>
 <tr class="separator:gaf67f7409d83d5806e8dee459e28ea116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -276,7 +276,7 @@ DMA support</h2></td></tr>
 <tr class="separator:gadec05a7c9f34ca3d4790c6c54db455dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00393" id="a00393"></a>
+<a name="a00390" id="a00390"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -398,7 +398,7 @@ DMA support</h2></td></tr>
 
 </div>
 </div>
-<a name="a00390" id="a00390"></a>
+<a name="a00387" id="a00387"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -453,7 +453,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00392" id="a00392"></a>
+<a name="a00389" id="a00389"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -482,7 +482,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_CAMERA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
+          <td class="memname">#define FSL_FLEXIO_CAMERA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -507,7 +507,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00029.html#a00390">_flexio_camera_config</a>  <a class="el" href="a00029.html#gaea627d9388fe88477f9622c04c84bc84">flexio_camera_config_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00029.html#a00387">_flexio_camera_config</a>  <a class="el" href="a00029.html#gaea627d9388fe88477f9622c04c84bc84">flexio_camera_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -519,7 +519,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00029.html#a00392">_flexio_camera_transfer</a>  <a class="el" href="a00029.html#ga9f8f31be1073c6d3a85e11d9b23dd93a">flexio_camera_transfer_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00029.html#a00389">_flexio_camera_transfer</a>  <a class="el" href="a00029.html#ga9f8f31be1073c6d3a85e11d9b23dd93a">flexio_camera_transfer_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -638,7 +638,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <p>The configuration can be used directly for calling the <a class="el" href="a00029.html#ga673dbe9cee73c1bc18a48d4903ae0d0f" title="Ungates the FlexIO clock, resets the FlexIO module, and configures the FlexIO Camera. ">FLEXIO_CAMERA_Init()</a>. Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00390">flexio_camera_config_t</a> config;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00387">flexio_camera_config_t</a> config;</div>
 <div class="line"><a class="code" href="a00029.html#ga802016ccb9ed8299101f66455b85d7db">FLEXIO_CAMERA_GetDefaultConfig</a>(&amp;userConfig);</div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

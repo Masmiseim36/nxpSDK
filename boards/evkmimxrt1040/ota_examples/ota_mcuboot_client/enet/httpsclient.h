@@ -22,7 +22,7 @@
 #include "lwip/opt.h"
 
 #include "mbedtls/entropy.h"
-#include "mbedtls/hmac_drbg.h"
+#include "mbedtls/ctr_drbg.h"
 #include "mbedtls/certs.h"
 #include "mbedtls/x509.h"
 #include "mbedtls/ssl.h"
@@ -43,7 +43,7 @@ int https_client_ota_download(const char *host, const char *fPath, uint32_t dstA
 typedef struct _TLSDataParams
 {
     mbedtls_entropy_context entropy;
-    mbedtls_hmac_drbg_context hmac_drbg;
+    mbedtls_ctr_drbg_context ctr_drbg;
     mbedtls_ssl_context ssl;
     mbedtls_ssl_config conf;
     uint32_t flags;

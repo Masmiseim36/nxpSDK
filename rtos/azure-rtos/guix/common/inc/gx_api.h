@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -24,7 +23,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.4.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -68,7 +67,7 @@
 /*                                            added new widget type       */
 /*                                            GX_GENERIC_SCROLL_WHEEL,    */
 /*                                            added animation delete API, */
-/*                                            added generic Dave2D        */ 
+/*                                            added generic Dave2D        */
 /*                                            graphics accelerator        */
 /*                                            support,                    */
 /*                                            resulting in version 6.1.7  */
@@ -101,6 +100,23 @@
 /*                                            GX_SCROLLBAR_BACKGROUND_    */
 /*                                            TILE,                       */
 /*                                            resulting in version 6.2.0  */
+/*  03-08-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch version,      */
+/*                                            resulting in version 6.2.1  */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added new APIs for loading  */
+/*                                            pixelmap and font from      */
+/*                                            standalone binary,          */
+/*                                            removed unused defines,     */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
+/*  12-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch version,      */
+/*                                            resulting in version 6.4.0  */
+/*  03-01-2024     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch version,      */
+/*                                            resulting in version 6.4.1  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -123,8 +139,8 @@ extern   "C" {
 
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
-#define GUIX_MINOR_VERSION 2
-#define GUIX_PATCH_VERSION 0
+#define GUIX_MINOR_VERSION 4
+#define GUIX_PATCH_VERSION 1
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -360,7 +376,9 @@ typedef struct GX_STRING_STRUCT
 #define GX_FALSE                            0
 #define GX_NULL                             0
 #define GX_ID_NONE                          0
-#define GX_MAGIC_NUMBER                     0x4758U
+#define GX_MAGIC_NUMBER                     0x4758U /* GX */
+#define GX_RESOURCE_TYPE_BINRES_NORMAL      0x4758U /* GX */
+#define GX_RESOURCE_TYPE_BINRES_STANDALONE  0x4753U /* GS */
 
 /* API return values.  */
 
@@ -967,6 +985,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_CANVAS_VISIBLE                   0x04                /* Canvas is visible                         */
 #define GX_CANVAS_MODIFIED                  0x08
 #define GX_CANVAS_COMPOSITE                 0x20                /* Canvas is a buffer for creating composite*/
+#define GX_CANVAS_PARTIAL_FRAME_BUFFER      0x40
 
 /* Define common combinations.  */
 
@@ -1516,6 +1535,10 @@ typedef struct GX_DRAW_CONTEXT_STRUCT
     GX_RECTANGLE              gx_draw_context_dirty;
     GX_RECTANGLE             *gx_draw_context_clip;
     GX_VALUE                  gx_draw_context_pitch;
+#if defined GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    GX_VALUE                  gx_draw_context_offset_x;
+    GX_VALUE                  gx_draw_context_offset_y;
+#endif
 } GX_DRAW_CONTEXT;
 
 /* Define fill map info type.  */
@@ -1805,6 +1828,12 @@ typedef struct GX_CANVAS_STRUCT
 
     /* Define the canvas memory pointer.  */
     GX_COLOR *gx_canvas_memory;
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    GX_VALUE  gx_canvas_memory_width;
+    GX_VALUE  gx_canvas_memory_height;
+    GX_VALUE  gx_canvas_memory_offset_x;
+    GX_VALUE  gx_canvas_memory_offset_y;
+#endif
 
     /* padded canvas memory buffer, only needed for Win32 */
     #ifdef GX_TARGET_WIN32
@@ -1832,7 +1861,6 @@ typedef struct GX_CANVAS_STRUCT
     GX_UBYTE      gx_canvas_alpha;
     GX_UBYTE      gx_canvas_draw_nesting;
     GX_BYTE       gx_canvas_hardware_layer;
-
 } GX_CANVAS;
 
 /* Define Theme type */
@@ -1873,7 +1901,6 @@ typedef struct GX_PEN_CONFIGURATION_STRUCT
     GX_FIXED_VAL gx_pen_configuration_min_drag_dist;
     UINT         gx_pen_configuration_max_pen_speed_ticks;
 } GX_PEN_CONFIGURATION;
-
 
 #define GX_RESOURCE_HEADER_SIZE      20
 #define GX_THEME_HEADER_SIZE         114
@@ -2999,6 +3026,8 @@ typedef struct GX_FIXED_POINT_STRUCT
 #endif
 #define gx_binres_language_table_load_ext                        _gx_binres_language_table_load_ext
 #define gx_binres_theme_load                                     _gx_binres_theme_load
+#define gx_binres_pixelmap_load                                  _gx_binres_pixelmap_load
+#define gx_binres_font_load                                      _gx_binres_font_load
 
 #define gx_brush_default                                         _gx_brush_default
 #define gx_brush_define                                          _gx_brush_define
@@ -3485,8 +3514,6 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_text_scroll_wheel_draw                                _gx_text_scroll_wheel_draw
 #define gx_text_scroll_wheel_event_process                       _gx_text_scroll_wheel_event_process
 
-#define gx_transition_window_create(a, b, c, d, e, f)            _gx_transition_window_create(a, b, (GX_WIDGET *)c, d, e, f)
-
 #define gx_tree_view_create(a, b, c, d, e, f)                    _gx_tree_view_create((GX_TREE_VIEW *)a, b, (GX_WIDGET *)c, d, e, f)
 #define gx_tree_view_draw                                        _gx_tree_view_draw
 #define gx_tree_view_event_process                               _gx_tree_view_event_process
@@ -3659,6 +3686,8 @@ UINT _gx_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****returne
 #endif
 UINT _gx_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table);
 UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
+UINT _gx_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gx_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 UINT _gx_brush_default(GX_BRUSH *brush);
 UINT _gx_brush_define(GX_BRUSH *brush, GX_COLOR line_color, GX_COLOR fill_color, UINT style);
@@ -4481,6 +4510,8 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #endif
 #define gx_binres_language_table_load_ext                        _gxe_binres_language_table_load_ext
 #define gx_binres_theme_load                                     _gxe_binres_theme_load
+#define gx_binres_pixelmap_load                                  _gxe_binres_pixelmap_load
+#define gx_binres_font_load                                      _gxe_binres_font_load
 
 #define gx_brush_default                                         _gxe_brush_default
 #define gx_brush_define                                          _gxe_brush_define
@@ -5136,6 +5167,8 @@ UINT _gxe_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****return
 #endif
 UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table);
 UINT _gxe_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
+UINT _gxe_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gxe_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 UINT _gxe_brush_default(GX_BRUSH *brush);
 UINT _gxe_brush_define(GX_BRUSH *brush, GX_COLOR line_color, GX_COLOR fill_color, UINT style);

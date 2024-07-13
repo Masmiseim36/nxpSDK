@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -107,7 +106,6 @@
 /*  CALLS                                                                 */
 /*                                                                        */
 /*    I/O Driver                                                          */
-/*    _fx_utility_exFAT_bitmap_initialize   Initialize exFAT bitmap       */
 /*    _fx_utility_16_unsigned_read          Read 16-bit unsigned value    */
 /*    _fx_utility_32_unsigned_read          Read 32-bit unsigned value    */
 /*    _fx_utility_logical_sector_flush      Invalidate log sector cache   */
@@ -369,7 +367,7 @@ FX_INT_SAVE_AREA
 
     /* If trace is enabled, register this object.  */
     FX_TRACE_OBJECT_REGISTER(FX_TRACE_OBJECT_TYPE_MEDIA, media_ptr, media_name, FX_MAX_FAT_CACHE, media_ptr -> fx_media_sector_cache_size)
-    
+
     /* Adjust the internal cache to fit the fixed number of sector cache control blocks
        built into the media control block.  */
     if (media_ptr -> fx_media_sector_cache_size > FX_MAX_SECTOR_CACHE)
@@ -463,121 +461,86 @@ FX_INT_SAVE_AREA
     }
 #endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type != FX_exFAT)
+
+    /* Root_sector_start has been computed */
+    media_ptr -> fx_media_root_sector_start =  media_ptr -> fx_media_reserved_sectors +
+        (media_ptr -> fx_media_number_of_FATs *
+         media_ptr -> fx_media_sectors_per_FAT);
+
+    /* Calculate the number of directory sectors.  */
+    media_ptr -> fx_media_root_sectors =
+        ((media_ptr -> fx_media_root_directory_entries * FX_DIR_ENTRY_SIZE) +
+         media_ptr -> fx_media_bytes_per_sector - 1) /
+        media_ptr -> fx_media_bytes_per_sector;
+
+    /* Calculate the starting data sector.  */
+    media_ptr -> fx_media_data_sector_start =  media_ptr -> fx_media_root_sector_start +
+        media_ptr -> fx_media_root_sectors;
+
+    /* Calculate the total number of clusters.  */
+    media_ptr -> fx_media_total_clusters =  (ULONG)((media_ptr -> fx_media_total_sectors - media_ptr -> fx_media_data_sector_start) /
+                                                        media_ptr -> fx_media_sectors_per_cluster);
+
+    /* Determine if a 12-bit FAT is in use.  */
+    if (media_ptr -> fx_media_total_clusters < FX_12_BIT_FAT_SIZE)
     {
-#endif /* FX_ENABLE_EXFAT */
 
-        /* Root_sector_start has been computed */
-        media_ptr -> fx_media_root_sector_start =  media_ptr -> fx_media_reserved_sectors +
-            (media_ptr -> fx_media_number_of_FATs *
-             media_ptr -> fx_media_sectors_per_FAT);
+        /* Yes, 12-bit FAT is present.  Set flag accordingly.  */
+        media_ptr -> fx_media_12_bit_FAT = FX_TRUE;
+        media_ptr -> fx_media_32_bit_FAT = FX_FALSE;
 
-        /* Calculate the number of directory sectors.  */
-        media_ptr -> fx_media_root_sectors =
-            ((media_ptr -> fx_media_root_directory_entries * FX_DIR_ENTRY_SIZE) +
-             media_ptr -> fx_media_bytes_per_sector - 1) /
-            media_ptr -> fx_media_bytes_per_sector;
+        /* No additional information sector in FAT12.  */
+        media_ptr -> fx_media_FAT32_additional_info_sector =  0;
 
-        /* Calculate the starting data sector.  */
-        media_ptr -> fx_media_data_sector_start =  media_ptr -> fx_media_root_sector_start +
-            media_ptr -> fx_media_root_sectors;
+        /* Set FAT last and FAT reserved. */
+        media_ptr -> fx_media_fat_reserved = FX_RESERVED_1;
+        media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_2;
+    }
+    else if (media_ptr -> fx_media_total_clusters < FX_16_BIT_FAT_SIZE)
+    {
 
-        /* Calculate the total number of clusters.  */
-        media_ptr -> fx_media_total_clusters =  (ULONG)((media_ptr -> fx_media_total_sectors - media_ptr -> fx_media_data_sector_start) /
-                                                            media_ptr -> fx_media_sectors_per_cluster);
+        /* A 16-bit FAT is present.  Set flag accordingly.  */
+        media_ptr -> fx_media_12_bit_FAT =  FX_FALSE;
+        media_ptr -> fx_media_32_bit_FAT =  FX_FALSE;
 
-        /* Determine if a 12-bit FAT is in use.  */
-        if (media_ptr -> fx_media_total_clusters < FX_12_BIT_FAT_SIZE)
-        {
+        /* No additional information sector in FAT16.  */
+        media_ptr -> fx_media_FAT32_additional_info_sector =  0;
 
-            /* Yes, 12-bit FAT is present.  Set flag accordingly.  */
-            media_ptr -> fx_media_12_bit_FAT = FX_TRUE;
-            media_ptr -> fx_media_32_bit_FAT = FX_FALSE;
-#ifdef FX_ENABLE_EXFAT
-            media_ptr -> fx_media_FAT_type = FX_FAT12;
-#endif /* FX_ENABLE_EXFAT */
-
-            /* No additional information sector in FAT12.  */
-            media_ptr -> fx_media_FAT32_additional_info_sector =  0;
-
-            /* Set FAT last and FAT reserved. */
-            media_ptr -> fx_media_fat_reserved = FX_RESERVED_1;
-            media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_2;
-        }
-        else if (media_ptr -> fx_media_total_clusters < FX_16_BIT_FAT_SIZE)
-        {
-
-            /* A 16-bit FAT is present.  Set flag accordingly.  */
-            media_ptr -> fx_media_12_bit_FAT =  FX_FALSE;
-            media_ptr -> fx_media_32_bit_FAT =  FX_FALSE;
-#ifdef FX_ENABLE_EXFAT
-            media_ptr -> fx_media_FAT_type = FX_FAT16;
-#endif /* FX_ENABLE_EXFAT */
-
-            /* No additional information sector in FAT16.  */
-            media_ptr -> fx_media_FAT32_additional_info_sector =  0;
-
-            /* Set FAT last and FAT reserved. */
-            media_ptr -> fx_media_fat_reserved = FX_RESERVED_1;
-            media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_2;
-        }
-        else
-        {
-
-            /* Yes, a 32-bit FAT is present.  */
-            media_ptr -> fx_media_12_bit_FAT =  FX_FALSE;
-            media_ptr -> fx_media_32_bit_FAT =  FX_TRUE;
-#ifdef FX_ENABLE_EXFAT
-            media_ptr -> fx_media_FAT_type = FX_FAT32;
-#endif /* FX_ENABLE_EXFAT */
-
-            /* Save the additional information sector FAT32. This was read from the boot
-               sector earlier in this routine. */
-            media_ptr -> fx_media_FAT32_additional_info_sector =  additional_info_sector;
-
-            /* Set FAT last and FAT reserved. */
-            media_ptr -> fx_media_fat_reserved = FX_RESERVED_1_32;
-            media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_2_32;
-        }
-#ifdef FX_ENABLE_EXFAT
+        /* Set FAT last and FAT reserved. */
+        media_ptr -> fx_media_fat_reserved = FX_RESERVED_1;
+        media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_2;
     }
     else
     {
 
+        /* Yes, a 32-bit FAT is present.  */
+        media_ptr -> fx_media_12_bit_FAT =  FX_FALSE;
+        media_ptr -> fx_media_32_bit_FAT =  FX_TRUE;
+
+        /* Save the additional information sector FAT32. This was read from the boot
+           sector earlier in this routine. */
+        media_ptr -> fx_media_FAT32_additional_info_sector =  additional_info_sector;
+
         /* Set FAT last and FAT reserved. */
-        media_ptr -> fx_media_fat_reserved = FX_RESERVED_1_exFAT;
-        media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_exFAT;
+        media_ptr -> fx_media_fat_reserved = FX_RESERVED_1_32;
+        media_ptr -> fx_media_fat_last = FX_LAST_CLUSTER_2_32;
     }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Determine if a 32-bit FAT is present. If so, calculate the size of the root directory (since
        it is variable in FAT32.  */
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_32_bit_FAT == FX_TRUE || 
-        (media_ptr -> fx_media_FAT_type == FX_exFAT))
-#else
     if (media_ptr -> fx_media_32_bit_FAT == FX_TRUE)
-#endif /* FX_ENABLE_EXFAT */
     {
-#ifdef FX_ENABLE_EXFAT
-        if (media_ptr -> fx_media_32_bit_FAT == FX_TRUE)
+
+        /* Root First cluster starts from at least cluster 2, or higher. */
+        if (media_ptr -> fx_media_root_cluster_32 < FX_FAT_ENTRY_START)
         {
-#endif /* FX_ENABLE_EXFAT */
-
-            /* Root First cluster starts from at least cluster 2, or higher. */
-            if (media_ptr -> fx_media_root_cluster_32 < FX_FAT_ENTRY_START)
-            {
-                return(FX_MEDIA_INVALID);
-            }
-
-            /* Calculate logical number of root dir sector.  */
-            media_ptr -> fx_media_root_sector_start = media_ptr -> fx_media_data_sector_start +
-                (media_ptr -> fx_media_root_cluster_32 - FX_FAT_ENTRY_START) *
-                media_ptr -> fx_media_sectors_per_cluster;
-#ifdef FX_ENABLE_EXFAT
+            return(FX_MEDIA_INVALID);
         }
-#endif /* FX_ENABLE_EXFAT */
+
+        /* Calculate logical number of root dir sector.  */
+        media_ptr -> fx_media_root_sector_start = media_ptr -> fx_media_data_sector_start +
+            (media_ptr -> fx_media_root_cluster_32 - FX_FAT_ENTRY_START) *
+            media_ptr -> fx_media_sectors_per_cluster;
 
         /* Calculate maximum possible value for fx_media_root_directory_entries */
         i = 0;
@@ -803,12 +766,7 @@ FX_INT_SAVE_AREA
             }
         }
     }
-#ifdef FX_ENABLE_EXFAT
-    else if ((media_ptr -> fx_media_available_clusters == 0)
-             && (media_ptr -> fx_media_FAT_type != FX_exFAT))
-#else
     else if (media_ptr -> fx_media_available_clusters == 0)
-#endif /* FX_ENABLE_EXFAT */
     {
 
         /* A 16 or 32-bit FAT is present. Read directly into the logical sector
@@ -942,18 +900,6 @@ FX_INT_SAVE_AREA
             }
         }
     }
-#ifdef FX_ENABLE_EXFAT
-    else if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        status = _fx_utility_exFAT_bitmap_initialize(media_ptr);
-
-        if ((FX_SUCCESS         != status)  &&
-            (FX_NO_MORE_SPACE   != status))
-        {
-            return(status);
-        }
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* If there were no free clusters, just set the search pointer to the
        first cluster number.  */

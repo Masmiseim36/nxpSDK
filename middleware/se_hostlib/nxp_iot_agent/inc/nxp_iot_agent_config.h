@@ -1,15 +1,15 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
  */
 
-#include <nxp_iot_agent_config_certificates.h>
-#include <nxp_iot_agent_config_credentials.h>
-
 #ifndef _NXP_IOT_AGENT_CONFIG_H_
 #define _NXP_IOT_AGENT_CONFIG_H_
+
+#include <nxp_iot_agent_config_certificates.h>
+#include <nxp_iot_agent_config_credentials.h>
 
 #define NXP_IOT_AGENT_MAX_NUM_KEYSTORES       (1U)
 #define NXP_IOT_AGENT_MAX_NUM_DATASTORES      (1U)

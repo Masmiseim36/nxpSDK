@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -37,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_ipv4_packet_receive                             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -79,6 +78,10 @@
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Tiejun Zhou              Modified comment(s),          */
+/*                                            validated packet length for */
+/*                                            fragments,                  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _nx_ipv4_packet_receive(NX_IP *ip_ptr, NX_PACKET *packet_ptr)
@@ -570,6 +573,21 @@ UINT            packet_consumed;
 
                 /* Yes, fragmenting is available.  Place the packet on the incoming
                    fragment queue.  */
+
+                /* Check packet length with more fragment bit. If not multiple of 8 bytes...  */
+                if ((ip_header_ptr -> nx_ip_header_word_1 & NX_IP_MORE_FRAGMENT) &&
+                    (((pkt_length  - (ULONG)sizeof(NX_IPV4_HEADER))  & 0x7) != 0))
+                {
+
+                    /* Invalid length.  Drop the packet.  */
+#ifndef NX_DISABLE_IP_INFO
+
+                    /* Increment the IP receive packets dropped count.  */
+                    ip_ptr -> nx_ip_receive_packets_dropped++;
+#endif
+                    _nx_packet_release(packet_ptr);
+                    return;
+                }
 
                 /* Disable interrupts.  */
                 TX_DISABLE

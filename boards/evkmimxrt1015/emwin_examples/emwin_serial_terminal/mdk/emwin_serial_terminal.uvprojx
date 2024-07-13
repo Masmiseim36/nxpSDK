@@ -330,10 +330,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1015/template;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1015/template;../../../../../devices/MIMXRT1015/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -445,7 +445,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lcd</GroupName>
+          <GroupName>lcdc</GroupName>
           <Files>
             <File>
               <FileName>fsl_ili9341.h</FileName>
@@ -628,16 +628,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -656,6 +646,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1001,6 +1001,21 @@
               <FileName>GUI_SPY_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SVG_OpenVG.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SVG_OpenVG.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SVG_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SVG_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SVG_VGLite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SVG_VGLite.h</FilePath>
             </File>
             <File>
               <FileName>GUI_SetOrientation.h</FileName>
@@ -1903,10 +1918,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1015/template;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1015/template;../../../../../devices/MIMXRT1015/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2018,7 +2033,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lcd</GroupName>
+          <GroupName>lcdc</GroupName>
           <Files>
             <File>
               <FileName>fsl_ili9341.h</FileName>
@@ -2201,16 +2216,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2229,6 +2234,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2574,6 +2589,21 @@
               <FileName>GUI_SPY_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SVG_OpenVG.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SVG_OpenVG.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SVG_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SVG_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SVG_VGLite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SVG_VGLite.h</FilePath>
             </File>
             <File>
               <FileName>GUI_SetOrientation.h</FileName>

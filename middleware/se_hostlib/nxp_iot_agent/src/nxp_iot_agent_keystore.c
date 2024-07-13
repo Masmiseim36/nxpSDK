@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2024 NXP
  * 
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -16,7 +16,7 @@ iot_agent_status_t iot_agent_keystore_free(iot_agent_keystore_t* keystore)
         {
             agent_status = keystore->iface.destroy(keystore->context);
             if (agent_status != IOT_AGENT_SUCCESS) {
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
             	IOT_AGENT_ERROR("Failed to destroy keystore [type: %lu, id: 0x%08lx]: 0x%08x",
                     keystore->type, keystore->identifier, agent_status);
 #else

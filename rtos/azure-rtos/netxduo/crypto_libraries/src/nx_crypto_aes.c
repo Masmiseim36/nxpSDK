@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -1702,7 +1701,7 @@ UINT   i;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_init                          PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -1739,6 +1738,8 @@ UINT   i;
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_init(struct NX_CRYPTO_METHOD_STRUCT *method,
@@ -1758,7 +1759,7 @@ NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_init(struct NX_CRYPTO_METHOD_STRUCT *
         return(NX_CRYPTO_PTR_ERROR);
     }
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((((ULONG)crypto_metadata) & 0x3) != 0)
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -1846,7 +1847,7 @@ NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_cleanup(VOID *crypto_metadata)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_operation                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -1896,6 +1897,8 @@ NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_cleanup(VOID *crypto_metadata)
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_operation(UINT op,      /* Encrypt, Decrypt, Authenticate */
@@ -1917,7 +1920,7 @@ UINT    status;
 
     NX_CRYPTO_STATE_CHECK
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((method == NX_CRYPTO_NULL) || (crypto_metadata == NX_CRYPTO_NULL) || ((((ULONG)crypto_metadata) & 0x3) != 0))
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -1994,7 +1997,7 @@ UINT    status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_cbc_operation                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -2041,6 +2044,8 @@ UINT    status;
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_cbc_operation(UINT op,      /* Encrypt, Decrypt, Authenticate */
@@ -2071,7 +2076,7 @@ UINT    status;
     
     NX_CRYPTO_STATE_CHECK
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((method == NX_CRYPTO_NULL) || (crypto_metadata == NX_CRYPTO_NULL) || ((((ULONG)crypto_metadata) & 0x3) != 0))
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -2167,7 +2172,7 @@ UINT    status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_ccm_operation                 PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -2215,9 +2220,11 @@ UINT    status;
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Tiejun Zhou              Modified comment(s), and      */
+/*  03-08-2023     Tiejun Zhou              Modified comment(s), and      */
 /*                                            fixed compiler warnings,    */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.2.1  */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_ccm_operation(UINT op,      /* Encrypt, Decrypt, Authenticate */
@@ -2248,7 +2255,7 @@ UINT    status;
     
     NX_CRYPTO_STATE_CHECK
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((method == NX_CRYPTO_NULL) || (crypto_metadata == NX_CRYPTO_NULL) || ((((ULONG)crypto_metadata) & 0x3) != 0))
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -2467,7 +2474,7 @@ UINT    status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_gcm_operation                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -2515,6 +2522,8 @@ UINT    status;
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_gcm_operation(UINT op,      /* Encrypt, Decrypt, Authenticate */
@@ -2547,7 +2556,7 @@ UINT    status;
 
     NX_CRYPTO_STATE_CHECK
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((method == NX_CRYPTO_NULL) || (crypto_metadata == NX_CRYPTO_NULL) || ((((ULONG)crypto_metadata) & 0x3) != 0))
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -2763,7 +2772,7 @@ UINT    status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_ctr_operation                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -2810,6 +2819,8 @@ UINT    status;
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_ctr_operation(UINT op,      /* Encrypt, Decrypt, Authenticate */
@@ -2839,7 +2850,7 @@ UINT                status;
     
     NX_CRYPTO_STATE_CHECK
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((method == NX_CRYPTO_NULL) || (crypto_metadata == NX_CRYPTO_NULL) || ((((ULONG)crypto_metadata) & 0x3) != 0))
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -2913,7 +2924,7 @@ UINT                status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_crypto_method_aes_xcbc_operation                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -2960,6 +2971,8 @@ UINT                status;
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_method_aes_xcbc_operation(UINT op,      /* Encrypt, Decrypt, Authenticate */
@@ -2990,7 +3003,7 @@ UINT            status;
 
     NX_CRYPTO_STATE_CHECK
 
-    /* Verify the metadata addrsss is 4-byte aligned. */
+    /* Verify the metadata address is 4-byte aligned. */
     if((method == NX_CRYPTO_NULL) || (key == NX_CRYPTO_NULL) || (crypto_metadata == NX_CRYPTO_NULL) || ((((ULONG)crypto_metadata) & 0x3) != 0))
     {
         return(NX_CRYPTO_PTR_ERROR);

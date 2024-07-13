@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */
 /*                                                                        */
 /*    nx_user.h                                           PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -52,6 +51,9 @@
 /*                                            resulting in version 6.1.8  */
 /*  04-25-2022     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Tiejun Zhou              Modified comment(s),          */
+/*                                            supported random IP id,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -124,6 +126,11 @@
 /* This define specifies the size of IP routing table. The default value is 8. */
 /*
 #define NX_IP_ROUTING_TABLE_SIZE 8
+*/
+
+/* Defined, this option enables random IP id. By default IP id is increased by one for each packet. */
+/*
+#define NX_ENABLE_IP_ID_RANDOMIZATION
 */
 
 /* This define specifies the maximum number of multicast groups that can be joined.
@@ -761,6 +768,14 @@
    NX_ENABLE_INTERFACE_CAPABILITY must be defined to enable this feature.  */
 /*
 #define NX_ENABLE_TCPIP_OFFLOAD
+*/
+
+/* Defined, the VLAN feature is enabled.
+   Note: Require driver support to use APIs from this file.
+         A quick check in driver is to search for
+         NX_LINK_RAW_PACKET_SEND. VLAN APIs are not supported if not found. */
+/*
+#define NX_ENABLE_VLAN
 */
 
 #endif

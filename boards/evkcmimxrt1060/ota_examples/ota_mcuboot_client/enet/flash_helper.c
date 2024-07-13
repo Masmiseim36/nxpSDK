@@ -12,7 +12,7 @@
 #include "flash_helper.h"
 #include "mflash_drv.h"
 #include "fsl_debug_console.h"
-#include "mbedtls/md5.h"
+#include "mbedtls/sha256.h"
 
 void hexdump(const void *src, size_t size)
 {
@@ -145,16 +145,14 @@ int flash_program(uint32_t offset, void *data, size_t size)
     return kStatus_Success;
 }
 
-/* note: could be implemented using direct mem access */
-
-int flash_md5(uint32_t offset, size_t size, uint8_t md[16])
+int flash_sha256(uint32_t offset, size_t size, uint8_t sha256[32])
 {
     uint32_t buf[128 / sizeof(uint32_t)];
     status_t status;
-    mbedtls_md5_context md_ctx;
+    mbedtls_sha256_context sha256ctx;
 
-    mbedtls_md5_init(&md_ctx);
-    mbedtls_md5_starts_ret(&md_ctx);
+    mbedtls_sha256_init(&sha256ctx);
+    mbedtls_sha256_starts_ret(&sha256ctx, 0);
 
     while (size > 0)
     {
@@ -168,13 +166,13 @@ int flash_md5(uint32_t offset, size_t size, uint8_t md[16])
             return status;
         }
 
-        mbedtls_md5_update(&md_ctx, (unsigned char *)buf, chunk);
+        mbedtls_sha256_update(&sha256ctx, (unsigned char *)buf, chunk);
 
         size -= chunk;
         offset += chunk;
     }
 
-    mbedtls_md5_finish(&md_ctx, md);
+    mbedtls_sha256_finish(&sha256ctx, sha256);
 
     return kStatus_Success;
 }

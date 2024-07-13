@@ -485,8 +485,11 @@ void FMSTR_Example_Init(void)
 
 void FMSTR_Example_Init_Ex(FMSTR_BOOL callFmstrInit)
 {
+#if FMSTR_USE_RECORDER >= 2
     static FMSTR_U8 recBuffer[512]; /* Recorder #1 sampling buffer */
     FMSTR_REC_BUFF recBuffCfg;
+#endif
+
     FMSTR_HPIPE hpipe;
     int i;
 
@@ -622,8 +625,11 @@ void FMSTR_Example_Poll_Ex(FMSTR_BOOL callFmstrPoll)
 {
     static unsigned short div;
     unsigned short nAppCmdCode;
-    int i;
 
+#if ((defined(FMSTR_DEMO_SUPPORT_FLT) && (FMSTR_DEMO_SUPPORT_FLT > 0)) \
+    || (defined(FMSTR_DEMO_SUPPORT_DBL) && (FMSTR_DEMO_SUPPORT_DBL > 0)))
+    int i;
+#endif
     /* scope variables, increment once a while */
     if (varIncSpeed && ++div > varIncSpeed)
     {

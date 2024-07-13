@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -116,15 +116,15 @@ bool iot_agent_keystore_sss_se05x_handle_request(pb_istream_t *istream,
 	{
 		nxp_iot_ApduRequest request = nxp_iot_ApduRequest_init_default;
 
-		uint8_t apdu_memory[SE05X_MAX_BUF_SIZE_CMD];
-		uint8_t response_memory[SE05X_MAX_BUF_SIZE_RSP];
-        uint8_t expectation_memory[512];
+		uint8_t apdu_memory[SE05X_MAX_BUF_SIZE_CMD] = {0U};
+		uint8_t response_memory[SE05X_MAX_BUF_SIZE_RSP] = {0U};
+        uint8_t expectation_memory[512] = {0U};
 
-		buffer_t read_buffer;
+		buffer_t read_buffer = {0};
 		read_buffer.buf = &apdu_memory[0];
 		read_buffer.len = sizeof(apdu_memory);
 
-		buffer_t write_buffer;
+		buffer_t write_buffer = {0};
 		write_buffer.buf = &response_memory[0];
 		write_buffer.len = sizeof(response_memory);
 
@@ -160,10 +160,16 @@ bool iot_agent_keystore_sss_se05x_handle_request(pb_istream_t *istream,
         axTimeMeasurement_t apdu_time = { 0 };
         initMeasurement(&apdu_time);
 #endif
-		sm_comm_status = DoAPDUTxRx(&pSession->s_ctx, read_buffer.buf, read_buffer.len, write_buffer.buf, &len);
+		sm_comm_status = DoAPDUTxRx(&(pSession->s_ctx), read_buffer.buf, read_buffer.len, write_buffer.buf, &len);
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
         concludeMeasurement(&apdu_time);
-        iot_agent_time.apdu_time += getMeasurement(&apdu_time);
+		long measured_time = getMeasurement(&apdu_time);
+		if (iot_agent_time.apdu_time > (LONG_MAX - measured_time))
+		{
+			IOT_AGENT_ERROR("Error in the time measurement");
+			return false;
+		}
+        iot_agent_time.apdu_time += measured_time;
 #endif
 
 		if (sm_comm_status == SM_OK)

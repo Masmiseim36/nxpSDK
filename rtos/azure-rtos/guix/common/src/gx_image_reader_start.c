@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -292,7 +291,7 @@ static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_start                              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -340,6 +339,9 @@ static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_start(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
@@ -372,15 +374,6 @@ GX_BOOL     do_compress;
         status = _gx_image_reader_pixelmap_info_set(image_reader, outmap);
     }
 
-    if (status == GX_SUCCESS)
-    {
-        if (image_reader -> gx_image_reader_color_format == GX_COLOR_FORMAT_MONOCHROME)
-        {
-            status = _gx_image_reader_pixel_read_callback_set(image_reader, &srcmap);
-            _gx_image_reader_gray_threshold_calculate(image_reader);
-        }
-    }
-
     if (image_reader -> gx_image_reader_mode & GX_IMAGE_READER_MODE_COMPRESS)
     {
         do_compress = GX_TRUE;
@@ -390,33 +383,47 @@ GX_BOOL     do_compress;
         do_compress = GX_FALSE;
     }
 
-    image_reader -> gx_image_reader_mode = (GX_UBYTE)(image_reader -> gx_image_reader_mode & (~GX_IMAGE_READER_MODE_COMPRESS));
-
-    /* Color Space Convert.  */
-    if (status == GX_SUCCESS)
+    if((image_reader -> gx_image_reader_image_type == GX_IMAGE_TYPE_JPG && srcmap.gx_pixelmap_format == GX_IMAGE_FORMAT_24BPP) ||
+       (image_reader -> gx_image_reader_image_type == GX_IMAGE_TYPE_PNG))
     {
-        tempmap = *outmap;
 
-        status = _gx_image_reader_pixel_read_callback_set(image_reader, &srcmap);
-    }
-
-    if (status == GX_SUCCESS)
-    {
-        status = _gx_image_reader_pixel_write_callback_set(image_reader, &tempmap);
-    }
-
-    if (status == GX_SUCCESS)
-    {
-        status = _gx_image_reader_colorspace_convert(image_reader, &tempmap);
-
-        _gx_system_memory_free((VOID *)srcmap.gx_pixelmap_data);
-
-        if (srcmap.gx_pixelmap_aux_data)
+        if (status == GX_SUCCESS)
         {
-            _gx_system_memory_free((VOID *)srcmap.gx_pixelmap_aux_data);
+            if (image_reader -> gx_image_reader_color_format == GX_COLOR_FORMAT_MONOCHROME)
+            {
+                status = _gx_image_reader_pixel_read_callback_set(image_reader, &srcmap);
+                _gx_image_reader_gray_threshold_calculate(image_reader);
+            }
         }
 
-        srcmap = tempmap;
+        image_reader -> gx_image_reader_mode = (GX_UBYTE)(image_reader -> gx_image_reader_mode & (~GX_IMAGE_READER_MODE_COMPRESS));
+
+        /* Color Space Convert.  */
+        if (status == GX_SUCCESS)
+        {
+            tempmap = *outmap;
+
+            status = _gx_image_reader_pixel_read_callback_set(image_reader, &srcmap);
+        }
+
+        if (status == GX_SUCCESS)
+        {
+            status = _gx_image_reader_pixel_write_callback_set(image_reader, &tempmap);
+        }
+
+        if (status == GX_SUCCESS)
+        {
+            status = _gx_image_reader_colorspace_convert(image_reader, &tempmap);
+
+            _gx_system_memory_free((VOID *)srcmap.gx_pixelmap_data);
+
+            if (srcmap.gx_pixelmap_aux_data)
+            {
+                _gx_system_memory_free((VOID *)srcmap.gx_pixelmap_aux_data);
+            }
+
+            srcmap = tempmap;
+        }
     }
 
     /* Compare compressed size and raw size. */

@@ -1,7 +1,7 @@
 var a00034 =
 [
     [ "FlexIO eDMA SPI Driver", "a00035.html", "a00035" ],
-    [ "_flexio_spi_type", "a00034.html#a00389", [
+    [ "_flexio_spi_type", "a00034.html#a00386", [
       [ "flexioBase", "a00034.html#a4dc08bcdfef224a823fe5655f1351079", null ],
       [ "SDOPinIndex", "a00034.html#a13c3a1fc33229ca2958e0a74c6675dc4", null ],
       [ "SDIPinIndex", "a00034.html#a27df7a01b0fed892b728fe34587fe983", null ],
@@ -10,7 +10,7 @@ var a00034 =
       [ "shifterIndex", "a00034.html#a8b4806ac616f6fbbab5edb677cf4561c", null ],
       [ "timerIndex", "a00034.html#a24ab8783c327151df41d4cd5fe0c9f30", null ]
     ] ],
-    [ "_flexio_spi_master_config", "a00034.html#a00384", [
+    [ "_flexio_spi_master_config", "a00034.html#a00381", [
       [ "enableMaster", "a00034.html#a567386226d7df91faf4d60b9b3005cb9", null ],
       [ "enableInDoze", "a00034.html#ac278230317cf87c458c532bc22d4da8c", null ],
       [ "enableInDebug", "a00034.html#a3bde3f256e4ab5e75790c4eb5d2ec91c", null ],
@@ -19,7 +19,7 @@ var a00034 =
       [ "phase", "a00034.html#a1ef09b527bdeaca4a6cd0af74174ee18", null ],
       [ "dataMode", "a00034.html#a6e294aa10c5ec01a08f7aa86b27d6b81", null ]
     ] ],
-    [ "_flexio_spi_slave_config", "a00034.html#a00387", [
+    [ "_flexio_spi_slave_config", "a00034.html#a00384", [
       [ "enableSlave", "a00034.html#ae499fbfb72599cb20bce91435aa523ae", null ],
       [ "enableInDoze", "a00034.html#aa9fca18ad65df7eb3b2391d780def4eb", null ],
       [ "enableInDebug", "a00034.html#a91046bd3f90ec29de679e20721ee5b72", null ],
@@ -27,14 +27,14 @@ var a00034 =
       [ "phase", "a00034.html#a734c4f75ee49fb5207b633c727481fde", null ],
       [ "dataMode", "a00034.html#a3613b4e5b514b11026f91692d5e24080", null ]
     ] ],
-    [ "_flexio_spi_transfer", "a00034.html#a00388", [
-      [ "txData", "a00034.html#a25d9c2eba39a591d122105446594d628", null ],
+    [ "_flexio_spi_transfer", "a00034.html#a00385", [
+      [ "txData", "a00034.html#ad43eb04a8bc3eccd95beea388927659f", null ],
       [ "rxData", "a00034.html#a5790b55749df9533289b7a3df2a2a62e", null ],
       [ "dataSize", "a00034.html#a5ef46e695ae4a85fd4eb767b359bc949", null ],
       [ "flags", "a00034.html#a0287079938a673a719ab4efc7e185e15", null ]
     ] ],
-    [ "_flexio_spi_master_handle", "a00034.html#a00386", [
-      [ "txData", "a00034.html#a7ac65bf28b4ef86c5635ecaecc0e68b6", null ],
+    [ "_flexio_spi_master_handle", "a00034.html#a00383", [
+      [ "txData", "a00034.html#a121d90e3435cb346833b30df72ac9b0d", null ],
       [ "rxData", "a00034.html#a61c91cb060d0f514dc9408dda09bea9f", null ],
       [ "transferSize", "a00034.html#a0907f74a10d6b516058f9275b08d6013", null ],
       [ "txRemainingBytes", "a00034.html#a4f76b4e4c94aa41b259ec8deec2fbb19", null ],

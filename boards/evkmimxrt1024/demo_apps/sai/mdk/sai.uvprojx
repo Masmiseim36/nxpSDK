@@ -327,10 +327,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1024DAG5A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../components/codec/wm8960;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../components/codec/wm8960;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../devices/MIMXRT1024/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -736,19 +736,14 @@
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
             </File>
             <File>
               <FileName>arm_const_structs_f16.h</FileName>
@@ -759,6 +754,11 @@
               <FileName>arm_helium_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>arm_math_f16.h</FileName>
@@ -846,6 +846,11 @@
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
             </File>
             <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/debug.h</FilePath>
+            </File>
+            <File>
               <FileName>distance_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
@@ -894,6 +899,11 @@
               <FileName>matrix_functions_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</FilePath>
             </File>
             <File>
               <FileName>none.h</FileName>
@@ -954,6 +964,11 @@
               <FileName>utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>window_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/window_functions.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1198,6 +1213,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS/DSP/Source/WindowFunctions</GroupName>
+          <Files>
+            <File>
+              <FileName>WindowFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
@@ -1281,16 +1306,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1309,6 +1324,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1828,10 +1853,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1024DAG5A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../components/codec/wm8960;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../components/codec/wm8960;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../devices/MIMXRT1024/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2237,19 +2262,14 @@
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
             </File>
             <File>
               <FileName>arm_const_structs_f16.h</FileName>
@@ -2260,6 +2280,11 @@
               <FileName>arm_helium_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>arm_math_f16.h</FileName>
@@ -2347,6 +2372,11 @@
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
             </File>
             <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/debug.h</FilePath>
+            </File>
+            <File>
               <FileName>distance_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
@@ -2395,6 +2425,11 @@
               <FileName>matrix_functions_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</FilePath>
             </File>
             <File>
               <FileName>none.h</FileName>
@@ -2455,6 +2490,11 @@
               <FileName>utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>window_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/window_functions.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2699,6 +2739,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS/DSP/Source/WindowFunctions</GroupName>
+          <Files>
+            <File>
+              <FileName>WindowFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
@@ -2782,16 +2832,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2810,6 +2850,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

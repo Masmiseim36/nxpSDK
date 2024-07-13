@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP.
+ * Copyright 2020-2024 NXP.
  * NXP Confidential and Proprietary.
  * This software is owned or controlled by NXP and may only be used strictly in
  * accordance with the applicable license terms. By expressly accepting such
@@ -40,7 +40,7 @@ typedef enum _hal_image_status
 typedef struct _static_image_operator
 {
     hal_image_status_t (*init)(static_image_t *elt, mpp_img_params_t *config, void *param); /*!< initialize the elt */
-    hal_image_status_t (*dequeue)(const static_image_t *elt, hw_buf_desc_t *out_buf, mpp_pixel_format_t *format); /*!< dequeue a buffer from the elt */
+    hal_image_status_t (*dequeue)(static_image_t *elt, hw_buf_desc_t *out_buf, int *stripe_num); /*!< dequeue a buffer from the elt */
 } static_image_operator_t;
 
 /** @} */
@@ -59,6 +59,7 @@ typedef struct
     int right;                 /*!< right position */
     int bottom;                /*!< bottom position */
     mpp_pixel_format_t format; /*!< pixel format */
+    bool stripe;               /*!< stripe mode */
 } static_image_static_config_t;
 
 /** @brief Attributes of a an image element. */
@@ -67,6 +68,7 @@ struct _static_image
     int id;                              /*!< unique id which is assigned by image manager */
     const static_image_operator_t *ops;  /*!< operations */
     static_image_static_config_t config; /*!< static configs */
+    int stripe_idx;                      /*!< the current stripe index */
     uint8_t *buffer;                     /*!< static image buffer */
 };
 

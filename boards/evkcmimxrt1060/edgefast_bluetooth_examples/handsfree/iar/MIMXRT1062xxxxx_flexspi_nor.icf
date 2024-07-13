@@ -80,7 +80,7 @@ if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = 0x1000;
 }
 
-define exported symbol __NCACHE_REGION_START   = m_data2_start;
+define exported symbol __NCACHE_REGION_START   = m_data_start;
 define exported symbol __NCACHE_REGION_SIZE    = 0x0;
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;
@@ -99,6 +99,8 @@ define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
+define block USB_RW    with alignment = 32, end alignment = 32  { section m_usb_dma_init_data };
+define block USB_ZI    with alignment = 32, end alignment = 32  { section m_usb_dma_noninit_data };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
 define block QACCESS_DATA  { section DataQuickAccess };
@@ -129,8 +131,8 @@ define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
 define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
 
 place in TEXT_region                        { readonly, block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static};
-place in DATA2_region                       { block RW, block ._net_buf_pool, block ._k_mem_slab };
-place in DATA2_region                       { block ZI };
+place in DATA2_region                       { block RW, block ._net_buf_pool, block ._k_mem_slab,block USB_RW};
+place in DATA2_region                       { block ZI, block USB_ZI };
 place in DATA_region                        { last block HEAP };
 place in DATA_region                        { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };

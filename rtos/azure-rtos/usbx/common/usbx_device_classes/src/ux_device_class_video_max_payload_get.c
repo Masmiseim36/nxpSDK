@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -89,4 +88,56 @@ UX_SLAVE_DEVICE             *device;
     /* Return enumerated payload size.  */
     return(endpoint -> ux_slave_endpoint_transfer_request.
                                     ux_slave_transfer_request_transfer_length);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_video_max_payload_length          PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in getting video stream max payload     */
+/*    length function call.                                               */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    stream                                Address of video stream       */
+/*                                            instance                    */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_video_max_payload_length                           */
+/*                                          Get max payload length in the */
+/*                                            video stream.               */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Yajun Xia                Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+ULONG _uxe_device_class_video_max_payload_length(UX_DEVICE_CLASS_VIDEO_STREAM *stream)
+{
+
+    /* Sanity check. */
+    if (stream == UX_NULL)
+        return(0);
+
+    /* Call the actual function.  */
+    return(_ux_device_class_video_max_payload_length(stream));
 }

@@ -328,10 +328,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1062DVL6A, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=7340032, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -589,16 +589,6 @@
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/shell/fsl_shell.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -1114,10 +1104,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=7340032, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1375,16 +1365,6 @@
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/shell/fsl_shell.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -1900,10 +1880,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1062DVL6A, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=7340032, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2161,16 +2141,6 @@
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/shell/fsl_shell.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -2686,10 +2656,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=7340032, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/flash/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1062/utilities/shell;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../components/flash/mflash;../../../../../devices/MIMXRT1062/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2947,16 +2917,6 @@
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/shell/fsl_shell.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>

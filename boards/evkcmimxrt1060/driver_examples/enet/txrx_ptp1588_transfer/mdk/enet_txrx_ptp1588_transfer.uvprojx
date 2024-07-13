@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, ENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -545,16 +545,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -573,6 +563,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1067,10 +1067,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, ENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1280,16 +1280,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1308,6 +1298,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1802,10 +1802,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, ENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2015,16 +2015,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2043,6 +2033,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2537,10 +2537,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, ENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2750,16 +2750,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2778,6 +2768,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3272,10 +3272,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, ENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3485,16 +3485,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3513,6 +3503,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4007,10 +4007,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, ENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4220,16 +4220,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4248,6 +4238,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -58,6 +58,7 @@
     <definition extID="middleware.freertos-kernel.template.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1062"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1062"/>
+    <definition extID="utility.str.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_system.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -67,7 +68,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_ota_demo_enet" name="ota_demo_enet" dependency="driver.phy-device-ksz8081.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 platform.drivers.enet.MIMXRT1062 middleware.lwip.kinetis_ethernetif.MIMXRT1062 middleware.lwip.MIMXRT1062 component.mflash.rt1060.MIMXRT1062 component.mflash_file.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 component.silicon_id_rt10xx.MIMXRT1062 component.silicon_id.MIMXRT1062 middleware.iot_reference.kvstore.MIMXRT1062 middleware.iot_reference.logging.MIMXRT1062 middleware.iot_reference.mqtt_agent.MIMXRT1062 middleware.iot_reference.transport_mbedtls.MIMXRT1062 middleware.aws_iot.ota.MIMXRT1062 middleware.aws_iot.ota.freertos.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1062 middleware.pkcs11.MIMXRT1062 middleware.freertos.corepkcs11.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.serial_manager.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 driver.phy-common.MIMXRT1062 middleware.lwip.template.MIMXRT1062 component.igpio_adapter.MIMXRT1062 component.mflash.common.MIMXRT1062 middleware.mbedtls.template.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.trng.MIMXRT1062 middleware.iot_reference.template.MIMXRT1062 middleware.freertos.backoffalgorithm.MIMXRT1062 middleware.freertos.coremqtt-agent.MIMXRT1062 middleware.iot_reference.mqtt_agent_interface.MIMXRT1062 middleware.freertos.coremqtt.MIMXRT1062 middleware.freertos.coremqtt.template.MIMXRT1062 middleware.freertos.corejson.MIMXRT1062 middleware.tinycbor.MIMXRT1062 middleware.freertos.corepkcs11.template.MIMXRT1062 middleware.freertos-kernel.template.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="aws_examples">
+  <example id="evkmimxrt1060_ota_demo_enet" name="ota_demo_enet" dependency="driver.phy-device-ksz8081.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 platform.drivers.enet.MIMXRT1062 middleware.lwip.kinetis_ethernetif.MIMXRT1062 middleware.lwip.MIMXRT1062 component.mflash.rt1060.MIMXRT1062 component.mflash_file.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 component.silicon_id_rt10xx.MIMXRT1062 component.silicon_id.MIMXRT1062 middleware.iot_reference.kvstore.MIMXRT1062 middleware.iot_reference.logging.MIMXRT1062 middleware.iot_reference.mqtt_agent.MIMXRT1062 middleware.iot_reference.transport_mbedtls.MIMXRT1062 middleware.aws_iot.ota.MIMXRT1062 middleware.aws_iot.ota.freertos.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls_utils.MIMXRT1062 middleware.pkcs11.MIMXRT1062 middleware.freertos.corepkcs11.MIMXRT1062 middleware.freertos.corepkcs11.mbedtls.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.serial_manager.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 driver.phy-common.MIMXRT1062 middleware.lwip.template.MIMXRT1062 component.igpio_adapter.MIMXRT1062 component.mflash.common.MIMXRT1062 middleware.mbedtls.template.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.trng.MIMXRT1062 middleware.iot_reference.template.MIMXRT1062 middleware.freertos.backoffalgorithm.MIMXRT1062 middleware.freertos.coremqtt-agent.MIMXRT1062 middleware.iot_reference.mqtt_agent_interface.MIMXRT1062 middleware.freertos.coremqtt.MIMXRT1062 middleware.freertos.coremqtt.template.MIMXRT1062 middleware.freertos.corejson.MIMXRT1062 middleware.tinycbor.MIMXRT1062 middleware.freertos.corepkcs11.template.MIMXRT1062 middleware.freertos-kernel.template.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 utility.str.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -149,7 +150,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -286,7 +287,6 @@
     </source>
     <source path="bootutil_port" project_relative_path="bootutil_port" type="c_include">
       <files mask="flash_map.h"/>
-      <files mask="sbldef.h"/>
     </source>
     <source path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include">
       <files mask="sysflash.h"/>

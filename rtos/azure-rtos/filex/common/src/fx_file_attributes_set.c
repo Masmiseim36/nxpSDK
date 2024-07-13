@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -115,18 +114,7 @@ UCHAR        not_a_file_attr;
         /* Return the media not opened error.  */
         return(FX_MEDIA_NOT_OPEN);
     }
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        not_a_file_attr = FX_DIRECTORY;
-    }
-    else
-    {
-#endif /* FX_ENABLE_EXFAT */
-        not_a_file_attr = FX_DIRECTORY | FX_VOLUME;
-#ifdef FX_ENABLE_EXFAT
-    }
-#endif /* FX_ENABLE_EXFAT */
+    not_a_file_attr = FX_DIRECTORY | FX_VOLUME;
 
     /* If trace is enabled, insert this event into the trace buffer.  */
     FX_TRACE_IN_LINE_INSERT(FX_TRACE_FILE_ATTRIBUTES_SET, media_ptr, file_name, attributes, 0, FX_TRACE_FILE_EVENTS, 0, 0)
@@ -203,18 +191,7 @@ UCHAR        not_a_file_attr;
 #endif /* FX_ENABLE_FAULT_TOLERANT */
 
     /* Now write out the directory entry.  */
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        status = _fx_directory_exFAT_entry_write(media_ptr, &dir_entry, UPDATE_FILE);
-    }
-    else
-    {
-#endif /* FX_ENABLE_EXFAT */
-        status = _fx_directory_entry_write(media_ptr, &dir_entry);
-#ifdef FX_ENABLE_EXFAT
-    }
-#endif /* FX_ENABLE_EXFAT */
+    status = _fx_directory_entry_write(media_ptr, &dir_entry);
 
 #ifdef FX_ENABLE_FAULT_TOLERANT
     /* Check for a bad status.  */

@@ -232,6 +232,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_BAREMETAL</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -368,10 +369,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1329,6 +1330,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_BAREMETAL</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -1465,10 +1467,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2429,6 +2431,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_BAREMETAL</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -2565,10 +2568,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3527,6 +3530,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_BAREMETAL</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -3663,10 +3667,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4624,6 +4628,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_BAREMETAL</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -4760,10 +4765,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5724,6 +5729,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
           <state>SDK_OS_BAREMETAL</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -5860,10 +5866,10 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6894,12 +6900,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6907,6 +6907,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

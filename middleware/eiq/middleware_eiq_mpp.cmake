@@ -3,26 +3,26 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
+if((CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkbmimxrt1170 OR CONFIG_BOARD STREQUAL evkbimxrt1050 OR CONFIG_BOARD STREQUAL frdmmcxn947))
+
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_mipi_ov5640.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_ezh_ov7670.c
-  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_lcdifv2_rk055ahd091.c
+  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_lcdifv2_rk055.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_csi_mt9m114.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_lcdif_rk043fn.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_mculcd_ssd1963.c
+  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_mculcd_st7796s.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_draw.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_freertos.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_graphics_pxp.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_graphics_cpu.c
+  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_graphics_vglite.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_static_image.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_utils.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_vision_algo_tflite.c
-  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_vision_algo_glow.c
-  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_vision_algo_deep_view_rt.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/tflite/model.cpp
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/tflite/model_all_ops_micro.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/glow/model.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/deep_view_rt/model.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
@@ -80,3 +80,16 @@ if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc) AND CONF
   )
 endif()
 
+if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc) AND CONFIG_CORE STREQUAL cm33)
+  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+      ${CMAKE_CURRENT_LIST_DIR}/mpp/lib/cm33/libmpp.a
+      -Wl,--end-group
+  )
+endif()
+
+else()
+
+message(SEND_ERROR "middleware_eiq_mpp dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()

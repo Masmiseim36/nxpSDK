@@ -5,7 +5,7 @@ var NAVTREE =
     [ "Trademarks", "a00002.html", null ],
     [ "Architectural Overview", "a00004.html", null ],
     [ "Driver errors status", "a00006.html", null ],
-    [ "Deprecated List", "a00249.html", null ],
+    [ "Deprecated List", "a00246.html", null ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];
@@ -15,7 +15,7 @@ var NAVTREEINDEX =
 "a00002.html",
 "a00011.html#gab399f83e83c40a96f48415354707df4e",
 "a00011.html#gga8cc618299e74f8bf82a7ecf09386bd82a797212e8e95ca1a4afb9db946ff01b3f",
-"a00012.html#ggafb730582952b7ceec73d7dc9bf7bef39a2f33d3fc91063c6c183d143a4d31eca7",
+"a00012.html#ggaf715e26dfffd1f8de1c18449e2770cffaad656261a4472f15709bc96dbef0d5d2",
 "a00015.html#ggaeb2343eaff1e79fc88d26072f7b8961ca9f97bdd4ba7ae0086bcc7b0cfbe370c0",
 "a00019.html#ga7957e210d6f4904d42df81508da25d56",
 "a00023.html#ga81158a4e5323b8aace6a4d33a67a1370",
@@ -25,16 +25,16 @@ var NAVTREEINDEX =
 "a00036.html#gaff8a89d83ce5fdaea9db88317eece33c",
 "a00040.html#ade69bccbfde1d55336f07ab7643c6956",
 "a00042.html#gadfc1f24f4c524e96076740067443b074",
-"a00044.html#gabfcdc658c463e9e7523cc60c5e8f9672",
-"a00050.html#ga503619dd8ee2244edd12da3e27fa13e2",
-"a00051.html#gga95e14f2415bc08bc74dddd5ab3d21040a23a1e736f7176595b5c8f6928aae92af",
-"a00053.html#ga76c8fce1a9222a408a073873a27430f0",
-"a00056.html#gga655b3e8c0c8f2b005fda4d47e4f48c3da2a98602358806c8f01cdbe42cc4c763c",
-"a00060.html#ga9df665fe30a7e1539e377737d4a1fc17",
-"a00064.html#gaac12716aedb0b05e8be3e96433c8ad56",
-"a00067.html#gacb30f80634350ca28097b895df43cc02",
-"a00216.html#gga7ff0b98bb1341c07acefb1473b6eda29a6510cce112fc6ed1e0523b5d7b307ca2",
-"a00235.html#ga028eff2428680ec9e47eed17d7ad6180"
+"a00044.html#ga5f767cb7f8458682f742f2e7d4bda63d",
+"a00049.html#gaadfcf653873f3c881b316f6b9d9ca79c",
+"a00050.html#ggaa7cbbbc1751d68bffcd391c323e24391acf2037b15d767df630652ecdcc0b6b5a",
+"a00052.html#ga85217823bf3acbe6616f1dc325f7a87b",
+"a00055.html#gga655b3e8c0c8f2b005fda4d47e4f48c3daba414efbedc13dd6605fdc76daee832f",
+"a00059.html#gabff8182f0b6daa2a2bbafcaab0caf582",
+"a00063.html#gga101a182b6425f63c070d960b23adc28ea2411d65d49169b9244b0c975442ff898",
+"a00066.html#gae6c6a3b67c7930937dd877390dc94cbe",
+"a00212.html#gga7ff0b98bb1341c07acefb1473b6eda29a67a884fec4d6adb5b455d50a0a5617a5",
+"a00232.html#gab2823ff7917ffeaaccf805f739116ec1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,6 +1,6 @@
 var a00045 =
 [
-    [ "_gpt_init_config", "a00045.html#a00427", [
+    [ "_gpt_init_config", "a00045.html#a00424", [
       [ "clockSource", "a00045.html#a991827e19f7919d6a54cd65d41d4d972", null ],
       [ "divider", "a00045.html#adb06fd44c871b50cdfed748a680e338c", null ],
       [ "enableFreeRun", "a00045.html#aeacf9f451dcd860c4d1eb4fb8f3c653a", null ],

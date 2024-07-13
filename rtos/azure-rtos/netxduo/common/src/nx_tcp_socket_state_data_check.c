@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -282,7 +281,7 @@ ULONG      work_length;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_tcp_socket_state_data_check                     PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -333,6 +332,9 @@ ULONG      work_length;
 /*  10-31-2022     Wenhui Xie               Modified comment(s), and      */
 /*                                            supported HTTP Proxy,       */
 /*                                            resulting in version 6.2.0  */
+/*  10-31-2023     Bo Chen                 Modified comment(s), corrected */
+/*                                            the acked packet count,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_tcp_socket_state_data_check(NX_TCP_SOCKET *socket_ptr, NX_PACKET *packet_ptr)
@@ -925,14 +927,15 @@ NX_IP         *ip_ptr;
             if ((INT)(expected_sequence - search_begin_sequence) >= 0)
             {
 
+                /* Increment the acked packet count.  */
+                acked_packets++;
+
                 if ((INT)(search_end_sequence - expected_sequence) > 0)
                 {
                     /* Sequence number is within this packet.  Advance sequence number. */
                     expected_sequence = search_end_sequence;
 
                     socket_ptr -> nx_tcp_socket_rx_sequence = expected_sequence;
-
-                    acked_packets++;
 
                     /* Mark this packet as ready for retrieval.  */
                     /*lint -e{923} suppress cast of ULONG to pointer.  */

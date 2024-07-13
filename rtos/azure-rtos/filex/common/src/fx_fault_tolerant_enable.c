@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -70,7 +69,6 @@
 /*    _fx_fault_tolerant_recover            Recover FAT chain             */
 /*    _fx_fault_tolerant_reset_log_file     Reset the log file            */
 /*    _fx_fault_tolerant_read_log_file      Read log file to cache        */
-/*    _fx_utility_exFAT_cluster_state_get   Get state of exFAT cluster    */
 /*    _fx_utility_FAT_entry_read            Read a FAT entry              */
 /*    _fx_utility_16_unsigned_read          Read a USHORT from memory     */
 /*    _fx_utility_32_unsigned_read          Read a ULONG from memory      */
@@ -106,8 +104,8 @@ ULONG                         i, j;
 ULONG                         FAT_entry, FAT_sector, FAT_read_sectors;
 ULONG                         bytes_in_buffer;
 ULONG                         clusters;
-ULONG                         bytes_per_sector; 
-ULONG                         bytes_per_cluster; 
+ULONG                         bytes_per_sector;
+ULONG                         bytes_per_cluster;
 
     /* Protect against other threads accessing the media.  */
     FX_PROTECT
@@ -305,29 +303,26 @@ ULONG                         bytes_per_cluster;
         {
 
             /* Check whether this cluster is used. */
-#ifdef FX_ENABLE_EXFAT
-            if (media_ptr -> fx_media_FAT_type == FX_exFAT)
+            for (i = 0; i < clusters; i++)
             {
-            UCHAR cluste_state;
 
-                for (i = 0; i < clusters; i++)
+                /* Read FAT entry.  */
+                status =  _fx_utility_FAT_entry_read(media_ptr, start_cluster + i, &FAT_value);
+
+                /* Check for a bad status.  */
+                if (status != FX_SUCCESS)
                 {
 
-                    /* Update Bitmap */
-                    status = _fx_utility_exFAT_cluster_state_get(media_ptr, start_cluster + i, &cluste_state);
+                    /* Release media protection.  */
+                    FX_UNPROTECT
 
-                    /* Check for a bad status.  */
-                    if (status != FX_SUCCESS)
-                    {
+                    /* Return the bad status.  */
+                    return(status);
+                }
 
-                        /* Release media protection.  */
-                        FX_UNPROTECT
-
-                        /* Return the bad status.  */
-                        return(status);
-                    }
-
-                    if (cluste_state != FX_EXFAT_BITMAP_CLUSTER_OCCUPIED)
+                if (i < clusters - 1)
+                {
+                    if (FAT_value != (start_cluster + i + 1))
                     {
 
                         /* Mark invalid. */
@@ -335,48 +330,14 @@ ULONG                         bytes_per_cluster;
                         break;
                     }
                 }
-            }
-            else
-            {
-#endif /* FX_ENABLE_EXFAT */
-                for (i = 0; i < clusters; i++)
+                else if (FAT_value != media_ptr -> fx_media_fat_last)
                 {
 
-                    /* Read FAT entry.  */
-                    status =  _fx_utility_FAT_entry_read(media_ptr, start_cluster + i, &FAT_value);
-
-                    /* Check for a bad status.  */
-                    if (status != FX_SUCCESS)
-                    {
-
-                        /* Release media protection.  */
-                        FX_UNPROTECT
-
-                        /* Return the bad status.  */
-                        return(status);
-                    }
-
-                    if (i < clusters - 1)
-                    {
-                        if (FAT_value != (start_cluster + i + 1))
-                        {
-
-                            /* Mark invalid. */
-                            start_cluster = 0;
-                            break;
-                        }
-                    }
-                    else if (FAT_value != media_ptr -> fx_media_fat_last)
-                    {
-
-                        /* Mark invalid. */
-                        start_cluster = 0;
-                        break;
-                    }
+                    /* Mark invalid. */
+                    start_cluster = 0;
+                    break;
                 }
-#ifdef FX_ENABLE_EXFAT
             }
-#endif /* FX_ENABLE_EXFAT */
 
             /* Is this FAT entry occupied by log file? */
             if (start_cluster)

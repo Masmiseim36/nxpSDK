@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -225,46 +224,35 @@ ULONG                  trace_timestamp;
             for (i = (media_ptr -> fx_media_sectors_per_cluster -
                       file_ptr -> fx_file_current_relative_sector); i < sectors; i += media_ptr -> fx_media_sectors_per_cluster)
             {
-#ifdef FX_ENABLE_EXFAT
-                if (file_ptr -> fx_file_dir_entry.fx_dir_entry_dont_use_fat & 1)
+                status =  _fx_utility_FAT_entry_read(media_ptr, cluster, &next_cluster);
+
+                /* Determine if an error is present.  */
+                if ((status != FX_SUCCESS) || (next_cluster < FX_FAT_ENTRY_START) ||
+                    (next_cluster > media_ptr -> fx_media_fat_reserved))
                 {
-                    cluster++;
-                }
-                else
-                {
-#endif /* FX_ENABLE_EXFAT */
-                    status =  _fx_utility_FAT_entry_read(media_ptr, cluster, &next_cluster);
 
-                    /* Determine if an error is present.  */
-                    if ((status != FX_SUCCESS) || (next_cluster < FX_FAT_ENTRY_START) ||
-                        (next_cluster > media_ptr -> fx_media_fat_reserved))
+                    /* Release media protection.  */
+                    FX_UNPROTECT
+
+                    /* Send error message back to caller.  */
+                    if (status != FX_SUCCESS)
                     {
-
-                        /* Release media protection.  */
-                        FX_UNPROTECT
-
-                        /* Send error message back to caller.  */
-                        if (status != FX_SUCCESS)
-                        {
-                            return(status);
-                        }
-                        else
-                        {
-                            return(FX_FILE_CORRUPT);
-                        }
-                    }
-
-                    if (next_cluster != cluster + 1)
-                    {
-                        break;
+                        return(status);
                     }
                     else
                     {
-                        cluster = next_cluster;
+                        return(FX_FILE_CORRUPT);
                     }
-#ifdef FX_ENABLE_EXFAT
                 }
-#endif /* FX_ENABLE_EXFAT */
+
+                if (next_cluster != cluster + 1)
+                {
+                    break;
+                }
+                else
+                {
+                    cluster = next_cluster;
+                }
             }
 
             if (i < sectors)
@@ -382,41 +370,30 @@ ULONG                  trace_timestamp;
             if (file_ptr -> fx_file_current_relative_sector >=
                 media_ptr -> fx_media_sectors_per_cluster)
             {
-#ifdef FX_ENABLE_EXFAT
-                if (file_ptr -> fx_file_dir_entry.fx_dir_entry_dont_use_fat & 1)
-                {
-                    next_cluster = file_ptr -> fx_file_current_physical_cluster + 1;
-                }
-                else
-                {
-#endif /* FX_ENABLE_EXFAT */
 
-                    /* Read the FAT entry of the current cluster to find
-                       the next cluster.  */
-                    status =  _fx_utility_FAT_entry_read(media_ptr,
-                                                         file_ptr -> fx_file_current_physical_cluster, &next_cluster);
+                /* Read the FAT entry of the current cluster to find
+                   the next cluster.  */
+                status =  _fx_utility_FAT_entry_read(media_ptr,
+                                                     file_ptr -> fx_file_current_physical_cluster, &next_cluster);
 
-                    /* Determine if an error is present.  */
-                    if ((status != FX_SUCCESS) || (next_cluster < FX_FAT_ENTRY_START) ||
-                        (next_cluster > media_ptr -> fx_media_fat_reserved))
+                /* Determine if an error is present.  */
+                if ((status != FX_SUCCESS) || (next_cluster < FX_FAT_ENTRY_START) ||
+                    (next_cluster > media_ptr -> fx_media_fat_reserved))
+                {
+
+                    /* Release media protection.  */
+                    FX_UNPROTECT
+
+                    /* Send error message back to caller.  */
+                    if (status != FX_SUCCESS)
                     {
-
-                        /* Release media protection.  */
-                        FX_UNPROTECT
-
-                        /* Send error message back to caller.  */
-                        if (status != FX_SUCCESS)
-                        {
-                            return(status);
-                        }
-                        else
-                        {
-                            return(FX_FILE_CORRUPT);
-                        }
+                        return(status);
                     }
-#ifdef FX_ENABLE_EXFAT
+                    else
+                    {
+                        return(FX_FILE_CORRUPT);
+                    }
                 }
-#endif /* FX_ENABLE_EXFAT */
 
                 /* Otherwise, we have a new cluster.  Save it in the file
                    control block and calculate a new logical sector value.  */

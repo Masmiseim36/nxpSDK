@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_pictbridge_array_element_to_array_hexa          PORTABLE C      */ 
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -69,6 +68,9 @@
 /*  04-25-2022     Yajun Xia                Modified comment(s),          */
 /*                                            internal clean up,          */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            limited output array size,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_pictbridge_array_element_to_array_hexa(UCHAR *element, ULONG *hexa_array)
@@ -84,6 +86,7 @@ ULONG                   element_length;
 ULONG                   saved_element_length = 0;
 UINT                    string_length = UX_PICTBRIDGE_MAX_ELEMENT_SIZE;
 UINT                    status;
+ULONG                   *hexa_array_end = hexa_array + UX_PICTBRIDGE_MAX_DEVINFO_ARRAY_SIZE;
 
 
     /* Get the string length.  */
@@ -207,6 +210,10 @@ UINT                    status;
             remaining_length--;
         }            
         
+        /* Check if the array is Full.  */
+        if (hexa_array == hexa_array_end)
+            break;
+        
         /* Increment the element position to the next one if there.  */
         element++;
         
@@ -215,8 +222,12 @@ UINT                    status;
         
     }
     
-    /* Reset the last position in the array.  */
-    *hexa_array = 0;
+    /* Reset the remaining positions in the array.  */
+    while(hexa_array != hexa_array_end)
+    {
+        *hexa_array = 0;
+        hexa_array++;
+    }
                
     /* Operation was successful.  */
     return(UX_SUCCESS);    

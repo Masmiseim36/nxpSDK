@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP.
+ * Copyright 2020-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,8 @@
 #include "hal.h"
 #include "hal_utils.h"
 
+#define IMG_NB_STRIPE 16
+
 hal_image_status_t HAL_Image_Init(static_image_t *elt, mpp_img_params_t *config, void *param)
 {
     hal_image_status_t ret = MPP_kStatus_HAL_ImageSuccess;
@@ -18,12 +20,13 @@ hal_image_status_t HAL_Image_Init(static_image_t *elt, mpp_img_params_t *config,
     elt->config.width = config->width;
     elt->config.height = config->height;
     elt->config.format = config->format;
+    elt->config.stripe = config->stripe;
     elt->buffer = param ;
     HAL_LOGD("--HAL_STATIC_Image_Init\n");
     return ret;
 }
 
-hal_image_status_t HAL_Image_Dequeue(const static_image_t *elt, hw_buf_desc_t *out_buf, mpp_pixel_format_t *format)
+hal_image_status_t HAL_Image_Dequeue(static_image_t *elt, hw_buf_desc_t *out_buf, int *stripe_num)
 {
     hal_image_status_t ret = MPP_kStatus_HAL_ImageSuccess;
     static_image_static_config_t config = elt->config;
@@ -31,12 +34,29 @@ hal_image_status_t HAL_Image_Dequeue(const static_image_t *elt, hw_buf_desc_t *o
     int dest_stride = out_buf->stride;
     HAL_LOGI("++HAL_IMAGE_Dequeue\n");
 
-    *format = elt->config.format;
-
-    for (int y = 0; y < config.height; y++) {
-        memcpy(out_buf->addr + dest_stride*y,
-               elt->buffer + image_stride*y,
-               image_stride);
+    if(config.stripe)
+    {
+        /* copy stripe line by line */
+        int stripe_h = config.height / IMG_NB_STRIPE;
+        for (int y = 0; y < stripe_h; y++) {
+            memcpy(out_buf->addr + dest_stride*y,
+                   elt->buffer + image_stride*(stripe_h*elt->stripe_idx + y),
+                   image_stride);
+        }
+        /* pass stripe number [1 ; IMG_NB_STRIPE] */
+        *stripe_num = elt->stripe_idx + 1;
+        /* define next stripe index */
+        elt->stripe_idx++;
+        if (elt->stripe_idx >= IMG_NB_STRIPE) elt->stripe_idx = 0;
+    }
+    else
+    {
+        /* copy whole image line by line */
+        for (int y = 0; y < config.height; y++) {
+            memcpy(out_buf->addr + dest_stride*y,
+                   elt->buffer + image_stride*y,
+                   image_stride);
+        }
     }
 
     HAL_LOGI("--HAL_IMAGE_Dequeue\n");

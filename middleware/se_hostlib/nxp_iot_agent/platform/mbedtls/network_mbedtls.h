@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021, 2023 NXP
+ * Copyright 2018-2021, 2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,6 +27,7 @@ typedef psa_key_id_t mbedtls_svc_key_id_t;
 #include <mbedtls/error.h>
 #include <mbedtls/pk.h>
 #include <mbedtls/net_sockets.h>
+#include <mbedtls/version.h>
 
 #ifdef __cplusplus
 extern "C" {

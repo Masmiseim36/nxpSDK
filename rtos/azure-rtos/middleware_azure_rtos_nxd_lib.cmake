@@ -4,6 +4,11 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/tsn/src/nx_mrp.c
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/tsn/src/nx_msrp.c
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/tsn/src/nx_mvrp.c
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/tsn/src/nx_shaper.c
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/tsn/src/nx_srp.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/common/netxduo_common_source.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/common/src/nx_ip_initialize.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/common/src/nx_packet_pool_initialize.c
@@ -377,6 +382,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/inc
   ${CMAKE_CURRENT_LIST_DIR}/filex/common/inc
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/common/inc
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/tsn/inc
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/crypto_libraries/inc
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/nx_secure/inc
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/nx_secure/ports

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP.
+ * Copyright 2023-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,13 +22,10 @@
 #include "hal_debug.h"
 #include "hal_display_dev.h"
 #include "hal_utils.h"
+#include "hal_os.h"
 /* board configuration includes */
 
 #if (defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdSsd1963 == 1)
-
-#include <FreeRTOS.h>
-#include "semphr.h"
-#include <queue.h>
 
 #include "fsl_common.h"
 #include "fsl_ssd1963.h"
@@ -63,6 +60,8 @@ extern "C" {
 #define HAL_DISPLAY_DEV_McuLcdSsd1963_FORMAT              MPP_PIXEL_RGB565
 /* only RGB565 is supported */
 #define HAL_DISPLAY_DEV_McuLcdSsd1963_BPP                 2
+/* default stripe height */
+#define HAL_SMARTDMA_STRIPES                              16
 /* these macros represent the number of are used to define a small area of the screen in
  * order to set the LCD background.
  */
@@ -105,11 +104,12 @@ extern "C" {
 static ssd1963_handle_t lcd_handle;
 static edma_handle_t edma_tx_handle;
 static flexio_mculcd_edma_handle_t flexio_lcd_handle;
-static SemaphoreHandle_t s_transfer_done;
+static hal_sema_t s_transfer_done;
+static hal_mutex_t s_mutex; /* prevent stopping controller during transfer */
 
 /**** declarations ****/
 static hal_display_status_t hal_init_flexio_mcu_lcd(void);
-static hal_display_status_t hal_flush_display(const display_dev_t *dev, const uint8_t *pdata);
+static hal_display_status_t hal_flush_display(const display_dev_t *dev, const uint8_t *pdata, int stripenum);
 static hal_display_status_t hal_set_background_to_black(void);
 
 static void board_set_cs_pin(bool set);
@@ -128,7 +128,7 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Deinit(const display_dev_t *de
 hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Start(display_dev_t *dev);
 hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev);
 hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Blit(const display_dev_t *dev,
-        void *frame, int width, int height);
+        void *frame, int stripe);
 hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Getbufdesc(const display_dev_t *dev,
         hw_buf_desc_t *in_buf, mpp_memory_policy_t *policy);
 
@@ -214,12 +214,12 @@ static display_dev_t s_display_dev_mcu_lcd = {.id   = 0,
 
 static void board_set_cs_pin(bool set)
 {
-    GPIO_PinWrite(BOARD_SSD1963_CS_GPIO, BOARD_SSD1963_CS_PIN, (uint8_t)set);
+    GPIO_PinWrite(BOARD_LCD_CS_GPIO, BOARD_LCD_CS_PIN, (uint8_t)set);
 }
 
 static void board_set_rs_pin(bool set)
 {
-    GPIO_PinWrite(BOARD_SSD1963_RS_GPIO, BOARD_SSD1963_RS_PIN, (uint8_t)set);
+    GPIO_PinWrite(BOARD_LCD_RS_GPIO, BOARD_LCD_RS_PIN, (uint8_t)set);
 }
 
 static void board_flexio_transfer_callback(FLEXIO_MCULCD_Type *base,
@@ -227,9 +227,9 @@ static void board_flexio_transfer_callback(FLEXIO_MCULCD_Type *base,
         status_t status,
         void *user_data)
 {
-    BaseType_t task_awake = pdFALSE;
-    xSemaphoreGiveFromISR(s_transfer_done, &task_awake);
-    portYIELD_FROM_ISR(task_awake);
+    long task_awake = 0; /* no higher prio task to wake */
+    hal_sema_give_isr(s_transfer_done, &task_awake);
+    hal_sched_yield(task_awake);
 }
 
 /* This function is used to write command to display */
@@ -300,7 +300,7 @@ static status_t hal_lcd_write_memory(void *dbi_xfer_handle,
         return kStatus_HAL_DisplayError;
     } else {
         /* Wait for transfer done. */
-        if (xSemaphoreTake(s_transfer_done, portMAX_DELAY) != pdTRUE) {
+        if (hal_sema_take(s_transfer_done, HAL_MAX_TIMEOUT) != true) {
             HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: LCD FLEXIO transfer error\r\n");
             return kStatus_HAL_DisplayError;
         }
@@ -333,19 +333,19 @@ static hal_display_status_t hal_init_flexio_mcu_lcd(void)
     CLOCK_EnableClock(kCLOCK_Gpio4);
 
     /* Set SSD1963 CS, RS, and reset pin to output. */
-    GPIO_PinInit(BOARD_SSD1963_RST_GPIO, BOARD_SSD1963_RST_PIN, &reset_pin_config);
-    GPIO_PinInit(BOARD_SSD1963_CS_GPIO, BOARD_SSD1963_CS_PIN, &reset_pin_config);
-    GPIO_PinInit(BOARD_SSD1963_RS_GPIO, BOARD_SSD1963_RS_PIN, &reset_pin_config);
+    GPIO_PinInit(BOARD_LCD_RST_GPIO, BOARD_LCD_RST_PIN, &reset_pin_config);
+    GPIO_PinInit(BOARD_LCD_CS_GPIO, BOARD_LCD_CS_PIN, &reset_pin_config);
+    GPIO_PinInit(BOARD_LCD_RS_GPIO, BOARD_LCD_RS_PIN, &reset_pin_config);
 
-    s_transfer_done = xSemaphoreCreateBinary();
+    s_transfer_done = hal_sema_create_binary();
 
     if (NULL == s_transfer_done) {
         HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Semaphore create failed\r\n");
         return kStatus_HAL_DisplayError;
     }
 
-    /* FreeRTOS kernel API is used in FLEXIO ISR, so need to set proper IRQ priority. */
-    NVIC_SetPriority(BOARD_FLEXIO_MCU_LCD_IRQ, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+    /* FreeRTOS kernel API is used in EDMA ISR, so need to set proper IRQ priority. */
+    NVIC_SetPriority(BOARD_EDMA_IRQ, hal_get_max_syscall_prio() + 1);
 
     FLEXIO_MCULCD_GetDefaultConfig(&flexio_mcu_lcd_config);
     flexio_mcu_lcd_config.baudRate_Bps = BOARD_FLEXIO_BAUDRATE_BPS;
@@ -383,17 +383,29 @@ static hal_display_status_t hal_init_flexio_mcu_lcd(void)
 }
 
 /* This function is used to transfer frame data from MCU to the display. */
-static hal_display_status_t hal_flush_display(const display_dev_t *dev, const uint8_t *pdata)
+static hal_display_status_t hal_flush_display(const display_dev_t *dev, const uint8_t *pdata, int stripenum)
 {
     status_t status = kStatus_Success;
-
-    /* get buffer size */
-    int pixel_depth = get_bitpp(dev->cap.format)/8;
-    uint32_t buffer_size = dev->cap.width * dev->cap.height * pixel_depth;
+    int top, bottom;
 
     /* Define frame area where MCU can access. */
+    /* Get buffer size */
+    uint32_t buffer_size;
+    if (dev->cap.stripe)
+    {
+        top = dev->cap.stripe_height * (stripenum - 1) + dev->cap.top;
+        bottom = top + dev->cap.stripe_height - 1;
+        buffer_size = dev->cap.stripe_height * dev->cap.pitch;
+    }
+    else
+    {
+        top = dev->cap.top;
+        bottom = dev->cap.bottom;
+        buffer_size = dev->cap.height * dev->cap.pitch;
+    }
+
     status = SSD1963_SelectArea(&lcd_handle, dev->cap.left,
-            dev->cap.top, dev->cap.right, dev->cap.bottom);
+            top, dev->cap.right, bottom);
 
     if (status != kStatus_Success)  {
         HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to set display output area\n");
@@ -436,7 +448,7 @@ static hal_display_status_t hal_set_background_to_black(void)
     int backgr_buff_size = backgr_buff_height * backgr_buff_width *
             HAL_DISPLAY_DEV_McuLcdSsd1963_BPP;
 
-    uint8_t *backgr_buff = (uint8_t *)malloc(backgr_buff_size * sizeof(uint8_t));
+    uint8_t *backgr_buff = (uint8_t *)hal_malloc(backgr_buff_size * sizeof(uint8_t));
 
     if (backgr_buff == NULL) {
         HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to allocate "
@@ -484,6 +496,12 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
     HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_Init\n");
 
+    if (hal_mutex_create(&s_mutex) != MPP_SUCCESS)
+    {
+        HAL_LOGE("Failed to create mutex\n");
+        return kStatus_HAL_DisplayError;
+    }
+
     ret = hal_init_flexio_mcu_lcd();
 
     if (ret != kStatus_HAL_DisplaySuccess) {
@@ -529,10 +547,17 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
         display_cap->width = config->width;
         display_cap->height = config->height;
         display_cap->pitch = config->width * pixel_depth;
-        /* if width and height changes right and bottom should be updated accordingly */
-        display_cap->right = config->width - 1;
-        display_cap->bottom = config->height - 1;
     }
+
+    if (config->right != 0)
+        display_cap->right = config->right;
+    else
+        display_cap->right = config->left + config->width - 1;
+
+    if (config->bottom != 0)
+        display_cap->bottom = config->bottom;
+    else
+        display_cap->bottom = config->top + config->height - 1;
 
     /* get user's provided display position */
     if ((config->top != 0) || (config->left != 0)) {
@@ -550,6 +575,11 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
     }
 
     display_cap->rotate = config->rotate;
+    display_cap->stripe = config->stripe;
+    if(config->stripe)
+        display_cap->stripe_height = config->height / HAL_SMARTDMA_STRIPES;
+    else
+        display_cap->stripe_height = 0;
     display_cap->frameBuffers = NULL;
     display_cap->callback = callback;
     display_cap->user_data = user_data;
@@ -564,6 +594,8 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Deinit(const display_dev_t *de
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
 
     EDMA_Deinit(BOARD_EDMA);
+
+    hal_mutex_remove(s_mutex);
 
     return ret;
 }
@@ -638,6 +670,12 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev)
 
     HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_Stop\n");
 
+    if (hal_mutex_lock(s_mutex) != MPP_SUCCESS)
+    {
+        HAL_LOGE("Failed to lock mutex\n");
+        return kStatus_HAL_DisplayError;
+    }
+
     status = SSD1963_StopDisplay(&lcd_handle);
 
     if (status != kStatus_Success) {
@@ -647,13 +685,25 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev)
 
     SSD1963_Deinit(&lcd_handle);
 
+    if (hal_mutex_unlock(s_mutex) != MPP_SUCCESS)
+    {
+        HAL_LOGE("Failed to unlock mutex\n");
+        return kStatus_HAL_DisplayError;
+    }
+
     HAL_LOGD("--HAL_DisplayDev_McuLcdSsd1963_Stop\n");
 
     return kStatus_HAL_DisplaySuccess;
 }
 
+/* Send pixel data to screen
+ * @param [in] dev device handle
+ * @param [in] frame pointer to pixel data
+ * @param [in] stripe stripe number, 0 means full-frame
+ * @return \ref return_codes
+ */
 hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Blit(const display_dev_t *dev, void *frame,
-        int width, int height)
+        int stripe)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
 
@@ -664,20 +714,36 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Blit(const display_dev_t *dev,
         return kStatus_HAL_DisplayError;
     }
 
+    if (hal_mutex_lock(s_mutex) != MPP_SUCCESS)
+    {
+        HAL_LOGE("Failed to lock mutex\n");
+        return kStatus_HAL_DisplayError;
+    }
+
     /* flush data to display */
-    ret = hal_flush_display(dev, frame);
+    ret = hal_flush_display(dev, frame, stripe);
 
     if (ret != kStatus_HAL_DisplaySuccess) {
         HAL_LOGE("Failed to flush image to display\n");
         return kStatus_HAL_DisplayError;
     }
 
+    if (hal_mutex_unlock(s_mutex) != MPP_SUCCESS)
+    {
+        HAL_LOGE("Failed to unlock mutex\n");
+        return kStatus_HAL_DisplayError;
+    }
+
 #if (ENABLE_PISANO_CHECKSUM == 1)
     checksum_data_t checksum;
     checksum.type = CHECKSUM_TYPE_PISANO;
-    checksum.value = calc_checksum((dev->cap.width * get_bitpp(dev->cap.format)/8) * dev->cap.height, frame);
-    HAL_LOGD("CHECKSUM=0x%X\n", checksum.value);
-
+    if (stripe == 0) {
+        checksum.value = calc_checksum((dev->cap.width * get_bitpp(dev->cap.format)/8) * dev->cap.height, frame);
+        HAL_LOGD("CHECKSUM=0x%X\n", checksum.value);
+    } else {
+        checksum.value = 0;
+        HAL_LOGD("Checksum not supported with stripes\n");
+    }
     if (dev->cap.callback != NULL)
         dev->cap.callback(NULL, MPP_EVENT_INTERNAL_TEST_RESERVED,
                 (void *) &checksum, dev->cap.user_data);

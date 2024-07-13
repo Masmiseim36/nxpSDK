@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_device_class_pima_object_prop_value_get         PORTABLE C      */ 
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -84,6 +83,10 @@
 /*                                            updated status handling,    */
 /*                                            passed max length to app,   */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_pima_object_prop_value_get(UX_SLAVE_CLASS_PIMA *pima,
@@ -108,7 +111,7 @@ ULONG                   object_property_value_length;
     pima_data_buffer =  transfer_request -> ux_slave_transfer_request_data_pointer;
 
     /* Save the end of the buffer.  */
-    pima_data_buffer_end =  pima_data_buffer + UX_SLAVE_REQUEST_DATA_MAX_LENGTH;
+    pima_data_buffer_end =  pima_data_buffer + UX_DEVICE_CLASS_PIMA_TRANSFER_BUFFER_LENGTH;
 
     /* Fill in the data container type.  */
     _ux_utility_short_put(pima_data_buffer + UX_DEVICE_CLASS_PIMA_DATA_HEADER_TYPE,

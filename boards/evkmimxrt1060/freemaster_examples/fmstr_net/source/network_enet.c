@@ -13,7 +13,7 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#if BOARD_NETWORK_USE_100M_ENET_PORT
+#if EXAMPLE_NET_SPEED_100M
 #define EXAMPLE_MDIO_HANDLE ENET
 #else
 #define EXAMPLE_MDIO_HANDLE ENET_1G

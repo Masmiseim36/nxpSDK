@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -127,7 +126,7 @@ GX_WIDGET *end = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_event_process                            PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -175,6 +174,9 @@ GX_WIDGET *end = GX_NULL;
 /*                                            system input release logic  */
 /*                                            on widget hide event,       */
 /*                                            resulting in version 6.1.11 */
+/*  12-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            improved focus lose logic,  */
+/*                                            resulting in version 6.4.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_widget_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
@@ -255,20 +257,20 @@ GX_EVENT   input_release_event;
                 widget -> gx_widget_style &= ~GX_STYLE_DRAW_SELECTED;
                 _gx_system_dirty_mark(widget);
             }
+        }
 
-            /* and make sure my children don't think they have focus */
+        /* and make sure my children don't think they have focus */
 
-            child = widget -> gx_widget_first_child;
+        child = widget -> gx_widget_first_child;
 
-            while (child)
+        while (child)
+        {
+            if (child -> gx_widget_status & GX_STATUS_HAS_FOCUS)
             {
-                if (child -> gx_widget_status & GX_STATUS_HAS_FOCUS)
-                {
-                    child -> gx_widget_event_process_function(child, event_ptr);
-                    break;
-                }
-                child = child -> gx_widget_next;
+                child -> gx_widget_event_process_function(child, event_ptr);
+                break;
             }
+            child = child -> gx_widget_next;
         }
         break;
 

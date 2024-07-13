@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 NXP.
+ * Copyright 2023-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,7 @@
 #include "mpp_config.h"
 #include "hal_graphics_dev.h"
 #include "hal_debug.h"
-#if (defined HAL_ENABLE_2D_IMGPROC)
+#if (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Cpu == 1)
 #include "fsl_common.h"
 #include "hal_utils.h"
 
@@ -69,6 +69,10 @@ static int HAL_GfxDev_Cpu_ColorConvert(gfx_surface_t *pSrc, gfx_surface_t *pDst,
                                        cpu_blit_dims_t *pBlit_dims)  __attribute__((unused));
 static int HAL_GfxDev_Cpu_NoneConvert(gfx_surface_t *pSrc, gfx_surface_t *pDst,
                                       cpu_blit_dims_t *pBlit_dims)  __attribute__((unused));
+static int HAL_GfxDev_Scale_RGB565to888(const gfx_dev_t *dev, const gfx_surface_t *pSrc,
+        const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip);
+static int HAL_GfxDev_any_OP(const gfx_dev_t *dev, const gfx_surface_t *pSrc,
+        const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip);
 
 int HAL_GfxDev_Cpu_Getbufdesc(const gfx_dev_t *dev, hw_buf_desc_t *in_buf, hw_buf_desc_t *out_buf, mpp_memory_policy_t *policy)
 {
@@ -638,7 +642,16 @@ const hal_gfx_cpu_color_conv rgb565_to_rgb888[MAX_COMP_PER_PIXEL] =
 static inline uint8_t get_color_byte_from_rgb565(int x, int y, uint8_t *buf, int pitch, int bpp, int offset, get_src_pos f_get_src_pos, int width, int height)
 {
     uint16_t *rgb565 = (uint16_t *)buf;
-    return (((rgb565[f_get_src_pos(x, y, pitch/bpp, bpp/bpp, offset, width, height)]
+    return (((rgb565[f_get_src_pos(x, y, pitch/bpp, 1, offset, width, height)]
+              >> rgb565_to_rgb888[offset].pos_src) &
+             rgb565_to_rgb888[offset].mask_src) <<
+            rgb565_to_rgb888[offset].shift_dst);
+}
+
+static inline uint8_t get_color_byte_from_rgb565_rot0(int x, int y, uint8_t *buf, int pitch, int offset, int width, int height)
+{
+    uint16_t *rgb565 = (uint16_t *)buf;
+    return (((rgb565[rotate0_map(x, y, pitch/2, 1, offset, width, height)]
               >> rgb565_to_rgb888[offset].pos_src) &
              rgb565_to_rgb888[offset].mask_src) <<
             rgb565_to_rgb888[offset].shift_dst);
@@ -685,6 +698,27 @@ static inline uint8_t scale_rgb565(int x, int y, uint8_t *buf, int pitch, int bp
     tr = get_color_byte_from_rgb565(src_x+1, src_y, buf, pitch, bpp, offset, f_get_src_pos, width, height);
     bl = get_color_byte_from_rgb565(src_x, src_y+1, buf, pitch, bpp, offset, f_get_src_pos, width, height);
     br = get_color_byte_from_rgb565(src_x+1, src_y+1, buf, pitch, bpp, offset, f_get_src_pos, width, height);
+    /* interpolate horizontally */
+    int distx = x % SUBPIXINC;
+    int top = ( (tl * (SUBPIXINC - distx)) + (tr * distx) ) >> SUBPIXPOW;
+    int bot = ( (bl * (SUBPIXINC - distx)) + (br * distx) ) >> SUBPIXPOW;
+    /* interpolate vertically */
+    return ( (top * (SUBPIXINC - disty)) + (bot * disty) ) >> SUBPIXPOW;
+}
+
+static inline uint8_t scale_rgb565_rot0(int x, int y, uint8_t *buf, int pitch, int offset, int width, int height)
+{
+    uint8_t tl, tr, bl, br; /* 4 neighbors values in source */
+    int src_y = y >> SUBPIXPOW;
+    int disty = y % SUBPIXINC;
+
+    /* get 4 neighbors at source pixel positions */
+    /* divide by SUBPIXINC */
+    int src_x = x >> SUBPIXPOW;
+    tl = get_color_byte_from_rgb565_rot0(src_x, src_y, buf, pitch, offset, width, height);
+    tr = get_color_byte_from_rgb565_rot0(src_x+1, src_y, buf, pitch, offset, width, height);
+    bl = get_color_byte_from_rgb565_rot0(src_x, src_y+1, buf, pitch, offset, width, height);
+    br = get_color_byte_from_rgb565_rot0(src_x+1, src_y+1, buf, pitch, offset, width, height);
     /* interpolate horizontally */
     int distx = x % SUBPIXINC;
     int top = ( (tl * (SUBPIXINC - distx)) + (tr * distx) ) >> SUBPIXPOW;
@@ -750,8 +784,8 @@ static int HAL_GfxDev_Cpu_Scale(gfx_surface_t *pSrc, gfx_surface_t *pDst,
     int src_pitch = pSrc->pitch;
     int d_width = pBlit_dims->dst_w;
     int d_height = pBlit_dims->dst_h;
-    int h_incr = pBlit_dims->src_w * SUBPIXINC / d_width;
-    int v_incr = pBlit_dims->src_h * SUBPIXINC / d_height;
+    int h_incr = (pBlit_dims->src_w - 1) * SUBPIXINC / (d_width - 1);
+    int v_incr = (pBlit_dims->src_h - 1) * SUBPIXINC / (d_height - 1);
     int srcBPP = get_bitpp(pSrc->format)/8;
     int dstBPP = get_bitpp(pDst->format)/8;
     uint8_t *dstbuf = pDst->buf;
@@ -881,6 +915,80 @@ static int HAL_GfxDev_Cpu_NoneConvert(gfx_surface_t *pSrc, gfx_surface_t *pDst,
 int HAL_GfxDev_Cpu_Blit(
     const gfx_dev_t *dev, const gfx_surface_t *pSrc, const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip)
 {
+    int ret;
+    if ( (pSrc->format == MPP_PIXEL_RGB565)
+            && (pDst->format == MPP_PIXEL_RGB)
+            && (pRotate->degree == ROTATE_0)
+            && (flip == FLIP_NONE) )
+    {
+        ret = HAL_GfxDev_Scale_RGB565to888(dev, pSrc, pDst, pRotate, flip);
+    }
+    else
+    {
+        ret = HAL_GfxDev_any_OP(dev, pSrc, pDst, pRotate, flip);
+    }
+    return ret;
+}
+
+static int HAL_GfxDev_Scale_RGB565to888(
+        const gfx_dev_t *dev, const gfx_surface_t *pSrc, const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip)
+{
+    int error = 0;
+    int src_pitch = pSrc->pitch;
+    int dst_pitch = pDst->pitch;
+    int h_incr = 1;
+    int v_incr = 1;
+    uint8_t *srcbuf;
+    uint8_t *dstbuf;
+    int x, y, sub_x, sub_y;   /* position in destination */
+    uint8_t r, g, b;
+
+    int src_w = pSrc->right - pSrc->left + 1;
+    int src_h = pSrc->bottom - pSrc->top + 1;
+    int dst_w = pDst->right - pDst->left + 1;
+    int dst_h = pDst->bottom - pDst->top + 1;
+    int loop_width = dst_w;
+    int loop_height = dst_h;
+
+    HAL_LOGD("Input window: width=[%d], height=[%d].\n", src_w, src_h);
+    HAL_LOGD("Output window: width=[%d], height=[%d].\n", dst_w, dst_h);
+
+    HAL_LOGD("Input buffer addr=0x%x\n", (unsigned int)pSrc->buf);
+    HAL_LOGD("Output buffer addr=0x%x\n", (unsigned int)pDst->buf);
+
+    /* adapt buffers with crop and output window parameters */
+    srcbuf = (uint8_t *)(pSrc->buf + (pSrc->left * 2) + (pSrc->top * pSrc->pitch));
+    dstbuf = (uint8_t *)(pDst->buf + (pDst->left * 3) + (pDst->top * pDst->pitch));
+
+    h_incr = (src_w - 1) * SUBPIXINC / (dst_w - 1);
+    v_incr = (src_h - 1) * SUBPIXINC / (dst_h - 1);
+
+    for (y = 0, sub_y = 0; y < loop_height; y++, sub_y += v_incr)
+    {
+        for (x = 0, sub_x = 0; x < loop_width; x++, sub_x += h_incr)
+        {
+            r = scale_rgb565_rot0(sub_x, sub_y, srcbuf, src_pitch, 0, src_w, src_h);
+            g = scale_rgb565_rot0(sub_x, sub_y, srcbuf, src_pitch, 1, src_w, src_h);
+            b = scale_rgb565_rot0(sub_x, sub_y, srcbuf, src_pitch, 2, src_w, src_h);
+            write_rgb888(&dstbuf[(y * dst_pitch) + (x * 3)], r, g, b);
+        }
+    }
+
+#if (ENABLE_PISANO_CHECKSUM == 1)
+    checksum_data_t checksum;
+    checksum.type = CHECKSUM_TYPE_PISANO;
+    checksum.value = calc_checksum((dst_w*get_bitpp(pDst->format)/8) * dst_h, dstbuf);
+    HAL_LOGD("CHECKSUM=0x%X\n", checksum.value);
+    if (dev->callback != NULL)
+        dev->callback(NULL, MPP_EVENT_INTERNAL_TEST_RESERVED,
+                      (void *) &checksum, dev->user_data);
+#endif
+    return error;
+}
+
+static int HAL_GfxDev_any_OP(
+        const gfx_dev_t *dev, const gfx_surface_t *pSrc, const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip)
+{
     int error = 0;
     int src_pitch = pSrc->pitch;
     int dst_pitch = pDst->pitch;
@@ -922,14 +1030,14 @@ int HAL_GfxDev_Cpu_Blit(
 
     if ( ((pRotate->degree == ROTATE_0) || (pRotate->degree == ROTATE_180)) &&
          ((dst_w != src_w) || (dst_h != src_h)) ) {
-        h_incr = src_w * SUBPIXINC / dst_w;
-        v_incr = src_h * SUBPIXINC / dst_h;
+        h_incr = (src_w - 1) * SUBPIXINC / (dst_w - 1);
+        v_incr = (src_h - 1) * SUBPIXINC / (dst_h - 1);
         scaling = true;
     }
     else if ( ((pRotate->degree == ROTATE_90) || (pRotate->degree == ROTATE_270)) &&
               ((dst_w != src_h) || (dst_h != src_w)) ) {
-        h_incr = src_h * SUBPIXINC / dst_w;
-        v_incr = src_w * SUBPIXINC / dst_h;
+        h_incr = (src_h - 1) * SUBPIXINC / (dst_w - 1);
+        v_incr = (src_w - 1) * SUBPIXINC / (dst_h - 1);
         scaling = true;
     }
 

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -39,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_dpump_write_run                    PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -78,6 +77,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  01-31-2022     Chaoqiong Xiao           Initial Version 6.1.10        */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_dpump_write_run(UX_SLAVE_CLASS_DPUMP *dpump, UCHAR *buffer,
@@ -161,10 +164,10 @@ UINT                        read_state;
         }
 
         /* Check if we have enough in the local buffer.  */
-        if (requested_length > UX_SLAVE_REQUEST_DATA_MAX_LENGTH)
+        if (requested_length > UX_DEVICE_CLASS_DPUMP_WRITE_BUFFER_SIZE)
 
             /* We have too much to transfer.  */
-            dpump -> ux_device_class_dpump_write_transfer_length = UX_SLAVE_REQUEST_DATA_MAX_LENGTH;
+            dpump -> ux_device_class_dpump_write_transfer_length = UX_DEVICE_CLASS_DPUMP_WRITE_BUFFER_SIZE;
 
         else
 

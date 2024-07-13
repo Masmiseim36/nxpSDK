@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -85,7 +85,7 @@ extern "C" {
 /**
  * @brief The keyid on the PSA API to use for connecting to the EdgeLock 2GO cloud service.
  */
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL || NXP_IOT_AGENT_ENABLE_LITE
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL || defined(NXP_IOT_AGENT_ENABLE_LITE)
 #define EDGELOCK2GO_KEYID_ECC              0x3fff0201U
 #else
 #define EDGELOCK2GO_KEYID_ECC              0x7FFF816CU
@@ -116,13 +116,13 @@ extern "C" {
  /**
   * @brief The keyid on the PSA API to use for fetching a claimcode.
   */
-#define CLAIMCODE_OBJ_ID    		       0xf00000e0
+#define CLAIMCODE_OBJ_ID    		       0xf00000e0U
 
   /**
    * @brief The keyid on the PSA API to use for OEM specific objects.
    */
-#define EL2GO_OEM_FW_AUTH_KEY_HASH			0x7fff817a
-#define EL2GO_OEM_FW_DECRYPT_KEY			0x7fff817b
+#define EL2GO_OEM_FW_AUTH_KEY_HASH			0x7fff817aU
+#define EL2GO_OEM_FW_DECRYPT_KEY			0x7fff817bU
 
 #endif
 
@@ -188,7 +188,7 @@ iot_agent_status_t iot_agent_set_edgelock2go_datastore(iot_agent_context_t* ctx,
 /*! @brief Update device configuration
  * Reach out to EdgeLock 2GO cloud service for checking and (if applicable) fetching
  * configuration updates for the device.
- * @param[in] ctx: Context for the iot_agent.
+ * @param[in] agent_context: Context for the iot_agent.
  * @param[out] status_report: Provides a more detailed view on the operations performed 
  *    during the update and its outcomes. If the argument is NULL, no detailed status 
  *    is reported. 
@@ -199,7 +199,7 @@ iot_agent_status_t iot_agent_set_edgelock2go_datastore(iot_agent_context_t* ctx,
  * @retval IOT_AGENT_SUCCESS Upon success
  * @retval IOT_AGENT_FAILURE Upon failure
  */
-iot_agent_status_t iot_agent_update_device_configuration(iot_agent_context_t * ctx, 
+iot_agent_status_t iot_agent_update_device_configuration(iot_agent_context_t * agent_context, 
 	nxp_iot_UpdateStatusReport* status_report);
 
 

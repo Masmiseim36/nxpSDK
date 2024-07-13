@@ -127,7 +127,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -328,10 +328,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1042XJM5B, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../devices/MIMXRT1042/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../components/gt911;../../../../../components/video;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../devices/MIMXRT1042/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../components/gt911;../../../../../components/video;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../devices/MIMXRT1042/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -591,16 +591,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -619,6 +609,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2988,7 +2988,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -3189,10 +3189,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1042XJM5B, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../devices/MIMXRT1042/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../components/gt911;../../../../../components/video;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../devices/MIMXRT1042/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../components/gt911;../../../../../components/video;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../devices/MIMXRT1042/utilities/str;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3452,16 +3452,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3480,6 +3470,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

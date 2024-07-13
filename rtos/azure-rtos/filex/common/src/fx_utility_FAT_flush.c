@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -115,11 +114,7 @@ ULONG  sector;
         cluster =       media_ptr -> fx_media_fat_cache[index].fx_fat_cache_entry_cluster;
 
         /* Determine which type of FAT is present.  */
-#ifdef FX_ENABLE_EXFAT
-        if (media_ptr -> fx_media_FAT_type == FX_FAT12)
-#else
         if (media_ptr -> fx_media_12_bit_FAT)
-#endif /* FX_ENABLE_EXFAT */
         {
 
             /* Calculate the byte offset to the cluster entry.  */
@@ -314,7 +309,7 @@ ULONG  sector;
                 }
 
                 ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
-                media_ptr -> fx_media_fat_secondary_update_map[ind] = 
+                media_ptr -> fx_media_fat_secondary_update_map[ind] =
                     (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
                     | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
 
@@ -333,11 +328,7 @@ ULONG  sector;
                 }
             }
         }
-#ifdef FX_ENABLE_EXFAT
-        else if (media_ptr -> fx_media_FAT_type == FX_FAT16)
-#else
         else if (!media_ptr -> fx_media_32_bit_FAT)
-#endif /* FX_ENABLE_EXFAT */
         {
 
             /* 16-bit FAT is present.  */
@@ -432,14 +423,14 @@ ULONG  sector;
                 sectors_per_bit =  (UCHAR)((media_ptr -> fx_media_sectors_per_FAT / (FX_FAT_MAP_SIZE << 3)) + 1);
             }
             ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
-            media_ptr -> fx_media_fat_secondary_update_map[ind] = 
+            media_ptr -> fx_media_fat_secondary_update_map[ind] =
                 (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
                 | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
         }
         else
         {
 
-            /* 32-bit FAT or exFAT are present.  */
+            /* 32-bit FAT is present.  */
 
             /* Calculate the byte offset to the cluster entry.  */
             byte_offset =  (((ULONG)cluster) * 4);
@@ -521,29 +512,21 @@ ULONG  sector;
                 return(status);
             }
 
-#ifdef FX_ENABLE_EXFAT
-            /* We are not using fx_media_fat_secondary_update_map for exFAT.  */
-            if (media_ptr -> fx_media_FAT_type == FX_FAT32)
-            {
-#endif /* FX_ENABLE_EXFAT */
 
-                /* Mark the FAT sector update bit map to indicate this sector has been
-                   written.  */
-                if (media_ptr -> fx_media_sectors_per_FAT % (FX_FAT_MAP_SIZE << 3) == 0)
-                {
-                    sectors_per_bit =  (UCHAR)(media_ptr -> fx_media_sectors_per_FAT / (FX_FAT_MAP_SIZE << 3));
-                }
-                else
-                {
-                    sectors_per_bit =  (UCHAR)((media_ptr -> fx_media_sectors_per_FAT / (FX_FAT_MAP_SIZE << 3)) + 1);
-                }
-                ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
-                media_ptr -> fx_media_fat_secondary_update_map[ind] = 
-                    (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
-                    | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
-#ifdef FX_ENABLE_EXFAT
+            /* Mark the FAT sector update bit map to indicate this sector has been
+               written.  */
+            if (media_ptr -> fx_media_sectors_per_FAT % (FX_FAT_MAP_SIZE << 3) == 0)
+            {
+                sectors_per_bit =  (UCHAR)(media_ptr -> fx_media_sectors_per_FAT / (FX_FAT_MAP_SIZE << 3));
             }
-#endif /* FX_ENABLE_EXFAT */
+            else
+            {
+                sectors_per_bit =  (UCHAR)((media_ptr -> fx_media_sectors_per_FAT / (FX_FAT_MAP_SIZE << 3)) + 1);
+            }
+            ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
+            media_ptr -> fx_media_fat_secondary_update_map[ind] =
+                (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
+                | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
         }
     }
 

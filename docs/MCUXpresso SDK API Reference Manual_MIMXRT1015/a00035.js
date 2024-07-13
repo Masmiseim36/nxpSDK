@@ -1,6 +1,6 @@
 var a00035 =
 [
-    [ "_flexram_allocate_ram", "a00035.html#a00335", [
+    [ "_flexram_allocate_ram", "a00035.html#a00332", [
       [ "ocramBankNum", "a00035.html#a95e8a79967ab8b942dfa6d88deb5879e", null ],
       [ "dtcmBankNum", "a00035.html#af9d605ea93f398bc467b405fc4f944bc", null ],
       [ "itcmBankNum", "a00035.html#a6fdd9fadb00e2f1157442f5e45d40600", null ]

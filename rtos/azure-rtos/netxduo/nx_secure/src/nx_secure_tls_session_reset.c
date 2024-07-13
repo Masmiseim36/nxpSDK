@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -29,7 +28,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_session_reset                        PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -82,6 +81,10 @@
 /*                                            fixed renegotiation when    */
 /*                                            receiving in non-block mode,*/
 /*                                            resulting in version 6.2.0  */
+/*  03-08-2023     Yanwu Cai                Modified comment(s),          */
+/*                                            fixed compiler errors when  */
+/*                                            x509 is disabled,           */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_session_reset(NX_SECURE_TLS_SESSION *session_ptr)
@@ -156,12 +159,16 @@ UINT temp_status;
     NX_SECURE_MEMSET(session_ptr -> nx_secure_tls_local_sequence_number, 0, sizeof(session_ptr -> nx_secure_tls_local_sequence_number));
     NX_SECURE_MEMSET(session_ptr -> nx_secure_tls_remote_sequence_number, 0, sizeof(session_ptr -> nx_secure_tls_remote_sequence_number));
 
+#ifndef NX_SECURE_DISABLE_X509
+
     /* Clear out all remote certificates. */
     status = _nx_secure_tls_remote_certificate_free_all(session_ptr);
 
     /* Clear out the active certificate so if the session is reused it will return to the default (local cert). */
     session_ptr -> nx_secure_tls_credentials.nx_secure_tls_active_certificate = NX_NULL;
-
+#else
+    status = NX_SECURE_TLS_SUCCESS;
+#endif
 
 #ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
     session_ptr -> nx_secure_tls_secure_renegotiation = NX_FALSE;

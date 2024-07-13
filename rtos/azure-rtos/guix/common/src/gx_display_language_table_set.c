@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -212,7 +211,7 @@ GX_CONST GX_STRING **old_table = display -> gx_display_language_table;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_language_direction_table_set_ext        PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -224,7 +223,7 @@ GX_CONST GX_STRING **old_table = display -> gx_display_language_table;
 /*  INPUT                                                                 */
 /*                                                                        */
 /*    display                               Pointer to display            */
-/*    language_direciton_table              The language direction table  */
+/*    language_direction_table              The language direction table  */
 /*                                            to be set                   */
 /*    num_languages                         Number of languages in the    */
 /*                                            table                       */
@@ -246,6 +245,8 @@ GX_CONST GX_STRING **old_table = display -> gx_display_language_table;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)

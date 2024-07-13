@@ -347,7 +347,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/common_modules/inc;../../../../../rtos/azure-rtos/threadx/common_modules/module_manager/inc;../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/ac6/inc</IncludePath>
@@ -2016,7 +2016,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/common_modules/inc;../../../../../rtos/azure-rtos/threadx/common_modules/module_manager/inc;../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/ac6/inc</IncludePath>

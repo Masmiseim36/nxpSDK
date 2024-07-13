@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021, 2023 NXP
+ * Copyright 2018-2021,2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -83,7 +83,10 @@ iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_a
 		success &= EVP_DigestUpdate(digest_context, &buffer[0], chunk_size);
 
 		remaining -= chunk_size;
-		offset += chunk_size;
+		if (offset <= (SIZE_MAX - chunk_size))
+		{
+			offset += chunk_size;
+		}
 	}
 
 	if (success) {
@@ -108,10 +111,11 @@ exit:
 iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_agent_datastore_t* ctx,
 	const configuration_data_header_t* header, uint8_t calculated_checksum[32])
 {
-	uint8_t buffer[CONFIG_BUFFER_CHUNK_SIZE] = { 0 };
+	uint8_t buffer[CONFIG_BUFFER_CHUNK_SIZE] = { 0U };
 	size_t offset = sizeof(header->checksum);
 	size_t remaining = 0U;
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+	int failed = 0;
 
 	ASSERT_OR_EXIT_MSG((header->length >= offset), "Header length is lower than offset");
 	remaining = header->length - offset;
@@ -121,14 +125,14 @@ iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_a
 	mbedtls_sha256_init(&digest_context);
 	mbedtls_sha256_starts_ret(&digest_context, 0);
 
-	int failed = 0;
-	while ((!failed) && (remaining > 0))
+	while ((!failed) && (remaining > 0U))
 	{
 		size_t chunk_size = remaining < sizeof(buffer) ? remaining : sizeof(buffer);
 		iot_agent_service_read_buffer(ctx, offset, &buffer[0], chunk_size);
 		failed |= mbedtls_sha256_update_ret(&digest_context, &buffer[0], chunk_size);
-
 		remaining -= chunk_size;
+
+		ASSERT_OR_EXIT_MSG((offset <= (SIZE_MAX - chunk_size)), "Error in the offset variable");
 		offset += chunk_size;
 	}
 
@@ -138,10 +142,10 @@ iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_a
 #else
 	mbedtls_sha256_context digest_context;
 	mbedtls_sha256_init(&digest_context);
-	mbedtls_sha256_starts(&digest_context, 0);
 
-	int failed = 0;
-	while ((!failed) && (remaining > 0))
+	failed |= mbedtls_sha256_starts(&digest_context, 0);
+
+	while ((failed == 0) && (remaining > 0U))
 	{
 		size_t chunk_size = remaining < sizeof(buffer) ? remaining : sizeof(buffer);
 		iot_agent_service_read_buffer(ctx, offset, &buffer[0], chunk_size);
@@ -151,7 +155,7 @@ iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_a
 		offset += chunk_size;
 	}
 
-	if (!failed) {
+	if (failed == 0) {
 		failed |= mbedtls_sha256_finish(&digest_context, &calculated_checksum[0]);
 	}
 #endif
@@ -172,7 +176,7 @@ bool iot_agent_service_is_configuration_data_valid(
 
 	iot_agent_status_t agent_status = iot_agent_service_read_buffer(ctx, 0U, &header, sizeof(header));
 	ASSERT_OR_EXIT_SILENT(agent_status == IOT_AGENT_SUCCESS);
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1 && !defined(__ZEPHYR__)
 	ASSERT_OR_EXIT_MSG(header.length >= sizeof(header),
 		"Length indicated in header [%lu] is too small to contain configuration data.",
 		header.length);
@@ -206,11 +210,11 @@ exit:
 *   @param buffer
 *   @return agent_status
 */
-const char* STR_AWSSERVICE = "aws";
-const char* STR_AZURESERVICE = "azure";
-const char* STR_GOOGLESERVICE = "google";
-const char* STR_IBMSERVICE = "ibm";
-const char* STR_CUSTOMSERVICE = "custom";
+static const char* STR_AWSSERVICE = "aws";
+static const char* STR_AZURESERVICE = "azure";
+static const char* STR_GOOGLESERVICE = "google";
+static const char* STR_IBMSERVICE = "ibm";
+static const char* STR_CUSTOMSERVICE = "custom";
 
 iot_agent_status_t iot_agent_service_get_service_type_as_string(
 	const nxp_iot_ServiceDescriptor* service_descriptor, const char** buffer)
@@ -252,13 +256,13 @@ iot_agent_status_t iot_agent_service_get_service_type_as_string(
 *   @param buffer
 *   @return agent_status
 */
-const char* STR_PROTOCOL_HTTPS = "HTTPS";
-const char* STR_PROTOCOL_MQTTS = "MQTTS";
-const char* STR_PROTOCOL_AMQPS = "AMQPS";
-const char* STR_PROTOCOL_XMPP = "XMPP";
-const char* STR_PROTOCOL_DDS = "DDS";
-const char* STR_PROTOCOL_COAP = "COAP";
-const char* STR_PROTOCOL_EMPTY = "empty";
+static const char* STR_PROTOCOL_HTTPS = "HTTPS";
+static const char* STR_PROTOCOL_MQTTS = "MQTTS";
+static const char* STR_PROTOCOL_AMQPS = "AMQPS";
+static const char* STR_PROTOCOL_XMPP = "XMPP";
+static const char* STR_PROTOCOL_DDS = "DDS";
+static const char* STR_PROTOCOL_COAP = "COAP";
+static const char* STR_PROTOCOL_EMPTY = "empty";
 
 iot_agent_status_t iot_agent_service_get_protocol_of_service_as_string(
 	const nxp_iot_ServiceDescriptor* service_descriptor,

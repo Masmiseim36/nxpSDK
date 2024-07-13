@@ -13,6 +13,15 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/.
 )
 
+if(CONFIG_USE_COMPONENT_CONFIGURATION)
+  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
+
+  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    -DTIMER_PORT_TYPE_PIT=1
+  )
+
+endif()
+
 else()
 
 message(SEND_ERROR "component_pit_adapter.MIMXRT1024 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")

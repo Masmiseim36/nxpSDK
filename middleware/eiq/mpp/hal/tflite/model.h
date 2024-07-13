@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2022-2023 NXP
+ * Copyright 2020, 2022-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,10 +13,15 @@
 #include "fsl_common.h"
 #include "hal_valgo_dev.h"
 #include "hal.h"
+#include "mpp_config.h"
 
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */
+
+#ifndef HAL_TFLITE_BUFFER_ALIGN
+#define HAL_TFLITE_BUFFER_ALIGN 16
+#endif
 
 status_t MODEL_Init(const void *model_data, int model_size);
 uint8_t* MODEL_GetInputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type);

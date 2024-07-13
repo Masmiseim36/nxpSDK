@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -33,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_mouse_show                               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -65,6 +64,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_MOUSE_SUPPORT)
@@ -72,6 +74,14 @@ UINT _gx_canvas_mouse_show(GX_CANVAS *canvas)
 {
 GX_DISPLAY           *display;
 GX_MOUSE_CURSOR_INFO *mouse_info;
+
+#if defined(GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER)
+    if (canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+    {
+        /* Not supported.  */
+        return GX_FAILURE;
+    }
+#endif
 
     display = canvas -> gx_canvas_display;
     mouse_info = display -> gx_display_mouse.gx_mouse_cursor_info;

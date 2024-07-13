@@ -30,6 +30,10 @@
 #if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #include "fsl_memory.h"
 #endif
+#if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE > 0U))
+#include "fsl_cache.h"
+#endif
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -61,7 +65,9 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
 static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehciState);
 static void USB_DeviceEhciInterruptPortChange(usb_device_ehci_state_struct_t *ehciState);
 static void USB_DeviceEhciInterruptReset(usb_device_ehci_state_struct_t *ehciState);
-static void USB_DeviceEhciInterruptSof(usb_device_ehci_state_struct_t *ehciState);
+#if (defined(USB_DEVICE_CONFIG_SOF_NOTIFICATIONS) && (USB_DEVICE_CONFIG_SOF_NOTIFICATIONS > 0U))
+static void USB_DeviceEhciInterruptSOF(usb_device_ehci_state_struct_t *ehciState);
+#endif /* USB_DEVICE_CONFIG_SOF_NOTIFICATIONS */
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
 static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciState);
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
@@ -69,6 +75,8 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
                                            uint8_t endpointAddress,
                                            uint8_t *buffer,
                                            uint32_t length);
+static usb_status_t USB_DeviceEhciNotification(usb_device_ehci_state_struct_t *ehciState,
+                                               usb_device_callback_message_struct_t *message);
 
 /*******************************************************************************
  * Variables
@@ -197,7 +205,19 @@ static void USB_DeviceEhciSetDefaultState(usb_device_ehci_state_struct_t *ehciSt
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
          | USBHS_USBINTR_SLE_MASK
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
+#if (defined(USB_DEVICE_CONFIG_SOF_NOTIFICATIONS) && (USB_DEVICE_CONFIG_SOF_NOTIFICATIONS > 0U))
+         | USBHS_USBINTR_SRE_MASK
+#endif /* USB_DEVICE_CONFIG_SOF_NOTIFICATIONS */
         );
+
+    /* Enable USB LPM L1 entry interrupt and exit interrupt */
+#if ((defined(USB_DEVICE_CONFIG_LOW_POWER_MODE)) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
+#if ((defined(USB_DEVICE_CONFIG_LPM_L1)) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+    ehciState->registerBase->USBINTR |= USB_USBINTR_LPM_L1_ENTRYIE_MASK;
+    ehciState->registerNcBase->LPM_CSR0 |= USBNC_LPM_CSR0_LPM_EN_MASK;
+    ehciState->registerNcBase->LPM_CSR1 |= USBNC_LPM_CSR1_LPM_DEV_RES_MASK;
+#endif
+#endif
     /* Clear reset flag */
     ehciState->isResetting = 0U;
 }
@@ -491,7 +511,8 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
                                             uint8_t direction)
 {
     usb_device_ehci_dtd_struct_t *currentDtd;
-    uint32_t index = ((uint32_t)endpoint << 1U) + (uint32_t)direction;
+    uint32_t index    = ((uint32_t)endpoint << 1U) + (uint32_t)direction;
+    uint32_t primeBit = 1UL << (endpoint + 16U * direction);
     usb_device_callback_message_struct_t message;
 
     message.buffer = NULL;
@@ -517,12 +538,30 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
         if (0U != (currentDtd->dtdTokenUnion.dtdTokenBitmap.status & USB_DEVICE_ECHI_DTD_STATUS_ACTIVE))
         {
             message.length = USB_CANCELLED_TRANSFER_LENGTH;
+            /* Flush the endpoint to stop a transfer. */
+            do
+            {
+                /* Set the corresponding bit(s) in the EPFLUSH register */
+                ehciState->registerBase->EPFLUSH |= primeBit;
+
+                /* Wait until all bits in the EPFLUSH register are cleared. */
+                while (0U != (ehciState->registerBase->EPFLUSH & primeBit))
+                {
+                }
+                /*
+                 * Read the EPSR register to ensure that for all endpoints
+                 * commanded to be flushed, that the corresponding bits
+                 * are now cleared.
+                 */
+            } while (0U != (ehciState->registerBase->EPSR & primeBit));
         }
         else
         {
             message.length += (currentDtd->reservedUnion.originalBufferInfo.originalBufferLength -
                                currentDtd->dtdTokenUnion.dtdTokenBitmap.totalBytes);
         }
+        /* Clear the endpoint transfer done status */
+        ehciState->registerBase->EPCOMPLETE = primeBit;
 
         /* Move the dtd head pointer to next. */
         /* If the pointer of the head equals to the tail, set the dtd queue to null. */
@@ -549,16 +588,7 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
         {
             message.code    = endpoint | (uint8_t)((uint32_t)direction << 0x07U);
             message.isSetup = 0U;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-            {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-                usb_echo("notification error\n");
-#endif
-            }
-#else
-            (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+            (void)USB_DeviceEhciNotification(ehciState, &message);
             message.buffer = NULL;
             message.length = 0U;
         }
@@ -623,16 +653,7 @@ static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehc
                 /* Fill the setup packet to the backup buffer */
                 USB_DeviceEhciFillSetupBuffer(ehciState, endpoint);
                 /* Notify the up layer the EHCI status changed. */
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-                if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-                {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-                    usb_echo("notification error\n");
-#endif
-                }
-#else
-                (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+                (void)USB_DeviceEhciNotification(ehciState, &message);
             }
         }
     }
@@ -768,16 +789,7 @@ static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehc
                         {
                             message.code    = endpoint | (uint8_t)((uint32_t)direction << 0x07U);
                             message.isSetup = 0U;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-                            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-                            {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-                                usb_echo("notification error\n");
-#endif
-                            }
-#else
-                            (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+                            (void)USB_DeviceEhciNotification(ehciState, &message);
                             message.buffer = NULL;
                             message.length = 0U;
                         }
@@ -863,16 +875,7 @@ static void USB_DeviceEhciInterruptPortChange(usb_device_ehci_state_struct_t *eh
         if (0U != ehciState->isResetting)
         {
             message.code = (uint8_t)kUSB_DeviceNotifyBusReset;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-            {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-                usb_echo("notification error\n");
-#endif
-            }
-#else
-            (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+            (void)USB_DeviceEhciNotification(ehciState, &message);
             ehciState->isResetting = 0U;
         }
     }
@@ -880,18 +883,19 @@ static void USB_DeviceEhciInterruptPortChange(usb_device_ehci_state_struct_t *eh
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
     if ((0U != ehciState->isSuspending) && (0U == (ehciState->registerBase->PORTSC1 & USBHS_PORTSC1_SUSP_MASK)))
     {
+#if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+        /* pollinng if the device exits the L1 state */
+        while (!(ehciState->registerBase->USBSTS & USB_USBSTS_LPM_L1_EXITI_MASK))
+        {
+            __NOP();
+        }
+        ehciState->registerBase->USBSTS |= USB_USBSTS_LPM_L1_EXITI_MASK;
+#endif
         /* Set the resume flag */
         ehciState->isSuspending = 0U;
 
         message.code = (uint8_t)kUSB_DeviceNotifyResume;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-        {
-            return kStatus_USB_Error;
-        }
-#else
-        (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+        (void)USB_DeviceEhciNotification(ehciState, &message);
     }
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
 }
@@ -933,30 +937,32 @@ static void USB_DeviceEhciInterruptReset(usb_device_ehci_state_struct_t *ehciSta
         message.code    = (uint8_t)kUSB_DeviceNotifyBusReset;
         message.length  = 0U;
         message.isSetup = 0U;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-        {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-            usb_echo("notification error\n");
-#endif
-        }
-#else
-        (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+        (void)USB_DeviceEhciNotification(ehciState, &message);
     }
 }
 
+#if (defined(USB_DEVICE_CONFIG_SOF_NOTIFICATIONS) && (USB_DEVICE_CONFIG_SOF_NOTIFICATIONS > 0U))
 /*!
- * @brief Handle the sof interrupt.
+ * @brief Handle Start of Frame (SOF) Interrupt.
  *
- * The function is used to handle the sof interrupt.
+ * The function is used to handle the SOF interrupt.
  *
  * @param ehciState       Pointer of the device EHCI state structure.
  *
  */
-static void USB_DeviceEhciInterruptSof(usb_device_ehci_state_struct_t *ehciState)
+static void USB_DeviceEhciInterruptSOF(usb_device_ehci_state_struct_t *ehciState)
 {
+    usb_device_callback_message_struct_t message;
+
+    message.buffer  = (uint8_t *)NULL;
+    message.code    = (uint8_t)kUSB_DeviceNotifySOF;
+    message.length  = 0U;
+    message.isSetup = 0U;
+
+    /* Notify upper layer */
+    (void)USB_DeviceEhciNotification(ehciState, &message);
 }
+#endif /* USB_DEVICE_CONFIG_SOF_NOTIFICATIONS */
 
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
 /*!
@@ -988,14 +994,7 @@ static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciS
             message.length  = 0U;
             message.isSetup = 0U;
             message.code    = (uint8_t)kUSB_DeviceNotifySuspend;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-            {
-                return kStatus_USB_Error;
-            }
-#else
-            (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+            (void)USB_DeviceEhciNotification(ehciState, &message);
         }
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
 #else
@@ -1007,6 +1006,28 @@ static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciS
 #endif
     }
 }
+
+#if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+static usb_status_t USB_DeviceEhciInterruptLPMSleep(usb_device_ehci_state_struct_t *ehciState)
+{
+    usb_device_callback_message_struct_t message;
+
+    message.buffer  = &ehciState->lpmRemoteWakeUp;
+    message.code    = (uint8_t)kUSB_DeviceNotifyLPMSleep;
+    message.length  = 0U;
+    message.isSetup = 0U;
+
+    /*TODO: maybe need 3us delay */
+
+    ehciState->lpmRemoteWakeUp =
+        (uint8_t)((ehciState->registerNcBase->LPM_CSR1 & USBNC_LPM_CSR1_LPM_DEV_RWKENRCVD_MASK) >>
+                  USBNC_LPM_CSR1_LPM_DEV_RWKENRCVD_SHIFT);
+
+    /* Notify up layer the USB suspend signal detected. */
+    return USB_DeviceEhciNotification(ehciState, &message);
+}
+#endif
+
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
 
 /*!
@@ -1057,6 +1078,13 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
     {
         return kStatus_USB_Error;
     }
+
+#if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE > 0U))
+    if (0U != length)
+    {
+        DCACHE_CleanByRange((uint32_t)buffer, length);
+    }
+#endif
 
     if (0U == dtdRequestCount)
     {
@@ -1279,12 +1307,12 @@ static usb_hsdcd_status_t USB_DeviceEhciIsrHSDCDCallback(void *handle, uint32_t 
     message.isSetup = 0U;
     message.code    = (uint8_t)kUSB_DeviceNotifyDcdDetectFinished;
 #if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+    if (kStatus_USB_Success != USB_DeviceEhciNotification(ehciState, &message))
     {
         return kStatus_hsdcd_Error;
     }
 #else
-    (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+    (void)USB_DeviceEhciNotification(ehciState, &message);
 #endif
 
     return error;
@@ -1316,22 +1344,61 @@ static usb_phydcd_status_t USB_DeviceEhciIsrPHYDCDCallback(void *handle, uint32_
     }
 
     /*messsgae buffer contain event information*/
-    message.buffer = (uint8_t *)param;
-    message.length = 0U;
+    message.buffer  = (uint8_t *)param;
+    message.length  = 0U;
     message.isSetup = 0U;
-    message.code = (uint8_t)kUSB_DeviceNotifyDcdDetectFinished;
+    message.code    = (uint8_t)kUSB_DeviceNotifyDcdDetectFinished;
 #if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+    if (kStatus_USB_Success != USB_DeviceEhciNotification(ehciState, &message))
     {
-        return kStatus_USB_Error;
+        return kStatus_phydcd_Error;
     }
 #else
-    (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+    (void)USB_DeviceEhciNotification(ehciState, &message);
 #endif
 
     return error;
 }
 #endif
+
+/*!
+ * @brief Notify the device that the controller status changed.
+ *
+ * This function is used to notify the device that the controller status changed.
+ *
+ * @param ehciState              Pointer of the device EHCI state structure.
+ * @param message                The device callback message handle.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+static usb_status_t USB_DeviceEhciNotification(usb_device_ehci_state_struct_t *ehciState,
+                                               usb_device_callback_message_struct_t *message)
+{
+    usb_status_t error;
+
+#if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE > 0U))
+    /* If valid OUT packet, invalidate data in cache */
+    if ((message->code < kUSB_DeviceNotifyBusReset) && (message->buffer != NULL) && (message->length != 0U) &&
+        (message->length != USB_CANCELLED_TRANSFER_LENGTH))
+    {
+        DCACHE_InvalidateByRange((uint32_t)message->buffer, message->length);
+    }
+#endif
+
+    error = USB_DeviceNotificationTrigger(ehciState->deviceHandle, message);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != error)
+    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+        usb_echo("notification error\n");
+#endif
+    }
+#else
+    error                = kStatus_USB_Success;
+#endif
+
+    return error;
+}
 
 /*!
  * @brief Initialize the USB device EHCI instance.
@@ -1423,10 +1490,16 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 #endif
 
 #endif
-    /* Reset the controller. */
-    ehciState->registerBase->USBCMD |= USBHS_USBCMD_RST_MASK;
-    while (0U != (ehciState->registerBase->USBCMD & USBHS_USBCMD_RST_MASK))
+    /* For eUSB, do not need to reset controller. */
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
     {
+        /* Reset the controller. */
+        ehciState->registerBase->USBCMD |= USBHS_USBCMD_RST_MASK;
+        while (0U != (ehciState->registerBase->USBCMD & USBHS_USBCMD_RST_MASK))
+        {
+        }
     }
 
     /* Get the HW's endpoint count */
@@ -1462,13 +1535,13 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
         /* Device is connected to a host. */
         message.code = (uint8_t)kUSB_DeviceNotifyAttach;
 #if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-        if ((kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message)) ||
+        if ((kStatus_USB_Success != USB_DeviceEhciNotification(ehciState, &message)) ||
             (kStatus_hsdcd_Success != USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL)))
         {
             return kStatus_USB_Error;
         }
 #else
-        (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+        (void)USB_DeviceEhciNotification(ehciState, &message);
         (void)USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
 #endif
     }
@@ -1477,7 +1550,7 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 
     index = controllerId - (uint8_t)kUSB_ControllerEhci0;
 
-    phyDcdParamConfig.dcdCallback = USB_DeviceEhciIsrPHYDCDCallback;
+    phyDcdParamConfig.dcdCallback      = USB_DeviceEhciIsrPHYDCDCallback;
     phyDcdParamConfig.dcdCallbackParam = (void *)ehciState;
 
     phyDcdError =
@@ -1492,13 +1565,13 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
         /* Device is connected to a host. */
         message.code = (uint8_t)kUSB_DeviceNotifyAttach;
 #if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-        if ((kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message)) ||
+        if ((kStatus_USB_Success != USB_DeviceEhciNotification(ehciState, &message)) ||
             (kStatus_USB_Success != USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL)))
         {
             return kStatus_USB_Error;
         }
 #else
-        (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+        (void)USB_DeviceEhciNotification(ehciState, &message);
         (void)USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL);
 #endif
     }
@@ -1775,12 +1848,12 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
         message.code    = ep;
         message.isSetup = 0U;
 #if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+        if (kStatus_USB_Success != USB_DeviceEhciNotification(ehciState, &message))
         {
             return kStatus_USB_Error;
         }
 #else
-        (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+        (void)USB_DeviceEhciNotification(ehciState, &message);
 #endif
         message.buffer = NULL;
     }
@@ -1808,6 +1881,9 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
     uint16_t *temp16;
     uint8_t *temp8;
+#if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
+    OSA_SR_ALLOC();
+#endif
 
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     usb_device_struct_t *deviceHandle;
@@ -1944,9 +2020,20 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             ehciState->registerBase->PORTSC1 &= ~USBHS_PORTSC1_FPR_MASK;
             error = kStatus_USB_Success;
             break;
+#if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+        case kUSB_DeviceControlSleepResume:
+#if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
+            ehciState->registerNcBase->USB_OTGn_CTRL &= ~USBNC_USB_OTGn_CTRL_WIE_MASK;
+#endif
+            ehciState->registerBase->PORTSC1 &= ~USBHS_PORTSC1_PHCD_MASK;
+            ehciState->registerBase->PORTSC1 |= USBHS_PORTSC1_FPR_MASK;
+            error = kStatus_USB_Success;
+            break;
+#endif
 #endif /* USB_DEVICE_CONFIG_REMOTE_WAKEUP */
         case kUSB_DeviceControlSuspend:
             ehciState->registerBase->OTGSC |= 0x007F0000U;
+            OSA_ENTER_CRITICAL();
 #if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
             /* ehciState->registerBase->PLL_CONTROL_1 |= USBC_PLL_CONTROL_1_PLL_SUSPEND_EN(1); */
 #endif
@@ -1957,10 +2044,6 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             {
                 ehciState->registerPhyBase->PWD = 0xFFFFFFFFU;
                 /* ehciState->registerBase->OTGCTL |= ((1U<<10) | (1U<<17) | (1U<<16)); */
-                while (0U != (ehciState->registerPhyBase->CTRL & (USBPHY_CTRL_UTMI_SUSPENDM_MASK)))
-                {
-                    __NOP();
-                }
             }
 #endif
             /* ehciState->registerPhyBase->CTRL |= ((1U << 21) | (1U << 22) | (1U << 23)); */
@@ -1989,9 +2072,14 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             }
 #endif
 #endif
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            ehciState->registerNcBase->USB_OTGn_CTRL |=
+                USBNC_USB_OTGn_CTRL_WKUP_VBUS_EN_MASK | USBNC_USB_OTGn_CTRL_WKUP_DPDM_EN_MASK;
+#else
             ehciState->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WKUP_ID_EN_MASK |
                                                         USBNC_USB_OTGn_CTRL_WKUP_VBUS_EN_MASK |
                                                         USBNC_USB_OTGn_CTRL_WKUP_DPDM_EN_MASK;
+#endif
             ehciState->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WIE_MASK;
 #else
 #if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
@@ -2009,8 +2097,79 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             }
 #endif
             ehciState->isSuspending = 1U;
-            error                   = kStatus_USB_Success;
+            OSA_EXIT_CRITICAL();
+            error = kStatus_USB_Success;
             break;
+
+#if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+        case kUSB_DeviceControlSleep:
+            ehciState->registerBase->OTGSC |= 0x007F0000U;
+            OSA_ENTER_CRITICAL();
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->PWD = 0xFFFFFFFFU;
+                /* ehciState->registerBase->OTGCTL |= ((1U<<10) | (1U<<17) | (1U<<16)); */
+            }
+#endif
+            ehciState->registerBase->USBSTS |= USBHS_USBSTS_SRI_MASK;
+#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+            }
+#endif
+#endif
+            /* ehciState->registerBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;*/
+#if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
+#if (defined(USBPHY_CTRL_ENVBUSCHG_WKUP_MASK))
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_ENVBUSCHG_WKUP_MASK | USBPHY_CTRL_ENIDCHG_WKUP_MASK |
+                                                    USBPHY_CTRL_ENDPDMCHG_WKUP_MASK |
+                                                    USBPHY_CTRL_ENIRQRESUMEDETECT_MASK;
+            }
+#endif
+#endif
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            ehciState->registerNcBase->USB_OTGn_CTRL |=
+                USBNC_USB_OTGn_CTRL_WKUP_VBUS_EN_MASK | USBNC_USB_OTGn_CTRL_WKUP_DPDM_EN_MASK;
+#else
+            ehciState->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WKUP_ID_EN_MASK |
+                                                        USBNC_USB_OTGn_CTRL_WKUP_VBUS_EN_MASK |
+                                                        USBNC_USB_OTGn_CTRL_WKUP_DPDM_EN_MASK;
+#endif
+            ehciState->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WIE_MASK;
+#else
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+            PMU->WAKEUP_PM2_MASK1 |= PMU_WAKEUP_PM2_MASK1_USB(1);
+#else
+            ehciState->registerBase->USBGENCTRL = USBHS_USBGENCTRL_WU_IE_MASK;
+#endif
+#endif
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
+            }
+#endif
+            /* TODO: wait 3us delay */
+            ehciState->isSuspending = 1U;
+            OSA_EXIT_CRITICAL();
+            error = kStatus_USB_Success;
+            break;
+#endif
+
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
         case kUSB_DeviceControlSetDefaultStatus:
             for (uint8_t count = 0U; count < USB_DEVICE_CONFIG_ENDPOINTS; count++)
@@ -2200,16 +2359,7 @@ void USB_DeviceEhciIsrFunction(void *deviceHandle)
         {
             /* Device is connected to a host. */
             message.code = (uint8_t)kUSB_DeviceNotifyAttach;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-            {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-                usb_echo("notification triigger error\n");
-#endif
-            }
-#else
-            (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+            (void)USB_DeviceEhciNotification(ehciState, &message);
 
 #if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) && \
     (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
@@ -2241,16 +2391,7 @@ void USB_DeviceEhciIsrFunction(void *deviceHandle)
         {
             /* Device is disconnected from a host. */
             message.code = (uint8_t)kUSB_DeviceNotifyDetach;
-#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
-            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
-            {
-#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
-                usb_echo("notification trigger error\n");
-#endif
-            }
-#else
-            (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-#endif
+            (void)USB_DeviceEhciNotification(ehciState, &message);
         }
     }
 #endif /* USB_DEVICE_CONFIG_DETACH_ENABLE */
@@ -2291,13 +2432,21 @@ void USB_DeviceEhciIsrFunction(void *deviceHandle)
         /* Suspend interrupt */
         USB_DeviceEhciInterruptSuspend(ehciState);
     }
+#if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+    if (0U != (status & USB_USBSTS_LPM_L1_ENTRYI_MASK))
+    {
+        USB_DeviceEhciInterruptLPMSleep(ehciState);
+    }
+#endif
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
 
+#if (defined(USB_DEVICE_CONFIG_SOF_NOTIFICATIONS) && (USB_DEVICE_CONFIG_SOF_NOTIFICATIONS > 0U))
     if (0U != (status & USBHS_USBSTS_SRI_MASK))
     {
-        /* Sof interrupt */
-        USB_DeviceEhciInterruptSof(ehciState);
+        /* SOF interrupt */
+        USB_DeviceEhciInterruptSOF(ehciState);
     }
+#endif
 }
 
 #endif /* USB_DEVICE_CONFIG_EHCI */

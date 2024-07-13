@@ -3,6 +3,10 @@
  * LICENSE file in the project root for full license information
  */
 
+/* 
+ * Copyright 2023-2024 NXP
+ */
+
 #ifndef ____NETC_EP_H___
 #define ____NETC_EP_H___
 #include "soem_netc_ep.h"

@@ -1,12 +1,12 @@
 var a00021 =
 [
-    [ "edma_config_t", "a00021.html#a00375", [
+    [ "edma_config_t", "a00021.html#a00372", [
       [ "enableContinuousLinkMode", "a00021.html#aa45bd940803ec470b60e5b5d5bd0356b", null ],
       [ "enableHaltOnError", "a00021.html#a4d319e29ce0ab4f2406aae26a136422a", null ],
       [ "enableRoundRobinArbitration", "a00021.html#aef3200ba1711d6649c69fca888cf3468", null ],
       [ "enableDebugMode", "a00021.html#a7929ad2b37282a423c5ac5d7f4c7e744", null ]
     ] ],
-    [ "edma_transfer_config_t", "a00021.html#a00379", [
+    [ "edma_transfer_config_t", "a00021.html#a00376", [
       [ "srcAddr", "a00021.html#aa1ff988241ea8238e8793f4236c55553", null ],
       [ "destAddr", "a00021.html#a70e10c552f356c4d2935e9f308a3317a", null ],
       [ "srcTransferSize", "a00021.html#ae5f96bb8d80f6f7a6c8a687e8a42a77e", null ],
@@ -16,17 +16,17 @@ var a00021 =
       [ "minorLoopBytes", "a00021.html#a6f4c2ec17c05de3741d67447f784f721", null ],
       [ "majorLoopCounts", "a00021.html#accd14b645237edae7fa51c5db6aa6998", null ]
     ] ],
-    [ "edma_channel_Preemption_config_t", "a00021.html#a00374", [
+    [ "edma_channel_Preemption_config_t", "a00021.html#a00371", [
       [ "enableChannelPreemption", "a00021.html#aa1230352459f3f47b0e396ef7971bbd6", null ],
       [ "enablePreemptAbility", "a00021.html#ab7329f8b16f7e8bb0283c9305d9902ce", null ],
       [ "channelPriority", "a00021.html#a38fbcb827c573361d0043d95faca2d8f", null ]
     ] ],
-    [ "edma_minor_offset_config_t", "a00021.html#a00377", [
+    [ "edma_minor_offset_config_t", "a00021.html#a00374", [
       [ "enableSrcMinorOffset", "a00021.html#aa2b34fbdc053b7f2f3ea476048e9f80f", null ],
       [ "enableDestMinorOffset", "a00021.html#a5a2ce555e51bc7694fec6443c191fb5b", null ],
       [ "minorOffset", "a00021.html#aff7bae6e4e019c2b49508bbfec6cd1ea", null ]
     ] ],
-    [ "edma_tcd_t", "a00021.html#a00378", [
+    [ "edma_tcd_t", "a00021.html#a00375", [
       [ "SADDR", "a00021.html#a0390d1bdd79814503542ca534da58e90", null ],
       [ "SOFF", "a00021.html#a28284a4d47a0b15aa5eabc67888f9a2a", null ],
       [ "ATTR", "a00021.html#a4ac302b14c968761b4bd8bc4e620d9f6", null ],
@@ -39,7 +39,7 @@ var a00021 =
       [ "CSR", "a00021.html#aa49f8458af67a904d9f5dae1dc829a10", null ],
       [ "BITER", "a00021.html#a4c5331d08a6b43c9ebc15d41c5734140", null ]
     ] ],
-    [ "edma_handle_t", "a00021.html#a00376", [
+    [ "edma_handle_t", "a00021.html#a00373", [
       [ "callback", "a00021.html#a2103986f2733a5b6ce42b5983eabcb11", null ],
       [ "userData", "a00021.html#a6af5d18677d40167da0d0219cb3bed01", null ],
       [ "base", "a00021.html#aac2e55c398c06eb64a7cd00b0d5dc6e3", null ],

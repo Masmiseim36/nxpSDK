@@ -328,10 +328,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_EX_ECC, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1062/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1091,6 +1091,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -1826,16 +1831,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1859,6 +1854,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3299,10 +3304,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_EX_ECC, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/utilities;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/ex/src;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1062/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4062,6 +4067,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -4797,16 +4807,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4830,6 +4830,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

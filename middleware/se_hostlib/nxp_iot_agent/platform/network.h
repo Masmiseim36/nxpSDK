@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -41,13 +41,13 @@ NETWORK_ASSERT_OR_EXIT_STATUS_MSG(CONDITION, NETWORK_STATUS_FAIL, "assert failed
 
 typedef struct iot_agent_context_t iot_agent_context_t;
 
-void* network_new();
-void network_free(void* context);
+void* network_new(void);
+void network_free(void* ctx);
 
-int network_configure(void* context, void* network_config);
+int network_configure(void* opaque_ctx, void* opaque_network_config);
 
-int network_connect(void* context);
-int network_disconnect(void* context);
+int network_connect(void* opaque_ctx);
+int network_disconnect(void* opaque_ctx);
 int network_read(void* context, uint8_t* buffer, size_t len);
 int network_write(void* context, const uint8_t* buffer, size_t len);
 

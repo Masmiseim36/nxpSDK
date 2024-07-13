@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -85,7 +84,7 @@ static ULONG process_timerticks = 0;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nxe_sntp_client_create                             PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -126,6 +125,9 @@ static ULONG process_timerticks = 0;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  03-08-2023     Wenhui Xie               Modified comment(s),          */
+/*                                            checked the client ID,      */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nxe_sntp_client_create(NX_SNTP_CLIENT *client_ptr, NX_IP *ip_ptr, UINT iface_index, NX_PACKET_POOL *packet_pool_ptr,   
@@ -143,6 +145,14 @@ UINT status;
 
         /* Return error status.  */
        return(NX_PTR_ERROR);
+    }
+
+    /* Check for the client ID.  */
+    if ((client_ptr == NX_NULL) || (client_ptr -> nx_sntp_client_id == NXD_SNTP_ID))
+    {
+
+        /* Return error status.  */
+        return(NX_PTR_ERROR);
     }
 
     /* Check for invalid network interface input. */
@@ -449,7 +459,7 @@ UINT status;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_sntp_client_delete                              PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -489,10 +499,16 @@ UINT status;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  03-08-2023     Wenhui Xie               Modified comment(s),          */
+/*                                            cleared the client ID,      */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_sntp_client_delete(NX_SNTP_CLIENT *client_ptr)
 {
+
+    /* Clear the client ID.  */
+    client_ptr -> nx_sntp_client_id = 0;
 
     /* Suspend the SNTP Client thread.  */
     tx_thread_suspend(&client_ptr -> nx_sntp_client_thread);
@@ -2432,7 +2448,7 @@ NX_SNTP_TIME local_time;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_sntp_client_receive_time_update                 PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -2483,6 +2499,9 @@ NX_SNTP_TIME local_time;
 /*  07-29-2022     Yuxin Zhou               Modified comment(s), and      */
 /*                                            corrected the port check,   */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Tiejun Zhou              Modified comment(s), and      */
+/*                                            fixed packet chain issue,   */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_sntp_client_receive_time_update(NX_SNTP_CLIENT *client_ptr, ULONG timeout)
@@ -2710,6 +2729,18 @@ NXD_ADDRESS     source_ip_address, destination_ip_address;
 
             continue;
         }
+
+#ifndef NX_DISABLE_PACKET_CHAIN
+        /* Ignore packet chain.  */
+        if (receive_packet -> nx_packet_next)
+        {
+
+            /* No further need for the receive packet. Release back to the client pool.  */
+            nx_packet_release(receive_packet);
+
+            continue;
+        }
+#endif /* NX_DISABLE_PACKET_CHAIN */
 
         memset(&(client_ptr -> nx_sntp_current_server_time_message), 0, sizeof(NX_SNTP_TIME_MESSAGE));
 

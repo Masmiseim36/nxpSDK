@@ -368,7 +368,6 @@
           <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -379,6 +378,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1473,7 +1473,6 @@
           <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -1484,6 +1483,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2580,7 +2580,6 @@
           <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -2591,6 +2590,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3683,7 +3683,6 @@
           <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -3694,6 +3693,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4788,7 +4788,6 @@
           <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -4799,6 +4798,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5895,7 +5895,6 @@
           <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -5906,6 +5905,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6821,19 +6821,19 @@
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_helium_utils.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math_f16.h</name>
@@ -6886,6 +6886,9 @@
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/debug.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</name>
           </file>
           <file>
@@ -6914,6 +6917,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/none.h</name>
@@ -6950,6 +6956,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/window_functions.h</name>
           </file>
         </group>
       </group>
@@ -7097,6 +7106,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>WindowFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</name>
           </file>
         </group>
       </group>
@@ -7270,12 +7285,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -7286,6 +7295,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

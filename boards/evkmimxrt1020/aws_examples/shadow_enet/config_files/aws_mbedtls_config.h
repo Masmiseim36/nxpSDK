@@ -94,16 +94,16 @@
 
 #define CAAM_INSTANCE CAAM
 
-#define MBEDTLS_FREESCALE_CAAM_AES     /* Enable use of CAAM AES.*/
-#define MBEDTLS_FREESCALE_CAAM_AES_GCM /* Enable use of CAAM AES GCM.*/
+//#define MBEDTLS_FREESCALE_CAAM_AES     /* Enable use of CAAM AES.*/
+//#define MBEDTLS_FREESCALE_CAAM_AES_GCM /* Enable use of CAAM AES GCM.*/
 
-#define MBEDTLS_FREESCALE_CAAM_DES /* Enable use of CAAM DES.*/
+//#define MBEDTLS_FREESCALE_CAAM_DES /* Enable use of CAAM DES.*/
 
-#define MBEDTLS_FREESCALE_CAAM_SHA1   /* Enable use of CAAM SHA1.*/
-#define MBEDTLS_FREESCALE_CAAM_SHA256 /* Enable use of CAAM SHA256.*/
+//#define MBEDTLS_FREESCALE_CAAM_SHA1   /* Enable use of CAAM SHA1.*/
+//#define MBEDTLS_FREESCALE_CAAM_SHA256 /* Enable use of CAAM SHA256.*/
 
-#define MBEDTLS_FREESCALE_CAAM_PKHA /* Enable use of CAAM PKHA.*/
-#define FREESCALE_PKHA_INT_MAX_BYTES 512
+//#define MBEDTLS_FREESCALE_CAAM_PKHA /* Enable use of CAAM PKHA.*/
+//#define FREESCALE_PKHA_INT_MAX_BYTES 512
 #endif
 
 /* Enable DCP use in library if there is DCP on chip. */

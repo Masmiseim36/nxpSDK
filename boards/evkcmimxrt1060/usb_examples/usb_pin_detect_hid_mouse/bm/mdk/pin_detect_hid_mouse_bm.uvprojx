@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, DEBUG, CPU_MIMXRT1062DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -720,16 +720,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -738,6 +728,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1302,10 +1302,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1690,16 +1690,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1708,6 +1698,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2272,10 +2272,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2660,16 +2660,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2678,6 +2668,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3242,10 +3242,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, NDEBUG, CPU_MIMXRT1062DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3630,16 +3630,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3648,6 +3638,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4212,10 +4212,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4600,16 +4600,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -4618,6 +4608,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5182,10 +5182,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1062;../../../../xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../components/osa;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5570,16 +5570,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -5588,6 +5578,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

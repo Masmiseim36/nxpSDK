@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iomuxc_3a_20iomux_20controller',['IOMUXC: IOMUX Controller',['../a00256.html',1,'']]]
+  ['iomuxc_3a_20iomux_20controller',['IOMUXC: IOMUX Controller',['../a00252.html',1,'']]]
 ];

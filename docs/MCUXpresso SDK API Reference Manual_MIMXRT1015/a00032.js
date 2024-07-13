@@ -1,6 +1,6 @@
 var a00032 =
 [
-    [ "_flexio_spi_master_edma_handle", "a00032.html#a00324", [
+    [ "_flexio_spi_master_edma_handle", "a00032.html#a00321", [
       [ "transferSize", "a00032.html#a7b8e9764d5251b6802223f1a06825880", null ],
       [ "nbytes", "a00032.html#a0031d44f585927e4e39c6dd41104472d", null ],
       [ "txInProgress", "a00032.html#a0d382a3798829e3cb4325ec08e6206e2", null ],

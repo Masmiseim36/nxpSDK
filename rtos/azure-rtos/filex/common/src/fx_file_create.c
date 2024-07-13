@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -101,9 +100,6 @@ UINT         i;
 CHAR        *work_ptr;
 FX_DIR_ENTRY dir_entry;
 FX_DIR_ENTRY search_directory;
-#ifdef FX_ENABLE_EXFAT
-ULONG64      dir_size;
-#endif /* FX_ENABLE_EXFAT */
 
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
@@ -223,27 +219,6 @@ ULONG64      dir_size;
         return(FX_INVALID_PATH);
     }
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        if (((dir_entry.fx_dir_entry_name[0] == '.') && (dir_entry.fx_dir_entry_name[1] == 0)) ||
-            ((dir_entry.fx_dir_entry_name[0] == '.') && (dir_entry.fx_dir_entry_name[1] == '.') && (dir_entry.fx_dir_entry_name[2] == 0)))
-        {
-#ifdef FX_ENABLE_FAULT_TOLERANT
-            FX_FAULT_TOLERANT_TRANSACTION_FAIL(media_ptr);
-#endif /* FX_ENABLE_FAULT_TOLERANT */
-
-            /* Release media protection.  */
-            FX_UNPROTECT
-
-            /* We don't need '.' or '..' for exFAT */
-            return(FX_ALREADY_CREATED);
-        }
-    }
-
-    /* Save the directory entry size.  */
-    dir_size = search_directory.fx_dir_entry_file_size;
-#endif /* FX_ENABLE_EXFAT */
 
     /* Find a free slot for the new file.  */
     status =  _fx_directory_free_search(media_ptr, &search_directory, &dir_entry);
@@ -284,10 +259,6 @@ ULONG64      dir_size;
     /* Set file size to 0. */
     dir_entry.fx_dir_entry_file_size =  0;
 
-#ifdef FX_ENABLE_EXFAT
-    /* Set available file size to 0. */
-    dir_entry.fx_dir_entry_available_file_size = 0;
-#endif /* FX_ENABLE_EXFAT */
 
     /* Set the cluster to NULL.  */
     dir_entry.fx_dir_entry_cluster =    FX_NULL;
@@ -300,70 +271,9 @@ ULONG64      dir_size;
         dir_entry.fx_dir_entry_attributes |=  FX_HIDDEN;
     }
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        /* Don't use FAT by default.  */
-        dir_entry.fx_dir_entry_dont_use_fat = (CHAR)(((search_directory.fx_dir_entry_dont_use_fat & 1) << 1) | 1);
-
-        if (search_directory.fx_dir_entry_name[0])
-        {
-
-            /* Not root directory.  */
-            /* Copy the date and time from the actual sub-directory.  */
-            search_directory.fx_dir_entry_time = dir_entry.fx_dir_entry_time;
-            search_directory.fx_dir_entry_date = dir_entry.fx_dir_entry_date;
-
-            /* Check if the directory size has changed.  */
-            if (search_directory.fx_dir_entry_file_size == dir_size)
-            {
-
-                /* Not changed, we need only update time stamps.  */
-                status = _fx_directory_exFAT_entry_write(media_ptr, &search_directory, UPDATE_FILE);
-            }
-            else
-            {
-
-                /* Directory size changed, update time stamps and the stream size.  */
-                status = _fx_directory_exFAT_entry_write(media_ptr, &search_directory, UPDATE_STREAM);
-            }
-
-            /* Check for a bad status.  */
-            if (status != FX_SUCCESS)
-            {
-
-#ifdef FX_ENABLE_FAULT_TOLERANT
-                FX_FAULT_TOLERANT_TRANSACTION_FAIL(media_ptr);
-#endif /* FX_ENABLE_FAULT_TOLERANT */
-
-                /* Release media protection.  */
-                FX_UNPROTECT
-
-                /* Return the bad status.  */
-                return(status);
-            }
-        }
-    }
-    else
-    {
-        dir_entry.fx_dir_entry_dont_use_fat = 0;
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Now write out the directory entry.  */
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        status = _fx_directory_exFAT_entry_write(media_ptr, &dir_entry, UPDATE_FULL);
-    }
-    else
-    {
-#endif /* FX_ENABLE_EXFAT */
-        status = _fx_directory_entry_write(media_ptr, &dir_entry);
-#ifdef FX_ENABLE_EXFAT
-    }
-#endif /* FX_ENABLE_EXFAT */
+    status = _fx_directory_entry_write(media_ptr, &dir_entry);
 
 #ifdef FX_ENABLE_FAULT_TOLERANT
     /* Check for a bad status.  */

@@ -1,6 +1,6 @@
 var a00027 =
 [
-    [ "_flexcan_frame", "a00027.html#a00384", [
+    [ "_flexcan_frame", "a00027.html#a00381", [
       [ "timestamp", "a00027.html#a2d574a318bed8991a6c173865e2bf578", null ],
       [ "length", "a00027.html#a79577000abdd0aead2ccbae8fff1ca66", null ],
       [ "type", "a00027.html#a868664b2368610412f00f8ec6559da6c", null ],
@@ -19,7 +19,7 @@ var a00027 =
       [ "dataByte5", "a00027.html#a598ddfb685ffb0f2287821a5708ceef8", null ],
       [ "dataByte4", "a00027.html#a0401aa7e547f5109bc748f4d118a1e29", null ]
     ] ],
-    [ "_flexcan_fd_frame", "a00027.html#a00382", [
+    [ "_flexcan_fd_frame", "a00027.html#a00379", [
       [ "timestamp", "a00027.html#a130b3669379e7148c6f4961c6ec57531", null ],
       [ "length", "a00027.html#ad97e02ed8eca9b833a259754c6645872", null ],
       [ "type", "a00027.html#aa4829764f77b8fcf905c059e4d583baa", null ],
@@ -40,7 +40,7 @@ var a00027 =
       [ "dataByte5", "a00027.html#ac28ec2c76604ce4a072166b42a01458e", null ],
       [ "dataByte4", "a00027.html#a3b0256db5850a9b2149770e80882048a", null ]
     ] ],
-    [ "_flexcan_timing_config", "a00027.html#a00389", [
+    [ "_flexcan_timing_config", "a00027.html#a00386", [
       [ "preDivider", "a00027.html#a094250169e8e286eff95dedfdae9e0e6", null ],
       [ "rJumpwidth", "a00027.html#af296065f4a2ac8f604503bc4fe6a41bc", null ],
       [ "phaseSeg1", "a00027.html#abe55f38d4790119e5507e7f0978a6bf1", null ],
@@ -52,7 +52,7 @@ var a00027 =
       [ "fphaseSeg2", "a00027.html#aee4bc9453fc65578b00eccf802cbf568", null ],
       [ "fpropSeg", "a00027.html#ac4fbbde2a9eaac22a78ae58544c26a0a", null ]
     ] ],
-    [ "_flexcan_config", "a00027.html#a00380", [
+    [ "_flexcan_config", "a00027.html#a00377", [
       [ "baudRate", "a00027.html#a7a997a5d07d195dc35002e5e104196d3", null ],
       [ "baudRateFD", "a00027.html#adeaa843f3193d306ea4c446064552e0e", null ],
       [ "bitRate", "a00027.html#a22c7375fbe9674f6f510bd73b652a3d4", null ],
@@ -69,26 +69,26 @@ var a00027 =
       [ "enableSupervisorMode", "a00027.html#ac2ca9141608d5b021391d1c720da63d9", null ],
       [ "enableDoze", "a00027.html#a7a4b67eb4727210f9d28fb8552851e9c", null ]
     ] ],
-    [ "_flexcan_rx_mb_config", "a00027.html#a00388", [
+    [ "_flexcan_rx_mb_config", "a00027.html#a00385", [
       [ "id", "a00027.html#a4ff5fa151c2ba5ba98319bf0a649a6fc", null ],
       [ "format", "a00027.html#ad8e7c29dfd88c333b2b67aa1907a0532", null ],
       [ "type", "a00027.html#a126ff20c8635183bfc9ea22c8d0145d4", null ]
     ] ],
-    [ "_flexcan_rx_fifo_config", "a00027.html#a00387", [
+    [ "_flexcan_rx_fifo_config", "a00027.html#a00384", [
       [ "idFilterTable", "a00027.html#aea31cb6b0d8d0043b8fef0bf5643e023", null ],
       [ "idFilterNum", "a00027.html#a618071167b1c2d692ae2300f0aca11e8", null ],
       [ "idFilterType", "a00027.html#a054a415ae6706180c56d45a23c043144", null ],
       [ "priority", "a00027.html#a1c243a04b67b2e884cd5a5412e0c180a", null ]
     ] ],
-    [ "_flexcan_mb_transfer", "a00027.html#a00386", [
+    [ "_flexcan_mb_transfer", "a00027.html#a00383", [
       [ "frame", "a00027.html#a0fbc2630619824ada84a7c8f1fb6d8e5", null ],
       [ "mbIdx", "a00027.html#a57d98d8dfa64c50572a30ff7c4039748", null ]
     ] ],
-    [ "_flexcan_fifo_transfer", "a00027.html#a00383", [
+    [ "_flexcan_fifo_transfer", "a00027.html#a00380", [
       [ "frame", "a00027.html#af301237fe1da56ad6a2b3b4b11f00ea2", null ],
       [ "frameNum", "a00027.html#a212435fed34842a51bccef58f80adf21", null ]
     ] ],
-    [ "_flexcan_handle", "a00027.html#a00385", [
+    [ "_flexcan_handle", "a00027.html#a00382", [
       [ "callback", "a00027.html#aa0c17cc65cf1fecab95fc2188a0d89c1", null ],
       [ "userData", "a00027.html#a7e044b14352b7636ba3e0fd1b45539b7", null ],
       [ "mbFrameBuf", "a00027.html#a26b7974562fe0615291b95692898e901", null ],

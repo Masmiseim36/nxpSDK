@@ -1,6 +1,6 @@
 var a00021 =
 [
-    [ "_enc_config", "a00021.html#a00299", [
+    [ "_enc_config", "a00021.html#a00296", [
       [ "enableReverseDirection", "a00021.html#ad754ab4be68e450ac01f5c5def997762", null ],
       [ "decoderWorkMode", "a00021.html#ac55e95a1ebbf9a703c63a05c723e040a", null ],
       [ "HOMETriggerMode", "a00021.html#a4c57c0fef10c4148b7bbf0014af81e27", null ],
@@ -19,7 +19,7 @@ var a00021 =
       [ "positionModulusValue", "a00021.html#ad24588974b896443abc282fb81d9a910", null ],
       [ "positionInitialValue", "a00021.html#adc59884c4cdd242858612d085604c84e", null ]
     ] ],
-    [ "_enc_self_test_config", "a00021.html#a00300", [
+    [ "_enc_self_test_config", "a00021.html#a00297", [
       [ "signalDirection", "a00021.html#af93dbcfe3bdec619dc4c3137ab435ef0", null ],
       [ "signalCount", "a00021.html#a88b049ae384312c2b4fb74c59924f7f5", null ],
       [ "signalPeriod", "a00021.html#a232136f38b57ce15fdf30a430a3ebff3", null ]

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_audio_read_frame_get               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -61,7 +60,7 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    ThreadX                                                             */
+/*    Application                                                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
@@ -70,6 +69,8 @@
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
 /*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  03-08-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_audio_read_frame_get(UX_DEVICE_CLASS_AUDIO_STREAM *stream,
@@ -111,4 +112,58 @@ UX_SLAVE_DEVICE             *device;
     *frame_length = stream -> ux_device_class_audio_stream_access_pos -> ux_device_class_audio_frame_length;
 
     return(UX_SUCCESS);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_audio_read_frame_get              PORTABLE C      */
+/*                                                           6.2.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in frame buffer getting function call.  */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    stream                                Address of audio stream       */
+/*                                            instance                    */
+/*    frame_data                            Pointer to buffer to save     */
+/*                                            pointer to frame data       */
+/*    frame_length                          Pointer to buffer to save     */
+/*                                            pointer to frame length     */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_audio_read_frame_get Get buffer from 1st FIFO item */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  03-08-2023     Chaoqiong Xiao           Initial Version 6.2.1         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_device_class_audio_read_frame_get(UX_DEVICE_CLASS_AUDIO_STREAM *stream,
+                                           UCHAR **frame_data, ULONG *frame_length)
+{
+
+    /* Sanity checks.  */
+    if (stream == UX_NULL || frame_data == UX_NULL || frame_length == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Get frame access buffer.  */
+    return(_ux_device_class_audio_read_frame_get(stream, frame_data, frame_length));
 }

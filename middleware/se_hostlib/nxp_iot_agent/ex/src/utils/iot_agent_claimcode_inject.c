@@ -1,4 +1,4 @@
-/* Copyright 2020-2022 NXP
+/* Copyright 2020-2022,2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -14,7 +14,7 @@
 static uint8_t CheckIfKeyIdExists(sss_object_t* obj, uint32_t keyId, pSe05xSession_t session_ctx)
 {
 
-#if ((SSS_HAVE_SE05X_VER_03_XX) || (SSS_HAVE_SE05X_VER_06_00))
+#if (SSS_HAVE_SE05X_VER_03_XX)
     if (sss_key_object_get_handle(obj, keyId) == (sss_status_t)kStatus_SSS_Success)
     {
         return 1;

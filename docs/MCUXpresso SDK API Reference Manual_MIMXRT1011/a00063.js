@@ -1,24 +1,52 @@
 var a00063 =
 [
-    [ "_tempmon_config", "a00063.html#a00390", [
-      [ "frequency", "a00063.html#a7abc547e53d2bf57d98a8c53aba24d73", null ],
-      [ "highAlarmTemp", "a00063.html#aef9a15b388394ba5b01c773a904e6161", null ],
-      [ "panicAlarmTemp", "a00063.html#a4ee843733473a886d67a422d4a155f64", null ],
-      [ "lowAlarmTemp", "a00063.html#a3b800f87335e6569c4122baecdae621d", null ]
+    [ "_trng_statistical_check_limit", "a00063.html#a00387", [
+      [ "maximum", "a00063.html#a35e227d700d93b82e9a8d9c6bed5ddee", null ],
+      [ "minimum", "a00063.html#a7eab56036ebd5d30bab45ad339ea2139", null ]
     ] ],
-    [ "FSL_TEMPMON_DRIVER_VERSION", "a00063.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba", null ],
-    [ "tempmon_config_t", "a00063.html#ga7d83f2e7eaf7b3833a9ce786a758b867", null ],
-    [ "tempmon_alarm_mode", "a00063.html#gae299ab75db04e087bad01ec6df1b82e6", null ],
-    [ "_tempmon_alarm_mode", "a00063.html#gaa902d39a9a0944943dfa1652a1c191da", [
-      [ "kTEMPMON_HighAlarmMode", "a00063.html#ggaa902d39a9a0944943dfa1652a1c191daa6c34f34b411e7f880a5782d0329f732f", null ],
-      [ "kTEMPMON_PanicAlarmMode", "a00063.html#ggaa902d39a9a0944943dfa1652a1c191daa3cafbb2449dbb58abb5ef078907ba6b0", null ],
-      [ "kTEMPMON_LowAlarmMode", "a00063.html#ggaa902d39a9a0944943dfa1652a1c191daa3b1e1531c3d0529cba956f38568140f5", null ]
+    [ "_trng_user_config", "a00063.html#a00388", [
+      [ "lock", "a00063.html#a29129f1a5b47676d2b1386004161d2bb", null ],
+      [ "clockMode", "a00063.html#a97acdb955a51ea515fe72b7048efd52f", null ],
+      [ "ringOscDiv", "a00063.html#a4ae5348399979e0b535e741417545f52", null ],
+      [ "sampleMode", "a00063.html#a8adf402929396a04de4cf981956e70d0", null ],
+      [ "entropyDelay", "a00063.html#a7070e1295b5735b031e4302103fac77d", null ],
+      [ "sampleSize", "a00063.html#a94f09b210075570590c3bef47fb6889d", null ],
+      [ "sparseBitLimit", "a00063.html#a175eecf4ec28fd2d0f23a5bd8508da65", null ],
+      [ "retryCount", "a00063.html#af3870d8f37e36935d77446fc9d1c1268", null ],
+      [ "longRunMaxLimit", "a00063.html#ae0c1a71abdd377256338df5b3c941c75", null ],
+      [ "monobitLimit", "a00063.html#acbe08ed6f9a5c445f5e0753fadc8bcba", null ],
+      [ "runBit1Limit", "a00063.html#a05e0d98d8f9062199a1179acc97581a4", null ],
+      [ "runBit2Limit", "a00063.html#a6fb88d2407735ebd8df0dfc75902a72e", null ],
+      [ "runBit3Limit", "a00063.html#a1041555f2fbaedadbf7b9ba310a7d72b", null ],
+      [ "runBit4Limit", "a00063.html#a37e6243bb2381d40255c10d860b4fed3", null ],
+      [ "runBit5Limit", "a00063.html#a702e81749fc05e836847f71e6d5f8dd8", null ],
+      [ "runBit6PlusLimit", "a00063.html#a9e629c65f299286641b8b40a9fb93111", null ],
+      [ "pokerLimit", "a00063.html#afb53ed4ec399d9b80ca53d33ac6c6d74", null ],
+      [ "frequencyCountLimit", "a00063.html#ab4f832762f67021a65530caf4dcafe5a", null ]
     ] ],
-    [ "TEMPMON_Init", "a00063.html#gad74d3cd12c87cd031afefa47a40c4ffa", null ],
-    [ "TEMPMON_Deinit", "a00063.html#ga9300a134aeda04212a2e84d1ccdb3e4a", null ],
-    [ "TEMPMON_GetDefaultConfig", "a00063.html#gad39681b64944bdc56124fc4dcd66a81e", null ],
-    [ "TEMPMON_StartMeasure", "a00063.html#gab591e289ffce94b52811b716f9e00fbb", null ],
-    [ "TEMPMON_StopMeasure", "a00063.html#ga430b69c227f54ee17e8c1f4db14fdf35", null ],
-    [ "TEMPMON_GetCurrentTemperature", "a00063.html#gafd97504a28d73d0ffbd8cd4c8f0810b8", null ],
-    [ "TEMPMON_SetTempAlarm", "a00063.html#gab78940fbc3cc7a3b8e3562a5981803ca", null ]
+    [ "FSL_TRNG_DRIVER_VERSION", "a00063.html#ga0d809ab2bf96ed21a28c531679c1cffe", null ],
+    [ "trng_sample_mode_t", "a00063.html#ga2de9f7d76b4b85280422205789f314f3", null ],
+    [ "trng_clock_mode_t", "a00063.html#gac029fe64631b9305b9b58f40bbe782ad", null ],
+    [ "trng_ring_osc_div_t", "a00063.html#ga91590689c2d3c009892847a310588dfb", null ],
+    [ "trng_statistical_check_limit_t", "a00063.html#ga13d04154be80fe1b500d9410881a6e32", null ],
+    [ "trng_config_t", "a00063.html#ga61121c5471ea471783aacba6fecce71e", null ],
+    [ "_trng_sample_mode", "a00063.html#ga101a182b6425f63c070d960b23adc28e", [
+      [ "kTRNG_SampleModeVonNeumann", "a00063.html#gga101a182b6425f63c070d960b23adc28eaf9f812a5ba8dddf6800fe42db487f5e7", null ],
+      [ "kTRNG_SampleModeRaw", "a00063.html#gga101a182b6425f63c070d960b23adc28ea2411d65d49169b9244b0c975442ff898", null ],
+      [ "kTRNG_SampleModeVonNeumannRaw", "a00063.html#gga101a182b6425f63c070d960b23adc28ea12725a856bdf7ea64e16156fc1f6792c", null ]
+    ] ],
+    [ "_trng_clock_mode", "a00063.html#gadf8e7ff7c029a63058334f5f381be5af", [
+      [ "kTRNG_ClockModeRingOscillator", "a00063.html#ggadf8e7ff7c029a63058334f5f381be5afa10eb7dda9879280deaab08f87158ebbc", null ],
+      [ "kTRNG_ClockModeSystem", "a00063.html#ggadf8e7ff7c029a63058334f5f381be5afa066582671741cf64617d6cde5d929937", null ]
+    ] ],
+    [ "_trng_ring_osc_div", "a00063.html#gafc4c4e44dc0724bcb166cd9881eaf3ef", [
+      [ "kTRNG_RingOscDiv0", "a00063.html#ggafc4c4e44dc0724bcb166cd9881eaf3efa557465d3f4d88b544fcf818085032b51", null ],
+      [ "kTRNG_RingOscDiv2", "a00063.html#ggafc4c4e44dc0724bcb166cd9881eaf3efaf420c1e0c4bd6a0a181464866ae70764", null ],
+      [ "kTRNG_RingOscDiv4", "a00063.html#ggafc4c4e44dc0724bcb166cd9881eaf3efad03f20e54add497bca2cab5084e409d8", null ],
+      [ "kTRNG_RingOscDiv8", "a00063.html#ggafc4c4e44dc0724bcb166cd9881eaf3efa207ca5ecd9403ce8299085a1bf2f9ca2", null ]
+    ] ],
+    [ "TRNG_GetDefaultConfig", "a00063.html#ga3f90793dd83a0ac2249fdcb8fa762c6a", null ],
+    [ "TRNG_Init", "a00063.html#gaefef4539a93045832f10d28f094d26ea", null ],
+    [ "TRNG_Deinit", "a00063.html#gacdcc7542e374e611c888008a227b878c", null ],
+    [ "TRNG_GetRandomData", "a00063.html#gaac12716aedb0b05e8be3e96433c8ad56", null ]
 ];

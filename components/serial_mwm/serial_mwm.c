@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021, NXP
+ * Copyright 2020-2021, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,9 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "serial_mwm.h"
+#include "serial_mwm_port.h"
 #include "board.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -22,15 +24,11 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern int mwm_port_init(void);
-extern int mwm_port_deinit(void);
-extern int mwm_tx(uint8_t *write_buf, uint32_t len);
-extern int mwm_rx(uint8_t *read_buf, uint32_t len);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static uint8_t s_buff[MWM_BUFFER_SIZE];
+static char s_buff[MWM_BUFFER_SIZE];
 
 /*******************************************************************************
  * Code
@@ -44,12 +42,13 @@ int mwm_init(void)
     BOARD_SERIAL_MWM_RST_WRITE(1);
     vTaskDelay(pdMS_TO_TICKS(MWM_REBOOT_DELAY_MS));
 #else
-/*
- * Example of Wi-Fi reset pin settings:
- * #define BOARD_SERIAL_MWM_RST_GPIO          GPIO1
- * #define BOARD_SERIAL_MWM_RST_PIN           22
- * #define BOARD_SERIAL_MWM_RST_WRITE(output) GPIO_PinWrite(BOARD_SERIAL_MWM_RST_GPIO, BOARD_SERIAL_MWM_RST_PIN, output)
- */
+    /*
+     * Example of Wi-Fi reset pin settings:
+     * #define BOARD_SERIAL_MWM_RST_GPIO          GPIO1
+     * #define BOARD_SERIAL_MWM_RST_PIN           22
+     * #define BOARD_SERIAL_MWM_RST_WRITE(output) GPIO_PinWrite(BOARD_SERIAL_MWM_RST_GPIO, BOARD_SERIAL_MWM_RST_PIN,
+     * output)
+     */
 #warning "Define BOARD_SERIAL_MWM_RST_WRITE(output) in board.h"
 #endif
 
@@ -70,23 +69,23 @@ static int mwm_tx_data(uint8_t *data, uint32_t len)
             c = (char)data[i];
             if ((c == '\\') || (c == '$'))
             {
-                s_buff[idx++] = (uint8_t)'\\';
-                s_buff[idx++] = (uint8_t)c;
+                s_buff[idx++] = '\\';
+                s_buff[idx++] = c;
             }
             else
             {
-                s_buff[idx++] = (uint8_t)c;
+                s_buff[idx++] = c;
             }
         }
         else
         {
             /* End of data mode: last two chars are $$ */
-            s_buff[idx++] = (uint8_t)'$';
+            s_buff[idx++] = '$';
         }
 
         if ((idx + 2u) >= MWM_BUFFER_SIZE)
         {
-            ret = mwm_tx(s_buff, idx);
+            ret = mwm_tx((uint8_t *)s_buff, idx);
             if (ret < 0)
             {
                 return ret;
@@ -98,7 +97,7 @@ static int mwm_tx_data(uint8_t *data, uint32_t len)
 
     if (idx > 0u)
     {
-        ret = mwm_tx(s_buff, idx);
+        ret = mwm_tx((uint8_t *)s_buff, idx);
         if (ret < 0)
         {
             return ret;
@@ -108,7 +107,39 @@ static int mwm_tx_data(uint8_t *data, uint32_t len)
     return 0;
 }
 
-static int read_string_max(uint8_t *s, uint32_t max_len)
+static uint32_t uint_to_str(const uint32_t n, char *str)
+{
+    uint32_t x = 10u;
+    uint32_t i = 8u;
+    while ((x < n) && (i > 0u))
+    {
+        x *= 10u;
+        i--;
+    }
+
+    if (x > n)
+    {
+        x = x / 10u;
+    }
+
+    i          = 0u;
+    uint32_t y = n;
+    uint32_t z = 0u;
+
+    while (x > 0u)
+    {
+        z        = y / x;
+        str[i++] = ((uint8_t)z + '0');
+        y -= z * x;
+        x /= 10u;
+    }
+
+    str[i] = '\0';
+
+    return i;
+}
+
+static int read_string_max(char *s, uint32_t max_len)
 {
     int ret;
     int idx = 0;
@@ -122,7 +153,7 @@ static int read_string_max(uint8_t *s, uint32_t max_len)
             return -1;
         }
 
-        s[idx++] = c;
+        s[idx++] = (char)c;
 
     } while ((c != 0u) && ((uint32_t)idx < max_len));
 
@@ -134,7 +165,7 @@ static int read_string_max(uint8_t *s, uint32_t max_len)
     return idx;
 }
 
-static int read_int(int *val)
+static int read_int(int *n)
 {
     int ret;
 
@@ -144,8 +175,34 @@ static int read_int(int *val)
         return -1;
     }
 
+    errno = 0;
     /* Parse int */
-    *val = strtol((char *)s_buff, NULL, 10);
+    *n = strtol(s_buff, NULL, 10);
+    if (errno != 0)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
+static int read_uint(uint32_t *n)
+{
+    int ret;
+
+    ret = read_string_max(s_buff, MWM_BUFFER_SIZE);
+    if (ret < 0)
+    {
+        return -1;
+    }
+
+    errno = 0;
+    /* Parse uint32_t */
+    *n = strtoul(s_buff, NULL, 10);
+    if (errno != 0)
+    {
+        return -1;
+    }
 
     return 0;
 }
@@ -156,13 +213,13 @@ static int read_string(const char *s)
     size_t n;
 
     n   = strlen(s);
-    ret = mwm_rx(s_buff, n);
+    ret = mwm_rx((uint8_t *)s_buff, n);
     if (ret < 0)
     {
         return ret;
     }
 
-    if (strncmp((char *)s_buff, s, n) != 0)
+    if (strncmp(s_buff, s, n) != 0)
     {
         return -1;
     }
@@ -196,14 +253,14 @@ static int read_end2(void)
 {
     int ret;
 
-    ret = mwm_rx(s_buff, 2);
+    ret = mwm_rx((uint8_t *)s_buff, 2);
     if (ret < 0)
     {
         return ret;
     }
 
     /* Check values */
-    if ((s_buff[0] != 0u) && (s_buff[1] != 0u))
+    if ((s_buff[0] != '\0') && (s_buff[1] != '\0'))
     {
         return -1;
     }
@@ -211,7 +268,7 @@ static int read_end2(void)
     return 0;
 }
 
-static int read_errno(int *errno)
+static int read_errno(int *socket_errno)
 {
     int ret;
     ret = read_string("errno:");
@@ -220,7 +277,7 @@ static int read_errno(int *errno)
         return ret;
     }
 
-    ret = read_int(errno);
+    ret = read_int(socket_errno);
     if (ret < 0)
     {
         return ret;
@@ -235,14 +292,14 @@ static int read_errno(int *errno)
     return 0;
 }
 
-static int read_whole_response(uint8_t *buff, uint32_t max_len, uint32_t *resp_len)
+static int read_whole_response(char *buff, uint32_t max_len, uint32_t *resp_len)
 {
     int ret;
     uint32_t idx = 0u;
     uint8_t c;
-    bool end = false;
+    bool end_loop = false;
 
-    while (!end)
+    while (!end_loop)
     {
         ret = mwm_rx(&c, 1);
         if (ret < 0)
@@ -254,20 +311,20 @@ static int read_whole_response(uint8_t *buff, uint32_t max_len, uint32_t *resp_l
         {
             if (idx == 0u)
             {
-                end = true;
+                end_loop = true;
             }
             else
             {
-                if (buff[idx - 1u] == 0u)
+                if (buff[idx - 1u] == '\0')
                 {
-                    end = true;
+                    end_loop = true;
                 }
             }
         }
 
-        buff[idx++] = c;
+        buff[idx++] = (char)c;
 
-        if ((idx == max_len) && !end)
+        if ((idx == max_len) && !end_loop)
         {
             return -1;
         }
@@ -281,9 +338,9 @@ static int read_whole_response(uint8_t *buff, uint32_t max_len, uint32_t *resp_l
     return 0;
 }
 
-static int find_val(const char *key, char **val, uint8_t *buff, uint32_t buff_len)
+static int find_value(const char *key, const char **value, const char *buff, uint32_t buff_len)
 {
-    if ((key == NULL) || (val == NULL) || (buff == NULL) || (buff_len == 0u))
+    if ((key == NULL) || (value == NULL) || (buff == NULL) || (buff_len == 0u))
     {
         return -1;
     }
@@ -295,7 +352,7 @@ static int find_val(const char *key, char **val, uint8_t *buff, uint32_t buff_le
     while (i < buff_len)
     {
         /* compare the key */
-        while ((j < key_len) && (i < buff_len) && (buff[i] == (uint8_t)key[j]))
+        while ((j < key_len) && (i < buff_len) && (buff[i] == key[j]))
         {
             j++;
             i++;
@@ -303,13 +360,13 @@ static int find_val(const char *key, char **val, uint8_t *buff, uint32_t buff_le
 
         if (j == key_len)
         {
-            *val = (char *)(buff + i);
+            *value = buff + i;
             return 1;
         }
         else
         {
             /* find next delimiter '\0' - begin of next key */
-            while ((buff[i++] != 0u) && (i < buff_len))
+            while ((buff[i++] != '\0') && (i < buff_len))
             {
             }
 
@@ -321,13 +378,10 @@ static int find_val(const char *key, char **val, uint8_t *buff, uint32_t buff_le
 }
 
 /* Send cmd and return status code of received response */
-static int mwm_cmd(char *cmd)
+static int mwm_cmd(char *cmd, uint32_t cmd_len)
 {
     int ret;
-    size_t cmd_len;
-
-    cmd_len = strlen(cmd);
-    ret     = mwm_tx((uint8_t *)cmd, (uint32_t)cmd_len);
+    ret = mwm_tx((uint8_t *)cmd, cmd_len);
     if (ret < 0)
     {
         return -1;
@@ -342,17 +396,34 @@ static int mwm_cmd(char *cmd)
 
     if (status_code == MWM_SOCKET_ERROR)
     {
-        int errno = 1;
-        ret       = read_errno(&errno);
+        int socket_errno = 1;
+        ret              = read_errno(&socket_errno);
         if (ret < 0)
         {
             return ret;
         }
 
-        return -errno;
+        return -socket_errno;
     }
 
     return status_code;
+}
+
+static uint32_t prepare_cmd(const char *cmd)
+{
+    s_buff[0] = 'm';
+    s_buff[1] = 'w';
+    s_buff[2] = 'm';
+    s_buff[3] = '+';
+
+    uint32_t i = 0u;
+    char *dst  = &s_buff[4];
+    while ((cmd[i] != '\0') && (i < (MWM_BUFFER_SIZE - 4u)))
+    {
+        *dst++ = cmd[i++];
+    }
+
+    return (i + 4u);
 }
 
 int mwm_version(char *value, uint32_t val_len)
@@ -362,8 +433,10 @@ int mwm_version(char *value, uint32_t val_len)
         return -1;
     }
 
+    uint32_t i = prepare_cmd("sver\n");
+
     int ret;
-    ret = mwm_cmd("mwm+sver\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -376,7 +449,7 @@ int mwm_version(char *value, uint32_t val_len)
     }
 
     /* Read response */
-    ret = read_whole_response((uint8_t *)value, val_len, NULL);
+    ret = read_whole_response(value, val_len, NULL);
 
     return ret;
 }
@@ -388,14 +461,17 @@ int mwm_upgrade(char *type, char *url)
         return -1;
     }
 
-    int ret;
     bool check_status = false;
     int state_code    = -1;
 
+    const char cmd[] = "mwm+supg=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+
     if (strcmp(type, MWM_UPGRADE_STATUS) == 0)
     {
+        s_buff[i++]  = '?';
         check_status = true;
-        ret          = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+supg=?\n");
     }
     else
     {
@@ -404,15 +480,36 @@ int mwm_upgrade(char *type, char *url)
             return -1;
         }
 
-        ret = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+supg=%s,%s\n", type, url);
-    }
+        size_t url_len = strlen(url);
+        if ((url_len + i + 5u) > MWM_BUFFER_SIZE)
+        {
+            return -1;
+        }
 
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+        const char *fw = NULL;
+        if (strcmp(type, MWM_UPGRADE_MCU_FW) == 0)
+        {
+            fw = MWM_UPGRADE_MCU_FW;
+        }
+        else if (strcmp(type, MWM_UPGRADE_WLAN_FW) == 0)
+        {
+            fw = MWM_UPGRADE_WLAN_FW;
+        }
+        else
+        {
+            return -1;
+        }
 
-    ret = mwm_cmd((char *)s_buff);
+        s_buff[i++] = fw[0];
+        s_buff[i++] = fw[1];
+        s_buff[i++] = ',';
+        (void)memcpy(&s_buff[i], url, url_len);
+        i += url_len;
+    }
+    s_buff[i++] = '\n';
+
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -451,8 +548,10 @@ int mwm_upgrade(char *type, char *url)
 
 int mwm_reboot(void)
 {
+    uint32_t i = prepare_cmd("sreboot\n");
+
     int ret;
-    ret = mwm_cmd("mwm+sreboot\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -483,8 +582,10 @@ int mwm_wlan_fw_version(char *value, uint32_t val_len)
         return -1;
     }
 
+    uint32_t i = prepare_cmd("wver\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wver\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -497,15 +598,17 @@ int mwm_wlan_fw_version(char *value, uint32_t val_len)
     }
 
     /* Read response */
-    ret = read_whole_response((uint8_t *)value, val_len, NULL);
+    ret = read_whole_response(value, val_len, NULL);
 
     return ret;
 }
 
 int mwm_wlan_start(void)
 {
+    uint32_t i = prepare_cmd("wstrt\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wstrt\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -519,8 +622,10 @@ int mwm_wlan_start(void)
 
 int mwm_wlan_status(void)
 {
+    uint32_t i = prepare_cmd("wstat\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wstat\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -551,21 +656,21 @@ int mwm_wlan_status(void)
     /* Check for the connection error in response */
     if (resp_len > 1u)
     {
-        char *val = NULL;
-        ret       = find_val("failure-reason-code:", &val, s_buff, resp_len);
+        const char *value = NULL;
+        ret               = find_value("failure-reason-code:", &value, s_buff, resp_len);
         if (ret < 1)
         {
             return -1;
         }
 
         /* 1 - authentication failed */
-        if (*val == '1')
+        if (*value == '1')
         {
             return MWM_AUTH_FAILED;
         }
 
         /* 2 - network not found */
-        if (*val == '2')
+        if (*value == '2')
         {
             return MWM_NETWORK_NOT_FOUND;
         }
@@ -576,8 +681,10 @@ int mwm_wlan_status(void)
 /* Reset to provisioning mode */
 int mwm_wlan_prov(void)
 {
+    uint32_t i = prepare_cmd("wrprov\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wrprov\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -591,8 +698,10 @@ int mwm_wlan_prov(void)
 
 int mwm_wlan_info(char *ssid, char *ip_addr)
 {
+    uint32_t i = prepare_cmd("winfo\n");
+
     int ret;
-    ret = mwm_cmd("mwm+winfo\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -622,20 +731,20 @@ int mwm_wlan_info(char *ssid, char *ip_addr)
 
     if (resp_len > 1u)
     {
-        char *val = NULL;
-        ret       = find_val("ssid:", &val, s_buff, resp_len);
+        const char *value = NULL;
+        ret               = find_value("ssid:", &value, s_buff, resp_len);
         if (ret < 1)
         {
             return -1;
         }
-        (void)strcpy(ssid, val);
+        (void)strcpy(ssid, value);
 
-        ret = find_val("ip:", &val, s_buff, resp_len);
+        ret = find_value("ip:", &value, s_buff, resp_len);
         if (ret < 1)
         {
             return -1;
         }
-        (void)strcpy(ip_addr, val);
+        (void)strcpy(ip_addr, value);
     }
     else
     {
@@ -647,8 +756,10 @@ int mwm_wlan_info(char *ssid, char *ip_addr)
 
 int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
 {
+    uint32_t i = prepare_cmd("wscan\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wscan\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -661,20 +772,20 @@ int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
     }
 
     /* Parse scan-count value */
-    int scan_count = -1;
-    ret            = read_int(&scan_count);
+    uint32_t scan_count = 0u;
+    ret                 = read_uint(&scan_count);
     if (ret < 0)
     {
         return ret;
     }
 
-    int i = 0;
+    i = 0u;
     while (i < scan_count)
     {
         if (i < wlan_count)
         {
             wlans[i].bssid[17] = '\0';
-            ret                = mwm_rx((uint8_t *)wlans[i].bssid, 17);
+            ret                = mwm_rx((uint8_t *)wlans[i].bssid, 17u);
             if (ret < 0)
             {
                 return ret;
@@ -687,7 +798,7 @@ int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
             }
 
             uint32_t j = (uint32_t)ret - 1u;
-            while ((j > 0u) && (s_buff[j] != (uint8_t)'-'))
+            while ((j > 0u) && (s_buff[j] != '-'))
             {
                 j--;
             }
@@ -696,14 +807,14 @@ int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
             uint32_t cnt = 2;
             while ((j > 0u) && (cnt > 0u))
             {
-                if (s_buff[j] == (uint8_t)',')
+                if (s_buff[j] == ',')
                 {
                     cnt--;
                 }
                 j--;
             }
 
-            uint32_t len = MIN(j, (sizeof(wlans[i].ssid) - 1));
+            uint32_t len = MIN(j, (sizeof(wlans[i].ssid) - 1u));
             if (len > 0u)
             {
                 (void)memcpy((void *)wlans[i].ssid, (void *)(s_buff + 1), len);
@@ -711,19 +822,32 @@ int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
             wlans[i].ssid[len] = '\0';
 
             j += 2u;
-            wlans[i].channel = (uint8_t)strtol((char *)&s_buff[j], NULL, 10);
+            errno            = 0;
+            wlans[i].channel = (uint8_t)strtoul(&s_buff[j], NULL, 10);
+            if (errno != 0)
+            {
+                return -1;
+            }
 
-            wlans[i].rssi = (int8_t)strtol((char *)&s_buff[rssi_idx], NULL, 10);
+            wlans[i].rssi = (int8_t)strtol(&s_buff[rssi_idx], NULL, 10);
+            if (errno != 0)
+            {
+                return -1;
+            }
 
             j = rssi_idx;
 
-            while (s_buff[j] != (uint8_t)',')
+            while (s_buff[j] != ',')
             {
                 j++;
             }
             j++;
 
-            wlans[i].security = (uint8_t)strtol((char *)&s_buff[j], NULL, 10);
+            wlans[i].security = (uint8_t)strtol(&s_buff[j], NULL, 10);
+            if (errno != 0)
+            {
+                return -1;
+            }
         }
         else
         {
@@ -744,13 +868,15 @@ int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
         return ret;
     }
 
-    return MIN(scan_count, wlan_count);
+    return (int)MIN(scan_count, wlan_count);
 }
 
 int mwm_wlan_connect(void)
 {
+    uint32_t i = prepare_cmd("wcon\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wcon\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -764,8 +890,10 @@ int mwm_wlan_connect(void)
 
 int mwm_wlan_disconnect(void)
 {
+    uint32_t i = prepare_cmd("wdcon\n");
+
     int ret;
-    ret = mwm_cmd("mwm+wdcon\n");
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -784,13 +912,25 @@ int mwm_get_param(char *module, char *param, char *value, uint32_t val_len)
         return -1;
     }
 
-    int ret = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+cget=%s,%s\n", module, param);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
+    const char cmd[]  = "mwm+cget=";
+    size_t i          = sizeof(cmd) - 1u;
+    size_t module_len = strlen(module);
+    size_t param_len  = strlen(param);
+    if ((module_len + param_len + i + 3u) > MWM_BUFFER_SIZE)
     {
         return -1;
     }
 
-    ret = mwm_cmd((char *)s_buff);
+    (void)memcpy(s_buff, cmd, i);
+    (void)memcpy(&s_buff[i], module, module_len);
+    i += module_len;
+    s_buff[i++] = ',';
+    (void)memcpy(&s_buff[i], param, param_len);
+    i += param_len;
+    s_buff[i++] = '\n';
+
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -809,7 +949,7 @@ int mwm_get_param(char *module, char *param, char *value, uint32_t val_len)
     }
 
     /* Read response */
-    ret = read_whole_response((uint8_t *)value, val_len, NULL);
+    ret = read_whole_response(value, val_len, NULL);
 
     return ret;
 }
@@ -821,13 +961,29 @@ int mwm_set_param(char *module, char *param, char *value)
         return -1;
     }
 
-    int ret = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+cset=%s,%s,%s\n", module, param, value);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
+    const char cmd[]  = "mwm+cset=";
+    size_t i          = sizeof(cmd) - 1u;
+    size_t module_len = strlen(module);
+    size_t param_len  = strlen(param);
+    size_t value_len  = strlen(value);
+    if ((module_len + param_len + value_len + i + 4u) > MWM_BUFFER_SIZE)
     {
         return -1;
     }
 
-    ret = mwm_cmd((char *)s_buff);
+    (void)memcpy(s_buff, cmd, i);
+    (void)memcpy(&s_buff[i], module, module_len);
+    i += module_len;
+    s_buff[i++] = ',';
+    (void)memcpy(&s_buff[i], param, param_len);
+    i += param_len;
+    s_buff[i++] = ',';
+    (void)memcpy(&s_buff[i], value, value_len);
+    i += value_len;
+    s_buff[i++] = '\n';
+
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -859,7 +1015,7 @@ int mwm_socket(int type)
     }
 
     int ret;
-    ret = mwm_cmd(cmd);
+    ret = mwm_cmd(cmd, sizeof(cmd) - 1u);
     if (ret < 0)
     {
         return ret;
@@ -891,14 +1047,20 @@ int mwm_socket(int type)
 
 int mwm_connect(int socket, mwm_sockaddr_t *addr, uint32_t addrlen)
 {
-    int ret = -1;
-    ret     = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+ncon=%d,%s,%d\n", socket, addr->host, addr->port);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+    const char cmd[] = "mwm+ncon=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+    i += uint_to_str((uint32_t)socket, &s_buff[i]);
+    s_buff[i++]     = ',';
+    size_t host_len = strlen(addr->host);
+    (void)memcpy(&s_buff[i], addr->host, host_len);
+    i += host_len;
+    s_buff[i++] = ',';
+    i += uint_to_str(addr->port, &s_buff[i]);
+    s_buff[i++] = '\n';
 
-    ret = mwm_cmd((char *)s_buff);
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -910,16 +1072,20 @@ int mwm_connect(int socket, mwm_sockaddr_t *addr, uint32_t addrlen)
     return ret;
 }
 
-int mwm_recv_timeout(int socket, void *buf, size_t len, int timeout_ms)
+int mwm_recv_timeout(int socket, void *buf, size_t len, uint32_t timeout_ms)
 {
-    int ret = -1;
-    ret     = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+nrecv=%d,%d,%d\n", socket, len, timeout_ms);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+    const char cmd[] = "mwm+nrecv=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+    i += uint_to_str((uint32_t)socket, &s_buff[i]);
+    s_buff[i++] = ',';
+    i += uint_to_str(len, &s_buff[i]);
+    s_buff[i++] = ',';
+    i += uint_to_str(timeout_ms, &s_buff[i]);
+    s_buff[i++] = '\n';
 
-    ret = mwm_cmd((char *)s_buff);
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -955,16 +1121,20 @@ int mwm_recv_timeout(int socket, void *buf, size_t len, int timeout_ms)
     return content_len;
 }
 
-int mwm_recvfrom_timeout(int socket, void *buf, size_t len, int timeout_ms)
+int mwm_recvfrom_timeout(int socket, void *buf, size_t len, uint32_t timeout_ms)
 {
-    int ret = -1;
-    ret     = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+nrecvfrom=%d,%d,%d\n", socket, len, timeout_ms);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+    const char cmd[] = "mwm+nrecvfrom=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+    i += uint_to_str((uint32_t)socket, &s_buff[i]);
+    s_buff[i++] = ',';
+    i += uint_to_str(len, &s_buff[i]);
+    s_buff[i++] = ',';
+    i += uint_to_str(timeout_ms, &s_buff[i]);
+    s_buff[i++] = '\n';
 
-    ret = mwm_cmd((char *)s_buff);
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -1016,14 +1186,17 @@ int mwm_recvfrom_timeout(int socket, void *buf, size_t len, int timeout_ms)
 
 int mwm_send(int socket, void *buf, size_t len)
 {
-    int ret = -1;
-    ret     = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+nsend=%d,$$\n", socket);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+    const char cmd[] = "mwm+nsend=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+    i += uint_to_str((uint32_t)socket, &s_buff[i]);
+    s_buff[i++] = ',';
+    s_buff[i++] = '$';
+    s_buff[i++] = '$';
+    s_buff[i++] = '\n';
 
-    ret = mwm_tx(s_buff, (uint32_t)ret);
+    int ret;
+    ret = mwm_tx((uint8_t *)s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -1045,14 +1218,14 @@ int mwm_send(int socket, void *buf, size_t len)
 
     if (status_code == MWM_SOCKET_ERROR)
     {
-        int errno = 1;
-        ret       = read_errno(&errno);
+        int socket_errno = 1;
+        ret              = read_errno(&socket_errno);
         if (ret < 0)
         {
             return ret;
         }
 
-        return -errno;
+        return -socket_errno;
     }
 
     /* Read end of response */
@@ -1065,16 +1238,25 @@ int mwm_send(int socket, void *buf, size_t len)
     return (int)len;
 }
 
-int mwm_sendto(int socket, char *buf, int len, mwm_sockaddr_t *to, int tolen)
+int mwm_sendto(int socket, void *buf, int len, mwm_sockaddr_t *to, int tolen)
 {
-    int ret = -1;
-    ret     = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+nsendto=%d,%s,%d,$$\n", socket, to->host, to->port);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+    const char cmd[] = "mwm+nsendto=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+    i += uint_to_str((uint32_t)socket, &s_buff[i]);
+    s_buff[i++]     = ',';
+    size_t host_len = strlen(to->host);
+    (void)memcpy(&s_buff[i], to->host, host_len);
+    i += host_len;
+    s_buff[i++] = ',';
+    i += uint_to_str(to->port, &s_buff[i]);
+    s_buff[i++] = ',';
+    s_buff[i++] = '$';
+    s_buff[i++] = '$';
+    s_buff[i++] = '\n';
 
-    ret = mwm_tx(s_buff, (uint32_t)ret);
+    int ret;
+    ret = mwm_tx((uint8_t *)s_buff, i);
     if (ret < 0)
     {
         return ret;
@@ -1096,14 +1278,14 @@ int mwm_sendto(int socket, char *buf, int len, mwm_sockaddr_t *to, int tolen)
 
     if (status_code == MWM_SOCKET_ERROR)
     {
-        int errno = 1;
-        ret       = read_errno(&errno);
+        int socket_errno = 1;
+        ret              = read_errno(&socket_errno);
         if (ret < 0)
         {
             return ret;
         }
 
-        return -errno;
+        return -socket_errno;
     }
 
     /* Read end of response */
@@ -1114,19 +1296,18 @@ int mwm_sendto(int socket, char *buf, int len, mwm_sockaddr_t *to, int tolen)
     }
 
     return (int)len;
-    ;
 }
 
 int mwm_close(int socket)
 {
-    int ret = -1;
-    ret     = snprintf((char *)s_buff, MWM_BUFFER_SIZE, "mwm+nclose=%d\n", socket);
-    if ((ret <= 0) || ((uint32_t)ret > MWM_BUFFER_SIZE))
-    {
-        return -1;
-    }
+    const char cmd[] = "mwm+nclose=";
+    size_t i         = sizeof(cmd) - 1u;
+    (void)memcpy(s_buff, cmd, i);
+    i += uint_to_str((uint32_t)socket, &s_buff[i]);
+    s_buff[i++] = '\n';
 
-    ret = mwm_cmd((char *)s_buff);
+    int ret;
+    ret = mwm_cmd(s_buff, i);
     if (ret < 0)
     {
         return ret;

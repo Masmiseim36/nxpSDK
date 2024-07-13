@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,8 +56,8 @@
  ******************************************************************************/
 
 /* Disable Rx interrupt when out of RX buffers. Enable when first buffer is freed. */
-#ifndef ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
-#define ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS (!NO_SYS)
+#ifndef ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#define ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS (!NO_SYS)
 #endif
 
 #define ETHERNETIF_TIMEOUT (0xFFFU)

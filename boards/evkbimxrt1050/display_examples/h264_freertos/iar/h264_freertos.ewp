@@ -360,7 +360,6 @@
           <state>$PROJ_DIR$/../freertos_libraries/c_sdk/standard/common/include/private</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
@@ -377,6 +376,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
@@ -650,6 +650,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1471,7 +1472,6 @@
           <state>$PROJ_DIR$/../freertos_libraries/c_sdk/standard/common/include/private</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
@@ -1488,6 +1488,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
@@ -1761,6 +1762,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2517,12 +2519,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2533,6 +2529,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -2740,7 +2742,16 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>

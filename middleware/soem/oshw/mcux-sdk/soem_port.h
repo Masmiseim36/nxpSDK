@@ -3,14 +3,18 @@
  * LICENSE file in the project root for full license information
  */
 
+/*
+ * Copyright 2022-2024 NXP
+ */
+
 #ifndef __SOEM__PORT__
 #define __SOEM__PORT__
 
 #include "osal.h"
 
 #define SOEM_IF_PORT_MAXNUM  2
-#define SOEM_IF_NAME_MAXLEN  9
-#define SOEM_DEV_NAME_MAXLEN 9
+#define SOEM_IF_NAME_MAXLEN  12
+#define SOEM_DEV_NAME_MAXLEN 12
 
 struct soem_if_port
 {

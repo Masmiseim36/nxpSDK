@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -118,14 +117,14 @@ UCHAR *destination_buffer;
 UINT   bytes_per_sector;
 
 
-    /* There are several useful/important pieces of information contained in 
-       the media structure, some of which are supplied by FileX and others 
-       are for the driver to setup. The following is a summary of the 
+    /* There are several useful/important pieces of information contained in
+       the media structure, some of which are supplied by FileX and others
+       are for the driver to setup. The following is a summary of the
        necessary FX_MEDIA structure members:
 
             FX_MEDIA Member                    Meaning
 
-        fx_media_driver_request             FileX request type. Valid requests from 
+        fx_media_driver_request             FileX request type. Valid requests from
                                             FileX are as follows:
 
                                                     FX_DRIVER_READ
@@ -138,15 +137,15 @@ UINT   bytes_per_sector;
                                                     FX_DRIVER_BOOT_WRITE
                                                     FX_DRIVER_UNINIT
 
-        fx_media_driver_status              This value is RETURNED by the driver. 
-                                            If the operation is successful, this 
-                                            field should be set to FX_SUCCESS for 
-                                            before returning. Otherwise, if an 
-                                            error occurred, this field should be 
+        fx_media_driver_status              This value is RETURNED by the driver.
+                                            If the operation is successful, this
+                                            field should be set to FX_SUCCESS for
+                                            before returning. Otherwise, if an
+                                            error occurred, this field should be
                                             set to FX_IO_ERROR.
 
-        fx_media_driver_buffer              Pointer to buffer to read or write 
-                                            sector data. This is supplied by 
+        fx_media_driver_buffer              Pointer to buffer to read or write
+                                            sector data. This is supplied by
                                             FileX.
 
         fx_media_driver_logical_sector      Logical sector FileX is requesting.
@@ -158,36 +157,36 @@ UINT   bytes_per_sector;
 
             FX_MEDIA Member                              Meaning
 
-        fx_media_driver_info                Pointer to any additional information 
-                                            or memory. This is optional for the 
-                                            driver use and is setup from the 
+        fx_media_driver_info                Pointer to any additional information
+                                            or memory. This is optional for the
+                                            driver use and is setup from the
                                             fx_media_open call. The RAM disk uses
-                                            this pointer for the RAM disk memory 
+                                            this pointer for the RAM disk memory
                                             itself.
 
-        fx_media_driver_write_protect       The DRIVER sets this to FX_TRUE when 
-                                            media is write protected. This is 
+        fx_media_driver_write_protect       The DRIVER sets this to FX_TRUE when
+                                            media is write protected. This is
                                             typically done in initialization,
                                             but can be done anytime.
 
-        fx_media_driver_free_sector_update  The DRIVER sets this to FX_TRUE when 
-                                            it needs to know when clusters are 
-                                            released. This is important for FLASH 
+        fx_media_driver_free_sector_update  The DRIVER sets this to FX_TRUE when
+                                            it needs to know when clusters are
+                                            released. This is important for FLASH
                                             wear-leveling drivers.
 
-        fx_media_driver_system_write        FileX sets this flag to FX_TRUE if the 
-                                            sector being written is a system sector, 
-                                            e.g., a boot, FAT, or directory sector. 
-                                            The driver may choose to use this to 
+        fx_media_driver_system_write        FileX sets this flag to FX_TRUE if the
+                                            sector being written is a system sector,
+                                            e.g., a boot, FAT, or directory sector.
+                                            The driver may choose to use this to
                                             initiate error recovery logic for greater
                                             fault tolerance.
 
-        fx_media_driver_data_sector_read    FileX sets this flag to FX_TRUE if the 
-                                            sector(s) being read are file data sectors, 
+        fx_media_driver_data_sector_read    FileX sets this flag to FX_TRUE if the
+                                            sector(s) being read are file data sectors,
                                             i.e., NOT system sectors.
 
-        fx_media_driver_sector_type         FileX sets this variable to the specific 
-                                            type of sector being read or written. The 
+        fx_media_driver_sector_type         FileX sets this variable to the specific
+                                            type of sector being read or written. The
                                             following sector types are identified:
 
                                                     FX_UNKNOWN_SECTOR
@@ -208,13 +207,13 @@ UINT   bytes_per_sector;
            the fx_media_driver_info pointer, which is supplied by the application in the
            call to fx_media_open.  */
         source_buffer =  ((UCHAR *)media_ptr -> fx_media_driver_info) +
-            ((media_ptr -> fx_media_driver_logical_sector + 
-              media_ptr -> fx_media_hidden_sectors) * 
+            ((media_ptr -> fx_media_driver_logical_sector +
+              media_ptr -> fx_media_hidden_sectors) *
              media_ptr -> fx_media_bytes_per_sector);
 
         /* Copy the RAM sector into the destination.  */
-        _fx_utility_memory_copy(source_buffer, media_ptr -> fx_media_driver_buffer, 
-                                media_ptr -> fx_media_driver_sectors * 
+        _fx_utility_memory_copy(source_buffer, media_ptr -> fx_media_driver_buffer,
+                                media_ptr -> fx_media_driver_sectors *
                                 media_ptr -> fx_media_bytes_per_sector);
 
         /* Successful driver request.  */
@@ -229,13 +228,13 @@ UINT   bytes_per_sector;
            the fx_media_driver_info pointer, which is supplied by the application in the
            call to fx_media_open.  */
         destination_buffer =  ((UCHAR *)media_ptr -> fx_media_driver_info) +
-            ((media_ptr -> fx_media_driver_logical_sector + 
-              media_ptr -> fx_media_hidden_sectors) * 
+            ((media_ptr -> fx_media_driver_logical_sector +
+              media_ptr -> fx_media_hidden_sectors) *
              media_ptr -> fx_media_bytes_per_sector);
 
         /* Copy the source to the RAM sector.  */
         _fx_utility_memory_copy(media_ptr -> fx_media_driver_buffer, destination_buffer,
-                                media_ptr -> fx_media_driver_sectors * 
+                                media_ptr -> fx_media_driver_sectors *
                                 media_ptr -> fx_media_bytes_per_sector);
 
         /* Successful driver request.  */
@@ -301,16 +300,16 @@ UINT   bytes_per_sector;
 
         /* Read the boot record and return to the caller.  */
 
-        /* Calculate the RAM disk boot sector offset, which is at the very beginning of 
-           the RAM disk. Note the RAM disk memory is pointed to by the 
-           fx_media_driver_info pointer, which is supplied by the application in the 
+        /* Calculate the RAM disk boot sector offset, which is at the very beginning of
+           the RAM disk. Note the RAM disk memory is pointed to by the
+           fx_media_driver_info pointer, which is supplied by the application in the
            call to fx_media_open.  */
         source_buffer =  (UCHAR *)media_ptr -> fx_media_driver_info;
 
         /* For RAM driver, determine if the boot record is valid.  */
         if ((source_buffer[0] != (UCHAR)0xEB)  ||
             ((source_buffer[1] != (UCHAR)0x34)  &&
-             (source_buffer[1] != (UCHAR)0x76)) ||          /* exFAT jump code.  */
+             (source_buffer[1] != (UCHAR)0x76)) ||
             (source_buffer[2] != (UCHAR)0x90))
         {
 
@@ -322,15 +321,6 @@ UINT   bytes_per_sector;
         /* For RAM disk only, pickup the bytes per sector.  */
         bytes_per_sector =  _fx_utility_16_unsigned_read(&source_buffer[FX_BYTES_SECTOR]);
 
-#ifdef FX_ENABLE_EXFAT
-        /* if byte per sector is zero, then treat it as exFAT volume.  */
-        if (bytes_per_sector == 0 && (source_buffer[1] == (UCHAR)0x76))
-        {
-
-            /* Pickup the byte per sector shift, and calculate byte per sector.  */
-            bytes_per_sector = (UINT)(1 << source_buffer[FX_EF_BYTE_PER_SECTOR_SHIFT]);
-        }
-#endif /* FX_ENABLE_EXFAT */
 
         /* Ensure this is less than the media memory size.  */
         if (bytes_per_sector > media_ptr -> fx_media_memory_size)
@@ -354,7 +344,7 @@ UINT   bytes_per_sector;
         /* Write the boot record and return to the caller.  */
 
         /* Calculate the RAM disk boot sector offset, which is at the very beginning of the
-           RAM disk. Note the RAM disk memory is pointed to by the fx_media_driver_info 
+           RAM disk. Note the RAM disk memory is pointed to by the fx_media_driver_info
            pointer, which is supplied by the application in the call to fx_media_open.  */
         destination_buffer =  (UCHAR *)media_ptr -> fx_media_driver_info;
 

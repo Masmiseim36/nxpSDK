@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,14 +110,14 @@ $(document).ready(function(){initNavTree('a00042.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00319"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00319">flexspi_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00319"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00042.html#a00319">More...</a><br/></td></tr>
-<tr class="separator:a00319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00316"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00316">flexspi_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00316"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00042.html#a00316">More...</a><br/></td></tr>
+<tr class="separator:a00316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga18c417694a255c05206b53e1d882d9c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga18c417694a255c05206b53e1d882d9c3"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> )(FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> )(FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00262.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga18c417694a255c05206b53e1d882d9c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI eDMA transfer callback function for finish and error. <br/></td></tr>
 <tr class="separator:ga18c417694a255c05206b53e1d882d9c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -140,30 +140,30 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa636d92d25b3e2c9055df861b900886f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gaa636d92d25b3e2c9055df861b900886f">FSL_FLEXSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 3))</td></tr>
+<tr class="memitem:gaa636d92d25b3e2c9055df861b900886f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gaa636d92d25b3e2c9055df861b900886f">FSL_FLEXSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00262.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 3))</td></tr>
 <tr class="memdesc:gaa636d92d25b3e2c9055df861b900886f"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI EDMA driver version.  <a href="#gaa636d92d25b3e2c9055df861b900886f">More...</a><br/></td></tr>
 <tr class="separator:gaa636d92d25b3e2c9055df861b900886f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 FLEXSPI eDMA Transactional</h2></td></tr>
-<tr class="memitem:ga73da3b504891554a3f5306c61d544035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga73da3b504891554a3f5306c61d544035">FLEXSPI_TransferCreateHandleEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00042.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00376">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00021.html#a00376">edma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memitem:ga73da3b504891554a3f5306c61d544035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga73da3b504891554a3f5306c61d544035">FLEXSPI_TransferCreateHandleEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00042.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00373">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00021.html#a00373">edma_handle_t</a> *rxDmaHandle)</td></tr>
 <tr class="memdesc:ga73da3b504891554a3f5306c61d544035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FLEXSPI handle for transfer which is used in transactional functions and set the callback.  <a href="#ga73da3b504891554a3f5306c61d544035">More...</a><br/></td></tr>
 <tr class="separator:ga73da3b504891554a3f5306c61d544035"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab00370842d3c81263d34b672f0b2105b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gab00370842d3c81263d34b672f0b2105b">FLEXSPI_TransferUpdateSizeEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00042.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a> nsize)</td></tr>
 <tr class="memdesc:gab00370842d3c81263d34b672f0b2105b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update FLEXSPI EDMA transfer source data transfer size(SSIZE) and destination data transfer size(DSIZE).  <a href="#gab00370842d3c81263d34b672f0b2105b">More...</a><br/></td></tr>
 <tr class="separator:gab00370842d3c81263d34b672f0b2105b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga2048a6a5bf9b8522297e3aea525bd4d4">FLEXSPI_TransferEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00041.html#a00436">flexspi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00262.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga2048a6a5bf9b8522297e3aea525bd4d4">FLEXSPI_TransferEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00041.html#a00433">flexspi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfers FLEXSPI data using an eDMA non-blocking method.  <a href="#ga2048a6a5bf9b8522297e3aea525bd4d4">More...</a><br/></td></tr>
 <tr class="separator:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7cfea2cf3ddab6b2615906345a473f11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga7cfea2cf3ddab6b2615906345a473f11">FLEXSPI_TransferAbortEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:ga7cfea2cf3ddab6b2615906345a473f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the transfer data using eDMA.  <a href="#ga7cfea2cf3ddab6b2615906345a473f11">More...</a><br/></td></tr>
 <tr class="separator:ga7cfea2cf3ddab6b2615906345a473f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gaa6edf877e695b01269c5a652ba6e4bd4">FLEXSPI_TransferGetTransferCountEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00262.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gaa6edf877e695b01269c5a652ba6e4bd4">FLEXSPI_TransferGetTransferCountEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the transferred counts of transfer.  <a href="#gaa6edf877e695b01269c5a652ba6e4bd4">More...</a><br/></td></tr>
 <tr class="separator:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00319" id="a00319"></a>
+<a name="a00316" id="a00316"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -174,10 +174,10 @@ FLEXSPI eDMA Transactional</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a3d0d98f2c483c09c5332d82d4811e1e5">txDmaHandle</a></td></tr>
+<tr class="memitem:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00373">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a3d0d98f2c483c09c5332d82d4811e1e5">txDmaHandle</a></td></tr>
 <tr class="memdesc:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA handler for FLEXSPI Tx.  <a href="#a3d0d98f2c483c09c5332d82d4811e1e5">More...</a><br/></td></tr>
 <tr class="separator:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a2ea3c9da9a52a5a86aea6bfdf597464c">rxDmaHandle</a></td></tr>
+<tr class="memitem:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00373">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a2ea3c9da9a52a5a86aea6bfdf597464c">rxDmaHandle</a></td></tr>
 <tr class="memdesc:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA handler for FLEXSPI Rx.  <a href="#a2ea3c9da9a52a5a86aea6bfdf597464c">More...</a><br/></td></tr>
 <tr class="separator:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a735f036ea3a12686df32463d71d135db"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a735f036ea3a12686df32463d71d135db">transferSize</a></td></tr>
@@ -209,7 +209,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00021.html#a00376">edma_handle_t</a>* flexspi_edma_handle_t::txDmaHandle</td>
+          <td class="memname"><a class="el" href="a00021.html#a00373">edma_handle_t</a>* flexspi_edma_handle_t::txDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -221,7 +221,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00021.html#a00376">edma_handle_t</a>* flexspi_edma_handle_t::rxDmaHandle</td>
+          <td class="memname"><a class="el" href="a00021.html#a00373">edma_handle_t</a>* flexspi_edma_handle_t::rxDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -309,7 +309,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 3))</td>
+          <td class="memname">#define FSL_FLEXSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00262.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -378,13 +378,13 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00373">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txDmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00373">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -454,7 +454,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXSPI_TransferEDMA </td>
+          <td class="memname"><a class="el" href="a00262.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXSPI_TransferEDMA </td>
           <td>(</td>
           <td class="paramtype">FLEXSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -468,7 +468,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00041.html#a00436">flexspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#a00433">flexspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -537,7 +537,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXSPI_TransferGetTransferCountEDMA </td>
+          <td class="memname"><a class="el" href="a00262.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXSPI_TransferGetTransferCountEDMA </td>
           <td>(</td>
           <td class="paramtype">FLEXSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

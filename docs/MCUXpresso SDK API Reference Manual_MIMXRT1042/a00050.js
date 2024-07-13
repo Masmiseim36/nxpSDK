@@ -1,6 +1,6 @@
 var a00050 =
 [
-    [ "lpspi_master_edma_handle_t", "a00050.html#a00325", [
+    [ "lpspi_master_edma_handle_t", "a00050.html#a00322", [
       [ "isPcsContinuous", "a00050.html#a46fe35e5026b495d125d0adbb3f7800c", null ],
       [ "isByteSwap", "a00050.html#ad0fb215abc5c73d7571757cacddd25e3", null ],
       [ "fifoSize", "a00050.html#ab73f9ad736231a96b1d1fe9b36d0f4d9", null ],
@@ -9,13 +9,20 @@ var a00050 =
       [ "bytesEachRead", "a00050.html#a0fc9ec30c6a3768af78a9f42e753bb59", null ],
       [ "bytesLastRead", "a00050.html#a78c832134cc772eb2047b436204f9e4d", null ],
       [ "isThereExtraRxBytes", "a00050.html#afe44259465c061dc2e9903e3998839ae", null ],
-      [ "txData", "a00050.html#aa9d47588e6ee08e6afc2003f08fbf061", null ],
+      [ "txData", "a00050.html#a930622eda3681090ee386b078fbe466f", null ],
       [ "rxData", "a00050.html#a7d633dc7680601b7e9945492b8ceb0c3", null ],
       [ "txRemainingByteCount", "a00050.html#a33b7d908890788fa86707be356465bf9", null ],
       [ "rxRemainingByteCount", "a00050.html#a40f69c223ec3606147163a841ee0cb69", null ],
       [ "writeRegRemainingTimes", "a00050.html#a34302d1017f6334c10d3e7bcc51792d9", null ],
       [ "readRegRemainingTimes", "a00050.html#ae8a6105ac4b2617d229365b10d1be1a9", null ],
       [ "totalByteCount", "a00050.html#a6b81e39587dd95e07d211c974d8cf427", null ],
+      [ "lastTimeTCD", "a00050.html#a9997f89b18f8c855ef537d9fe585ab06", null ],
+      [ "isMultiDMATransmit", "a00050.html#ad6889018d1f7e3b5e82d325039ea5522", null ],
+      [ "dmaTransmitTime", "a00050.html#a1629feee1d22077468f2ca3da9d61b21", null ],
+      [ "lastTimeDataBytes", "a00050.html#a390ca4eafb21436690fb56b60ef9423f", null ],
+      [ "dataBytesEveryTime", "a00050.html#adec6935591ff5cc8804396cb56b76807", null ],
+      [ "transferConfigRx", "a00050.html#a217cfa20b2d776064b9adbe9e264a630", null ],
+      [ "transferConfigTx", "a00050.html#a7715c7f8ad70910d6cfd66f41fe52876", null ],
       [ "txBuffIfNull", "a00050.html#a69cd02bb8e5dd9dfd3167e5a9b6eeba6", null ],
       [ "rxBuffIfNull", "a00050.html#a32570ed62f20341301be87e2c57bee1d", null ],
       [ "transmitCommand", "a00050.html#aa1c93b195e005e6b5fe53303841cc6c6", null ],
@@ -27,7 +34,7 @@ var a00050 =
       [ "edmaTxDataToTxRegHandle", "a00050.html#a7040efe4741c60f8924c0988178af2f5", null ],
       [ "lpspiSoftwareTCD", "a00050.html#a1610cd02da7febac3e0cb624bd5f54af", null ]
     ] ],
-    [ "lpspi_slave_edma_handle_t", "a00050.html#a00327", [
+    [ "lpspi_slave_edma_handle_t", "a00050.html#a00324", [
       [ "isByteSwap", "a00050.html#adde5846fcb7d9b727fa48199e097ebe0", null ],
       [ "fifoSize", "a00050.html#a32ff741b430eafb22d754ac1c915c0d2", null ],
       [ "rxWatermark", "a00050.html#ae71513d9bb2d3555688dc788f59e95e3", null ],
@@ -36,7 +43,7 @@ var a00050 =
       [ "bytesLastRead", "a00050.html#a60a19410542dacf7966928b1d8125099", null ],
       [ "isThereExtraRxBytes", "a00050.html#a357209584b821a5db546148779107f97", null ],
       [ "nbytes", "a00050.html#ac4304fd510994667fcc72cf37ef1345a", null ],
-      [ "txData", "a00050.html#a74bd7b77c24b4239d0a1ba515c007b01", null ],
+      [ "txData", "a00050.html#ab8df7cce48f9e66b44533df76f54e21c", null ],
       [ "rxData", "a00050.html#a5dc6dfcb4b91259fa028d4b7e40c61bf", null ],
       [ "txRemainingByteCount", "a00050.html#a21805cc6572bac9409823c6fcffe3b9d", null ],
       [ "rxRemainingByteCount", "a00050.html#a541744df6a1f4544ad0357b31a6bf409", null ],
@@ -54,6 +61,7 @@ var a00050 =
       [ "lpspiSoftwareTCD", "a00050.html#a1aa47d8c4f4d937202d9e5407500d918", null ]
     ] ],
     [ "FSL_LPSPI_EDMA_DRIVER_VERSION", "a00050.html#gaa083089fda62238f6cdcd9b6289913c7", null ],
+    [ "DMA_MAX_TRANSFER_COUNT", "a00050.html#gaebe7d948ac31ff020dde038034ae3bbd", null ],
     [ "lpspi_master_edma_transfer_callback_t", "a00050.html#gac7830d169e650c0f0239bfe22fe044f0", null ],
     [ "lpspi_slave_edma_transfer_callback_t", "a00050.html#gafab27c360b0c9a27c0c3f2327cdf8fd8", null ],
     [ "LPSPI_MasterTransferCreateHandleEDMA", "a00050.html#ga0e311cb35cbf6f7d4c8027773214c75e", null ],

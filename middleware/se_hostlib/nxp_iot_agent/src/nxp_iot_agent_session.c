@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2022,2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +17,7 @@
 #endif
 
 // The TFM implementation comes with the NXP SDK which includes the app.h
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM && !defined(__ZEPHYR__)
 #include "app.h"
 #endif
 
@@ -71,7 +71,7 @@ void iot_agent_session_bm(void)
 #if NXP_IOT_AGENT_HAVE_SSS
   	// In case the SSS library exist, initialization is happening there
 	ex_sss_main_ksdk_bm();
-#else
+#elif !defined(__ZEPHYR__)
 	BOARD_InitHardware();
 	// otherwise use the SDK functions to initialize it
 #endif //NXP_IOT_AGENT_HAVE_SSS

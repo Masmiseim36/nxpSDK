@@ -90,6 +90,8 @@ define block QACCESS_DATA  { section DataQuickAccess };
 initialize by copy {
   object mflash_drv.o,
   object fsl_flexspi.o,
+  object fsl_bee.o,
+  object platform_enc_bee.o,
 };
 
 initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess};

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -37,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_icmpv6_process_ra                               PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -83,6 +82,9 @@
 /*                                            added internal ip address   */
 /*                                            change notification,        */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Bo Chen                  Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _nx_icmpv6_process_ra(NX_IP *ip_ptr, NX_PACKET *packet_ptr)
@@ -111,6 +113,26 @@ UINT                          interface_index;
 
     /* Add debug information. */
     NX_PACKET_DEBUG(__FILE__, __LINE__, packet_ptr);
+
+    /* Check packet length is at least sizeof(NX_ICMPV6_RA). */
+#ifndef NX_DISABLE_RX_SIZE_CHECKING
+    if ((packet_ptr -> nx_packet_length < sizeof(NX_ICMPV6_RA))
+#ifndef NX_DISABLE_PACKET_CHAIN
+        || (packet_ptr -> nx_packet_next) /* Ignore chained packet.  */
+#endif /* NX_DISABLE_PACKET_CHAIN */
+        )
+    {
+#ifndef NX_DISABLE_ICMP_INFO
+
+        /* Increment the ICMP invalid message count.  */
+        ip_ptr -> nx_ip_icmp_invalid_packets++;
+#endif
+
+        /* Invalid ICMP message, just release it.  */
+        _nx_packet_release(packet_ptr);
+        return;
+    }
+#endif /* NX_DISABLE_RX_SIZE_CHECKING */
 
     /* Initialize the ND cache table entry to NULL */
     nd_entry = NX_NULL;

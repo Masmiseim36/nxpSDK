@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_video_entry                        PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -72,6 +71,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  10-31-2023     Yajun xia                Modified comment(s),          */
+/*                                            added error checks support, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_video_entry(UX_SLAVE_CLASS_COMMAND *command)
@@ -86,9 +88,15 @@ UINT        status;
     {
 
     case UX_SLAVE_CLASS_COMMAND_INITIALIZE:
+#if defined(UX_DEVICE_CLASS_VIDEO_ENABLE_ERROR_CHECKING)
+
+        /* Call the init function of the Video class.  */
+        status =  _uxe_device_class_video_initialize(command);
+#else
 
         /* Call the init function of the Video class.  */
         status =  _ux_device_class_video_initialize(command);
+#endif  /* UX_DEVICE_CLASS_VIDEO_ENABLE_ERROR_CHECKING */
 
         /* Return the completion status.  */
         return(status);

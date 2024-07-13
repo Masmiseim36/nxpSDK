@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_pictbridge_object_parse                         PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -67,6 +66,9 @@
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
 /*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            checked tag nesting depth,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_pictbridge_object_parse(UX_PICTBRIDGE *pictbridge, UCHAR *xml_object_buffer,
@@ -211,6 +213,17 @@ UINT                                    status;
                 /* Reset the closing tag count.  */
                 closing_tag_count =  0;
 
+                /* Check if the tag history depth is fine for saving.  */
+                if (tag_history_index >= UX_PICTBRIDGE_MAX_TAG_DEPTH)
+                {
+
+                    /* Syntax error.  */
+                    status = UX_BUFFER_OVERFLOW;
+                    
+                    /* Do not proceed.  */
+                    break;
+                }
+
                 /* Save the current tag in the tag history.  */
                 tag_history[tag_history_index] = tag_entry;
                 
@@ -317,4 +330,3 @@ UINT                                    status;
     /* Return completion status.  */
     return(status);    
 }
-

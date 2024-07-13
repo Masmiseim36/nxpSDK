@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_ccid_thread_entry                  PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -68,6 +67,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  03-08-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added standalone support,   */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _ux_device_class_ccid_thread_entry(ULONG ccid_inst)
@@ -163,7 +165,7 @@ UINT                                                status;
         handles = (UX_DEVICE_CLASS_CCID_HANDLE *)parameter -> ux_device_class_ccid_handles;
 
         /* Lock global status resources.  */
-        _ux_device_mutex_on(&ccid -> ux_device_class_ccid_mutex);
+        _ux_device_class_ccid_lock(ccid);
 
         /* Initialize response.  */
         rsp = (UX_DEVICE_CLASS_CCID_RDR_TO_PC_SLOT_STATUS_HEADER *)
@@ -180,7 +182,7 @@ UINT                                                status;
 
             /* Response: command not supported (0,1,0).  */
             rsp -> bStatus = UX_DEVICE_CLASS_CCID_SLOT_STATUS(0, 1);
-            _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+            _ux_device_class_ccid_unlock(ccid);
             _ux_device_class_ccid_response(ccid, (UCHAR *)rsp, UX_DEVICE_CLASS_CCID_MESSAGE_HEADER_LENGTH);
             continue;
         }
@@ -192,7 +194,7 @@ UINT                                                status;
             /* Response: Slot not exist.  */
             rsp -> bStatus = UX_DEVICE_CLASS_CCID_SLOT_STATUS(2, 1);
             rsp -> bError  = 5;
-            _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+            _ux_device_class_ccid_unlock(ccid);
             _ux_device_class_ccid_response(ccid, (UCHAR *)rsp, UX_DEVICE_CLASS_CCID_MESSAGE_HEADER_LENGTH);
             continue;
         }
@@ -261,7 +263,7 @@ UINT                                                status;
                                             rsp, UX_DEVICE_CLASS_CCID_MESSAGE_HEADER_LENGTH); /* Use case of memcpy is verified. */
 
                     /* Pre-process of command done.  */
-                    _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+                    _ux_device_class_ccid_unlock(ccid);
 
                     /* Signal event to runner thread.  */
                     _ux_utility_thread_resume(&runner -> ux_device_class_ccid_runner_thread);
@@ -278,7 +280,7 @@ UINT                                                status;
             rsp -> bStatus = UX_DEVICE_CLASS_CCID_SLOT_STATUS(
                              slot -> ux_device_class_ccid_slot_icc_status, 1);
             rsp -> bError = UX_DEVICE_CLASS_CCID_CMD_SLOT_BUSY;
-            _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+            _ux_device_class_ccid_unlock(ccid);
             _ux_device_class_ccid_response(ccid, (UCHAR *)rsp, UX_DEVICE_CLASS_CCID_MESSAGE_HEADER_LENGTH);
             continue;
         }
@@ -343,7 +345,7 @@ UINT                                                status;
                 slot -> ux_device_class_ccid_slot_aborting = UX_FALSE;
             }
 
-            _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+            _ux_device_class_ccid_unlock(ccid);
 
             /* Send response any way.  */
             _ux_device_class_ccid_response(ccid, (UCHAR *)rsp, UX_DEVICE_CLASS_CCID_MESSAGE_HEADER_LENGTH);
@@ -357,7 +359,7 @@ UINT                                                status;
                             slot -> ux_device_class_ccid_slot_icc_status, 1);
         rsp -> bError = UX_DEVICE_CLASS_CCID_CMD_ABORTED;
 
-        _ux_device_mutex_off(&ccid -> ux_device_class_ccid_mutex);
+        _ux_device_class_ccid_unlock(ccid);
 
         _ux_device_class_ccid_response(ccid, (UCHAR *)rsp, UX_DEVICE_CLASS_CCID_MESSAGE_HEADER_LENGTH);
     }

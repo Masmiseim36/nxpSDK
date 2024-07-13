@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP.
+ * Copyright 2020-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@ extern "C" {
 
 static void LOG_STR(const char* module, const char* func, int line, const char* lvl_str, const char* str)
 {
-    PRINTF("\r[%u]", (unsigned int)GET_TICK());
+    PRINTF("\r[%u]", (unsigned int)hal_get_ostick());
     PRINTF(":%s:%s:(%s:%u)", module, lvl_str, func, line);
     PRINTF(":%s", str);
 }

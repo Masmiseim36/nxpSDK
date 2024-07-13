@@ -58,7 +58,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
 "${ProjDirPath}/../bootutil_port/flash_map.h"
 "${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
-"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../aws_mbedtls_config.h"
 "${ProjDirPath}/../core_mqtt_config.h"
 "${ProjDirPath}/../core_pkcs11_config.h"

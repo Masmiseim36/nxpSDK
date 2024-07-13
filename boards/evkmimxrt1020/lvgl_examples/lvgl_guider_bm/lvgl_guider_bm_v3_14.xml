@@ -34,6 +34,7 @@
     <definition extID="RTE_Device.MIMXRT1021"/>
     <definition extID="middleware.lvgl.template.MIMXRT1021"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1021"/>
+    <definition extID="utility.str.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_system.MIMXRT1021"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -43,7 +44,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_lvgl_guider_bm" name="lvgl_guider_bm" dependency="driver.ili9341.MIMXRT1021 driver.ft6x06.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.lpi2c_edma.MIMXRT1021 platform.drivers.lpspi_edma.MIMXRT1021 platform.drivers.lpspi_cmsis.MIMXRT1021 platform.drivers.lpi2c_cmsis.MIMXRT1021 platform.drivers.common.MIMXRT1021 middleware.lvgl.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 CMSIS_Driver_Include.I2C.MIMXRT1021 platform.drivers.lpspi.MIMXRT1021 CMSIS_Driver_Include.SPI.MIMXRT1021 RTE_Device.MIMXRT1021 middleware.lvgl.template.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="lvgl_examples">
+  <example id="evkmimxrt1020_lvgl_guider_bm" name="lvgl_guider_bm" dependency="driver.ili9341.MIMXRT1021 driver.ft6x06.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.lpi2c_edma.MIMXRT1021 platform.drivers.lpspi_edma.MIMXRT1021 platform.drivers.lpspi_cmsis.MIMXRT1021 platform.drivers.lpi2c_cmsis.MIMXRT1021 platform.drivers.common.MIMXRT1021 middleware.lvgl.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 CMSIS_Driver_Include.I2C.MIMXRT1021 platform.drivers.lpspi.MIMXRT1021 CMSIS_Driver_Include.SPI.MIMXRT1021 RTE_Device.MIMXRT1021 middleware.lvgl.template.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 utility.str.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="lvgl_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -118,7 +119,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -Wno-format</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin -Wno-format</value>
         </option>
         <option id="com.crt.advproject.cpp.fpu" type="enum">
           <value>com.crt.advproject.cpp.fpu.fpv5dp.hard</value>
@@ -130,7 +131,7 @@
           <value>com.crt.advproject.misc.dialect.gnupp11</value>
         </option>
         <option id="gnu.cpp.compiler.option.other.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -fno-rtti -fno-exceptions -Wno-format</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin -fno-rtti -fno-exceptions -Wno-format</value>
         </option>
         <option id="gnu.cpp.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_host_class_storage_endpoints_get                PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -76,6 +75,9 @@
 /*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            initial the timeout value,  */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            checked endpoint get status,*/
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_storage_endpoints_get(UX_HOST_CLASS_STORAGE *storage)
@@ -83,6 +85,7 @@ UINT  _ux_host_class_storage_endpoints_get(UX_HOST_CLASS_STORAGE *storage)
 
 UINT            endpoint_index;
 UX_ENDPOINT     *endpoint;
+UINT            status;
 
 
     /* Search for the bulk OUT endpoint. It is attached to the interface container.  */
@@ -91,7 +94,11 @@ UX_ENDPOINT     *endpoint;
     {
 
         /* Get an endpoint.  */
-        _ux_host_stack_interface_endpoint_get(storage -> ux_host_class_storage_interface, endpoint_index, &endpoint);
+        status = _ux_host_stack_interface_endpoint_get(storage -> ux_host_class_storage_interface, endpoint_index, &endpoint);
+
+        /* Check status.  */
+        if (status != UX_SUCCESS)
+            continue;
 
         /* We have an endpoint. Check if endpoint is bulk and OUT.  */
         if (((endpoint -> ux_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_OUT) &&
@@ -127,7 +134,11 @@ UX_ENDPOINT     *endpoint;
     {
 
         /* Get an endpoint.  */
-        _ux_host_stack_interface_endpoint_get(storage -> ux_host_class_storage_interface, endpoint_index, &endpoint);
+        status = _ux_host_stack_interface_endpoint_get(storage -> ux_host_class_storage_interface, endpoint_index, &endpoint);
+
+        /* Check status.  */
+        if (status != UX_SUCCESS)
+            continue;
 
         /* We have an endpoint. Check if endpoint is bulk and IN.  */
         if (((endpoint -> ux_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_IN) &&
@@ -177,7 +188,11 @@ UX_ENDPOINT     *endpoint;
         {
 
             /* Get an endpoint.  */
-            _ux_host_stack_interface_endpoint_get(storage -> ux_host_class_storage_interface, endpoint_index, &endpoint);
+            status = _ux_host_stack_interface_endpoint_get(storage -> ux_host_class_storage_interface, endpoint_index, &endpoint);
+
+            /* Check status.  */
+            if (status != UX_SUCCESS)
+                continue;
 
             /* Check if endpoint is Interrupt and IN.  */
             if (((endpoint -> ux_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_IN) &&

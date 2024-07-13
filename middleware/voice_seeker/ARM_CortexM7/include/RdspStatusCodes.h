@@ -18,6 +18,7 @@ typedef enum RdspStatus {
     MALLOC_FAIL = 2,
     INVALID_PARAMETERS = 3,
     NOT_ENABLED = 4,
+    TRIGGER_START_OVERFLOW = 5,
 	RDSP_VOICESEEKER_LICENSE_EXPIRED = -12
 } RdspStatus;
 

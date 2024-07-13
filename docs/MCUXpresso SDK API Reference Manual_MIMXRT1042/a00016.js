@@ -1,11 +1,11 @@
 var a00016 =
 [
-    [ "cs42888_audio_format_t", "a00016.html#a00357", [
+    [ "cs42888_audio_format_t", "a00016.html#a00354", [
       [ "mclk_HZ", "a00016.html#a5fd01de40f2d61eaded45b58910eb9e6", null ],
       [ "sampleRate", "a00016.html#a606f22140a1a18f014cfd854233716fc", null ],
       [ "bitWidth", "a00016.html#a5a375f48e508232d89ae87f4af47e166", null ]
     ] ],
-    [ "cs42888_config_t", "a00016.html#a00358", [
+    [ "cs42888_config_t", "a00016.html#a00355", [
       [ "bus", "a00016.html#abe4fb7d060b3749d089f212afee66edd", null ],
       [ "format", "a00016.html#a390b84d16170a8a88a1630f4a4f0de19", null ],
       [ "ADCMode", "a00016.html#a3b112c12d31e8259d8d4a36846071cde", null ],
@@ -15,7 +15,7 @@ var a00016 =
       [ "slaveAddress", "a00016.html#abdef2c13001f11f5d4148af1b0196567", null ],
       [ "reset", "a00016.html#a9c476b216744897cc8a3fc401e0e6dca", null ]
     ] ],
-    [ "cs42888_handle_t", "a00016.html#a00359", [
+    [ "cs42888_handle_t", "a00016.html#a00356", [
       [ "config", "a00016.html#ae6a321c3fa8d47e83f09996125b06794", null ],
       [ "i2cHandle", "a00016.html#a561ab054fec522adeab35c07bb6cab34", null ]
     ] ],
@@ -48,14 +48,14 @@ var a00016 =
       [ "kCS42888_BusOL1", "a00016.html#gga420482576c736d6016bc7cb40966ae76a7c862e2ffab7396a543b9a07df682c7d", null ],
       [ "kCS42888_BusOL2", "a00016.html#gga420482576c736d6016bc7cb40966ae76a440e9e0d3ebd0431de4690b05bffcf5f", null ],
       [ "kCS42888_BusTDM", "a00016.html#gga420482576c736d6016bc7cb40966ae76af1ae036e2e350aabfe39cd29bace6d32", null ],
-      [ "kCS42888_AOUT1", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba40c873d24063247f27786a37ae99f4e5", null ],
-      [ "kCS42888_AOUT2", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba4e25320a6e1770c4782c0776bd6708e2", null ],
-      [ "kCS42888_AOUT3", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba3635f95f2c41320a933acb215a07ea1e", null ],
-      [ "kCS42888_AOUT4", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6ebad9aedebf8ecd41a35099a221194985ae", null ],
-      [ "kCS42888_AOUT5", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba5433074d6d61dc9a342dd07880ad8013", null ],
-      [ "kCS42888_AOUT6", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba5523459f137c68559e45279689b3c9d1", null ],
-      [ "kCS42888_AOUT7", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba4c5575ba57cca766bc4f8a1971065b5a", null ],
-      [ "kCS42888_AOUT8", "a00016.html#gga97f905ac94bfebd46e50e32c7389e6eba317c6f4677e7331aeee1270eefd18981", null ]
+      [ "kCS42888_AOUT1", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a40c873d24063247f27786a37ae99f4e5", null ],
+      [ "kCS42888_AOUT2", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a4e25320a6e1770c4782c0776bd6708e2", null ],
+      [ "kCS42888_AOUT3", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a3635f95f2c41320a933acb215a07ea1e", null ],
+      [ "kCS42888_AOUT4", "a00016.html#gga1e06e534e565b0e44afdf96c77951725ad9aedebf8ecd41a35099a221194985ae", null ],
+      [ "kCS42888_AOUT5", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a5433074d6d61dc9a342dd07880ad8013", null ],
+      [ "kCS42888_AOUT6", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a5523459f137c68559e45279689b3c9d1", null ],
+      [ "kCS42888_AOUT7", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a4c5575ba57cca766bc4f8a1971065b5a", null ],
+      [ "kCS42888_AOUT8", "a00016.html#gga1e06e534e565b0e44afdf96c77951725a317c6f4677e7331aeee1270eefd18981", null ]
     ] ],
     [ "CS42888_Init", "a00016.html#gaaedecae1ab48066f40067f938b45e246", null ],
     [ "CS42888_Deinit", "a00016.html#ga9f3f2e2ab36b350ac9e7687ac068c924", null ],

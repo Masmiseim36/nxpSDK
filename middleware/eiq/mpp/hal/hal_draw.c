@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
-
+#include "fsl_common.h"
 #include "font.h"
 #include "hal_draw.h"
 #include "hal_debug.h"
@@ -56,7 +56,8 @@ typedef struct {
  * @param x drawing position on X axe
  * @param y drawing position on Y axe
  */
-static void GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, uint16_t bcolor, uint16_t fcolor, uint32_t width);
+static void GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, uint16_t bcolor, uint16_t fcolor,
+        uint32_t width, int stripe_top, int stripe_bottom);
 
 /*******************************************************************************
  * Variables
@@ -78,14 +79,14 @@ static chgui_font_t _gFontTbl[] =
 
  */
 void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
-                   int x, int y, const char *label)
+                   int x, int y, const char *label, int stripe_top, int stripe_bottom)
 {
     int idx = 0;
 
     while ((label[idx] != 0) && (idx < GUI_PRINTF_BUF_SIZE)) {
         GUI_DispChar(lcd_buf, label[idx],
                      INCREMENT(x, idx * _gFontTbl[0].x_size), y,
-                     fcolor, bcolor, width);
+                     fcolor, bcolor, width, stripe_top, stripe_bottom);
         idx++;
     }
 }
@@ -102,10 +103,11 @@ void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint3
  * @param fcolor foreground RGB565 color.
  * @param bcolor background RGB565 color.
  */
-static void _GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, const char *pdata,
-        int font_xsize, int font_ysize, uint16_t fcolor, uint16_t bcolor, uint16_t width)
+static inline void _GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, const char *pdata,
+        int font_xsize, int font_ysize, uint16_t fcolor, uint16_t bcolor, uint16_t width, int stripe_top, int stripe_bottom)
 {
-    uint8_t j, pos, t;
+    uint8_t j, t;
+    int pos;
     uint8_t temp;
     uint8_t XNum;
     uint32_t base;
@@ -121,28 +123,35 @@ static void _GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, const char *p
     c = c - ' ';
     base = (c * XNum * font_ysize);
 
-    for (j = 0; j < XNum; j++)
-    {
-        for (pos = 0; pos < font_ysize; pos++)
+    int ystart = MAX(stripe_top, y);
+    int yend = MIN(stripe_bottom, y + font_ysize - 1);
+
+    if ((ystart <= stripe_bottom) && (yend >= stripe_top))
+    {   /* part of font is in stripe */
+        for (j = 0; j < XNum; j++)
         {
-            temp = (uint8_t) pdata[base + pos + j * font_ysize];
-            for (t = 0; t < 8; t++)
+            for (pos = ystart; pos < yend; pos++)
             {
-                if ((temp >> t) & 0x01) {
-                    hal_draw_pixel565(lcd_buf, DECREMENT(x + font_xsize, t), INCREMENT(y, pos), fcolor, width);
-                } else {
-                    hal_draw_pixel565(lcd_buf, DECREMENT(x + font_xsize, t), INCREMENT(y, pos), bcolor, width);
+                temp = (uint8_t) pdata[base + (pos - y) + j * font_ysize];
+                for (t = 0; t < font_xsize; t++)
+                {
+                    if ((temp >> t) & 0x01) {
+                        hal_draw_pixel565(lcd_buf, (x + font_xsize - t), (pos - stripe_top), fcolor, width);
+                    } else {
+                        hal_draw_pixel565(lcd_buf, (x + font_xsize - t), (pos - stripe_top), bcolor, width);
+                    }
                 }
             }
+            x = x + 8;
         }
-        x = INCREMENT(x, 8);
     }
 }
 
-static void GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, uint16_t fcolor, uint16_t bcolor, uint32_t width)
+static inline void GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, uint16_t fcolor, uint16_t bcolor,
+        uint32_t width, int stripe_top, int stripe_bottom)
 {
     _GUI_DispChar(lcd_buf, c, x, y, _gFontTbl[0].data, (int)_gFontTbl[0].x_size,
-            (int)_gFontTbl[0].y_size, fcolor, bcolor, width);
+            (int)_gFontTbl[0].y_size, fcolor, bcolor, width, stripe_top, stripe_bottom);
 }
 
 /*!
@@ -153,41 +162,61 @@ static void GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, uint16_t fcolo
  * @param b 0-255 blue color value
  * @return color in RGB565
  */
-static uint16_t ConvRgb888Rgb565(uint32_t r, uint32_t g, uint32_t b)
+static inline uint16_t ConvRgb888Rgb565(mpp_color_t col)
 {
-    b = GET_MSB(b, 5, 0);
-    g = GET_MSB(g, 6, 5);
-    r = GET_MSB(r, 5, 11);
+    uint16_t b = GET_MSB(col.rgb.B, 5, 0);
+    uint16_t g = GET_MSB(col.rgb.G, 6, 5);
+    uint16_t r = GET_MSB(col.rgb.B, 5, 11);
 
     return (uint16_t)(r | g | b);
 }
 
-void hal_draw_rect565(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
-                  uint32_t r, uint32_t g, uint32_t b, uint32_t width)
+static inline void hal_draw_rect565(uint16_t *lcd_buf, hal_rect_t rect,
+                  mpp_color_t rgb, uint32_t width,
+                  int stripe_top, int stripe_bottom)
 {
-    uint16_t color16 = ConvRgb888Rgb565(r,g,b);
+    uint16_t color16 = ConvRgb888Rgb565(rgb);
 
-    /* horizontals */
-    for (int i = x; i < x + xsize; i++) {
-        hal_draw_pixel565(lcd_buf, i, y, color16, width);
-        hal_draw_pixel565(lcd_buf, i, y + ysize - 1, color16, width);
+    /* horizontal top bar */
+    if ((rect.top >= stripe_top) && (rect.top <= stripe_bottom))
+    {
+        for (int i = rect.left; i < rect.right; i++) {
+            hal_draw_pixel565(lcd_buf, i, rect.top - stripe_top, color16, width);
+        }
     }
+    /* horizontal bottom bar */
+    if ((rect.bottom >= stripe_top) && (rect.bottom <= stripe_bottom))
+    {
+        for (int i = rect.left; i < rect.right; i++)
+        {
+            hal_draw_pixel565(lcd_buf, i, rect.bottom - stripe_top, color16, width);
+        }
+    }
+
     /* verticals */
-    for (int i = y; i < y + ysize; i++) {
-        hal_draw_pixel565(lcd_buf, x, i, color16, width);
-        hal_draw_pixel565(lcd_buf, x + xsize - 1, i, color16, width);
+    int ystart = MAX(stripe_top, rect.top);
+    int yend = MIN(stripe_bottom, rect.bottom);
+    if ((ystart <= stripe_bottom) && (yend >= stripe_top))
+    {
+        for (int i = ystart; i <= yend; i++)
+        {
+            hal_draw_pixel565(lcd_buf, rect.left, i - stripe_top, color16, width);
+            hal_draw_pixel565(lcd_buf, rect.right, i - stripe_top, color16, width);
+        }
     }
 }
 
-void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w)
+static inline void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w)
 {
     pDst[y * (lcd_w) + x] = color;
 }
 
 int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_t format,
-                        mpp_labeled_rect_t *lr)
+                        mpp_labeled_rect_t *lr, int stripe, int stripe_max)
 {
     uint32_t xsize, ysize, lw;
+    hal_rect_t rect;
+    int stripe_top, stripe_bottom;
 
     /* for now only support RGB565 format */
     if (format != MPP_PIXEL_RGB565) return MPP_INVALID_PARAM;
@@ -210,10 +239,24 @@ int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_
         return MPP_SUCCESS;
     }
 
+    if (stripe)
+    {
+        int stripe_h = height / stripe_max;
+        stripe_top = (stripe - 1) * stripe_h;
+        stripe_bottom = stripe_top + stripe_h - 1;
+    }
+    else
+    {
+        stripe_top = 0;
+        stripe_bottom = height - 1;
+    }
+
     for (lw = 0; lw < lr->line_width; lw++) {
-      hal_draw_rect565((uint16_t *)frame, lr->left + lw, lr->top + lw,
-                       xsize - (lw*2), ysize - (lw*2), lr->line_color.rgb.R,
-                       lr->line_color.rgb.G, lr->line_color.rgb.B, width);
+        rect.top = lr->top + lw;
+        rect.left = lr->left + lw;
+        rect.right = lr->right - lw;
+        rect.bottom = lr->bottom - lw;
+        hal_draw_rect565((uint16_t *)frame, rect, lr->line_color, width, stripe_top, stripe_bottom);
     }
 
     /* check label fits in frame */
@@ -223,6 +266,6 @@ int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_
     )   return MPP_INVALID_PARAM;
 
     hal_draw_text565((uint16_t *)frame, WHITE_RGB565, BLACK_RGB565, width,
-                 lr->left, lr->top, (char *)lr->label);
+                 lr->left, lr->top, (char *)lr->label, stripe_top, stripe_bottom);
     return MPP_SUCCESS;
 }

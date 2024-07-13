@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -113,14 +112,6 @@ ULONG               FAT_sector;
                 /* Flush the cached individual FAT entries */
                 _fx_utility_FAT_flush(media_ptr);
 
-#ifdef FX_ENABLE_EXFAT
-                if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-                {
-
-                    /* Flush exFAT bitmap.  */
-                    _fx_utility_exFAT_bitmap_flush(media_ptr);
-                }
-#endif /* FX_ENABLE_EXFAT */
             }
 
             /* Record sector number of current FAT entry. */
@@ -130,15 +121,15 @@ ULONG               FAT_sector;
 #endif /* FX_ENABLE_FAULT_TOLERANT */
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
-    /* Increment the number of FAT entry writes and cache hits.  */
-    media_ptr -> fx_media_fat_entry_writes++;
-    media_ptr -> fx_media_fat_entry_cache_write_hits++;
+/* Increment the number of FAT entry writes and cache hits.  */
+media_ptr -> fx_media_fat_entry_writes++;
+media_ptr -> fx_media_fat_entry_cache_write_hits++;
 #endif
 
-    /* Extended port-specific processing macro, which is by default defined to white space.  */
-    FX_UTILITY_FAT_ENTRY_WRITE_EXTENSION
+/* Extended port-specific processing macro, which is by default defined to white space.  */
+FX_UTILITY_FAT_ENTRY_WRITE_EXTENSION
 
-    /* Calculate the area of the cache for this FAT entry.  */
+/* Calculate the area of the cache for this FAT entry.  */
     index =  (cluster & FX_FAT_CACHE_HASH_MASK) * FX_FAT_CACHE_DEPTH;
 
     /* Build a pointer to the cache entry.  */

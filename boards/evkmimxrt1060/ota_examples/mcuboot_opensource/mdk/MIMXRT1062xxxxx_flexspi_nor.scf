@@ -105,6 +105,8 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (DataQuickAccess)
     mflash_drv.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
+    fsl_bee.o (+RO +RW +ZI)
+    platform_enc_bee.o (+RO +RW +ZI)
   }
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }

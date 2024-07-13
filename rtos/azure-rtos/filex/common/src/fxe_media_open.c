@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -141,7 +140,7 @@ UINT       old_threshold;
 
 #ifndef FX_SINGLE_THREAD
 
-    /* Pickup current thread pointer. At this point we know the current thread pointer is non-null since 
+    /* Pickup current thread pointer. At this point we know the current thread pointer is non-null since
        it was checked by code in FX_CALLER_CHECKING_CODE macro.  */
     current_thread =  tx_thread_identify();
 

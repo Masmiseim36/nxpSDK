@@ -397,7 +397,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -413,6 +412,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/tinycbor/src</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -679,6 +679,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/../config_files</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1537,7 +1538,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1553,6 +1553,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/tinycbor/src</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1819,6 +1820,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/../config_files</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2418,9 +2420,6 @@
         <name>$PROJ_DIR$/../bootutil_port/sysflash/sysflash.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../bootutil_port/sbldef.h</name>
-    </file>
   </group>
   <group>
     <name>doc</name>
@@ -3642,6 +3641,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/base64.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/bignum_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/bignum.c</name>
       </file>
       <file>
@@ -4280,7 +4282,16 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -4504,12 +4515,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4523,6 +4528,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

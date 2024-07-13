@@ -3,6 +3,13 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
+if(CONFIG_USE_middleware_fatfs_nand)
+
 add_config_file(${CMAKE_CURRENT_LIST_DIR}/template/nand/ffconf.h ${CMAKE_CURRENT_LIST_DIR}/template/nand middleware_fatfs_template_nand)
 add_config_file(${CMAKE_CURRENT_LIST_DIR}/template/nand/dhara_nand_config.h "" middleware_fatfs_template_nand)
 
+else()
+
+message(SEND_ERROR "middleware_fatfs_template_nand dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()

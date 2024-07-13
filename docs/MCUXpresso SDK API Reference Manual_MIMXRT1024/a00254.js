@@ -1,11 +1,20 @@
 var a00254 =
 [
-    [ "FSL_IOMUXC_DRIVER_VERSION", "a00254.html#gaa82996f29b9fa7947fdc478b7a874757", null ],
-    [ "IOMUXC_SetPinMux", "a00254.html#gaff65bf655b0d541b868b4a9d15415ce8", null ],
-    [ "IOMUXC_SetPinConfig", "a00254.html#gab7a6f9e42bd00d9e80457b53712748de", null ],
-    [ "IOMUXC_EnableMode", "a00254.html#gaeba2c5aab7783f6458d02bd78ffc8cf9", null ],
-    [ "IOMUXC_SetSaiMClkClockSource", "a00254.html#ga540a7b7a45e2c47b277acc52b6fe045b", null ],
-    [ "IOMUXC_MQSEnterSoftwareReset", "a00254.html#gab11fd4c56268fce42153f1a9b310f6a5", null ],
-    [ "IOMUXC_MQSEnable", "a00254.html#ga252dddec1e615b8efc9a1771e5de0f3c", null ],
-    [ "IOMUXC_MQSConfig", "a00254.html#gafab34e7bfa5e484026e28addd0daa418", null ]
+    [ "FSL_CACHE_DRIVER_VERSION", "a00254.html#gac954b8be2bb59a983a9594c59e4b4fa5", null ],
+    [ "L1CACHE_EnableICache", "a00254.html#gaea07bb3879fa96b03f1ecaa6bf821c74", null ],
+    [ "L1CACHE_DisableICache", "a00254.html#gafa6d1a14a0499342890eee0e104c8d96", null ],
+    [ "L1CACHE_InvalidateICache", "a00254.html#gabce0ccbe1684fef7eff231f3704025b6", null ],
+    [ "L1CACHE_InvalidateICacheByRange", "a00254.html#gaf66ed6d9a7b881ef98707861484d7530", null ],
+    [ "L1CACHE_EnableDCache", "a00254.html#ga52d071c691c4ce9ead828e086f07f457", null ],
+    [ "L1CACHE_DisableDCache", "a00254.html#gae6eb154e5afc3a877aad4155cb90bca9", null ],
+    [ "L1CACHE_InvalidateDCache", "a00254.html#gad6bb45d3f9feb8ed2a63b174d204f277", null ],
+    [ "L1CACHE_CleanDCache", "a00254.html#gab1dcfc930ee90724a807f69428a1f269", null ],
+    [ "L1CACHE_CleanInvalidateDCache", "a00254.html#ga49c6ba08328943022264442f6ce2c090", null ],
+    [ "L1CACHE_InvalidateDCacheByRange", "a00254.html#ga9baff800f4d60a09efc4e4ce309dd583", null ],
+    [ "L1CACHE_CleanDCacheByRange", "a00254.html#gad120776b1a7f2f3f21b2bf017dbab095", null ],
+    [ "L1CACHE_CleanInvalidateDCacheByRange", "a00254.html#ga4837708efaec2927416b268d75412361", null ],
+    [ "ICACHE_InvalidateByRange", "a00254.html#ga00cdccb5c53201a747f2a3e2009f43cc", null ],
+    [ "DCACHE_InvalidateByRange", "a00254.html#gab5c47d7193562d7a763b1bc1bd91b28c", null ],
+    [ "DCACHE_CleanByRange", "a00254.html#ga893959336987f85910fe98ab9f7f8648", null ],
+    [ "DCACHE_CleanInvalidateByRange", "a00254.html#gac20095b525889cf55c105658877c2c84", null ]
 ];

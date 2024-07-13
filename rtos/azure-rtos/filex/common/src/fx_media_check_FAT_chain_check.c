@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -105,15 +104,6 @@ UINT  status;
 
         cluster_number = cluster;
 
-#ifdef FX_ENABLE_EXFAT
-
-        /* For the index of the first cluster in exFAT is 2, adjust the number of clusters to fit Allocation Bitmap Table. */
-        /* We will compare logical_fat with Aollcation Bitmap table later to find out lost clusters. */
-        if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-        {
-            cluster_number = cluster - FX_FAT_ENTRY_START;
-        }
-#endif /* FX_ENABLE_EXFAT */
 
         /* Determine if this cluster is already in the logical FAT bit map.  */
         if (logical_fat[cluster_number >> 3] & (1 << (cluster_number & 7)))

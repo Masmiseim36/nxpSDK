@@ -330,10 +330,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1011/drivers;../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/str;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1011/utilities;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1011/template;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1011/drivers;../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1011/utilities;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1011/template;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1011/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -530,7 +530,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lcd</GroupName>
+          <GroupName>lcdc</GroupName>
           <Files>
             <File>
               <FileName>fsl_ili9341.h</FileName>
@@ -2788,16 +2788,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1011/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2821,6 +2811,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1011/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3313,10 +3313,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1011/drivers;../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/str;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1011/utilities;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1011/template;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1011/drivers;../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1011/utilities;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1011/template;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1011/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3513,7 +3513,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lcd</GroupName>
+          <GroupName>lcdc</GroupName>
           <Files>
             <File>
               <FileName>fsl_ili9341.h</FileName>
@@ -5771,16 +5771,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1011/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -5804,6 +5794,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1011/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1011/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

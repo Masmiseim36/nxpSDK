@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -134,7 +134,7 @@ size_t iot_agent_service_get_number_of_services(
 /**
  * @brief Get the offset and the service descriptor of a service specified by service_id.
  *
- * @param[in] ctx: The datastore to query for the service.
+ * @param[in] datastore: The datastore to query for the service.
  * @param[in] service_id: ID of the service
  * @param[out] offset: The offset of the service descriptor within the datastore.
  * @param[out] service_descriptor: Structure for holding a service descriptor.
@@ -153,7 +153,7 @@ size_t iot_agent_service_get_number_of_services(
  * @see iot_agent_is_service_configuration_data_valid
  */
 iot_agent_status_t iot_agent_service_get_service_offset_by_id(
-		const iot_agent_datastore_t* ctx,
+		const iot_agent_datastore_t* datastore,
 		uint64_t service_id,
 		size_t* offset,
 		nxp_iot_ServiceDescriptor* service_descriptor);

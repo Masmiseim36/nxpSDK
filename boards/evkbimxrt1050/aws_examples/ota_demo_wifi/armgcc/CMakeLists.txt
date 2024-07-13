@@ -75,7 +75,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
 "${ProjDirPath}/../bootutil_port/flash_map.h"
 "${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
-"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../ota/ota_pal.c"
 "${ProjDirPath}/../ota/ota_pal.h"
 "${ProjDirPath}/../ota/ota_signature_validation.c"
@@ -110,8 +109,8 @@ set_source_files_properties("${ProjDirPath}/../config_files/demo_config.h" PROPE
 set_source_files_properties("${ProjDirPath}/../config_files/kvstore_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_iot_reference_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
-set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
-set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
 set_source_files_properties("${ProjDirPath}/../config_files/FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
 set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")

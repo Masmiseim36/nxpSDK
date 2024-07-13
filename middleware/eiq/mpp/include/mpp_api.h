@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -129,22 +129,14 @@ int mpp_element_add(mpp_t mpp, mpp_element_id_t id, mpp_element_params_t *params
 int mpp_split(mpp_t mpp, unsigned int num, mpp_params_t *params, mpp_t *out_list);
 
 /**
- * Join multiple pipelines through an element.
+ * Put next elements processing in background
  *
- * The element becomes a source for output pipeline.
- *
- * @warning NOT TESTED!
- *
- * @param [in] in_list list of joined pipelines
- * @param [in] num number of pipelines in the list
- * @param [in] id element id
- * @param [in] params element params
- * @param [out] out output pipeline
+ * @param [in] mpp input pipeline
+ * @param [in] params new mpp parameters (exec_flag must be MPP_EXEC_PREEMPT)
+ * @param [out] out_mpp output pipeline
  * @return \ref return_codes
  */
-int mpp_element_join(mpp_t *in_list, unsigned int num,
-                     mpp_element_id_t id, mpp_element_params_t *params,
-                     mpp_t out);
+int mpp_background(mpp_t mpp, mpp_params_t *params, mpp_t *out_mpp);
 
 /**
  * Update element parameters

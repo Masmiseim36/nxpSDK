@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_hid_receiver_tasks_run             PORTABLE C      */
-/*                                                           6.1.12       */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -67,6 +66,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  07-29-2022     Chaoqiong Xiao           Initial Version 6.1.12        */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added zero copy support,    */
+/*                                            resulting in version 6.3.0  */
+/*  12-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed save position issue,  */
+/*                                            resulting in version 6.4.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_hid_receiver_tasks_run(UX_SLAVE_CLASS_HID *hid)
@@ -117,6 +122,13 @@ ULONG                               temp;
             return(UX_STATE_IDLE);
         }
 
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && defined(UX_DEVICE_CLASS_HID_ZERO_COPY)
+
+        /* Set request buffer.  */
+        buffer = pos -> ux_device_class_hid_received_event_data;
+        transfer -> ux_slave_transfer_request_data_pointer = buffer;
+#endif
+
         /* Set request length.  */
         hid -> ux_device_class_hid_read_requested_length =
                     receiver -> ux_device_class_hid_receiver_event_buffer_size;
@@ -155,16 +167,26 @@ ULONG                               temp;
                 return(UX_STATE_NEXT);
             }
 
-            /* Save received event data and length.  */
+            /* Get current save position.  */
             pos = receiver -> ux_device_class_hid_receiver_event_save_pos;
+
+#if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && defined(UX_DEVICE_CLASS_HID_ZERO_COPY)
+
+            /* Save received event length.  */
+            temp = transfer -> ux_slave_transfer_request_actual_length;
+#else
+
+            /* Save received event data and length.  */
             buffer = (UCHAR *)&pos -> ux_device_class_hid_received_event_data;
             temp = transfer -> ux_slave_transfer_request_actual_length;
             _ux_utility_memory_copy(buffer,
                             transfer -> ux_slave_transfer_request_data_pointer,
                             temp); /* Use case of memcpy is verified. */
+#endif
 
             /* Advance the save position.  */
-            next_pos = (UCHAR *)pos + receiver -> ux_device_class_hid_receiver_event_buffer_size + sizeof(ULONG);
+            next_pos = (UCHAR *)pos + UX_DEVICE_CLASS_HID_RECEIVED_QUEUE_ITEM_SIZE(receiver);
+
             if (next_pos >= (UCHAR *)receiver -> ux_device_class_hid_receiver_events_end)
                 next_pos = (UCHAR *)receiver -> ux_device_class_hid_receiver_events;
             receiver -> ux_device_class_hid_receiver_event_save_pos = (UX_DEVICE_CLASS_HID_RECEIVED_EVENT *)next_pos;

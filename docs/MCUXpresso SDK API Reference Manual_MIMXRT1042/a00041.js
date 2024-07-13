@@ -1,7 +1,7 @@
 var a00041 =
 [
     [ "FLEXSPI eDMA Driver", "a00042.html", "a00042" ],
-    [ "flexspi_config_t", "a00041.html#a00431", [
+    [ "flexspi_config_t", "a00041.html#a00428", [
       [ "rxSampleClock", "a00041.html#a9a6d5f8a07fb46097107c9eb286b274f", null ],
       [ "enableSckFreeRunning", "a00041.html#aff3b7741db982d0de6b123e449173fea", null ],
       [ "enableCombination", "a00041.html#ac9919bbdaeaf47d77de8503dc794562f", null ],
@@ -25,7 +25,7 @@ var a00041 =
       [ "enableAHBBufferable", "a00041.html#aa85616f967cd9582bf3212e25d8aaee9", null ],
       [ "enableAHBCachable", "a00041.html#a201560e33a07598c65cb1ccb7d510446", null ]
     ] ],
-    [ "flexspi_device_config_t", "a00041.html#a00432", [
+    [ "flexspi_device_config_t", "a00041.html#a00429", [
       [ "flexspiRootClk", "a00041.html#a809837315f7851315f2eb83bfee03b9d", null ],
       [ "isSck2Enabled", "a00041.html#a4dc1ab693f5c62858f216eeafc8dcdaa", null ],
       [ "flashSize", "a00041.html#a341c39425de7eb023afb4245b8953377", null ],
@@ -44,7 +44,7 @@ var a00041 =
       [ "AHBWriteWaitInterval", "a00041.html#ac257c0df9ebe1e95af1b2eccd9bac6da", null ],
       [ "enableWriteMask", "a00041.html#a537cacf6f847b62d33ef849149984ee3", null ]
     ] ],
-    [ "flexspi_transfer_t", "a00041.html#a00436", [
+    [ "flexspi_transfer_t", "a00041.html#a00433", [
       [ "deviceAddress", "a00041.html#ad60ddfe61616ffc2b1c289b398249687", null ],
       [ "port", "a00041.html#a494f8e3695226d89469edfacf040c779", null ],
       [ "cmdType", "a00041.html#a2d9a15603f7c60495351d6e784efa21f", null ],
@@ -53,7 +53,7 @@ var a00041 =
       [ "data", "a00041.html#a9f868d6eaf921590653512ce58480f6b", null ],
       [ "dataSize", "a00041.html#a80b74d7879a7359ad5f79980ca5f3e53", null ]
     ] ],
-    [ "flexspi_handle_t", "a00041.html#a00320", [
+    [ "flexspi_handle_t", "a00041.html#a00317", [
       [ "state", "a00041.html#a933e9a2e61686adbe8e85cc6e996c707", null ],
       [ "data", "a00041.html#a295ef5147af8f1d4079af11f0c649060", null ],
       [ "dataSize", "a00041.html#af398d4e2e49ebb106f29a2afe50e0f97", null ],

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,6 +34,10 @@
 #include "txm_module.h"
 #include "txm_module_manager_util.h"
 
+#ifdef TX_ENABLE_EVENT_TRACE
+#include "tx_trace.h"
+#endif
+
 #ifdef TXM_MODULE_ENABLE_FILEX
 extern UINT  _txm_module_manager_filex_stop(TXM_MODULE_INSTANCE *module_instance);
 #endif
@@ -60,7 +63,7 @@ extern UINT  _txm_module_manager_usbx_stop(TXM_MODULE_INSTANCE *module_instance)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _txm_module_manager_stop                            PORTABLE C      */
-/*                                                           6.1.5        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Scott Larson, Microsoft Corporation                                 */
@@ -112,6 +115,8 @@ extern UINT  _txm_module_manager_usbx_stop(TXM_MODULE_INSTANCE *module_instance)
 /*  03-02-2021      Scott Larson            Modified comments, fix        */
 /*                                            object delete underflow,    */
 /*                                            resulting in version 6.1.5  */
+/*  03-08-2023      Scott Larson            Added tx_trace.h include,     */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _txm_module_manager_stop(TXM_MODULE_INSTANCE *module_instance)

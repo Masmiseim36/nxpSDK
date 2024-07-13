@@ -1,5 +1,6 @@
 var a00276 =
 [
-    [ "SAI Driver", "a00061.html", "a00061" ],
-    [ "SAI EDMA Driver", "a00082.html", "a00082" ]
+    [ "XBARB_Init", "a00276.html#gaef36940e839f28936f9415c3cb6d703f", null ],
+    [ "XBARB_Deinit", "a00276.html#gad5775a6073d472b2749cc202116d1809", null ],
+    [ "XBARB_SetSignalsConnection", "a00276.html#ga64a72733261fc11d061c0d7f0abe0771", null ]
 ];

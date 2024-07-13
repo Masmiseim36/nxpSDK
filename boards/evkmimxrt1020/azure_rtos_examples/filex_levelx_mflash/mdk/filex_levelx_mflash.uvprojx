@@ -327,10 +327,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=5767168, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1021/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -516,24 +516,39 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_256byte_ecc_compute.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_full_update.c</FileName>
+              <FileName>lx_nand_flash_block_allocate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_full_update.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_allocate.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_obsoleted_check.c</FileName>
+              <FileName>lx_nand_flash_block_data_move.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_obsoleted_check.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_data_move.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_reclaim.c</FileName>
+              <FileName>lx_nand_flash_block_find.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_reclaim.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_find.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_mapping_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_mapping_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_status_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_status_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_close.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_close.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_data_page_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_data_page_copy.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_defragment.c</FileName>
@@ -561,29 +576,14 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_block_status_set.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_set.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_driver_page_erased_verify.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_page_erased_verify.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_read.c</FileName>
+              <FileName>lx_nand_flash_erase_count_set.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_write.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_erase_count_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_extended_cache_enable.c</FileName>
@@ -591,19 +591,54 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_extended_cache_enable.c</FilePath>
             </File>
             <File>
+              <FileName>lx_nand_flash_format.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_format.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_free_block_list_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_free_block_list_add.c</FilePath>
+            </File>
+            <File>
               <FileName>lx_nand_flash_initialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_initialize.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_logical_sector_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_add.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_logical_sector_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_add.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_next_block_to_erase_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_get.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_next_block_to_erase_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_mapped_block_list_remove.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_remove.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_memory_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_memory_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_allocate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_allocate.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_build.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_build.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_open.c</FileName>
@@ -626,16 +661,6 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_partial_defragment.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_physical_page_allocate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_physical_page_allocate.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_sector_mapping_cache_invalidate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_mapping_cache_invalidate.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_sector_read.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_read.c</FilePath>
@@ -649,6 +674,21 @@
               <FileName>lx_nand_flash_sector_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_release.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_release.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_simulator.c</FileName>
@@ -886,16 +926,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -919,6 +949,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1029,11 +1069,6 @@
               <FileName>fx_directory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
             </File>
             <File>
               <FileName>fx_fault_tolerant.h</FileName>
@@ -1593,10 +1628,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=5767168, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1021/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1782,24 +1817,39 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_256byte_ecc_compute.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_full_update.c</FileName>
+              <FileName>lx_nand_flash_block_allocate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_full_update.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_allocate.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_obsoleted_check.c</FileName>
+              <FileName>lx_nand_flash_block_data_move.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_obsoleted_check.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_data_move.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_reclaim.c</FileName>
+              <FileName>lx_nand_flash_block_find.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_reclaim.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_find.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_mapping_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_mapping_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_status_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_status_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_close.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_close.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_data_page_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_data_page_copy.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_defragment.c</FileName>
@@ -1827,29 +1877,14 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_block_status_set.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_set.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_driver_page_erased_verify.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_page_erased_verify.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_read.c</FileName>
+              <FileName>lx_nand_flash_erase_count_set.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_write.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_erase_count_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_extended_cache_enable.c</FileName>
@@ -1857,19 +1892,54 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_extended_cache_enable.c</FilePath>
             </File>
             <File>
+              <FileName>lx_nand_flash_format.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_format.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_free_block_list_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_free_block_list_add.c</FilePath>
+            </File>
+            <File>
               <FileName>lx_nand_flash_initialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_initialize.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_logical_sector_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_add.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_logical_sector_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_add.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_next_block_to_erase_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_get.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_next_block_to_erase_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_mapped_block_list_remove.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_remove.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_memory_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_memory_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_allocate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_allocate.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_build.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_build.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_open.c</FileName>
@@ -1892,16 +1962,6 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_partial_defragment.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_physical_page_allocate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_physical_page_allocate.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_sector_mapping_cache_invalidate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_mapping_cache_invalidate.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_sector_read.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_read.c</FilePath>
@@ -1915,6 +1975,21 @@
               <FileName>lx_nand_flash_sector_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_release.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_release.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_simulator.c</FileName>
@@ -2152,16 +2227,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2185,6 +2250,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2295,11 +2370,6 @@
               <FileName>fx_directory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
             </File>
             <File>
               <FileName>fx_fault_tolerant.h</FileName>
@@ -2859,10 +2929,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=5767168, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1021/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3048,24 +3118,39 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_256byte_ecc_compute.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_full_update.c</FileName>
+              <FileName>lx_nand_flash_block_allocate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_full_update.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_allocate.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_obsoleted_check.c</FileName>
+              <FileName>lx_nand_flash_block_data_move.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_obsoleted_check.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_data_move.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_reclaim.c</FileName>
+              <FileName>lx_nand_flash_block_find.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_reclaim.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_find.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_mapping_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_mapping_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_status_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_status_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_close.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_close.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_data_page_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_data_page_copy.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_defragment.c</FileName>
@@ -3093,29 +3178,14 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_block_status_set.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_set.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_driver_page_erased_verify.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_page_erased_verify.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_read.c</FileName>
+              <FileName>lx_nand_flash_erase_count_set.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_write.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_erase_count_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_extended_cache_enable.c</FileName>
@@ -3123,19 +3193,54 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_extended_cache_enable.c</FilePath>
             </File>
             <File>
+              <FileName>lx_nand_flash_format.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_format.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_free_block_list_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_free_block_list_add.c</FilePath>
+            </File>
+            <File>
               <FileName>lx_nand_flash_initialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_initialize.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_logical_sector_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_add.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_logical_sector_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_add.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_next_block_to_erase_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_get.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_next_block_to_erase_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_mapped_block_list_remove.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_remove.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_memory_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_memory_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_allocate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_allocate.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_build.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_build.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_open.c</FileName>
@@ -3158,16 +3263,6 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_partial_defragment.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_physical_page_allocate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_physical_page_allocate.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_sector_mapping_cache_invalidate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_mapping_cache_invalidate.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_sector_read.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_read.c</FilePath>
@@ -3181,6 +3276,21 @@
               <FileName>lx_nand_flash_sector_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_release.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_release.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_simulator.c</FileName>
@@ -3418,16 +3528,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3451,6 +3551,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3561,11 +3671,6 @@
               <FileName>fx_directory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
             </File>
             <File>
               <FileName>fx_fault_tolerant.h</FileName>
@@ -4125,10 +4230,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=5767168, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1021;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include;../../../../../devices/MIMXRT1021/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4314,24 +4419,39 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_256byte_ecc_compute.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_full_update.c</FileName>
+              <FileName>lx_nand_flash_block_allocate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_full_update.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_allocate.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_obsoleted_check.c</FileName>
+              <FileName>lx_nand_flash_block_data_move.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_obsoleted_check.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_data_move.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_block_reclaim.c</FileName>
+              <FileName>lx_nand_flash_block_find.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_reclaim.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_find.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_mapping_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_mapping_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_block_status_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_status_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_close.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_close.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_data_page_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_data_page_copy.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_defragment.c</FileName>
@@ -4359,29 +4479,14 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_block_status_set.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_extra_bytes_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_set.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_driver_page_erased_verify.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_page_erased_verify.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_driver_read.c</FileName>
+              <FileName>lx_nand_flash_erase_count_set.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_driver_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_write.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_erase_count_set.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_extended_cache_enable.c</FileName>
@@ -4389,19 +4494,54 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_extended_cache_enable.c</FilePath>
             </File>
             <File>
+              <FileName>lx_nand_flash_format.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_format.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_free_block_list_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_free_block_list_add.c</FilePath>
+            </File>
+            <File>
               <FileName>lx_nand_flash_initialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_initialize.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_logical_sector_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_add.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_logical_sector_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_add.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_next_block_to_erase_find.c</FileName>
+              <FileName>lx_nand_flash_mapped_block_list_get.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_next_block_to_erase_find.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_mapped_block_list_remove.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_remove.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_memory_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_memory_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_allocate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_allocate.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_build.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_build.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_metadata_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_open.c</FileName>
@@ -4424,16 +4564,6 @@
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_partial_defragment.c</FilePath>
             </File>
             <File>
-              <FileName>lx_nand_flash_physical_page_allocate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_physical_page_allocate.c</FilePath>
-            </File>
-            <File>
-              <FileName>lx_nand_flash_sector_mapping_cache_invalidate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_mapping_cache_invalidate.c</FilePath>
-            </File>
-            <File>
               <FileName>lx_nand_flash_sector_read.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_read.c</FilePath>
@@ -4447,6 +4577,21 @@
               <FileName>lx_nand_flash_sector_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_release.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_release.c</FilePath>
+            </File>
+            <File>
+              <FileName>lx_nand_flash_sectors_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_write.c</FilePath>
             </File>
             <File>
               <FileName>lx_nand_flash_simulator.c</FileName>
@@ -4684,16 +4829,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4717,6 +4852,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4827,11 +4972,6 @@
               <FileName>fx_directory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
             </File>
             <File>
               <FileName>fx_fault_tolerant.h</FileName>

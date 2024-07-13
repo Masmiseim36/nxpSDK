@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -33,6 +32,10 @@
 /*                                            start flag, corrected stack */
 /*                                            allocation size,            */
 /*                                            resulting in version 6.1.12 */
+/*  12-31-2023     Xiuwen Cai               Modified comment(s), and      */
+/*                                            added check for overflow in */
+/*                                            queue size calculation,     */
+/*                                            resulting in version 6.4.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -1526,6 +1529,13 @@ QueueHandle_t xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize)
     }
 #endif
 
+    if ((uxQueueLength > (SIZE_MAX / uxItemSize)) ||
+        (uxQueueLength > (ULONG_MAX / uxItemSize))) {
+
+        /* Integer overflow in queue size */
+        return NULL;
+    }
+
     p_queue = txfr_malloc(sizeof(txfr_queue_t));
     if(p_queue == NULL) {
         return NULL;
@@ -2691,6 +2701,13 @@ QueueSetHandle_t xQueueCreateSet(const UBaseType_t uxEventQueueLength)
         tx_freertos_auto_init();
     }
 #endif
+
+    if ((uxEventQueueLength > (SIZE_MAX / sizeof(void *))) ||
+        (uxEventQueueLength > (ULONG_MAX / sizeof(void *)))) {
+
+        /* Integer overflow in queue size */
+        return NULL;
+    }
 
     p_set = txfr_malloc(sizeof(txfr_queueset_t));
     if(p_set == NULL) {

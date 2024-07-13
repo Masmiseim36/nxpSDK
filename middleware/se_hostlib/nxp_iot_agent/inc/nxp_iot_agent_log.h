@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -44,7 +44,7 @@ extern "C" {
  *
  * Macro to expose function, line number as well as desired log message.
  */
-# ifdef ENABLE_IOT_AGENT_DEBUG
+# if defined(ENABLE_IOT_AGENT_DEBUG) && ENABLE_IOT_AGENT_DEBUG
 #  define IOT_AGENT_DEBUG(...)                       \
   do {                                               \
     printf("DEBUG:   %s L#%d ", __func__, __LINE__); \
@@ -60,7 +60,7 @@ extern "C" {
  *
  * Macro to print message function entry and exit
  */
-# ifdef ENABLE_IOT_AGENT_TRACE
+# if defined(ENABLE_IOT_AGENT_TRACE) && ENABLE_IOT_AGENT_TRACE
 #  define IOT_AGENT_FUNC_ENTRY                              \
   do {                                                      \
     printf("FUNC_ENTRY:   %s L#%d \n", __func__, __LINE__); \
@@ -95,7 +95,7 @@ extern "C" {
  * Macro to expose desired log message.  Info messages do not include automatic
  *function names and line numbers.
  */
-# ifdef ENABLE_IOT_AGENT_INFO
+# if defined(ENABLE_IOT_AGENT_INFO) && ENABLE_IOT_AGENT_INFO
 #  define IOT_AGENT_INFO(...) \
   for (;;) {                        \
     printf(__VA_ARGS__);      \
@@ -111,7 +111,7 @@ extern "C" {
  *
  * Macro to expose function, line number as well as desired log message.
  */
-# ifdef ENABLE_IOT_AGENT_WARN
+# if defined(ENABLE_IOT_AGENT_WARN) && ENABLE_IOT_AGENT_WARN
 #  define IOT_AGENT_WARN(...)                      \
   for (;;) {                                             \
     printf("WARN:  %s L#%d ", __func__, __LINE__); \
@@ -128,7 +128,7 @@ extern "C" {
  *
  * Macro to expose function, line number as well as desired log message.
  */
-# ifdef ENABLE_IOT_AGENT_ERROR
+# if defined(ENABLE_IOT_AGENT_ERROR) && ENABLE_IOT_AGENT_ERROR
 #  define IOT_AGENT_ERROR(...)                     \
   for (;;) {                                                \
     printf("ERROR: %s L#%d ", __func__, __LINE__); \

@@ -26,25 +26,13 @@
 ** ###################################################################
 */
 
-/* NVM */
-/* By default, the NVM is not used. */
-#if !(defined(gUseNVMLink_d))
-    #define gUseNVMLink_d              0
-#endif
-
-#if !(defined(gEraseNVMLink_d))
-    #define gEraseNVMLink_d            0
-#endif
-
-#if !(defined(gNVMSectorCountLink_d))
-    #define gNVMSectorCountLink_d      4
-#endif
-
 #if (defined(__ram_vector_table__))
   #define __ram_vector_table_size__    0x00000400
 #else
   #define __ram_vector_table_size__    0x00000000
 #endif
+
+#define LITTLEFS_REGION_SIZE           0x00280000
 
 #define m_flash_config_start           0x60000000
 #define m_flash_config_size            0x00001000
@@ -56,47 +44,26 @@
 #define m_interrupts_size              0x00000400
 
 #define m_text_start                   0x60002400
-#define _ROM_END_                      0x63D7FFFF
+#define m_text_size                    0x03FFDC00 - LITTLEFS_REGION_SIZE
+
 #define m_qacode_start                 0x00000000
 #define m_qacode_size                  0x00020000
 
 #define m_interrupts_ram_start         0x20000000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
-#define NVM_ADAPTER_TABLE_SIZE         0x200
-#define NVM_TABLE_SIZE                 0x1000
-#define NVM_TABLE_START                m_interrupts_ram_start + m_interrupts_ram_size
-
-#define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size + NVM_TABLE_SIZE)
-#define m_data_size                    (0x00020000 - m_interrupts_ram_size - NVM_TABLE_SIZE)
+#define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size)
+#define m_data_size                    (0x00020000 - m_interrupts_ram_size)
 
 #define m_data2_start                  0x20200000
 #define m_data2_size                   0x00040000
-#define STORAGE_AREA_LENGTH            0x10000
 
-#define STORAGE_AREA_SIZE             STORAGE_AREA_LENGTH
-#define STORAGE_AREA_START            (_ROM_END_ - STORAGE_AREA_SIZE + 1)
-#define m_text_size                   (_ROM_END_ - m_text_start - STORAGE_AREA_SIZE - NVM_ADAPTER_TABLE_SIZE + 1)
-
-/*** NVM Configuration Start ***/
-#if (defined(gUseNVMLink_d))
-  #define NVM_AREA_START              STORAGE_AREA_START
-  
-  /* 4k flash sector size */
-  #define NV_STORAGE_SECTOR_SIZE      0x1000
-  #define NV_STORAGE_MAX_SECTORS      gNVMSectorCountLink_d
-  #define NVM_AREA_SIZE               (NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS)
-
-  #define NV_STORAGE_END_ADDRESS      (NVM_AREA_START + NVM_AREA_SIZE - 1)
-  #define NV_STORAGE_START_ADDRESS    (NVM_AREA_START)
-#endif
-/*** NVM Configuration End ***/
+/* NOTE: The last LITTLEFS_REGION_SIZE Flash( in range (m_text_start + m_text_size) ~ (m_text_start + m_text_size + LITTLEFS_REGION_SIZE -1)) is reserved for litteFS data */
 
 /*** littleFS configuration Start ***/
-#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (_ROM_END_ + 1)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS  (0x64000000)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x40000) 
-#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    ((EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (m_text_start + m_text_size)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x40000)    /* 256k flash sector size */
+#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    (LITTLEFS_REGION_SIZE / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
 /*** littleFS configuration End ***/
 
 /* Sizes */
@@ -154,14 +121,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (._bt_l2cap_br_fixed_chan*)
   }
 
-  ER_NVM_ADAPTER_TABLE m_text_start+m_text_size UNINIT NVM_ADAPTER_TABLE_SIZE { ; load address = execution address
-    * (*NVM_ADAPTER_TABLE)
-  }
-
-  NVM_region NV_STORAGE_START_ADDRESS EMPTY NVM_AREA_SIZE { ; load address = execution address
-  }
-
-  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
+  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (LITTLEFS_REGION_SIZE) { ; load address = execution address
   }
 #if (defined(__ram_vector_table__))
   VECTOR_RAM m_interrupts_ram_start EMPTY m_interrupts_ram_size {
@@ -170,9 +130,6 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   VECTOR_RAM m_interrupts_start EMPTY 0 {
   }
 #endif
-  RW_NVM_TABLE NVM_TABLE_START UNINIT NVM_TABLE_SIZE { ; RW data
-    * (*NVM_TABLE)
-  }
   RW_m_data m_data2_start m_data2_size { ; RW data
     .ANY (+RW +ZI)
     * (RamFunction)
@@ -181,13 +138,15 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     fsl_adapter_flexspi_hyper_flash_config.o  (+RO +RW +ZI)
     fsl_clock.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
-    NV_Flash.o (+RO +RW +ZI)
     mflash_drv.o (+RO +RW +ZI)
-    * (NonCacheable.init)
-    * (*NonCacheable)
-    * (DataQuickAccess)
   }
-
+  RW_m_usb_data +0 ALIGNALL 32 { ; USB RW data
+    * (*m_usb_dma_init_data)
+    * (*m_usb_dma_noninit_data)
+  }
+    ; Other regions shall not be placed between RW_m_usb_data and RW_m_usb_data_aux
+  RW_m_usb_data_aux +0 ALIGN 32 EMPTY 0 { ; Empty region added for cache line alignment.
+  }
   RW_net_buf_pool +0 { ;
     * (._net_buf_pool*)
   }
@@ -195,9 +154,16 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_ram_text m_qacode_start m_qacode_size { ;
     * (CodeQuickAccess)
   }
+  RW_m_data3 m_data_start m_data2_size { ;
+    * (DataQuickAccess)
+  }
   RW_m_ncache m_data_start EMPTY 0 {
   }
-  RW_m_ncache_unused +0 EMPTY m_data_size-ImageLength(RW_m_ncache)-Stack_Size-Heap_Size { ; Empty region added for MPU configuration
+  RW_m_ncache_unused +0 EMPTY 0 { ; Empty region added for MPU configuration
+  }
+  RW_m_data2 +0 m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_ncache)-ImageLength(RW_m_ncache_unused) {
+    * (NonCacheable.init)
+    * (*NonCacheable)
   }
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }

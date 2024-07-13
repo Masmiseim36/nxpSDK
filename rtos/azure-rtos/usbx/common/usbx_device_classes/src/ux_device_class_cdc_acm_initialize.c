@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**                                                                       */ 
@@ -37,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_device_class_cdc_acm_initialize                 PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -87,6 +86,11 @@
 /*                                            fixed parameter/variable    */
 /*                                            names conflict C++ keyword, */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added zero copy support,    */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_cdc_acm_initialize(UX_SLAVE_CLASS_COMMAND *command)
@@ -120,6 +124,23 @@ UINT                                    status;
     cdc_acm -> ux_slave_class_cdc_acm_parameter.ux_slave_class_cdc_acm_instance_deactivate = cdc_acm_parameter -> ux_slave_class_cdc_acm_instance_deactivate;
     cdc_acm -> ux_slave_class_cdc_acm_parameter.ux_slave_class_cdc_acm_parameter_change = cdc_acm_parameter -> ux_slave_class_cdc_acm_parameter_change;
 
+#if defined(UX_DEVICE_CLASS_CDC_ACM_OWN_ENDPOINT_BUFFER)
+
+    /* Allocate the buffer for the CDC ACM endpoints.  */
+    UX_ASSERT(!UX_DEVICE_CLASS_CDC_ACM_ENDPOINT_BUFFER_SIZE_CALC_OVERFLOW);
+    cdc_acm -> ux_device_class_cdc_acm_endpoint_buffer = _ux_utility_memory_allocate(UX_NO_ALIGN, UX_CACHE_SAFE_MEMORY,
+                                    UX_DEVICE_CLASS_CDC_ACM_ENDPOINT_BUFFER_SIZE);
+    if (cdc_acm -> ux_device_class_cdc_acm_endpoint_buffer == UX_NULL)
+    {
+        
+        /* Free the resources.  */
+        _ux_utility_memory_free(cdc_acm);
+        
+        /* Return fatal error.  */
+        return(UX_MEMORY_INSUFFICIENT);
+    }
+#endif
+
 #if !defined(UX_DEVICE_STANDALONE)
 
     /* Create the Mutex for each endpoint as multiple threads cannot access each pipe at the same time.  */
@@ -130,6 +151,9 @@ UINT                                    status;
     {
 
         /* Free the resources.  */
+#if defined(UX_DEVICE_CLASS_CDC_ACM_OWN_ENDPOINT_BUFFER)
+        _ux_utility_memory_free(cdc_acm -> ux_device_class_cdc_acm_endpoint_buffer);
+#endif
         _ux_utility_memory_free(cdc_acm);
         
         /* Return fatal error.  */
@@ -147,6 +171,9 @@ UINT                                    status;
         _ux_device_mutex_delete(&cdc_acm -> ux_slave_class_cdc_acm_endpoint_in_mutex);
 
         /* Free the resources.  */
+#if defined(UX_DEVICE_CLASS_CDC_ACM_OWN_ENDPOINT_BUFFER)
+        _ux_utility_memory_free(cdc_acm -> ux_device_class_cdc_acm_endpoint_buffer);
+#endif
         _ux_utility_memory_free(cdc_acm);
         
         /* Return fatal error.  */
@@ -269,6 +296,9 @@ UINT                                    status;
             _ux_utility_memory_free(cdc_acm -> ux_slave_class_cdc_acm_bulkout_thread_stack);
         _ux_device_mutex_delete(&cdc_acm -> ux_slave_class_cdc_acm_endpoint_in_mutex);
         _ux_device_mutex_delete(&cdc_acm -> ux_slave_class_cdc_acm_endpoint_out_mutex);
+#if defined(UX_DEVICE_CLASS_CDC_ACM_OWN_ENDPOINT_BUFFER)
+        _ux_utility_memory_free(cdc_acm -> ux_device_class_cdc_acm_endpoint_buffer);
+#endif
         _ux_utility_memory_free(cdc_acm);
         return(status);
     }

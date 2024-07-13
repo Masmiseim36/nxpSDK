@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -30,9 +29,6 @@
 #include "fx_directory.h"
 #include "fx_media.h"
 #include "fx_utility.h"
-#ifdef FX_ENABLE_EXFAT
-#include "fx_directory_exFAT.h"
-#endif /* FX_ENABLE_EXFAT */
 
 
 /**************************************************************************/
@@ -92,9 +88,6 @@ UINT         status, offset;
 ULONG        i;
 INT          j;
 
-#ifdef FX_ENABLE_EXFAT
-ULONG        character_count;
-#endif /* FX_ENABLE_EXFAT */
 FX_DIR_ENTRY dir_entry;
 
 
@@ -115,12 +108,6 @@ FX_DIR_ENTRY dir_entry;
     /* Protect against other threads accessing the media.  */
     FX_PROTECT
 
-#ifdef FX_ENABLE_EXFAT
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        volume_source = FX_DIRECTORY_SECTOR;
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Ensure the volume name is NULL initially.  */
     volume_name[0] =  FX_NULL;
@@ -154,12 +141,7 @@ FX_DIR_ENTRY dir_entry;
             }
 
             /* Check for a volume name.  */
-#ifdef FX_ENABLE_EXFAT
-            if (((media_ptr -> fx_media_FAT_type == FX_exFAT) && ((dir_entry.fx_dir_entry_attributes & FX_VOLUME) || (dir_entry.fx_dir_entry_type == FX_EXFAT_DIR_ENTRY_TYPE_VOLUME_LABEL))) 
-                    || ((media_ptr -> fx_media_FAT_type != FX_exFAT) && (dir_entry.fx_dir_entry_attributes & FX_VOLUME) && ((UCHAR)dir_entry.fx_dir_entry_name[0] != (UCHAR)FX_DIR_ENTRY_FREE)))
-#else
             if ((dir_entry.fx_dir_entry_attributes & FX_VOLUME) && ((UCHAR)dir_entry.fx_dir_entry_name[0] != (UCHAR)FX_DIR_ENTRY_FREE))
-#endif /* FX_ENABLE_EXFAT */
             {
 
                 /* Yes, we have found a previously set volume name.  */
@@ -192,81 +174,41 @@ FX_DIR_ENTRY dir_entry;
             /* Offset to volume label entry.  */
             offset = dir_entry.fx_dir_entry_byte_offset;
 
-#ifdef FX_ENABLE_EXFAT
-            if (media_ptr -> fx_media_FAT_type == FX_exFAT)
+
+            /* Skip trailing space characters of volume name. */
+            for (j = 10; j >= 0; j--)
             {
 
-                /* Read character count of volume label.  */
-                character_count = media_ptr -> fx_media_memory_buffer[offset + FX_EXFAT_CHAR_COUNT];
-
-                /* Check if the buffer is too short for the name.  */
-                if (character_count >= volume_name_buffer_length)
+                /* Check for space character.  */
+                if (media_ptr -> fx_media_memory_buffer[offset + (UINT)j] != (UCHAR)' ')
                 {
 
-                    /* Buffer too short, return error.  */
-                    status =  FX_BUFFER_ERROR;
-
-                    /* Set character count to fit for the buffer.  */
-                    character_count = volume_name_buffer_length - 1;
+                    /* Last character found. */
+                    break;
                 }
-
-                /* Move to volume label field.  */
-                offset += FX_EXFAT_VOLUME_LABEL;
-
-                for (i = 0; i < character_count; i++)
-                {
-
-                    /* Read one character of volume label.  */
-                    volume_name[i] = (CHAR)_fx_utility_16_unsigned_read(&media_ptr -> fx_media_memory_buffer[offset]);
-
-                    /* Move to next character.  */
-                    offset += 2;
-                }
-
-                /* NULL terminate the volume name.  */
-                volume_name[i] =  FX_NULL;
             }
-            else
+
+            /* Check if the buffer is too short for the name.  */
+            if (j >= (INT)volume_name_buffer_length - 1)
             {
-#endif /* FX_ENABLE_EXFAT */
 
-                /* Skip trailing space characters of volume name. */
-                for (j = 10; j >= 0; j--)
-                {
+                /* Buffer too short, return error.  */
+                status =  FX_BUFFER_ERROR;
 
-                    /* Check for space character.  */
-                    if (media_ptr -> fx_media_memory_buffer[offset + (UINT)j] != (UCHAR)' ')
-                    {
-
-                        /* Last character found. */
-                        break;
-                    }
-                }
-
-                /* Check if the buffer is too short for the name.  */
-                if (j >= (INT)volume_name_buffer_length - 1)
-                {
-
-                    /* Buffer too short, return error.  */
-                    status =  FX_BUFFER_ERROR;
-
-                    /* Set character count to fit for the buffer.  */
-                    j = (INT)volume_name_buffer_length - 2;
-                }
-
-                /* NULL terminate the volume name.  */
-                volume_name[j + 1] =  FX_NULL;
-
-                /* Pickup the remaining characters of the volume name from the boot sector.  */
-                for (; j >= 0; j--)
-                {
-
-                    /* Pickup byte of volume name.  */
-                    volume_name[j] =  (CHAR)media_ptr -> fx_media_memory_buffer[offset + (UINT)j];
-                }
-#ifdef FX_ENABLE_EXFAT
+                /* Set character count to fit for the buffer.  */
+                j = (INT)volume_name_buffer_length - 2;
             }
-#endif /* FX_ENABLE_EXFAT */
+
+            /* NULL terminate the volume name.  */
+            volume_name[j + 1] =  FX_NULL;
+
+            /* Pickup the remaining characters of the volume name from the boot sector.  */
+            for (; j >= 0; j--)
+            {
+
+                /* Pickup byte of volume name.  */
+                volume_name[j] =  (CHAR)media_ptr -> fx_media_memory_buffer[offset + (UINT)j];
+            }
 
             /* Release media protection.  */
             FX_UNPROTECT
@@ -348,7 +290,7 @@ FX_DIR_ENTRY dir_entry;
             break;
         }
     }
-    
+
     /* Check if the buffer is too short for the name.  */
     if (j >= (INT)volume_name_buffer_length - 1)
     {

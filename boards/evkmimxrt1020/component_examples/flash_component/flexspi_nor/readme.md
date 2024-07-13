@@ -5,14 +5,14 @@ external flash device.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
+- IAR embedded Workbench  9.60.1
+- Keil MDK  5.39.0
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================
@@ -81,6 +81,3 @@ To debug in qspiflash, following steps are needed:
 2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 3. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Known issue
-The MCUX release target and armgcc flexspi_nor_release run fail.

@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2023-2024 NXP
  * 
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -33,6 +33,11 @@ bool write_callback(pb_ostream_t *stream, const pb_byte_t *buf, size_t count)
 #endif
 
 	int32_t written = network_write(network_context, buf, count);
+	if (written < 0)
+	{
+		IOT_AGENT_ERROR("Error in network write");
+		return false;
+	}
 	return ((size_t)written == count);
 }
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SRC: System Reset Controller Driver</title>
+<title>MCUXpresso SDK API Reference Manual: debug console configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,654 +99,161 @@ $(document).ready(function(){initNavTree('a00243.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SRC: System Reset Controller Driver</div>  </div>
+<div class="title">debug console configuration<div class="ingroups"><a class="el" href="a00242.html">Debug Console</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The configuration is used for debug console only.  
+<a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the System Reset Controller (SRC) module.</p>
-<p>The System Reset Controller (SRC) controls the reset and boot operation of the SoC. It is responsible for the generation of all reset signals and boot decoding. The reset controller determines the source and the type of reset, such as POR, WARM, COLD, and performs the necessary reset qualification and stretching sequences. Based on the type of reset, the reset logic generates the reset sequence for the entire IC. </p>
+<p> .</p>
+<p>Please note, it is not sued for debug console lite. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga8ab4968fbeb3aeff87002c5f04a79c12"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00243.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga8ab4968fbeb3aeff87002c5f04a79c12">src_warm_reset_bypass_count_t</a></td></tr>
-<tr class="memdesc:ga8ab4968fbeb3aeff87002c5f04a79c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selection of WARM reset bypass count.  <a href="#ga8ab4968fbeb3aeff87002c5f04a79c12">More...</a><br/></td></tr>
-<tr class="separator:ga8ab4968fbeb3aeff87002c5f04a79c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaf647f7dbfbed8b1612675ab132cfa244"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gaf647f7dbfbed8b1612675ab132cfa244">_src_reset_status_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244a35d666ccd943a593bc1af289e6233adb">kSRC_TemperatureSensorResetFlag</a> = SRC_SRSR_TSR_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244a0cfd86a5b8b7110fac02e1304d33d218">kSRC_Wdog3ResetFlag</a> = SRC_SRSR_WDOG3_RST_B_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244aac41e066587c8a4c8bc79348307a56b3">kSRC_JTAGSystemResetFlag</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244abc557d5e2e199f9727744af4b181602b">kSRC_JTAGSoftwareResetFlag</a> = SRC_SRSR_SJC_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244a8a43d19a82614c4c1d571dad1f492628">kSRC_JTAGGeneratedResetFlag</a> = SRC_SRSR_JTAG_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244abce52ce03031bdb1b0d76576daf418df">kSRC_WatchdogResetFlag</a> = SRC_SRSR_WDOG_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244af8e87b67801dd22376d5b284722d02e3">kSRC_IppUserResetFlag</a> = SRC_SRSR_IPP_USER_RESET_B_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244a3008203f1efa3b9385545f53445844fb">kSRC_CsuResetFlag</a> = SRC_SRSR_CSU_RESET_B_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244a7aefc2a8dc90e667f7be06afc3efd4c0">kSRC_CoreLockupResetFlag</a> = SRC_SRSR_LOCKUP_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#ggaf647f7dbfbed8b1612675ab132cfa244af7eba139e63dffc69983a262551a8856">kSRC_IppResetPinFlag</a> = SRC_SRSR_IPP_RESET_B_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf647f7dbfbed8b1612675ab132cfa244"><td class="mdescLeft">&#160;</td><td class="mdescRight">SRC reset status flags.  <a href="a00243.html#gaf647f7dbfbed8b1612675ab132cfa244">More...</a><br/></td></tr>
-<tr class="separator:gaf647f7dbfbed8b1612675ab132cfa244"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9001fa7e0c13473ca9351c94866aab30"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a> { <br/>
-&#160;&#160;<a class="el" href="a00243.html#gga9001fa7e0c13473ca9351c94866aab30ae2e8afc71fab41ccbac78e6a8d69ff62">kSRC_WarmResetWaitAlways</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#gga9001fa7e0c13473ca9351c94866aab30ad20bc2e2d97c95046d65940f111e9584">kSRC_WarmResetWaitClk16</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#gga9001fa7e0c13473ca9351c94866aab30a8c3d2f6cd0c0f36da9a342e3c3eb77f8">kSRC_WarmResetWaitClk32</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00243.html#gga9001fa7e0c13473ca9351c94866aab30a5bbedec3e30404b252af1b02af0042c0">kSRC_WarmResetWaitClk64</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga9001fa7e0c13473ca9351c94866aab30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selection of WARM reset bypass count.  <a href="a00243.html#ga9001fa7e0c13473ca9351c94866aab30">More...</a><br/></td></tr>
-<tr class="separator:ga9001fa7e0c13473ca9351c94866aab30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga1acc402410430b368530084805b022ac"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga1acc402410430b368530084805b022ac">SRC_EnableWDOG3Reset</a> (SRC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga1acc402410430b368530084805b022ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the WDOG3 reset.  <a href="#ga1acc402410430b368530084805b022ac">More...</a><br/></td></tr>
-<tr class="separator:ga1acc402410430b368530084805b022ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa00efe244ad4bf9f2b2fbf434adba463"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gaa00efe244ad4bf9f2b2fbf434adba463">SRC_EnableCoreDebugResetAfterPowerGate</a> (SRC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaa00efe244ad4bf9f2b2fbf434adba463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug reset would be asserted after power gating event.  <a href="#gaa00efe244ad4bf9f2b2fbf434adba463">More...</a><br/></td></tr>
-<tr class="separator:gaa00efe244ad4bf9f2b2fbf434adba463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga720bd353336716e97c2ed486f3f972e9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga720bd353336716e97c2ed486f3f972e9">SRC_DoSoftwareResetARMCore0</a> (SRC_Type *base)</td></tr>
-<tr class="memdesc:ga720bd353336716e97c2ed486f3f972e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software reset the ARM core0 only.  <a href="#ga720bd353336716e97c2ed486f3f972e9">More...</a><br/></td></tr>
-<tr class="separator:ga720bd353336716e97c2ed486f3f972e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0893922f62b39cf97053d6909d2b6721"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga0893922f62b39cf97053d6909d2b6721">SRC_GetSoftwareResetARMCore0Done</a> (SRC_Type *base)</td></tr>
-<tr class="memdesc:ga0893922f62b39cf97053d6909d2b6721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the software for ARM core0 is done.  <a href="#ga0893922f62b39cf97053d6909d2b6721">More...</a><br/></td></tr>
-<tr class="separator:ga0893922f62b39cf97053d6909d2b6721"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac96321bdff82d5abc821d061323447df"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gac96321bdff82d5abc821d061323447df">SRC_EnableWDOGReset</a> (SRC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gac96321bdff82d5abc821d061323447df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the WDOG Reset in SRC.  <a href="#gac96321bdff82d5abc821d061323447df">More...</a><br/></td></tr>
-<tr class="separator:gac96321bdff82d5abc821d061323447df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7bda7dc2533fc1f2a40b106b6f8d185"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gae7bda7dc2533fc1f2a40b106b6f8d185">SRC_EnableLockupReset</a> (SRC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gae7bda7dc2533fc1f2a40b106b6f8d185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the lockup reset.  <a href="#gae7bda7dc2533fc1f2a40b106b6f8d185">More...</a><br/></td></tr>
-<tr class="separator:gae7bda7dc2533fc1f2a40b106b6f8d185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34abd9ece8bad43b617ced6e018af08c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga34abd9ece8bad43b617ced6e018af08c">SRC_GetBootModeWord1</a> (SRC_Type *base)</td></tr>
-<tr class="memdesc:ga34abd9ece8bad43b617ced6e018af08c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the boot mode register 1 value.  <a href="#ga34abd9ece8bad43b617ced6e018af08c">More...</a><br/></td></tr>
-<tr class="separator:ga34abd9ece8bad43b617ced6e018af08c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab850f1217901abfd78a35096a3b30d64"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gab850f1217901abfd78a35096a3b30d64">SRC_GetBootModeWord2</a> (SRC_Type *base)</td></tr>
-<tr class="memdesc:gab850f1217901abfd78a35096a3b30d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the boot mode register 2 value.  <a href="#gab850f1217901abfd78a35096a3b30d64">More...</a><br/></td></tr>
-<tr class="separator:gab850f1217901abfd78a35096a3b30d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac15086ff9e2d490efc95b8a5577cbae6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gac15086ff9e2d490efc95b8a5577cbae6">SRC_GetResetStatusFlags</a> (SRC_Type *base)</td></tr>
-<tr class="memdesc:gac15086ff9e2d490efc95b8a5577cbae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status flags of SRC.  <a href="#gac15086ff9e2d490efc95b8a5577cbae6">More...</a><br/></td></tr>
-<tr class="separator:gac15086ff9e2d490efc95b8a5577cbae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36d75f094528c8d5e37a77b4d45b617e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga36d75f094528c8d5e37a77b4d45b617e">SRC_ClearResetStatusFlags</a> (SRC_Type *base, uint32_t flags)</td></tr>
-<tr class="memdesc:ga36d75f094528c8d5e37a77b4d45b617e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the status flags of SRC.  <a href="#ga36d75f094528c8d5e37a77b4d45b617e">More...</a><br/></td></tr>
-<tr class="separator:ga36d75f094528c8d5e37a77b4d45b617e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c2062f093d4a0d164354ac7a2f4b3e2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga8c2062f093d4a0d164354ac7a2f4b3e2">SRC_SetGeneralPurposeRegister</a> (SRC_Type *base, uint32_t index, uint32_t value)</td></tr>
-<tr class="memdesc:ga8c2062f093d4a0d164354ac7a2f4b3e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value to general purpose registers.  <a href="#ga8c2062f093d4a0d164354ac7a2f4b3e2">More...</a><br/></td></tr>
-<tr class="separator:ga8c2062f093d4a0d164354ac7a2f4b3e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c5e46dd8c4e1bd20aa737cfef532ab1"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga8c5e46dd8c4e1bd20aa737cfef532ab1">SRC_GetGeneralPurposeRegister</a> (SRC_Type *base, uint32_t index)</td></tr>
-<tr class="memdesc:ga8c5e46dd8c4e1bd20aa737cfef532ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from general purpose registers.  <a href="#ga8c5e46dd8c4e1bd20aa737cfef532ab1">More...</a><br/></td></tr>
-<tr class="separator:ga8c5e46dd8c4e1bd20aa737cfef532ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:gab27a1d7efba9d270e93527f1d2c54605"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gab27a1d7efba9d270e93527f1d2c54605">FSL_SRC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00226.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
-<tr class="memdesc:gab27a1d7efba9d270e93527f1d2c54605"><td class="mdescLeft">&#160;</td><td class="mdescRight">SRC driver version 2.0.1.  <a href="#gab27a1d7efba9d270e93527f1d2c54605">More...</a><br/></td></tr>
-<tr class="separator:gab27a1d7efba9d270e93527f1d2c54605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga028eff2428680ec9e47eed17d7ad6180"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga028eff2428680ec9e47eed17d7ad6180">DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN</a>&#160;&#160;&#160;(512U)</td></tr>
+<tr class="memdesc:ga028eff2428680ec9e47eed17d7ad6180"><td class="mdescLeft">&#160;</td><td class="mdescRight">If Non-blocking mode is needed, please define it at project setting, otherwise blocking mode is the default transfer mode.  <a href="#ga028eff2428680ec9e47eed17d7ad6180">More...</a><br/></td></tr>
+<tr class="separator:ga028eff2428680ec9e47eed17d7ad6180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadad6011e61c820f396b1c13568dbfe16"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gadad6011e61c820f396b1c13568dbfe16">DEBUG_CONSOLE_RECEIVE_BUFFER_LEN</a>&#160;&#160;&#160;(1024U)</td></tr>
+<tr class="memdesc:gadad6011e61c820f396b1c13568dbfe16"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the receive buffer length which is used to store the user input, buffer is enabled automatically when non-blocking transfer is using, This value will affect the RAM's ultilization, should be set per paltform's capability and software requirement.  <a href="#gadad6011e61c820f396b1c13568dbfe16">More...</a><br/></td></tr>
+<tr class="separator:gadad6011e61c820f396b1c13568dbfe16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2823ff7917ffeaaccf805f739116ec1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gab2823ff7917ffeaaccf805f739116ec1">DEBUG_CONSOLE_TX_RELIABLE_ENABLE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:gab2823ff7917ffeaaccf805f739116ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether enable the reliable TX function If the macro is zero, the reliable TX function of the debug console is disabled.  <a href="#gab2823ff7917ffeaaccf805f739116ec1">More...</a><br/></td></tr>
+<tr class="separator:gab2823ff7917ffeaaccf805f739116ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27259eda6262948659d081ea4b7ad2fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga27259eda6262948659d081ea4b7ad2fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga27259eda6262948659d081ea4b7ad2fe">DEBUG_CONSOLE_RX_ENABLE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:ga27259eda6262948659d081ea4b7ad2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether enable the RX function If the macro is zero, the receive function of the debug console is disabled. <br/></td></tr>
+<tr class="separator:ga27259eda6262948659d081ea4b7ad2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga9777b06b434b336e5a2c1b21421c9ea3">DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN</a>&#160;&#160;&#160;(128U)</td></tr>
+<tr class="memdesc:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the MAX log length debug console support , that is when you call printf("log", x);, the log length can not bigger than this value.  <a href="#ga9777b06b434b336e5a2c1b21421c9ea3">More...</a><br/></td></tr>
+<tr class="separator:ga9777b06b434b336e5a2c1b21421c9ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2afcebb59f366867a49bb888b8d043d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#gab2afcebb59f366867a49bb888b8d043d">DEBUG_CONSOLE_SCANF_MAX_LOG_LEN</a>&#160;&#160;&#160;(20U)</td></tr>
+<tr class="memdesc:gab2afcebb59f366867a49bb888b8d043d"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the buffer support buffer scanf log length, that is when you call scanf("log", &amp;x);, the log length can not bigger than this value.  <a href="#gab2afcebb59f366867a49bb888b8d043d">More...</a><br/></td></tr>
+<tr class="separator:gab2afcebb59f366867a49bb888b8d043d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cbe5dd480860843788779e39d1d0d1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga1cbe5dd480860843788779e39d1d0d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console synchronization User should not change these macro for synchronization mode, but add the corresponding synchronization mechanism per different software environment.  <a href="#ga1cbe5dd480860843788779e39d1d0d1e">More...</a><br/></td></tr>
+<tr class="separator:ga1cbe5dd480860843788779e39d1d0d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9589914d5a8b1cfedf834d52a6574496"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9589914d5a8b1cfedf834d52a6574496"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga9589914d5a8b1cfedf834d52a6574496">DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ga9589914d5a8b1cfedf834d52a6574496"><td class="mdescLeft">&#160;</td><td class="mdescRight">synchronization for freertos software <br/></td></tr>
+<tr class="separator:ga9589914d5a8b1cfedf834d52a6574496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b85f4e4309413064a69c99e7327d3f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga7b85f4e4309413064a69c99e7327d3f2">DEBUG_CONSOLE_SYNCHRONIZATION_MODE</a>&#160;&#160;&#160;<a class="el" href="a00243.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a></td></tr>
+<tr class="memdesc:ga7b85f4e4309413064a69c99e7327d3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTOS synchronization mechanism disable If not defined, default is enable, to avoid multitask log print mess.  <a href="#ga7b85f4e4309413064a69c99e7327d3f2">More...</a><br/></td></tr>
+<tr class="separator:ga7b85f4e4309413064a69c99e7327d3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5cc1f7845683fbde63e9619f38aac2d1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga5cc1f7845683fbde63e9619f38aac2d1">DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">echo function support If you want to use the echo function,please define DEBUG_CONSOLE_ENABLE_ECHO at your project setting. <br/></td></tr>
+<tr class="separator:ga5cc1f7845683fbde63e9619f38aac2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74776e2523880761897d8b57199e5596"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00243.html#ga74776e2523880761897d8b57199e5596">BOARD_USE_VIRTUALCOM</a>&#160;&#160;&#160;0U</td></tr>
+<tr class="memdesc:ga74776e2523880761897d8b57199e5596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition to select virtual com(USB CDC) as the debug console.  <a href="#ga74776e2523880761897d8b57199e5596">More...</a><br/></td></tr>
+<tr class="separator:ga74776e2523880761897d8b57199e5596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab27a1d7efba9d270e93527f1d2c54605"></a>
+<a class="anchor" id="ga028eff2428680ec9e47eed17d7ad6180"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SRC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00226.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
+          <td class="memname">#define DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN&#160;&#160;&#160;(512U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Warning: If you want to use non-blocking transfer,please make sure the corresponding IO interrupt is enable, otherwise there is no output. And non-blocking is combine with buffer, no matter bare-metal or rtos. Below shows how to configure in your project if you want to use non-blocking mode. For IAR, right click project and select "Options", define it in "C/C++ Compiler-&gt;Preprocessor-&gt;Defined symbols". For KEIL, click "Options for Target…", define it in "C/C++-&gt;Preprocessor Symbols-&gt;Define". For ARMGCC, open CmakeLists.txt and add the following lines, "SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")" for debug target. "SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")" for release target. For MCUxpresso, right click project and select "Properties", define it in "C/C++ Build-&gt;Settings-&gt;MCU C
+Complier-&gt;Preprocessor".</p>
+<p>define the transmit buffer length which is used to store the multi task log, buffer is enabled automatically when non-blocking transfer is using, This value will affect the RAM's ultilization, should be set per paltform's capability and software requirement. If it is configured too small, log maybe missed , because the log will not be buffered if the buffer is full, and the print will return immediately with -1. And this value should be multiple of 4 to meet memory alignment. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga8ab4968fbeb3aeff87002c5f04a79c12"></a>
+<a class="anchor" id="gadad6011e61c820f396b1c13568dbfe16"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="a00243.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a>  <a class="el" href="a00243.html#ga8ab4968fbeb3aeff87002c5f04a79c12">src_warm_reset_bypass_count_t</a></td>
+          <td class="memname">#define DEBUG_CONSOLE_RECEIVE_BUFFER_LEN&#160;&#160;&#160;(1024U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This type defines the 32KHz clock cycles to count before bypassing the MMDC acknowledge for WARM reset. If the MMDC acknowledge is not asserted before this counter is elapsed, a COLD reset will be initiated. </p>
+<p>If it is configured too small, log maybe missed, because buffer will be overwrited if buffer is too small. And this value should be multiple of 4 to meet memory alignment. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf647f7dbfbed8b1612675ab132cfa244"></a>
+<a class="anchor" id="gab2823ff7917ffeaaccf805f739116ec1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00243.html#gaf647f7dbfbed8b1612675ab132cfa244">_src_reset_status_flags</a></td>
+          <td class="memname">#define DEBUG_CONSOLE_TX_RELIABLE_ENABLE&#160;&#160;&#160;(1U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244a35d666ccd943a593bc1af289e6233adb"></a>kSRC_TemperatureSensorResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the reset was the result of software reset from on-chip Temperature Sensor. </p>
-<p>Temperature Sensor Interrupt needs to be served before this bit can be cleaned. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244a0cfd86a5b8b7110fac02e1304d33d218"></a>kSRC_Wdog3ResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>IC Watchdog3 Time-out reset. </p>
-<p>Indicates whether the reset was the result of the watchdog3 time-out event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244aac41e066587c8a4c8bc79348307a56b3"></a>kSRC_JTAGSystemResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the reset was the result of software reset form JTAG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244abc557d5e2e199f9727744af4b181602b"></a>kSRC_JTAGSoftwareResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the reset was the result of setting SJC_GPCCR bit 31. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244a8a43d19a82614c4c1d571dad1f492628"></a>kSRC_JTAGGeneratedResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates a reset has been caused by JTAG selection of certain IR codes: EXTEST or HIGHZ. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244abce52ce03031bdb1b0d76576daf418df"></a>kSRC_WatchdogResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates a reset has been caused by the watchdog timer timing out. </p>
-<p>This reset source can be blocked by disabling the watchdog. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244af8e87b67801dd22376d5b284722d02e3"></a>kSRC_IppUserResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the reset was the result of the ipp_user_reset_b qualified reset. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244a3008203f1efa3b9385545f53445844fb"></a>kSRC_CsuResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the reset was the result of the csu_reset_b input. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244a7aefc2a8dc90e667f7be06afc3efd4c0"></a>kSRC_CoreLockupResetFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates a reset has been caused by the ARM core indication of a LOCKUP event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf647f7dbfbed8b1612675ab132cfa244af7eba139e63dffc69983a262551a8856"></a>kSRC_IppResetPinFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether reset was the result of ipp_reset_b pin (Power-up sequence). </p>
-</td></tr>
-</table>
+<p>When the macro is zero, the string of PRINTF will be thrown away after the transmit buffer is full. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga9001fa7e0c13473ca9351c94866aab30"></a>
+<a class="anchor" id="ga9777b06b434b336e5a2c1b21421c9ea3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00243.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a></td>
+          <td class="memname">#define DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN&#160;&#160;&#160;(128U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This type defines the 32KHz clock cycles to count before bypassing the MMDC acknowledge for WARM reset. If the MMDC acknowledge is not asserted before this counter is elapsed, a COLD reset will be initiated. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30ae2e8afc71fab41ccbac78e6a8d69ff62"></a>kSRC_WarmResetWaitAlways</em>&nbsp;</td><td class="fielddoc">
-<p>System will wait until MMDC acknowledge is asserted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30ad20bc2e2d97c95046d65940f111e9584"></a>kSRC_WarmResetWaitClk16</em>&nbsp;</td><td class="fielddoc">
-<p>Wait 16 32KHz clock cycles before switching the reset. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30a8c3d2f6cd0c0f36da9a342e3c3eb77f8"></a>kSRC_WarmResetWaitClk32</em>&nbsp;</td><td class="fielddoc">
-<p>Wait 32 32KHz clock cycles before switching the reset. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30a5bbedec3e30404b252af1b02af0042c0"></a>kSRC_WarmResetWaitClk64</em>&nbsp;</td><td class="fielddoc">
-<p>Wait 64 32KHz clock cycles before switching the reset. </p>
-</td></tr>
-</table>
+<p>This macro decide the local log buffer length, the buffer locate at stack, the stack maybe overflow if the buffer is too big and current task stack size not big enough. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga1acc402410430b368530084805b022ac"></a>
+<a class="anchor" id="gab2afcebb59f366867a49bb888b8d043d"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SRC_EnableWDOG3Reset </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DEBUG_CONSOLE_SCANF_MAX_LOG_LEN&#160;&#160;&#160;(20U)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>The WDOG3 reset is enabled by default.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the reset or not. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>As same as the DEBUG_CONSOLE_BUFFER_PRINTF_MAX_LOG_LEN. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaa00efe244ad4bf9f2b2fbf434adba463"></a>
+<a class="anchor" id="ga1cbe5dd480860843788779e39d1d0d1e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SRC_EnableCoreDebugResetAfterPowerGate </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DEBUG_CONSOLE_SYNCHRONIZATION_BM&#160;&#160;&#160;0</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the reset or not. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Such as, if another RTOS is used, add: #define DEBUG_CONSOLE_SYNCHRONIZATION_XXXX 3 in this configuration file and implement the synchronization in fsl.log.c.</p>
+<p>synchronization for baremetal software </p>
 
 </div>
 </div>
-<a class="anchor" id="ga720bd353336716e97c2ed486f3f972e9"></a>
+<a class="anchor" id="ga7b85f4e4309413064a69c99e7327d3f2"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SRC_DoSoftwareResetARMCore0 </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define DEBUG_CONSOLE_SYNCHRONIZATION_MODE&#160;&#160;&#160;<a class="el" href="a00243.html#ga1cbe5dd480860843788779e39d1d0d1e">DEBUG_CONSOLE_SYNCHRONIZATION_BM</a></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>If other RTOS is used, you can implement the RTOS's specific synchronization mechanism in fsl.log.c If synchronization is disabled, log maybe messed on terminal. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga0893922f62b39cf97053d6909d2b6721"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool SRC_GetSoftwareResetARMCore0Done </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>If the reset is done. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac96321bdff82d5abc821d061323447df"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SRC_EnableWDOGReset </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>WDOG Reset is enabled in SRC by default. If the WDOG event to SRC is masked, it would not create a reset to the chip. During the time the WDOG event is masked, when the WDOG event flag is asserted, it would remain asserted regardless of servicing the WDOG module. The only way to clear that bit is the hardware reset.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the reset or not. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae7bda7dc2533fc1f2a40b106b6f8d185"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SRC_EnableLockupReset </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the reset or not. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga34abd9ece8bad43b617ced6e018af08c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SRC_GetBootModeWord1 </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The Boot Mode register contains bits that reflect the status of BOOT_CFGx pins of the chip. See to chip-specific document for detail information about value.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of BOOT_CFGx pins of the chip. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab850f1217901abfd78a35096a3b30d64"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SRC_GetBootModeWord2 </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The Boot Mode register contains bits that reflect the status of BOOT_MODEx Pins and fuse values that controls boot of the chip. See to chip-specific document for detail information about value.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of BOOT_MODEx Pins and fuse values that controls boot of the chip. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac15086ff9e2d490efc95b8a5577cbae6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SRC_GetResetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Mask value of status flags, see to <a class="el" href="a00243.html#gaf647f7dbfbed8b1612675ab132cfa244" title="SRC reset status flags. ">_src_reset_status_flags</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga36d75f094528c8d5e37a77b4d45b617e"></a>
+<a class="anchor" id="ga74776e2523880761897d8b57199e5596"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SRC_ClearResetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>flags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BOARD_USE_VIRTUALCOM&#160;&#160;&#160;0U</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">flags</td><td>value of status flags to be cleared, see to <a class="el" href="a00243.html#gaf647f7dbfbed8b1612675ab132cfa244" title="SRC reset status flags. ">_src_reset_status_flags</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8c2062f093d4a0d164354ac7a2f4b3e2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SRC_SetGeneralPurposeRegister </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>General purpose registers (GPRx) would hold the value during reset process. Wakeup function could be kept in these register. For example, the GPR1 holds the entry function for waking-up from Partial SLEEP mode while the GPR2 holds the argument. Other GPRx register would store the arbitray values.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">index</td><td>The index of GPRx register array. Note index 0 reponses the GPR1 register. </td></tr>
-    <tr><td class="paramname">value</td><td>Setting value for GPRx register. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8c5e46dd8c4e1bd20aa737cfef532ab1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SRC_GetGeneralPurposeRegister </td>
-          <td>(</td>
-          <td class="paramtype">SRC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>index</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SRC peripheral base address. </td></tr>
-    <tr><td class="paramname">index</td><td>The index of GPRx register array. Note index 0 reponses the GPR1 register. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The setting value for GPRx register. </dd></dl>
 
 </div>
 </div>

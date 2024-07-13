@@ -1,11 +1,13 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef HAL_DRAW_H
 #define HAL_DRAW_H
+
+#include "mpp_api_types.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -20,6 +22,14 @@ extern "C" {
  ******************************************************************************/
 /*! @brief Local text buffer size. */
 #define GUI_PRINTF_BUF_SIZE 64
+
+/*! @brief rectangle positions. */
+typedef struct {
+    int top;
+    int left;
+    int bottom;
+    int right;
+} hal_rect_t;
 
 /** @} */
 
@@ -40,7 +50,7 @@ extern "C" {
  * @param color RGB565 encoded value
  * @param lcd_w lcd width
  */
-void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w);
+static inline void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w);
 
 /*!
  * @brief Draws text stored in label pointer to LCD buffer.
@@ -58,8 +68,8 @@ void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, u
  * @return The return number of written chars to the buffer
 
  */
-void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
-                   int x, int y, const char *label);
+static inline void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
+                   int x, int y, const char *label, int stripe_top, int stripe_bottom);
 
 /*!
  * @brief Draws rectangle
@@ -77,8 +87,9 @@ void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint3
  * @return N/A
 
  */
-void hal_draw_rect565(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
-                  uint32_t r, uint32_t g, uint32_t b, uint32_t width);
+static inline void hal_draw_rect565(uint16_t *lcd_buf, hal_rect_t rect,
+        mpp_color_t rgb, uint32_t width,
+        int stripe_top, int stripe_bottom);
 
 /** @} */
 

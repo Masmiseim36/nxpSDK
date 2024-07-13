@@ -9,10 +9,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_entry_read.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_entry_write.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_exFAT_entry_read.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_exFAT_entry_write.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_exFAT_free_search.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_exFAT_unicode_entry_write.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_first_entry_find.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_first_full_entry_find.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_directory_free_search.c
@@ -82,7 +78,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_check_lost_cluster_check.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_close.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_close_notify_set.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_exFAT_format.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_extended_space_available.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_flush.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_media_format.c
@@ -134,25 +129,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_FAT_map_flush.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_FAT_sector_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_absolute_path_get.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_allocate_new_cluster.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_bitmap_cache_prepare.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_bitmap_cache_update.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_bitmap_flush.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_bitmap_free_cluster_find.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_bitmap_initialize.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_bitmap_start_sector_get.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_cluster_free.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_cluster_state_get.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_cluster_state_set.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_geometry_check.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_name_hash_get.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_size_calculate.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_system_area_checksum_verify.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_system_area_checksum_write.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_system_area_format.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_system_sector_write.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_unicode_name_hash_get.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_exFAT_upcase_table.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_logical_sector_cache_entry_read.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_logical_sector_flush.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fx_utility_logical_sector_read.c
@@ -213,7 +189,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_check.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_close.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_close_notify_set.c
-	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_exFAT_format.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_extended_space_available.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_flush.c
 	${CMAKE_CURRENT_LIST_DIR}/src/fxe_media_format.c

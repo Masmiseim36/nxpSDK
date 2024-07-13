@@ -21,7 +21,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -include ${ProjDirPath}/../app_config.h \
+    -include ${ProjDirPath}/../app_bluetooth_config.h \
+    -DLFS_NO_ASSERT \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
@@ -31,9 +32,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DGATT_CLIENT \
     -DGATT_DB \
     -DFSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0 \
-    -DSDK_COMPONENT_INTEGRATION=1 \
-    -DgNvStorageIncluded_d=1 \
-    -DgNvTableKeptInRam_d=1 \
     -DIOT_WIFI_ENABLE_SAVE_NETWORK=1 \
     -DFSL_OSA_MAIN_FUNC_ENABLE=0 \
     -DHAL_UART_ADAPTER_FIFO=1 \
@@ -44,45 +42,49 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DSDK_OS_FREE_RTOS \
     -DFSL_OSA_TASK_ENABLE=1 \
     -DSDIO_ENABLED=1 \
-    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1 \
     -DCONFIG_BT_BREDR=1 \
     -DCONFIG_BT_PERIPHERAL=1 \
     -DCONFIG_BT_CENTRAL=1 \
     -DCONFIG_BT_SMP=1 \
-    -DCONFIG_BT_DEVICE_NAME='\"edgefast spp\"' \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DOSA_USED=1 \
     -DSHELL_USE_COMMON_TASK=0 \
     -DSHELL_TASK_STACK_SIZE=2048 \
     -DLPUART_RING_BUFFER_SIZE=1024U \
-    -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT1052DVL6B_cm7 \
     -DHAL_UART_DMA_ENABLE=1 \
     -DHAL_AUDIO_DMA_INIT_ENABLE=0 \
     -DLFS_NO_INTRINSICS=1 \
     -DLFS_NO_ERROR=1 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DEDGEFAST_BT_LITTLEFS_MFLASH \
+    -DMFLASH_PAGE_SIZE=256 \
+    -DUSB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE=1 \
+    -DMCUXPRESSO_SDK \
     -DLOG_ENABLE_ASYNC_MODE=1 \
     -DLOG_MAX_ARGUMENT_COUNT=10 \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -DMFLASH_FILE_BASEADDR=64487424 \
-    -DMCUXPRESSO_SDK \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_IGMP=1 \
+    -D_XOPEN_SOURCE=500 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
     -MMD \
     -MP \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -90,8 +92,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
     -DCPU_MIMXRT1052DVL6B \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -101,7 +103,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -116,7 +117,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -133,5 +133,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1052xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1052xxxxx_flexspi_nor.ld\" -static \
 ")

@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2024 NXP
  * 
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -92,9 +92,11 @@ iot_agent_status_t iot_agent_datastore_plain_allocate(
 		datastore_context->size[datastore_context->idx_write] = 0U;
 	}
 	else {
+		ASSERT_OR_EXIT_MSG(datastore_context->idx_write <= (SIZE_MAX - 1U), "Overflow in write index");
 		datastore_context->idx_write = (datastore_context->idx_write + 1U) & 0x01U;
 	}
 
+	ASSERT_OR_EXIT_MSG(datastore_context->idx_write < BUFFER_NUMBER, "Overflow in the write index.");
 	datastore_context->buffers[datastore_context->idx_write] = malloc(len);
 	ASSERT_OR_EXIT_STATUS_MSG(datastore_context->buffers[datastore_context->idx_write] != NULL,
 		IOT_AGENT_ERROR_MEMORY, "Unable to allocate memory of size %u", len);
@@ -110,12 +112,15 @@ iot_agent_status_t iot_agent_datastore_plain_write(
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	iot_agent_datastore_plain_context_t* datastore_context = (iot_agent_datastore_plain_context_t*) context;
-
-	uint8_t* write_buffer = datastore_context->buffers[datastore_context->idx_write];
-	size_t write_buffer_size = datastore_context->size[datastore_context->idx_write];
+	uint8_t* write_buffer = NULL;
+	size_t write_buffer_size = 0U;
+	ASSERT_OR_EXIT_MSG(datastore_context->idx_write < BUFFER_NUMBER, "Overflow in write index.");
+	write_buffer = datastore_context->buffers[datastore_context->idx_write];
+	write_buffer_size = datastore_context->size[datastore_context->idx_write];
 
 	ASSERT_OR_EXIT_MSG(datastore_context != NULL, "datastore_context is NULL.");
 	ASSERT_OR_EXIT_MSG(write_buffer != NULL, "write_buffer is NULL.");
+	ASSERT_OR_EXIT_MSG(offset <= (SIZE_MAX - len), "Wraparound in addition calculation.");
 	ASSERT_OR_EXIT_MSG((offset + len) >= offset, "Overflow in addition calculation.");
 	ASSERT_OR_EXIT_MSG(offset + len <= write_buffer_size, 
 		"Writing out of bounds. Offset: %u, len: %u, write_buffer_size: %u.",
@@ -132,15 +137,20 @@ iot_agent_status_t iot_agent_datastore_plain_read(
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	iot_agent_datastore_plain_context_t* datastore_context = (iot_agent_datastore_plain_context_t*) context;
-	uint8_t* read_buffer = datastore_context->buffers[datastore_context->idx_read];
-	size_t read_buffer_size = datastore_context->size[datastore_context->idx_read];
+	uint8_t* read_buffer = NULL;
+	size_t read_buffer_size = 0U;
+	ASSERT_OR_EXIT_MSG(datastore_context->idx_read < BUFFER_NUMBER, "Overflow in read index.");
+	read_buffer = datastore_context->buffers[datastore_context->idx_read];
+	read_buffer_size = datastore_context->size[datastore_context->idx_read];
 
 	if (read_buffer == NULL) { 
 		*len = 0U;
 		return agent_status;
 	}
+	ASSERT_OR_EXIT_MSG(offset <= (SIZE_MAX - *len), "Overflow in addition calculation.");
 	ASSERT_OR_EXIT_MSG((offset + *len) >= offset, "Overflow in addition calculation.");
-	if (offset + *len > read_buffer_size) { 
+	if (offset + *len > read_buffer_size) {
+		ASSERT_OR_EXIT_MSG(read_buffer_size >= offset, "Overflow in addition calculation.");
 		*len = read_buffer_size - offset;
 	}
 	memcpy(dst, read_buffer + offset, *len);
@@ -211,8 +221,18 @@ bool iot_agent_datastore_plain_handle_write_data(pb_istream_t *stream, const pb_
 		return false;
 	}
 
+	if (datastore_context->idx_write >= BUFFER_NUMBER) {
+		IOT_AGENT_ERROR("Overflow in read index.");
+		return false;
+	}
 	uint8_t* write_buffer = datastore_context->buffers[datastore_context->idx_write];
 	size_t write_buffer_size = datastore_context->size[datastore_context->idx_write];
+
+	if (request->offset < 0)
+	{
+		IOT_AGENT_ERROR("Issue in integer converstion.");
+		return false;
+	}
 
 	size_t offset = (size_t)request->offset;
 	size_t len = stream->bytes_left;
@@ -220,6 +240,12 @@ bool iot_agent_datastore_plain_handle_write_data(pb_istream_t *stream, const pb_
 	if (write_buffer == NULL) {
 		IOT_AGENT_ERROR("Write_buffer is NULL.");
 		return false;
+	}
+
+	if (offset > (SIZE_MAX - len)) {
+		IOT_AGENT_ERROR("Wraparound in offset and length variables.");
+		return false;
+
 	}
 
 	if ((offset + len) < offset) {

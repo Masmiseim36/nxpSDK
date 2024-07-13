@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_device_class_video_write_payload_commit         PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -47,8 +46,6 @@
 /*                                                                        */
 /*    stream                                Address of video stream       */
 /*                                            instance                    */
-/*    buffer                                Pointer to buffer to save     */
-/*                                            payload data                */
 /*    length                                Frame length in bytes         */
 /*                                                                        */
 /*  OUTPUT                                                                */
@@ -60,13 +57,15 @@
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    ThreadX                                                             */
+/*    Application                                                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  04-25-2022     Chaoqiong Xiao           Initial Version 6.1.11        */
+/*  10-31-2023     Yajun Xia                Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _ux_device_class_video_write_payload_commit(UX_DEVICE_CLASS_VIDEO_STREAM *stream, ULONG length)
@@ -124,3 +123,54 @@ UCHAR                       *next_pos;
     return(UX_SUCCESS);
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_video_write_payload_commit        PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yajun Xia, Microsoft Corporation                                    */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in video write payload commit function  */
+/*    call.                                                               */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    stream                                Address of video stream       */
+/*                                            instance                    */
+/*    length                                Frame length in bytes         */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_video_write_payload_commit                         */
+/*                                          Video write payload commit    */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Yajun Xia                Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT _uxe_device_class_video_write_payload_commit(UX_DEVICE_CLASS_VIDEO_STREAM *stream, ULONG length)
+{
+
+    /* Sanity check. */
+    if ((stream == UX_NULL) || (length == 0))
+        return(UX_INVALID_PARAMETER);
+
+    /* Call the actual video write payload commit function.  */
+    return (_ux_device_class_video_write_payload_commit(stream, length));
+}

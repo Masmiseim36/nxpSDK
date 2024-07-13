@@ -1,56 +1,33 @@
 var a00282 =
 [
-    [ "FSL_PMU_DRIVER_VERSION", "a00282.html#ga0dc3464cb828e0c8195cf6f4fd9fc9a8", [
-      [ "kPMU_1P1RegulatorOutputOK", "a00282.html#ggaeb8e1c282570d629a6b603a94a4650d6a394fea19008801a519d8739020709a19", null ],
-      [ "kPMU_1P1BrownoutOnOutput", "a00282.html#ggaeb8e1c282570d629a6b603a94a4650d6ac52322dd21cce9696c3dd7291f01808e", null ],
-      [ "kPMU_3P0RegulatorOutputOK", "a00282.html#ggaeb8e1c282570d629a6b603a94a4650d6a5d2df2491523287e130b1e36ff457d42", null ],
-      [ "kPMU_3P0BrownoutOnOutput", "a00282.html#ggaeb8e1c282570d629a6b603a94a4650d6a76b4070aa90b7471b8f95481f96d20f7", null ],
-      [ "kPMU_2P5RegulatorOutputOK", "a00282.html#ggaeb8e1c282570d629a6b603a94a4650d6a536d44e80cffab2c47b9144628dac099", null ],
-      [ "kPMU_2P5BrownoutOnOutput", "a00282.html#ggaeb8e1c282570d629a6b603a94a4650d6a74380ff6243784a0a997d9d69420b351", null ]
+    [ "FSL_SRC_DRIVER_VERSION", "a00282.html#gab27a1d7efba9d270e93527f1d2c54605", null ],
+    [ "_src_reset_status_flags", "a00282.html#gaf647f7dbfbed8b1612675ab132cfa244", [
+      [ "kSRC_TemperatureSensorResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244a35d666ccd943a593bc1af289e6233adb", null ],
+      [ "kSRC_Wdog3ResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244a0cfd86a5b8b7110fac02e1304d33d218", null ],
+      [ "kSRC_JTAGSystemResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244aac41e066587c8a4c8bc79348307a56b3", null ],
+      [ "kSRC_JTAGSoftwareResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244abc557d5e2e199f9727744af4b181602b", null ],
+      [ "kSRC_JTAGGeneratedResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244a8a43d19a82614c4c1d571dad1f492628", null ],
+      [ "kSRC_WatchdogResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244abce52ce03031bdb1b0d76576daf418df", null ],
+      [ "kSRC_IppUserResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244af8e87b67801dd22376d5b284722d02e3", null ],
+      [ "kSRC_CsuResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244a3008203f1efa3b9385545f53445844fb", null ],
+      [ "kSRC_LockupSysResetFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244a5e025d23a354a68ed8eb72f03208fff2", null ],
+      [ "kSRC_IppResetPinFlag", "a00282.html#ggaf647f7dbfbed8b1612675ab132cfa244af7eba139e63dffc69983a262551a8856", null ]
     ] ],
-    [ "pmu_1p1_weak_reference_source_t", "a00282.html#ga6b47a2e7d1775049cdcfb744b37ecadb", [
-      [ "kPMU_1P1WeakReferenceSourceAlt0", "a00282.html#gga6b47a2e7d1775049cdcfb744b37ecadba66d71c9d447ecdb90b6b2b1bd025168e", null ],
-      [ "kPMU_1P1WeakReferenceSourceAlt1", "a00282.html#gga6b47a2e7d1775049cdcfb744b37ecadbace5078924f5b087c2791e3fc6ba958e4", null ]
+    [ "src_warm_reset_bypass_count_t", "a00282.html#ga5b40161d6cf7c90a651afd9047b6bedd", [
+      [ "kSRC_WarmResetWaitAlways", "a00282.html#gga5b40161d6cf7c90a651afd9047b6beddae2e8afc71fab41ccbac78e6a8d69ff62", null ],
+      [ "kSRC_WarmResetWaitClk16", "a00282.html#gga5b40161d6cf7c90a651afd9047b6beddad20bc2e2d97c95046d65940f111e9584", null ],
+      [ "kSRC_WarmResetWaitClk32", "a00282.html#gga5b40161d6cf7c90a651afd9047b6bedda8c3d2f6cd0c0f36da9a342e3c3eb77f8", null ],
+      [ "kSRC_WarmResetWaitClk64", "a00282.html#gga5b40161d6cf7c90a651afd9047b6bedda5bbedec3e30404b252af1b02af0042c0", null ]
     ] ],
-    [ "pmu_3p0_vbus_voltage_source_t", "a00282.html#gaf7f949a78166a27563c8a0f2ebc0af31", [
-      [ "kPMU_3P0VBusVoltageSourceAlt0", "a00282.html#ggaf7f949a78166a27563c8a0f2ebc0af31a825e44d25be34386eadd03f99b66f857", null ],
-      [ "kPMU_3P0VBusVoltageSourceAlt1", "a00282.html#ggaf7f949a78166a27563c8a0f2ebc0af31aefdca33e631b3b7b3b9b6a412254b2f7", null ]
-    ] ],
-    [ "pmu_core_reg_voltage_ramp_rate_t", "a00282.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e", [
-      [ "kPMU_CoreRegVoltageRampRateFast", "a00282.html#gga4a1cbd5cfe295ba24ff9d6460c3f660eacf2fdfb31db3e83e3306c3d98ffbe9f9", null ],
-      [ "kPMU_CoreRegVoltageRampRateMediumFast", "a00282.html#gga4a1cbd5cfe295ba24ff9d6460c3f660eadab48795d60139c6009a5de52277aa7f", null ],
-      [ "kPMU_CoreRegVoltageRampRateMediumSlow", "a00282.html#gga4a1cbd5cfe295ba24ff9d6460c3f660ea2afb37a84985c3eeb1146aaee869f891", null ],
-      [ "kPMU_CoreRegVoltageRampRateSlow", "a00282.html#gga4a1cbd5cfe295ba24ff9d6460c3f660ea8744a5ed680a59150feca86ba0357d12", null ]
-    ] ],
-    [ "pmu_power_bandgap_t", "a00282.html#ga8178a1394f1448946497f11062aac986", [
-      [ "kPMU_NormalPowerBandgap", "a00282.html#gga8178a1394f1448946497f11062aac986a47cf46f2e5470bebdd7babc9b4d3cd20", null ],
-      [ "kPMU_LowPowerBandgap", "a00282.html#gga8178a1394f1448946497f11062aac986a8f4daf5e5847e848d7feb71b99685763", null ]
-    ] ],
-    [ "PMU_GetStatusFlags", "a00282.html#gaf5cfe704de9542b230132e63f735f191", null ],
-    [ "PMU_1P1SetWeakReferenceSource", "a00282.html#gac2f5999f1ad10dcddb29788b4033bb34", null ],
-    [ "PMU_1P1EnableWeakRegulator", "a00282.html#gaac00c4a1c3df766df1d580e7803ade42", null ],
-    [ "PMU_1P1SetRegulatorOutputVoltage", "a00282.html#gad8349891ff819c3218c6bfc9336af8fc", null ],
-    [ "PMU_1P1SetBrownoutOffsetVoltage", "a00282.html#ga86c8fff119565ff331130a4a860e9b35", null ],
-    [ "PMU_1P1EnablePullDown", "a00282.html#ga995f4e42184c6f62756236d05cc0f2c7", null ],
-    [ "PMU_1P1EnableCurrentLimit", "a00282.html#ga6060fefbaa792bc3b472be682447ccdb", null ],
-    [ "PMU_1P1EnableBrownout", "a00282.html#ga761a5725232c461af8f229646f5ab20c", null ],
-    [ "PMU_1P1EnableOutput", "a00282.html#gae884b80510d080986fed8b4a88fe6e77", null ],
-    [ "PMU_3P0SetRegulatorOutputVoltage", "a00282.html#ga49c8b1d40457140252c6d71e9760ef96", null ],
-    [ "PMU_3P0SetVBusVoltageSource", "a00282.html#ga7fd889f7fac239475cae5e1fdd9eb220", null ],
-    [ "PMU_3P0SetBrownoutOffsetVoltage", "a00282.html#ga255543472ab3f09a168bf03fd33d584f", null ],
-    [ "PMU_3P0EnableCurrentLimit", "a00282.html#gab3a03db68124d97f4c4737bb5d33206a", null ],
-    [ "PMU_3P0EnableBrownout", "a00282.html#ga92993c141c89bf54d6125d6638aca595", null ],
-    [ "PMU_3P0EnableOutput", "a00282.html#ga302cc325f516455ddadd361bcda1f804", null ],
-    [ "PMU_2P5EnableWeakRegulator", "a00282.html#ga5e359c604d2a587f8d606de5ae7efc8a", null ],
-    [ "PMU_2P5SetRegulatorOutputVoltage", "a00282.html#ga2a4a038ad26d2f6a88ca6d020503de2e", null ],
-    [ "PMU_2P5SetBrownoutOffsetVoltage", "a00282.html#ga6e9b26e8745268cced79edb0f020e20c", null ],
-    [ "PMU_2P5EnablePullDown", "a00282.html#gaed744cd58d99a8275f155f851d0ea959", null ],
-    [ "PMU_2P1EnablePullDown", "a00282.html#ga53c7dcb145496f85d4f9ce657d2d8168", null ],
-    [ "PMU_2P5EnableCurrentLimit", "a00282.html#gae29695c43dfe052a7287b0d7b6817164", null ],
-    [ "PMU_2P5nableBrownout", "a00282.html#ga2112f8cbcde1a6407c7e612bf17aab61", null ],
-    [ "PMU_2P5EnableOutput", "a00282.html#ga3bb2d104b6253f1c010c9ee7af8af252", null ],
-    [ "PMU_CoreEnableIncreaseGateDrive", "a00282.html#ga7baf539021e407e5f32ee4334ce31371", null ],
-    [ "PMU_CoreSetRegulatorVoltageRampRate", "a00282.html#gaebff0c51866f730270db5076508552d7", null ],
-    [ "PMU_CoreSetSOCDomainVoltage", "a00282.html#ga24fdaba5fbb1713f5b67e649979124f1", null ],
-    [ "PMU_CoreSetARMCoreDomainVoltage", "a00282.html#ga8655aa1a407b17bfa7a1a8ac9e28eafb", null ]
+    [ "SRC_EnableWDOG3Reset", "a00282.html#ga1acc402410430b368530084805b022ac", null ],
+    [ "SRC_EnableCoreDebugResetAfterPowerGate", "a00282.html#gaa00efe244ad4bf9f2b2fbf434adba463", null ],
+    [ "SRC_DoSoftwareResetARMCore0", "a00282.html#ga720bd353336716e97c2ed486f3f972e9", null ],
+    [ "SRC_GetSoftwareResetARMCore0Done", "a00282.html#ga0893922f62b39cf97053d6909d2b6721", null ],
+    [ "SRC_EnableWDOGReset", "a00282.html#gac96321bdff82d5abc821d061323447df", null ],
+    [ "SRC_GetBootModeWord1", "a00282.html#ga34abd9ece8bad43b617ced6e018af08c", null ],
+    [ "SRC_GetBootModeWord2", "a00282.html#gab850f1217901abfd78a35096a3b30d64", null ],
+    [ "SRC_GetResetStatusFlags", "a00282.html#gac15086ff9e2d490efc95b8a5577cbae6", null ],
+    [ "SRC_ClearResetStatusFlags", "a00282.html#ga36d75f094528c8d5e37a77b4d45b617e", null ],
+    [ "SRC_SetGeneralPurposeRegister", "a00282.html#ga8c2062f093d4a0d164354ac7a2f4b3e2", null ],
+    [ "SRC_GetGeneralPurposeRegister", "a00282.html#ga8c5e46dd8c4e1bd20aa737cfef532ab1", null ]
 ];

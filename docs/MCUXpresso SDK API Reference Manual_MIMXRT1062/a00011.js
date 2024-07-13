@@ -1,6 +1,6 @@
 var a00011 =
 [
-    [ "_bee_region_config", "a00011.html#a00324", [
+    [ "_bee_region_config", "a00011.html#a00321", [
       [ "region0Mode", "a00011.html#a6b11c37ab7b7470872f666bda09fb354", null ],
       [ "region1Mode", "a00011.html#a3e948d5d1dcde94f436606e11a32f186", null ],
       [ "region0AddrOffset", "a00011.html#a93ac3523da7d15654f4676218d08608a", null ],

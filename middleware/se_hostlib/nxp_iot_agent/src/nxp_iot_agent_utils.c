@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2023 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,6 +30,17 @@
 #endif
 
 #ifdef NXP_IOT_AGENT_ENABLE_LITE
+#include <fsl_romapi_iap.h>
+#include <task.h>
+
+#define SYSTEM_IS_XIP_FLEXSPI()                                                                               \
+    ((((uint32_t)SystemCoreClockUpdate >= 0x08000000U) && ((uint32_t)SystemCoreClockUpdate < 0x10000000U)) || \
+     (((uint32_t)SystemCoreClockUpdate >= 0x18000000U) && ((uint32_t)SystemCoreClockUpdate < 0x20000000U)))
+
+#define FCB_ADDRESS             0x08000400U
+#define FLEXSPI_INSTANCE        0U
+#define FLASH_OPTION_QSPI_SDR   0xc0000004U
+
 #include <mcuxClPsaDriver_Oracle_Macros.h>
 #include <mcuxClPsaDriver_Oracle_Utils.h>
 
@@ -48,8 +59,9 @@ extern const key_recipe_t recipe_el2goconn_auth_prk;
 #include <fsl_sss_api.h>
 #include <nxp_iot_agent_keystore_sss_se05x.h>
 #endif
-#if NXP_IOT_AGENT_HAVE_PSA
-#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL
+#if NXP_IOT_AGENT_HAVE_PSA && !NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL
+#ifdef __ZEPHYR__
+#include <zephyr/drivers/hwinfo.h>
 #else
 #include <fsl_silicon_id.h>
 #endif
@@ -152,6 +164,7 @@ iot_agent_status_t iot_agent_utils_gen_key_ref_ecc(sss_key_store_t *keyStore, ss
 
 
 	buffer_ptr_const = buffer;
+	ASSERT_OR_EXIT_MSG(buffer_size <= LONG_MAX, "Error in casting of buffer size.");
 	ec_key = d2i_EC_PUBKEY(NULL, &buffer_ptr_const, (long)buffer_size);
 	OPENSSL_ASSERT_OR_EXIT(ec_key != NULL, "d2i_EC_PUBKEY");
 
@@ -171,6 +184,7 @@ iot_agent_status_t iot_agent_utils_gen_key_ref_ecc(sss_key_store_t *keyStore, ss
 	//offset = key_ref_template->private_key_offset_storage_class;
 	//buffer[offset] = 0; // storageClass;
 
+	ASSERT_OR_EXIT_MSG(key_ref_template->private_key_len <= INT32_MAX, "Error in casting of key length.");
 	bn_priv = BN_bin2bn(buffer, (int)key_ref_template->private_key_len, NULL);
 	OPENSSL_ASSERT_OR_EXIT_STATUS(bn_priv != NULL, "BN_bin2bn",
 		IOT_AGENT_ERROR_CRYPTO_ENGINE_FAILED);
@@ -231,6 +245,7 @@ iot_agent_status_t iot_agent_utils_gen_key_ref_rsa(sss_key_store_t *keyStore, ss
 	// create key object from public key
 
 	buffer_ptr_const = buffer;
+	ASSERT_OR_EXIT_MSG(buffer_size <= LONG_MAX, "Error in casting of buffer size.");
 	rsa_key = d2i_RSA_PUBKEY(NULL, &buffer_ptr_const, (long)buffer_size);
 	OPENSSL_ASSERT_OR_EXIT(rsa_key != NULL, "d2i_RSA_PUBKEY");
 
@@ -391,6 +406,7 @@ iot_agent_status_t iot_agent_utils_write_certificate_pem(uint8_t* buffer, size_t
 	ASSERT_OR_EXIT_MSG(buffer != NULL, "buffer is NULL.");
 	ASSERT_OR_EXIT_MSG(filename != NULL, "filename is NULL.");
 
+	ASSERT_OR_EXIT_MSG(len <= INT32_MAX, "Error in length casting.");
 	bio_in = BIO_new_mem_buf(&buffer[0], (int)len);
 	OPENSSL_ASSERT_OR_EXIT(bio_in != NULL, "BIO_new_mem_buf");
 
@@ -600,7 +616,7 @@ exit:
 
 #if	(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
 
-iot_agent_status_t iot_agent_utils_get_oid_value_in_subject(uint8_t* cert_buffer, size_t cert_len,
+static iot_agent_status_t iot_agent_utils_get_oid_value_in_subject(uint8_t* cert_buffer, size_t cert_len,
 	char* oid, char* value, size_t max_size)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
@@ -616,7 +632,7 @@ iot_agent_status_t iot_agent_utils_get_oid_value_in_subject(uint8_t* cert_buffer
 
 	mbedtls_x509_crt_init(&client_cert);
 
-	if (mbedtls_x509_crt_parse_der(&client_cert, cert_buffer, cert_len))
+	if (mbedtls_x509_crt_parse_der(&client_cert, cert_buffer, cert_len) != 0)
 	{
 		EXIT_STATUS_MSG(IOT_AGENT_FAILURE, "Error in loading the client certificate");
 	}
@@ -633,8 +649,9 @@ iot_agent_status_t iot_agent_utils_get_oid_value_in_subject(uint8_t* cert_buffer
 			{
 				EXIT_STATUS_MSG(IOT_AGENT_FAILURE, "Error in loading the client certificate");
 			}
-			for(size_t i = 0; i < len; i++)
+			for(size_t i = 0U; i < len; i++)
 			{
+			  	ASSERT_OR_EXIT_MSG((oid_ptr->val.p[i] <= INT8_MAX), "Wrapparound in assigning");
 				*(value + i) = oid_ptr->val.p[i];
 			}
 			oid_found = true;
@@ -703,6 +720,7 @@ iot_agent_status_t iot_agent_utils_get_certificate_from_keystore(iot_agent_keyst
 	sss_object_t certObj = { 0 };
 	size_t cert_lenBits = 0U;
 
+	ASSERT_OR_EXIT_MSG(*cert_len <= ((SIZE_MAX / 8U) - 1U), "Wraparound in length of bits.");
 	cert_lenBits = (*cert_len) * 8U;
 	sss_key_store_t* sss_key_store = NULL;
 
@@ -760,7 +778,7 @@ exit:
 iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(iot_agent_keystore_t* keystore, uint32_t* object_id)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	if (0) {}
+	if (false) {}
 #if NXP_IOT_AGENT_HAVE_SSS
 	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
 
@@ -779,6 +797,7 @@ iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(iot_agent_keystore_t* 
 		*object_id = EDGELOCK2GO_KEYID_ECC;
 	}
 #endif
+	else {}
 #if NXP_IOT_AGENT_HAVE_SSS
 	exit:
 #endif
@@ -789,7 +808,7 @@ iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(iot_agent_keystore_t* 
 iot_agent_status_t iot_agent_utils_get_edgelock2go_certificate_id(iot_agent_keystore_t* keystore, uint32_t* object_id)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	if (0) {}
+	if (false) {}
 #if NXP_IOT_AGENT_HAVE_SSS
 	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
 		uint32_t object_ids[] = { EDGELOCK2GO_CERTID_ECC, EDGELOCK2GO_CERTID_RSA };
@@ -819,14 +838,21 @@ iot_agent_status_t iot_agent_utils_get_device_id(uint8_t* buffer, size_t* len) {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 
 #if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL
+	psa_status_t psa_status = PSA_SUCCESS;
 	// Fake for simulators, the UID in fact is in ITS.
 	ASSERT_OR_EXIT_MSG(*len >= DEVICEID_LENGTH, "buffer is too small for device id, %u bytes are required.", DEVICEID_LENGTH);
 
-	psa_status_t psa_status = psa_its_get(DEVICEID_KEYID, 0, DEVICEID_LENGTH, buffer, len);
+	psa_status = psa_its_get(DEVICEID_KEYID, 0U, DEVICEID_LENGTH, buffer, len);
 	ASSERT_OR_EXIT_MSG(psa_status == PSA_SUCCESS, "psa_its_get failed: 0x%08x", psa_status);
 #elif NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
 	// Devices do have an ID which can be retrieved:
-	ASSERT_OR_EXIT_MSG(SILICONID_GetID(buffer, len) == kStatus_Success, "Error in getting the device ID");
+#ifdef __ZEPHYR__
+	ASSERT_OR_EXIT_MSG(*len >= DEVICEID_LENGTH, "buffer is too small for device id, %u bytes are required.", DEVICEID_LENGTH);
+	ASSERT_OR_EXIT_MSG(hwinfo_get_device_id(buffer, *len) == DEVICEID_LENGTH, "Error in getting the device ID");
+	*len = DEVICEID_LENGTH;
+#else
+	ASSERT_OR_EXIT_MSG(SILICONID_GetID(buffer, (uint32_t*)len) == kStatus_Success, "Error in getting the device ID");
+#endif
 #else
 	agent_status = read_device_uuid(buffer, len);
 #endif
@@ -846,12 +872,17 @@ iot_agent_status_t iot_agent_utils_create_self_signed_edgelock2go_certificate(
     mbedtls_pk_context loaded_issuer_key;
     const char* issuer_prefix = "O=NXP,OU=Plug and Trust,CN=NXP_DIE_ID_AUTH,serialNumber=";
     char issuer_name[256] = {0};
+	uint8_t uuid[20] = { 0U };
+	mbedtls_md_type_t md_alg = MBEDTLS_MD_SHA256;
+	const uint8_t serial_bytes[1] = { 1U };
 
     mbedtls_x509write_cert crt;
     mbedtls_mpi serial;
     mbedtls_entropy_context entropy;
     mbedtls_ctr_drbg_context ctr_drbg;
     const char *pers = "edglock2go_self_signed_cert";
+	char* pos = issuer_name + strlen(issuer_prefix);
+	size_t uuid_len = 0U;
 
     mbedtls_x509write_crt_init( &crt );
     mbedtls_pk_init( &loaded_issuer_key );
@@ -864,15 +895,13 @@ iot_agent_status_t iot_agent_utils_create_self_signed_edgelock2go_certificate(
                                strlen( pers ) );
     ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_ctr_drbg_seed failed: 0x%x", ret);
 
-	uint8_t uuid[20] = { 0 };
-	size_t uuid_len = sizeof(uuid);
+	uuid_len = sizeof(uuid);
 	agent_status = iot_agent_utils_get_device_id(uuid, &uuid_len);
 	ASSERT_OR_EXIT_MSG(agent_status == IOT_AGENT_SUCCESS, "iot_agent_utils_get_device_id failed with 0x%08x", agent_status);
 
 	COMPILE_TIME_ASSERT(sizeof(issuer_name) > sizeof(*issuer_prefix) + sizeof(uuid) * 2);
 	strcpy(issuer_name, issuer_prefix);
-	char* pos = issuer_name + strlen(issuer_prefix);
-	for (size_t i = 0; i < uuid_len; i++) {
+	for (size_t i = 0U; i < uuid_len; i++) {
 		sprintf(pos, "%02X", uuid[i]);
 		pos += 2;
 	}
@@ -905,14 +934,12 @@ iot_agent_status_t iot_agent_utils_create_self_signed_edgelock2go_certificate(
 
     mbedtls_x509write_crt_set_version( &crt, MBEDTLS_X509_CRT_VERSION_3 );
 
-    mbedtls_md_type_t md_alg = MBEDTLS_MD_SHA256;
-    if (mbedtls_pk_get_bitlen(&loaded_issuer_key) == 384)
+    if (mbedtls_pk_get_bitlen(&loaded_issuer_key) == 384U)
     {
         md_alg = MBEDTLS_MD_SHA384;
     }
     mbedtls_x509write_crt_set_md_alg( &crt, md_alg);
 
-    const uint8_t serial_bytes[1] = {1};
     ret = mbedtls_mpi_read_binary(&serial, serial_bytes, sizeof(serial_bytes));
     ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_mpi_read_binary failed with 0x%08x", ret);
     ret = mbedtls_x509write_crt_set_serial( &crt, &serial );
@@ -921,6 +948,11 @@ iot_agent_status_t iot_agent_utils_create_self_signed_edgelock2go_certificate(
     ret = mbedtls_x509write_crt_set_validity( &crt, "20220101000000", "99991231235959");
     ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_x509write_crt_set_validity failed with 0x%08x", ret);
 
+	// if the usage or other extension fields are not set, mbedTLS generates an extension field with 0 lenght
+	// which is a not valid option. at least one of the extansions must be present
+	mbedtls_x509write_crt_set_key_usage(&crt, MBEDTLS_X509_KU_DIGITAL_SIGNATURE);
+	ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_x509write_crt_set_key_usage failed with 0x%08x", ret);
+   
     // Note: mbedtls_x509write_crt_der writes the cert to the end of the buffer!
     ret = mbedtls_x509write_crt_der(&crt, certificate_buffer, *certificate_buffer_size,
             mbedtls_ctr_drbg_random, &ctr_drbg);
@@ -961,7 +993,7 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
     unsigned int calculted_checksum_len = 0U;
     EVP_MD_CTX* digest_context = NULL;
 #elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
-    int failed = 0U;
+    int failed = 0;
 #endif
 #if NXP_IOT_AGENT_HAVE_PSA
 	PB_BYTES_ARRAY_T(1024) client_certificate_buffer = { 0 };
@@ -978,6 +1010,7 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 
 	service_descriptor.has_client_key_sss_ref = true;
 	service_descriptor.client_key_sss_ref.has_type = true;
+	ASSERT_OR_EXIT_MSG(keystore->type <= _nxp_iot_EndpointType_MAX, "Error in keystore type");
 	service_descriptor.client_key_sss_ref.type = (nxp_iot_EndpointType)keystore->type;
 	service_descriptor.client_key_sss_ref.has_endpoint_id = true;
 	service_descriptor.client_key_sss_ref.endpoint_id = keystore->identifier;
@@ -991,6 +1024,7 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 		if (agent_status == IOT_AGENT_SUCCESS) {
 			service_descriptor.has_client_certificate_sss_ref = true;
 			service_descriptor.client_certificate_sss_ref.has_type = true;
+			ASSERT_OR_EXIT_MSG(keystore->type <= _nxp_iot_EndpointType_MAX, "Error in keystore type");
 			service_descriptor.client_certificate_sss_ref.type = (nxp_iot_EndpointType)keystore->type;
 			service_descriptor.client_certificate_sss_ref.has_endpoint_id = true;
 			service_descriptor.client_certificate_sss_ref.endpoint_id = keystore->identifier;
@@ -1022,14 +1056,22 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 	ASSERT_OR_EXIT_MSG(pb_status == true, "pb_encode_delimited for getting size failed.");
 	encoded_size = stream.bytes_written;
 
+	ASSERT_OR_EXIT_MSG(encoded_size <= (SIZE_MAX - sizeof(configuration_data_header_t)), "Wraparound in the total size calculation.");
 	total_size = sizeof(configuration_data_header_t) + encoded_size;
 	buffer = malloc(total_size);
+	ASSERT_OR_EXIT_MSG(buffer != NULL, "Allocated buffer is NULL.");
 	ostream = pb_ostream_from_buffer(buffer + sizeof(configuration_data_header_t), encoded_size);
 	pb_status = pb_encode_delimited(&ostream, nxp_iot_ServiceDescriptor_fields, &service_descriptor);
 	ASSERT_OR_EXIT_MSG(pb_status == true, "pb_encode_delimited failed.");
 
 	// Create a header.
-	header = (configuration_data_header_t*)buffer;
+	union {
+		uint8_t* pui8;
+		configuration_data_header_t* pheader;
+	}u_access;
+
+	u_access.pui8 = buffer;
+	header = u_access.pheader;
 	memset(header, 0, sizeof(*header));
 	header->length = (uint32_t)total_size;
 	header->number_of_services = 1U;
@@ -1048,6 +1090,7 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 	success &= EVP_DigestFinal_ex(digest_context, header->checksum, &calculted_checksum_len);
 	ASSERT_OR_EXIT_MSG(success == 1, "Header checksum calculation failed.");
 #elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
+	ASSERT_OR_EXIT_MSG(total_size >= sizeof(header->checksum), "Buffer overflow in SHA calculation.");
 	mbedtls_sha256_context digest_context;
 	mbedtls_sha256_init(&digest_context);
 #if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
@@ -1055,11 +1098,11 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 	failed |= mbedtls_sha256_update_ret(&digest_context, &buffer[sizeof(header->checksum)], total_size - sizeof(header->checksum));
 	failed |= mbedtls_sha256_finish_ret(&digest_context, header->checksum);
 #else
-	mbedtls_sha256_starts(&digest_context, 0U);
+	mbedtls_sha256_starts(&digest_context, 0);
 	failed |= mbedtls_sha256_update(&digest_context, &buffer[sizeof(header->checksum)], total_size - sizeof(header->checksum));
 	failed |= mbedtls_sha256_finish(&digest_context, header->checksum);
 #endif
-	ASSERT_OR_EXIT_MSG(failed == 0U, "Header checksum calculation failed.");
+	ASSERT_OR_EXIT_MSG(failed == 0, "Header checksum calculation failed.");
 #endif
 
 	// Write everything to the datastore context.
@@ -1082,12 +1125,18 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore_from_env(iot_agen
     const char *hostname = EDGELOCK2GO_HOSTNAME;
     char *hostname_local = NULL;
     uint32_t port = EDGELOCK2GO_PORT;
-    const char* edgelock2go_port_env = NULL;
+	char* edgelock2go_hostname_env = NULL;
+	char* edgelock2go_port_env = NULL;
 
 	ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
 	ASSERT_OR_EXIT_MSG(datastore != NULL, "datastore is NULL.");
 
-    const char* edgelock2go_hostname_env = getenv("IOT_AGENT_TEST_EDGELOCK2GO_HOSTNAME");
+#if defined(_WIN32) || defined(_WIN64)
+	size_t edgelock2go_hostname_env_size = 0U;
+	ASSERT_OR_EXIT_MSG(_dupenv_s(&edgelock2go_hostname_env, &edgelock2go_hostname_env_size, "IOT_AGENT_TEST_EDGELOCK2GO_HOSTNAME") == 0, "Error in getting environmental variable");
+#else
+	edgelock2go_hostname_env = getenv("IOT_AGENT_TEST_EDGELOCK2GO_HOSTNAME");
+#endif
     if (edgelock2go_hostname_env != NULL) {
         size_t len = strlen(edgelock2go_hostname_env);
         hostname_local = malloc(len + 1U);
@@ -1096,10 +1145,16 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore_from_env(iot_agen
         hostname = hostname_local;
     }
 
-    edgelock2go_port_env = getenv("IOT_AGENT_TEST_EDGELOCK2GO_PORT");
-
+#if defined(_WIN32) || defined(_WIN64)
+	size_t edgelock2go_port_env_size = 0U;
+	ASSERT_OR_EXIT_MSG(_dupenv_s(&edgelock2go_port_env, &edgelock2go_port_env_size, "IOT_AGENT_TEST_EDGELOCK2GO_PORT") == 0, "Error in getting environmental variable");
+#else
+	edgelock2go_port_env = getenv("IOT_AGENT_TEST_EDGELOCK2GO_PORT");
+#endif
 	if (edgelock2go_port_env != NULL) {
-		port = (uint32_t)atoi(edgelock2go_port_env);
+		int int_port = atoi(edgelock2go_port_env);
+		ASSERT_OR_EXIT_MSG(int_port >= 0, "Port is negative value.");
+		port = (uint32_t)int_port;
 	}
 
     agent_status = iot_agent_utils_write_edgelock2go_datastore(keystore, datastore, hostname, port,
@@ -1107,6 +1162,10 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore_from_env(iot_agen
     AGENT_SUCCESS_OR_EXIT();
 
 exit:
+#if defined(_WIN32) || defined(_WIN64)
+	free(edgelock2go_hostname_env);
+	free(edgelock2go_port_env);
+#endif
     free(hostname_local);
     return agent_status;
 }
@@ -1127,7 +1186,7 @@ iot_agent_status_t iot_agent_keystore_file_existence(const char *Filename, bool 
 		{
 			EXIT_STATUS_MSG(IOT_AGENT_FAILURE, "Unable to ensure file existence [%s]", Filename);
 		}
-        fclose(fd);
+		ASSERT_OR_EXIT_MSG(fclose(fd) == 0, "Error in closing the file");
 	}
 exit:
 	return agent_status;
@@ -1135,20 +1194,20 @@ exit:
 
 #endif //!(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
 
-iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t serviceId, uint32_t *keyId)
+iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t service_id, uint32_t *key_id)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 
-	ASSERT_OR_EXIT_MSG(keyId != NULL, "keyId is NULL.");
+	ASSERT_OR_EXIT_MSG(key_id != NULL, "key_id is NULL.");
 
-	if (serviceId > 0xFFFFFFFFUL)
+	if (service_id > 0xFFFFFFFFUL)
 	{
 		return IOT_AGENT_FAILURE;
 	}
 
-	*keyId = EDGELOCK2GO_MANAGED_SERVICE_KEY_MIN | ((uint32_t) serviceId);
+	*key_id = EDGELOCK2GO_MANAGED_SERVICE_KEY_MIN | ((uint32_t) service_id);
 
-	if (*keyId > EDGELOCK2GO_MANAGED_SERVICE_KEY_MAX)
+	if (*key_id > EDGELOCK2GO_MANAGED_SERVICE_KEY_MAX)
 	{
 		agent_status = IOT_AGENT_FAILURE;
 	}
@@ -1160,20 +1219,29 @@ exit:
 	return agent_status;
 }
 
-static size_t iot_agent_ceil_to_blocksize(size_t len, size_t blocksize)
+static iot_agent_status_t iot_agent_ceil_to_blocksize(size_t len, size_t blocksize, size_t* padded_length)
 {
-    return ((len + (blocksize - 1)) / blocksize) * blocksize;
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+	ASSERT_OR_EXIT_MSG(blocksize >= 1U, "Overflow in calculation of padded length");
+	ASSERT_OR_EXIT_MSG(len <= (SIZE_MAX - (blocksize - 1U)), "Overflow in calculation of padded length");
+	*padded_length = ((len + (blocksize - 1U)) / blocksize) * blocksize;
+exit:
+    return agent_status;
 }
 
 iot_agent_status_t nxp_iot_agent_unpad_iso7816d4(uint8_t *data, size_t *data_size) {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 
-	int count = *data_size -1;
-	while (count > 0 && data[count] == 0) {
+	size_t count = 0U;
+	ASSERT_OR_EXIT_MSG(*data_size <= (SIZE_MAX - 1U), "Wraparound in data size.");
+	ASSERT_OR_EXIT_MSG(*data_size >= 1U, "Data size should be greater the 1.");
+	count = *data_size - 1U;
+	while ((count > 0U) && (data[count] == 0U)) {
 		count--;
 	}
-
-	ASSERT_OR_EXIT_MSG(data[count] == 0x80, "iso_7816_unpad failed, pad block corrupted");
+	ASSERT_OR_EXIT_MSG(count < *data_size, "Overflow in data buffer.");
+	ASSERT_OR_EXIT_MSG(data[count] == 0x80U, "iso_7816_unpad failed, pad block corrupted.");
+	ASSERT_OR_EXIT_MSG(*data_size >= (*data_size - count), "Overflow in data buffer.");
 
 	*data_size -= *data_size - count;
 exit:
@@ -1184,17 +1252,219 @@ iot_agent_status_t iot_agent_pad_iso7816d4(uint8_t *data, size_t data_size,
         size_t unpadded_length, size_t blocksize, size_t* padded_length)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-
-    *padded_length = iot_agent_ceil_to_blocksize(
-            unpadded_length + 1 /* always inserted padding 0x80 */, blocksize);
-
+	ASSERT_OR_EXIT_MSG(unpadded_length <= SIZE_MAX - 1U, "Wraparound in length variable.");
+    agent_status = iot_agent_ceil_to_blocksize(
+            unpadded_length + 1U /* always inserted padding 0x80 */, blocksize, padded_length);
+	AGENT_SUCCESS_OR_EXIT_MSG("Error in calculation of padded length");
     ASSERT_OR_EXIT_MSG(data_size >= *padded_length, "Buffer size %u is too small to hold "
             "plaintext of length %u that will be padded up to length %u", data_size,
             unpadded_length, *padded_length);
 
-    data[unpadded_length] = 0x80;
-    memset(&data[unpadded_length + 1], 0, *padded_length - (unpadded_length + 1));
+	ASSERT_OR_EXIT_MSG(unpadded_length < data_size, "Overflow in the data buffer");
+    data[unpadded_length] = 0x80U;
+	ASSERT_OR_EXIT_MSG(unpadded_length <= (SIZE_MAX - 1U - (*padded_length - (unpadded_length + 1U))), "Wraparound in the data buffer");
+	ASSERT_OR_EXIT_MSG(*padded_length >= (unpadded_length + 1U), "Wraparound in the data buffer");
+    memset(&data[unpadded_length + 1U], 0, *padded_length - (unpadded_length + 1U));
 
 exit:
     return agent_status;
 }
+
+#ifdef NXP_IOT_AGENT_ENABLE_LITE
+
+#include "flash_config.h"
+#include <fsl_cache.h>
+#include <nxp_iot_agent_flash_config.h>
+
+typedef struct _flexspi_cache_status
+{
+    volatile bool CacheEnableFlag;
+} flexspi_cache_status_t;
+
+static void disable_cache(flexspi_cache_status_t *cacheStatus)
+{
+    /* Disable cache */
+    CACHE64_DisableCache(CACHE64_CTRL0);
+    cacheStatus->CacheEnableFlag = true;
+}
+
+static void enable_cache(flexspi_cache_status_t cacheStatus)
+{
+    if (cacheStatus.CacheEnableFlag)
+    {
+        /* Enable cache. */
+        CACHE64_EnableCache(CACHE64_CTRL0);
+    }
+}
+
+static status_t program_memory(api_core_context_t *context, uint32_t address, uint32_t length, const void *data)
+{
+    __disable_irq(); 
+
+    flexspi_cache_status_t cacheStatus;
+    disable_cache(&cacheStatus);
+
+    status_t status = iap_mem_write(context, address, length, data, kMemoryID_FlexspiNor);
+
+    enable_cache(cacheStatus);
+    __enable_irq();
+    return status;
+}
+
+static status_t erase_memory(api_core_context_t *context, uint32_t address, uint32_t sector_size)
+{
+    __disable_irq();
+    flexspi_cache_status_t cacheStatus;
+    disable_cache(&cacheStatus); 
+
+    status_t status = iap_mem_erase(context, address, sector_size, kMemoryID_FlexspiNor); 
+
+    enable_cache(cacheStatus);
+    __enable_irq();
+
+    return status;
+}
+
+static status_t flush_memory(api_core_context_t *context)
+{
+    __disable_irq();
+    flexspi_cache_status_t cacheStatus;
+    disable_cache(&cacheStatus); 
+
+    status_t status = iap_mem_flush(context); 
+
+    enable_cache(cacheStatus);
+    __enable_irq();
+
+    return status;
+}
+
+iot_agent_status_t iot_agent_utils_write_to_flash(const uint8_t *area, size_t area_size, const uint8_t *data, size_t data_size)
+{
+    iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+    ASSERT_OR_EXIT_MSG(area != NULL, "area address null");
+    ASSERT_OR_EXIT_MSG(data != NULL, "data address is null");
+    ASSERT_OR_EXIT_MSG(data_size <= area_size, "data_size is bigger than area_size");
+
+    ASSERT_OR_EXIT_STATUS_SILENT(data_size != 0U, IOT_AGENT_SUCCESS);
+
+    api_core_context_t context  = {0};
+    uint8_t iap_api_arena[4096] = {0};
+    kp_api_init_param_t params  = {0};
+    params.allocStart           = (uint32_t)&iap_api_arena;
+    params.allocSize            = sizeof(iap_api_arena);
+
+    ASSERT_OR_EXIT(iap_api_init(&context, &params) == kStatus_Success);
+
+    flexspi_nor_config_t flashConfig = {0};
+    if (!SYSTEM_IS_XIP_FLEXSPI())
+    {
+        // In case of RAM execution we found out a limitation in case the Flash configuration
+        // is loaded throught the flexspi_nor_get_config; in case of SW reset, only the RW61x chip
+        // reset (but not the Flash), causing the function giving back the default Flash setting
+        // used by the boot ROM for initial FCB read. For this reason the Flash config is stored in the
+        // application variable flexspi_config_agent
+
+        /**********************************************************************************************************************
+         * API: flexspi_nor_set_clock_source
+         *********************************************************************************************************************/
+        uint32_t flexspi_clock_source = 0x0;
+        status_t status = flexspi_nor_set_clock_source(flexspi_clock_source);
+        if (kStatus_Success != status)
+        {
+            PRINTF("flexspi_nor_set_clock_source returned with code [%d]\r\n", status);
+        }
+
+        /**********************************************************************************************************************
+         * API: flexspi_clock_config
+         *********************************************************************************************************************/
+        uint32_t flexspi_freqOption    = 0x1;
+        uint32_t flexspi_sampleClkMode = 0x0;
+        flexspi_clock_config(FLEXSPI_INSTANCE, flexspi_freqOption, flexspi_sampleClkMode);	  
+
+        flashConfig = flexspi_config_agent;
+    }
+    else
+    {
+        flashConfig = *((flexspi_nor_config_t *)FCB_ADDRESS);
+    }
+
+    ASSERT_OR_EXIT_MSG(iap_mem_config(&context, (uint32_t *)&flashConfig, kMemoryID_FlexspiNor) == kStatus_Success,
+					   "Error in Flash memory configuration");
+
+    ASSERT_OR_EXIT_MSG(erase_memory(&context, (uint32_t)area, area_size) == kStatus_Success,
+					   "Error in Flash memory erasing");
+    ASSERT_OR_EXIT_MSG(program_memory(&context, (uint32_t)area, data_size, data) == kStatus_Success,
+					   "Error in Flash memory writing");
+    ASSERT_OR_EXIT_MSG(flush_memory(&context) == kStatus_Success,
+					   "Error in Flash memory flushing");
+
+    ASSERT_OR_EXIT_MSG(memcmp(area, data, data_size) == 0,
+					   "Error in data check after memory write");
+
+exit:
+    return agent_status;
+}
+
+iot_agent_status_t iot_agent_utils_erase_from_flash(const uint8_t *area, size_t area_size)
+{
+    iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+    ASSERT_OR_EXIT_MSG(area != NULL, "area address null");
+
+    ASSERT_OR_EXIT_STATUS_SILENT(area_size != 0, IOT_AGENT_SUCCESS);
+
+    api_core_context_t context  = {0};
+    uint8_t iap_api_arena[4096] = {0};
+    kp_api_init_param_t params  = {0};
+    params.allocStart           = (uint32_t)&iap_api_arena;
+    params.allocSize            = sizeof(iap_api_arena);
+
+    ASSERT_OR_EXIT(iap_api_init(&context, &params) == kStatus_Success);
+
+    flexspi_nor_config_t flashConfig = {0};
+    if (!SYSTEM_IS_XIP_FLEXSPI())
+    {
+        // In case of RAM execution we found out a limitation in case the Flash configuration
+        // is loaded throught the flexspi_nor_get_config; in case of SW reset, only the RW61x chip
+        // reset (but not the Flash), causing the function giving back the default Flash setting
+        // used by the boot ROM for initial FCB read. For this reason the Flash config is stored in the
+        // application variable flexspi_config_agent
+
+        /**********************************************************************************************************************
+         * API: flexspi_nor_set_clock_source
+         *********************************************************************************************************************/
+        uint32_t flexspi_clock_source = 0x0;
+        status_t status = flexspi_nor_set_clock_source(flexspi_clock_source);
+        if (kStatus_Success != status)
+        {
+            PRINTF("flexspi_nor_set_clock_source returned with code [%d]\r\n", status);
+        }
+
+        /**********************************************************************************************************************
+         * API: flexspi_clock_config
+         *********************************************************************************************************************/
+        uint32_t flexspi_freqOption    = 0x1;
+        uint32_t flexspi_sampleClkMode = 0x0;
+        flexspi_clock_config(FLEXSPI_INSTANCE, flexspi_freqOption, flexspi_sampleClkMode);	  
+
+        flashConfig = flexspi_config_agent;
+    }
+    else
+    {
+        flashConfig = *((flexspi_nor_config_t *)FCB_ADDRESS);
+    }
+
+    ASSERT_OR_EXIT_MSG(iap_mem_config(&context, (uint32_t *)&flashConfig, kMemoryID_FlexspiNor) == kStatus_Success,
+					   "Error in Flash memory configuration");
+
+    ASSERT_OR_EXIT_MSG(erase_memory(&context, (uint32_t)area, area_size) == kStatus_Success,
+					   "Error in Flash memory erasing");
+    ASSERT_OR_EXIT_MSG(flush_memory(&context) == kStatus_Success,
+					   "Error in Flash memory flushing");
+
+exit:
+    return agent_status;
+}
+#endif // NXP_IOT_AGENT_ENABLE_LITE

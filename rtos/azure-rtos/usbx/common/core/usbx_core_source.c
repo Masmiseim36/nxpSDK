@@ -179,6 +179,8 @@
 #include "src/ux_utility_memory_allocate.c"
 #include "src/ux_utility_memory_allocate_mulc_safe.c"
 #include "src/ux_utility_memory_allocate_mulv_safe.c"
+#include "src/ux_utility_memory_byte_pool_create.c"
+#include "src/ux_utility_memory_byte_pool_search.c"
 #include "src/ux_utility_memory_compare.c"
 #include "src/ux_utility_memory_copy.c"
 #include "src/ux_utility_memory_free_block_best_get.c"

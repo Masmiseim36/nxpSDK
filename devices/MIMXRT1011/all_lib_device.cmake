@@ -217,6 +217,9 @@
 #  # description: Component mem_manager_light
 #  set(CONFIG_USE_component_mem_manager_light true)
 
+#  # description: Component mem_manager_freertos
+#  set(CONFIG_USE_component_mem_manager_freertos true)
+
 #  # description: Driver mma8451q
 #  set(CONFIG_USE_driver_mma8451q true)
 
@@ -352,19 +355,19 @@
 #  # description: LPI2C Driver
 #  set(CONFIG_USE_driver_lpi2c true)
 
-#  # description: LPI2C Driver
+#  # description: LPI2C FreeRTOS Driver
 #  set(CONFIG_USE_driver_lpi2c_freertos true)
 
 #  # description: LPSPI Driver
 #  set(CONFIG_USE_driver_lpspi true)
 
-#  # description: LPSPI Driver
+#  # description: LPSPI FreeRTOS Driver
 #  set(CONFIG_USE_driver_lpspi_freertos true)
 
 #  # description: LPUART Driver
 #  set(CONFIG_USE_driver_lpuart true)
 
-#  # description: LPUART Driver
+#  # description: LPUART Freertos Driver
 #  set(CONFIG_USE_driver_lpuart_freertos true)
 
 #  # description: OCOTP Driver
@@ -489,50 +492,12 @@
 #  # description: CMSIS-NN Library
 #  set(CONFIG_USE_CMSIS_NN_Source true)
 
-#set.middleware.embedded_wizard
-#  # description: embedded_wizard template
-#  set(CONFIG_USE_middleware_embedded_wizard_template_evkmimxrt1010 true)
-
-#  # description: embedded_wizard library
-#  set(CONFIG_USE_middleware_embedded_wizard_evkmimxrt1010 true)
-
-#  # description: embedded_wizard library
-#  set(CONFIG_USE_middleware_embedded_wizard_lib_evkmimxrt10xx true)
-
 #set.middleware.emwin
 #  # description: emwin template
 #  set(CONFIG_USE_middleware_emwin_template true)
 
 #  # description: emWin library
 #  set(CONFIG_USE_middleware_emwin true)
-
-#set.middleware.fatfs
-#  # description: FatFs template MMC
-#  set(CONFIG_USE_middleware_fatfs_template_mmc true)
-
-#  # description: FatFs template NAND
-#  set(CONFIG_USE_middleware_fatfs_template_nand true)
-
-#  # description: FatFs template RAM
-#  set(CONFIG_USE_middleware_fatfs_template_ram true)
-
-#  # description: FatFs template SD
-#  set(CONFIG_USE_middleware_fatfs_template_sd true)
-
-#  # description: FatFs template SDSPI
-#  set(CONFIG_USE_middleware_fatfs_template_sdspi true)
-
-#  # description: FatFs template USB
-#  set(CONFIG_USE_middleware_fatfs_template_usb true)
-
-#  # description: FatFs
-#  set(CONFIG_USE_middleware_fatfs true)
-
-#  # description: FatFs_RAM
-#  set(CONFIG_USE_middleware_fatfs_ram true)
-
-#  # description: FatFs_USB
-#  set(CONFIG_USE_middleware_fatfs_usb true)
 
 #set.middleware.freertos-kernel
 #  # description: FreeRTOS NXP extension
@@ -559,7 +524,10 @@
 #  # description: FreeRTOS heap 5
 #  set(CONFIG_USE_middleware_freertos-kernel_heap_5 true)
 
-#  # description: FreeRTOS MPU wrappers
+#  # description: new V2 FreeRTOS MPU wrappers introduced in V10.6.0
+#  set(CONFIG_USE_middleware_freertos-kernel_mpu_wrappers_v2 true)
+
+#  # description: old FreeRTOS MPU wrappers used before V10.6.0
 #  set(CONFIG_USE_middleware_freertos-kernel_mpu_wrappers true)
 
 #set.middleware.libjpeg
@@ -647,6 +615,9 @@
 #  # description: Middleware usb host cdc
 #  set(CONFIG_USE_middleware_usb_host_cdc true)
 
+#  # description: Middleware usb host cdc_ecm
+#  set(CONFIG_USE_middleware_usb_host_cdc_ecm true)
+
 #  # description: Middleware usb host cdc_rndis
 #  set(CONFIG_USE_middleware_usb_host_cdc_rndis true)
 
@@ -681,11 +652,49 @@
 #  # description: els_pkc config
 #  set(CONFIG_USE_middleware_mbedtls_els_pkc_config true)
 
+#  # description: mbedTLS test suite
+#  set(CONFIG_USE_middleware_mbedtls_tests true)
+
+#  # description: mbedTLS 3rdparty code
+#  set(CONFIG_USE_middleware_mbedtls_3rdparty true)
+
 #  # description: mbedTLS port library for KPSDK
 #  set(CONFIG_USE_middleware_mbedtls_port_ksdk true)
 
 #  # description: mbedTLS library
 #  set(CONFIG_USE_middleware_mbedtls true)
+
+#set.component.osa
+#  # description: Component osa_zephyr
+#  set(CONFIG_USE_component_osa_zephyr true)
+
+#  # description: Component common_task
+#  set(CONFIG_USE_component_common_task true)
+
+#  # description: Component osa_bm
+#  set(CONFIG_USE_component_osa_bm true)
+
+#  # description: Component osa_free_rtos
+#  set(CONFIG_USE_component_osa_free_rtos true)
+
+#  # description: Component osa
+#  set(CONFIG_USE_component_osa true)
+
+#  # description: Component osa interface
+#  set(CONFIG_USE_component_osa_interface true)
+
+#  # description: Component osa thread
+#  set(CONFIG_USE_component_osa_thread true)
+
+#set.component.serial_mwm
+#  # description: UART port layer
+#  set(CONFIG_USE_component_serial_mwm_port true)
+
+#  # description: Host driver middleware and API's for connecting to MW320 Wi-Fi co-processor with on-board TCP/IP stack
+#  set(CONFIG_USE_component_serial_mwm true)
+
+#  # description: LPUART port layer for Serial MWM
+#  set(CONFIG_USE_component_serial_mwm_lpuart true)
 
 #set.middleware.lvgl
 #  # description: lvgl template
@@ -733,6 +742,9 @@
 
 #  # description: imxrt1010 files
 #  set(CONFIG_USE_middleware_mcu-boot_imxrt1010_files true)
+
+#  # description: Bootloader usb device controller driver
+#  set(CONFIG_USE_middleware_mcu-boot_usb_device_controller_driver true)
 
 #  # description: Bootloader bm usb sources
 #  set(CONFIG_USE_middleware_mcu-boot_src_bm_usb_hid true)
@@ -839,6 +851,9 @@
 
 #  # description: ISSDK GPIO Driver for i.MXRT685
 #  set(CONFIG_USE_middleware_issdk_drivers_gpio_imxrt600 true)
+
+#  # description: ISSDK GPIO Driver for MIMXRT798S
+#  set(CONFIG_USE_middleware_issdk_drivers_gpio_imxrt700 true)
 
 #  # description: ISSDK GPIO Driver for i.MXRT1180
 #  set(CONFIG_USE_middleware_issdk_drivers_gpio_imxrt1180 true)
@@ -947,8 +962,21 @@
 #  # description: FreeMASTER driver code for 32bit platforms, enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN, USB and BDM/JTAG physical interface.
 #  set(CONFIG_USE_middleware_fmstr_platform_gen32le true)
 
-#  # description: FreeMASTER configuration file template. Contains placeholders and TODOs which need to be filled by user or by using Peripherals ConfigTool.
-#  set(CONFIG_USE_middleware_fmstr_template_cfg_gen32le true)
+#set.middleware.fatfs
+#  # description: FatFs
+#  set(CONFIG_USE_middleware_fatfs true)
+
+#  # description: FatFs_RAM
+#  set(CONFIG_USE_middleware_fatfs_ram true)
+
+#  # description: FatFs template RAM
+#  set(CONFIG_USE_middleware_fatfs_template_ram true)
+
+#  # description: FatFs template USB
+#  set(CONFIG_USE_middleware_fatfs_template_usb true)
+
+#  # description: FatFs_USB
+#  set(CONFIG_USE_middleware_fatfs_usb true)
 
 #set.middleware.corehttp
 #  # description: Client implementation of the HTTP/1.1 specification for embedded devices.
@@ -957,32 +985,6 @@
 #set.middleware.llhttp
 #  # description: HTTP parser in LLVM IR
 #  set(CONFIG_USE_middleware_llhttp true)
-
-#set.component.osa
-#  # description: Component common_task
-#  set(CONFIG_USE_component_common_task true)
-
-#  # description: Component osa_bm
-#  set(CONFIG_USE_component_osa_bm true)
-
-#  # description: Component osa_free_rtos
-#  set(CONFIG_USE_component_osa_free_rtos true)
-
-#  # description: Component osa
-#  set(CONFIG_USE_component_osa true)
-
-#  # description: Component osa interface
-#  set(CONFIG_USE_component_osa_interface true)
-
-#  # description: Component osa thread
-#  set(CONFIG_USE_component_osa_thread true)
-
-#set.component.serial_mwm
-#  # description: Host driver middleware and API's for connecting to MW320 Wi-Fi co-processor with on-board TCP/IP stack
-#  set(CONFIG_USE_component_serial_mwm true)
-
-#  # description: LPUART port layer for Serial MWM
-#  set(CONFIG_USE_component_serial_mwm_lpuart true)
 
 list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/.
@@ -1038,7 +1040,6 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/timer_manager
   ${CMAKE_CURRENT_LIST_DIR}/../../components/uart
   ${CMAKE_CURRENT_LIST_DIR}/../../components/video
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/EmbeddedWizard
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/bm
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/emwin
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/fatfs
@@ -1112,12 +1113,14 @@ include_if_use(component_lpspi_adapter.MIMXRT1011)
 include_if_use(component_lpuart_adapter.MIMXRT1011)
 include_if_use(component_lpuart_dma_adapter.MIMXRT1011)
 include_if_use(component_mem_manager.MIMXRT1011)
+include_if_use(component_mem_manager_freertos.MIMXRT1011)
 include_if_use(component_mem_manager_light.MIMXRT1011)
 include_if_use(component_osa)
 include_if_use(component_osa_bm)
 include_if_use(component_osa_free_rtos)
 include_if_use(component_osa_interface)
 include_if_use(component_osa_thread)
+include_if_use(component_osa_zephyr)
 include_if_use(component_panic.MIMXRT1011)
 include_if_use(component_pit_adapter.MIMXRT1011)
 include_if_use(component_reset_adapter.MIMXRT1011)
@@ -1129,6 +1132,7 @@ include_if_use(component_serial_manager_usb_cdc.MIMXRT1011)
 include_if_use(component_serial_manager_virtual.MIMXRT1011)
 include_if_use(component_serial_mwm)
 include_if_use(component_serial_mwm_lpuart)
+include_if_use(component_serial_mwm_port)
 include_if_use(component_sgtl_adapter.MIMXRT1011)
 include_if_use(component_software_crc_adapter.MIMXRT1011)
 include_if_use(component_software_rng_adapter.MIMXRT1011)
@@ -1257,23 +1261,15 @@ include_if_use(middleware_azure_rtos_ux_ohci)
 include_if_use(middleware_azure_rtos_ux_sp)
 include_if_use(middleware_azure_rtos_ux_template)
 include_if_use(middleware_baremetal.MIMXRT1011)
-include_if_use(middleware_embedded_wizard_evkmimxrt1010)
-include_if_use(middleware_embedded_wizard_lib_evkmimxrt10xx)
-include_if_use(middleware_embedded_wizard_template_evkmimxrt1010)
 include_if_use(middleware_emwin)
 include_if_use(middleware_emwin_template)
 include_if_use(middleware_fatfs)
 include_if_use(middleware_fatfs_ram)
-include_if_use(middleware_fatfs_template_mmc)
-include_if_use(middleware_fatfs_template_nand)
 include_if_use(middleware_fatfs_template_ram)
-include_if_use(middleware_fatfs_template_sd)
-include_if_use(middleware_fatfs_template_sdspi)
 include_if_use(middleware_fatfs_template_usb)
 include_if_use(middleware_fatfs_usb)
 include_if_use(middleware_fmstr)
 include_if_use(middleware_fmstr_platform_gen32le)
-include_if_use(middleware_fmstr_template_cfg_gen32le)
 include_if_use(middleware_freertos-kernel)
 include_if_use(middleware_freertos-kernel_extension)
 include_if_use(middleware_freertos-kernel_heap_1)
@@ -1282,6 +1278,7 @@ include_if_use(middleware_freertos-kernel_heap_3)
 include_if_use(middleware_freertos-kernel_heap_4)
 include_if_use(middleware_freertos-kernel_heap_5)
 include_if_use(middleware_freertos-kernel_mpu_wrappers)
+include_if_use(middleware_freertos-kernel_mpu_wrappers_v2)
 include_if_use(middleware_freertos-kernel_template)
 include_if_use(middleware_freertos_corehttp)
 include_if_use(middleware_issdk_drivers_gpio_imx)
@@ -1289,6 +1286,7 @@ include_if_use(middleware_issdk_drivers_gpio_imx8)
 include_if_use(middleware_issdk_drivers_gpio_imxrt)
 include_if_use(middleware_issdk_drivers_gpio_imxrt1180)
 include_if_use(middleware_issdk_drivers_gpio_imxrt600)
+include_if_use(middleware_issdk_drivers_gpio_imxrt700)
 include_if_use(middleware_issdk_drivers_host)
 include_if_use(middleware_issdk_drivers_systick_utils)
 include_if_use(middleware_issdk_sensor_allregdefs)
@@ -1324,9 +1322,11 @@ include_if_use(middleware_lvgl_demo_widgets)
 include_if_use(middleware_lvgl_template)
 include_if_use(middleware_lvgl_unused_files)
 include_if_use(middleware_mbedtls)
+include_if_use(middleware_mbedtls_3rdparty)
 include_if_use(middleware_mbedtls_els_pkc_config)
 include_if_use(middleware_mbedtls_port_ksdk)
 include_if_use(middleware_mbedtls_template)
+include_if_use(middleware_mbedtls_tests)
 include_if_use(middleware_mcu-boot_CMSIS_cm7_headers)
 include_if_use(middleware_mcu-boot_MIMXRT1011_drivers)
 include_if_use(middleware_mcu-boot_MIMXRT1011_sources)
@@ -1344,6 +1344,7 @@ include_if_use(middleware_mcu-boot_mem_spi_nand)
 include_if_use(middleware_mcu-boot_sdphost)
 include_if_use(middleware_mcu-boot_src_bm_usb_hid)
 include_if_use(middleware_mcu-boot_src_startup)
+include_if_use(middleware_mcu-boot_usb_device_controller_driver)
 include_if_use(middleware_netxduo_imxrt)
 include_if_use(middleware_pkcs11)
 include_if_use(middleware_tinycbor)
@@ -1365,6 +1366,7 @@ include_if_use(middleware_usb_device_stack_external)
 include_if_use(middleware_usb_device_video_external)
 include_if_use(middleware_usb_host_audio)
 include_if_use(middleware_usb_host_cdc)
+include_if_use(middleware_usb_host_cdc_ecm)
 include_if_use(middleware_usb_host_cdc_rndis)
 include_if_use(middleware_usb_host_common_header)
 include_if_use(middleware_usb_host_ehci)

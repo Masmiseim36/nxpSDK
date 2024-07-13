@@ -3,6 +3,10 @@
  * LICENSE file in the project root for full license information
  */
 
+/*
+ * Copyright 2022-2024 NXP
+ */
+
 #include <stdio.h>
 
 #include "osal.h"

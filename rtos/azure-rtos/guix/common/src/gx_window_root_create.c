@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_window_root_create                              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,6 +73,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            updated the link logic,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_window_root_create(GX_WINDOW_ROOT *root_window, GX_CONST GX_CHAR *name,
@@ -97,14 +99,20 @@ UINT  _gx_window_root_create(GX_WINDOW_ROOT *root_window, GX_CONST GX_CHAR *name
     root_window -> gx_widget_status &= ~GX_STATUS_MOVABLE;
     root_window -> gx_widget_event_process_function = (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_window_root_event_process;
 
+    GX_ENTER_CRITICAL
+
     if (_gx_system_root_window_created_list)
     {
         /* link this root to the one previously created */
         root_window -> gx_widget_next = (GX_WIDGET *)_gx_system_root_window_created_list;
+
+        _gx_system_root_window_created_list -> gx_widget_previous = (GX_WIDGET *)root_window;
     }
 
     /* Update the root window pointer  */
     _gx_system_root_window_created_list = root_window;
+
+    GX_EXIT_CRITICAL
 
     /* Return the status from window create.  */
     return(GX_SUCCESS);

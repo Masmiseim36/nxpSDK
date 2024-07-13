@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 /**************************************************************************/
 /**************************************************************************/
@@ -167,4 +166,59 @@ ULONG                       i;
     /* Return success.  */
     return(UX_SUCCESS);
 #endif
+}
+
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_device_class_audio_interrupt_send              PORTABLE C      */
+/*                                                           6.2.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in queuing audio interrupt data         */
+/*    function call.                                                      */
+/*                                                                        */
+/*    Note the interrupt data size is predefined and not checked:         */
+/*    - for Audio 1.0 interrupt status word is 2 bytes                    */
+/*    - for Audio 2.0 interrupt data message is 6 bytes                   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    audio                                 Address of audio instance     */
+/*    int_data                              Interrupt data (2 or 6 bytes) */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_device_class_audio_interrupt_send Queue interrupt data to send  */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  03-08-2023     Chaoqiong Xiao           Initial Version 6.2.1         */
+/*                                                                        */
+/**************************************************************************/
+UINT    _uxe_device_class_audio_interrupt_send(UX_DEVICE_CLASS_AUDIO *audio, UCHAR *int_data)
+{
+
+    /* Sanity check.  */
+    if (audio == UX_NULL || int_data == UX_NULL)
+        return(UX_INVALID_PARAMETER);
+
+    /* Send interrupt data.  */
+    return(_ux_device_class_audio_interrupt_send(audio, int_data));
 }

@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -567,7 +566,7 @@ UINT    status;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_telnet_client_delete                            PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -600,6 +599,9 @@ UINT    status;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  03-08-2023     Wenhui Xie               Modified comment(s),          */
+/*                                            cleared the client ID,      */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_telnet_client_delete(NX_TELNET_CLIENT *client_ptr)
@@ -612,6 +614,9 @@ UINT  _nx_telnet_client_delete(NX_TELNET_CLIENT *client_ptr)
         /* Still connected, return an error.  */
         return(NX_TELNET_NOT_DISCONNECTED);
     }
+
+    /* Clear the client ID.  */
+    client_ptr -> nx_telnet_client_id = 0;
 
     /* Delete the socket.  */
     nx_tcp_socket_delete(&(client_ptr -> nx_telnet_client_socket));

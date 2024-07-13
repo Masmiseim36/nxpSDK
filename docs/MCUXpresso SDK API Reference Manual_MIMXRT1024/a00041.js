@@ -1,10 +1,10 @@
 var a00041 =
 [
-    [ "_flexspi_lut_seq", "a00041.html#a00400", [
+    [ "_flexspi_lut_seq", "a00041.html#a00397", [
       [ "seqNum", "a00041.html#a44c6ec1fae0e6abca856e675400bb7f9", null ],
       [ "seqId", "a00041.html#a5c7ac6e48c90b1f08d464c5c14bd6eea", null ]
     ] ],
-    [ "_flexspi_mem_config", "a00041.html#a00401", [
+    [ "_flexspi_mem_config", "a00041.html#a00398", [
       [ "tag", "a00041.html#ad20718a8722b6ae286fc01e270e2cc0c", null ],
       [ "version", "a00041.html#a621a8797dc305e19afcacf3ee5b9d9eb", null ],
       [ "reserved0", "a00041.html#a29c80db0ef12e7f6a51a9e4942ed053a", null ],
@@ -46,7 +46,7 @@ var a00041 =
       [ "lutCustomSeq", "a00041.html#abe46b0b2e6624c65d7bc94cf567eefab", null ],
       [ "reserved4", "a00041.html#a43d272828a2e15c9867a3a681b1e803d", null ]
     ] ],
-    [ "_flexspi_nor_config", "a00041.html#a00402", [
+    [ "_flexspi_nor_config", "a00041.html#a00399", [
       [ "memConfig", "a00041.html#a006ff9a51fa7c10465fd9d005880a399", null ],
       [ "pageSize", "a00041.html#ac6df0762158a3417668e58ee7d7c042f", null ],
       [ "sectorSize", "a00041.html#aed05462888e2e7299c385a0f1921419c", null ],
@@ -61,7 +61,7 @@ var a00041 =
       [ "blockSize", "a00041.html#a4e328ffd7e86163e15ed73b4d4f62613", null ],
       [ "reserve2", "a00041.html#a1ea37a7f5efa424b0f343a3209a2533f", null ]
     ] ],
-    [ "_flexspi_xfer", "a00041.html#a00404", [
+    [ "_flexspi_xfer", "a00041.html#a00401", [
       [ "operation", "a00041.html#a82e1054070d4a7af58af802443d5b9b4", null ],
       [ "baseAddress", "a00041.html#abb243149fbe0c732cf810a18b3d5f1fa", null ],
       [ "seqId", "a00041.html#ab968b18a776109a974221d68487d9ee2", null ],

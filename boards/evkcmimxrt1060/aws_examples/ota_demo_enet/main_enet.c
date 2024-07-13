@@ -83,7 +83,7 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define appmainMQTT_AGENT_TASK_STACK_SIZE (2048)
 #define appmainMQTT_AGENT_TASK_PRIORITY   (tskIDLE_PRIORITY + 2)
 
-#define INIT_TASK_STACK_SIZE (512)
+#define INIT_TASK_STACK_SIZE (1024)
 #define INIT_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 
 #ifndef EXAMPLE_NETIF_INIT_FN

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: GPC: General Power Controller Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPSPI: Low Power Serial Peripheral Interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,236 +99,25 @@ $(document).ready(function(){initNavTree('a00267.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">GPC: General Power Controller Driver</div>  </div>
+<div class="title">LPSPI: Low Power Serial Peripheral Interface</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the General Power Controller (GPC) module of MCUXpresso SDK devices.</p>
-<p>API functions are provided to configure the system about working in dedicated power mode. There are mainly about enabling the power for memory, enabling the wakeup sources for STOP modes, and power up/down operations for various peripherals. </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the Low Power Serial Peripheral Interface (LPSPI) module of MCUXpresso SDK devices. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00267.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e">GPC_EnableIRQ</a> (GPC_Type *base, uint32_t irqId)</td></tr>
-<tr class="memdesc:ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the IRQ.  <a href="#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e">More...</a><br/></td></tr>
-<tr class="separator:ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacfd07601d1a0e90e3b80fffe14830010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00267.html#gacfd07601d1a0e90e3b80fffe14830010">GPC_DisableIRQ</a> (GPC_Type *base, uint32_t irqId)</td></tr>
-<tr class="memdesc:gacfd07601d1a0e90e3b80fffe14830010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the IRQ.  <a href="#gacfd07601d1a0e90e3b80fffe14830010">More...</a><br/></td></tr>
-<tr class="separator:gacfd07601d1a0e90e3b80fffe14830010"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1118000efd3c822329c63a7155bbe12e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00267.html#ga1118000efd3c822329c63a7155bbe12e">GPC_GetIRQStatusFlag</a> (GPC_Type *base, uint32_t irqId)</td></tr>
-<tr class="memdesc:ga1118000efd3c822329c63a7155bbe12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the IRQ/Event flag.  <a href="#ga1118000efd3c822329c63a7155bbe12e">More...</a><br/></td></tr>
-<tr class="separator:ga1118000efd3c822329c63a7155bbe12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8270fba73a065a4e14af1bc895e55969"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00267.html#ga8270fba73a065a4e14af1bc895e55969">GPC_RequestPdram0PowerDown</a> (GPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga8270fba73a065a4e14af1bc895e55969"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM PDRAM0 Power Gate Enable.  <a href="#ga8270fba73a065a4e14af1bc895e55969">More...</a><br/></td></tr>
-<tr class="separator:ga8270fba73a065a4e14af1bc895e55969"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaac50bee55eb34b329680e6fd0d2a9582"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00267.html#gaac50bee55eb34b329680e6fd0d2a9582">GPC_RequestMEGAPowerOn</a> (GPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaac50bee55eb34b329680e6fd0d2a9582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests the MEGA power switch sequence.  <a href="#gaac50bee55eb34b329680e6fd0d2a9582">More...</a><br/></td></tr>
-<tr class="separator:gaac50bee55eb34b329680e6fd0d2a9582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga91a1b6b08dc09200c3b0ee314b362b74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00267.html#ga91a1b6b08dc09200c3b0ee314b362b74">FSL_GPC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00260.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="memdesc:ga91a1b6b08dc09200c3b0ee314b362b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPC driver version 2.1.1.  <a href="#ga91a1b6b08dc09200c3b0ee314b362b74">More...</a><br/></td></tr>
-<tr class="separator:ga91a1b6b08dc09200c3b0ee314b362b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00269"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html">LPSPI CMSIS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00268"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00268.html">LPSPI FreeRTOS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00048"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html">LPSPI Peripheral driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00049"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html">LPSPI eDMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga91a1b6b08dc09200c3b0ee314b362b74"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_GPC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00260.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7c73d81bfb34ebb7ca40a5ad2a63ad7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPC_EnableIRQ </td>
-          <td>(</td>
-          <td class="paramtype">GPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>irqId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
-    <tr><td class="paramname">irqId</td><td>ID number of IRQ to be enabled, available range is 32-159. 0-31 is available in some platforms. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacfd07601d1a0e90e3b80fffe14830010"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPC_DisableIRQ </td>
-          <td>(</td>
-          <td class="paramtype">GPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>irqId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
-    <tr><td class="paramname">irqId</td><td>ID number of IRQ to be disabled, available range is 32-159. 0-31 is available in some platforms. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1118000efd3c822329c63a7155bbe12e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool GPC_GetIRQStatusFlag </td>
-          <td>(</td>
-          <td class="paramtype">GPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>irqId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
-    <tr><td class="paramname">irqId</td><td>ID number of IRQ to be enabled, available range is 32-159. 0-31 is available in some platforms. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Indicated IRQ/Event is asserted or not. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8270fba73a065a4e14af1bc895e55969"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPC_RequestPdram0PowerDown </td>
-          <td>(</td>
-          <td class="paramtype">GPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function configures the FLEXRAM PDRAM0 if it will keep power when cpu core is power down. When the PDRAM0 Power is 1, PDRAM0 will be power down once when CPU core is power down. When the PDRAM0 Power is 0, PDRAM0 will keep power on even if CPU core is power down. When CPU core is re-power up, the default setting is 1.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the request or not. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaac50bee55eb34b329680e6fd0d2a9582"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPC_RequestMEGAPowerOn </td>
-          <td>(</td>
-          <td class="paramtype">GPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the power on sequence, or the power down sequence. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

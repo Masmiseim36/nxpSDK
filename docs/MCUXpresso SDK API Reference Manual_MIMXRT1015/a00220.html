@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FlexIO: FlexIO Driver</title>
+<title>MCUXpresso SDK API Reference Manual: AIPSTZ: AHB to IP Bridge</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,31 +99,269 @@ $(document).ready(function(){initNavTree('a00220.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO: FlexIO Driver</div>  </div>
+<div class="title">AIPSTZ: AHB to IP Bridge</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FlexIO drivers for the FlexIO module of MCUXpresso SDK devices. </p>
+<p>The MCUXpresso SDK provides a driver for the AHB-to-IP Bridge (AIPSTZ) of MCUXpresso SDK devices. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00022"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html">FlexIO Camera Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html">FlexIO Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00025"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html">FlexIO I2C Master Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00026"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html">FlexIO I2S Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00028"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html">FlexIO MCU Interface LCD Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00030"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html">FlexIO SPI Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00032"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html">FlexIO UART Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8589895f6b90baf4430caf389caf7e3a"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00220.html#ga60c9c7de80a717af5abdb261ffec44bf">_aipstz_master_privilege_level</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga8589895f6b90baf4430caf389caf7e3a">aipstz_master_privilege_level_t</a></td></tr>
+<tr class="memdesc:ga8589895f6b90baf4430caf389caf7e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ privilege configuration.  <a href="#ga8589895f6b90baf4430caf389caf7e3a">More...</a><br/></td></tr>
+<tr class="separator:ga8589895f6b90baf4430caf389caf7e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga315e33ae68e98948c0b7c492f5ece22a"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00220.html#ga07216e554820b8e11a237acb3521c878">_aipstz_master</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga315e33ae68e98948c0b7c492f5ece22a">aipstz_master_t</a></td></tr>
+<tr class="memdesc:ga315e33ae68e98948c0b7c492f5ece22a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ masters.  <a href="#ga315e33ae68e98948c0b7c492f5ece22a">More...</a><br/></td></tr>
+<tr class="separator:ga315e33ae68e98948c0b7c492f5ece22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02cefea45ba85726347c5447bdcc2c88"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00220.html#ga598aba6ec5a0bbc63e560c00d319e376">_aipstz_peripheral_access_control</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga02cefea45ba85726347c5447bdcc2c88">aipstz_peripheral_access_control_t</a></td></tr>
+<tr class="memdesc:ga02cefea45ba85726347c5447bdcc2c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ peripheral access control configuration.  <a href="#ga02cefea45ba85726347c5447bdcc2c88">More...</a><br/></td></tr>
+<tr class="separator:ga02cefea45ba85726347c5447bdcc2c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45c59b8b94f648fe486cb54d374c0315"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00220.html#gae1c3be40f321b5b93f56b85ce0451d98">_aipstz_peripheral</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga45c59b8b94f648fe486cb54d374c0315">aipstz_peripheral_t</a></td></tr>
+<tr class="memdesc:ga45c59b8b94f648fe486cb54d374c0315"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ peripherals.  <a href="#ga45c59b8b94f648fe486cb54d374c0315">More...</a><br/></td></tr>
+<tr class="separator:ga45c59b8b94f648fe486cb54d374c0315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga60c9c7de80a717af5abdb261ffec44bf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga60c9c7de80a717af5abdb261ffec44bf">_aipstz_master_privilege_level</a> { <br/>
+&#160;&#160;<a class="el" href="a00220.html#gga60c9c7de80a717af5abdb261ffec44bfa0b72fa18391c6c78eb6a099d20294269">kAIPSTZ_MasterBufferedWriteEnable</a> = (1U &lt;&lt; 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00220.html#gga60c9c7de80a717af5abdb261ffec44bfa9519e4b78bb722c6e0cc66f2f5ddeeee">kAIPSTZ_MasterTrustedForReadEnable</a> = (1U &lt;&lt; 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00220.html#gga60c9c7de80a717af5abdb261ffec44bfac266137d6fc99b702e03eacd79ff5280">kAIPSTZ_MasterTrustedForWriteEnable</a> = (1U &lt;&lt; 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00220.html#gga60c9c7de80a717af5abdb261ffec44bfac588fb9df7c0231b66a302077e08a5de">kAIPSTZ_MasterForceUserModeEnable</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga60c9c7de80a717af5abdb261ffec44bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ privilege configuration.  <a href="a00220.html#ga60c9c7de80a717af5abdb261ffec44bf">More...</a><br/></td></tr>
+<tr class="separator:ga60c9c7de80a717af5abdb261ffec44bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07216e554820b8e11a237acb3521c878"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga07216e554820b8e11a237acb3521c878">_aipstz_master</a> </td></tr>
+<tr class="memdesc:ga07216e554820b8e11a237acb3521c878"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ masters.  <a href="a00220.html#ga07216e554820b8e11a237acb3521c878">More...</a><br/></td></tr>
+<tr class="separator:ga07216e554820b8e11a237acb3521c878"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga598aba6ec5a0bbc63e560c00d319e376"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga598aba6ec5a0bbc63e560c00d319e376">_aipstz_peripheral_access_control</a> </td></tr>
+<tr class="memdesc:ga598aba6ec5a0bbc63e560c00d319e376"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ peripheral access control configuration.  <a href="a00220.html#ga598aba6ec5a0bbc63e560c00d319e376">More...</a><br/></td></tr>
+<tr class="separator:ga598aba6ec5a0bbc63e560c00d319e376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1c3be40f321b5b93f56b85ce0451d98"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#gae1c3be40f321b5b93f56b85ce0451d98">_aipstz_peripheral</a> </td></tr>
+<tr class="memdesc:gae1c3be40f321b5b93f56b85ce0451d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of AIPSTZ peripherals.  <a href="a00220.html#gae1c3be40f321b5b93f56b85ce0451d98">More...</a><br/></td></tr>
+<tr class="separator:gae1c3be40f321b5b93f56b85ce0451d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga63da39530bbcd0dc57e95ea907626d30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga63da39530bbcd0dc57e95ea907626d30"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga63da39530bbcd0dc57e95ea907626d30">FSL_AIPSTZ_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00222.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
+<tr class="memdesc:ga63da39530bbcd0dc57e95ea907626d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.1. <br/></td></tr>
+<tr class="separator:ga63da39530bbcd0dc57e95ea907626d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:gaa0b2d889df182cd605ae955fc65e333a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#gaa0b2d889df182cd605ae955fc65e333a">AIPSTZ_SetMasterPriviledgeLevel</a> (AIPSTZ_Type *base, <a class="el" href="a00220.html#ga315e33ae68e98948c0b7c492f5ece22a">aipstz_master_t</a> master, uint32_t privilegeConfig)</td></tr>
+<tr class="memdesc:gaa0b2d889df182cd605ae955fc65e333a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the privilege level for master.  <a href="#gaa0b2d889df182cd605ae955fc65e333a">More...</a><br/></td></tr>
+<tr class="separator:gaa0b2d889df182cd605ae955fc65e333a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dd3e90419600f38e9d4b970f723e918"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga6dd3e90419600f38e9d4b970f723e918">AIPSTZ_SetPeripheralAccessControl</a> (AIPSTZ_Type *base, <a class="el" href="a00220.html#ga45c59b8b94f648fe486cb54d374c0315">aipstz_peripheral_t</a> peripheral, uint32_t accessControl)</td></tr>
+<tr class="memdesc:ga6dd3e90419600f38e9d4b970f723e918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the access for peripheral.  <a href="#ga6dd3e90419600f38e9d4b970f723e918">More...</a><br/></td></tr>
+<tr class="separator:ga6dd3e90419600f38e9d4b970f723e918"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga8589895f6b90baf4430caf389caf7e3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00220.html#ga60c9c7de80a717af5abdb261ffec44bf">_aipstz_master_privilege_level</a>  <a class="el" href="a00220.html#ga8589895f6b90baf4430caf389caf7e3a">aipstz_master_privilege_level_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga315e33ae68e98948c0b7c492f5ece22a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00220.html#ga07216e554820b8e11a237acb3521c878">_aipstz_master</a>  <a class="el" href="a00220.html#ga315e33ae68e98948c0b7c492f5ece22a">aipstz_master_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Organized by width for the 8-15 bits and shift for lower 8 bits. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga02cefea45ba85726347c5447bdcc2c88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00220.html#ga598aba6ec5a0bbc63e560c00d319e376">_aipstz_peripheral_access_control</a>  <a class="el" href="a00220.html#ga02cefea45ba85726347c5447bdcc2c88">aipstz_peripheral_access_control_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga45c59b8b94f648fe486cb54d374c0315"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00220.html#gae1c3be40f321b5b93f56b85ce0451d98">_aipstz_peripheral</a>  <a class="el" href="a00220.html#ga45c59b8b94f648fe486cb54d374c0315">aipstz_peripheral_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Organized by register offset for higher 32 bits, width for the 8-15 bits and shift for lower 8 bits. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga60c9c7de80a717af5abdb261ffec44bf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00220.html#ga60c9c7de80a717af5abdb261ffec44bf">_aipstz_master_privilege_level</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga60c9c7de80a717af5abdb261ffec44bfa0b72fa18391c6c78eb6a099d20294269"></a>kAIPSTZ_MasterBufferedWriteEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Write accesses from this master are allowed to be buffered. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga60c9c7de80a717af5abdb261ffec44bfa9519e4b78bb722c6e0cc66f2f5ddeeee"></a>kAIPSTZ_MasterTrustedForReadEnable</em>&nbsp;</td><td class="fielddoc">
+<p>This master is trusted for read accesses. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga60c9c7de80a717af5abdb261ffec44bfac266137d6fc99b702e03eacd79ff5280"></a>kAIPSTZ_MasterTrustedForWriteEnable</em>&nbsp;</td><td class="fielddoc">
+<p>This master is trusted for write accesses. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga60c9c7de80a717af5abdb261ffec44bfac588fb9df7c0231b66a302077e08a5de"></a>kAIPSTZ_MasterForceUserModeEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Accesses from this master are forced to user-mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga07216e554820b8e11a237acb3521c878"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00220.html#ga07216e554820b8e11a237acb3521c878">_aipstz_master</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Organized by width for the 8-15 bits and shift for lower 8 bits. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga598aba6ec5a0bbc63e560c00d319e376"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00220.html#ga598aba6ec5a0bbc63e560c00d319e376">_aipstz_peripheral_access_control</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae1c3be40f321b5b93f56b85ce0451d98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00220.html#gae1c3be40f321b5b93f56b85ce0451d98">_aipstz_peripheral</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Organized by register offset for higher 32 bits, width for the 8-15 bits and shift for lower 8 bits. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaa0b2d889df182cd605ae955fc65e333a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPSTZ_SetMasterPriviledgeLevel </td>
+          <td>(</td>
+          <td class="paramtype">AIPSTZ_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00220.html#ga315e33ae68e98948c0b7c492f5ece22a">aipstz_master_t</a>&#160;</td>
+          <td class="paramname"><em>master</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>privilegeConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>AIPSTZ peripheral base pointer </td></tr>
+    <tr><td class="paramname">master</td><td>Masters for AIPSTZ. </td></tr>
+    <tr><td class="paramname">privilegeConfig</td><td>Configuration is ORed from <a class="el" href="a00220.html#ga8589895f6b90baf4430caf389caf7e3a">aipstz_master_privilege_level_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6dd3e90419600f38e9d4b970f723e918"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPSTZ_SetPeripheralAccessControl </td>
+          <td>(</td>
+          <td class="paramtype">AIPSTZ_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00220.html#ga45c59b8b94f648fe486cb54d374c0315">aipstz_peripheral_t</a>&#160;</td>
+          <td class="paramname"><em>peripheral</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>accessControl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>AIPSTZ peripheral base pointer </td></tr>
+    <tr><td class="paramname">peripheral</td><td>Peripheral for AIPSTZ. </td></tr>
+    <tr><td class="paramname">accessControl</td><td>Configuration is ORed from <a class="el" href="a00220.html#ga02cefea45ba85726347c5447bdcc2c88">aipstz_peripheral_access_control_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

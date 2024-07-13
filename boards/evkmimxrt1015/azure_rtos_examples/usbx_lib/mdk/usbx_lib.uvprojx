@@ -347,7 +347,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1015DAF5A, MIMXRT, MCUXPRESSO_SDK, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
@@ -504,11 +504,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
@@ -597,6 +592,11 @@
               <FileName>nx_ipv6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_link.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</FilePath>
             </File>
             <File>
               <FileName>nx_md5.h</FileName>
@@ -1556,7 +1556,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1015DAF5A, MIMXRT, MCUXPRESSO_SDK, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
@@ -1713,11 +1713,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
@@ -1806,6 +1801,11 @@
               <FileName>nx_ipv6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_link.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</FilePath>
             </File>
             <File>
               <FileName>nx_md5.h</FileName>

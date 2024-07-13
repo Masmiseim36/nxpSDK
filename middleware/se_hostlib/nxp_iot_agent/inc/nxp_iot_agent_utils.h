@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -181,9 +181,11 @@ iot_agent_status_t iot_agent_utils_write_certificate_pem_cos_over_rtp(iot_agent_
 */
 iot_agent_status_t iot_agent_utils_write_key_ref_pem_cos_over_rtp(const iot_agent_context_t* ctx,
 	const nxp_iot_ServiceDescriptor* service_descriptor, const char* filename);
-iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t service_id, uint32_t *key_id);
 iot_agent_status_t iot_agent_utils_der_to_pem_bio(BIO *bio_in, BIO* bio_out);
 
+#endif
+
+iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t service_id, uint32_t *key_id);
 
 /** @brief Maps a given service id to the range of keys that are managed by the EdgeLock 2GO cloud
  * service.
@@ -196,8 +198,6 @@ iot_agent_status_t iot_agent_utils_der_to_pem_bio(BIO *bio_in, BIO* bio_out);
 
 iot_agent_status_t iot_agent_get_first_found_object(iot_agent_keystore_t* keystore,
 	uint32_t* object_ids, size_t num_objects, uint32_t* object_id);
-
-#endif
 
 /*! @brief Gets the common name from the client certificte.
 *
@@ -215,7 +215,7 @@ iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context
 
 /*! @brief Read a certificate from a keystore.
  */
-iot_agent_status_t iot_agent_utils_get_certificate_from_keystore(iot_agent_keystore_t* keyStore,
+iot_agent_status_t iot_agent_utils_get_certificate_from_keystore(iot_agent_keystore_t* keystore,
 	uint32_t certificate_id, uint8_t* cert, size_t* cert_len);
 
 
@@ -321,6 +321,33 @@ iot_agent_status_t nxp_iot_agent_unpad_iso7816d4(uint8_t *data, size_t *data_siz
  */
 iot_agent_status_t iot_agent_pad_iso7816d4(uint8_t *data, size_t data_size, 
         size_t unpadded_length, size_t blocksize, size_t* padded_length);
+
+#ifdef NXP_IOT_AGENT_ENABLE_LITE
+/**
+* Writes data to a specified flash area
+*
+* @param[in] area Flash area
+* @param[in] area_size Size of the flash area
+* @param[in] data Data to write
+* @param[in] data_size Size of the data to write
+
+* @retval IOT_AGENT_SUCCESS upon success
+* @retval IOT_AGENT_FAILURE upon failure
+*/
+iot_agent_status_t iot_agent_utils_write_to_flash(const uint8_t *area, size_t area_size, const uint8_t *data, 
+    size_t data_size);
+
+/**
+* Erases a specified flash area
+*
+* @param[in] area Flash area
+* @param[in] area_size Size of the flash area
+
+* @retval IOT_AGENT_SUCCESS upon success
+* @retval IOT_AGENT_FAILURE upon failure
+*/
+iot_agent_status_t iot_agent_utils_erase_from_flash(const uint8_t *area, size_t area_size);
+#endif
 
 #ifdef __cplusplus
 } // extern "C"

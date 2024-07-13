@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -33,7 +32,8 @@
 #if UX_DEVICE_CLASS_PIMA_TRANSFER_BUFFER_LENGTH < UX_DEVICE_CLASS_PIMA_DATA_HEADER_SIZE +   \
                                                    4 +                                      \
                                                   (4 * UX_DEVICE_CLASS_PIMA_MAX_STORAGE_IDS)
-#error UX_DEVICE_CLASS_PIMA_TRANSFER_BUFFER_LENGTH too small
+/* #error UX_DEVICE_CLASS_PIMA_TRANSFER_BUFFER_LENGTH too small */
+/* Build option checked runtime by UX_ASSERT  */
 #endif
 
 /**************************************************************************/ 
@@ -41,7 +41,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_device_class_pima_storage_id_send               PORTABLE C      */ 
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -79,6 +79,10 @@
 /*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
 /*                                            improved sanity checks,     */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            checked compiling options   */
+/*                                            by runtime UX_ASSERT,       */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_pima_storage_id_send(UX_SLAVE_CLASS_PIMA *pima)
@@ -88,6 +92,12 @@ UINT                    status;
 UX_SLAVE_TRANSFER       *transfer_request;
 ULONG                   storage_id_length;
 UCHAR                   *storage_id;
+
+    /* Build option check.  */
+    UX_ASSERT(UX_DEVICE_CLASS_PIMA_TRANSFER_BUFFER_LENGTH >=
+                                (UX_DEVICE_CLASS_PIMA_DATA_HEADER_SIZE + 
+                                 4 +                                     
+                                 (4 * UX_DEVICE_CLASS_PIMA_MAX_STORAGE_IDS)));
 
     /* If trace is enabled, insert this event into the trace buffer.  */
     UX_TRACE_IN_LINE_INSERT(UX_TRACE_DEVICE_CLASS_PIMA_STORAGE_ID_SEND, pima, 0, 0, 0, UX_TRACE_DEVICE_CLASS_EVENTS, 0, 0)

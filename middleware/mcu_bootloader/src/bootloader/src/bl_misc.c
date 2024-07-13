@@ -335,6 +335,10 @@ void _isatty(void)
 void _kill(void)
 {
 }
+void __assertion_failed(char *_Expr)
+{
+    while(1);
+}
 #endif
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

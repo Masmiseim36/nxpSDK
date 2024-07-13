@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */ 
 /*                                                                        */ 
 /*    nx_ppp.h                                            PORTABLE C      */  
-/*                                                           6.1.9        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -52,6 +51,10 @@
 /*  10-15-2021     Yuxin Zhou               Modified comment(s), included */
 /*                                            necessary header file,      */
 /*                                            resulting in version 6.1.9  */
+/*  10-31-2023     Wenhui Xie               Modified comment(s), and      */
+/*                                            supported processing        */
+/*                                            compressed data,            */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -390,6 +393,10 @@ extern   "C" {
 #define NX_PPP_DNS_SERVER_OPTION                            0x81
 #define NX_PPP_DNS_SECONDARY_SERVER_OPTION                  0x83
 
+/* Define the mark for the last octet of protocol field */
+/* RFC 1661 https://www.rfc-editor.org/rfc/rfc1661#section-6.5:
+   The presence of a binary "1" as the LSB marks the last octet of the Protocol field. */
+#define NX_PPP_PROTOCOL_LSB_MARK                            0x01
 
 
 /* Define optional debug log.  This is used to capture the PPP traffic for debug

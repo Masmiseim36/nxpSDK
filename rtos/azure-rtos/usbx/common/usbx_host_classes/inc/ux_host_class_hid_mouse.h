@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -70,6 +69,13 @@ extern   "C" {
 #endif  
 
 
+/* Internal option: enable the basic USBX error checking. This define is typically used
+   while debugging application.  */
+#if defined(UX_ENABLE_ERROR_CHECKING) && !defined(UX_DEVICE_CLASS_HID_MOUSE_ENABLE_ERROR_CHECKING)
+#define UX_DEVICE_CLASS_HID_MOUSE_ENABLE_ERROR_CHECKING
+#endif
+
+
 /* Define HID Mouse Class constants.  */
 
 #define UX_HOST_CLASS_HID_MOUSE_BUFFER_LENGTH                   128
@@ -125,15 +131,36 @@ UINT    _ux_host_class_hid_mouse_buttons_get(UX_HOST_CLASS_HID_MOUSE *mouse_inst
 UINT    _ux_host_class_hid_mouse_position_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
                                             SLONG *mouse_x_position, 
                                             SLONG *mouse_y_position);
-UINT  _ux_host_class_hid_mouse_wheel_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
+UINT    _ux_host_class_hid_mouse_wheel_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
                                             SLONG *mouse_wheel_movement); 
+
+UINT    _uxe_host_class_hid_mouse_buttons_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
+                                            ULONG *mouse_buttons);
+UINT    _uxe_host_class_hid_mouse_position_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
+                                            SLONG *mouse_x_position, 
+                                            SLONG *mouse_y_position);
+UINT    _uxe_host_class_hid_mouse_wheel_get(UX_HOST_CLASS_HID_MOUSE *mouse_instance, 
+                                            SLONG *mouse_wheel_movement); 
+
 
 /* Define HID Mouse Class API prototypes.  */
 
 #define ux_host_class_hid_mouse_entry                       _ux_host_class_hid_mouse_entry
+
+#if defined(UX_DEVICE_CLASS_HID_MOUSE_ENABLE_ERROR_CHECKING)
+
+#define ux_host_class_hid_mouse_buttons_get                 _uxe_host_class_hid_mouse_buttons_get
+#define ux_host_class_hid_mouse_position_get                _uxe_host_class_hid_mouse_position_get
+#define ux_host_class_hid_mouse_wheel_get                   _uxe_host_class_hid_mouse_wheel_get
+
+#else
+
 #define ux_host_class_hid_mouse_buttons_get                 _ux_host_class_hid_mouse_buttons_get
 #define ux_host_class_hid_mouse_position_get                _ux_host_class_hid_mouse_position_get
 #define ux_host_class_hid_mouse_wheel_get                   _ux_host_class_hid_mouse_wheel_get
+
+#endif
+
 
 /* Determine if a C++ compiler is being used.  If so, complete the standard 
    C conditional started above.  */   

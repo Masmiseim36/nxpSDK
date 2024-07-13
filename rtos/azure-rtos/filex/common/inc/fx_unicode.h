@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -93,12 +92,12 @@ UINT _fxe_unicode_name_get_extended(FX_MEDIA *media_ptr, CHAR *source_short_name
 UINT _fxe_unicode_short_name_get(FX_MEDIA *media_ptr, UCHAR *source_unicode_name, ULONG source_unicode_length,
                                  CHAR *destination_short_name);
 UINT _fxe_unicode_short_name_get_extended(FX_MEDIA *media_ptr, UCHAR *source_unicode_name, ULONG source_unicode_length,
-                                 CHAR *destination_short_name, ULONG short_name_buffer_length);                                 
+                                 CHAR *destination_short_name, ULONG short_name_buffer_length);
 
 /* Define the internal Unicode component function prototypes.  */
 
 UINT  _fx_unicode_directory_search(FX_MEDIA *media_ptr, FX_DIR_ENTRY *entry_ptr,
-                                   UCHAR *short_name, ULONG short_name_buffer_length, 
+                                   UCHAR *short_name, ULONG short_name_buffer_length,
                                    UCHAR *unicode_name, ULONG *unicode_name_length, ULONG unicode_name_buffer_length);
 UINT _fx_unicode_directory_entry_read(FX_MEDIA *media_ptr, FX_DIR_ENTRY *source_dir,
                                       ULONG *entry_ptr, FX_DIR_ENTRY *destination_ptr,

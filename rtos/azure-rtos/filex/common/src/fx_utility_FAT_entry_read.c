@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -116,15 +115,15 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
 #endif /* FX_ENABLE_FAULT_TOLERANT */
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
-    /* Increment the number of FAT entry reads and cache hits.  */
-    media_ptr -> fx_media_fat_entry_reads++;
-    media_ptr -> fx_media_fat_entry_cache_read_hits++;
+/* Increment the number of FAT entry reads and cache hits.  */
+media_ptr -> fx_media_fat_entry_reads++;
+media_ptr -> fx_media_fat_entry_cache_read_hits++;
 #endif
 
-    /* Extended port-specific processing macro, which is by default defined to white space.  */
-    FX_UTILITY_FAT_ENTRY_READ_EXTENSION
+/* Extended port-specific processing macro, which is by default defined to white space.  */
+FX_UTILITY_FAT_ENTRY_READ_EXTENSION
 
-    /* Calculate the area of the cache for this FAT entry.  */
+/* Calculate the area of the cache for this FAT entry.  */
     index =  (cluster & FX_FAT_CACHE_HASH_MASK) * FX_FAT_CACHE_DEPTH;
 
     /* Build a pointer to the cache entry.  */
@@ -190,7 +189,7 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
         return(FX_SUCCESS);
     }
 #else
-    for (UINT i = 0; i < 4; i++)
+for(UINT i = 0; i < 4; i++)
     {
         if (((cache_entry_ptr + i) -> fx_fat_cache_entry_cluster) == cluster)
         {
@@ -343,11 +342,7 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
     }
 
     /* Check for a 16-bit FAT.  */
-#ifdef FX_ENABLE_EXFAT
-    else if (FX_FAT16  == media_ptr -> fx_media_FAT_type)
-#else
     else if (!media_ptr -> fx_media_32_bit_FAT)
-#endif /* FX_ENABLE_EXFAT */
     {
 
         /* 16-bit FAT is present.  */
@@ -384,12 +379,7 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
 
         *entry_ptr =  entry;
     }
-#ifdef FX_ENABLE_EXFAT
-    else if ((media_ptr -> fx_media_FAT_type == FX_FAT32) ||
-             (media_ptr -> fx_media_FAT_type == FX_exFAT))
-#else
     else
-#endif /* FX_ENABLE_EXFAT */
     {
 
         /* Otherwise, a 32 bit FAT present.  */
@@ -420,17 +410,9 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
         /* Pickup the FAT entry.  */
         entry32 =  _fx_utility_32_unsigned_read(FAT_ptr);
 
-#ifdef FX_ENABLE_EXFAT
-        /* FAT32 uses 28 bit cluster addressing but  exFAT uses 32 bit.  */
-        if (media_ptr -> fx_media_FAT_type == FX_FAT32)
-        {
-#endif /* FX_ENABLE_EXFAT */
 
-            /* Clear upper nibble.  */
-            entry32 = entry32 & 0x0FFFFFFF;
-#ifdef FX_ENABLE_EXFAT
-        }
-#endif /* FX_ENABLE_EXFAT */
+        /* Clear upper nibble.  */
+        entry32 = entry32 & 0x0FFFFFFF;
 
         *entry_ptr =  entry32;
     }

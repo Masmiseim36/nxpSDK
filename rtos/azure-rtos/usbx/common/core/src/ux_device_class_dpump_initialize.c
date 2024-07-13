@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -34,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_device_class_dpump_initialize                   PORTABLE C      */ 
-/*                                                           6.1.12       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -70,6 +69,10 @@
 /*                                            fixed parameter/variable    */
 /*                                            names conflict C++ keyword, */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added a new mode to manage  */
+/*                                            endpoint buffer in classes, */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_device_class_dpump_initialize(UX_SLAVE_CLASS_COMMAND *command)
@@ -91,7 +94,19 @@ UX_SLAVE_CLASS_DPUMP_PARAMETER          *dpump_parameter;
 
     /* Save the address of the DPUMP instance inside the DPUMP container.  */
     class_ptr -> ux_slave_class_instance = (VOID *) dpump;
-    
+
+#if UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1
+    UX_ASSERT(!UX_DEVICE_CLASS_DPUMP_ENDPOINT_BUFFER_SIZE_CALC_OVERFLOW);
+    dpump -> ux_device_class_dpump_endpoint_buffer = _ux_utility_memory_allocate(
+                                UX_NO_ALIGN, UX_CACHE_SAFE_MEMORY,
+                                UX_DEVICE_CLASS_DPUMP_ENDPOINT_BUFFER_SIZE);
+    if (dpump -> ux_device_class_dpump_endpoint_buffer == UX_NULL)
+    {
+        _ux_utility_memory_free(dpump);
+        return(UX_MEMORY_INSUFFICIENT);
+    }
+#endif
+
     /* Get the pointer to the application parameters for the cdc class.  */
     dpump_parameter =  command -> ux_slave_class_command_parameter;
 

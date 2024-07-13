@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2023-2024 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -23,6 +23,8 @@
  * @{
  */
 
+#define BUFFER_NUMBER 2U
+
 typedef struct iot_agent_datastore_plain_context_t {
 	// In order to demonstrate atomic updates with transactions, this datastore 
 	// implementation contains two buffers. One is holding the current data. 
@@ -31,8 +33,8 @@ typedef struct iot_agent_datastore_plain_context_t {
 	// still come from the original buffer.
 	// When committing, the original buffer is deleted and all accesses are done 
 	// on the new buffer from that point onwards.
-	uint8_t* buffers[2];
-	size_t size[2];
+	uint8_t* buffers[BUFFER_NUMBER];
+	size_t size[BUFFER_NUMBER];
 
 	/** The index of the buffers from which reads will take place. */
 	size_t idx_read;

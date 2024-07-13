@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_create                                   PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -81,6 +80,10 @@
 /*                                            resulting in version 6.1    */
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1.3  */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added initilization to the  */
+/*                                            canvas members,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_create(GX_CANVAS *canvas, GX_CONST GX_CHAR *name, GX_DISPLAY *display,
@@ -100,9 +103,13 @@ UINT  _gx_canvas_create(GX_CANVAS *canvas, GX_CONST GX_CHAR *name, GX_DISPLAY *d
     canvas -> gx_canvas_draw_nesting =      0;
     canvas -> gx_canvas_dirty_count =       0;
     canvas -> gx_canvas_status =            type;
-    canvas -> gx_canvas_x_resolution =      (GX_VALUE) width;
-    canvas -> gx_canvas_y_resolution =      (GX_VALUE) height;
-    canvas -> gx_canvas_hardware_layer =    (GX_BYTE) -1;
+    canvas -> gx_canvas_x_resolution =      (GX_VALUE)width;
+    canvas -> gx_canvas_y_resolution =      (GX_VALUE)height;
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    canvas -> gx_canvas_memory_width =      (GX_VALUE)width;
+    canvas -> gx_canvas_memory_height =     (GX_VALUE)height;
+#endif
+    canvas -> gx_canvas_hardware_layer =    (GX_BYTE)-1;
 
     /* Determine if there is a memory area.  */
     if (memory_area)

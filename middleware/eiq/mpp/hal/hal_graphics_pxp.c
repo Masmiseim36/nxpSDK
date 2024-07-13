@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP.
+ * Copyright 2019-2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,8 +14,7 @@
 #include "hal_graphics_dev.h"
 #include "hal_debug.h"
 #if (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Pxp == 1)
-#include "FreeRTOS.h"
-#include "semphr.h"
+#include "hal_os.h"
 #include "fsl_common.h"
 #include "fsl_pxp.h"
 #include "fsl_cache.h"
@@ -53,9 +52,9 @@ typedef struct _gfx_pxp_handle
     pxp_as_blend_config_t asBlendConfig;
     pxp_output_buffer_config_t outputBufferConfig;
 #if ENABLE_PXP_LOCK
-    SemaphoreHandle_t mutex; /*!< Mutex to lock the handle during a transfer */
+    hal_mutex_t mutex; /*!< Mutex to lock the handle during a transfer */
 #endif
-    SemaphoreHandle_t semaphore; /*!< Semaphore to notify and unblock task when transfer ends */
+    hal_sema_t semaphore; /*!< Semaphore to notify and unblock task when transfer ends */
 } gfx_pxp_handle_t;
 
 static gfx_pxp_handle_t s_GfxPxpHandle;
@@ -72,14 +71,14 @@ void PXP_IRQHandler(void)
 {
     if (s_GfxPxpHandle.semaphore != NULL)
     {
-        BaseType_t result;
-        BaseType_t HigherPriorityTaskWoken = pdFALSE;
+        bool result;
+        long HigherPriorityTaskWoken = 0;
         PXP_ClearStatusFlags(PXP_DEV, kPXP_CompleteFlag);
-        result = xSemaphoreGiveFromISR(s_GfxPxpHandle.semaphore, &HigherPriorityTaskWoken);
+        result = hal_sema_give_isr(s_GfxPxpHandle.semaphore, &HigherPriorityTaskWoken);
 
-        if (result != pdFAIL)
+        if (result != true)
         {
-            portYIELD_FROM_ISR(HigherPriorityTaskWoken);
+            hal_sched_yield(HigherPriorityTaskWoken);
         }
     }
 }
@@ -92,16 +91,16 @@ static int _HAL_GfxDev_Pxp_Lock()
     HAL_GfxDev_Pxp_Init(NULL, NULL);
 
 #if ENABLE_PXP_LOCK
-    BaseType_t ret;
+    int ret;
 
     if (s_GfxPxpHandle.mutex == NULL)
     {
         return -1;
     }
 
-    ret = xSemaphoreTake(s_GfxPxpHandle.mutex, portMAX_DELAY);
+    ret = hal_mutex_lock(s_GfxPxpHandle.mutex);
 
-    if (pdTRUE != ret)
+    if (MPP_SUCCESS != ret)
     {
         error = -1;
     }
@@ -120,16 +119,16 @@ static int _HAL_GfxDev_Pxp_Unlock()
     int error = 0;
 
 #if ENABLE_PXP_LOCK
-    BaseType_t ret;
+    int ret;
 
     if (s_GfxPxpHandle.mutex == NULL)
     {
         return -1;
     }
 
-    ret = xSemaphoreGive(s_GfxPxpHandle.mutex);
+    ret = hal_mutex_unlock(s_GfxPxpHandle.mutex);
 
-    if (pdTRUE != ret)
+    if (MPP_SUCCESS != ret)
     {
         error = -1;
     }
@@ -154,14 +153,14 @@ int HAL_GfxDev_Pxp_Init(const gfx_dev_t *dev, void *param)
         PXP_Init(PXP_DEV);
         PXP_EnableInterrupts(PXP_DEV, kPXP_CompleteInterruptEnable);
         EnableIRQ(PXP_IRQn);
-        NVIC_SetPriority(PXP_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+        NVIC_SetPriority(PXP_IRQn, hal_get_max_syscall_prio() + 1);
 
         PXP_SetProcessSurfaceBackGroundColor(PXP_DEV, 0U);
         // disable the AS
         PXP_SetAlphaSurfacePosition(PXP_DEV, 0xFFFFU, 0xFFFFU, 0U, 0U);
 
 #if ENABLE_PXP_LOCK
-        s_GfxPxpHandle.mutex = xSemaphoreCreateMutex();
+        hal_mutex_create(&s_GfxPxpHandle.mutex);
 
         if (s_GfxPxpHandle.mutex == NULL)
         {
@@ -170,7 +169,7 @@ int HAL_GfxDev_Pxp_Init(const gfx_dev_t *dev, void *param)
         }
 
 #endif
-        s_GfxPxpHandle.semaphore = xSemaphoreCreateBinary();
+        s_GfxPxpHandle.semaphore = hal_sema_create_binary();
 
         if (s_GfxPxpHandle.semaphore == NULL)
         {
@@ -221,7 +220,7 @@ static int set_input_buffer_format(pxp_ps_buffer_config_t *pPsBufferConfig, gfx_
     // setup input buffer configuration
     switch (pSrc->format)
     {
-        case MPP_PIXEL_ARGB:
+        case MPP_PIXEL_BGRA:
         {
 #if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) || \
 		(!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
@@ -546,7 +545,7 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromGray16(gfx_surface_t *pSrc, gfx_surfa
         /* need to re-allocate the buffer */
         if (s_SurfGray888x.buf != NULL)
         {
-            MPP_FREE(s_SurfGray888x.buf);
+            hal_free(s_SurfGray888x.buf);
         }
 
         s_SurfGray888x.width  = pSrc->width;
@@ -554,7 +553,7 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromGray16(gfx_surface_t *pSrc, gfx_surfa
         s_SurfGray888x.pitch  = pSrc->width * 4;
         s_SurfGray888x.format = MPP_PIXEL_GRAY888X;
 
-        s_SurfGray888x.buf = MPP_MALLOC(s_SurfGray888x.height * s_SurfGray888x.pitch);
+        s_SurfGray888x.buf = hal_malloc(s_SurfGray888x.height * s_SurfGray888x.pitch);
         if (s_SurfGray888x.buf == NULL)
         {
             HAL_LOGE("MPP_MALLOC\n");
@@ -636,7 +635,7 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromDepth16(gfx_surface_t *pSrc, gfx_surf
         /* need to re-allocate the buffer */
         if (s_SurfGray888x.buf != NULL)
         {
-            MPP_FREE(s_SurfGray888x.buf);
+            hal_free(s_SurfGray888x.buf);
         }
 
         s_SurfGray888x.width  = pSrc->width;
@@ -644,7 +643,7 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromDepth16(gfx_surface_t *pSrc, gfx_surf
         s_SurfGray888x.pitch  = pSrc->width * 4;
         s_SurfGray888x.format = MPP_PIXEL_GRAY888X;
 
-        s_SurfGray888x.buf = MPP_MALLOC(s_SurfGray888x.height * s_SurfGray888x.pitch);
+        s_SurfGray888x.buf = hal_malloc(s_SurfGray888x.height * s_SurfGray888x.pitch);
         if (s_SurfGray888x.buf == NULL)
         {
             HAL_LOGE("MPP_MALLOC\n");
@@ -912,7 +911,7 @@ int HAL_GfxDev_Pxp_Blit(
     // start the pxp operation
     PXP_Start(PXP_DEV);
 
-    xSemaphoreTake(s_GfxPxpHandle.semaphore, portMAX_DELAY);
+    hal_sema_take(s_GfxPxpHandle.semaphore, HAL_MAX_TIMEOUT);
 
     _HAL_GfxDev_Pxp_Unlock();
 
@@ -1141,18 +1140,18 @@ static int HAL_GfxDev_Pxp_ComposeInternal(const gfx_dev_t *dev,
     // lock overlay surface to avoid conflict with ui drawing on overlay surface
     if (pOverlay->lock)
     {
-        xSemaphoreTake(pOverlay->lock, portMAX_DELAY);
+        hal_sema_take(pOverlay->lock, HAL_MAX_TIMEOUT);
     }
 
     // start the pxp operation
     PXP_Start(PXP_DEV);
 
-    xSemaphoreTake(s_GfxPxpHandle.semaphore, portMAX_DELAY);
+    hal_sema_take(s_GfxPxpHandle.semaphore, HAL_MAX_TIMEOUT);
 
     // unlock overlay surface to avoid conflict with ui drawing on overlay surface
     if (pOverlay->lock)
     {
-        xSemaphoreGive(pOverlay->lock);
+        hal_sema_give(pOverlay->lock);
     }
 
     _HAL_GfxDev_Pxp_Unlock();
@@ -1173,15 +1172,15 @@ static int HAL_GfxDev_Pxp_ComposeSurfaceAdaptForScaleAndPsRotate(const gfx_dev_t
     if (ptmp_buffer == NULL)
     {
         tmp_buffer_size = pDst->pitch * pDst->height;
-        ptmp_buffer     = MPP_MALLOC(tmp_buffer_size);
+        ptmp_buffer     = hal_malloc(tmp_buffer_size);
     }
     else
     {
         if (tmp_buffer_size < (pDst->pitch * pDst->height))
         {
-            MPP_FREE(ptmp_buffer);
+            hal_free(ptmp_buffer);
             tmp_buffer_size = pDst->pitch * pDst->height;
-            ptmp_buffer     = MPP_MALLOC(tmp_buffer_size);
+            ptmp_buffer     = hal_malloc(tmp_buffer_size);
         }
     }
     if (ptmp_buffer == NULL)

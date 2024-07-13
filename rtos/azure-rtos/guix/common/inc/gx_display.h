@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -26,7 +25,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_display.h                                        PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -60,12 +59,16 @@
 /*                                            added language direction    */
 /*                                            table set declarations,     */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            removed unused prototypes,  */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
 #ifndef GX_DISPLAY_H
 #define GX_DISPLAY_H
-
 
 /* Define Display management constants.  */
 
@@ -283,7 +286,6 @@ VOID     _gx_display_driver_565rgb_rotated_pixelmap_blend(GX_DRAW_CONTEXT *conte
 VOID     _gx_display_driver_565rgb_rotated_pixelmap_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
                                                            INT angle, INT rot_cx, INT rot_cy);
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
-USHORT   _gx_display_driver_565rgb_YCbCr2RGB(INT y, INT cb, INT cr);
 VOID     _gx_display_driver_565rgb_rotated_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 VOID     _gx_display_driver_565rgb_rotated_png_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 #endif
@@ -301,7 +303,6 @@ VOID     _gx_display_driver_24xrgb_rotated_pixel_blend(GX_DRAW_CONTEXT *context,
 
 
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
-UINT     _gx_display_driver_24xrgb_YCbCr2RGB(INT y, INT cb, INT cr);
 VOID     _gx_display_driver_24xrgb_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 VOID     _gx_display_driver_24xrgb_png_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 VOID     _gx_display_driver_24xrgb_rotated_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
@@ -540,5 +541,15 @@ VOID *_win32_canvas_memory_prepare(GX_CANVAS *canvas, GX_RECTANGLE *dirty);
         /* Not supported. */                                  \
         return;                                               \
     }
+#endif
+
+#if defined GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+#define GX_CALCULATE_PUTROW(putrow, xpos, ypos, context)\
+    putrow += (ypos - context->gx_draw_context_offset_y) * context->gx_draw_context_pitch;\
+    putrow += (xpos - context->gx_draw_context_offset_x)
+#else
+#define GX_CALCULATE_PUTROW(putrow, xpos, ypos, context)\
+    putrow += ypos * context->gx_draw_context_pitch;\
+    putrow += xpos
 #endif
 

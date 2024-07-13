@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_hcd_ehci_request_control_transfer               PORTABLE C      */ 
-/*                                                           6.1.10       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -86,6 +85,9 @@
 /*                                            refined macros names,       */
 /*                                            fixed compile warnings,     */
 /*                                            resulting in version 6.1.2  */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_hcd_ehci_request_control_transfer(UX_HCD_EHCI *hcd_ehci, UX_TRANSFER *transfer_request)
@@ -131,7 +133,7 @@ UINT            pid;
 
     /* Set the default MPS Capability info in the ED.  */
     ed -> ux_ehci_ed_cap0 &=  ~UX_EHCI_QH_MPS_MASK;
-    ed -> ux_ehci_ed_cap0 |=  endpoint -> ux_endpoint_descriptor.wMaxPacketSize << UX_EHCI_QH_MPS_LOC;
+    ed -> ux_ehci_ed_cap0 |=  (ULONG)endpoint -> ux_endpoint_descriptor.wMaxPacketSize << UX_EHCI_QH_MPS_LOC;
 
     /* On Control transfers, the toggle is set in the TD, not the QH.  */
     ed -> ux_ehci_ed_cap0 |=  UX_EHCI_QH_DTC;

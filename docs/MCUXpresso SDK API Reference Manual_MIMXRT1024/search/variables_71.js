@@ -1,17 +1,17 @@
 var searchData=
 [
-  ['qdata',['qdata',['../a00074.html#aa1b12b4293ba55b403ee57e5c8dfd736',1,'_spdif_transfer']]],
-  ['qos',['qos',['../a00066.html#ae80e3acb2997ea6dc62d6c1a1fab5133',1,'_semc_queuea_weight_struct::qos()'],['../a00066.html#abf772aa3c7690a11c082d247fb28e899',1,'_semc_queueb_weight_struct::qos()']]],
+  ['qdata',['qdata',['../a00073.html#aa1b12b4293ba55b403ee57e5c8dfd736',1,'_spdif_transfer']]],
+  ['qos',['qos',['../a00065.html#ae80e3acb2997ea6dc62d6c1a1fab5133',1,'_semc_queuea_weight_struct::qos()'],['../a00065.html#abf772aa3c7690a11c082d247fb28e899',1,'_semc_queueb_weight_struct::qos()']]],
   ['queue',['queue',['../a00030.html#a71efb264e6c1362fd91af882999ce0a9',1,'_flexio_i2s_handle::queue()'],['../a00031.html#a2280c1dc77e28686dfbe584a5e128f46',1,'_flexio_i2s_edma_handle::queue()']]],
-  ['queueaconfig',['queueaConfig',['../a00066.html#aef73966fdeae7b7f77d5879906d59bbb',1,'_semc_queuea_weight']]],
-  ['queueaenable',['queueaEnable',['../a00066.html#affa31c42295544ae775870fb49ab5889',1,'_semc_axi_queueweight']]],
-  ['queueavalue',['queueaValue',['../a00066.html#a08a9307a58371c1ff35285fcb9ef66c1',1,'_semc_queuea_weight']]],
-  ['queueaweight',['queueaWeight',['../a00066.html#a9fcfc8c5270b3d778edc7bbf0f924473',1,'_semc_axi_queueweight']]],
-  ['queuebconfig',['queuebConfig',['../a00066.html#a08b797e7bb1adb9cf99fac76e613c844',1,'_semc_queueb_weight']]],
-  ['queuebenable',['queuebEnable',['../a00066.html#a94474af8b1a8ef4f3e9a10d6404fca9f',1,'_semc_axi_queueweight']]],
-  ['queuebvalue',['queuebValue',['../a00066.html#ac7102fa86181e355448cc8b6157ecfa2',1,'_semc_queueb_weight']]],
-  ['queuebweight',['queuebWeight',['../a00066.html#a0d140fa1273968f64875cfcf8ea5ae61',1,'_semc_axi_queueweight']]],
-  ['queuedriver',['queueDriver',['../a00030.html#a74b6814e572ae5cf43928c8a9768886b',1,'_flexio_i2s_handle::queueDriver()'],['../a00031.html#abb2aa0af51c8b0bea6b19560ec8ba00b',1,'_flexio_i2s_edma_handle::queueDriver()'],['../a00061.html#af469c27f110424e0fefb61c7b65199fe',1,'_sai_handle::queueDriver()'],['../a00082.html#ac7cd6167651d0153af2ff4f324097602',1,'sai_edma_handle::queueDriver()'],['../a00074.html#ac8fbcfb70e31ce4b427cf8989555c86a',1,'_spdif_handle::queueDriver()'],['../a00075.html#af918a94ea924a39a8780b9cdd2e99ded',1,'_spdif_edma_handle::queueDriver()']]],
-  ['queueuser',['queueUser',['../a00030.html#a553d7b7ee77695b269b9d2b2c10ff35d',1,'_flexio_i2s_handle::queueUser()'],['../a00031.html#a402c6b4542c7edae50a9741406cec231',1,'_flexio_i2s_edma_handle::queueUser()'],['../a00061.html#aec7e7477fa071fee75c417824dcbf06f',1,'_sai_handle::queueUser()'],['../a00082.html#afb40eac3af06a3130c21b6fdfe3a99b6',1,'sai_edma_handle::queueUser()'],['../a00074.html#a4bbb6f77648bf22c5e897550ec08c1ee',1,'_spdif_handle::queueUser()'],['../a00075.html#a0222731e27952445ac95faf435651e72',1,'_spdif_edma_handle::queueUser()']]],
-  ['queueweight',['queueWeight',['../a00066.html#a8d415491a1369c26a41b8fbba6e1caf2',1,'_semc_config_t']]]
+  ['queueaconfig',['queueaConfig',['../a00065.html#aef73966fdeae7b7f77d5879906d59bbb',1,'_semc_queuea_weight']]],
+  ['queueaenable',['queueaEnable',['../a00065.html#affa31c42295544ae775870fb49ab5889',1,'_semc_axi_queueweight']]],
+  ['queueavalue',['queueaValue',['../a00065.html#a08a9307a58371c1ff35285fcb9ef66c1',1,'_semc_queuea_weight']]],
+  ['queueaweight',['queueaWeight',['../a00065.html#a9fcfc8c5270b3d778edc7bbf0f924473',1,'_semc_axi_queueweight']]],
+  ['queuebconfig',['queuebConfig',['../a00065.html#a08b797e7bb1adb9cf99fac76e613c844',1,'_semc_queueb_weight']]],
+  ['queuebenable',['queuebEnable',['../a00065.html#a94474af8b1a8ef4f3e9a10d6404fca9f',1,'_semc_axi_queueweight']]],
+  ['queuebvalue',['queuebValue',['../a00065.html#ac7102fa86181e355448cc8b6157ecfa2',1,'_semc_queueb_weight']]],
+  ['queuebweight',['queuebWeight',['../a00065.html#a0d140fa1273968f64875cfcf8ea5ae61',1,'_semc_axi_queueweight']]],
+  ['queuedriver',['queueDriver',['../a00030.html#a74b6814e572ae5cf43928c8a9768886b',1,'_flexio_i2s_handle::queueDriver()'],['../a00031.html#abb2aa0af51c8b0bea6b19560ec8ba00b',1,'_flexio_i2s_edma_handle::queueDriver()'],['../a00060.html#af469c27f110424e0fefb61c7b65199fe',1,'_sai_handle::queueDriver()'],['../a00081.html#ac7cd6167651d0153af2ff4f324097602',1,'sai_edma_handle::queueDriver()'],['../a00073.html#ac8fbcfb70e31ce4b427cf8989555c86a',1,'_spdif_handle::queueDriver()'],['../a00074.html#af918a94ea924a39a8780b9cdd2e99ded',1,'_spdif_edma_handle::queueDriver()']]],
+  ['queueuser',['queueUser',['../a00030.html#a553d7b7ee77695b269b9d2b2c10ff35d',1,'_flexio_i2s_handle::queueUser()'],['../a00031.html#a402c6b4542c7edae50a9741406cec231',1,'_flexio_i2s_edma_handle::queueUser()'],['../a00060.html#aec7e7477fa071fee75c417824dcbf06f',1,'_sai_handle::queueUser()'],['../a00081.html#afb40eac3af06a3130c21b6fdfe3a99b6',1,'sai_edma_handle::queueUser()'],['../a00073.html#a4bbb6f77648bf22c5e897550ec08c1ee',1,'_spdif_handle::queueUser()'],['../a00074.html#a0222731e27952445ac95faf435651e72',1,'_spdif_edma_handle::queueUser()']]],
+  ['queueweight',['queueWeight',['../a00065.html#a8d415491a1369c26a41b8fbba6e1caf2',1,'_semc_config_t']]]
 ];

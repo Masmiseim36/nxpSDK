@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2024 NXP
  * 
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -39,18 +39,21 @@ iot_agent_status_t iot_agent_datastore_fs_open_file(FILE** fp,
 	const char* basename, size_t index, const char* mode)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	size_t filename_size = strlen(basename) + 16U;
-	char* filename = malloc(filename_size);
+	size_t filename_size = 0U;
+	char* filename = NULL;
+	ASSERT_OR_EXIT_MSG(strlen(basename) <= SIZE_MAX - 16U, "Error in the provided filename");
+	filename_size = strlen(basename) + 16U;
+	filename = malloc(filename_size);
 
 	if (filename == NULL)
 	{
 		return IOT_AGENT_ERROR_MEMORY;
 	}
 
-	snprintf(filename, filename_size, "%s.%u", basename, index);
+	ASSERT_OR_EXIT_MSG(snprintf(filename, filename_size, "%s.%u", basename, index) >= 0, "Error in creating filename string");
 
 	if (*fp != NULL) {
-		fclose(*fp);
+		ASSERT_OR_EXIT_MSG(fclose(*fp) == 0, "Error in closing the file");
 		*fp = NULL;
 	}
 
@@ -59,7 +62,7 @@ iot_agent_status_t iot_agent_datastore_fs_open_file(FILE** fp,
 	if (*fp == NULL) {
 		agent_status = IOT_AGENT_ERROR_FILE_SYSTEM;
 	}
-
+exit:
 	free(filename);
 	return agent_status;
 }
@@ -81,10 +84,12 @@ iot_agent_status_t iot_agent_datastore_fs_init(iot_agent_datastore_t* datastore,
 	memset(datastore_context, 0, sizeof(iot_agent_datastore_fs_context_t));
 	datastore->context = datastore_context;
 
+	ASSERT_OR_EXIT_MSG(strlen(basename) <= (SIZE_MAX - 1U), "Wraparound in addition calculation.");
 	basename_size = strlen(basename) + 1U;
 	datastore_context->basename = malloc(basename_size);
 	ASSERT_OR_EXIT_STATUS(datastore_context->basename != NULL, IOT_AGENT_ERROR_MEMORY);
-	memcpy(datastore_context->basename, basename, basename_size);
+	memset(datastore_context->basename, '\0', basename_size);
+	memcpy(datastore_context->basename, basename, strlen(basename));
 
 	validating_datastore.context = datastore_context;
 	validating_datastore.iface = iot_agent_datastore_fs_interface;
@@ -147,12 +152,16 @@ iot_agent_status_t iot_agent_datastore_fs_destroy(
 	if (datastore_context != NULL) {
 
 		if (datastore_context->fp[0] != NULL) {
-			fclose(datastore_context->fp[0]);
+			if (fclose(datastore_context->fp[0]) != 0) {
+				IOT_AGENT_ERROR("Error in closing the file");
+			}
 			datastore_context->fp[0] = NULL;
 		}
 
 		if (datastore_context->fp[1] != NULL) {
-			fclose(datastore_context->fp[1]);
+			if (fclose(datastore_context->fp[1]) != 0) {
+				IOT_AGENT_ERROR("Error in closing the file");
+			}
 			datastore_context->fp[1] = NULL;
 		}
 
@@ -175,7 +184,7 @@ iot_agent_status_t iot_agent_datastore_fs_allocate(
 	// ongoing transaction and starting a fresh one.
 	if (datastore_context->idx_read != datastore_context->idx_write) {
 		if (datastore_context->fp[datastore_context->idx_write] != NULL) {
-			fclose(datastore_context->fp[datastore_context->idx_write]);
+			ASSERT_OR_EXIT_MSG(fclose(datastore_context->fp[datastore_context->idx_write]) == 0, "Error in closing the file");
 			datastore_context->fp[datastore_context->idx_write] = NULL;
 		}
 	}
@@ -183,6 +192,7 @@ iot_agent_status_t iot_agent_datastore_fs_allocate(
 		datastore_context->idx_write = (datastore_context->idx_write + 1U) & 0x01U;
 	}
 
+	ASSERT_OR_EXIT_MSG(datastore_context->idx_write < FILE_POINTER_NUMBER, "Error in the datastore write index");
 	agent_status = iot_agent_datastore_fs_open_file(&datastore_context->fp[datastore_context->idx_write], datastore_context->basename, datastore_context->idx_write, "w+b");
 	ASSERT_OR_EXIT_STATUS_MSG(agent_status == IOT_AGENT_SUCCESS, IOT_AGENT_ERROR_FILE_SYSTEM, 
 		"Unable to open file [%s.%u].", datastore_context->basename, datastore_context->idx_write);
@@ -202,11 +212,13 @@ iot_agent_status_t iot_agent_datastore_fs_write(
 
 	ASSERT_OR_EXIT_MSG(datastore_context != NULL, "datastore_context is NULL.");
 	ASSERT_OR_EXIT_MSG(datastore_context->fp != NULL, "datastore_context->fp is NULL.");
-
+	ASSERT_OR_EXIT_MSG(offset < SIZE_MAX, "Error in the offset casting");
+	ASSERT_OR_EXIT_MSG(datastore_context->idx_write < FILE_POINTER_NUMBER, "Overflow in the write index");
 	fp_status = fseek(datastore_context->fp[datastore_context->idx_write], offset, SEEK_SET);
 	ASSERT_OR_EXIT_MSG(fp_status == 0, "fseek failed: 0x%08x.", fp_status);
 
 	written = fwrite(src, sizeof(uint8_t), len, datastore_context->fp[datastore_context->idx_write]);
+	ASSERT_OR_EXIT_MSG(written == len, "Error in the f_write function");
 	AGENT_SUCCESS_OR_EXIT_MSG("Only %u bytes were written (wanted %u).", written, len);
 exit:
 	return agent_status;
@@ -216,11 +228,19 @@ exit:
 iot_agent_status_t iot_agent_datastore_fs_read(
 	void* context, void* dst, size_t offset, size_t* len)
 {
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	iot_agent_datastore_fs_context_t* datastore_context = (iot_agent_datastore_fs_context_t*)context;
-	int fp_status = fseek(datastore_context->fp[datastore_context->idx_read], offset, SEEK_SET);
+	size_t read = 0U;
+	int fp_status = 0;
+	ASSERT_OR_EXIT_MSG(datastore_context->idx_read < FILE_POINTER_NUMBER, "Overflow in the read index");
+	ASSERT_OR_EXIT_MSG(offset <= SIZE_MAX, "Error in offset casting.");
+	fp_status = fseek(datastore_context->fp[datastore_context->idx_read], offset, SEEK_SET);
 	if (fp_status != 0) { *len = 0U; }
-	*len = fread(dst, sizeof(uint8_t), *len, datastore_context->fp[datastore_context->idx_read]);
-	return IOT_AGENT_SUCCESS;
+	read = fread(dst, sizeof(uint8_t), *len, datastore_context->fp[datastore_context->idx_read]);
+	ASSERT_OR_EXIT_MSG(read <= *len, "Error in the f_read function"); 
+	*len = read;
+exit:
+	return agent_status;
 }
 
 
@@ -234,10 +254,10 @@ iot_agent_status_t iot_agent_datastore_fs_commit(
 		"There is no transaction to commit.");
 
 	// Flush the write file to make sure its stored.
-	fflush(datastore_context->fp[datastore_context->idx_write]);
+	ASSERT_OR_EXIT_MSG(fflush(datastore_context->fp[datastore_context->idx_write]) == 0, "Error in fflush execution");
 
 	// Empty the other file.
-	fclose(datastore_context->fp[datastore_context->idx_read]);
+	ASSERT_OR_EXIT_MSG(fclose(datastore_context->fp[datastore_context->idx_read]) == 0, "Error in closing the file")
 	datastore_context->fp[datastore_context->idx_read] = NULL;
 	agent_status = iot_agent_datastore_fs_open_file(&datastore_context->fp[datastore_context->idx_read], 
 		datastore_context->basename, datastore_context->idx_read, "w+b");
@@ -270,6 +290,10 @@ bool iot_agent_datastore_fs_get_endpoint_info(
 	info->has_additionalData = true;
 	pb_ostream_t ostream = pb_ostream_from_buffer(info->additionalData.bytes, sizeof(info->additionalData.bytes));
 	bool encode_status = pb_encode_delimited(&ostream, nxp_iot_AgentAdditionalData_fields, &additional_data);
+	if (ostream.bytes_written > SIZE_MAX) {
+		return false;
+	}
+	
 	info->additionalData.size = (pb_size_t)ostream.bytes_written;
 	return encode_status;
 }
@@ -287,6 +311,11 @@ bool iot_agent_datastore_fs_handle_write_data(pb_istream_t *stream, const pb_fie
 	iot_agent_datastore_fs_handle_write_data_t* context = (iot_agent_datastore_fs_handle_write_data_t*)(*arg);
 	iot_agent_datastore_fs_context_t* datastore_context = context->datastore_context;
 	nxp_iot_DatastoreRequest* request = context->request;
+
+	if (request->offset < 0) {
+		IOT_AGENT_ERROR("Offset variable is negative.");
+		return false;
+	}
 
 	size_t offset = (size_t)request->offset;
 	size_t len = stream->bytes_left;

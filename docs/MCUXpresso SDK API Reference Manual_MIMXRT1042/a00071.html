@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Serial Port SWO</title>
+<title>MCUXpresso SDK API Reference Manual: Serial Port USB</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,87 +99,135 @@ $(document).ready(function(){initNavTree('a00071.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Port SWO<div class="ingroups"><a class="el" href="a00070.html">Serial Manager</a></div></div>  </div>
+<div class="title">Serial Port USB<div class="ingroups"><a class="el" href="a00069.html">Serial Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00297"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00297.html">USB Device Configuration</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00519"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a00519">serial_port_swo_config_t</a></td></tr>
-<tr class="memdesc:a00519"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo config struct  <a href="a00071.html#a00519">More...</a><br/></td></tr>
-<tr class="separator:a00519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00516"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a00516">serial_port_usb_cdc_config_t</a></td></tr>
+<tr class="memdesc:a00516"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port usb config struct  <a href="a00071.html#a00516">More...</a><br/></td></tr>
+<tr class="separator:a00516"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga65f815f28e5af3d42712ebefdd8662dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga65f815f28e5af3d42712ebefdd8662dc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#ga65f815f28e5af3d42712ebefdd8662dc">SERIAL_PORT_SWO_HANDLE_SIZE</a>&#160;&#160;&#160;(12U)</td></tr>
-<tr class="memdesc:ga65f815f28e5af3d42712ebefdd8662dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo handle size <br/></td></tr>
-<tr class="separator:ga65f815f28e5af3d42712ebefdd8662dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga360a6c81305a4e09848df9aece70ad40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga360a6c81305a4e09848df9aece70ad40"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#ga360a6c81305a4e09848df9aece70ad40">SERIAL_PORT_USB_CDC_HANDLE_SIZE</a>&#160;&#160;&#160;(72U)</td></tr>
+<tr class="memdesc:ga360a6c81305a4e09848df9aece70ad40"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port usb handle size <br/></td></tr>
+<tr class="separator:ga360a6c81305a4e09848df9aece70ad40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9fb260c0db8e2e75fa339416c82084b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9fb260c0db8e2e75fa339416c82084b9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#ga9fb260c0db8e2e75fa339416c82084b9">USB_DEVICE_INTERRUPT_PRIORITY</a>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="memdesc:ga9fb260c0db8e2e75fa339416c82084b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB interrupt priority. <br/></td></tr>
+<tr class="separator:ga9fb260c0db8e2e75fa339416c82084b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gab72244db50e88efd6d079d157558932d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#gab72244db50e88efd6d079d157558932d">serial_port_swo_protocol_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00071.html#ggab72244db50e88efd6d079d157558932da57feeffbb98d786af19111f49bd6d733">kSerialManager_SwoProtocolManchester</a> = 1U, 
+<tr class="memitem:ga0d579054cbf9827f77f7018cd6f84c29"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#ga0d579054cbf9827f77f7018cd6f84c29">serial_port_usb_cdc_controller_index_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f">kSerialManager_UsbControllerKhci0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00071.html#ggab72244db50e88efd6d079d157558932da1178f82728f1b7f27f28af46f8550d95">kSerialManager_SwoProtocolNrz</a> = 2U
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a2992ed3c36bb733a2f3760b8a5927fdd">kSerialManager_UsbControllerKhci1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29aa9a69ebd4f3d306f583cb23ff5bc8aad">kSerialManager_UsbControllerEhci0</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a48e611ec0653efbf4a8b01168b8668b3">kSerialManager_UsbControllerEhci1</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29afd13021033517524c07c581fa500a83d">kSerialManager_UsbControllerLpcIp3511Fs0</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a4fc76a970dded05f11d3adc8c99880c3">kSerialManager_UsbControllerLpcIp3511Fs1</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a78c55818f572f8120a85f13337ec9274">kSerialManager_UsbControllerLpcIp3511Hs0</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a3e09ecce4e5aee8338fa0d1574139d47">kSerialManager_UsbControllerLpcIp3511Hs1</a> = 7U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29acb150e43e1572c4f7abb9b374783ba30">kSerialManager_UsbControllerOhci0</a> = 8U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a2a98602358806c8f01cdbe42cc4c763c">kSerialManager_UsbControllerOhci1</a> = 9U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a51d953a091b2650c6b8283e2ce5639ae">kSerialManager_UsbControllerIp3516Hs0</a> = 10U, 
+<br/>
+&#160;&#160;<a class="el" href="a00071.html#gga0d579054cbf9827f77f7018cd6f84c29a863a8a6669f791ce5b5207b3d85c6664">kSerialManager_UsbControllerIp3516Hs1</a> = 11U
 <br/>
  }</td></tr>
-<tr class="memdesc:gab72244db50e88efd6d079d157558932d"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo protocol  <a href="a00071.html#gab72244db50e88efd6d079d157558932d">More...</a><br/></td></tr>
-<tr class="separator:gab72244db50e88efd6d079d157558932d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga0d579054cbf9827f77f7018cd6f84c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB controller ID.  <a href="a00071.html#ga0d579054cbf9827f77f7018cd6f84c29">More...</a><br/></td></tr>
+<tr class="separator:ga0d579054cbf9827f77f7018cd6f84c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00519" id="a00519"></a>
+<a name="a00516" id="a00516"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct serial_port_swo_config_t</td>
+          <td class="memname">struct serial_port_usb_cdc_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a515e2f5ca8778fd65e10a0ac7f77d309"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a515e2f5ca8778fd65e10a0ac7f77d309"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a515e2f5ca8778fd65e10a0ac7f77d309">clockRate</a></td></tr>
-<tr class="memdesc:a515e2f5ca8778fd65e10a0ac7f77d309"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock rate <br/></td></tr>
-<tr class="separator:a515e2f5ca8778fd65e10a0ac7f77d309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af06ab1ceb2156bba95ee5b125ef77e40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af06ab1ceb2156bba95ee5b125ef77e40"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#af06ab1ceb2156bba95ee5b125ef77e40">baudRate</a></td></tr>
-<tr class="memdesc:af06ab1ceb2156bba95ee5b125ef77e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">baud rate <br/></td></tr>
-<tr class="separator:af06ab1ceb2156bba95ee5b125ef77e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeab85500212c4b7945515d3acdf24aee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeab85500212c4b7945515d3acdf24aee"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#aeab85500212c4b7945515d3acdf24aee">port</a></td></tr>
-<tr class="memdesc:aeab85500212c4b7945515d3acdf24aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port used to transfer data. <br/></td></tr>
-<tr class="separator:aeab85500212c4b7945515d3acdf24aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fee1b1db63edc021f9b1d2e5808ecc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fee1b1db63edc021f9b1d2e5808ecc0"></a>
-<a class="el" href="a00071.html#gab72244db50e88efd6d079d157558932d">serial_port_swo_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a1fee1b1db63edc021f9b1d2e5808ecc0">protocol</a></td></tr>
-<tr class="memdesc:a1fee1b1db63edc021f9b1d2e5808ecc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWO protocol. <br/></td></tr>
-<tr class="separator:a1fee1b1db63edc021f9b1d2e5808ecc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a164ef9f84df063b85674cc8aa6edd872"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a164ef9f84df063b85674cc8aa6edd872"></a>
+<a class="el" href="a00071.html#ga0d579054cbf9827f77f7018cd6f84c29">serial_port_usb_cdc_controller_index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a164ef9f84df063b85674cc8aa6edd872">controllerIndex</a></td></tr>
+<tr class="memdesc:a164ef9f84df063b85674cc8aa6edd872"><td class="mdescLeft">&#160;</td><td class="mdescRight">controller index <br/></td></tr>
+<tr class="separator:a164ef9f84df063b85674cc8aa6edd872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab72244db50e88efd6d079d157558932d"></a>
+<a class="anchor" id="ga0d579054cbf9827f77f7018cd6f84c29"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00071.html#gab72244db50e88efd6d079d157558932d">serial_port_swo_protocol_t</a></td>
+          <td class="memname">enum <a class="el" href="a00071.html#ga0d579054cbf9827f77f7018cd6f84c29">serial_port_usb_cdc_controller_index_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab72244db50e88efd6d079d157558932da57feeffbb98d786af19111f49bd6d733"></a>kSerialManager_SwoProtocolManchester</em>&nbsp;</td><td class="fielddoc">
-<p>SWO Manchester protocol. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f"></a>kSerialManager_UsbControllerKhci0</em>&nbsp;</td><td class="fielddoc">
+<p>KHCI 0U. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab72244db50e88efd6d079d157558932da1178f82728f1b7f27f28af46f8550d95"></a>kSerialManager_SwoProtocolNrz</em>&nbsp;</td><td class="fielddoc">
-<p>SWO UART/NRZ protocol. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a2992ed3c36bb733a2f3760b8a5927fdd"></a>kSerialManager_UsbControllerKhci1</em>&nbsp;</td><td class="fielddoc">
+<p>KHCI 1U, Currently, there are no platforms which have two KHCI IPs, this is reserved to be used in the future. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29aa9a69ebd4f3d306f583cb23ff5bc8aad"></a>kSerialManager_UsbControllerEhci0</em>&nbsp;</td><td class="fielddoc">
+<p>EHCI 0U. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a48e611ec0653efbf4a8b01168b8668b3"></a>kSerialManager_UsbControllerEhci1</em>&nbsp;</td><td class="fielddoc">
+<p>EHCI 1U, Currently, there are no platforms which have two EHCI IPs, this is reserved to be used in the future. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29afd13021033517524c07c581fa500a83d"></a>kSerialManager_UsbControllerLpcIp3511Fs0</em>&nbsp;</td><td class="fielddoc">
+<p>LPC USB IP3511 FS controller 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a4fc76a970dded05f11d3adc8c99880c3"></a>kSerialManager_UsbControllerLpcIp3511Fs1</em>&nbsp;</td><td class="fielddoc">
+<p>LPC USB IP3511 FS controller 1, there are no platforms which have two IP3511 IPs, this is reserved to be used in the future. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a78c55818f572f8120a85f13337ec9274"></a>kSerialManager_UsbControllerLpcIp3511Hs0</em>&nbsp;</td><td class="fielddoc">
+<p>LPC USB IP3511 HS controller 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a3e09ecce4e5aee8338fa0d1574139d47"></a>kSerialManager_UsbControllerLpcIp3511Hs1</em>&nbsp;</td><td class="fielddoc">
+<p>LPC USB IP3511 HS controller 1, there are no platforms which have two IP3511 IPs, this is reserved to be used in the future. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29acb150e43e1572c4f7abb9b374783ba30"></a>kSerialManager_UsbControllerOhci0</em>&nbsp;</td><td class="fielddoc">
+<p>OHCI 0U. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a2a98602358806c8f01cdbe42cc4c763c"></a>kSerialManager_UsbControllerOhci1</em>&nbsp;</td><td class="fielddoc">
+<p>OHCI 1U, Currently, there are no platforms which have two OHCI IPs, this is reserved to be used in the future. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a51d953a091b2650c6b8283e2ce5639ae"></a>kSerialManager_UsbControllerIp3516Hs0</em>&nbsp;</td><td class="fielddoc">
+<p>IP3516HS 0U. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a863a8a6669f791ce5b5207b3d85c6664"></a>kSerialManager_UsbControllerIp3516Hs1</em>&nbsp;</td><td class="fielddoc">
+<p>IP3516HS 1U, Currently, there are no platforms which have two IP3516HS IPs, this is reserved to be used in the future. </p>
 </td></tr>
 </table>
 

@@ -408,7 +408,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -422,6 +421,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/template</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -688,6 +688,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1559,7 +1560,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1573,6 +1573,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/template</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1839,6 +1840,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2658,19 +2660,19 @@
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_helium_utils.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math_f16.h</name>
@@ -2723,6 +2725,9 @@
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/debug.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</name>
           </file>
           <file>
@@ -2751,6 +2756,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/none.h</name>
@@ -2787,6 +2795,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/window_functions.h</name>
           </file>
         </group>
       </group>
@@ -2934,6 +2945,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>WindowFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</name>
           </file>
         </group>
       </group>
@@ -3966,7 +3983,16 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -4026,12 +4052,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/shell/fsl_shell.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>

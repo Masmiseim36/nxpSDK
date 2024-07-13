@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -123,3 +122,55 @@ UX_HOST_CLASS_HID   *hid;
     return(UX_SUCCESS);    
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _uxe_host_class_hid_keyboard_key_get                PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in HID key get function call.           */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    keyboard_instance                     Pointer to remote control     */ 
+/*    keyboard key                          Pointer to keyboard key       */ 
+/*    keyboard state                        Pointer to keyboard state     */ 
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                                              */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _ux_host_class_hid_keyboard_key_get   Get a keyboard key            */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application                                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Chaoqiong Xiao           Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+UINT  _uxe_host_class_hid_keyboard_key_get(UX_HOST_CLASS_HID_KEYBOARD *keyboard_instance, 
+                                            ULONG *keyboard_key, ULONG *keyboard_state)
+{
+
+    /* Sanity checks.  */
+    if ((keyboard_instance == UX_NULL) ||
+        (keyboard_key == UX_NULL) || (keyboard_state == UX_NULL) ||
+        (keyboard_key == keyboard_state))
+        return(UX_INVALID_PARAMETER);
+
+    /* Invoke key get function.  */
+    return(_ux_host_class_hid_keyboard_key_get(keyboard_instance, keyboard_key, keyboard_state));
+}

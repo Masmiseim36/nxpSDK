@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -29,12 +28,6 @@
 #include "fx_system.h"
 #include "fx_directory.h"
 #include "fx_utility.h"
-#ifdef FX_ENABLE_EXFAT
-#include "fx_directory_exFAT.h"
-
-
-
-#endif /* FX_ENABLE_EXFAT */
 
 
 /**************************************************************************/
@@ -68,7 +61,6 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _fx_directory_exFAT_entry_read        Read exFAT entries            */
 /*    _fx_utility_FAT_entry_read            Read a FAT entry              */
 /*    _fx_utility_logical_sector_read       Read directory sector         */
 /*    _fx_utility_16_unsigned_read          Read a UINT from memory       */
@@ -87,13 +79,8 @@
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-#ifdef FX_ENABLE_EXFAT
-UINT  _fx_directory_entry_read_FAT(FX_MEDIA *media_ptr, FX_DIR_ENTRY *source_dir,
-                                   ULONG *entry_ptr, FX_DIR_ENTRY *destination_ptr)
-#else
 UINT  _fx_directory_entry_read(FX_MEDIA *media_ptr, FX_DIR_ENTRY *source_dir,
                                ULONG *entry_ptr, FX_DIR_ENTRY *destination_ptr)
-#endif /* FX_ENABLE_EXFAT */
 {
 
 UINT   i, j, card, dotflag, get_short_name;
@@ -126,11 +113,7 @@ ULONG  entry = *entry_ptr;
     byte_offset =  entry * FX_DIR_ENTRY_SIZE;
 
     /* Determine if a sub-directory or FAT32 root directory is specified.  */
-#ifdef FX_ENABLE_EXFAT
-    if ((source_dir) || (media_ptr -> fx_media_FAT_type == FX_FAT32))
-#else
     if ((source_dir) || (media_ptr -> fx_media_32_bit_FAT))
-#endif
     {
 
         /* Yes, a sub-directory is present.  */
@@ -729,58 +712,10 @@ ULONG  entry = *entry_ptr;
         source_dir -> fx_dir_entry_last_search_log_sector =        source_dir -> fx_dir_entry_log_sector;
         source_dir -> fx_dir_entry_last_search_byte_offset =       source_dir -> fx_dir_entry_byte_offset;
     }
-#ifdef FX_ENABLE_EXFAT
-    destination_ptr -> fx_dir_entry_dont_use_fat = 0;
-
-    /* If a file whose first byte of long name is read, fx_dir_entry_short_name will not be empty. */
-    /* If a free dir_entry is obtained, fx_dir_entry_short_name[0] will not be assigned as 0 around Line 623 in this file. */
-    /* If there is only a free dir_entry without front long name dir_entries, fx_dir_entry_name[0] will be assigned by the loop around Line 568. */
-    if (((UCHAR)destination_ptr -> fx_dir_entry_name[0] == FX_DIR_ENTRY_FREE) && ((UCHAR)destination_ptr -> fx_dir_entry_short_name[0] == 0))
-    {
-        destination_ptr -> fx_dir_entry_type = FX_EXFAT_DIR_ENTRY_TYPE_FREE;
-    }
-    else if ((UCHAR)destination_ptr -> fx_dir_entry_name[0] == FX_DIR_ENTRY_DONE)
-    {
-        destination_ptr -> fx_dir_entry_type = FX_EXFAT_DIR_ENTRY_TYPE_END_MARKER;
-    }
-    else
-    {
-        destination_ptr -> fx_dir_entry_type = FX_EXFAT_DIR_ENTRY_TYPE_FILE_DIRECTORY;
-    }
-#endif /* FX_ENABLE_EXFAT */
 
     /* Return success to the caller.  */
     return(FX_SUCCESS);
 }
 
 
-#ifdef FX_ENABLE_EXFAT
-UINT  _fx_directory_entry_read_ex(FX_MEDIA *media_ptr, FX_DIR_ENTRY *source_dir,
-                                  ULONG *entry_ptr, FX_DIR_ENTRY *destination_ptr, UINT hash)
-{
-UINT status = FX_SUCCESS;
-
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-        status =
-            _fx_directory_exFAT_entry_read(
-                media_ptr, source_dir, entry_ptr, destination_ptr, hash, FX_FALSE, NULL, NULL);
-    }
-    else
-    {
-        status =
-            _fx_directory_entry_read_FAT(media_ptr, source_dir, entry_ptr, destination_ptr);
-    }
-
-    return(status);
-}
-
-
-UINT  _fx_directory_entry_read(FX_MEDIA *media_ptr, FX_DIR_ENTRY *source_dir,
-                               ULONG *entry_ptr, FX_DIR_ENTRY *destination_ptr)
-{
-
-    return(_fx_directory_entry_read_ex(media_ptr, source_dir, entry_ptr, destination_ptr, 0));
-}
-#endif /* FX_ENABLE_EXFAT */
 

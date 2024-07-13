@@ -358,7 +358,6 @@
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
@@ -367,6 +366,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1450,7 +1450,6 @@
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
@@ -1459,6 +1458,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2317,12 +2317,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2333,6 +2327,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -2542,6 +2542,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SVG_OpenVG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SVG_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SVG_VGLite.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</name>

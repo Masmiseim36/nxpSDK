@@ -34,8 +34,14 @@
 #endif
 
 #ifdef CPU_MCXN947VDF_cm33_core0
-/* MCXN1 has both KHCI and EHCI, force using EHCI */
+/* MCXN10 has both KHCI and EHCI, force using EHCI */
 #undef FSL_FEATURE_USB_KHCI_COUNT
+#undef FSL_FEATURE_USBHS_EHCI_COUNT
+#define FSL_FEATURE_USBHS_EHCI_COUNT 1
+#endif
+
+#ifdef CPU_MCXN236VDF
+/* Using EHCI for MCXN11*/
 #undef FSL_FEATURE_USBHS_EHCI_COUNT
 #define FSL_FEATURE_USBHS_EHCI_COUNT 1
 #endif

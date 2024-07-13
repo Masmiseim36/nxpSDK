@@ -15,7 +15,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ftp/nxd_ftp_server.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/http/nxd_http_client.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/http/nxd_http_server.c
-  ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/lwm2m/nx_lwm2m_client.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mdns/nxd_mdns.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mqtt/nxd_mqtt_client.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/nat/nx_nat.c
@@ -37,6 +36,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/web/nx_web_http_client.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/web/nx_web_http_server.c
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/websocket/nx_websocket_client.c
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/rtp/nx_rtp_sender.c
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/rtsp/nx_rtsp_server.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
@@ -47,7 +48,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/dns
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ftp
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/http
-  ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/lwm2m
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mdns
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mqtt
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/nat
@@ -62,6 +62,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/tftp
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/web
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/websocket
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/rtp
+  ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/rtsp
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/common/inc
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/crypto_libraries/inc
   ${CMAKE_CURRENT_LIST_DIR}/netxduo/nx_secure/inc

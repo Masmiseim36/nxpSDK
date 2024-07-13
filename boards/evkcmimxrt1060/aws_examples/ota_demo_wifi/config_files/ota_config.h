@@ -80,7 +80,7 @@
 /**
  * @brief Milliseconds to wait for the self test phase to succeed before we force reset.
  */
-#define otaconfigSELF_TEST_RESPONSE_WAIT_MS 60000U
+#define otaconfigSELF_TEST_RESPONSE_WAIT_MS 120000U
 
 /**
  * @brief Milliseconds to wait before requesting data blocks from the OTA service if nothing is happening.

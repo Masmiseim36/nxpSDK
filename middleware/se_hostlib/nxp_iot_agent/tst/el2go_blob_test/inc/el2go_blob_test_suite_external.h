@@ -1,0 +1,402 @@
+/*
+ * Copyright 2023-2024 NXP
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ */
+
+#ifndef __EL2GO_BLOB_TEST_SUITE_EXTERNAL_H__
+#define __EL2GO_BLOB_TEST_SUITE_EXTERNAL_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// These are placeholder blobs
+// Refer to el2go_blob_test.readme for how to generate device specific ones
+
+static const uint8_t EXTERNAL_BIN1B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BIN256B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BIN512B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BIN1024B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BIN2783B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BIN4096B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BIN8063B_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP192_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP224_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP256_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP256_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP256_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP256_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP384_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_NISTP521_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP192R1_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP224R1_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP256R1_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP320R1_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP384R1_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_BRAINPOOLP512R1_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ192_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ224_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_SIGVERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_SIGVERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_SIGVERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_VERMSG_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_VERHASH_ECDSAANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_VERHASH_ECDSAANY[] = {0};
+
+static const uint8_t EXTERNAL_KOBLITZ256_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_MONTDH25519_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_MONTDH25519_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_MONTDH25519_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_MONTDH448_KEYEXCH_ECDH[] = {0};
+
+static const uint8_t EXTERNAL_MONTDH448_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_MONTDH448_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_SIGVERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_SIGVERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_SIGVERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_SIGVERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_SIGVERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_CRYPT_OAEPSHA256[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_CRYPT_PKCS1V15[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_VERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_VERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_VERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_VERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_VERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA1024_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_SIGVERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_SIGVERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_SIGVERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_SIGVERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_SIGVERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_CRYPT_OAEPSHA256[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_CRYPT_PKCS1V15[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_VERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_VERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_VERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_VERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_VERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA2048_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_SIGVERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_SIGVERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_SIGVERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_SIGVERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_SIGVERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_CRYPT_OAEPSHA256[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_CRYPT_PKCS1V15[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_VERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_VERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_VERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_VERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_VERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA3072_NONE_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_SIGVERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_SIGVERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_SIGVERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_SIGVERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_SIGVERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_CRYPT_OAEPSHA256[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_CRYPT_PKCS1V15[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_EXPORT_NONE[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_VERMSG_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_VERMSG_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_VERHASH_PSSANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_VERHASH_PKCS1V15ANYHASH[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_VERHASH_RAW[] = {0};
+
+static const uint8_t EXTERNAL_RSA4096_NONE_NONE[] = {0};
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __EL2GO_BLOB_TEST_SUITE_EXTERNAL_H__ */

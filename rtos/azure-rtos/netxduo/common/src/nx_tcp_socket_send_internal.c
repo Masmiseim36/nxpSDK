@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -44,7 +43,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_tcp_socket_driver_send                          PORTABLE C      */
-/*                                                           6.1.8        */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -77,6 +76,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  08-02-2021     Yuxin Zhou               Initial Version 6.1.8         */
+/*  12-31-2023     Yajun Xia                Modified comment(s),          */
+/*                                            supported VLAN,             */
+/*                                            resulting in version 6.4.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_tcp_socket_driver_send(NX_TCP_SOCKET *socket_ptr, NX_PACKET *packet_ptr, ULONG wait_option)
@@ -917,6 +919,13 @@ UINT            compute_checksum = 1;
             socket_ptr -> nx_tcp_socket_packets_sent++;
             socket_ptr -> nx_tcp_socket_bytes_sent += send_packet -> nx_packet_length - (ULONG)sizeof(NX_TCP_HEADER);
 #endif /* NX_DISABLE_TCP_INFO */
+
+#ifdef NX_ENABLE_VLAN
+            if (socket_ptr -> nx_tcp_socket_vlan_priority != NX_VLAN_PRIORITY_INVALID)
+            {
+                send_packet -> nx_packet_vlan_priority = socket_ptr -> nx_tcp_socket_vlan_priority;
+            }
+#endif /* NX_ENABLE_VLAN */
 
             /* If trace is enabled, insert this event into the trace buffer.  */
             NX_TRACE_IN_LINE_INSERT(NX_TRACE_INTERNAL_TCP_DATA_SEND, ip_ptr, socket_ptr, send_packet, socket_ptr -> nx_tcp_socket_tx_sequence - (send_packet -> nx_packet_length - sizeof(NX_TCP_HEADER)), NX_TRACE_INTERNAL_EVENTS, 0, 0);

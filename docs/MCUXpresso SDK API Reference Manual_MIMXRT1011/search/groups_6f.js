@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ocotp_3a_20on_20chip_20one_2dtime_20programmable_20controller_2e',['OCOTP: On Chip One-Time Programmable controller.',['../a00048.html',1,'']]],
-  ['otfad_3a_20on_20the_20fly_20aes_2d128_20decryption_20driver',['OTFAD: On The Fly AES-128 Decryption Driver',['../a00049.html',1,'']]]
+  ['ocotp_3a_20on_20chip_20one_2dtime_20programmable_20controller_2e',['OCOTP: On Chip One-Time Programmable controller.',['../a00047.html',1,'']]],
+  ['otfad_3a_20on_20the_20fly_20aes_2d128_20decryption_20driver',['OTFAD: On The Fly AES-128 Decryption Driver',['../a00048.html',1,'']]]
 ];

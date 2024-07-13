@@ -327,10 +327,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1024/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -348,7 +348,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -996,16 +996,6 @@
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1019,6 +1009,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1126,9 +1126,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -1578,10 +1593,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1024/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1599,7 +1614,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2247,16 +2262,6 @@
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2270,6 +2275,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2377,9 +2392,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -2829,10 +2859,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, _DEBUG=0, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, _DEBUG=0, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1024/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2850,7 +2880,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3498,16 +3528,6 @@
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3521,6 +3541,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3628,9 +3658,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -4080,10 +4125,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, _DEBUG=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, _DEBUG=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CPU_MIMXRT1024DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../components/i2c;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1024;../../../../../evkmimxrt1024/xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../devices/MIMXRT1024/utilities;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1024/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4101,7 +4146,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1024</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1024;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4749,16 +4794,6 @@
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4772,6 +4807,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4879,9 +4924,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>

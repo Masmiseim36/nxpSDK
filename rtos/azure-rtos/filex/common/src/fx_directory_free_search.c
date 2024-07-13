@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -29,9 +28,6 @@
 #include "fx_system.h"
 #include "fx_directory.h"
 #include "fx_utility.h"
-#ifdef FX_ENABLE_EXFAT
-#include "fx_directory_exFAT.h"
-#endif /* FX_ENABLE_EXFAT */
 
 
 /**************************************************************************/
@@ -108,15 +104,6 @@ UINT          sectors;
 FX_INT_SAVE_AREA
 
 
-#ifdef FX_ENABLE_EXFAT
-    /* Check if media format is exFAT.  */
-    if (media_ptr -> fx_media_FAT_type == FX_exFAT)
-    {
-
-        /* Call exFAT specific function.  */
-        return(_fx_directory_exFAT_free_search(media_ptr, directory_ptr, entry_ptr));
-    }
-#endif /* FX_ENABLE_EXFAT */
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
 
@@ -357,10 +344,10 @@ FX_INT_SAVE_AREA
                     /* Write out the directory entry.  */
                     status = _fx_directory_entry_write(media_ptr, entry_ptr);
                     if(status != FX_SUCCESS)
-                    {  
+                    {
                         return(status);
                     }
-  
+
                     /* Note that for long names we need to avoid holes in the middle,
                        i.e. entries must be logically contiguous.  */
                 }

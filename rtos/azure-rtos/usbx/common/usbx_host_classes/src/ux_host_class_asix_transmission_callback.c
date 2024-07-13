@@ -1,13 +1,12 @@
-/**************************************************************************/
-/*                                                                        */
-/*       Copyright (c) Microsoft Corporation. All rights reserved.        */
-/*                                                                        */
-/*       This software is licensed under the Microsoft Software License   */
-/*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
-/*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
-/*       and in the root directory of this software.                      */
-/*                                                                        */
-/**************************************************************************/
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation 
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ * 
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
 
 
 /**************************************************************************/
@@ -35,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_host_class_asix_transmission_callback           PORTABLE C      */ 
-/*                                                           6.2.0        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -81,6 +80,10 @@
 /*                                            supported NX packet chain,  */
 /*                                            fixed empty queue handling, */
 /*                                            resulting in version 6.2.0  */
+/*  10-31-2023     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            improved 64-bit support,    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _ux_host_class_asix_transmission_callback (UX_TRANSFER *transfer_request)
@@ -158,7 +161,7 @@ ULONG                           copied;
         if (next_packet -> nx_packet_next)
         {
 
-            next_packet -> nx_packet_length += sizeof(USHORT) * 2;
+            next_packet -> nx_packet_length += (ULONG)sizeof(USHORT) * 2;
             next_packet -> nx_packet_prepend_ptr -= sizeof(USHORT) * 2;
             nx_packet_data_extract_offset(next_packet, 0, asix -> ux_host_class_asix_xmit_buffer, next_packet -> nx_packet_length, &copied);
 
@@ -167,7 +170,7 @@ ULONG                           copied;
             transfer_request -> ux_transfer_request_data_pointer = asix -> ux_host_class_asix_xmit_buffer;
 
             /* Restore packet status.  */
-            next_packet -> nx_packet_length -= sizeof(USHORT) * 2;
+            next_packet -> nx_packet_length -= (ULONG)sizeof(USHORT) * 2;
             next_packet -> nx_packet_prepend_ptr += sizeof(USHORT) * 2;
         }
         else

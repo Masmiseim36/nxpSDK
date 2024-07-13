@@ -1,6 +1,6 @@
 var a00029 =
 [
-    [ "_flexio_i2c_type", "a00029.html#a00371", [
+    [ "_flexio_i2c_type", "a00029.html#a00368", [
       [ "flexioBase", "a00029.html#a8c612e804a704d10af7495010447506d", null ],
       [ "SDAPinIndex", "a00029.html#a0dd4c317807ba1701e561d3f6b9131ce", null ],
       [ "SCLPinIndex", "a00029.html#a90f9f1c5d3181e6ac34b475c6eb0da56", null ],
@@ -8,14 +8,14 @@ var a00029 =
       [ "timerIndex", "a00029.html#a00c9a97524f0d5c42585aacf4c4de4ca", null ],
       [ "baudrate", "a00029.html#ae684d7f95a201dbb4104801e0311f247", null ]
     ] ],
-    [ "_flexio_i2c_master_config", "a00029.html#a00368", [
+    [ "_flexio_i2c_master_config", "a00029.html#a00365", [
       [ "enableMaster", "a00029.html#a91a87b7bd8d4bae9e406390ae9776155", null ],
       [ "enableInDoze", "a00029.html#ae4c1517363576758cff67f9537927b88", null ],
       [ "enableInDebug", "a00029.html#a7f9e31f1448e28351002384106e332f0", null ],
       [ "enableFastAccess", "a00029.html#a689dee0d3ab98623b8f5c0b5bd83183d", null ],
       [ "baudRate_Bps", "a00029.html#abf5d294be79f4687caa730c2674de22e", null ]
     ] ],
-    [ "_flexio_i2c_master_transfer", "a00029.html#a00370", [
+    [ "_flexio_i2c_master_transfer", "a00029.html#a00367", [
       [ "flags", "a00029.html#aa74dd7104b75a95d9128fce2f9731628", null ],
       [ "slaveAddress", "a00029.html#ad40d580b11006c7b47931d5a16482a01", null ],
       [ "direction", "a00029.html#a3a0e94bf1d8f89f9a0f3c36b919e6a09", null ],
@@ -24,7 +24,7 @@ var a00029 =
       [ "data", "a00029.html#a0104b33e9efa445c26bde6cc0be3ddce", null ],
       [ "dataSize", "a00029.html#a8539ca8b74e1d6335754daf6e819fd47", null ]
     ] ],
-    [ "_flexio_i2c_master_handle", "a00029.html#a00369", [
+    [ "_flexio_i2c_master_handle", "a00029.html#a00366", [
       [ "transfer", "a00029.html#a5532e06e5a1f46f2ee953951d6ddb45e", null ],
       [ "transferSize", "a00029.html#aa8453802324d3032c21902f09bd05382", null ],
       [ "state", "a00029.html#a3b70729eb68c9344be4f40542dfa248f", null ],

@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_lwip AND CONFIG_USE_middleware_usb_host_cdc AND CONFIG_USE_middleware_usb_host_cdc_rndis AND (CONFIG_USE_middleware_usb_host_ehci))
+if(CONFIG_USE_middleware_lwip AND CONFIG_USE_middleware_usb_host_cdc AND (CONFIG_USE_middleware_usb_host_cdc_ecm OR CONFIG_USE_middleware_usb_host_cdc_rndis) AND (CONFIG_USE_middleware_usb_host_khci OR CONFIG_USE_middleware_usb_host_ehci OR CONFIG_USE_middleware_usb_host_ohci))
 
 if(CONFIG_USE_middleware_baremetal)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

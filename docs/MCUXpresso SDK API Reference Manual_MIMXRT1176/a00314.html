@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00314.html','');});
 <div class="header">
   <div class="summary">
 <a href="#files">Files</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">ANATOP_AI driver</div>  </div>
@@ -110,185 +111,196 @@ $(document).ready(function(){initNavTree('a00314.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00122"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00122.html">fsl_anatop_ai.h</a></td></tr>
+<tr class="memitem:a00124"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00124.html">fsl_anatop_ai.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gadbe3ecd128505fd461c1e31dde98aa45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadbe3ecd128505fd461c1e31dde98aa45"></a>
+typedef enum <a class="el" href="a00314.html#gae289151ed70fbd645da2547d88e347bd">_anatop_ai_itf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#gadbe3ecd128505fd461c1e31dde98aa45">anatop_ai_itf_t</a></td></tr>
+<tr class="memdesc:gadbe3ecd128505fd461c1e31dde98aa45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Anatop AI ITF enumeration. <br/></td></tr>
+<tr class="separator:gadbe3ecd128505fd461c1e31dde98aa45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bf8eda6145136987c38c367f94ad35d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3bf8eda6145136987c38c367f94ad35d"></a>
+typedef enum <a class="el" href="a00314.html#ga90d0320f3c13ad21c0b2a3f5e73ae086">_anatop_ai_reg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ga3bf8eda6145136987c38c367f94ad35d">anatop_ai_reg_t</a></td></tr>
+<tr class="memdesc:ga3bf8eda6145136987c38c367f94ad35d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of ANATOP AI Register. <br/></td></tr>
+<tr class="separator:ga3bf8eda6145136987c38c367f94ad35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaac052ed875a5a08a12def23c2ed9337e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#gaac052ed875a5a08a12def23c2ed9337e">anatop_ai_itf_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337ea97457bb3e181e4e65c2bed8a6742b181">kAI_Itf_Ldo</a> = 0, 
+<tr class="memitem:gae289151ed70fbd645da2547d88e347bd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#gae289151ed70fbd645da2547d88e347bd">_anatop_ai_itf</a> { <br/>
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bda97457bb3e181e4e65c2bed8a6742b181">kAI_Itf_Ldo</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337ea7da01d7f8df56a5ce18613cdcb393de8">kAI_Itf_1g</a> = 1, 
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bda7da01d7f8df56a5ce18613cdcb393de8">kAI_Itf_1g</a> = 1, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337ea008819dad96edf208090ef8d7a758b98">kAI_Itf_Audio</a> = 2, 
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bda008819dad96edf208090ef8d7a758b98">kAI_Itf_Audio</a> = 2, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337ea12aa5b2e5e558276f7601c4bb38a6c92">kAI_Itf_Video</a> = 3, 
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bda12aa5b2e5e558276f7601c4bb38a6c92">kAI_Itf_Video</a> = 3, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337ea0b6970ef1f453bca2d0b88d83b2226c8">kAI_Itf_400m</a> = 4, 
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bda0b6970ef1f453bca2d0b88d83b2226c8">kAI_Itf_400m</a> = 4, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337eac8446bcab7e13c561bfa3e6bd5fdfede">kAI_Itf_Temp</a> = 5, 
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bdac8446bcab7e13c561bfa3e6bd5fdfede">kAI_Itf_Temp</a> = 5, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#ggaac052ed875a5a08a12def23c2ed9337eac401f1f74c2c1ae1c93e528d2feb43df">kAI_Itf_Bandgap</a> = 6
+&#160;&#160;<a class="el" href="a00314.html#ggae289151ed70fbd645da2547d88e347bdac401f1f74c2c1ae1c93e528d2feb43df">kAI_Itf_Bandgap</a> = 6
 <br/>
  }</td></tr>
-<tr class="memdesc:gaac052ed875a5a08a12def23c2ed9337e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Anatop AI ITF enumeration.  <a href="a00314.html#gaac052ed875a5a08a12def23c2ed9337e">More...</a><br/></td></tr>
-<tr class="separator:gaac052ed875a5a08a12def23c2ed9337e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga525d3922a89f6767f30afe62d39d2c7a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ga525d3922a89f6767f30afe62d39d2c7a">anatop_ai_reg_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa237698818866089fd8b20af4af11242d">kAI_PHY_LDO_CTRL0</a> = 0x0, 
+<tr class="memdesc:gae289151ed70fbd645da2547d88e347bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Anatop AI ITF enumeration.  <a href="a00314.html#gae289151ed70fbd645da2547d88e347bd">More...</a><br/></td></tr>
+<tr class="separator:gae289151ed70fbd645da2547d88e347bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90d0320f3c13ad21c0b2a3f5e73ae086"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ga90d0320f3c13ad21c0b2a3f5e73ae086">_anatop_ai_reg</a> { <br/>
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a237698818866089fd8b20af4af11242d">kAI_PHY_LDO_CTRL0</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa6b49784446b1d4ae56cd53c156a2a3cb">kAI_PHY_LDO_CTRL0_SET</a> = 0x4, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a6b49784446b1d4ae56cd53c156a2a3cb">kAI_PHY_LDO_CTRL0_SET</a> = 0x4, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa209fb65dc167a0e66ad7cc5f7397f013">kAI_PHY_LDO_CTRL0_CLR</a> = 0x8, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a209fb65dc167a0e66ad7cc5f7397f013">kAI_PHY_LDO_CTRL0_CLR</a> = 0x8, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aad07f96746fcfef207a1cfec05a468e19">kAI_PHY_LDO_CTRL0_TOG</a> = 0xC, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ad07f96746fcfef207a1cfec05a468e19">kAI_PHY_LDO_CTRL0_TOG</a> = 0xC, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa0d8d020a178991f7fd3349010b0381fb">kAI_PHY_LDO_STAT0</a> = 0x50, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a0d8d020a178991f7fd3349010b0381fb">kAI_PHY_LDO_STAT0</a> = 0x50, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aaa5c5bad85d5b01ee687ad961a7c85643">kAI_PHY_LDO_STAT0_SET</a> = 0x54, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086aa5c5bad85d5b01ee687ad961a7c85643">kAI_PHY_LDO_STAT0_SET</a> = 0x54, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa7cf7b6bad80abde23add2160927b177d">kAI_PHY_LDO_STAT0_CLR</a> = 0x58, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a7cf7b6bad80abde23add2160927b177d">kAI_PHY_LDO_STAT0_CLR</a> = 0x58, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa2913a7c8dbe96b78f8e33279e6ef37c1">kAI_PHY_LDO_STAT0_TOG</a> = 0x5C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a2913a7c8dbe96b78f8e33279e6ef37c1">kAI_PHY_LDO_STAT0_TOG</a> = 0x5C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa5894f043e53287678e9a4bcb49e77b96">kAI_BANDGAP_CTRL0</a> = 0x0, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a5894f043e53287678e9a4bcb49e77b96">kAI_BANDGAP_CTRL0</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aad9d3d5bec05f7bf40249df018be1b55a">kAI_BANDGAP_STAT0</a> = 0x50, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ad9d3d5bec05f7bf40249df018be1b55a">kAI_BANDGAP_STAT0</a> = 0x50, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa67690de754a72459bf69b1a875199837">kAI_RCOSC400M_CTRL0</a> = 0x0, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a67690de754a72459bf69b1a875199837">kAI_RCOSC400M_CTRL0</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa22f49fb2a233ae067402d1e444967bd3">kAI_RCOSC400M_CTRL0_SET</a> = 0x4, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a22f49fb2a233ae067402d1e444967bd3">kAI_RCOSC400M_CTRL0_SET</a> = 0x4, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aad07bb56cd3a33a0506f11db582ef18b0">kAI_RCOSC400M_CTRL0_CLR</a> = 0x8, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ad07bb56cd3a33a0506f11db582ef18b0">kAI_RCOSC400M_CTRL0_CLR</a> = 0x8, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa550b8d81b2643d76508333d805412812">kAI_RCOSC400M_CTRL0_TOG</a> = 0xC, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a550b8d81b2643d76508333d805412812">kAI_RCOSC400M_CTRL0_TOG</a> = 0xC, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa53a0f2dedae78c7671b615dfe762b2cb">kAI_RCOSC400M_CTRL1</a> = 0x10, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a53a0f2dedae78c7671b615dfe762b2cb">kAI_RCOSC400M_CTRL1</a> = 0x10, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aac967a14c0f6e00cd6a5ffe69ec041006">kAI_RCOSC400M_CTRL1_SET</a> = 0x14, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ac967a14c0f6e00cd6a5ffe69ec041006">kAI_RCOSC400M_CTRL1_SET</a> = 0x14, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa312e6b8073981546d865018d98dc0991">kAI_RCOSC400M_CTRL1_CLR</a> = 0x18, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a312e6b8073981546d865018d98dc0991">kAI_RCOSC400M_CTRL1_CLR</a> = 0x18, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa2c0af04d62310105edd9f175d3fc50e2">kAI_RCOSC400M_CTRL1_TOG</a> = 0x1C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a2c0af04d62310105edd9f175d3fc50e2">kAI_RCOSC400M_CTRL1_TOG</a> = 0x1C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa09558d1e49dcf6703755c0d962055447">kAI_RCOSC400M_CTRL2</a> = 0x20, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a09558d1e49dcf6703755c0d962055447">kAI_RCOSC400M_CTRL2</a> = 0x20, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa392c448d376d48a62d4be737e505b471">kAI_RCOSC400M_CTRL2_SET</a> = 0x24, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a392c448d376d48a62d4be737e505b471">kAI_RCOSC400M_CTRL2_SET</a> = 0x24, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa831d95ef44bc9040179e6f39a928a891">kAI_RCOSC400M_CTRL2_CLR</a> = 0x28, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a831d95ef44bc9040179e6f39a928a891">kAI_RCOSC400M_CTRL2_CLR</a> = 0x28, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa2915baec12709312b2d9fa95c44b1327">kAI_RCOSC400M_CTRL2_TOG</a> = 0x2C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a2915baec12709312b2d9fa95c44b1327">kAI_RCOSC400M_CTRL2_TOG</a> = 0x2C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aabf96ad0cf4120f97fbd91de0f3bd1655">kAI_RCOSC400M_CTRL3</a> = 0x30, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086abf96ad0cf4120f97fbd91de0f3bd1655">kAI_RCOSC400M_CTRL3</a> = 0x30, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa38ff5e96fffc0a560032d72bd7a0f505">kAI_RCOSC400M_CTRL3_SET</a> = 0x34, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a38ff5e96fffc0a560032d72bd7a0f505">kAI_RCOSC400M_CTRL3_SET</a> = 0x34, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa73eb38e7930dd4b7ce075111d7dcf568">kAI_RCOSC400M_CTRL3_CLR</a> = 0x38, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a73eb38e7930dd4b7ce075111d7dcf568">kAI_RCOSC400M_CTRL3_CLR</a> = 0x38, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aada195abd3aa9b6866e83f3c2e6f44d72">kAI_RCOSC400M_CTRL3_TOG</a> = 0x3C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ada195abd3aa9b6866e83f3c2e6f44d72">kAI_RCOSC400M_CTRL3_TOG</a> = 0x3C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa02f0175f82df3ee867d015f4cb670d95">kAI_RCOSC400M_STAT0</a> = 0x50, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a02f0175f82df3ee867d015f4cb670d95">kAI_RCOSC400M_STAT0</a> = 0x50, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aaedb6fc2b0561721ca8721b070c39958d">kAI_RCOSC400M_STAT0_SET</a> = 0x54, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086aedb6fc2b0561721ca8721b070c39958d">kAI_RCOSC400M_STAT0_SET</a> = 0x54, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa45b25c33265b4911182b852b2797bb7b">kAI_RCOSC400M_STAT0_CLR</a> = 0x58, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a45b25c33265b4911182b852b2797bb7b">kAI_RCOSC400M_STAT0_CLR</a> = 0x58, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa5bd41292fef39b7a9de5e4c65aa6fa43">kAI_RCOSC400M_STAT0_TOG</a> = 0x5C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a5bd41292fef39b7a9de5e4c65aa6fa43">kAI_RCOSC400M_STAT0_TOG</a> = 0x5C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aab9c491520771c6dc52dbe6ba65245034">kAI_RCOSC400M_STAT1</a> = 0x60, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ab9c491520771c6dc52dbe6ba65245034">kAI_RCOSC400M_STAT1</a> = 0x60, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa50c9be83f178fcddbea2f0fe402f919e">kAI_RCOSC400M_STAT1_SET</a> = 0x64, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a50c9be83f178fcddbea2f0fe402f919e">kAI_RCOSC400M_STAT1_SET</a> = 0x64, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa68b56ecb4777b53cce318f1afc74fd23">kAI_RCOSC400M_STAT1_CLR</a> = 0x68, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a68b56ecb4777b53cce318f1afc74fd23">kAI_RCOSC400M_STAT1_CLR</a> = 0x68, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa0f86624729ad36e642193304fb3ae9fb">kAI_RCOSC400M_STAT1_TOG</a> = 0x6C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a0f86624729ad36e642193304fb3ae9fb">kAI_RCOSC400M_STAT1_TOG</a> = 0x6C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa942aa30fdce49771473c2d3336c1fb2d">kAI_RCOSC400M_STAT2</a> = 0x70, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a942aa30fdce49771473c2d3336c1fb2d">kAI_RCOSC400M_STAT2</a> = 0x70, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aacea439e359603ace006c8eb0308d023b">kAI_RCOSC400M_STAT2_SET</a> = 0x74, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086acea439e359603ace006c8eb0308d023b">kAI_RCOSC400M_STAT2_SET</a> = 0x74, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aadeabcf988e11ddd7c7e8e8d5f76b6bd6">kAI_RCOSC400M_STAT2_CLR</a> = 0x78, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086adeabcf988e11ddd7c7e8e8d5f76b6bd6">kAI_RCOSC400M_STAT2_CLR</a> = 0x78, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa7380244fa13e7a3b9abc74fd3ec25de3">kAI_RCOSC400M_STAT2_TOG</a> = 0x7C, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a7380244fa13e7a3b9abc74fd3ec25de3">kAI_RCOSC400M_STAT2_TOG</a> = 0x7C, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa5f79c0715c1b3ce6b170ed5be7c9ba88">kAI_PLL1G_CTRL0</a> = 0x0, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a5f79c0715c1b3ce6b170ed5be7c9ba88">kAI_PLL1G_CTRL0</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aacdbccbb360e6126ca29fa72746392675">kAI_PLL1G_CTRL0_SET</a> = 0x4, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086acdbccbb360e6126ca29fa72746392675">kAI_PLL1G_CTRL0_SET</a> = 0x4, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aaf5e8f19558734d7bf9419f819b1a6f70">kAI_PLL1G_CTRL0_CLR</a> = 0x8, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086af5e8f19558734d7bf9419f819b1a6f70">kAI_PLL1G_CTRL0_CLR</a> = 0x8, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa2f11a2cd30ea4add147d2123d4e7f61d">kAI_PLL1G_CTRL1</a> = 0x10, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a2f11a2cd30ea4add147d2123d4e7f61d">kAI_PLL1G_CTRL1</a> = 0x10, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa3c4b129b325deab399219e1708f16215">kAI_PLL1G_CTRL1_SET</a> = 0x14, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a3c4b129b325deab399219e1708f16215">kAI_PLL1G_CTRL1_SET</a> = 0x14, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa468b16cc7bb35b242bdc45e978d7b487">kAI_PLL1G_CTRL1_CLR</a> = 0x18, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a468b16cc7bb35b242bdc45e978d7b487">kAI_PLL1G_CTRL1_CLR</a> = 0x18, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aabc7a5725b8bca0de84d06a011ff9efeb">kAI_PLL1G_CTRL2</a> = 0x20, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086abc7a5725b8bca0de84d06a011ff9efeb">kAI_PLL1G_CTRL2</a> = 0x20, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa84cee91ef4aa5eace1517048e962e0dd">kAI_PLL1G_CTRL2_SET</a> = 0x24, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a84cee91ef4aa5eace1517048e962e0dd">kAI_PLL1G_CTRL2_SET</a> = 0x24, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa718bebc3ed9b6d4abf20e09d7b36a92b">kAI_PLL1G_CTRL2_CLR</a> = 0x28, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a718bebc3ed9b6d4abf20e09d7b36a92b">kAI_PLL1G_CTRL2_CLR</a> = 0x28, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa6560c52f94124ce8bb6ca25e6b8056e9">kAI_PLL1G_CTRL3</a> = 0x30, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a6560c52f94124ce8bb6ca25e6b8056e9">kAI_PLL1G_CTRL3</a> = 0x30, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aad4259bbc0e946777763dadb594248679">kAI_PLL1G_CTRL3_SET</a> = 0x34, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ad4259bbc0e946777763dadb594248679">kAI_PLL1G_CTRL3_SET</a> = 0x34, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aaefd73b14f4cf68a916a2c42e20f9c8af">kAI_PLL1G_CTRL3_CLR</a> = 0x38, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086aefd73b14f4cf68a916a2c42e20f9c8af">kAI_PLL1G_CTRL3_CLR</a> = 0x38, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa761af762b0ea232607098a23c303d613">kAI_PLLAUDIO_CTRL0</a> = 0x0, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a761af762b0ea232607098a23c303d613">kAI_PLLAUDIO_CTRL0</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa04b8c2001642a9f3346475ef24e6e8fe">kAI_PLLAUDIO_CTRL0_SET</a> = 0x4, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a04b8c2001642a9f3346475ef24e6e8fe">kAI_PLLAUDIO_CTRL0_SET</a> = 0x4, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa053d98f3fc7272a5e2f6b905aafbc92e">kAI_PLLAUDIO_CTRL0_CLR</a> = 0x8, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a053d98f3fc7272a5e2f6b905aafbc92e">kAI_PLLAUDIO_CTRL0_CLR</a> = 0x8, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aaac4e81d1b0dfc5837bc1f3131bcf1a04">kAI_PLLAUDIO_CTRL1</a> = 0x10, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086aac4e81d1b0dfc5837bc1f3131bcf1a04">kAI_PLLAUDIO_CTRL1</a> = 0x10, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa8a0324a0a6d33a7c6e7cc440d71266e8">kAI_PLLAUDIO_CTRL1_SET</a> = 0x14, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a8a0324a0a6d33a7c6e7cc440d71266e8">kAI_PLLAUDIO_CTRL1_SET</a> = 0x14, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa95bfeec9c071cd0143b6a7643ad53136">kAI_PLLAUDIO_CTRL1_CLR</a> = 0x18, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a95bfeec9c071cd0143b6a7643ad53136">kAI_PLLAUDIO_CTRL1_CLR</a> = 0x18, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa2e458f2a4b77eb41c66f53ebe0dcb68f">kAI_PLLAUDIO_CTRL2</a> = 0x20, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a2e458f2a4b77eb41c66f53ebe0dcb68f">kAI_PLLAUDIO_CTRL2</a> = 0x20, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aab2bdcff1166f38f8c7b925a887594b14">kAI_PLLAUDIO_CTRL2_SET</a> = 0x24, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ab2bdcff1166f38f8c7b925a887594b14">kAI_PLLAUDIO_CTRL2_SET</a> = 0x24, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa2965556d6b3f23103a6a03777ed95925">kAI_PLLAUDIO_CTRL2_CLR</a> = 0x28, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a2965556d6b3f23103a6a03777ed95925">kAI_PLLAUDIO_CTRL2_CLR</a> = 0x28, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa0e81bf205d35079215f7386f5d215cad">kAI_PLLAUDIO_CTRL3</a> = 0x30, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a0e81bf205d35079215f7386f5d215cad">kAI_PLLAUDIO_CTRL3</a> = 0x30, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa7b593b8af484e15df3283344655503a6">kAI_PLLAUDIO_CTRL3_SET</a> = 0x34, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a7b593b8af484e15df3283344655503a6">kAI_PLLAUDIO_CTRL3_SET</a> = 0x34, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa6e3336795c5dff1cdf00415b388ecca2">kAI_PLLAUDIO_CTRL3_CLR</a> = 0x38, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a6e3336795c5dff1cdf00415b388ecca2">kAI_PLLAUDIO_CTRL3_CLR</a> = 0x38, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aac41e02eb1baa4a1cccf78e3a26cb2064">kAI_PLLVIDEO_CTRL0</a> = 0x0, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ac41e02eb1baa4a1cccf78e3a26cb2064">kAI_PLLVIDEO_CTRL0</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa0c8e1a8e7597b9cde868cad4c358bc22">kAI_PLLVIDEO_CTRL0_SET</a> = 0x4, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a0c8e1a8e7597b9cde868cad4c358bc22">kAI_PLLVIDEO_CTRL0_SET</a> = 0x4, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa6232d50b8f6781f332a07b3a6ac49e90">kAI_PLLVIDEO_CTRL0_CLR</a> = 0x8, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a6232d50b8f6781f332a07b3a6ac49e90">kAI_PLLVIDEO_CTRL0_CLR</a> = 0x8, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa1570f5ab3a898b1d21f8faad8580de9c">kAI_PLLVIDEO_CTRL1</a> = 0x10, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a1570f5ab3a898b1d21f8faad8580de9c">kAI_PLLVIDEO_CTRL1</a> = 0x10, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aabb7ce28fa47f9d0e8e9d6912e82401fd">kAI_PLLVIDEO_CTRL1_SET</a> = 0x14, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086abb7ce28fa47f9d0e8e9d6912e82401fd">kAI_PLLVIDEO_CTRL1_SET</a> = 0x14, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa63995f40d16eb5f5382e21e0a3d73380">kAI_PLLVIDEO_CTRL1_CLR</a> = 0x18, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a63995f40d16eb5f5382e21e0a3d73380">kAI_PLLVIDEO_CTRL1_CLR</a> = 0x18, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa76d6aed66277940a6b4d7d45664a2942">kAI_PLLVIDEO_CTRL2</a> = 0x20, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a76d6aed66277940a6b4d7d45664a2942">kAI_PLLVIDEO_CTRL2</a> = 0x20, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aaaae7060a71ba96eb8c34405a40e73059">kAI_PLLVIDEO_CTRL2_SET</a> = 0x24, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086aaae7060a71ba96eb8c34405a40e73059">kAI_PLLVIDEO_CTRL2_SET</a> = 0x24, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa7c9b09d4b5abefbcb356732bc5163d8f">kAI_PLLVIDEO_CTRL2_CLR</a> = 0x28, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a7c9b09d4b5abefbcb356732bc5163d8f">kAI_PLLVIDEO_CTRL2_CLR</a> = 0x28, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aab59d5e4a940a8ba342c76668ab5898e7">kAI_PLLVIDEO_CTRL3</a> = 0x30, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086ab59d5e4a940a8ba342c76668ab5898e7">kAI_PLLVIDEO_CTRL3</a> = 0x30, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa3944b320b2797c989bcf47ef73c69bfd">kAI_PLLVIDEO_CTRL3_SET</a> = 0x34, 
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a3944b320b2797c989bcf47ef73c69bfd">kAI_PLLVIDEO_CTRL3_SET</a> = 0x34, 
 <br/>
-&#160;&#160;<a class="el" href="a00314.html#gga525d3922a89f6767f30afe62d39d2c7aa6623163b1bd00256c47a48e137207946">kAI_PLLVIDEO_CTRL3_CLR</a> = 0x38
+&#160;&#160;<a class="el" href="a00314.html#gga90d0320f3c13ad21c0b2a3f5e73ae086a6623163b1bd00256c47a48e137207946">kAI_PLLVIDEO_CTRL3_CLR</a> = 0x38
 <br/>
  }</td></tr>
-<tr class="memdesc:ga525d3922a89f6767f30afe62d39d2c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of ANATOP AI Register.  <a href="a00314.html#ga525d3922a89f6767f30afe62d39d2c7a">More...</a><br/></td></tr>
-<tr class="separator:ga525d3922a89f6767f30afe62d39d2c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga90d0320f3c13ad21c0b2a3f5e73ae086"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of ANATOP AI Register.  <a href="a00314.html#ga90d0320f3c13ad21c0b2a3f5e73ae086">More...</a><br/></td></tr>
+<tr class="separator:ga90d0320f3c13ad21c0b2a3f5e73ae086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga2555fba0c164bfe03e9919d66e11c369"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ga2555fba0c164bfe03e9919d66e11c369">FSL_ANATOP_AI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1, 0, 0))</td></tr>
+<tr class="memitem:ga2555fba0c164bfe03e9919d66e11c369"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ga2555fba0c164bfe03e9919d66e11c369">FSL_ANATOP_AI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1, 0, 0))</td></tr>
 <tr class="memdesc:ga2555fba0c164bfe03e9919d66e11c369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Anatop AI driver version 1.0.0.  <a href="#ga2555fba0c164bfe03e9919d66e11c369">More...</a><br/></td></tr>
 <tr class="separator:ga2555fba0c164bfe03e9919d66e11c369"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -719,7 +731,7 @@ STAT2 - STAT2 Register</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_ANATOP_AI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1, 0, 0))</td>
+          <td class="memname">#define FSL_ANATOP_AI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1, 0, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -833,271 +845,271 @@ STAT2 - STAT2 Register</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaac052ed875a5a08a12def23c2ed9337e"></a>
+<a class="anchor" id="gae289151ed70fbd645da2547d88e347bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00314.html#gaac052ed875a5a08a12def23c2ed9337e">anatop_ai_itf_t</a></td>
+          <td class="memname">enum <a class="el" href="a00314.html#gae289151ed70fbd645da2547d88e347bd">_anatop_ai_itf</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337ea97457bb3e181e4e65c2bed8a6742b181"></a>kAI_Itf_Ldo</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bda97457bb3e181e4e65c2bed8a6742b181"></a>kAI_Itf_Ldo</em>&nbsp;</td><td class="fielddoc">
 <p>LDO ITF. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337ea7da01d7f8df56a5ce18613cdcb393de8"></a>kAI_Itf_1g</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bda7da01d7f8df56a5ce18613cdcb393de8"></a>kAI_Itf_1g</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL ITF. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337ea008819dad96edf208090ef8d7a758b98"></a>kAI_Itf_Audio</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bda008819dad96edf208090ef8d7a758b98"></a>kAI_Itf_Audio</em>&nbsp;</td><td class="fielddoc">
 <p>Audio PLL ITF. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337ea12aa5b2e5e558276f7601c4bb38a6c92"></a>kAI_Itf_Video</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bda12aa5b2e5e558276f7601c4bb38a6c92"></a>kAI_Itf_Video</em>&nbsp;</td><td class="fielddoc">
 <p>Video PLL ITF. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337ea0b6970ef1f453bca2d0b88d83b2226c8"></a>kAI_Itf_400m</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bda0b6970ef1f453bca2d0b88d83b2226c8"></a>kAI_Itf_400m</em>&nbsp;</td><td class="fielddoc">
 <p>400M OSC ITF. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337eac8446bcab7e13c561bfa3e6bd5fdfede"></a>kAI_Itf_Temp</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bdac8446bcab7e13c561bfa3e6bd5fdfede"></a>kAI_Itf_Temp</em>&nbsp;</td><td class="fielddoc">
 <p>Temperature Sensor ITF. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac052ed875a5a08a12def23c2ed9337eac401f1f74c2c1ae1c93e528d2feb43df"></a>kAI_Itf_Bandgap</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae289151ed70fbd645da2547d88e347bdac401f1f74c2c1ae1c93e528d2feb43df"></a>kAI_Itf_Bandgap</em>&nbsp;</td><td class="fielddoc">
 <p>Bandgap ITF. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga525d3922a89f6767f30afe62d39d2c7a"></a>
+<a class="anchor" id="ga90d0320f3c13ad21c0b2a3f5e73ae086"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00314.html#ga525d3922a89f6767f30afe62d39d2c7a">anatop_ai_reg_t</a></td>
+          <td class="memname">enum <a class="el" href="a00314.html#ga90d0320f3c13ad21c0b2a3f5e73ae086">_anatop_ai_reg</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa237698818866089fd8b20af4af11242d"></a>kAI_PHY_LDO_CTRL0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a237698818866089fd8b20af4af11242d"></a>kAI_PHY_LDO_CTRL0</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO CTRL0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa6b49784446b1d4ae56cd53c156a2a3cb"></a>kAI_PHY_LDO_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a6b49784446b1d4ae56cd53c156a2a3cb"></a>kAI_PHY_LDO_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO CTRL0 Set Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa209fb65dc167a0e66ad7cc5f7397f013"></a>kAI_PHY_LDO_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a209fb65dc167a0e66ad7cc5f7397f013"></a>kAI_PHY_LDO_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO CTRL0 Clr Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aad07f96746fcfef207a1cfec05a468e19"></a>kAI_PHY_LDO_CTRL0_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ad07f96746fcfef207a1cfec05a468e19"></a>kAI_PHY_LDO_CTRL0_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO CTRL0 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa0d8d020a178991f7fd3349010b0381fb"></a>kAI_PHY_LDO_STAT0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a0d8d020a178991f7fd3349010b0381fb"></a>kAI_PHY_LDO_STAT0</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO STAT0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aaa5c5bad85d5b01ee687ad961a7c85643"></a>kAI_PHY_LDO_STAT0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086aa5c5bad85d5b01ee687ad961a7c85643"></a>kAI_PHY_LDO_STAT0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO STAT0 Set Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa7cf7b6bad80abde23add2160927b177d"></a>kAI_PHY_LDO_STAT0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a7cf7b6bad80abde23add2160927b177d"></a>kAI_PHY_LDO_STAT0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO STAT0 Clr Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa2913a7c8dbe96b78f8e33279e6ef37c1"></a>kAI_PHY_LDO_STAT0_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a2913a7c8dbe96b78f8e33279e6ef37c1"></a>kAI_PHY_LDO_STAT0_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>PHY LDO STAT0 Tog Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa5894f043e53287678e9a4bcb49e77b96"></a>kAI_BANDGAP_CTRL0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a5894f043e53287678e9a4bcb49e77b96"></a>kAI_BANDGAP_CTRL0</em>&nbsp;</td><td class="fielddoc">
 <p>BANDGAP CTRL0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aad9d3d5bec05f7bf40249df018be1b55a"></a>kAI_BANDGAP_STAT0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ad9d3d5bec05f7bf40249df018be1b55a"></a>kAI_BANDGAP_STAT0</em>&nbsp;</td><td class="fielddoc">
 <p>BANDGAP STAT0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa67690de754a72459bf69b1a875199837"></a>kAI_RCOSC400M_CTRL0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a67690de754a72459bf69b1a875199837"></a>kAI_RCOSC400M_CTRL0</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa22f49fb2a233ae067402d1e444967bd3"></a>kAI_RCOSC400M_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a22f49fb2a233ae067402d1e444967bd3"></a>kAI_RCOSC400M_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL0 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aad07bb56cd3a33a0506f11db582ef18b0"></a>kAI_RCOSC400M_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ad07bb56cd3a33a0506f11db582ef18b0"></a>kAI_RCOSC400M_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL0 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa550b8d81b2643d76508333d805412812"></a>kAI_RCOSC400M_CTRL0_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a550b8d81b2643d76508333d805412812"></a>kAI_RCOSC400M_CTRL0_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL0 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa53a0f2dedae78c7671b615dfe762b2cb"></a>kAI_RCOSC400M_CTRL1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a53a0f2dedae78c7671b615dfe762b2cb"></a>kAI_RCOSC400M_CTRL1</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL1 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aac967a14c0f6e00cd6a5ffe69ec041006"></a>kAI_RCOSC400M_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ac967a14c0f6e00cd6a5ffe69ec041006"></a>kAI_RCOSC400M_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL1 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa312e6b8073981546d865018d98dc0991"></a>kAI_RCOSC400M_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a312e6b8073981546d865018d98dc0991"></a>kAI_RCOSC400M_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL1 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa2c0af04d62310105edd9f175d3fc50e2"></a>kAI_RCOSC400M_CTRL1_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a2c0af04d62310105edd9f175d3fc50e2"></a>kAI_RCOSC400M_CTRL1_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL1 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa09558d1e49dcf6703755c0d962055447"></a>kAI_RCOSC400M_CTRL2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a09558d1e49dcf6703755c0d962055447"></a>kAI_RCOSC400M_CTRL2</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL2 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa392c448d376d48a62d4be737e505b471"></a>kAI_RCOSC400M_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a392c448d376d48a62d4be737e505b471"></a>kAI_RCOSC400M_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL2 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa831d95ef44bc9040179e6f39a928a891"></a>kAI_RCOSC400M_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a831d95ef44bc9040179e6f39a928a891"></a>kAI_RCOSC400M_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL2 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa2915baec12709312b2d9fa95c44b1327"></a>kAI_RCOSC400M_CTRL2_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a2915baec12709312b2d9fa95c44b1327"></a>kAI_RCOSC400M_CTRL2_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL2 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aabf96ad0cf4120f97fbd91de0f3bd1655"></a>kAI_RCOSC400M_CTRL3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086abf96ad0cf4120f97fbd91de0f3bd1655"></a>kAI_RCOSC400M_CTRL3</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL3 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa38ff5e96fffc0a560032d72bd7a0f505"></a>kAI_RCOSC400M_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a38ff5e96fffc0a560032d72bd7a0f505"></a>kAI_RCOSC400M_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL3 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa73eb38e7930dd4b7ce075111d7dcf568"></a>kAI_RCOSC400M_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a73eb38e7930dd4b7ce075111d7dcf568"></a>kAI_RCOSC400M_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL3 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aada195abd3aa9b6866e83f3c2e6f44d72"></a>kAI_RCOSC400M_CTRL3_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ada195abd3aa9b6866e83f3c2e6f44d72"></a>kAI_RCOSC400M_CTRL3_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M CTRL3 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa02f0175f82df3ee867d015f4cb670d95"></a>kAI_RCOSC400M_STAT0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a02f0175f82df3ee867d015f4cb670d95"></a>kAI_RCOSC400M_STAT0</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aaedb6fc2b0561721ca8721b070c39958d"></a>kAI_RCOSC400M_STAT0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086aedb6fc2b0561721ca8721b070c39958d"></a>kAI_RCOSC400M_STAT0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT0 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa45b25c33265b4911182b852b2797bb7b"></a>kAI_RCOSC400M_STAT0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a45b25c33265b4911182b852b2797bb7b"></a>kAI_RCOSC400M_STAT0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT0 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa5bd41292fef39b7a9de5e4c65aa6fa43"></a>kAI_RCOSC400M_STAT0_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a5bd41292fef39b7a9de5e4c65aa6fa43"></a>kAI_RCOSC400M_STAT0_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT0 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aab9c491520771c6dc52dbe6ba65245034"></a>kAI_RCOSC400M_STAT1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ab9c491520771c6dc52dbe6ba65245034"></a>kAI_RCOSC400M_STAT1</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT1 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa50c9be83f178fcddbea2f0fe402f919e"></a>kAI_RCOSC400M_STAT1_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a50c9be83f178fcddbea2f0fe402f919e"></a>kAI_RCOSC400M_STAT1_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT1 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa68b56ecb4777b53cce318f1afc74fd23"></a>kAI_RCOSC400M_STAT1_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a68b56ecb4777b53cce318f1afc74fd23"></a>kAI_RCOSC400M_STAT1_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT1 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa0f86624729ad36e642193304fb3ae9fb"></a>kAI_RCOSC400M_STAT1_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a0f86624729ad36e642193304fb3ae9fb"></a>kAI_RCOSC400M_STAT1_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT1 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa942aa30fdce49771473c2d3336c1fb2d"></a>kAI_RCOSC400M_STAT2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a942aa30fdce49771473c2d3336c1fb2d"></a>kAI_RCOSC400M_STAT2</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT2 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aacea439e359603ace006c8eb0308d023b"></a>kAI_RCOSC400M_STAT2_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086acea439e359603ace006c8eb0308d023b"></a>kAI_RCOSC400M_STAT2_SET</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT2 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aadeabcf988e11ddd7c7e8e8d5f76b6bd6"></a>kAI_RCOSC400M_STAT2_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086adeabcf988e11ddd7c7e8e8d5f76b6bd6"></a>kAI_RCOSC400M_STAT2_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT2 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa7380244fa13e7a3b9abc74fd3ec25de3"></a>kAI_RCOSC400M_STAT2_TOG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a7380244fa13e7a3b9abc74fd3ec25de3"></a>kAI_RCOSC400M_STAT2_TOG</em>&nbsp;</td><td class="fielddoc">
 <p>RC OSC 400M STAT2 TOG Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa5f79c0715c1b3ce6b170ed5be7c9ba88"></a>kAI_PLL1G_CTRL0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a5f79c0715c1b3ce6b170ed5be7c9ba88"></a>kAI_PLL1G_CTRL0</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aacdbccbb360e6126ca29fa72746392675"></a>kAI_PLL1G_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086acdbccbb360e6126ca29fa72746392675"></a>kAI_PLL1G_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL0 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aaf5e8f19558734d7bf9419f819b1a6f70"></a>kAI_PLL1G_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086af5e8f19558734d7bf9419f819b1a6f70"></a>kAI_PLL1G_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL0 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa2f11a2cd30ea4add147d2123d4e7f61d"></a>kAI_PLL1G_CTRL1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a2f11a2cd30ea4add147d2123d4e7f61d"></a>kAI_PLL1G_CTRL1</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL1 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa3c4b129b325deab399219e1708f16215"></a>kAI_PLL1G_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a3c4b129b325deab399219e1708f16215"></a>kAI_PLL1G_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL1 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa468b16cc7bb35b242bdc45e978d7b487"></a>kAI_PLL1G_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a468b16cc7bb35b242bdc45e978d7b487"></a>kAI_PLL1G_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL1 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aabc7a5725b8bca0de84d06a011ff9efeb"></a>kAI_PLL1G_CTRL2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086abc7a5725b8bca0de84d06a011ff9efeb"></a>kAI_PLL1G_CTRL2</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL2 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa84cee91ef4aa5eace1517048e962e0dd"></a>kAI_PLL1G_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a84cee91ef4aa5eace1517048e962e0dd"></a>kAI_PLL1G_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL2 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa718bebc3ed9b6d4abf20e09d7b36a92b"></a>kAI_PLL1G_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a718bebc3ed9b6d4abf20e09d7b36a92b"></a>kAI_PLL1G_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL2 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa6560c52f94124ce8bb6ca25e6b8056e9"></a>kAI_PLL1G_CTRL3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a6560c52f94124ce8bb6ca25e6b8056e9"></a>kAI_PLL1G_CTRL3</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL3 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aad4259bbc0e946777763dadb594248679"></a>kAI_PLL1G_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ad4259bbc0e946777763dadb594248679"></a>kAI_PLL1G_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL3 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aaefd73b14f4cf68a916a2c42e20f9c8af"></a>kAI_PLL1G_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086aefd73b14f4cf68a916a2c42e20f9c8af"></a>kAI_PLL1G_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>1G PLL CTRL3 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa761af762b0ea232607098a23c303d613"></a>kAI_PLLAUDIO_CTRL0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a761af762b0ea232607098a23c303d613"></a>kAI_PLLAUDIO_CTRL0</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa04b8c2001642a9f3346475ef24e6e8fe"></a>kAI_PLLAUDIO_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a04b8c2001642a9f3346475ef24e6e8fe"></a>kAI_PLLAUDIO_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL0 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa053d98f3fc7272a5e2f6b905aafbc92e"></a>kAI_PLLAUDIO_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a053d98f3fc7272a5e2f6b905aafbc92e"></a>kAI_PLLAUDIO_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL0 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aaac4e81d1b0dfc5837bc1f3131bcf1a04"></a>kAI_PLLAUDIO_CTRL1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086aac4e81d1b0dfc5837bc1f3131bcf1a04"></a>kAI_PLLAUDIO_CTRL1</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL1 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa8a0324a0a6d33a7c6e7cc440d71266e8"></a>kAI_PLLAUDIO_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a8a0324a0a6d33a7c6e7cc440d71266e8"></a>kAI_PLLAUDIO_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL1 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa95bfeec9c071cd0143b6a7643ad53136"></a>kAI_PLLAUDIO_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a95bfeec9c071cd0143b6a7643ad53136"></a>kAI_PLLAUDIO_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL1 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa2e458f2a4b77eb41c66f53ebe0dcb68f"></a>kAI_PLLAUDIO_CTRL2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a2e458f2a4b77eb41c66f53ebe0dcb68f"></a>kAI_PLLAUDIO_CTRL2</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL2 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aab2bdcff1166f38f8c7b925a887594b14"></a>kAI_PLLAUDIO_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ab2bdcff1166f38f8c7b925a887594b14"></a>kAI_PLLAUDIO_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL2 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa2965556d6b3f23103a6a03777ed95925"></a>kAI_PLLAUDIO_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a2965556d6b3f23103a6a03777ed95925"></a>kAI_PLLAUDIO_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL2 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa0e81bf205d35079215f7386f5d215cad"></a>kAI_PLLAUDIO_CTRL3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a0e81bf205d35079215f7386f5d215cad"></a>kAI_PLLAUDIO_CTRL3</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL3 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa7b593b8af484e15df3283344655503a6"></a>kAI_PLLAUDIO_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a7b593b8af484e15df3283344655503a6"></a>kAI_PLLAUDIO_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL3 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa6e3336795c5dff1cdf00415b388ecca2"></a>kAI_PLLAUDIO_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a6e3336795c5dff1cdf00415b388ecca2"></a>kAI_PLLAUDIO_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>AUDIO PLL CTRL3 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aac41e02eb1baa4a1cccf78e3a26cb2064"></a>kAI_PLLVIDEO_CTRL0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ac41e02eb1baa4a1cccf78e3a26cb2064"></a>kAI_PLLVIDEO_CTRL0</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL0 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa0c8e1a8e7597b9cde868cad4c358bc22"></a>kAI_PLLVIDEO_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a0c8e1a8e7597b9cde868cad4c358bc22"></a>kAI_PLLVIDEO_CTRL0_SET</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL0 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa6232d50b8f6781f332a07b3a6ac49e90"></a>kAI_PLLVIDEO_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a6232d50b8f6781f332a07b3a6ac49e90"></a>kAI_PLLVIDEO_CTRL0_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL0 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa1570f5ab3a898b1d21f8faad8580de9c"></a>kAI_PLLVIDEO_CTRL1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a1570f5ab3a898b1d21f8faad8580de9c"></a>kAI_PLLVIDEO_CTRL1</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL1 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aabb7ce28fa47f9d0e8e9d6912e82401fd"></a>kAI_PLLVIDEO_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086abb7ce28fa47f9d0e8e9d6912e82401fd"></a>kAI_PLLVIDEO_CTRL1_SET</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL1 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa63995f40d16eb5f5382e21e0a3d73380"></a>kAI_PLLVIDEO_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a63995f40d16eb5f5382e21e0a3d73380"></a>kAI_PLLVIDEO_CTRL1_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL1 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa76d6aed66277940a6b4d7d45664a2942"></a>kAI_PLLVIDEO_CTRL2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a76d6aed66277940a6b4d7d45664a2942"></a>kAI_PLLVIDEO_CTRL2</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL2 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aaaae7060a71ba96eb8c34405a40e73059"></a>kAI_PLLVIDEO_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086aaae7060a71ba96eb8c34405a40e73059"></a>kAI_PLLVIDEO_CTRL2_SET</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL2 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa7c9b09d4b5abefbcb356732bc5163d8f"></a>kAI_PLLVIDEO_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a7c9b09d4b5abefbcb356732bc5163d8f"></a>kAI_PLLVIDEO_CTRL2_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL2 CLR Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aab59d5e4a940a8ba342c76668ab5898e7"></a>kAI_PLLVIDEO_CTRL3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086ab59d5e4a940a8ba342c76668ab5898e7"></a>kAI_PLLVIDEO_CTRL3</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL3 Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa3944b320b2797c989bcf47ef73c69bfd"></a>kAI_PLLVIDEO_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a3944b320b2797c989bcf47ef73c69bfd"></a>kAI_PLLVIDEO_CTRL3_SET</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL3 SET Register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga525d3922a89f6767f30afe62d39d2c7aa6623163b1bd00256c47a48e137207946"></a>kAI_PLLVIDEO_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga90d0320f3c13ad21c0b2a3f5e73ae086a6623163b1bd00256c47a48e137207946"></a>kAI_PLLVIDEO_CTRL3_CLR</em>&nbsp;</td><td class="fielddoc">
 <p>VIDEO PLL CTRL3 CLR Register. </p>
 </td></tr>
 </table>

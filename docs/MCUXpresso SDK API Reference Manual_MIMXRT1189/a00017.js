@@ -1,6 +1,6 @@
 var a00017 =
 [
-    [ "serial_nor_config_option_t", "a00017.html#a00618", [
+    [ "serial_nor_config_option_t", "a00017.html#a00615", [
       [ "max_freq", "a00017.html#ab4a57d8d940d2087b5b08f65a975ccc9", null ],
       [ "misc_mode", "a00017.html#ab593fc2c81c4662c4ec2cff4a275f5fc", null ],
       [ "quad_mode_setting", "a00017.html#a7977532540c18274ae2a57e5e26db431", null ],
@@ -16,15 +16,15 @@ var a00017 =
       [ "drive_strength", "a00017.html#a6cc829e3d9e583348145d9d6e2d941b0", null ],
       [ "flash_connection", "a00017.html#a728346cea7f4a888b9dc7c3d9236929b", null ]
     ] ],
-    [ "flexspi_lut_seq_t", "a00017.html#a00310", [
+    [ "flexspi_lut_seq_t", "a00017.html#a00308", [
       [ "seqNum", "a00017.html#aff1517c9311e2e44312c6dd8f06cbdb0", null ],
       [ "seqId", "a00017.html#ab372af7ca830c7dde741839c8c3216d4", null ]
     ] ],
-    [ "flexspi_dll_time_t", "a00017.html#a00309", [
+    [ "flexspi_dll_time_t", "a00017.html#a00307", [
       [ "time_100ps", "a00017.html#aa7a09832fd3df0d99d62c5fcf89215e8", null ],
       [ "delay_cells", "a00017.html#af4bc247095a51ff5329d4b7890f49a46", null ]
     ] ],
-    [ "flexspi_mem_config_t", "a00017.html#a00311", [
+    [ "flexspi_mem_config_t", "a00017.html#a00309", [
       [ "tag", "a00017.html#a99319a06c3809df78d7cb6fecf26bc19", null ],
       [ "version", "a00017.html#aa49ced79294c5520ed442d6260b5b821", null ],
       [ "reserved0", "a00017.html#ab4cea73af30b9cfea1f1cf57304e7f9f", null ],
@@ -66,7 +66,7 @@ var a00017 =
       [ "lutCustomSeq", "a00017.html#a37f516a14df0cb7a31e66e261da310f3", null ],
       [ "reserved4", "a00017.html#a1f47195d49377256398680d90d916e70", null ]
     ] ],
-    [ "flexspi_nor_config_t", "a00017.html#a00312", [
+    [ "flexspi_nor_config_t", "a00017.html#a00310", [
       [ "memConfig", "a00017.html#a78513beda2ef037851178bac828e30f7", null ],
       [ "pageSize", "a00017.html#a778ff87c62d497a46f5eba64a4319a37", null ],
       [ "sectorSize", "a00017.html#a6f924e5e21868b8371553a03f1c85e23", null ],
@@ -81,7 +81,7 @@ var a00017 =
       [ "blockSize", "a00017.html#aec6195ce139affc45cf05ce4be42c4ea", null ],
       [ "reserve2", "a00017.html#adc8bd60af94a8c51a3bd5edc56803658", null ]
     ] ],
-    [ "flexspi_xfer_t", "a00017.html#a00314", [
+    [ "flexspi_xfer_t", "a00017.html#a00312", [
       [ "operation", "a00017.html#a96151c62f0647e5a512c8877d71283c2", null ],
       [ "baseAddress", "a00017.html#a4de700520c744c3cf8e800e9043ee225", null ],
       [ "seqId", "a00017.html#a02b7b0481bb77341a8fbc33ae1469cd3", null ],

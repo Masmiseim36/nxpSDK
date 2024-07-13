@@ -63,7 +63,7 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
 {
     /* Clear GPIO stop request. */
     GPIO_ClearStopRequest();
-
+	
     if ((1U << APP_WAKEUP_BUTTON_GPIO_PIN) &
         RGPIO_GetPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, kRGPIO_InterruptOutput0))
     {
@@ -144,6 +144,8 @@ void RunModeSwitch(void)
 
         if (target < 3)
         {
+            uint32_t coreClk = CLOCK_GetRootClockFreq(kCLOCK_Root_M7);
+            SDK_DelayAtLeastUs(100000U, coreClk);
             // run mode switch controlled by core0, here only print system status.
             PrintSystemStatus();
         }

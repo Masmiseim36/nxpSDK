@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, MULADDC_CANNOT_USE_R7, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', MCUXPRESSO_SDK, FSL_FEATURE_SOC_ELE_S4XX, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/mbedtls3x/port/ele_s4xx;../../../../../../middleware/mbedtls3x/port/ele_s4xx/include;../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common;../../../../../../middleware/mbedtls3x/port;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../middleware/mbedtls3x/port/osal;../../../../../../middleware/mbedtls3x/port/osal/baremetal;../../../../../../components/ele_crypto;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../middleware/mbedtls3x/port;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -447,47 +447,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/ele_s4xx</GroupName>
+          <GroupName>component/psa_crypto_driver/ele_s4xx</GroupName>
           <Files>
             <File>
               <FileName>ele_s4xx.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_s4xx.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/ele_s4xx.h</FilePath>
             </File>
             <File>
               <FileName>ele_fw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_fw.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/ele_fw.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/ele_s4xx/src/common</GroupName>
+          <GroupName>component/psa_crypto_driver/ele_s4xx/src/common</GroupName>
           <Files>
             <File>
               <FileName>mcux_psa_s4xx_common_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_common_init.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_common_init.c</FilePath>
             </File>
             <File>
               <FileName>mcux_psa_s4xx_entropy.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_entropy.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_entropy.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/ele_s4xx/include/common</GroupName>
+          <GroupName>component/psa_crypto_driver/ele_s4xx/include/common</GroupName>
           <Files>
             <File>
               <FileName>mcux_psa_s4xx_common_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_common_init.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_common_init.h</FilePath>
             </File>
             <File>
               <FileName>mcux_psa_s4xx_entropy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/osal/baremetal</GroupName>
+          <Files>
+            <File>
+              <FileName>osal_mutex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_mutex_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -550,14 +565,39 @@
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0-ahab-container.img</FilePath>
             </File>
             <File>
+              <FileName>mxrt1180b0alt-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
               <FileName>mxrt1180b0alt-ahab-container.img</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-ahab-container.img</FilePath>
             </File>
             <File>
-              <FileName>Readme.md</FileName>
+              <FileName>mxrt1180b0el2goprov-1c00-ahab-container.img</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../firmware/edgelock/Readme.md</FilePath>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0el2goprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>Readme_rt1180.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/Readme_rt1180.md</FilePath>
             </File>
             <File>
               <FileName>SCR.txt</FileName>
@@ -669,6 +709,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -705,16 +755,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -733,6 +773,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -857,6 +912,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/ele_crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>ele_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/ele_crypto/ele_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>ele_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/ele_crypto/ele_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>ele_crypto_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/ele_crypto/ele_crypto_internal.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls3x/library</GroupName>
           <Files>
             <File>
@@ -870,19 +945,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_aead.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_cipher.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_client.c</FileName>
@@ -890,29 +955,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_client.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_core_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_driver_wrappers_no_static.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_driver_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_ecp.c</FileName>
@@ -920,19 +965,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_ecp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_ffdh.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_ffdh.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_hash.c</FileName>
@@ -940,34 +975,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_hash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_invasive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_invasive.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_its.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_mac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_mac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_pake.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_pake.c</FileName>
@@ -975,19 +985,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_random_impl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_random_impl.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_rsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_se.c</FileName>
@@ -995,39 +995,14 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_se.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_se.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_slot_management.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_slot_management.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_storage.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_storage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_util_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
             </File>
             <File>
               <FileName>aes.c</FileName>
@@ -1125,6 +1100,16 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_mod_raw_invasive.h</FilePath>
             </File>
             <File>
+              <FileName>block_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/block_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>block_cipher_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/block_cipher_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bn_mul.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bn_mul.h</FilePath>
@@ -1198,6 +1183,11 @@
               <FileName>ctr_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/ctr_drbg.c</FilePath>
+            </File>
+            <File>
+              <FileName>ctr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/ctr.h</FilePath>
             </File>
             <File>
               <FileName>des.c</FileName>
@@ -1355,6 +1345,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/pk.c</FilePath>
             </File>
             <File>
+              <FileName>pk_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/pk_ecc.c</FilePath>
+            </File>
+            <File>
               <FileName>pk_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/pk_internal.h</FilePath>
@@ -1410,6 +1405,106 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_pake.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/ripemd160.c</FilePath>
@@ -1428,6 +1523,11 @@
               <FileName>rsa_alt_helpers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/rsa_alt_helpers.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/rsa_internal.h</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
@@ -1510,6 +1610,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/x509write_csr.c</FilePath>
             </File>
             <File>
+              <FileName>x509_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/x509_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>pkcs7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/pkcs7.c</FilePath>
@@ -1518,6 +1623,11 @@
               <FileName>debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/debug_internal.h</FilePath>
             </File>
             <File>
               <FileName>mps_common.h</FileName>
@@ -1563,6 +1673,11 @@
               <FileName>ssl_ciphersuites.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/ssl_ciphersuites.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_ciphersuites_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/ssl_ciphersuites_internal.h</FilePath>
             </File>
             <File>
               <FileName>ssl_client.c</FileName>
@@ -1652,51 +1767,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/osal</GroupName>
-          <Files>
-            <File>
-              <FileName>osal_mutex.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/osal/osal_mutex.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls3x/port/osal/baremetal</GroupName>
-          <Files>
-            <File>
-              <FileName>osal_mutex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/osal/baremetal/osal_mutex.c</FilePath>
-            </File>
-            <File>
-              <FileName>osal_mutex_platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/osal/baremetal/osal_mutex_platform.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/ele_crypto</GroupName>
-          <Files>
-            <File>
-              <FileName>ele_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/ele_crypto/ele_crypto.c</FilePath>
-            </File>
-            <File>
-              <FileName>ele_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/ele_crypto/ele_crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>ele_crypto_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/ele_crypto/ele_crypto_internal.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -1728,6 +1798,11 @@
               <FileName>bignum.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/mbedtls/bignum.h</FilePath>
+            </File>
+            <File>
+              <FileName>block_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/mbedtls/block_cipher.h</FilePath>
             </File>
             <File>
               <FileName>build_info.h</FileName>
@@ -2178,6 +2253,16 @@
               <FileName>crypto_values.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/osal</GroupName>
+          <Files>
+            <File>
+              <FileName>osal_mutex.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2552,10 +2637,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, MULADDC_CANNOT_USE_R7, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', MCUXPRESSO_SDK, FSL_FEATURE_SOC_ELE_S4XX, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/mbedtls3x/port/ele_s4xx;../../../../../../middleware/mbedtls3x/port/ele_s4xx/include;../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common;../../../../../../middleware/mbedtls3x/port;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../middleware/mbedtls3x/port/osal;../../../../../../middleware/mbedtls3x/port/osal/baremetal;../../../../../../components/ele_crypto;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/psa_crypto_driver/ele_s4xx;../../../../../../components/psa_crypto_driver/ele_s4xx/include;../../../../../../components/psa_crypto_driver/ele_s4xx/include/common;../../../../../../components/psa_crypto_driver/osal/baremetal;../../../../../../middleware/mbedtls3x/port;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls3x/include;../../../../../../middleware/mbedtls3x/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../components/psa_crypto_driver/osal;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2667,47 +2752,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/ele_s4xx</GroupName>
+          <GroupName>component/psa_crypto_driver/ele_s4xx</GroupName>
           <Files>
             <File>
               <FileName>ele_s4xx.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_s4xx.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/ele_s4xx.h</FilePath>
             </File>
             <File>
               <FileName>ele_fw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_fw.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/ele_fw.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/ele_s4xx/src/common</GroupName>
+          <GroupName>component/psa_crypto_driver/ele_s4xx/src/common</GroupName>
           <Files>
             <File>
               <FileName>mcux_psa_s4xx_common_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_common_init.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_common_init.c</FilePath>
             </File>
             <File>
               <FileName>mcux_psa_s4xx_entropy.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_entropy.c</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_entropy.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/ele_s4xx/include/common</GroupName>
+          <GroupName>component/psa_crypto_driver/ele_s4xx/include/common</GroupName>
           <Files>
             <File>
               <FileName>mcux_psa_s4xx_common_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_common_init.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_common_init.h</FilePath>
             </File>
             <File>
               <FileName>mcux_psa_s4xx_entropy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</FilePath>
+              <FilePath>../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/osal/baremetal</GroupName>
+          <Files>
+            <File>
+              <FileName>osal_mutex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_mutex_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2770,14 +2870,39 @@
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0-ahab-container.img</FilePath>
             </File>
             <File>
+              <FileName>mxrt1180b0alt-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
               <FileName>mxrt1180b0alt-ahab-container.img</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-ahab-container.img</FilePath>
             </File>
             <File>
-              <FileName>Readme.md</FileName>
+              <FileName>mxrt1180b0el2goprov-1c00-ahab-container.img</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../firmware/edgelock/Readme.md</FilePath>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0el2goprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>Readme_rt1180.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/Readme_rt1180.md</FilePath>
             </File>
             <File>
               <FileName>SCR.txt</FileName>
@@ -2889,6 +3014,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2925,16 +3060,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2953,6 +3078,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3077,6 +3217,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/ele_crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>ele_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/ele_crypto/ele_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>ele_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/ele_crypto/ele_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>ele_crypto_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/ele_crypto/ele_crypto_internal.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls3x/library</GroupName>
           <Files>
             <File>
@@ -3090,19 +3250,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_aead.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_cipher.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_client.c</FileName>
@@ -3110,29 +3260,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_client.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_core_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_driver_wrappers_no_static.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_driver_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_ecp.c</FileName>
@@ -3140,19 +3270,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_ecp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_ffdh.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_ffdh.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_hash.c</FileName>
@@ -3160,34 +3280,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_hash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_invasive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_invasive.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_its.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_mac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_mac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_pake.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_pake.c</FileName>
@@ -3195,19 +3290,9 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_random_impl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_random_impl.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_rsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_se.c</FileName>
@@ -3215,39 +3300,14 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_se.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_se.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_slot_management.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.c</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_slot_management.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.h</FilePath>
-            </File>
-            <File>
               <FileName>psa_crypto_storage.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_storage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_util_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
             </File>
             <File>
               <FileName>aes.c</FileName>
@@ -3345,6 +3405,16 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/bignum_mod_raw_invasive.h</FilePath>
             </File>
             <File>
+              <FileName>block_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/block_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>block_cipher_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/block_cipher_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bn_mul.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/bn_mul.h</FilePath>
@@ -3418,6 +3488,11 @@
               <FileName>ctr_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/ctr_drbg.c</FilePath>
+            </File>
+            <File>
+              <FileName>ctr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/ctr.h</FilePath>
             </File>
             <File>
               <FileName>des.c</FileName>
@@ -3575,6 +3650,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/pk.c</FilePath>
             </File>
             <File>
+              <FileName>pk_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/pk_ecc.c</FilePath>
+            </File>
+            <File>
               <FileName>pk_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/pk_internal.h</FilePath>
@@ -3630,6 +3710,106 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_pake.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/ripemd160.c</FilePath>
@@ -3648,6 +3828,11 @@
               <FileName>rsa_alt_helpers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/rsa_alt_helpers.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/rsa_internal.h</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
@@ -3730,6 +3915,11 @@
               <FilePath>../../../../../../middleware/mbedtls3x/library/x509write_csr.c</FilePath>
             </File>
             <File>
+              <FileName>x509_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/x509_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>pkcs7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/pkcs7.c</FilePath>
@@ -3738,6 +3928,11 @@
               <FileName>debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/debug_internal.h</FilePath>
             </File>
             <File>
               <FileName>mps_common.h</FileName>
@@ -3783,6 +3978,11 @@
               <FileName>ssl_ciphersuites.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/library/ssl_ciphersuites.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_ciphersuites_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/library/ssl_ciphersuites_internal.h</FilePath>
             </File>
             <File>
               <FileName>ssl_client.c</FileName>
@@ -3872,51 +4072,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls3x/port/osal</GroupName>
-          <Files>
-            <File>
-              <FileName>osal_mutex.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/osal/osal_mutex.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls3x/port/osal/baremetal</GroupName>
-          <Files>
-            <File>
-              <FileName>osal_mutex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/osal/baremetal/osal_mutex.c</FilePath>
-            </File>
-            <File>
-              <FileName>osal_mutex_platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls3x/port/osal/baremetal/osal_mutex_platform.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/ele_crypto</GroupName>
-          <Files>
-            <File>
-              <FileName>ele_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/ele_crypto/ele_crypto.c</FilePath>
-            </File>
-            <File>
-              <FileName>ele_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/ele_crypto/ele_crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>ele_crypto_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/ele_crypto/ele_crypto_internal.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>mbedtls3x/include/mbedtls</GroupName>
           <Files>
             <File>
@@ -3948,6 +4103,11 @@
               <FileName>bignum.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/mbedtls/bignum.h</FilePath>
+            </File>
+            <File>
+              <FileName>block_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls3x/include/mbedtls/block_cipher.h</FilePath>
             </File>
             <File>
               <FileName>build_info.h</FileName>
@@ -4398,6 +4558,16 @@
               <FileName>crypto_values.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls3x/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/psa_crypto_driver/osal</GroupName>
+          <Files>
+            <File>
+              <FileName>osal_mutex.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -9,6 +9,14 @@
       </member>
       <member>
         <project>hello_world_demo_cm7</project>
+        <configuration>flexspi_nor_hyperram_debug</configuration>
+      </member>
+      <member>
+        <project>hello_world_demo_cm7</project>
+        <configuration>flexspi_nor_hyperram_release</configuration>
+      </member>
+      <member>
+        <project>hello_world_demo_cm7</project>
         <configuration>debug</configuration>
       </member>
       <member>
@@ -33,6 +41,20 @@
       <member>
         <project>hello_world_demo_cm7</project>
         <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_hyperram_debug</name>
+      <member>
+        <project>hello_world_demo_cm7</project>
+        <configuration>flexspi_nor_hyperram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_hyperram_release</name>
+      <member>
+        <project>hello_world_demo_cm7</project>
+        <configuration>flexspi_nor_hyperram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

@@ -1,21 +1,16 @@
 var a00352 =
 [
-    [ "FSL_OCOTP_DRIVER_VERSION", "a00352.html#ga211ad512cb6afc3a8649a61c4f887dd5", [
-      [ "kStatus_OCOTP_AccessError", "a00352.html#gga9a3be2d66956bd67c0b66c32d8b30f17a6133e2fb03bd09bc490982251048c8de", null ],
-      [ "kStatus_OCOTP_CrcFail", "a00352.html#gga9a3be2d66956bd67c0b66c32d8b30f17a6c5aa99c2965029cf80feaf36cd0763a", null ],
-      [ "kStatus_OCOTP_ReloadError", "a00352.html#gga9a3be2d66956bd67c0b66c32d8b30f17aa1a3a69603c6973128021852a03cf9ce", null ],
-      [ "kStatus_OCOTP_ProgramFail", "a00352.html#gga9a3be2d66956bd67c0b66c32d8b30f17ae3aafd3ae27db94a954965038445d240", null ],
-      [ "kStatus_OCOTP_Locked", "a00352.html#gga9a3be2d66956bd67c0b66c32d8b30f17a3a38a5c2c3c0f0146c9b773e855812a6", null ]
-    ] ],
-    [ "OCOTP_Init", "a00352.html#ga54480b3c489116b8cb76053b16f02c89", null ],
-    [ "OCOTP_Deinit", "a00352.html#gaafffa3b5fe3f1f69f077e88ba5a7e107", null ],
-    [ "OCOTP_CheckBusyStatus", "a00352.html#gaa3040092099624ec476dd81bd022712c", null ],
-    [ "OCOTP_CheckErrorStatus", "a00352.html#gaf0ee0166ccd35b0273d468b7eb72c954", null ],
-    [ "OCOTP_ClearErrorStatus", "a00352.html#gad9294be0c39be4dfaa1eea436ac85171", null ],
-    [ "OCOTP_ReloadShadowRegister", "a00352.html#ga7a7b1cd03383fafde15157a06fdda557", null ],
-    [ "OCOTP_ReadFuseShadowRegister", "a00352.html#gaecc991ccf4be0c49286fb13cba97e389", null ],
-    [ "OCOTP_ReadFuseShadowRegisterExt", "a00352.html#gaa1b0f813fa5ca43225d71d9218c48a28", null ],
-    [ "OCOTP_WriteFuseShadowRegister", "a00352.html#ga43636ab96125958c9a14fe82c176e33e", null ],
-    [ "OCOTP_WriteFuseShadowRegisterWithLock", "a00352.html#ga4f837c7b4a66ffe3153f2975fd5c6388", null ],
-    [ "OCOTP_GetVersion", "a00352.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5", null ]
+    [ "FSL_RDC_SEMA42_DRIVER_VERSION", "a00352.html#gaa6cac37b3ebec11ac45076d374d6a93e", null ],
+    [ "RDC_SEMA42_GATE_NUM_RESET_ALL", "a00352.html#ga2e1384ab2be0f1a97f5e4eda2d12ceaf", null ],
+    [ "RDC_SEMA42_GATEn", "a00352.html#ga857f01bed307b5d333bd793429b59037", null ],
+    [ "RDC_SEMA42_GATE_COUNT", "a00352.html#ga09a33a01fde064c69b0ee9eec91b0c1a", null ],
+    [ "RDC_SEMA42_Init", "a00352.html#ga5b8154d8b24ac1dfd1b1d2bb10158ec0", null ],
+    [ "RDC_SEMA42_Deinit", "a00352.html#ga1a2c1f1889cdd9c2d4410a9fffe226d9", null ],
+    [ "RDC_SEMA42_TryLock", "a00352.html#ga85fb981fbe35995485b419091c06583c", null ],
+    [ "RDC_SEMA42_Lock", "a00352.html#ga55f710fde1530472af83d2192a1003d6", null ],
+    [ "RDC_SEMA42_Unlock", "a00352.html#ga24343ed74b1ac14f1ef6ee2bf9981787", null ],
+    [ "RDC_SEMA42_GetLockMasterIndex", "a00352.html#ga0335914d7ba08830da16f7110d2e2ddc", null ],
+    [ "RDC_SEMA42_GetLockDomainID", "a00352.html#gac2bc50ca8bb908c88f0eedba0bc2f3f2", null ],
+    [ "RDC_SEMA42_ResetGate", "a00352.html#ga756f7f9c12750a30c2ab26271371108d", null ],
+    [ "RDC_SEMA42_ResetAllGates", "a00352.html#gae72a0e282cf4c612ff7f2e55954cd2fd", null ]
 ];

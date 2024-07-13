@@ -1,8 +1,12 @@
 var a00334 =
 [
-    [ "CAAM_CRC_Init", "a00334.html#ga289e6d38c9dc301da643e37e12782338", null ],
-    [ "CAAM_CRC_Update", "a00334.html#ga427a357fbbf2992f01577f1ce9e5dd96", null ],
-    [ "CAAM_CRC_Finish", "a00334.html#ga2525667037e39d0acf81c73f00bdca2b", null ],
-    [ "CAAM_CRC", "a00334.html#gadcd62c2e6792d7ec5c3f3261bf75c587", null ],
-    [ "CAAM_CRC_NonBlocking", "a00334.html#ga148c19a9d9cd036b7690f9b711d46a55", null ]
+    [ "FSL_DMAMUX_DRIVER_VERSION", "a00334.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
+    [ "DMAMUX_Init", "a00334.html#ga850545ac61a004df8ca312db2ca9db73", null ],
+    [ "DMAMUX_Deinit", "a00334.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
+    [ "DMAMUX_EnableChannel", "a00334.html#gaecac68802d961c31a06389caa97387f5", null ],
+    [ "DMAMUX_DisableChannel", "a00334.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
+    [ "DMAMUX_SetSource", "a00334.html#gab4cfa329d636dc52dffb7fedef84367e", null ],
+    [ "DMAMUX_EnablePeriodTrigger", "a00334.html#ga9b873510e45bcc998b5cede12ed359d0", null ],
+    [ "DMAMUX_DisablePeriodTrigger", "a00334.html#ga7a632ca1a6bd05a936a4f4ba1295e158", null ],
+    [ "DMAMUX_EnableAlwaysOn", "a00334.html#ga70912895b0619dcfb911663501cb03f5", null ]
 ];

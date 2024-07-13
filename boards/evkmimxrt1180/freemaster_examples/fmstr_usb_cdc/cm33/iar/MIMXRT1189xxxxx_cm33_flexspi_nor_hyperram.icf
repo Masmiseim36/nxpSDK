@@ -52,7 +52,7 @@ define symbol m_fcb_start              = m_flash_start + m_fcb_offset;
 define symbol m_fcb_end                = m_fcb_start + m_fcb_size - 1;
 
 define symbol m_xmcd_offset            = 0x800;
-define symbol m_xmcd_size              = 0x200;
+define symbol m_xmcd_size              = 0x400;
 define symbol m_xmcd_start             = m_flash_start + m_xmcd_offset;
 define symbol m_xmcd_end               = m_xmcd_start + m_xmcd_size - 1;
 
@@ -66,13 +66,13 @@ define symbol vector_table_size        = 0x00000400;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x0400;
+  define symbol __size_cstack__        = 0x2000;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x0400;
+  define symbol __size_heap__          = 0x2000;
 }
 
 define symbol m_qacode_start           = m_code_tcm_start + (isdefinedsymbol(__ram_vector_table__) ? vector_table_size : 0);

@@ -14,7 +14,7 @@
 #include "fsl_common.h"
 #include "fsl_edma.h"
 #include "fsl_trdc.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -190,19 +190,19 @@ int main(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Release TRDC A to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     TRDC_EDMA4_ResetPermissions();

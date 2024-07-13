@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, _DEBUG=1, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, _DEBUG=1, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c</IncludePath>
+              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -870,6 +870,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</FilePath>
@@ -965,14 +985,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -988,6 +1003,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1412,10 +1437,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE, DEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE, DEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c</IncludePath>
+              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1950,6 +1975,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</FilePath>
@@ -2045,14 +2090,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -2068,6 +2108,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2492,10 +2542,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c</IncludePath>
+              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3030,6 +3080,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</FilePath>
@@ -3125,14 +3195,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -3148,6 +3213,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3572,10 +3647,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c</IncludePath>
+              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4110,6 +4185,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</FilePath>
@@ -4205,14 +4300,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -4228,6 +4318,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4652,10 +4752,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c</IncludePath>
+              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5190,6 +5290,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</FilePath>
@@ -5285,14 +5405,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -5308,6 +5423,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5732,10 +5857,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, TIMER_PORT_TYPE_GPT=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c</IncludePath>
+              <IncludePath>..;../../../../../../../components/osa;../../../../../../../middleware/usb/pd;../../../../../../../components/timer;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../evkmimxrt1180/xip;../../../../../../../devices/MIMXRT1189/xip;../../../../../../../middleware/usb/pd/ptn5110;../../../../../../../middleware/usb/pd/phy_interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/usb/include;../../../../../../../components/gpio;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6270,6 +6395,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</FilePath>
@@ -6365,14 +6510,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -6388,6 +6528,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

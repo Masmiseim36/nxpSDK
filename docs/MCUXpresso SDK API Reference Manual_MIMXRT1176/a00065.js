@@ -1,80 +1,53 @@
 var a00065 =
 [
-    [ "_mmc_usr_param", "a00065.html#a00584", [
-      [ "ioStrength", "a00065.html#a2492f6e7b46c91eb978c8bfb6d109c68", null ],
-      [ "maxFreq", "a00065.html#a008dd91bb763e5383059eea046c45ac0", null ],
-      [ "capability", "a00065.html#ab30eb27aa2f2a59815adfb8ede7db78e", null ]
+    [ "_notifier_notification_block", "a00065.html#a00584", [
+      [ "targetConfig", "a00065.html#a018195ff797af865b0d49c0a40c5150a", null ],
+      [ "policy", "a00065.html#aba07cda193bd7b533b525d8272cceeb2", null ],
+      [ "notifyType", "a00065.html#adc67fe829150c3c2a679db904432d7ea", null ]
     ] ],
-    [ "_mmc_card", "a00065.html#a00579", [
-      [ "host", "a00065.html#a30cc4dbbaa472aa5d1100d51d6c15c89", null ],
-      [ "usrParam", "a00065.html#ac618738b6922f5b78e35a503d9cb4766", null ],
-      [ "isHostReady", "a00065.html#a7d825ef388f8ffc8999970cdc5c9f993", null ],
-      [ "noInteralAlign", "a00065.html#a96cacb1bff48c1038b9a652914a8e368", null ],
-      [ "busClock_Hz", "a00065.html#acb055f60fd033bf343b7e5ff800cb3f0", null ],
-      [ "relativeAddress", "a00065.html#a113333f1f137500a4eb228fc472ae1b6", null ],
-      [ "enablePreDefinedBlockCount", "a00065.html#a65ed393e3ecfc128c76f5b8430ec67d5", null ],
-      [ "flags", "a00065.html#acb4fedfe62837d1fbf732c31f892abf6", null ],
-      [ "internalBuffer", "a00065.html#ad6c1f6f1a0eee9ef98cd025fca7574ee", null ],
-      [ "ocr", "a00065.html#ae64eb8c922a66132a3fe3fee85c02272", null ],
-      [ "cid", "a00065.html#a29214263836c7926601537413cd36326", null ],
-      [ "csd", "a00065.html#a21da22a7211b5c9ec8eaa60fe1ede2de", null ],
-      [ "extendedCsd", "a00065.html#aff5e6eaae4ea2928f46c643efc688db3", null ],
-      [ "blockSize", "a00065.html#a832a43eb5725c93de422279af52d5b98", null ],
-      [ "userPartitionBlocks", "a00065.html#a7b0e08b35289ef2fba0ab6cb3c4caa14", null ],
-      [ "bootPartitionBlocks", "a00065.html#a9a2f7983025d764ea428f1a5f64ecea6", null ],
-      [ "eraseGroupBlocks", "a00065.html#a952389c4583f24b75bf7104e92b65b05", null ],
-      [ "currentPartition", "a00065.html#aac1d842eb7c4be3b01b812470b156a0c", null ],
-      [ "hostVoltageWindowVCCQ", "a00065.html#aea564024177a5f8b83715a4bea26a660", null ],
-      [ "hostVoltageWindowVCC", "a00065.html#a34e7bbd988a33dda1eb9b08211b78688", null ],
-      [ "busTiming", "a00065.html#aeb623ca3d3f3beb02143ebdf317bf255", null ],
-      [ "busWidth", "a00065.html#abeb01f8de945cd9efb47cd755b049028", null ],
-      [ "lock", "a00065.html#ae2976750b8fba83778c78b2926e1edb9", null ]
+    [ "_notifier_callback_config", "a00065.html#a00582", [
+      [ "callback", "a00065.html#a85eb3076fe6c084c74669e67c62213a7", null ],
+      [ "callbackType", "a00065.html#a3a89d9f29db8d7cd160febde83d28059", null ],
+      [ "callbackData", "a00065.html#a3157da142ad8e9147093b734f7f9c1c8", null ]
     ] ],
-    [ "FSL_MMC_DRIVER_VERSION", "a00065.html#gaa853e6ed145fdde29cb8277c789ab5cb", null ],
-    [ "mmc_sleep_awake_t", "a00065.html#gacd8cb5bb52d6eb3d5b5042bc887dbe47", null ],
-    [ "mmc_io_strength_t", "a00065.html#ga5615d27683e82898b6d4526eff8efcd8", null ],
-    [ "mmc_usr_param_t", "a00065.html#gacfc78ba35ecb16844db02e696445c4ee", null ],
-    [ "mmc_card_t", "a00065.html#gaaf83cf346c0bc8bad98979da67156257", [
-      [ "kMMC_SupportHighSpeed26MHZFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa0f2e16ba804bfabd3c81fee5fa780c95", null ],
-      [ "kMMC_SupportHighSpeed52MHZFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaadb778db370818747d81df90b23298bf1", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ180V300VFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaaf873861eb6356bd1a236d4741d3bd382", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ120VFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaab26ad5455afddab2dd5909435243d8de", null ],
-      [ "kMMC_SupportHS200200MHZ180VFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa39b3765119b6f0134b9c3d00e78ccdc3", null ],
-      [ "kMMC_SupportHS200200MHZ120VFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa7875676a63cb3e3f3bce09d60b12cf88", null ],
-      [ "kMMC_SupportHS400DDR200MHZ180VFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa5b1fc45cb6e3fee016907e5d13f1ad83", null ],
-      [ "kMMC_SupportHS400DDR200MHZ120VFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaaf2976472059a8701c26ed30e0f28c5fa", null ],
-      [ "kMMC_SupportHighCapacityFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa067279b27baf58ed3266df38e848b128", null ],
-      [ "kMMC_SupportAlternateBootFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaac18882ad0cc699401c3e3483633ed77b", null ],
-      [ "kMMC_SupportDDRBootFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaaf9baef828e6536d54f64295e1ce57548", null ],
-      [ "kMMC_SupportHighSpeedBootFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa57438a043537958e8324400ce3788ed0", null ],
-      [ "kMMC_SupportEnhanceHS400StrobeFlag", "a00065.html#ggac72f7803394f05658258f8a2b76f53aaa39d546b05b2c725a822419330606bba5", null ]
+    [ "_notifier_handle", "a00065.html#a00583", [
+      [ "configsTable", "a00065.html#a3ecaf5ebe809ffe87e3fd765df0ce8f4", null ],
+      [ "configsNumber", "a00065.html#aa3922e6509dd3d21571e07367e2aa578", null ],
+      [ "callbacksTable", "a00065.html#abf74e82056bd7b4e19ac11ce554b0e6e", null ],
+      [ "callbacksNumber", "a00065.html#a3800d55438441a0091a84516381bba10", null ],
+      [ "errorCallbackIndex", "a00065.html#af91a8551d975e6a2354efc9c8ef3b585", null ],
+      [ "currentConfigIndex", "a00065.html#a482028570c5e46c6ed018885dc45204f", null ],
+      [ "userFunction", "a00065.html#a51562248abd92ea71aea469d7f2599b8", null ],
+      [ "userData", "a00065.html#a6ff25f57ffc4b15c365d03afe1d65ca5", null ]
     ] ],
-    [ "_mmc_sleep_awake", "a00065.html#gaf0d5a316617bfdec3b93cd29228b5bb7", [
-      [ "kMMC_Sleep", "a00065.html#ggaf0d5a316617bfdec3b93cd29228b5bb7a766aba45b5704265a1dfdf8d8d1ef5b2", null ],
-      [ "kMMC_Awake", "a00065.html#ggaf0d5a316617bfdec3b93cd29228b5bb7a68ce50ee0ddf66b369033f79da5328e9", null ]
+    [ "notifier_policy_t", "a00065.html#ga80f2ccc799b1cca21a091e2b28fbf36c", null ],
+    [ "notifier_notification_type_t", "a00065.html#gad7a79c7191c37e1cf4367bcda45b6943", null ],
+    [ "notifier_callback_type_t", "a00065.html#ga3fdecfea1f1a6b56c8d74c3608ee9657", null ],
+    [ "notifier_user_config_t", "a00065.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
+    [ "notifier_user_function_t", "a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
+    [ "notifier_notification_block_t", "a00065.html#gac3dc913bdf7b5e3b40b347e0f748189a", null ],
+    [ "notifier_callback_t", "a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
+    [ "notifier_callback_config_t", "a00065.html#ga1ed8b5576d410ff76c7707f7fc58435f", null ],
+    [ "notifier_handle_t", "a00065.html#ga5fb6d98190b8a419a8d4b4150b0eae2a", null ],
+    [ "_notifier_status", "a00065.html#gacac871f1b98f53906b07b2663943c784", [
+      [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00065.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
+      [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00065.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
     ] ],
-    [ "MMC_Init", "a00065.html#ga03f006d98725caeee8162ebb1250ff86", null ],
-    [ "MMC_Deinit", "a00065.html#gab67cdb5a21909356c4abadf3a4d8b40c", null ],
-    [ "MMC_CardInit", "a00065.html#ga9adb1349b4f9415c631e94a375bc7db0", null ],
-    [ "MMC_CardDeinit", "a00065.html#ga83e4e9e390a6c817f06999bbf887a3b3", null ],
-    [ "MMC_HostInit", "a00065.html#ga44f98e6d4caefbac4ee0237890f651e6", null ],
-    [ "MMC_HostDeinit", "a00065.html#ga56005088e0e2a575190bf7829520c7f1", null ],
-    [ "MMC_HostDoReset", "a00065.html#ga260f33fc882cd4eaef78f05ef9069fc9", null ],
-    [ "MMC_HostReset", "a00065.html#ga4f61aee1889a7a09e6dea3735714b1ce", null ],
-    [ "MMC_SetCardPower", "a00065.html#ga5231adac523a9314ba4aceb89e67c492", null ],
-    [ "MMC_CheckReadOnly", "a00065.html#gac08db377dfecee284aedd579d445999a", null ],
-    [ "MMC_ReadBlocks", "a00065.html#ga60a99fbb416b500761d668779ebe01f7", null ],
-    [ "MMC_WriteBlocks", "a00065.html#ga504ade2cd3eeb1891913271521bc9562", null ],
-    [ "MMC_EraseGroups", "a00065.html#ga90ca5cb83516ede64e9af6ece3439bab", null ],
-    [ "MMC_SelectPartition", "a00065.html#gad36b22249e056b0dda1da583a5530d61", null ],
-    [ "MMC_SetBootConfig", "a00065.html#gafd26b8b19b85f99d23175bfb3ddf6ff0", null ],
-    [ "MMC_StartBoot", "a00065.html#ga86dbfbd824a0f5243a960d343e3f9176", null ],
-    [ "MMC_SetBootConfigWP", "a00065.html#ga9b18b799d48e0b39672d89d5f6148548", null ],
-    [ "MMC_ReadBootData", "a00065.html#ga1e27e4af5916f5f501cd1d9912a42643", null ],
-    [ "MMC_StopBoot", "a00065.html#ga1976bb2986bd2dd53de05101cde394a7", null ],
-    [ "MMC_SetBootPartitionWP", "a00065.html#ga4e212f50660aa5fd7ff36a9232fecf93", null ],
-    [ "MMC_EnableCacheControl", "a00065.html#gab41ad4bb9f654d8cd213effffcbbae06", null ],
-    [ "MMC_FlushCache", "a00065.html#ga61bd93105cac69d83956086927d30dce", null ],
-    [ "MMC_SetSleepAwake", "a00065.html#gac8ecc09f078dc2e7e8f85eb24d939ed0", null ],
-    [ "MMC_PollingCardStatusBusy", "a00065.html#ga255bea62892cc6c3859caf2b1a57e24e", null ]
+    [ "_notifier_policy", "a00065.html#ga876c38aa0c3eb40cd6d9fa62106efd65", [
+      [ "kNOTIFIER_PolicyAgreement", "a00065.html#gga876c38aa0c3eb40cd6d9fa62106efd65a4513243b3cacd0aec289531dfb53e964", null ],
+      [ "kNOTIFIER_PolicyForcible", "a00065.html#gga876c38aa0c3eb40cd6d9fa62106efd65a97a2587e9e4c523dc028778ba1f72dc8", null ]
+    ] ],
+    [ "_notifier_notification_type", "a00065.html#gae4fbfb346e65c17b618dcedb491a864b", [
+      [ "kNOTIFIER_NotifyRecover", "a00065.html#ggae4fbfb346e65c17b618dcedb491a864ba49e6ad28b9d351a051035c8065de5d94", null ],
+      [ "kNOTIFIER_NotifyBefore", "a00065.html#ggae4fbfb346e65c17b618dcedb491a864ba91707ed2be51db6da2a9d6cc6eaee39c", null ],
+      [ "kNOTIFIER_NotifyAfter", "a00065.html#ggae4fbfb346e65c17b618dcedb491a864ba6e89a377b2890077646fc6af6b5c2e00", null ]
+    ] ],
+    [ "_notifier_callback_type", "a00065.html#ga120d15994388722016ef487b8159f3df", [
+      [ "kNOTIFIER_CallbackBefore", "a00065.html#gga120d15994388722016ef487b8159f3dfab9c117f1eccd38f914d0e4d05015d6a1", null ],
+      [ "kNOTIFIER_CallbackAfter", "a00065.html#gga120d15994388722016ef487b8159f3dfa8d5832eddd0d8cf976413aea02f3bfdc", null ],
+      [ "kNOTIFIER_CallbackBeforeAfter", "a00065.html#gga120d15994388722016ef487b8159f3dfada6451efe227571a1442e70ddf36e005", null ]
+    ] ],
+    [ "NOTIFIER_CreateHandle", "a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
+    [ "NOTIFIER_SwitchConfig", "a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],
+    [ "NOTIFIER_GetErrorCallbackIndex", "a00065.html#ga9736632c3beca486ec3f8dab504b839c", null ]
 ];

@@ -1,9 +1,6 @@
 var a00234 =
 [
-    [ "MMC Card Driver", "a00038.html", "a00038" ],
-    [ "SD Card Driver", "a00055.html", "a00055" ],
-    [ "SDIO Card Driver", "a00056.html", "a00056" ],
-    [ "SDMMC Common", "a00037.html", "a00037" ],
-    [ "SDMMC HOST Driver", "a00235.html", "a00235" ],
-    [ "SDMMC OSA", "a00057.html", "a00057" ]
+    [ "CODEC Common Driver", "a00011.html", "a00011" ],
+    [ "CODEC I2C Driver", "a00012.html", "a00012" ],
+    [ "Wm8962", "a00068.html", "a00068" ]
 ];

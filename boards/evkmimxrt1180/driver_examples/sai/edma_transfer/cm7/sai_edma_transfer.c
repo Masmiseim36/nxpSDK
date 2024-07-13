@@ -19,7 +19,7 @@
 #include "fsl_wm8962.h"
 #include "fsl_edma.h"
 #include "fsl_trdc.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -125,7 +125,11 @@ const clock_audio_pll_config_t audioPllConfig = {
     .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
     .denominator = 1000, /* 30 bit denominator of fractional loop divider */
 };
+#if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
+AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
+#else
 AT_QUICKACCESS_SECTION_DATA(sai_edma_handle_t txHandle);
+#endif
 edma_handle_t g_dmaHandle = {0};
 extern codec_config_t boardCodecConfig;
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM * DEMO_XFER_BUFFER_SIZE], 4);
@@ -216,19 +220,19 @@ void BOARD_SetDMA3Permission(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Release TRDC A to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     TRDC_EDMA3_ResetPermissions();
@@ -292,7 +296,7 @@ int main(void)
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
 
-    PRINTF("SAI example started!\n\r");
+    PRINTF("SAI EDMA example started!\n\r");
 
 #if (!defined(DEMO_EDMA_HAS_CHANNEL_CONFIG) || (defined(DEMO_EDMA_HAS_CHANNEL_CONFIG) && !DEMO_EDMA_HAS_CHANNEL_CONFIG))
     /* Create EDMA handle */

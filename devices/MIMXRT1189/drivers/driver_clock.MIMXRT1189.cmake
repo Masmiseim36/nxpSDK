@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_driver_common AND CONFIG_USE_driver_pmu_1)
+if(CONFIG_USE_driver_ele_base_api AND CONFIG_USE_driver_common AND CONFIG_USE_driver_pmu_1)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/fsl_clock.c

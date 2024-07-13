@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SDMMC HOST Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Serial Port Uart</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,19 +99,104 @@ $(document).ready(function(){initNavTree('a00373.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SDMMC HOST Driver<div class="ingroups"><a class="el" href="a00372.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
+<div class="title">Serial Port Uart<div class="ingroups"><a class="el" href="a00082.html">Serial Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The host adapter driver provide adapter for blocking/non_blocking mode. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00081"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00081.html">USDHC HOST adapter Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaff6176ea2af7001a012172a47622e204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff6176ea2af7001a012172a47622e204"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#gaff6176ea2af7001a012172a47622e204">SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH</a>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="memdesc:gaff6176ea2af7001a012172a47622e204"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart handle size <br/></td></tr>
+<tr class="separator:gaff6176ea2af7001a012172a47622e204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29c0fa5c543615a75f63bdcb7e086b16"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#ga29c0fa5c543615a75f63bdcb7e086b16">SERIAL_USE_CONFIGURE_STRUCTURE</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the confgure structure pointer. <br/></td></tr>
+<tr class="separator:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga3980002a1791549605701a7822bec4ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3980002a1791549605701a7822bec4ba"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00373.html#ga2d84542a7efc9d896f4e8d7221e1ec98">_serial_port_uart_parity_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#ga3980002a1791549605701a7822bec4ba">serial_port_uart_parity_mode_t</a></td></tr>
+<tr class="memdesc:ga3980002a1791549605701a7822bec4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart parity mode <br/></td></tr>
+<tr class="separator:ga3980002a1791549605701a7822bec4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a0798b3cc6db94c65bf067bcfe73b12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a0798b3cc6db94c65bf067bcfe73b12"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00373.html#ga97aea0fa091f5d31407cd8b94bdc5f35">_serial_port_uart_stop_bit_count</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#ga2a0798b3cc6db94c65bf067bcfe73b12">serial_port_uart_stop_bit_count_t</a></td></tr>
+<tr class="memdesc:ga2a0798b3cc6db94c65bf067bcfe73b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart stop bit count <br/></td></tr>
+<tr class="separator:ga2a0798b3cc6db94c65bf067bcfe73b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga2d84542a7efc9d896f4e8d7221e1ec98"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#ga2d84542a7efc9d896f4e8d7221e1ec98">_serial_port_uart_parity_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00373.html#gga2d84542a7efc9d896f4e8d7221e1ec98a208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00373.html#gga2d84542a7efc9d896f4e8d7221e1ec98a7d9d6f05fb6e1099fdfbf1f79a699356">kSerialManager_UartParityEven</a> = 0x2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00373.html#gga2d84542a7efc9d896f4e8d7221e1ec98a15bc11791c1f07fac71c808d083515db">kSerialManager_UartParityOdd</a> = 0x3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2d84542a7efc9d896f4e8d7221e1ec98"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart parity mode  <a href="a00373.html#ga2d84542a7efc9d896f4e8d7221e1ec98">More...</a><br/></td></tr>
+<tr class="separator:ga2d84542a7efc9d896f4e8d7221e1ec98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97aea0fa091f5d31407cd8b94bdc5f35"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#ga97aea0fa091f5d31407cd8b94bdc5f35">_serial_port_uart_stop_bit_count</a> { <br/>
+&#160;&#160;<a class="el" href="a00373.html#gga97aea0fa091f5d31407cd8b94bdc5f35a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00373.html#gga97aea0fa091f5d31407cd8b94bdc5f35a83eb7aee91f3fd8964d283c0057880dc">kSerialManager_UartTwoStopBit</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga97aea0fa091f5d31407cd8b94bdc5f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart stop bit count  <a href="a00373.html#ga97aea0fa091f5d31407cd8b94bdc5f35">More...</a><br/></td></tr>
+<tr class="separator:ga97aea0fa091f5d31407cd8b94bdc5f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga2d84542a7efc9d896f4e8d7221e1ec98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00373.html#ga2d84542a7efc9d896f4e8d7221e1ec98">_serial_port_uart_parity_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2d84542a7efc9d896f4e8d7221e1ec98a208958aa923a2c50ac1192a5085ab8b1"></a>kSerialManager_UartParityDisabled</em>&nbsp;</td><td class="fielddoc">
+<p>Parity disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2d84542a7efc9d896f4e8d7221e1ec98a7d9d6f05fb6e1099fdfbf1f79a699356"></a>kSerialManager_UartParityEven</em>&nbsp;</td><td class="fielddoc">
+<p>Parity even enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2d84542a7efc9d896f4e8d7221e1ec98a15bc11791c1f07fac71c808d083515db"></a>kSerialManager_UartParityOdd</em>&nbsp;</td><td class="fielddoc">
+<p>Parity odd enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga97aea0fa091f5d31407cd8b94bdc5f35"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00373.html#ga97aea0fa091f5d31407cd8b94bdc5f35">_serial_port_uart_stop_bit_count</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga97aea0fa091f5d31407cd8b94bdc5f35a5caed34146b357a7061aaacfe378e039"></a>kSerialManager_UartOneStopBit</em>&nbsp;</td><td class="fielddoc">
+<p>One stop bit. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga97aea0fa091f5d31407cd8b94bdc5f35a83eb7aee91f3fd8964d283c0057880dc"></a>kSerialManager_UartTwoStopBit</em>&nbsp;</td><td class="fielddoc">
+<p>Two stop bits. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

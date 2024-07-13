@@ -262,8 +262,6 @@ void main(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-
-    SCB_DisableDCache();
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
     DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
     edma_config_t config;
@@ -305,7 +303,6 @@ void main(void)
     }
 }
 
-#if 0
 /**
  * @brief Loop forever if stack overflow is detected.
  *
@@ -333,7 +330,6 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
     }
 }
 
-
 /**
  * @brief Warn user if pvPortMalloc fails.
  *
@@ -354,7 +350,6 @@ void vApplicationMallocFailedHook()
     {
     }
 }
-#endif
 
 /*-----------------------------------------------------------*/
 

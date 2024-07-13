@@ -80,7 +80,7 @@ extern "C" {
     *  disable hardware PQ support. */  
     
     /* Next line can be modified by user */
-    #define RTCESL_PQ RTCESL_ON     
+    #define RTCESL_PQ RTCESL_OFF     
     
     /* Independent function call can be used as well, for example
     *  MLIB_Div_F16 ... depend on setting

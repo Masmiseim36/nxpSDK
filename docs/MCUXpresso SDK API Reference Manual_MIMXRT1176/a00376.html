@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Serial Port Uart</title>
+<title>MCUXpresso SDK API Reference Manual: Caam_driver_hmac</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,101 +99,171 @@ $(document).ready(function(){initNavTree('a00376.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Port Uart<div class="ingroups"><a class="el" href="a00083.html">Serial Manager</a></div></div>  </div>
+<div class="title">Caam_driver_hmac</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaff6176ea2af7001a012172a47622e204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff6176ea2af7001a012172a47622e204"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#gaff6176ea2af7001a012172a47622e204">SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH</a>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="memdesc:gaff6176ea2af7001a012172a47622e204"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart handle size <br/></td></tr>
-<tr class="separator:gaff6176ea2af7001a012172a47622e204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29c0fa5c543615a75f63bdcb7e086b16"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga29c0fa5c543615a75f63bdcb7e086b16">SERIAL_USE_CONFIGURE_STRUCTURE</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the confgure structure pointer. <br/></td></tr>
-<tr class="separator:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga3980002a1791549605701a7822bec4ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3980002a1791549605701a7822bec4ba"></a>
-typedef enum <br class="typebreak"/>
-<a class="el" href="a00376.html#ga2d84542a7efc9d896f4e8d7221e1ec98">_serial_port_uart_parity_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga3980002a1791549605701a7822bec4ba">serial_port_uart_parity_mode_t</a></td></tr>
-<tr class="memdesc:ga3980002a1791549605701a7822bec4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart parity mode <br/></td></tr>
-<tr class="separator:ga3980002a1791549605701a7822bec4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a0798b3cc6db94c65bf067bcfe73b12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a0798b3cc6db94c65bf067bcfe73b12"></a>
-typedef enum <br class="typebreak"/>
-<a class="el" href="a00376.html#ga97aea0fa091f5d31407cd8b94bdc5f35">_serial_port_uart_stop_bit_count</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga2a0798b3cc6db94c65bf067bcfe73b12">serial_port_uart_stop_bit_count_t</a></td></tr>
-<tr class="memdesc:ga2a0798b3cc6db94c65bf067bcfe73b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart stop bit count <br/></td></tr>
-<tr class="separator:ga2a0798b3cc6db94c65bf067bcfe73b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga2d84542a7efc9d896f4e8d7221e1ec98"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga2d84542a7efc9d896f4e8d7221e1ec98">_serial_port_uart_parity_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00376.html#gga2d84542a7efc9d896f4e8d7221e1ec98a208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00376.html#gga2d84542a7efc9d896f4e8d7221e1ec98a7d9d6f05fb6e1099fdfbf1f79a699356">kSerialManager_UartParityEven</a> = 0x2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00376.html#gga2d84542a7efc9d896f4e8d7221e1ec98a15bc11791c1f07fac71c808d083515db">kSerialManager_UartParityOdd</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga2d84542a7efc9d896f4e8d7221e1ec98"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart parity mode  <a href="a00376.html#ga2d84542a7efc9d896f4e8d7221e1ec98">More...</a><br/></td></tr>
-<tr class="separator:ga2d84542a7efc9d896f4e8d7221e1ec98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97aea0fa091f5d31407cd8b94bdc5f35"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga97aea0fa091f5d31407cd8b94bdc5f35">_serial_port_uart_stop_bit_count</a> { <br/>
-&#160;&#160;<a class="el" href="a00376.html#gga97aea0fa091f5d31407cd8b94bdc5f35a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00376.html#gga97aea0fa091f5d31407cd8b94bdc5f35a83eb7aee91f3fd8964d283c0057880dc">kSerialManager_UartTwoStopBit</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga97aea0fa091f5d31407cd8b94bdc5f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart stop bit count  <a href="a00376.html#ga97aea0fa091f5d31407cd8b94bdc5f35">More...</a><br/></td></tr>
-<tr class="separator:ga97aea0fa091f5d31407cd8b94bdc5f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga3ba294f6ebcd5de9cdaddc6a6ff01d64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga3ba294f6ebcd5de9cdaddc6a6ff01d64">CAAM_HMAC_Init</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00323.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, <a class="el" href="a00323.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a> algo, const uint8_t *key, size_t keySize)</td></tr>
+<tr class="memdesc:ga3ba294f6ebcd5de9cdaddc6a6ff01d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize HMAC context.  <a href="#ga3ba294f6ebcd5de9cdaddc6a6ff01d64">More...</a><br/></td></tr>
+<tr class="separator:ga3ba294f6ebcd5de9cdaddc6a6ff01d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8af70684c8b9f6d3bcbed01ac0b5398f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ga8af70684c8b9f6d3bcbed01ac0b5398f">CAAM_HMAC</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00323.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a> algo, const uint8_t *input, size_t inputSize, const uint8_t *key, size_t keySize, uint8_t *output, size_t *outputSize)</td></tr>
+<tr class="memdesc:ga8af70684c8b9f6d3bcbed01ac0b5398f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create Message Authentication Code (MAC) on given data.  <a href="#ga8af70684c8b9f6d3bcbed01ac0b5398f">More...</a><br/></td></tr>
+<tr class="separator:ga8af70684c8b9f6d3bcbed01ac0b5398f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga2d84542a7efc9d896f4e8d7221e1ec98"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga3ba294f6ebcd5de9cdaddc6a6ff01d64"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00376.html#ga2d84542a7efc9d896f4e8d7221e1ec98">_serial_port_uart_parity_mode</a></td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HMAC_Init </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00323.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00323.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a>&#160;</td>
+          <td class="paramname"><em>algo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keySize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2d84542a7efc9d896f4e8d7221e1ec98a208958aa923a2c50ac1192a5085ab8b1"></a>kSerialManager_UartParityDisabled</em>&nbsp;</td><td class="fielddoc">
-<p>Parity disabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d84542a7efc9d896f4e8d7221e1ec98a7d9d6f05fb6e1099fdfbf1f79a699356"></a>kSerialManager_UartParityEven</em>&nbsp;</td><td class="fielddoc">
-<p>Parity even enabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d84542a7efc9d896f4e8d7221e1ec98a15bc11791c1f07fac71c808d083515db"></a>kSerialManager_UartParityOdd</em>&nbsp;</td><td class="fielddoc">
-<p>Parity odd enabled. </p>
-</td></tr>
-</table>
+<p>This function initializes the HMAC.</p>
+<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For MDHA the key length argument is ignored.</p>
+<p>This functions is used to initialize the context for both blocking and non-blocking CAAM_HMAC API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ctx</td><td>Output HMAC context </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for HMAC computation. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of initialization </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga97aea0fa091f5d31407cd8b94bdc5f35"></a>
+<a class="anchor" id="ga8af70684c8b9f6d3bcbed01ac0b5398f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00376.html#ga97aea0fa091f5d31407cd8b94bdc5f35">_serial_port_uart_stop_bit_count</a></td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HMAC </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00323.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a>&#160;</td>
+          <td class="paramname"><em>algo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>inputSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keySize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>outputSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga97aea0fa091f5d31407cd8b94bdc5f35a5caed34146b357a7061aaacfe378e039"></a>kSerialManager_UartOneStopBit</em>&nbsp;</td><td class="fielddoc">
-<p>One stop bit. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga97aea0fa091f5d31407cd8b94bdc5f35a83eb7aee91f3fd8964d283c0057880dc"></a>kSerialManager_UartTwoStopBit</em>&nbsp;</td><td class="fielddoc">
-<p>Two stop bits. </p>
-</td></tr>
-</table>
+<p>Perform the full keyed XCBC-MAC/CMAC, or HMAC-SHA in one function call.</p>
+<p>Key shall be supplied if the underlaying algoritm is AES XCBC-MAC, CMAC, or SHA HMAC.</p>
+<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For HMAC, the key can have any size.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for MAC computation. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output MAC data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output MAC in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
 
 </div>
 </div>

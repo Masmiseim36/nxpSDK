@@ -1,12 +1,12 @@
 /*
-	* Copyright 2022 NXP
-	*
-	* SPDX-License-Identifier: BSD-3-Clause
+    * Copyright 2024 NXP
+    *
+    * SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*
     * FILE NAME: ../boards/evkbmimxrt1170/mc_pmsm/pmsm_enc/m2_pmsm_appconfig.h
-    * DATE: Tue Dec 12 2023, 13:10:07
+    * DATE: Fri Jan 05 2024, 14:45:42
 */
 
 /*
@@ -37,7 +37,8 @@
         "parametersFreewheelDuration": 1.5,
         "parametersScalarUqMin": 1,
         "parametersAlignVoltage": 1.2,
-        "parametersAlignDuration": 1
+        "parametersAlignDuration": 1,
+        "parametersScalarVHzRatio": 100
     },
     "currentLoop": {
         "currentLoopSampleTime": 0.0000625,

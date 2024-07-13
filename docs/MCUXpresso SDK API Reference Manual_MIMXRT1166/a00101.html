@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPADC: 12-bit SAR Analog-to-Digital Converter Driver</title>
+<title>MCUXpresso SDK API Reference Manual: SAI EDMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,1262 +99,285 @@ $(document).ready(function(){initNavTree('a00101.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LPADC: 12-bit SAR Analog-to-Digital Converter Driver</div>  </div>
+<div class="title">SAI EDMA Driver<div class="ingroups"><a class="el" href="a00355.html">SAI: Serial Audio Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the 12-bit SAR Analog-to-Digital Converter (LPADC) module of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="LPADCTpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="LPADCPolConfig"></a>
-Polling Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/lpadc </p>
-<h2><a class="anchor" id="LPADCIntConfig"></a>
-Interrupt Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/lpadc </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00228"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html">fsl_lpadc.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00730"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a00730">lpadc_config_t</a></td></tr>
-<tr class="memdesc:a00730"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPADC global configuration.  <a href="a00101.html#a00730">More...</a><br/></td></tr>
-<tr class="separator:a00730"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00731"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a00731">lpadc_conv_command_config_t</a></td></tr>
-<tr class="memdesc:a00731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure to keep the configuration for conversion command.  <a href="a00101.html#a00731">More...</a><br/></td></tr>
-<tr class="separator:a00731"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00733"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a00733">lpadc_conv_trigger_config_t</a></td></tr>
-<tr class="memdesc:a00733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure to keep the configuration for conversion trigger.  <a href="a00101.html#a00733">More...</a><br/></td></tr>
+<tr class="memitem:a00733"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a00733">sai_edma_handle</a></td></tr>
+<tr class="memdesc:a00733"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAI DMA transfer handle, users should not touch the content of the handle.  <a href="a00101.html#a00733">More...</a><br/></td></tr>
 <tr class="separator:a00733"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00732"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a00732">lpadc_conv_result_t</a></td></tr>
-<tr class="memdesc:a00732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the structure to keep the conversion result.  <a href="a00101.html#a00732">More...</a><br/></td></tr>
-<tr class="separator:a00732"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gae305eca1c95975e49ea88d0d39aeb3e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gae305eca1c95975e49ea88d0d39aeb3e0">LPADC_GET_ACTIVE_COMMAND_STATUS</a>(statusVal)&#160;&#160;&#160;((statusVal &amp; ADC_STAT_CMDACT_MASK) &gt;&gt; ADC_STAT_CMDACT_SHIFT)</td></tr>
-<tr class="memdesc:gae305eca1c95975e49ea88d0d39aeb3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the MACRO function to get command status from status value.  <a href="#gae305eca1c95975e49ea88d0d39aeb3e0">More...</a><br/></td></tr>
-<tr class="separator:gae305eca1c95975e49ea88d0d39aeb3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48a0c8b6bac1e45cc7bdc93ccc288786"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga48a0c8b6bac1e45cc7bdc93ccc288786">LPADC_GET_ACTIVE_TRIGGER_STATUE</a>(statusVal)&#160;&#160;&#160;((statusVal &amp; ADC_STAT_TRGACT_MASK) &gt;&gt; ADC_STAT_TRGACT_SHIFT)</td></tr>
-<tr class="memdesc:ga48a0c8b6bac1e45cc7bdc93ccc288786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the MACRO function to get trigger status from status value.  <a href="#ga48a0c8b6bac1e45cc7bdc93ccc288786">More...</a><br/></td></tr>
-<tr class="separator:ga48a0c8b6bac1e45cc7bdc93ccc288786"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga6e079f1e1ac3e1e05be59c1537deaccc"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#ga1d4e7fc7a4a9a94f460d113d367f5e89">_lpadc_sample_scale_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga6e079f1e1ac3e1e05be59c1537deaccc">lpadc_sample_scale_mode_t</a></td></tr>
-<tr class="memdesc:ga6e079f1e1ac3e1e05be59c1537deaccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of sample scale mode.  <a href="#ga6e079f1e1ac3e1e05be59c1537deaccc">More...</a><br/></td></tr>
-<tr class="separator:ga6e079f1e1ac3e1e05be59c1537deaccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a016da64e36075cc5627b867ec622fb"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#ga76e229daed6a76105f60bb569038c54d">_lpadc_sample_channel_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga2a016da64e36075cc5627b867ec622fb">lpadc_sample_channel_mode_t</a></td></tr>
-<tr class="memdesc:ga2a016da64e36075cc5627b867ec622fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of channel sample mode.  <a href="#ga2a016da64e36075cc5627b867ec622fb">More...</a><br/></td></tr>
-<tr class="separator:ga2a016da64e36075cc5627b867ec622fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadca70a0ed9c6266555ad732462ea16bd"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#gad0ca387797936463d0d86cda97d17438">_lpadc_hardware_average_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gadca70a0ed9c6266555ad732462ea16bd">lpadc_hardware_average_mode_t</a></td></tr>
-<tr class="memdesc:gadca70a0ed9c6266555ad732462ea16bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of hardware average selection.  <a href="#gadca70a0ed9c6266555ad732462ea16bd">More...</a><br/></td></tr>
-<tr class="separator:gadca70a0ed9c6266555ad732462ea16bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23447c7f5c4e9a106715484fd93a8f95"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#ga1ee59a08c5a28f7c3b75c530d1cccc65">_lpadc_sample_time_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga23447c7f5c4e9a106715484fd93a8f95">lpadc_sample_time_mode_t</a></td></tr>
-<tr class="memdesc:ga23447c7f5c4e9a106715484fd93a8f95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of sample time selection.  <a href="#ga23447c7f5c4e9a106715484fd93a8f95">More...</a><br/></td></tr>
-<tr class="separator:ga23447c7f5c4e9a106715484fd93a8f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa631af36a82f2b04bf818918ad86bbc4"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#gaedf69fcc744298a489b12df83b4aff83">_lpadc_hardware_compare_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaa631af36a82f2b04bf818918ad86bbc4">lpadc_hardware_compare_mode_t</a></td></tr>
-<tr class="memdesc:gaa631af36a82f2b04bf818918ad86bbc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of hardware compare mode.  <a href="#gaa631af36a82f2b04bf818918ad86bbc4">More...</a><br/></td></tr>
-<tr class="separator:gaa631af36a82f2b04bf818918ad86bbc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8af78c5368037ad9c657f3317566717a"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#gaf8c74a8d5d1dc7f3918cf35513e51596">_lpadc_reference_voltage_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga8af78c5368037ad9c657f3317566717a">lpadc_reference_voltage_source_t</a></td></tr>
-<tr class="memdesc:ga8af78c5368037ad9c657f3317566717a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of reference voltage source.  <a href="#ga8af78c5368037ad9c657f3317566717a">More...</a><br/></td></tr>
-<tr class="separator:ga8af78c5368037ad9c657f3317566717a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e768f8b368e2e90d0d0c740392d14cd"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#gae5cd887aaa7f385bf70b6ff4066d4f7d">_lpadc_power_level_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga9e768f8b368e2e90d0d0c740392d14cd">lpadc_power_level_mode_t</a></td></tr>
-<tr class="memdesc:ga9e768f8b368e2e90d0d0c740392d14cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of power configuration.  <a href="#ga9e768f8b368e2e90d0d0c740392d14cd">More...</a><br/></td></tr>
-<tr class="separator:ga9e768f8b368e2e90d0d0c740392d14cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9504b206b2965d084eaa4caa0661e84"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
-<a class="el" href="a00101.html#gad93a64db4c5264aa880ea61ec2fb3729">_lpadc_trigger_priority_policy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gae9504b206b2965d084eaa4caa0661e84">lpadc_trigger_priority_policy_t</a></td></tr>
-<tr class="memdesc:gae9504b206b2965d084eaa4caa0661e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of trigger priority policy.  <a href="#gae9504b206b2965d084eaa4caa0661e84">More...</a><br/></td></tr>
-<tr class="separator:gae9504b206b2965d084eaa4caa0661e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb6ca21880d8cd8f5f954d38bfa73d63"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> )(I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAI eDMA transfer callback function for finish and error. <br/></td></tr>
+<tr class="separator:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6edfb066c228d8b519ac8990150cd01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad6edfb066c228d8b519ac8990150cd01"></a>
+typedef enum <a class="el" href="a00101.html#ga399d35c32a4aec53e8b62a256d528308">_sai_edma_interleave</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gad6edfb066c228d8b519ac8990150cd01">sai_edma_interleave_t</a></td></tr>
+<tr class="memdesc:gad6edfb066c228d8b519ac8990150cd01"><td class="mdescLeft">&#160;</td><td class="mdescRight">sai interleave type <br/></td></tr>
+<tr class="separator:gad6edfb066c228d8b519ac8990150cd01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaf40ddd93026be88551f23b9428e98e22"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaf40ddd93026be88551f23b9428e98e22">_lpadc_status_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22a0bc43d455f0c92b0455d392b02a4581e">kLPADC_ResultFIFO0OverflowFlag</a> = ADC_STAT_FOF0_MASK, 
+<tr class="memitem:ga399d35c32a4aec53e8b62a256d528308"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga399d35c32a4aec53e8b62a256d528308">_sai_edma_interleave</a> { <br/>
+&#160;&#160;<a class="el" href="a00101.html#gga399d35c32a4aec53e8b62a256d528308ad6dca42e6eb6f605c9628cc2a5eabfd5">kSAI_EDMAInterleavePerChannelSample</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22a16e8001de19be822847a36c2d6e6146c">kLPADC_ResultFIFO0ReadyFlag</a> = ADC_STAT_RDY0_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22a7b716de0304a1f486bde149e456b763c">kLPADC_ActiveFlag</a> = ADC_STAT_ADC_ACTIVE_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22aa52211bffea2def3062daff07532cb28">kLPADC_ResultFIFOOverflowFlag</a> = kLPADC_ResultFIFO0OverflowFlag, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22a7bd75ce7f5f38970c10f03c77075fc5d">kLPADC_ResultFIFOReadyFlag</a> = kLPADC_ResultFIFO0ReadyFlag
+&#160;&#160;<a class="el" href="a00101.html#gga399d35c32a4aec53e8b62a256d528308abe869d52b4b9f0883e963214b470d28e">kSAI_EDMAInterleavePerChannelBlock</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gaf40ddd93026be88551f23b9428e98e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hardware flags of the module.  <a href="a00101.html#gaf40ddd93026be88551f23b9428e98e22">More...</a><br/></td></tr>
-<tr class="separator:gaf40ddd93026be88551f23b9428e98e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeba33be014c52b093d5e7815dcf8e6b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaeba33be014c52b093d5e7815dcf8e6b3">_lpadc_interrupt_enable</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaeba33be014c52b093d5e7815dcf8e6b3a8591fb75b5c63ceab76e5766ef49363e">kLPADC_ResultFIFO0OverflowInterruptEnable</a> = ADC_IE_FOFIE0_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaeba33be014c52b093d5e7815dcf8e6b3a2bab7f05a3af09e6f8b90a6ca39fc2b6">kLPADC_FIFO0WatermarkInterruptEnable</a> = ADC_IE_FWMIE0_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaeba33be014c52b093d5e7815dcf8e6b3a487f293b5443e2b9c39412f4476f7638">kLPADC_ResultFIFOOverflowInterruptEnable</a> = kLPADC_ResultFIFO0OverflowInterruptEnable, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaeba33be014c52b093d5e7815dcf8e6b3a90f6e2b2819d89b685281a440b10b8b5">kLPADC_FIFOWatermarkInterruptEnable</a> = kLPADC_FIFO0WatermarkInterruptEnable
-<br/>
- }</td></tr>
-<tr class="memdesc:gaeba33be014c52b093d5e7815dcf8e6b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define interrupt switchers of the module.  <a href="a00101.html#gaeba33be014c52b093d5e7815dcf8e6b3">More...</a><br/></td></tr>
-<tr class="separator:gaeba33be014c52b093d5e7815dcf8e6b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d4e7fc7a4a9a94f460d113d367f5e89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga1d4e7fc7a4a9a94f460d113d367f5e89">_lpadc_sample_scale_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1d4e7fc7a4a9a94f460d113d367f5e89a2d5ef37dc371402d7b50992f6724f2fd">kLPADC_SamplePartScale</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1d4e7fc7a4a9a94f460d113d367f5e89acf9a7acbde288c4de0a60d0018457721">kLPADC_SampleFullScale</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1d4e7fc7a4a9a94f460d113d367f5e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of sample scale mode.  <a href="a00101.html#ga1d4e7fc7a4a9a94f460d113d367f5e89">More...</a><br/></td></tr>
-<tr class="separator:ga1d4e7fc7a4a9a94f460d113d367f5e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76e229daed6a76105f60bb569038c54d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga76e229daed6a76105f60bb569038c54d">_lpadc_sample_channel_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#gga76e229daed6a76105f60bb569038c54dae511411bd331e3049a5c9583163e4fe2">kLPADC_SampleChannelSingleEndSideA</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga76e229daed6a76105f60bb569038c54dab477a25f4b1cef6b47115b7bb4b9583c">kLPADC_SampleChannelSingleEndSideB</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga76e229daed6a76105f60bb569038c54da44153790e20e1d99c9ab49165b27db98">kLPADC_SampleChannelDiffBothSideAB</a> = 0x2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga76e229daed6a76105f60bb569038c54da29943cdedc87ec9e31f6e4f5b08452c8">kLPADC_SampleChannelDiffBothSideBA</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga76e229daed6a76105f60bb569038c54d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of channel sample mode.  <a href="a00101.html#ga76e229daed6a76105f60bb569038c54d">More...</a><br/></td></tr>
-<tr class="separator:ga76e229daed6a76105f60bb569038c54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0ca387797936463d0d86cda97d17438"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gad0ca387797936463d0d86cda97d17438">_lpadc_hardware_average_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438adeae8ae097545482c1942926119d968c">kLPADC_HardwareAverageCount1</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438a03e731d3d2e024623fd22145c484b797">kLPADC_HardwareAverageCount2</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438a0eda65451db63f4a0c1d154f851f9353">kLPADC_HardwareAverageCount4</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438a3cc487e2f5720a5c45318f69028c32cc">kLPADC_HardwareAverageCount8</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438ad5fece9b31b47f741c413fe7445df855">kLPADC_HardwareAverageCount16</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438a4cfb338bc49982bc7e58a7f0949bf425">kLPADC_HardwareAverageCount32</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438a081530884310024c8d2750735b6295ea">kLPADC_HardwareAverageCount64</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad0ca387797936463d0d86cda97d17438a4f86910a33fa9874108753b6de1947ce">kLPADC_HardwareAverageCount128</a> = 7U
-<br/>
- }</td></tr>
-<tr class="memdesc:gad0ca387797936463d0d86cda97d17438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of hardware average selection.  <a href="a00101.html#gad0ca387797936463d0d86cda97d17438">More...</a><br/></td></tr>
-<tr class="separator:gad0ca387797936463d0d86cda97d17438"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ee59a08c5a28f7c3b75c530d1cccc65"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga1ee59a08c5a28f7c3b75c530d1cccc65">_lpadc_sample_time_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65abfd94e19de3d57b94fae9baded5804db">kLPADC_SampleTimeADCK3</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a441c59d3df7a1ad5b64416e6a08dd246">kLPADC_SampleTimeADCK5</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65aa2a17502f50e36de117b337994c21dc2">kLPADC_SampleTimeADCK7</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a4a980813baf6845d528db2a265475905">kLPADC_SampleTimeADCK11</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a7f5bb84adb8783fd6fa8d3ce5ed31f3a">kLPADC_SampleTimeADCK19</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a9d59f3e6e9335223746533051f83a20b">kLPADC_SampleTimeADCK35</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a653e653b0ee479f6b42ff4b8ffea49ac">kLPADC_SampleTimeADCK67</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65ae327cbad1ded4882cbcd53ad5e6c2262">kLPADC_SampleTimeADCK131</a> = 7U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1ee59a08c5a28f7c3b75c530d1cccc65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of sample time selection.  <a href="a00101.html#ga1ee59a08c5a28f7c3b75c530d1cccc65">More...</a><br/></td></tr>
-<tr class="separator:ga1ee59a08c5a28f7c3b75c530d1cccc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedf69fcc744298a489b12df83b4aff83"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaedf69fcc744298a489b12df83b4aff83">_lpadc_hardware_compare_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaedf69fcc744298a489b12df83b4aff83ab205c4a4aa1cd79f38be81e6469f2fd2">kLPADC_HardwareCompareDisabled</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaedf69fcc744298a489b12df83b4aff83a0e30824c70217e386a1dfbaaecbd7b67">kLPADC_HardwareCompareStoreOnTrue</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaedf69fcc744298a489b12df83b4aff83a11bc71ef00c5e95a18431947fe0362e1">kLPADC_HardwareCompareRepeatUntilTrue</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaedf69fcc744298a489b12df83b4aff83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of hardware compare mode.  <a href="a00101.html#gaedf69fcc744298a489b12df83b4aff83">More...</a><br/></td></tr>
-<tr class="separator:gaedf69fcc744298a489b12df83b4aff83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8c74a8d5d1dc7f3918cf35513e51596"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaf8c74a8d5d1dc7f3918cf35513e51596">_lpadc_reference_voltage_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a8d40316bc847f29e588ff1a50775ab11">kLPADC_ReferenceVoltageAlt1</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a7f45d8cf9f4a252f22d52b8a82db304a">kLPADC_ReferenceVoltageAlt2</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a8c41f94955b5b1141956d61fc2feb44c">kLPADC_ReferenceVoltageAlt3</a> = 2U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf8c74a8d5d1dc7f3918cf35513e51596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of reference voltage source.  <a href="a00101.html#gaf8c74a8d5d1dc7f3918cf35513e51596">More...</a><br/></td></tr>
-<tr class="separator:gaf8c74a8d5d1dc7f3918cf35513e51596"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5cd887aaa7f385bf70b6ff4066d4f7d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gae5cd887aaa7f385bf70b6ff4066d4f7d">_lpadc_power_level_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggae5cd887aaa7f385bf70b6ff4066d4f7dac88970640320826c36101d8e7fa5a9c9">kLPADC_PowerLevelAlt1</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggae5cd887aaa7f385bf70b6ff4066d4f7daca71931306fe195df044d6a889639919">kLPADC_PowerLevelAlt2</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggae5cd887aaa7f385bf70b6ff4066d4f7daed7771e49eeec9fee65726c600956d6d">kLPADC_PowerLevelAlt3</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggae5cd887aaa7f385bf70b6ff4066d4f7da2f34a351174cf34ee124ccfc7f2bf9d2">kLPADC_PowerLevelAlt4</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gae5cd887aaa7f385bf70b6ff4066d4f7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of power configuration.  <a href="a00101.html#gae5cd887aaa7f385bf70b6ff4066d4f7d">More...</a><br/></td></tr>
-<tr class="separator:gae5cd887aaa7f385bf70b6ff4066d4f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad93a64db4c5264aa880ea61ec2fb3729"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gad93a64db4c5264aa880ea61ec2fb3729">_lpadc_trigger_priority_policy</a> { <br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad93a64db4c5264aa880ea61ec2fb3729a8952cef1b3169656cb213b1269f19e8a">kLPADC_ConvPreemptImmediatelyNotAutoResumed</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad93a64db4c5264aa880ea61ec2fb3729a50acd884fdcaa0297e0a5597172418fe">kLPADC_ConvPreemptSoftlyNotAutoResumed</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad93a64db4c5264aa880ea61ec2fb3729a0fec3ebd14c77fc5a1711cb3ed7a2ab5">kLPADC_TriggerPriorityPreemptImmediately</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00101.html#ggad93a64db4c5264aa880ea61ec2fb3729a406eb5620e19a0cad27c10211c548a46">kLPADC_TriggerPriorityPreemptSoftly</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gad93a64db4c5264aa880ea61ec2fb3729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of trigger priority policy.  <a href="a00101.html#gad93a64db4c5264aa880ea61ec2fb3729">More...</a><br/></td></tr>
-<tr class="separator:gad93a64db4c5264aa880ea61ec2fb3729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga399d35c32a4aec53e8b62a256d528308"><td class="mdescLeft">&#160;</td><td class="mdescRight">sai interleave type  <a href="a00101.html#ga399d35c32a4aec53e8b62a256d528308">More...</a><br/></td></tr>
+<tr class="separator:ga399d35c32a4aec53e8b62a256d528308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gab8a795637177dc9973e0fd2f5b29b6c3">FSL_LPADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00337.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 4))</td></tr>
-<tr class="memdesc:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPADC driver version 2.8.4.  <a href="#gab8a795637177dc9973e0fd2f5b29b6c3">More...</a><br/></td></tr>
-<tr class="separator:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadec154552382f7b68bce82ce829f3911"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadec154552382f7b68bce82ce829f3911"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gadec154552382f7b68bce82ce829f3911">FSL_SAI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 1))</td></tr>
+<tr class="memdesc:gadec154552382f7b68bce82ce829f3911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.7.1. <br/></td></tr>
+<tr class="separator:gadec154552382f7b68bce82ce829f3911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization &amp; de-initialization.</h2></td></tr>
-<tr class="memitem:gaf13dbab92e7a26afb07b3bb2cbaab793"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaf13dbab92e7a26afb07b3bb2cbaab793">LPADC_Init</a> (ADC_Type *base, const <a class="el" href="a00101.html#a00730">lpadc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gaf13dbab92e7a26afb07b3bb2cbaab793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPADC module.  <a href="#gaf13dbab92e7a26afb07b3bb2cbaab793">More...</a><br/></td></tr>
-<tr class="separator:gaf13dbab92e7a26afb07b3bb2cbaab793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94c79af85a28c45bc642226292b14d1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga94c79af85a28c45bc642226292b14d1c">LPADC_GetDefaultConfig</a> (<a class="el" href="a00101.html#a00730">lpadc_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga94c79af85a28c45bc642226292b14d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for initial configuration.  <a href="#ga94c79af85a28c45bc642226292b14d1c">More...</a><br/></td></tr>
-<tr class="separator:ga94c79af85a28c45bc642226292b14d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc10ae5663788ea5c7f77e2f3517a677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gabc10ae5663788ea5c7f77e2f3517a677">LPADC_Deinit</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:gabc10ae5663788ea5c7f77e2f3517a677"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the LPADC module.  <a href="#gabc10ae5663788ea5c7f77e2f3517a677">More...</a><br/></td></tr>
-<tr class="separator:gabc10ae5663788ea5c7f77e2f3517a677"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf76592d9f392cd30b738f599b2e71344"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaf76592d9f392cd30b738f599b2e71344">LPADC_Enable</a> (ADC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaf76592d9f392cd30b738f599b2e71344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch on/off the LPADC module.  <a href="#gaf76592d9f392cd30b738f599b2e71344">More...</a><br/></td></tr>
-<tr class="separator:gaf76592d9f392cd30b738f599b2e71344"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6e4218842365ee6c620cfc59db213c4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gab6e4218842365ee6c620cfc59db213c4">LPADC_DoResetFIFO</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:gab6e4218842365ee6c620cfc59db213c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do reset the conversion FIFO.  <a href="#gab6e4218842365ee6c620cfc59db213c4">More...</a><br/></td></tr>
-<tr class="separator:gab6e4218842365ee6c620cfc59db213c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7">LPADC_DoResetConfig</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do reset the module's configuration.  <a href="#ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7">More...</a><br/></td></tr>
-<tr class="separator:ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:gaa2793911f11091179bfcd8e9b1860300"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaa2793911f11091179bfcd8e9b1860300">LPADC_GetStatusFlags</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:gaa2793911f11091179bfcd8e9b1860300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status flags.  <a href="#gaa2793911f11091179bfcd8e9b1860300">More...</a><br/></td></tr>
-<tr class="separator:gaa2793911f11091179bfcd8e9b1860300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77ba72fad1e0f84b42809da6918e6532"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga77ba72fad1e0f84b42809da6918e6532">LPADC_ClearStatusFlags</a> (ADC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga77ba72fad1e0f84b42809da6918e6532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear status flags.  <a href="#ga77ba72fad1e0f84b42809da6918e6532">More...</a><br/></td></tr>
-<tr class="separator:ga77ba72fad1e0f84b42809da6918e6532"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupts</h2></td></tr>
-<tr class="memitem:ga2c147558843514556795fd52f86aca56"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga2c147558843514556795fd52f86aca56">LPADC_EnableInterrupts</a> (ADC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga2c147558843514556795fd52f86aca56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable interrupts.  <a href="#ga2c147558843514556795fd52f86aca56">More...</a><br/></td></tr>
-<tr class="separator:ga2c147558843514556795fd52f86aca56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c633af2aeab39c215d3b5aa6172ccb7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga5c633af2aeab39c215d3b5aa6172ccb7">LPADC_DisableInterrupts</a> (ADC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga5c633af2aeab39c215d3b5aa6172ccb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable interrupts.  <a href="#ga5c633af2aeab39c215d3b5aa6172ccb7">More...</a><br/></td></tr>
-<tr class="separator:ga5c633af2aeab39c215d3b5aa6172ccb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMA Control</h2></td></tr>
-<tr class="memitem:gacaaa33bc4d9cfd8fad4fac8f1475d97c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gacaaa33bc4d9cfd8fad4fac8f1475d97c">LPADC_EnableFIFOWatermarkDMA</a> (ADC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gacaaa33bc4d9cfd8fad4fac8f1475d97c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch on/off the DMA trigger for FIFO watermark event.  <a href="#gacaaa33bc4d9cfd8fad4fac8f1475d97c">More...</a><br/></td></tr>
-<tr class="separator:gacaaa33bc4d9cfd8fad4fac8f1475d97c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Trigger and conversion with FIFO.</h2></td></tr>
-<tr class="memitem:ga51b39db4ab530f900aa3a88a3047daf3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga51b39db4ab530f900aa3a88a3047daf3">LPADC_GetConvResultCount</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:ga51b39db4ab530f900aa3a88a3047daf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the count of result kept in conversion FIFO.  <a href="#ga51b39db4ab530f900aa3a88a3047daf3">More...</a><br/></td></tr>
-<tr class="separator:ga51b39db4ab530f900aa3a88a3047daf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1862883b3c4ce8365ad1f1a6c64043cc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga1862883b3c4ce8365ad1f1a6c64043cc">LPADC_GetConvResult</a> (ADC_Type *base, <a class="el" href="a00101.html#a00732">lpadc_conv_result_t</a> *result)</td></tr>
-<tr class="memdesc:ga1862883b3c4ce8365ad1f1a6c64043cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the result in conversion FIFO.  <a href="#ga1862883b3c4ce8365ad1f1a6c64043cc">More...</a><br/></td></tr>
-<tr class="separator:ga1862883b3c4ce8365ad1f1a6c64043cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebbcb9d28f962d7f12512a0e99aa09d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaebbcb9d28f962d7f12512a0e99aa09d2">LPADC_GetConvResultBlocking</a> (ADC_Type *base, <a class="el" href="a00101.html#a00732">lpadc_conv_result_t</a> *result)</td></tr>
-<tr class="memdesc:gaebbcb9d28f962d7f12512a0e99aa09d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the result in conversion FIFO using blocking method.  <a href="#gaebbcb9d28f962d7f12512a0e99aa09d2">More...</a><br/></td></tr>
-<tr class="separator:gaebbcb9d28f962d7f12512a0e99aa09d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67927722ab525eda9e31d1f7554f02a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga67927722ab525eda9e31d1f7554f02a4">LPADC_SetConvTriggerConfig</a> (ADC_Type *base, uint32_t triggerId, const <a class="el" href="a00101.html#a00733">lpadc_conv_trigger_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga67927722ab525eda9e31d1f7554f02a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the conversion trigger source.  <a href="#ga67927722ab525eda9e31d1f7554f02a4">More...</a><br/></td></tr>
-<tr class="separator:ga67927722ab525eda9e31d1f7554f02a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44e286bc27b1e8fee3f4796ca9196a27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga44e286bc27b1e8fee3f4796ca9196a27">LPADC_GetDefaultConvTriggerConfig</a> (<a class="el" href="a00101.html#a00733">lpadc_conv_trigger_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga44e286bc27b1e8fee3f4796ca9196a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for trigger's configuration.  <a href="#ga44e286bc27b1e8fee3f4796ca9196a27">More...</a><br/></td></tr>
-<tr class="separator:ga44e286bc27b1e8fee3f4796ca9196a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gacaef94ac48a3e0a34f9235f88767b7a3">LPADC_DoSoftwareTrigger</a> (ADC_Type *base, uint32_t triggerIdMask)</td></tr>
-<tr class="memdesc:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software trigger to conversion command.  <a href="#gacaef94ac48a3e0a34f9235f88767b7a3">More...</a><br/></td></tr>
-<tr class="separator:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4224ecb1a5bc073aeb37e462674734fe"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga4224ecb1a5bc073aeb37e462674734fe">LPADC_EnableHardwareTriggerCommandSelection</a> (ADC_Type *base, uint32_t triggerId, bool enable)</td></tr>
-<tr class="memdesc:ga4224ecb1a5bc073aeb37e462674734fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable hardware trigger command selection.  <a href="#ga4224ecb1a5bc073aeb37e462674734fe">More...</a><br/></td></tr>
-<tr class="separator:ga4224ecb1a5bc073aeb37e462674734fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga500d8b7b0323136353e10fdfad2e40c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga500d8b7b0323136353e10fdfad2e40c7">LPADC_SetConvCommandConfig</a> (ADC_Type *base, uint32_t commandId, const <a class="el" href="a00101.html#a00731">lpadc_conv_command_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga500d8b7b0323136353e10fdfad2e40c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure conversion command.  <a href="#ga500d8b7b0323136353e10fdfad2e40c7">More...</a><br/></td></tr>
-<tr class="separator:ga500d8b7b0323136353e10fdfad2e40c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3f7fd90bdbd65fbc4e5b88e904173f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaa3f7fd90bdbd65fbc4e5b88e904173f9">LPADC_GetDefaultConvCommandConfig</a> (<a class="el" href="a00101.html#a00731">lpadc_conv_command_config_t</a> *config)</td></tr>
-<tr class="memdesc:gaa3f7fd90bdbd65fbc4e5b88e904173f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for conversion command's configuration.  <a href="#gaa3f7fd90bdbd65fbc4e5b88e904173f9">More...</a><br/></td></tr>
-<tr class="separator:gaa3f7fd90bdbd65fbc4e5b88e904173f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+eDMA Transactional</h2></td></tr>
+<tr class="memitem:ga84f148e1d3fe186ce6604d637f89c2c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga84f148e1d3fe186ce6604d637f89c2c1">SAI_TransferTxCreateHandleEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> callback, void *userData, <a class="el" href="a00027.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *txDmaHandle)</td></tr>
+<tr class="memdesc:ga84f148e1d3fe186ce6604d637f89c2c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI eDMA handle.  <a href="#ga84f148e1d3fe186ce6604d637f89c2c1">More...</a><br/></td></tr>
+<tr class="separator:ga84f148e1d3fe186ce6604d637f89c2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44a719a507630fdcc25ba93690098a89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga44a719a507630fdcc25ba93690098a89">SAI_TransferRxCreateHandleEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> callback, void *userData, <a class="el" href="a00027.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memdesc:ga44a719a507630fdcc25ba93690098a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI Rx eDMA handle.  <a href="#ga44a719a507630fdcc25ba93690098a89">More...</a><br/></td></tr>
+<tr class="separator:ga44a719a507630fdcc25ba93690098a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada84bfce187319b89b6e89c802164478"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gada84bfce187319b89b6e89c802164478">SAI_TransferSetInterleaveType</a> (<a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00101.html#gad6edfb066c228d8b519ac8990150cd01">sai_edma_interleave_t</a> interleaveType)</td></tr>
+<tr class="memdesc:gada84bfce187319b89b6e89c802164478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI interleave type.  <a href="#gada84bfce187319b89b6e89c802164478">More...</a><br/></td></tr>
+<tr class="separator:gada84bfce187319b89b6e89c802164478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5295038a021787aef619bdd9f96981da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00077.html#ga1e798fe5217335d01709af9f4855e0dc">sai_transceiver_t</a> *saiConfig)</td></tr>
+<tr class="memdesc:ga5295038a021787aef619bdd9f96981da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Tx.  <a href="#ga5295038a021787aef619bdd9f96981da">More...</a><br/></td></tr>
+<tr class="separator:ga5295038a021787aef619bdd9f96981da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed5d72de0d0aa0ac71de3222924e4aa7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaed5d72de0d0aa0ac71de3222924e4aa7">SAI_TransferRxSetConfigEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00077.html#ga1e798fe5217335d01709af9f4855e0dc">sai_transceiver_t</a> *saiConfig)</td></tr>
+<tr class="memdesc:gaed5d72de0d0aa0ac71de3222924e4aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Rx.  <a href="#gaed5d72de0d0aa0ac71de3222924e4aa7">More...</a><br/></td></tr>
+<tr class="separator:gaed5d72de0d0aa0ac71de3222924e4aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a2c125e1f975c9f718dcb820ac46f63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga7a2c125e1f975c9f718dcb820ac46f63">SAI_TransferSendEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga7a2c125e1f975c9f718dcb820ac46f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI transfer using DMA.  <a href="#ga7a2c125e1f975c9f718dcb820ac46f63">More...</a><br/></td></tr>
+<tr class="separator:ga7a2c125e1f975c9f718dcb820ac46f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9060fb028d5a24d8763066981b079900"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga9060fb028d5a24d8763066981b079900">SAI_TransferReceiveEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga9060fb028d5a24d8763066981b079900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI receive using eDMA.  <a href="#ga9060fb028d5a24d8763066981b079900">More...</a><br/></td></tr>
+<tr class="separator:ga9060fb028d5a24d8763066981b079900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b62338a71194856549698e374d13cb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga1b62338a71194856549698e374d13cb0">SAI_TransferSendLoopEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
+<tr class="memdesc:ga1b62338a71194856549698e374d13cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI loop transfer using eDMA.  <a href="#ga1b62338a71194856549698e374d13cb0">More...</a><br/></td></tr>
+<tr class="separator:ga1b62338a71194856549698e374d13cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf6043ff078868f35d4459dd2e112c0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gaaf6043ff078868f35d4459dd2e112c0d">SAI_TransferReceiveLoopEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, <a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
+<tr class="memdesc:gaaf6043ff078868f35d4459dd2e112c0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI loop transfer using eDMA.  <a href="#gaaf6043ff078868f35d4459dd2e112c0d">More...</a><br/></td></tr>
+<tr class="separator:gaaf6043ff078868f35d4459dd2e112c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b3db811719337e4f2172c66ceeb7933"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga6b3db811719337e4f2172c66ceeb7933">SAI_TransferTerminateSendEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga6b3db811719337e4f2172c66ceeb7933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate all SAI send.  <a href="#ga6b3db811719337e4f2172c66ceeb7933">More...</a><br/></td></tr>
+<tr class="separator:ga6b3db811719337e4f2172c66ceeb7933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga819dcef593d48f3296ee858239802e26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga819dcef593d48f3296ee858239802e26">SAI_TransferTerminateReceiveEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga819dcef593d48f3296ee858239802e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate all SAI receive.  <a href="#ga819dcef593d48f3296ee858239802e26">More...</a><br/></td></tr>
+<tr class="separator:ga819dcef593d48f3296ee858239802e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12925e07667cc1b27915aedd1f718a7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga12925e07667cc1b27915aedd1f718a7a">SAI_TransferAbortSendEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga12925e07667cc1b27915aedd1f718a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a SAI transfer using eDMA.  <a href="#ga12925e07667cc1b27915aedd1f718a7a">More...</a><br/></td></tr>
+<tr class="separator:ga12925e07667cc1b27915aedd1f718a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bd586da5f41126cbfa92d2baa03620b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga3bd586da5f41126cbfa92d2baa03620b">SAI_TransferAbortReceiveEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga3bd586da5f41126cbfa92d2baa03620b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a SAI receive using eDMA.  <a href="#ga3bd586da5f41126cbfa92d2baa03620b">More...</a><br/></td></tr>
+<tr class="separator:ga3bd586da5f41126cbfa92d2baa03620b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02aa0e441b0aada0f4875f28f832dc71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga02aa0e441b0aada0f4875f28f832dc71">SAI_TransferGetSendCountEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga02aa0e441b0aada0f4875f28f832dc71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets byte count sent by SAI.  <a href="#ga02aa0e441b0aada0f4875f28f832dc71">More...</a><br/></td></tr>
+<tr class="separator:ga02aa0e441b0aada0f4875f28f832dc71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4a1100515e9a05bb61e0039288664a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#gae4a1100515e9a05bb61e0039288664a0">SAI_TransferGetReceiveCountEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:gae4a1100515e9a05bb61e0039288664a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets byte count received by SAI.  <a href="#gae4a1100515e9a05bb61e0039288664a0">More...</a><br/></td></tr>
+<tr class="separator:gae4a1100515e9a05bb61e0039288664a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33af2c1b3c360823ffdbb1348e586107"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ga33af2c1b3c360823ffdbb1348e586107">SAI_TransferGetValidTransferSlotsEDMA</a> (I2S_Type *base, <a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga33af2c1b3c360823ffdbb1348e586107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets valid transfer slot.  <a href="#ga33af2c1b3c360823ffdbb1348e586107">More...</a><br/></td></tr>
+<tr class="separator:ga33af2c1b3c360823ffdbb1348e586107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00730" id="a00730"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpadc_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>This structure would used to keep the settings for initialization. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac47a5a50ba40ca3b021b4be239a048f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ac47a5a50ba40ca3b021b4be239a048f3">enableInDozeMode</a></td></tr>
-<tr class="memdesc:ac47a5a50ba40ca3b021b4be239a048f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control system transition to Stop and Wait power modes while ADC is converting.  <a href="#ac47a5a50ba40ca3b021b4be239a048f3">More...</a><br/></td></tr>
-<tr class="separator:ac47a5a50ba40ca3b021b4be239a048f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab62dd78747ca5df971c30ad59d0127ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ab62dd78747ca5df971c30ad59d0127ba">enableAnalogPreliminary</a></td></tr>
-<tr class="memdesc:ab62dd78747ca5df971c30ad59d0127ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC analog circuits are pre-enabled and ready to execute conversions without startup delays(at the cost of higher DC current consumption).  <a href="#ab62dd78747ca5df971c30ad59d0127ba">More...</a><br/></td></tr>
-<tr class="separator:ab62dd78747ca5df971c30ad59d0127ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05885e7359e788bfee8bee8b1b7e17ac"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a05885e7359e788bfee8bee8b1b7e17ac">powerUpDelay</a></td></tr>
-<tr class="memdesc:a05885e7359e788bfee8bee8b1b7e17ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the analog circuits are not pre-enabled, the ADC analog circuits are only powered while the ADC is active and there is a counted delay defined by this field after an initial trigger transitions the ADC from its Idle state to allow time for the analog circuits to stabilize.  <a href="#a05885e7359e788bfee8bee8b1b7e17ac">More...</a><br/></td></tr>
-<tr class="separator:a05885e7359e788bfee8bee8b1b7e17ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2a2e2e253efb0a783435fe171091b3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#ga8af78c5368037ad9c657f3317566717a">lpadc_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#af2a2e2e253efb0a783435fe171091b3f">referenceVoltageSource</a></td></tr>
-<tr class="memdesc:af2a2e2e253efb0a783435fe171091b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the voltage reference high used for conversions.  <a href="#af2a2e2e253efb0a783435fe171091b3f">More...</a><br/></td></tr>
-<tr class="separator:af2a2e2e253efb0a783435fe171091b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa95f676c2ce209a53e411045a118b7d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#ga9e768f8b368e2e90d0d0c740392d14cd">lpadc_power_level_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#aa95f676c2ce209a53e411045a118b7d7">powerLevelMode</a></td></tr>
-<tr class="memdesc:aa95f676c2ce209a53e411045a118b7d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power Configuration Selection.  <a href="#aa95f676c2ce209a53e411045a118b7d7">More...</a><br/></td></tr>
-<tr class="separator:aa95f676c2ce209a53e411045a118b7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6790dea9cdf41dbe47a312f46d046d39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#gae9504b206b2965d084eaa4caa0661e84">lpadc_trigger_priority_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a6790dea9cdf41dbe47a312f46d046d39">triggerPriorityPolicy</a></td></tr>
-<tr class="memdesc:a6790dea9cdf41dbe47a312f46d046d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control how higher priority triggers are handled, see to lpadc_trigger_priority_policy_t.  <a href="#a6790dea9cdf41dbe47a312f46d046d39">More...</a><br/></td></tr>
-<tr class="separator:a6790dea9cdf41dbe47a312f46d046d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54cc3c1d27305b3916a0ce2fc1f86af0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a54cc3c1d27305b3916a0ce2fc1f86af0">enableConvPause</a></td></tr>
-<tr class="memdesc:a54cc3c1d27305b3916a0ce2fc1f86af0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the ADC pausing function.  <a href="#a54cc3c1d27305b3916a0ce2fc1f86af0">More...</a><br/></td></tr>
-<tr class="separator:a54cc3c1d27305b3916a0ce2fc1f86af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95cd7bea05bf46e0f5444762aba38fbe"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a95cd7bea05bf46e0f5444762aba38fbe">convPauseDelay</a></td></tr>
-<tr class="memdesc:a95cd7bea05bf46e0f5444762aba38fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the duration of pausing during command execution sequencing.  <a href="#a95cd7bea05bf46e0f5444762aba38fbe">More...</a><br/></td></tr>
-<tr class="separator:a95cd7bea05bf46e0f5444762aba38fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb5cae2223bf1d49e13332308ceae79b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#aeb5cae2223bf1d49e13332308ceae79b">FIFOWatermark</a></td></tr>
-<tr class="memdesc:aeb5cae2223bf1d49e13332308ceae79b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFOWatermark is a programmable threshold setting.  <a href="#aeb5cae2223bf1d49e13332308ceae79b">More...</a><br/></td></tr>
-<tr class="separator:aeb5cae2223bf1d49e13332308ceae79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ac47a5a50ba40ca3b021b4be239a048f3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_config_t::enableInDozeMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When enabled in Doze mode, immediate entries to Wait or Stop are allowed. When disabled, the ADC will wait for the current averaging iteration/FIFO storage to complete before acknowledging stop or wait mode entry. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab62dd78747ca5df971c30ad59d0127ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_config_t::enableAnalogPreliminary</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a05885e7359e788bfee8bee8b1b7e17ac"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_config_t::powerUpDelay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The startup delay count of (powerUpDelay * 4) ADCK cycles must result in a longer delay than the analog startup time. </p>
-
-</div>
-</div>
-<a class="anchor" id="af2a2e2e253efb0a783435fe171091b3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#ga8af78c5368037ad9c657f3317566717a">lpadc_reference_voltage_source_t</a> lpadc_config_t::referenceVoltageSource</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa95f676c2ce209a53e411045a118b7d7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#ga9e768f8b368e2e90d0d0c740392d14cd">lpadc_power_level_mode_t</a> lpadc_config_t::powerLevelMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6790dea9cdf41dbe47a312f46d046d39"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#gae9504b206b2965d084eaa4caa0661e84">lpadc_trigger_priority_policy_t</a> lpadc_config_t::triggerPriorityPolicy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a54cc3c1d27305b3916a0ce2fc1f86af0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_config_t::enableConvPause</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When enabled, a programmable delay is inserted during command execution sequencing between LOOP iterations, between commands in a sequence, and between conversions when command is executing in "Compare Until True" configuration. </p>
-
-</div>
-</div>
-<a class="anchor" id="a95cd7bea05bf46e0f5444762aba38fbe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_config_t::convPauseDelay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The pause delay is a count of (convPauseDelay*4) ADCK cycles. Only available when ADC pausing function is enabled. The available value range is in 9-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="aeb5cae2223bf1d49e13332308ceae79b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_config_t::FIFOWatermark</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When the number of datawords stored in the ADC Result FIFO is greater than the value in this field, the ready flag would be asserted to indicate stored data has reached the programmable threshold. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00731" id="a00731"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpadc_conv_command_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aa8a989a84f3f494e8a222a14e4fa2740"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#ga6e079f1e1ac3e1e05be59c1537deaccc">lpadc_sample_scale_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#aa8a989a84f3f494e8a222a14e4fa2740">sampleScaleMode</a></td></tr>
-<tr class="memdesc:aa8a989a84f3f494e8a222a14e4fa2740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample scale mode.  <a href="#aa8a989a84f3f494e8a222a14e4fa2740">More...</a><br/></td></tr>
-<tr class="separator:aa8a989a84f3f494e8a222a14e4fa2740"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad83d6cc054bd648551aa7a875e5e8a58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#ga2a016da64e36075cc5627b867ec622fb">lpadc_sample_channel_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ad83d6cc054bd648551aa7a875e5e8a58">sampleChannelMode</a></td></tr>
-<tr class="memdesc:ad83d6cc054bd648551aa7a875e5e8a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel sample mode.  <a href="#ad83d6cc054bd648551aa7a875e5e8a58">More...</a><br/></td></tr>
-<tr class="separator:ad83d6cc054bd648551aa7a875e5e8a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34b3392e374a496930b09d8c5a410d7b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a34b3392e374a496930b09d8c5a410d7b">channelNumber</a></td></tr>
-<tr class="memdesc:a34b3392e374a496930b09d8c5a410d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel number, select the channel or channel pair.  <a href="#a34b3392e374a496930b09d8c5a410d7b">More...</a><br/></td></tr>
-<tr class="separator:a34b3392e374a496930b09d8c5a410d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcf04257bab0b975b7667a25bf4cbcdf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#adcf04257bab0b975b7667a25bf4cbcdf">chainedNextCommandNumber</a></td></tr>
-<tr class="memdesc:adcf04257bab0b975b7667a25bf4cbcdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the next command to be executed after this command completes.  <a href="#adcf04257bab0b975b7667a25bf4cbcdf">More...</a><br/></td></tr>
-<tr class="separator:adcf04257bab0b975b7667a25bf4cbcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e3347e2c2f96cadd5805bca6409646"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a66e3347e2c2f96cadd5805bca6409646">enableAutoChannelIncrement</a></td></tr>
-<tr class="memdesc:a66e3347e2c2f96cadd5805bca6409646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loop with increment: when disabled, the "loopCount" field selects the number of times the selected channel is converted consecutively; when enabled, the "loopCount" field defines how many consecutive channels are converted as part of the command execution.  <a href="#a66e3347e2c2f96cadd5805bca6409646">More...</a><br/></td></tr>
-<tr class="separator:a66e3347e2c2f96cadd5805bca6409646"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ce69c5cf297a804b5510d779036c867"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a7ce69c5cf297a804b5510d779036c867">loopCount</a></td></tr>
-<tr class="memdesc:a7ce69c5cf297a804b5510d779036c867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects how many times this command executes before finish and transition to the next command or Idle state.  <a href="#a7ce69c5cf297a804b5510d779036c867">More...</a><br/></td></tr>
-<tr class="separator:a7ce69c5cf297a804b5510d779036c867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c44cc7c4a60d180e6a9aae0501e8752"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#gadca70a0ed9c6266555ad732462ea16bd">lpadc_hardware_average_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a1c44cc7c4a60d180e6a9aae0501e8752">hardwareAverageMode</a></td></tr>
-<tr class="memdesc:a1c44cc7c4a60d180e6a9aae0501e8752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware average selection.  <a href="#a1c44cc7c4a60d180e6a9aae0501e8752">More...</a><br/></td></tr>
-<tr class="separator:a1c44cc7c4a60d180e6a9aae0501e8752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24deb3ab5d573ce3b17ed48987350b65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#ga23447c7f5c4e9a106715484fd93a8f95">lpadc_sample_time_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a24deb3ab5d573ce3b17ed48987350b65">sampleTimeMode</a></td></tr>
-<tr class="memdesc:a24deb3ab5d573ce3b17ed48987350b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample time selection.  <a href="#a24deb3ab5d573ce3b17ed48987350b65">More...</a><br/></td></tr>
-<tr class="separator:a24deb3ab5d573ce3b17ed48987350b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bb19c6af0abf963655462a350c53ce4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html#gaa631af36a82f2b04bf818918ad86bbc4">lpadc_hardware_compare_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a5bb19c6af0abf963655462a350c53ce4">hardwareCompareMode</a></td></tr>
-<tr class="memdesc:a5bb19c6af0abf963655462a350c53ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware compare selection.  <a href="#a5bb19c6af0abf963655462a350c53ce4">More...</a><br/></td></tr>
-<tr class="separator:a5bb19c6af0abf963655462a350c53ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bc748a87503d1d30fce8652296a21a1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a4bc748a87503d1d30fce8652296a21a1">hardwareCompareValueHigh</a></td></tr>
-<tr class="memdesc:a4bc748a87503d1d30fce8652296a21a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare Value High.  <a href="#a4bc748a87503d1d30fce8652296a21a1">More...</a><br/></td></tr>
-<tr class="separator:a4bc748a87503d1d30fce8652296a21a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aded6fd827d36d7f20693cf5f361ec57e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#aded6fd827d36d7f20693cf5f361ec57e">hardwareCompareValueLow</a></td></tr>
-<tr class="memdesc:aded6fd827d36d7f20693cf5f361ec57e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare Value Low.  <a href="#aded6fd827d36d7f20693cf5f361ec57e">More...</a><br/></td></tr>
-<tr class="separator:aded6fd827d36d7f20693cf5f361ec57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aa8a989a84f3f494e8a222a14e4fa2740"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#ga6e079f1e1ac3e1e05be59c1537deaccc">lpadc_sample_scale_mode_t</a> lpadc_conv_command_config_t::sampleScaleMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad83d6cc054bd648551aa7a875e5e8a58"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#ga2a016da64e36075cc5627b867ec622fb">lpadc_sample_channel_mode_t</a> lpadc_conv_command_config_t::sampleChannelMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a34b3392e374a496930b09d8c5a410d7b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::channelNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="adcf04257bab0b975b7667a25bf4cbcdf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::chainedNextCommandNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>1-15 is available, 0 is to terminate the chain after this command. </p>
-
-</div>
-</div>
-<a class="anchor" id="a66e3347e2c2f96cadd5805bca6409646"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_conv_command_config_t::enableAutoChannelIncrement</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7ce69c5cf297a804b5510d779036c867"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::loopCount</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Command executes LOOP+1 times. 0-15 is available. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1c44cc7c4a60d180e6a9aae0501e8752"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#gadca70a0ed9c6266555ad732462ea16bd">lpadc_hardware_average_mode_t</a> lpadc_conv_command_config_t::hardwareAverageMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a24deb3ab5d573ce3b17ed48987350b65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#ga23447c7f5c4e9a106715484fd93a8f95">lpadc_sample_time_mode_t</a> lpadc_conv_command_config_t::sampleTimeMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5bb19c6af0abf963655462a350c53ce4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00101.html#gaa631af36a82f2b04bf818918ad86bbc4">lpadc_hardware_compare_mode_t</a> lpadc_conv_command_config_t::hardwareCompareMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4bc748a87503d1d30fce8652296a21a1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::hardwareCompareValueHigh</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The available value range is in 16-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="aded6fd827d36d7f20693cf5f361ec57e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::hardwareCompareValueLow</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The available value range is in 16-bit. </p>
-
-</div>
-</div>
-
-</div>
-</div>
 <a name="a00733" id="a00733"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpadc_conv_trigger_config_t</td>
+          <td class="memname">struct sai_edma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae1c77e5afcb5c9d2b80ac92cc5de597e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ae1c77e5afcb5c9d2b80ac92cc5de597e">targetCommandId</a></td></tr>
-<tr class="memdesc:ae1c77e5afcb5c9d2b80ac92cc5de597e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the command from command buffer to execute upon detect of the associated trigger event.  <a href="#ae1c77e5afcb5c9d2b80ac92cc5de597e">More...</a><br/></td></tr>
-<tr class="separator:ae1c77e5afcb5c9d2b80ac92cc5de597e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33fd3b422ca9c26c1eb915ef8fdc3c3e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a33fd3b422ca9c26c1eb915ef8fdc3c3e">delayPower</a></td></tr>
-<tr class="memdesc:a33fd3b422ca9c26c1eb915ef8fdc3c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the trigger delay duration to wait at the start of servicing a trigger event.  <a href="#a33fd3b422ca9c26c1eb915ef8fdc3c3e">More...</a><br/></td></tr>
-<tr class="separator:a33fd3b422ca9c26c1eb915ef8fdc3c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e4d3a907597cd2c8c712ae967c5ac2f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a2e4d3a907597cd2c8c712ae967c5ac2f">priority</a></td></tr>
-<tr class="memdesc:a2e4d3a907597cd2c8c712ae967c5ac2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the priority of the associated trigger source.  <a href="#a2e4d3a907597cd2c8c712ae967c5ac2f">More...</a><br/></td></tr>
-<tr class="separator:a2e4d3a907597cd2c8c712ae967c5ac2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32a44ab0d65a0666b659027b93738c95"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a32a44ab0d65a0666b659027b93738c95">enableHardwareTrigger</a></td></tr>
-<tr class="memdesc:a32a44ab0d65a0666b659027b93738c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable hardware trigger source to initiate conversion on the rising edge of the input trigger source or not.  <a href="#a32a44ab0d65a0666b659027b93738c95">More...</a><br/></td></tr>
-<tr class="separator:a32a44ab0d65a0666b659027b93738c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a206a3b43dad407f5a36781c817207f6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a206a3b43dad407f5a36781c817207f6c"></a>
+<a class="el" href="a00027.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a206a3b43dad407f5a36781c817207f6c">dmaHandle</a></td></tr>
+<tr class="memdesc:a206a3b43dad407f5a36781c817207f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for SAI send. <br/></td></tr>
+<tr class="separator:a206a3b43dad407f5a36781c817207f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ffb3c5dda8cbc7c9c304d0148e615d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a2ffb3c5dda8cbc7c9c304d0148e615d4">nbytes</a></td></tr>
+<tr class="memdesc:a2ffb3c5dda8cbc7c9c304d0148e615d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a2ffb3c5dda8cbc7c9c304d0148e615d4">More...</a><br/></td></tr>
+<tr class="separator:a2ffb3c5dda8cbc7c9c304d0148e615d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85f7e22cc868bbb5bd2a3e7bcab955f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85f7e22cc868bbb5bd2a3e7bcab955f2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a85f7e22cc868bbb5bd2a3e7bcab955f2">bytesPerFrame</a></td></tr>
+<tr class="memdesc:a85f7e22cc868bbb5bd2a3e7bcab955f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes in a frame. <br/></td></tr>
+<tr class="separator:a85f7e22cc868bbb5bd2a3e7bcab955f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac277f141af096a95a528a7e36fd2063d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac277f141af096a95a528a7e36fd2063d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ac277f141af096a95a528a7e36fd2063d">channelMask</a></td></tr>
+<tr class="memdesc:ac277f141af096a95a528a7e36fd2063d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enabled channel mask value, reference _sai_channel_mask. <br/></td></tr>
+<tr class="separator:ac277f141af096a95a528a7e36fd2063d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a688de11e52b693d680dafedb93a941c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a688de11e52b693d680dafedb93a941c5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a688de11e52b693d680dafedb93a941c5">channelNums</a></td></tr>
+<tr class="memdesc:a688de11e52b693d680dafedb93a941c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">total enabled channel nums <br/></td></tr>
+<tr class="separator:a688de11e52b693d680dafedb93a941c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c0a238341e3c96e49ad2c661be30dfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c0a238341e3c96e49ad2c661be30dfb"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a7c0a238341e3c96e49ad2c661be30dfb">channel</a></td></tr>
+<tr class="memdesc:a7c0a238341e3c96e49ad2c661be30dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which data channel. <br/></td></tr>
+<tr class="separator:a7c0a238341e3c96e49ad2c661be30dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80bd4bad1c70104a976c3e74cdbeab14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80bd4bad1c70104a976c3e74cdbeab14"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a80bd4bad1c70104a976c3e74cdbeab14">count</a></td></tr>
+<tr class="memdesc:a80bd4bad1c70104a976c3e74cdbeab14"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer data count in a DMA request. <br/></td></tr>
+<tr class="separator:a80bd4bad1c70104a976c3e74cdbeab14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b35afcf6ad716da7d3e2b44dc46e9a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b35afcf6ad716da7d3e2b44dc46e9a6"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a7b35afcf6ad716da7d3e2b44dc46e9a6">state</a></td></tr>
+<tr class="memdesc:a7b35afcf6ad716da7d3e2b44dc46e9a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal state for SAI eDMA transfer. <br/></td></tr>
+<tr class="separator:a7b35afcf6ad716da7d3e2b44dc46e9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbfc2ea495c2d6e378c44c8c37c53765"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbfc2ea495c2d6e378c44c8c37c53765"></a>
+<a class="el" href="a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#afbfc2ea495c2d6e378c44c8c37c53765">callback</a></td></tr>
+<tr class="memdesc:afbfc2ea495c2d6e378c44c8c37c53765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for users while transfer finish or error occurs. <br/></td></tr>
+<tr class="separator:afbfc2ea495c2d6e378c44c8c37c53765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad85e23d4f2370b3d5b7a8d1438a6f33b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad85e23d4f2370b3d5b7a8d1438a6f33b"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ad85e23d4f2370b3d5b7a8d1438a6f33b">userData</a></td></tr>
+<tr class="memdesc:ad85e23d4f2370b3d5b7a8d1438a6f33b"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback parameter. <br/></td></tr>
+<tr class="separator:ad85e23d4f2370b3d5b7a8d1438a6f33b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e68d0012cfebcc70e074237b7b121d8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a6e68d0012cfebcc70e074237b7b121d8">tcd</a> [(<a class="el" href="a00077.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>+1U)*sizeof(edma_tcd_t)]</td></tr>
+<tr class="memdesc:a6e68d0012cfebcc70e074237b7b121d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCD pool for eDMA transfer.  <a href="#a6e68d0012cfebcc70e074237b7b121d8">More...</a><br/></td></tr>
+<tr class="separator:a6e68d0012cfebcc70e074237b7b121d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae552929f0b797fd27532cc0b8ebda762"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ae552929f0b797fd27532cc0b8ebda762">saiQueue</a> [<a class="el" href="a00077.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memdesc:ae552929f0b797fd27532cc0b8ebda762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer queue storing queued transfer.  <a href="#ae552929f0b797fd27532cc0b8ebda762">More...</a><br/></td></tr>
+<tr class="separator:ae552929f0b797fd27532cc0b8ebda762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab25e923e0c1904c4a9db8f0d3957bd24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab25e923e0c1904c4a9db8f0d3957bd24"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ab25e923e0c1904c4a9db8f0d3957bd24">transferSize</a> [<a class="el" href="a00077.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memdesc:ab25e923e0c1904c4a9db8f0d3957bd24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bytes need to transfer. <br/></td></tr>
+<tr class="separator:ab25e923e0c1904c4a9db8f0d3957bd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42a9091453bae041d29966f774cd7b3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42a9091453bae041d29966f774cd7b3c"></a>
+<a class="el" href="a00101.html#gad6edfb066c228d8b519ac8990150cd01">sai_edma_interleave_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a42a9091453bae041d29966f774cd7b3c">interleaveType</a></td></tr>
+<tr class="memdesc:a42a9091453bae041d29966f774cd7b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer interleave type. <br/></td></tr>
+<tr class="separator:a42a9091453bae041d29966f774cd7b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb40eac3af06a3130c21b6fdfe3a99b6"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#afb40eac3af06a3130c21b6fdfe3a99b6">queueUser</a></td></tr>
+<tr class="memdesc:afb40eac3af06a3130c21b6fdfe3a99b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer.  <a href="#afb40eac3af06a3130c21b6fdfe3a99b6">More...</a><br/></td></tr>
+<tr class="separator:afb40eac3af06a3130c21b6fdfe3a99b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7cd6167651d0153af2ff4f324097602"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7cd6167651d0153af2ff4f324097602"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ac7cd6167651d0153af2ff4f324097602">queueDriver</a></td></tr>
+<tr class="memdesc:ac7cd6167651d0153af2ff4f324097602"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for driver to get the transfer data and size. <br/></td></tr>
+<tr class="separator:ac7cd6167651d0153af2ff4f324097602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ae1c77e5afcb5c9d2b80ac92cc5de597e"></a>
+<a class="anchor" id="a2ffb3c5dda8cbc7c9c304d0148e615d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpadc_conv_trigger_config_t::targetCommandId</td>
+          <td class="memname">uint8_t sai_edma_handle::nbytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a33fd3b422ca9c26c1eb915ef8fdc3c3e"></a>
+<a class="anchor" id="a6e68d0012cfebcc70e074237b7b121d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpadc_conv_trigger_config_t::delayPower</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When this field is clear, then no delay is incurred. When this field is set to a non-zero value, the duration for the delay is 2^delayPower ADCK cycles. The available value range is 4-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2e4d3a907597cd2c8c712ae967c5ac2f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_trigger_config_t::priority</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If two or more triggers have the same priority level setting, the lower order trigger event has the higher priority. The lower value for this field is for the higher priority, the available value range is 1-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="a32a44ab0d65a0666b659027b93738c95"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_conv_trigger_config_t::enableHardwareTrigger</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>THe software trigger is always available. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00732" id="a00732"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpadc_conv_result_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7ed6dcbf44ad017014525335013c817b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a7ed6dcbf44ad017014525335013c817b">commandIdSource</a></td></tr>
-<tr class="memdesc:a7ed6dcbf44ad017014525335013c817b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the command buffer being executed that generated this result.  <a href="#a7ed6dcbf44ad017014525335013c817b">More...</a><br/></td></tr>
-<tr class="separator:a7ed6dcbf44ad017014525335013c817b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87e1ee666c960928797ca574f1bcae1b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a87e1ee666c960928797ca574f1bcae1b">loopCountIndex</a></td></tr>
-<tr class="memdesc:a87e1ee666c960928797ca574f1bcae1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the loop count value during command execution that generated this result.  <a href="#a87e1ee666c960928797ca574f1bcae1b">More...</a><br/></td></tr>
-<tr class="separator:a87e1ee666c960928797ca574f1bcae1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3b63c03e1c136e4293dd82a443f1de2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ad3b63c03e1c136e4293dd82a443f1de2">triggerIdSource</a></td></tr>
-<tr class="memdesc:ad3b63c03e1c136e4293dd82a443f1de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the trigger source that initiated a conversion and generated this result.  <a href="#ad3b63c03e1c136e4293dd82a443f1de2">More...</a><br/></td></tr>
-<tr class="separator:ad3b63c03e1c136e4293dd82a443f1de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4add4f13e761e8048d4434eb195f44d5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a4add4f13e761e8048d4434eb195f44d5">convValue</a></td></tr>
-<tr class="memdesc:a4add4f13e761e8048d4434eb195f44d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data result.  <a href="#a4add4f13e761e8048d4434eb195f44d5">More...</a><br/></td></tr>
-<tr class="separator:a4add4f13e761e8048d4434eb195f44d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a7ed6dcbf44ad017014525335013c817b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_result_t::commandIdSource</td>
+          <td class="memname">uint8_t sai_edma_handle::tcd[(<a class="el" href="a00077.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>+1U)*sizeof(edma_tcd_t)]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a87e1ee666c960928797ca574f1bcae1b"></a>
+<a class="anchor" id="ae552929f0b797fd27532cc0b8ebda762"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpadc_conv_result_t::loopCountIndex</td>
+          <td class="memname"><a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> sai_edma_handle::saiQueue[<a class="el" href="a00077.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad3b63c03e1c136e4293dd82a443f1de2"></a>
+<a class="anchor" id="afb40eac3af06a3130c21b6fdfe3a99b6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpadc_conv_result_t::triggerIdSource</td>
+          <td class="memname">volatile uint8_t sai_edma_handle::queueUser</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4add4f13e761e8048d4434eb195f44d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t lpadc_conv_result_t::convValue</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab8a795637177dc9973e0fd2f5b29b6c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_LPADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00337.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 4))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gae305eca1c95975e49ea88d0d39aeb3e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LPADC_GET_ACTIVE_COMMAND_STATUS</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">statusVal</td><td>)</td>
-          <td>&#160;&#160;&#160;((statusVal &amp; ADC_STAT_CMDACT_MASK) &gt;&gt; ADC_STAT_CMDACT_SHIFT)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The statusVal is the return value from <a class="el" href="a00101.html#gaa2793911f11091179bfcd8e9b1860300" title="Get status flags. ">LPADC_GetStatusFlags()</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga48a0c8b6bac1e45cc7bdc93ccc288786"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LPADC_GET_ACTIVE_TRIGGER_STATUE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">statusVal</td><td>)</td>
-          <td>&#160;&#160;&#160;((statusVal &amp; ADC_STAT_TRGACT_MASK) &gt;&gt; ADC_STAT_TRGACT_SHIFT)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The statusVal is the return value from <a class="el" href="a00101.html#gaa2793911f11091179bfcd8e9b1860300" title="Get status flags. ">LPADC_GetStatusFlags()</a>. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga6e079f1e1ac3e1e05be59c1537deaccc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#ga1d4e7fc7a4a9a94f460d113d367f5e89">_lpadc_sample_scale_mode</a>  <a class="el" href="a00101.html#ga6e079f1e1ac3e1e05be59c1537deaccc">lpadc_sample_scale_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The sample scale mode is used to reduce the selected ADC analog channel input voltage level by a factor. The maximum possible voltage on the ADC channel input should be considered when selecting a scale mode to ensure that the reducing factor always results voltage level at or below the VREFH reference. This reducing capability allows conversion of analog inputs higher than VREFH. A-side and B-side channel inputs are both scaled using the scale mode. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga2a016da64e36075cc5627b867ec622fb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#ga76e229daed6a76105f60bb569038c54d">_lpadc_sample_channel_mode</a>  <a class="el" href="a00101.html#ga2a016da64e36075cc5627b867ec622fb">lpadc_sample_channel_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The channel sample mode configures the channel with single-end/differential/dual-single-end, side A/B. </p>
-
-</div>
-</div>
-<a class="anchor" id="gadca70a0ed9c6266555ad732462ea16bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#gad0ca387797936463d0d86cda97d17438">_lpadc_hardware_average_mode</a>  <a class="el" href="a00101.html#gadca70a0ed9c6266555ad732462ea16bd">lpadc_hardware_average_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>It Selects how many ADC conversions are averaged to create the ADC result. An internal storage buffer is used to capture temporary results while the averaging iterations are executed.</p>
-<dl class="section note"><dt>Note</dt><dd>Some enumerator values are not available on some devices, mainly depends on the size of AVGS field in CMDH register. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga23447c7f5c4e9a106715484fd93a8f95"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#ga1ee59a08c5a28f7c3b75c530d1cccc65">_lpadc_sample_time_mode</a>  <a class="el" href="a00101.html#ga23447c7f5c4e9a106715484fd93a8f95">lpadc_sample_time_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The shortest sample time maximizes conversion speed for lower impedance inputs. Extending sample time allows higher impedance inputs to be accurately sampled. Longer sample times can also be used to lower overall power consumption when command looping and sequencing is configured and high conversion rates are not required. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaa631af36a82f2b04bf818918ad86bbc4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#gaedf69fcc744298a489b12df83b4aff83">_lpadc_hardware_compare_mode</a>  <a class="el" href="a00101.html#gaa631af36a82f2b04bf818918ad86bbc4">lpadc_hardware_compare_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>After an ADC channel input is sampled and converted and any averaging iterations are performed, this mode setting guides operation of the automatic compare function to optionally only store when the compare operation is true. When compare is enabled, the conversion result is compared to the compare values. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga8af78c5368037ad9c657f3317566717a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#gaf8c74a8d5d1dc7f3918cf35513e51596">_lpadc_reference_voltage_mode</a>  <a class="el" href="a00101.html#ga8af78c5368037ad9c657f3317566717a">lpadc_reference_voltage_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>For detail information, need to check the SoC's specification. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9e768f8b368e2e90d0d0c740392d14cd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#gae5cd887aaa7f385bf70b6ff4066d4f7d">_lpadc_power_level_mode</a>  <a class="el" href="a00101.html#ga9e768f8b368e2e90d0d0c740392d14cd">lpadc_power_level_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Configures the ADC for power and performance. In the highest power setting the highest conversion rates will be possible. Refer to the device data sheet for power and performance capabilities for each setting. </p>
-
-</div>
-</div>
-<a class="anchor" id="gae9504b206b2965d084eaa4caa0661e84"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00101.html#gad93a64db4c5264aa880ea61ec2fb3729">_lpadc_trigger_priority_policy</a>  <a class="el" href="a00101.html#gae9504b206b2965d084eaa4caa0661e84">lpadc_trigger_priority_policy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This selection controls how higher priority triggers are handled. </p>
-<dl class="section note"><dt>Note</dt><dd><b>kLPADC_TriggerPriorityPreemptSubsequently</b> is not available on some devices, mainly depends on the size of TPRICTRL field in CFG register. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf40ddd93026be88551f23b9428e98e22"></a>
+<a class="anchor" id="ga399d35c32a4aec53e8b62a256d528308"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gaf40ddd93026be88551f23b9428e98e22">_lpadc_status_flags</a></td>
+          <td class="memname">enum <a class="el" href="a00101.html#ga399d35c32a4aec53e8b62a256d528308">_sai_edma_interleave</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22a0bc43d455f0c92b0455d392b02a4581e"></a>kLPADC_ResultFIFO0OverflowFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates that more data has been written to the Result FIFO 0 than it can hold. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga399d35c32a4aec53e8b62a256d528308ad6dca42e6eb6f605c9628cc2a5eabfd5"></a>kSAI_EDMAInterleavePerChannelSample</em>&nbsp;</td><td class="fielddoc">
+<h2>SAI data interleave per channel sample </h2>
+<p>|LEFT CHANNEL | RIGHT CHANNEL | LEFT CHANNEL | RIGHT CHANNEL | LEFT CHANNEL | RIGHT CHANNEL | .... </p>
+<h2>| </h2>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22a16e8001de19be822847a36c2d6e6146c"></a>kLPADC_ResultFIFO0ReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates when the number of valid datawords in the result FIFO 0 is greater than the setting watermark level. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22a7b716de0304a1f486bde149e456b763c"></a>kLPADC_ActiveFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates that the ADC is in active state. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22aa52211bffea2def3062daff07532cb28"></a>kLPADC_ResultFIFOOverflowFlag</em>&nbsp;</td><td class="fielddoc">
-<p>To compilitable with old version, do not recommend using this, please use <a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22a0bc43d455f0c92b0455d392b02a4581e">kLPADC_ResultFIFO0OverflowFlag</a> as instead. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22a7bd75ce7f5f38970c10f03c77075fc5d"></a>kLPADC_ResultFIFOReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>To compilitable with old version, do not recommend using this, please use <a class="el" href="a00101.html#ggaf40ddd93026be88551f23b9428e98e22a16e8001de19be822847a36c2d6e6146c">kLPADC_ResultFIFO0ReadyFlag</a> as instead. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaeba33be014c52b093d5e7815dcf8e6b3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gaeba33be014c52b093d5e7815dcf8e6b3">_lpadc_interrupt_enable</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Note: LPADC of different chips supports different number of trigger sources, please check the Reference Manual for details. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaeba33be014c52b093d5e7815dcf8e6b3a8591fb75b5c63ceab76e5766ef49363e"></a>kLPADC_ResultFIFO0OverflowInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Configures ADC to generate overflow interrupt requests when FOF0 flag is asserted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeba33be014c52b093d5e7815dcf8e6b3a2bab7f05a3af09e6f8b90a6ca39fc2b6"></a>kLPADC_FIFO0WatermarkInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Configures ADC to generate watermark interrupt requests when RDY0 flag is asserted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeba33be014c52b093d5e7815dcf8e6b3a487f293b5443e2b9c39412f4476f7638"></a>kLPADC_ResultFIFOOverflowInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>To compilitable with old version, do not recommend using this, please use <a class="el" href="a00101.html#ggaeba33be014c52b093d5e7815dcf8e6b3a8591fb75b5c63ceab76e5766ef49363e" title="Configures ADC to generate overflow interrupt requests when FOF0 flag is asserted. ">kLPADC_ResultFIFO0OverflowInterruptEnable</a> as instead. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeba33be014c52b093d5e7815dcf8e6b3a90f6e2b2819d89b685281a440b10b8b5"></a>kLPADC_FIFOWatermarkInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>To compilitable with old version, do not recommend using this, please use <a class="el" href="a00101.html#ggaeba33be014c52b093d5e7815dcf8e6b3a2bab7f05a3af09e6f8b90a6ca39fc2b6" title="Configures ADC to generate watermark interrupt requests when RDY0 flag is asserted. ">kLPADC_FIFO0WatermarkInterruptEnable</a> as instead. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga1d4e7fc7a4a9a94f460d113d367f5e89"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#ga1d4e7fc7a4a9a94f460d113d367f5e89">_lpadc_sample_scale_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The sample scale mode is used to reduce the selected ADC analog channel input voltage level by a factor. The maximum possible voltage on the ADC channel input should be considered when selecting a scale mode to ensure that the reducing factor always results voltage level at or below the VREFH reference. This reducing capability allows conversion of analog inputs higher than VREFH. A-side and B-side channel inputs are both scaled using the scale mode. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1d4e7fc7a4a9a94f460d113d367f5e89a2d5ef37dc371402d7b50992f6724f2fd"></a>kLPADC_SamplePartScale</em>&nbsp;</td><td class="fielddoc">
-<p>Use divided input voltage signal. </p>
-<p>(For scale select,please refer to the reference manual). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1d4e7fc7a4a9a94f460d113d367f5e89acf9a7acbde288c4de0a60d0018457721"></a>kLPADC_SampleFullScale</em>&nbsp;</td><td class="fielddoc">
-<p>Full scale (Factor of 1). </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga76e229daed6a76105f60bb569038c54d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#ga76e229daed6a76105f60bb569038c54d">_lpadc_sample_channel_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The channel sample mode configures the channel with single-end/differential/dual-single-end, side A/B. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga76e229daed6a76105f60bb569038c54dae511411bd331e3049a5c9583163e4fe2"></a>kLPADC_SampleChannelSingleEndSideA</em>&nbsp;</td><td class="fielddoc">
-<p>Single-end mode, only A-side channel is converted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga76e229daed6a76105f60bb569038c54dab477a25f4b1cef6b47115b7bb4b9583c"></a>kLPADC_SampleChannelSingleEndSideB</em>&nbsp;</td><td class="fielddoc">
-<p>Single-end mode, only B-side channel is converted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga76e229daed6a76105f60bb569038c54da44153790e20e1d99c9ab49165b27db98"></a>kLPADC_SampleChannelDiffBothSideAB</em>&nbsp;</td><td class="fielddoc">
-<p>Differential mode, the ADC result is (CHnA-CHnB). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga76e229daed6a76105f60bb569038c54da29943cdedc87ec9e31f6e4f5b08452c8"></a>kLPADC_SampleChannelDiffBothSideBA</em>&nbsp;</td><td class="fielddoc">
-<p>Differential mode, the ADC result is (CHnB-CHnA). </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad0ca387797936463d0d86cda97d17438"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gad0ca387797936463d0d86cda97d17438">_lpadc_hardware_average_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>It Selects how many ADC conversions are averaged to create the ADC result. An internal storage buffer is used to capture temporary results while the averaging iterations are executed.</p>
-<dl class="section note"><dt>Note</dt><dd>Some enumerator values are not available on some devices, mainly depends on the size of AVGS field in CMDH register. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438adeae8ae097545482c1942926119d968c"></a>kLPADC_HardwareAverageCount1</em>&nbsp;</td><td class="fielddoc">
-<p>Single conversion. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438a03e731d3d2e024623fd22145c484b797"></a>kLPADC_HardwareAverageCount2</em>&nbsp;</td><td class="fielddoc">
-<p>2 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438a0eda65451db63f4a0c1d154f851f9353"></a>kLPADC_HardwareAverageCount4</em>&nbsp;</td><td class="fielddoc">
-<p>4 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438a3cc487e2f5720a5c45318f69028c32cc"></a>kLPADC_HardwareAverageCount8</em>&nbsp;</td><td class="fielddoc">
-<p>8 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438ad5fece9b31b47f741c413fe7445df855"></a>kLPADC_HardwareAverageCount16</em>&nbsp;</td><td class="fielddoc">
-<p>16 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438a4cfb338bc49982bc7e58a7f0949bf425"></a>kLPADC_HardwareAverageCount32</em>&nbsp;</td><td class="fielddoc">
-<p>32 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438a081530884310024c8d2750735b6295ea"></a>kLPADC_HardwareAverageCount64</em>&nbsp;</td><td class="fielddoc">
-<p>64 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad0ca387797936463d0d86cda97d17438a4f86910a33fa9874108753b6de1947ce"></a>kLPADC_HardwareAverageCount128</em>&nbsp;</td><td class="fielddoc">
-<p>128 conversions averaged. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga1ee59a08c5a28f7c3b75c530d1cccc65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#ga1ee59a08c5a28f7c3b75c530d1cccc65">_lpadc_sample_time_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The shortest sample time maximizes conversion speed for lower impedance inputs. Extending sample time allows higher impedance inputs to be accurately sampled. Longer sample times can also be used to lower overall power consumption when command looping and sequencing is configured and high conversion rates are not required. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65abfd94e19de3d57b94fae9baded5804db"></a>kLPADC_SampleTimeADCK3</em>&nbsp;</td><td class="fielddoc">
-<p>3 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65a441c59d3df7a1ad5b64416e6a08dd246"></a>kLPADC_SampleTimeADCK5</em>&nbsp;</td><td class="fielddoc">
-<p>5 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65aa2a17502f50e36de117b337994c21dc2"></a>kLPADC_SampleTimeADCK7</em>&nbsp;</td><td class="fielddoc">
-<p>7 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65a4a980813baf6845d528db2a265475905"></a>kLPADC_SampleTimeADCK11</em>&nbsp;</td><td class="fielddoc">
-<p>11 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65a7f5bb84adb8783fd6fa8d3ce5ed31f3a"></a>kLPADC_SampleTimeADCK19</em>&nbsp;</td><td class="fielddoc">
-<p>19 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65a9d59f3e6e9335223746533051f83a20b"></a>kLPADC_SampleTimeADCK35</em>&nbsp;</td><td class="fielddoc">
-<p>35 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65a653e653b0ee479f6b42ff4b8ffea49ac"></a>kLPADC_SampleTimeADCK67</em>&nbsp;</td><td class="fielddoc">
-<p>69 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ee59a08c5a28f7c3b75c530d1cccc65ae327cbad1ded4882cbcd53ad5e6c2262"></a>kLPADC_SampleTimeADCK131</em>&nbsp;</td><td class="fielddoc">
-<p>131 ADCK cycles total sample time. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaedf69fcc744298a489b12df83b4aff83"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gaedf69fcc744298a489b12df83b4aff83">_lpadc_hardware_compare_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>After an ADC channel input is sampled and converted and any averaging iterations are performed, this mode setting guides operation of the automatic compare function to optionally only store when the compare operation is true. When compare is enabled, the conversion result is compared to the compare values. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaedf69fcc744298a489b12df83b4aff83ab205c4a4aa1cd79f38be81e6469f2fd2"></a>kLPADC_HardwareCompareDisabled</em>&nbsp;</td><td class="fielddoc">
-<p>Compare disabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaedf69fcc744298a489b12df83b4aff83a0e30824c70217e386a1dfbaaecbd7b67"></a>kLPADC_HardwareCompareStoreOnTrue</em>&nbsp;</td><td class="fielddoc">
-<p>Compare enabled. </p>
-<p>Store on true. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaedf69fcc744298a489b12df83b4aff83a11bc71ef00c5e95a18431947fe0362e1"></a>kLPADC_HardwareCompareRepeatUntilTrue</em>&nbsp;</td><td class="fielddoc">
-<p>Compare enabled. </p>
-<p>Repeat channel acquisition until true. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaf8c74a8d5d1dc7f3918cf35513e51596"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gaf8c74a8d5d1dc7f3918cf35513e51596">_lpadc_reference_voltage_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>For detail information, need to check the SoC's specification. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf8c74a8d5d1dc7f3918cf35513e51596a8d40316bc847f29e588ff1a50775ab11"></a>kLPADC_ReferenceVoltageAlt1</em>&nbsp;</td><td class="fielddoc">
-<p>Option 1 setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf8c74a8d5d1dc7f3918cf35513e51596a7f45d8cf9f4a252f22d52b8a82db304a"></a>kLPADC_ReferenceVoltageAlt2</em>&nbsp;</td><td class="fielddoc">
-<p>Option 2 setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf8c74a8d5d1dc7f3918cf35513e51596a8c41f94955b5b1141956d61fc2feb44c"></a>kLPADC_ReferenceVoltageAlt3</em>&nbsp;</td><td class="fielddoc">
-<p>Option 3 setting. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gae5cd887aaa7f385bf70b6ff4066d4f7d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gae5cd887aaa7f385bf70b6ff4066d4f7d">_lpadc_power_level_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Configures the ADC for power and performance. In the highest power setting the highest conversion rates will be possible. Refer to the device data sheet for power and performance capabilities for each setting. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae5cd887aaa7f385bf70b6ff4066d4f7dac88970640320826c36101d8e7fa5a9c9"></a>kLPADC_PowerLevelAlt1</em>&nbsp;</td><td class="fielddoc">
-<p>Lowest power setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae5cd887aaa7f385bf70b6ff4066d4f7daca71931306fe195df044d6a889639919"></a>kLPADC_PowerLevelAlt2</em>&nbsp;</td><td class="fielddoc">
-<p>Next lowest power setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae5cd887aaa7f385bf70b6ff4066d4f7daed7771e49eeec9fee65726c600956d6d"></a>kLPADC_PowerLevelAlt3</em>&nbsp;</td><td class="fielddoc">
-<p>... </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae5cd887aaa7f385bf70b6ff4066d4f7da2f34a351174cf34ee124ccfc7f2bf9d2"></a>kLPADC_PowerLevelAlt4</em>&nbsp;</td><td class="fielddoc">
-<p>Highest power setting. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad93a64db4c5264aa880ea61ec2fb3729"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00101.html#gad93a64db4c5264aa880ea61ec2fb3729">_lpadc_trigger_priority_policy</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This selection controls how higher priority triggers are handled. </p>
-<dl class="section note"><dt>Note</dt><dd><b>kLPADC_TriggerPriorityPreemptSubsequently</b> is not available on some devices, mainly depends on the size of TPRICTRL field in CFG register. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad93a64db4c5264aa880ea61ec2fb3729a8952cef1b3169656cb213b1269f19e8a"></a>kLPADC_ConvPreemptImmediatelyNotAutoResumed</em>&nbsp;</td><td class="fielddoc">
-<p>If a higher priority trigger is detected during command processing, the current conversion is aborted and the new command specified by the trigger is started, when higher priority conversion finishes, the preempted conversion is not automatically resumed or restarted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad93a64db4c5264aa880ea61ec2fb3729a50acd884fdcaa0297e0a5597172418fe"></a>kLPADC_ConvPreemptSoftlyNotAutoResumed</em>&nbsp;</td><td class="fielddoc">
-<p>If a higher priority trigger is received during command processing, the current conversion is completed (including averaging iterations and compare function if enabled) and stored to the result FIFO before the higher priority trigger/command is initiated, when higher priority conversion finishes, the preempted conversion is not resumed or restarted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad93a64db4c5264aa880ea61ec2fb3729a0fec3ebd14c77fc5a1711cb3ed7a2ab5"></a>kLPADC_TriggerPriorityPreemptImmediately</em>&nbsp;</td><td class="fielddoc">
-<p>Legacy support is not recommended as it only ensures compatibility with older versions. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad93a64db4c5264aa880ea61ec2fb3729a406eb5620e19a0cad27c10211c548a46"></a>kLPADC_TriggerPriorityPreemptSoftly</em>&nbsp;</td><td class="fielddoc">
-<p>Legacy support is not recommended as it only ensures compatibility with older versions. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga399d35c32a4aec53e8b62a256d528308abe869d52b4b9f0883e963214b470d28e"></a>kSAI_EDMAInterleavePerChannelBlock</em>&nbsp;</td><td class="fielddoc">
+<h2>SAI data interleave per channel block </h2>
+<p>|LEFT CHANNEL | LEFT CHANNEL | LEFT CHANNEL | ... </p>
+<h2>| RIGHT CHANNEL | RIGHT CHANNEL | RIGHT CHANNEL | ...| </h2>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf13dbab92e7a26afb07b3bb2cbaab793"></a>
+<a class="anchor" id="ga84f148e1d3fe186ce6604d637f89c2c1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_Init </td>
+          <td class="memname">void SAI_TransferTxCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00101.html#a00730">lpadc_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>txDmaHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1363,89 +386,53 @@ Trigger and conversion with FIFO.</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function initializes the SAI master DMA handle, which can be used for other SAI master transactional APIs. Usually, for a specified SAI instance, call this API once to get the initialized handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See "lpadc_config_t". </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
+    <tr><td class="paramname">txDmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga94c79af85a28c45bc642226292b14d1c"></a>
+<a class="anchor" id="ga44a719a507630fdcc25ba93690098a89"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_GetDefaultConfig </td>
+          <td class="memname">void SAI_TransferRxCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html#a00730">lpadc_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the converter configuration structure with an available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;enableInDozeMode        = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;enableAnalogPreliminary = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;powerUpDelay            = 0x80;</div>
-<div class="line">*   config-&gt;referenceVoltageSource  = <a class="code" href="a00101.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a8d40316bc847f29e588ff1a50775ab11">kLPADC_ReferenceVoltageAlt1</a>;</div>
-<div class="line">*   config-&gt;powerLevelMode          = <a class="code" href="a00101.html#ggae5cd887aaa7f385bf70b6ff4066d4f7dac88970640320826c36101d8e7fa5a9c9">kLPADC_PowerLevelAlt1</a>;</div>
-<div class="line">*   config-&gt;triggerPriorityPolicy   = <a class="code" href="a00101.html#ggad93a64db4c5264aa880ea61ec2fb3729a0fec3ebd14c77fc5a1711cb3ed7a2ab5">kLPADC_TriggerPriorityPreemptImmediately</a>;</div>
-<div class="line">*   config-&gt;enableConvPause         = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;convPauseDelay          = 0U;</div>
-<div class="line">*   config-&gt;FIFOWatermark           = 0U;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabc10ae5663788ea5c7f77e2f3517a677"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPADC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf76592d9f392cd30b738f599b2e71344"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPADC_Enable </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1453,132 +440,282 @@ Trigger and conversion with FIFO.</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function initializes the SAI slave DMA handle, which can be used for other SAI master transactional APIs. Usually, for a specified SAI instance, call this API once to get the initialized handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>switcher to the module. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
+    <tr><td class="paramname">rxDmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gab6e4218842365ee6c620cfc59db213c4"></a>
+<a class="anchor" id="gada84bfce187319b89b6e89c802164478"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DoResetFIFO </td>
+          <td class="memname">void SAI_TransferSetInterleaveType </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#gad6edfb066c228d8b519ac8990150cd01">sai_edma_interleave_t</a>&#160;</td>
+          <td class="paramname"><em>interleaveType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function initializes the SAI DMA handle member interleaveType, it shall be called only when application would like to use type kSAI_EDMAInterleavePerChannelBlock, since the default interleaveType is kSAI_EDMAInterleavePerChannelSample always</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">interleaveType</td><td>Multi channel interleave type. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"></a>
+<a class="anchor" id="ga5295038a021787aef619bdd9f96981da"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DoResetConfig </td>
+          <td class="memname">void SAI_TransferTxSetConfigEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Reset all ADC internal logic and registers, except the Control Register (ADCx_CTRL).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa2793911f11091179bfcd8e9b1860300"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPADC_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status flags' mask. See to <a class="el" href="a00101.html#gaf40ddd93026be88551f23b9428e98e22" title="Define hardware flags of the module. ">_lpadc_status_flags</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga77ba72fad1e0f84b42809da6918e6532"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPADC_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00077.html#ga1e798fe5217335d01709af9f4855e0dc">sai_transceiver_t</a> *&#160;</td>
+          <td class="paramname"><em>saiConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>SAI eDMA supports data transfer in a multiple SAI channels if the FIFO Combine feature is supported. To activate the multi-channel transfer enable SAI channels by filling the channelMask of sai_transceiver_t with the corresponding values of _sai_channel_mask enum, enable the FIFO Combine mode by assigning kSAI_FifoCombineModeEnabledOnWrite to the fifoCombine member of sai_fifo_combine_t which is a member of sai_transceiver_t. This is an example of multi-channel data transfer configuration step. <div class="fragment"><div class="line">*   <a class="code" href="a00077.html#a00637">sai_transceiver_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00077.html#gaf233a2ef17cff713b18a002924e992fc">SAI_GetClassicI2SConfig</a>(&amp;config, <a class="code" href="a00077.html#ggad4e90a38e43c3d4a2abe7dd09fd15e20a0328fc45f36f361f958cacd8378d4923">kSAI_WordWidth16bits</a>, <a class="code" href="a00077.html#ggab7c25036fc5c90315f202a19e42ae295a68780a0cf179c054ccccdd0d57fb780e">kSAI_Stereo</a>, <a class="code" href="a00077.html#gga0ae1e3bf78c960c83e2d437efd802058aa21f6e0475cce1ba88f8105ab4f692c7">kSAI_Channel0Mask</a>|<a class="code" href="a00077.html#gga0ae1e3bf78c960c83e2d437efd802058a4f8ec142406d199623daa8671b62285b">kSAI_Channel1Mask</a>);</div>
+<div class="line">*   config.<a class="code" href="a00077.html#a5f352ceb9e29f7b6073a2b3edeaab9df">fifo</a>.<a class="code" href="a00077.html#add8b2fe71eb00c45dfc630d11735ea77">fifoCombine</a> = <a class="code" href="a00077.html#ggaf26356d02c57c13a7683a3ad9a4f91a2a5f9f93fa7038c5ca68fafbb27b44a6c2">kSAI_FifoCombineModeEnabledOnWrite</a>;</div>
+<div class="line">*   <a class="code" href="a00101.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a>(I2S0, &amp;edmaHandle, &amp;config);</div>
+<div class="line">*  </div>
+</div><!-- fragment --></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">saiConfig</td><td>sai configurations. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaed5d72de0d0aa0ac71de3222924e4aa7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferRxSetConfigEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00077.html#ga1e798fe5217335d01709af9f4855e0dc">sai_transceiver_t</a> *&#160;</td>
+          <td class="paramname"><em>saiConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>SAI eDMA supports data transfer in a multiple SAI channels if the FIFO Combine feature is supported. To activate the multi-channel transfer enable SAI channels by filling the channelMask of sai_transceiver_t with the corresponding values of _sai_channel_mask enum, enable the FIFO Combine mode by assigning kSAI_FifoCombineModeEnabledOnRead to the fifoCombine member of sai_fifo_combine_t which is a member of sai_transceiver_t. This is an example of multi-channel data transfer configuration step. <div class="fragment"><div class="line">*   <a class="code" href="a00077.html#a00637">sai_transceiver_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00077.html#gaf233a2ef17cff713b18a002924e992fc">SAI_GetClassicI2SConfig</a>(&amp;config, <a class="code" href="a00077.html#ggad4e90a38e43c3d4a2abe7dd09fd15e20a0328fc45f36f361f958cacd8378d4923">kSAI_WordWidth16bits</a>, <a class="code" href="a00077.html#ggab7c25036fc5c90315f202a19e42ae295a68780a0cf179c054ccccdd0d57fb780e">kSAI_Stereo</a>, <a class="code" href="a00077.html#gga0ae1e3bf78c960c83e2d437efd802058aa21f6e0475cce1ba88f8105ab4f692c7">kSAI_Channel0Mask</a>|<a class="code" href="a00077.html#gga0ae1e3bf78c960c83e2d437efd802058a4f8ec142406d199623daa8671b62285b">kSAI_Channel1Mask</a>);</div>
+<div class="line">*   config.<a class="code" href="a00077.html#a5f352ceb9e29f7b6073a2b3edeaab9df">fifo</a>.<a class="code" href="a00077.html#add8b2fe71eb00c45dfc630d11735ea77">fifoCombine</a> = <a class="code" href="a00077.html#ggaf26356d02c57c13a7683a3ad9a4f91a2a5ace6deacace7a319179204a842940e3">kSAI_FifoCombineModeEnabledOnRead</a>;</div>
+<div class="line">*   <a class="code" href="a00101.html#gaed5d72de0d0aa0ac71de3222924e4aa7">SAI_TransferRxSetConfigEDMA</a>(I2S0, &amp;edmaHandle, &amp;config);</div>
+<div class="line">*  </div>
+</div><!-- fragment --> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">saiConfig</td><td>sai configurations. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7a2c125e1f975c9f718dcb820ac46f63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferSendEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This interface returns immediately after the transfer initiates. Call SAI_GetTransferStatus to poll the transfer status and check whether the SAI transfer is finished.</dd></dl>
+<p>This function support multi channel transfer,</p>
+<ol type="1">
+<li>for the sai IP support fifo combine mode, application should enable the fifo combine mode, no limitation on channel numbers</li>
+<li>for the sai IP not support fifo combine mode, sai edma provide another solution which using EDMA modulo feature, but support 2 or 4 channels only.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the DMA transfer structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA send successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_TxBusy</td><td>SAI is busy sending data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9060fb028d5a24d8763066981b079900"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This interface returns immediately after the transfer initiates. Call the SAI_GetReceiveRemainingBytes to poll the transfer status and check whether the SAI transfer is finished.</dd></dl>
+<p>This function support multi channel transfer,</p>
+<ol type="1">
+<li>for the sai IP support fifo combine mode, application should enable the fifo combine mode, no limitation on channel numbers</li>
+<li>for the sai IP not support fifo combine mode, sai edma provide another solution which using EDMA modulo feature, but support 2 or 4 channels only.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to DMA transfer structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA receive successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_RxBusy</td><td>SAI is busy receiving data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1b62338a71194856549698e374d13cb0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferSendLoopEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramname"><em>loopTransferCount</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1586,41 +723,55 @@ Trigger and conversion with FIFO.</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Only the flags can be cleared by writing ADCx_STATUS register would be cleared by this API.</p>
+<dl class="section note"><dt>Note</dt><dd>This function support loop transfer only,such as A-&gt;B-&gt;...-&gt;A, application must be aware of that the more counts of the loop transfer, then more tcd memory required, as the function use the tcd pool in sai_edma_handle_t, so application could redefine the SAI_XFER_QUEUE_SIZE to determine the proper TCD pool size. This function support one sai channel only.</dd></dl>
+<p>Once the loop transfer start, application can use function SAI_TransferAbortSendEDMA to stop the loop transfer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask value for flags to be cleared. See to <a class="el" href="a00101.html#gaf40ddd93026be88551f23b9428e98e22" title="Define hardware flags of the module. ">_lpadc_status_flags</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the DMA transfer structure, should be a array with elements counts &gt;=1(loopTransferCount). </td></tr>
+    <tr><td class="paramname">loopTransferCount</td><td>the counts of xfer array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA send successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2c147558843514556795fd52f86aca56"></a>
+<a class="anchor" id="gaaf6043ff078868f35d4459dd2e112c0d"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_EnableInterrupts </td>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferReceiveLoopEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00077.html#ga930ac1cfb546457c3e1ebf70151a6212">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramname"><em>loopTransferCount</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1628,40 +779,43 @@ Trigger and conversion with FIFO.</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function support loop transfer only,such as A-&gt;B-&gt;...-&gt;A, application must be aware of that the more counts of the loop transfer, then more tcd memory required, as the function use the tcd pool in sai_edma_handle_t, so application could redefine the SAI_XFER_QUEUE_SIZE to determine the proper TCD pool size. This function support one sai channel only.</dd></dl>
+<p>Once the loop transfer start, application can use function SAI_TransferAbortReceiveEDMA to stop the loop transfer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask value for interrupt events. See to <a class="el" href="a00101.html#gaeba33be014c52b093d5e7815dcf8e6b3" title="Define interrupt switchers of the module. ">_lpadc_interrupt_enable</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the DMA transfer structure, should be a array with elements counts &gt;=1(loopTransferCount). </td></tr>
+    <tr><td class="paramname">loopTransferCount</td><td>the counts of xfer array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA receive successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5c633af2aeab39c215d3b5aa6172ccb7"></a>
+<a class="anchor" id="ga6b3db811719337e4f2172c66ceeb7933"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DisableInterrupts </td>
+          <td class="memname">void SAI_TransferTerminateSendEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1669,40 +823,33 @@ Trigger and conversion with FIFO.</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function will clear all transfer slots buffered in the sai queue. If users only want to abort the current transfer slot, please call SAI_TransferAbortSendEDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask value for interrupt events. See to <a class="el" href="a00101.html#gaeba33be014c52b093d5e7815dcf8e6b3" title="Define interrupt switchers of the module. ">_lpadc_interrupt_enable</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gacaaa33bc4d9cfd8fad4fac8f1475d97c"></a>
+<a class="anchor" id="ga819dcef593d48f3296ee858239802e26"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_EnableFIFOWatermarkDMA </td>
+          <td class="memname">void SAI_TransferTerminateReceiveEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1710,68 +857,33 @@ Trigger and conversion with FIFO.</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function will clear all transfer slots buffered in the sai queue. If users only want to abort the current transfer slot, please call SAI_TransferAbortReceiveEDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Switcher to the event. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga51b39db4ab530f900aa3a88a3047daf3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPADC_GetConvResultCount </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The count of result kept in conversion FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1862883b3c4ce8365ad1f1a6c64043cc"></a>
+<a class="anchor" id="ga12925e07667cc1b27915aedd1f718a7a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool LPADC_GetConvResult </td>
+          <td class="memname">void SAI_TransferAbortSendEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00101.html#a00732">lpadc_conv_result_t</a> *&#160;</td>
-          <td class="paramname"><em>result</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1780,32 +892,32 @@ Trigger and conversion with FIFO.</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function only aborts the current transfer slots, the other transfer slots' information still kept in the handler. If users want to terminate all transfer slots, just call SAI_TransferTerminateSendEDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">result</td><td>Pointer to structure variable that keeps the conversion result in conversion FIFO.</td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status whether FIFO entry is valid. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaebbcb9d28f962d7f12512a0e99aa09d2"></a>
+<a class="anchor" id="ga3bd586da5f41126cbfa92d2baa03620b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_GetConvResultBlocking </td>
+          <td class="memname">void SAI_TransferAbortReceiveEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00101.html#a00732">lpadc_conv_result_t</a> *&#160;</td>
-          <td class="paramname"><em>result</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1814,37 +926,38 @@ Trigger and conversion with FIFO.</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function only aborts the current transfer slots, the other transfer slots' information still kept in the handler. If users want to terminate all transfer slots, just call SAI_TransferTerminateReceiveEDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">result</td><td>Pointer to structure variable that keeps the conversion result in conversion FIFO. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga67927722ab525eda9e31d1f7554f02a4"></a>
+<a class="anchor" id="ga02aa0e441b0aada0f4875f28f832dc71"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_SetConvTriggerConfig </td>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferGetSendCountEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerId</em>, </td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00101.html#a00733">lpadc_conv_trigger_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1853,66 +966,45 @@ Trigger and conversion with FIFO.</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Each programmable trigger can launch the conversion command in command buffer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerId</td><td>ID for each trigger. Typically, the available value range is from 0. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to <a class="el" href="a00101.html#a00733" title="Define structure to keep the configuration for conversion trigger. ">lpadc_conv_trigger_config_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Bytes count sent by SAI. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is no non-blocking transaction in progress. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga44e286bc27b1e8fee3f4796ca9196a27"></a>
+<a class="anchor" id="gae4a1100515e9a05bb61e0039288664a0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_GetDefaultConvTriggerConfig </td>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferGetReceiveCountEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html#a00733">lpadc_conv_trigger_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the trigger's configuration structure with an available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;targetCommandId        = 0U;</div>
-<div class="line">*   config-&gt;delayPower             = 0U;</div>
-<div class="line">*   config-&gt;priority               = 0U;</div>
-<div class="line">*   config-&gt;channelAFIFOSelect     = 0U;</div>
-<div class="line">*   config-&gt;channelBFIFOSelect     = 0U;</div>
-<div class="line">*   config-&gt;enableHardwareTrigger  = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacaef94ac48a3e0a34f9235f88767b7a3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPADC_DoSoftwareTrigger </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerIdMask</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1920,92 +1012,40 @@ Trigger and conversion with FIFO.</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerIdMask</td><td>Mask value for software trigger indexes, which count from zero. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Bytes count received by SAI. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is no non-blocking transaction in progress. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4224ecb1a5bc073aeb37e462674734fe"></a>
+<a class="anchor" id="ga33af2c1b3c360823ffdbb1348e586107"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_EnableHardwareTriggerCommandSelection </td>
+          <td class="memname">uint32_t SAI_TransferGetValidTransferSlotsEDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function will use the hardware trigger command from ADC_ETC.The trigger command is then defined by ADC hardware trigger command selection field in ADC_ETC- &gt;TRIGx_CHAINy_z_n[CSEL].</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerId</td><td>ID for each trigger. Typically, the available value range is from 0. </td></tr>
-    <tr><td class="paramname">enable</td><td>True to enable or flase to disable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga500d8b7b0323136353e10fdfad2e40c7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPADC_SetConvCommandConfig </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>commandId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00101.html#a00731">lpadc_conv_command_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00101.html#a00733">sai_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2014,52 +1054,17 @@ Trigger and conversion with FIFO.</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>The number of compare value register on different chips is different, that is mean in some chips, some command buffers do not have the compare functionality.</dd></dl>
+<p>This function can be used to query the valid transfer request slot that the application can submit. It should be called in the critical section, that means the application could call it in the corresponding callback function or disable IRQ before calling it in the application, otherwise, the returned value may not correct.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">commandId</td><td>ID for command in command buffer. Typically, the available value range is 1 - 15. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to <a class="el" href="a00101.html#a00731" title="Define structure to keep the configuration for conversion command. ">lpadc_conv_command_config_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa3f7fd90bdbd65fbc4e5b88e904173f9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPADC_GetDefaultConvCommandConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html#a00731">lpadc_conv_command_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the conversion command's configuration structure with an available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;sampleScaleMode            = <a class="code" href="a00101.html#gga1d4e7fc7a4a9a94f460d113d367f5e89acf9a7acbde288c4de0a60d0018457721">kLPADC_SampleFullScale</a>;</div>
-<div class="line">*   config-&gt;channelBScaleMode          = <a class="code" href="a00101.html#gga1d4e7fc7a4a9a94f460d113d367f5e89acf9a7acbde288c4de0a60d0018457721">kLPADC_SampleFullScale</a>;</div>
-<div class="line">*   config-&gt;sampleChannelMode          = <a class="code" href="a00101.html#gga76e229daed6a76105f60bb569038c54dae511411bd331e3049a5c9583163e4fe2">kLPADC_SampleChannelSingleEndSideA</a>;</div>
-<div class="line">*   config-&gt;channelNumber              = 0U;</div>
-<div class="line">*   config-&gt;channelBNumber             = 0U;</div>
-<div class="line">*   config-&gt;chainedNextCommandNumber   = 0U;</div>
-<div class="line">*   config-&gt;enableAutoChannelIncrement = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;loopCount                  = 0U;</div>
-<div class="line">*   config-&gt;hardwareAverageMode        = <a class="code" href="a00101.html#ggad0ca387797936463d0d86cda97d17438adeae8ae097545482c1942926119d968c">kLPADC_HardwareAverageCount1</a>;</div>
-<div class="line">*   config-&gt;sampleTimeMode             = <a class="code" href="a00101.html#gga1ee59a08c5a28f7c3b75c530d1cccc65abfd94e19de3d57b94fae9baded5804db">kLPADC_SampleTimeADCK3</a>;</div>
-<div class="line">*   config-&gt;hardwareCompareMode        = <a class="code" href="a00101.html#ggaedf69fcc744298a489b12df83b4aff83ab205c4a4aa1cd79f38be81e6469f2fd2">kLPADC_HardwareCompareDisabled</a>;</div>
-<div class="line">*   config-&gt;hardwareCompareValueHigh   = 0U;</div>
-<div class="line">*   config-&gt;hardwareCompareValueLow    = 0U;</div>
-<div class="line">*   config-&gt;conversionResolutionMode   = kLPADC_ConversionResolutionStandard;</div>
-<div class="line">*   config-&gt;enableWaitTrigger          = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableChannelB             = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">valid</td><td>slot count that application submit. </td></tr>
   </table>
   </dd>
 </dl>

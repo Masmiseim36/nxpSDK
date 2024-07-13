@@ -1,6 +1,6 @@
 var a00023 =
 [
-    [ "_dcdc_low_power_config", "a00022.html#a00435", [
+    [ "_dcdc_low_power_config", "a00022.html#a00432", [
       [ "enableAdjustHystereticValue", "a00022.html#ac009f10f5d80ab76becf338357dbe36d", null ],
       [ "workModeInVLPRW", "a00022.html#aad62a6613254797f506e2eaddf9d1c2a", null ],
       [ "workModeInVLPS", "a00022.html#ae06425f874813082f3952c1642deddaa", null ],
@@ -12,7 +12,7 @@ var a00023 =
       [ "hystereticLowerThresholdValue", "a00022.html#a608284e14be237d146ee1054cab28009", null ],
       [ "enableDiffComparators", "a00022.html#a026e01f113c508d5a0191c05f5e37c5b", null ]
     ] ],
-    [ "_dcdc_loop_control_config", "a00022.html#a00434", [
+    [ "_dcdc_loop_control_config", "a00022.html#a00431", [
       [ "enableCommonHysteresis", "a00022.html#ad0a09ad1b990e59530c3ddbb322b9404", null ],
       [ "enableCommonThresholdDetection", "a00022.html#a7607542942eee2f96a9656490767ffaf", null ],
       [ "enableDifferentialHysteresis", "a00022.html#a9312d6827d024ba400f8b5dd241f6a0a", null ],
@@ -27,7 +27,7 @@ var a00023 =
       [ "enableDiffHysteresisThresh", "a00022.html#abc9f82b46754653b6fa7030fd5f0f498", null ],
       [ "enableCommonHysteresisThresh", "a00022.html#a0b8fa3e2f317b0f852d8b7c9d00484c3", null ]
     ] ],
-    [ "_dcdc_min_power_config", "a00022.html#a00436", [
+    [ "_dcdc_min_power_config", "a00022.html#a00433", [
       [ "enableUseHalfFreqForContinuous", "a00022.html#a29dbd85401dd919ad76feac9f7b8818f", null ],
       [ "enableUseHalfFetForContinuous", "a00022.html#ae1edf96add51681d4a7a2a9a0c80e038", null ],
       [ "enableUseDoubleFetForContinuous", "a00022.html#a4f308b279f02698121e0a4c738f0a87b", null ],
@@ -35,7 +35,7 @@ var a00023 =
       [ "enableUseDoubleFetForPulsed", "a00022.html#ab3857bb9b96d716b2c8e8eac52773f86", null ],
       [ "enableUseHalfFreqForPulsed", "a00022.html#a91ffb931da0da9fa39642a0c591b69eb", null ]
     ] ],
-    [ "_dcdc_pulsed_integrator_config_t", "a00023.html#a00437", [
+    [ "_dcdc_pulsed_integrator_config_t", "a00023.html#a00434", [
       [ "enableUseUserIntegratorValue", "a00023.html#a0b04b5c9be4777780056e1da5d39ff8e", null ],
       [ "userIntegratorValue", "a00023.html#ad77aa23c41327e40ba7eecedea1641b8", null ],
       [ "enablePulseRunSpeedup", "a00023.html#a86bd1dd2ab4810f1764035b58166b8cb", null ]

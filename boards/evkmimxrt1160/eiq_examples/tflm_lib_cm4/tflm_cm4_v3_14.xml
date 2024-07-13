@@ -46,7 +46,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -Wno-strict-aliasing</value>
+          <value>-c -ffunction-sections -fdata-sections -fmessage-length=0 -funsigned-char -Wno-strict-aliasing</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
           <value>false</value>

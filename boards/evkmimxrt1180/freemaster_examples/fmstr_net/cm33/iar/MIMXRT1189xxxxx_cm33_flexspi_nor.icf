@@ -52,7 +52,7 @@ define symbol m_fcb_start              = m_flash_start + m_fcb_offset;
 define symbol m_fcb_end                = m_fcb_start + m_fcb_size - 1;
 
 define symbol m_xmcd_offset            = 0x800;
-define symbol m_xmcd_size              = 0x200;
+define symbol m_xmcd_size              = 0x400;
 define symbol m_xmcd_start             = m_flash_start + m_xmcd_offset;
 define symbol m_xmcd_end               = m_xmcd_start + m_xmcd_size - 1;
 

@@ -1,73 +1,69 @@
 var a00075 =
 [
-    [ "_rdc_hardware_config", "a00075.html#a00623", [
-      [ "domainNumber", "a00075.html#a0a1c71ea8794188dc975c8308c737dbb", null ],
-      [ "masterNumber", "a00075.html#a5173b5ae360696c710d9c28696342e7e", null ],
-      [ "periphNumber", "a00075.html#a7f5b8abeaf670f544b25bd22e51f584d", null ],
-      [ "memNumber", "a00075.html#a8ed986154479237da36ccd3f6241ffee", null ]
+    [ "_rtwdog_work_mode", "a00075.html#a00625", [
+      [ "enableWait", "a00075.html#ab20c5eef573eae84c4ee7e1af59a19d7", null ],
+      [ "enableStop", "a00075.html#a11f8ede7afeb712e61a3d92c95ef779b", null ],
+      [ "enableDebug", "a00075.html#afae9e4adf38445df26f3ca9edb3c47df", null ]
     ] ],
-    [ "_rdc_domain_assignment", "a00075.html#a00622", [
-      [ "domainId", "a00075.html#a5bbfcb6e3db56bcca10e6c5f7ee9de4d", null ],
-      [ "__pad0__", "a00075.html#a48fe208537eb4029cbe45bbb77fcae66", null ],
-      [ "lock", "a00075.html#a41881095499e658420cfc5efda6c5caa", null ]
+    [ "_rtwdog_config", "a00075.html#a00624", [
+      [ "enableRtwdog", "a00075.html#afa4fb2c22c60cc777bff07374e5506dc", null ],
+      [ "clockSource", "a00075.html#ad52338f92dcea3eddaccb25cec208f19", null ],
+      [ "prescaler", "a00075.html#abc90ebdecad715af2209a72977c4f355", null ],
+      [ "workMode", "a00075.html#a1882a3dece4f84b6968fecc018adcc33", null ],
+      [ "testMode", "a00075.html#a16c4356a888d6a2ac2f74cbe873f3150", null ],
+      [ "enableUpdate", "a00075.html#a99a56cd1f4a3cc1f44c71b29145d2d4a", null ],
+      [ "enableInterrupt", "a00075.html#abd2cdea7f69e8c9a2caffbc9219e91b7", null ],
+      [ "enableWindowMode", "a00075.html#a2ebda995494fa4c4b7178f7e374ef466", null ],
+      [ "windowValue", "a00075.html#a1542dd58d7ec8845f2cf6421711c8368", null ],
+      [ "timeoutValue", "a00075.html#a434445985209fce91ae93d25ea06c22b", null ]
     ] ],
-    [ "_rdc_periph_access_config", "a00075.html#a00626", [
-      [ "periph", "a00075.html#a242a1e54f86e21e833da3140902eaec1", null ],
-      [ "lock", "a00075.html#ab8b7b20b2b41579fea486131de105468", null ],
-      [ "enableSema", "a00075.html#a8d0c915fee91b8ec6fea7c2391c17e8f", null ],
-      [ "policy", "a00075.html#a7b0f6bba021eb4c36e304ff2ac9a6b66", null ]
+    [ "WDOG_FIRST_WORD_OF_UNLOCK", "a00075.html#ga8825b35bd62726165737f5dc0f5f61e4", null ],
+    [ "WDOG_SECOND_WORD_OF_UNLOCK", "a00075.html#gae2018a4151df654f86822786500cf2d3", null ],
+    [ "WDOG_FIRST_WORD_OF_REFRESH", "a00075.html#ga10f1df824e5965d6413b2e892fd04659", null ],
+    [ "WDOG_SECOND_WORD_OF_REFRESH", "a00075.html#ga2a375c7e4d71e7f52e899bce0a9106ee", null ],
+    [ "FSL_RTWDOG_DRIVER_VERSION", "a00075.html#ga036d8fa82f101485bb1bef62fbe0efec", null ],
+    [ "rtwdog_clock_source_t", "a00075.html#ga6510de305373a14b2dfcbf69b4287110", null ],
+    [ "rtwdog_clock_prescaler_t", "a00075.html#gaf559a88c22204ba1a1f85a8b47a80fea", null ],
+    [ "rtwdog_work_mode_t", "a00075.html#ga4548feb648f1760081293173d086a45b", null ],
+    [ "rtwdog_test_mode_t", "a00075.html#gab89ed9805e309b8ba7e064005203aef9", null ],
+    [ "rtwdog_config_t", "a00075.html#gae1ba5d3818230a3eb79df2725ab0009b", null ],
+    [ "_rtwdog_clock_source", "a00075.html#gab629a7621b77e082b75e69afa58c3dc1", [
+      [ "kRTWDOG_ClockSource0", "a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a89fe3caec9c47ea18afbea78fa7b75db", null ],
+      [ "kRTWDOG_ClockSource1", "a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a0490435c4f8e6b5f2bfb4d4959ee6ce5", null ],
+      [ "kRTWDOG_ClockSource2", "a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a596c695b96b5287f927f74d78577fe84", null ],
+      [ "kRTWDOG_ClockSource3", "a00075.html#ggab629a7621b77e082b75e69afa58c3dc1ad51ba4630b31474e7d497d1defc3075a", null ]
     ] ],
-    [ "_rdc_mem_access_config", "a00075.html#a00624", [
-      [ "mem", "a00075.html#aab16c859d011f27f18e8ef76f81439f4", null ],
-      [ "lock", "a00075.html#ab2dac0a75be9929c8e12a92b37f1b8e4", null ],
-      [ "baseAddress", "a00075.html#af42d89ec16e7b15c75c8a63b667d5ded", null ],
-      [ "endAddress", "a00075.html#a57f9536d7f3b6f2f8b4bd38104e280eb", null ],
-      [ "policy", "a00075.html#aac58d77bc6cc194f6902dffe4e80e0d6", null ]
+    [ "_rtwdog_clock_prescaler", "a00075.html#gaaf27dd1c76710401d0eeba0b2df024b0", [
+      [ "kRTWDOG_ClockPrescalerDivide1", "a00075.html#ggaaf27dd1c76710401d0eeba0b2df024b0affcd087724256907ae1e47f896461e78", null ],
+      [ "kRTWDOG_ClockPrescalerDivide256", "a00075.html#ggaaf27dd1c76710401d0eeba0b2df024b0a1b8252427d181ff4de3e4ea7eb1aac52", null ]
     ] ],
-    [ "_rdc_mem_status", "a00075.html#a00625", [
-      [ "hasViolation", "a00075.html#ad4dad1cd9f4e66b664b525ecd4b1be37", null ],
-      [ "domainID", "a00075.html#a28ba9cfc8af0f862635ded4738718c78", null ],
-      [ "address", "a00075.html#a8613c0efb2da82d09f7f67a5a3efee4f", null ]
+    [ "_rtwdog_test_mode", "a00075.html#ga48fe3f029b0c9b005bae2f132f3d5a63", [
+      [ "kRTWDOG_TestModeDisabled", "a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63a62fe6bb45f28e5b1275bfa1aad708124", null ],
+      [ "kRTWDOG_UserModeEnabled", "a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63ae12fd7134b26ac7e621f2117f3312598", null ],
+      [ "kRTWDOG_LowByteTest", "a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63ab885cb05aaad282ee54fe47b8ad270cc", null ],
+      [ "kRTWDOG_HighByteTest", "a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63aaf013b692ea93f0de8a9c47a814ac09d", null ]
     ] ],
-    [ "rdc_hardware_config_t", "a00075.html#ga5809f23a3763c0c2d114c8b991b19224", null ],
-    [ "rdc_domain_assignment_t", "a00075.html#ga2fa0f432125eabe3c7444a58ac406b10", null ],
-    [ "rdc_periph_access_config_t", "a00075.html#gab34ae3929d80075974affc8e2e4a1225", null ],
-    [ "rdc_mem_access_config_t", "a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61", null ],
-    [ "rdc_mem_status_t", "a00075.html#gaccf5405a9b3fc24040bd8f066f8b8a83", null ],
-    [ "_rdc_interrupts", "a00075.html#ga43f5d8d1ed667a8c73ab204a74925892", [
-      [ "kRDC_RestoreCompleteInterrupt", "a00075.html#gga43f5d8d1ed667a8c73ab204a74925892a5088cfe20c6ef9e259657e6f6ecc7387", null ]
+    [ "_rtwdog_interrupt_enable_t", "a00075.html#ga4225d9230a4625186e9b65be501bbc24", [
+      [ "kRTWDOG_InterruptEnable", "a00075.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a", null ]
     ] ],
-    [ "_rdc_flags", "a00075.html#ga30afa024532b0207bdeeee3344af9ebd", [
-      [ "kRDC_PowerDownDomainOn", "a00075.html#gga30afa024532b0207bdeeee3344af9ebda5e58c4dabb46b1f4a47b7ae8cd0f61e3", null ]
+    [ "_rtwdog_status_flags_t", "a00075.html#gab1ef76bc31ec6ca52a50e1aba88a08d8", [
+      [ "kRTWDOG_RunningFlag", "a00075.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38", null ],
+      [ "kRTWDOG_InterruptFlag", "a00075.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3", null ]
     ] ],
-    [ "_rdc_access_policy", "a00075.html#gad1f726221167c740e1500317ea80beb2", [
-      [ "kRDC_NoAccess", "a00075.html#ggad1f726221167c740e1500317ea80beb2a3abbfd7f6818ca32df8d30300aba7f1a", null ],
-      [ "kRDC_WriteOnly", "a00075.html#ggad1f726221167c740e1500317ea80beb2af704f2f758ba0d96ddea53e686325efe", null ],
-      [ "kRDC_ReadOnly", "a00075.html#ggad1f726221167c740e1500317ea80beb2acad6ad0fa9f2d31d48ec9e7b2898cdb6", null ],
-      [ "kRDC_ReadWrite", "a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd", null ]
-    ] ],
-    [ "RDC_Init", "a00075.html#ga5e55854cf5534e9ea2844c6447630d29", null ],
-    [ "RDC_Deinit", "a00075.html#gad67bd7441a6770382a42871a73cab1e9", null ],
-    [ "RDC_GetHardwareConfig", "a00075.html#ga70d043c746306a1518a9d76c708a45a7", null ],
-    [ "RDC_EnableInterrupts", "a00075.html#gac4fd27fb3b91add96b402a316f5257d1", null ],
-    [ "RDC_DisableInterrupts", "a00075.html#ga8431d5742c72d100e9d5ea8acb828164", null ],
-    [ "RDC_GetInterruptStatus", "a00075.html#ga2daf610d7330112bdefdaf737d88057d", null ],
-    [ "RDC_ClearInterruptStatus", "a00075.html#ga46324815d4934688c553fa427068aebf", null ],
-    [ "RDC_GetStatus", "a00075.html#ga607d3cb8467e3dad81c01b99b262b025", null ],
-    [ "RDC_ClearStatus", "a00075.html#gaa78b6ce74c4abe2fb4f8696dba4bab58", null ],
-    [ "RDC_SetMasterDomainAssignment", "a00075.html#gabe2b9840b82e64d3cc421df537450dca", null ],
-    [ "RDC_GetDefaultMasterDomainAssignment", "a00075.html#ga5079802654902bb5b1bb618958b136e1", null ],
-    [ "RDC_LockMasterDomainAssignment", "a00075.html#ga7bac728610bbf0d1fc8ef54684453a67", null ],
-    [ "RDC_SetPeriphAccessConfig", "a00075.html#gad7761fcab34b52ebf80024199d0390bc", null ],
-    [ "RDC_GetDefaultPeriphAccessConfig", "a00075.html#ga3960b46c770474ae90a3efe6bbf0848f", null ],
-    [ "RDC_LockPeriphAccessConfig", "a00075.html#gad726f804c6f29e6f08014749883816f8", null ],
-    [ "RDC_GetPeriphAccessPolicy", "a00075.html#ga5629cde26ba781eeb933acef2a6f95e5", null ],
-    [ "RDC_SetMemAccessConfig", "a00075.html#ga8a2282cbee8cbb2eeb38c98325351d64", null ],
-    [ "RDC_GetDefaultMemAccessConfig", "a00075.html#gad38513d641ad47ccbb003c47bb3c9727", null ],
-    [ "RDC_LockMemAccessConfig", "a00075.html#ga8e9f9b9bb90724ed625ee5b5cd2a8d41", null ],
-    [ "RDC_SetMemAccessValid", "a00075.html#ga50e5d41f56901ea8924e6bb1f6e92fbd", null ],
-    [ "RDC_GetMemViolationStatus", "a00075.html#ga76711caa424d57a32847831f60cac1aa", null ],
-    [ "RDC_ClearMemViolationFlag", "a00075.html#gaf594d7e71d47df3bdc89a62e45b944a1", null ],
-    [ "RDC_GetMemAccessPolicy", "a00075.html#gab4b8ce2df7a0ccd22d90d897a80616fb", null ],
-    [ "RDC_GetCurrentMasterDomainId", "a00075.html#gacf0861a99d3a45d022fef5dd35f158c5", null ]
+    [ "RTWDOG_GetDefaultConfig", "a00075.html#ga9b0f93e60a4ad521b60ea546e2b7cde5", null ],
+    [ "RTWDOG_Init", "a00075.html#gaf45b60f55a83c5f3632b4136a3ad2b52", null ],
+    [ "RTWDOG_Deinit", "a00075.html#ga470b1d21c8013531100e7c3c605046a7", null ],
+    [ "RTWDOG_Enable", "a00075.html#gab07abcef0c2d984783ab36df5b08ffa4", null ],
+    [ "RTWDOG_Disable", "a00075.html#ga7526eb9df0830431e942fcbca32ca6cd", null ],
+    [ "RTWDOG_EnableInterrupts", "a00075.html#ga69c0e214f7424205a23a902b688cb00d", null ],
+    [ "RTWDOG_DisableInterrupts", "a00075.html#ga58a299966ea5b0d72eab1e3a95916459", null ],
+    [ "RTWDOG_GetStatusFlags", "a00075.html#gabcee9521ed7f9e2106cbc8844c915910", null ],
+    [ "RTWDOG_EnableWindowMode", "a00075.html#ga6467fc58dc00affb0daf4df8c2edec9d", null ],
+    [ "RTWDOG_CountToMesec", "a00075.html#gafc86c177da23e2aea8980c9722f2d2af", null ],
+    [ "RTWDOG_ClearStatusFlags", "a00075.html#ga49c1f47ae1f5eacc9d33035a96919bd6", null ],
+    [ "RTWDOG_SetTimeoutValue", "a00075.html#ga1ef5c238172a1384ca3add569094505d", null ],
+    [ "RTWDOG_SetWindowValue", "a00075.html#ga8c32aa54a50e5ef0fc68945cb74549ad", null ],
+    [ "RTWDOG_Unlock", "a00075.html#gacac03752d33b0b906a9bc09c7b83d1d1", null ],
+    [ "RTWDOG_Refresh", "a00075.html#ga0d8b4744fc5ad161c8e5fbc47255328e", null ],
+    [ "RTWDOG_GetCounterValue", "a00075.html#ga8c3760e127cbcf22983a65d13c8a4bcd", null ]
 ];

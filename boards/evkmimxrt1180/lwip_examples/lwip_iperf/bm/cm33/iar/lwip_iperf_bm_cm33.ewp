@@ -225,11 +225,13 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
+          <state>ETH_MAX_RX_PKTS_AT_ONCE=8</state>
+          <state>NETC_RXBD_NUM=8</state>
+          <state>NETC_RXBUFF_NUM=16</state>
+          <state>TCP_WND=5840</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>ENET_RXBUFF_NUM=14</state>
-          <state>ENET_RXBD_NUM=9</state>
           <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
@@ -371,11 +373,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
@@ -385,6 +387,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1337,11 +1340,13 @@
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
+          <state>ETH_MAX_RX_PKTS_AT_ONCE=8</state>
+          <state>NETC_RXBD_NUM=8</state>
+          <state>NETC_RXBUFF_NUM=16</state>
+          <state>TCP_WND=5840</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>ENET_RXBUFF_NUM=14</state>
-          <state>ENET_RXBD_NUM=9</state>
           <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
@@ -1483,11 +1488,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
@@ -1497,6 +1502,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2448,11 +2454,13 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
+          <state>ETH_MAX_RX_PKTS_AT_ONCE=8</state>
+          <state>NETC_RXBD_NUM=8</state>
+          <state>NETC_RXBUFF_NUM=16</state>
+          <state>TCP_WND=5840</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>ENET_RXBUFF_NUM=14</state>
-          <state>ENET_RXBD_NUM=9</state>
           <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
@@ -2594,11 +2602,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
@@ -2608,6 +2616,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3558,11 +3567,13 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
+          <state>ETH_MAX_RX_PKTS_AT_ONCE=8</state>
+          <state>NETC_RXBD_NUM=8</state>
+          <state>NETC_RXBUFF_NUM=16</state>
+          <state>TCP_WND=5840</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>ENET_RXBUFF_NUM=14</state>
-          <state>ENET_RXBD_NUM=9</state>
           <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
@@ -3704,11 +3715,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
@@ -3718,6 +3729,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4670,11 +4682,13 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
+          <state>ETH_MAX_RX_PKTS_AT_ONCE=8</state>
+          <state>NETC_RXBD_NUM=8</state>
+          <state>NETC_RXBUFF_NUM=16</state>
+          <state>TCP_WND=5840</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>ENET_RXBUFF_NUM=14</state>
-          <state>ENET_RXBD_NUM=9</state>
           <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
@@ -4816,11 +4830,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
@@ -4830,6 +4844,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5781,11 +5796,13 @@
           <state>USE_HYPERRAM</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
+          <state>ETH_MAX_RX_PKTS_AT_ONCE=8</state>
+          <state>NETC_RXBD_NUM=8</state>
+          <state>NETC_RXBUFF_NUM=16</state>
+          <state>TCP_WND=5840</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>ENET_RXBUFF_NUM=14</state>
-          <state>ENET_RXBD_NUM=9</state>
           <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
@@ -5927,11 +5944,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
@@ -5941,6 +5958,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6837,6 +6855,18 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+    </file>
   </group>
   <group>
     <name>component</name>
@@ -7678,12 +7708,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -7694,6 +7718,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

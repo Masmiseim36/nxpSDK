@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, DEBUG, _DEBUG=1, CPU_MIMXRT1166DVM6A_cm7, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SD_ENABLED, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1166/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -999,16 +999,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1022,6 +1012,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1475,10 +1475,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SD_ENABLED, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1166/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2143,16 +2143,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2166,6 +2156,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2619,10 +2619,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1166DVM6A_cm7, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SD_ENABLED, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1166/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3287,16 +3287,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3310,6 +3300,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3763,10 +3763,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, NDEBUG, _DEBUG=0, CPU_MIMXRT1166DVM6A_cm7, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SD_ENABLED, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1166/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4431,16 +4431,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4454,6 +4444,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4907,10 +4907,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SD_ENABLED, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1166/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5575,16 +5575,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -5598,6 +5588,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6051,10 +6051,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SD_ENABLED, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/example/boards/evkmimxrt1160/usb_device_mtp_lite/bm/cm7;../../../../../../../components/gpio;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../xip;../../../../../../../devices/MIMXRT1166/xip;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/osa;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1166/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6719,16 +6719,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -6742,6 +6732,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

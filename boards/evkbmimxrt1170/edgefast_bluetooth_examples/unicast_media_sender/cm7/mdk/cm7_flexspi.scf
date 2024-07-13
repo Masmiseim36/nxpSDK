@@ -14,7 +14,7 @@
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2023 NXP
+**     Copyright 2016-2024 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -158,6 +158,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_ram_text m_qacode_start m_qacode_size { ;
     * (CodeQuickAccess)
   }
+  RW_m_data3 m_data_start m_data2_size { ;
+    * (DataQuickAccess)
+  }
   RW_m_ncache m_data_start EMPTY 0 { ; RW data
   }
   RW_m_ncache_unused +0 EMPTY 0 { ; Empty region added for MPU configuration
@@ -177,11 +180,30 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     fsl_adapter_flexspi_nor_flash.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
     mflash_drv.o (+RO +RW +ZI)
-    libethermind_lc3_common.lib (+RO +RW +ZI)
-    libethermind_lc3_encoder.lib (+RO +RW +ZI)
-    libethermind_lc3_decoder.lib (+RO +RW +ZI)
-  }
 
+    lc3_encoder_api.o (+RO +RW +ZI)
+    lc3_encode.o (+RO +RW +ZI)
+    lc3_decoder_api.o (+RO +RW +ZI)
+    lc3_decode.o (+RO +RW +ZI)
+    lc3_common.o (+RO +RW +ZI)
+    lc3_fft.o (+RO +RW +ZI)
+    lc3_init.o (+RO +RW +ZI)
+    lc3_math_util.o (+RO +RW +ZI)
+    lc3_tables.o (+RO +RW +ZI)
+
+    fsl_edma.o (+RO +RW +ZI)
+    fsl_sai.o (+RO +RW +ZI)
+    fsl_sai_edma.o (+RO +RW +ZI)
+    hardware_init.o (+RO +RW +ZI)
+    main.o (+RO +RW +ZI)
+  }
+  RW_m_usb_data +0 ALIGNALL 32 { ; USB RW data
+    * (*m_usb_dma_init_data)
+    * (*m_usb_dma_noninit_data)
+  }
+  ; Other regions shall not be placed between RW_m_usb_data and RW_m_usb_data_aux
+  RW_m_usb_data_aux +0 ALIGN 32 EMPTY 0 { ; Empty region added for cache line alignment.
+  }
   RW_net_buf_pool +0 { ;
     * (._net_buf_pool*)
   }

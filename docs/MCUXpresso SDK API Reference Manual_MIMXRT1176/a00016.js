@@ -1,34 +1,34 @@
 var a00016 =
 [
-    [ "_clock_group_config", "a00016.html#a00413", [
+    [ "_clock_group_config", "a00016.html#a00410", [
       [ "clockOff", "a00016.html#a237e0fd932b1e8cbfd1d27f97c1aa17b", null ],
       [ "resetDiv", "a00016.html#a5c026cf0478a4c96505f22844b20b14e", null ],
       [ "div0", "a00016.html#a51091199ea1a1f3c7220ef6c47b93fdf", null ]
     ] ],
-    [ "_clock_arm_pll_config", "a00016.html#a00409", [
+    [ "_clock_arm_pll_config", "a00016.html#a00406", [
       [ "postDivider", "a00016.html#a68812e542e3bfd135c42fddc11906106", null ],
       [ "loopDivider", "a00016.html#a0dec5fbdd4648ba882daa3aad33eb203", null ]
     ] ],
-    [ "_clock_usb_pll_config", "a00016.html#a00419", [
+    [ "_clock_usb_pll_config", "a00016.html#a00416", [
       [ "loopDivider", "a00016.html#a9d82f9d38216691211a87b46a66151fd", null ],
       [ "src", "a00016.html#a82470e57f15fb5b6d8bac2432b426e1c", null ]
     ] ],
-    [ "_clock_pll_ss_config", "a00016.html#a00414", [
+    [ "_clock_pll_ss_config", "a00016.html#a00411", [
       [ "stop", "a00016.html#a5d90f32533ba684d58411e0ffd99ba8c", null ],
       [ "step", "a00016.html#ac7a25a3daa3ed5127a2e47847c104076", null ]
     ] ],
-    [ "_clock_sys_pll2_config", "a00016.html#a00418", [
+    [ "_clock_sys_pll2_config", "a00016.html#a00415", [
       [ "mfd", "a00016.html#abad7442a4b65560dcaa2929417ca4afa", null ],
       [ "ss", "a00016.html#ab970868fa6ecbed95ca8d856fce9c46b", null ],
       [ "ssEnable", "a00016.html#aa29935a780c85bc9fc6452ed8bf45b9c", null ]
     ] ],
-    [ "_clock_sys_pll1_config", "a00016.html#a00417", [
+    [ "_clock_sys_pll1_config", "a00016.html#a00414", [
       [ "pllDiv2En", "a00016.html#a371b3db5bdb79c32747ce0422468a19e", null ],
       [ "pllDiv5En", "a00016.html#a4fd56fbc15594f32524869ec2b8f8efe", null ],
       [ "ss", "a00016.html#a0e385dc5b3cb85d7c2fe1053b1ae26de", null ],
       [ "ssEnable", "a00016.html#ac6c92da8a41d82832a9a6cca653beeb9", null ]
     ] ],
-    [ "_clock_audio_pll_config", "a00016.html#a00410", [
+    [ "_clock_audio_pll_config", "a00016.html#a00407", [
       [ "loopDivider", "a00016.html#ac5ec9fa5af5f95c54ade27f230dc8913", null ],
       [ "postDivider", "a00016.html#ac41bbdb6cf3c3abdf133c7d801fbf681", null ],
       [ "numerator", "a00016.html#ac34dd639bce5c377db430aed06a685d2", null ],
@@ -36,14 +36,14 @@ var a00016 =
       [ "ss", "a00016.html#aa25264f82f73422d735445f17778a86c", null ],
       [ "ssEnable", "a00016.html#aedd01979dcec91f2aca32d9ef11f5c97", null ]
     ] ],
-    [ "_clock_audio_pll_gpc_config", "a00016.html#a00411", [
+    [ "_clock_audio_pll_gpc_config", "a00016.html#a00408", [
       [ "loopDivider", "a00016.html#ac691a6da76bd24ce8cde765cc7c44ddf", null ],
       [ "numerator", "a00016.html#a0f2d7e5e8fb5651bc6f5691bbdbac629", null ],
       [ "denominator", "a00016.html#a3b1742c4083185d7666921df39b13651", null ],
       [ "ss", "a00016.html#a69a17b1c4fc4ccb6e369d8a820a9ba66", null ],
       [ "ssEnable", "a00016.html#aabba6c9b3d0f4be05f2dc83ef75243ef", null ]
     ] ],
-    [ "_clock_enet_pll_config", "a00016.html#a00412", [
+    [ "_clock_enet_pll_config", "a00016.html#a00409", [
       [ "enableClkOutput", "a00016.html#a766b9639fa3d3527b77307e2d3533c4b", null ],
       [ "enableClkOutput25M", "a00016.html#a36563c6b3dbe124219e92b7e5d4cda7f", null ],
       [ "loopDivider", "a00016.html#a061fafd79bc081b4e421dad7c65ec43d", null ],
@@ -51,11 +51,11 @@ var a00016 =
       [ "enableClkOutput1", "a00016.html#a4d2ca6511fe66a4390a0db2cf6271c20", null ],
       [ "loopDivider1", "a00016.html#a440c1717e21a7aed760525b5be55567d", null ]
     ] ],
-    [ "_clock_root_config_t", "a00016.html#a00415", [
+    [ "_clock_root_config_t", "a00016.html#a00412", [
       [ "mux", "a00016.html#a98880b5e0694aed7d7a6c0bb566a8638", null ],
       [ "div", "a00016.html#a45334efe4354da61bc629fd4615c5474", null ]
     ] ],
-    [ "_clock_root_setpoint_config_t", "a00016.html#a00416", [
+    [ "_clock_root_setpoint_config_t", "a00016.html#a00413", [
       [ "grade", "a00016.html#af360d48986692fe5d6292015bcb1f294", null ],
       [ "mux", "a00016.html#ae4d832ff652bcefd536805438ce808b8", null ],
       [ "div", "a00016.html#a7e1091bf45f619d46c48fc96f879b607", null ]

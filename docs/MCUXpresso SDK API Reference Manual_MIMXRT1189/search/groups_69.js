@@ -6,5 +6,5 @@ var searchData=
   ['i3c_5fmaster_5fedma_5fdriver',['I3c_master_edma_driver',['../a00022.html',1,'']]],
   ['i3c_20slave_20driver',['I3C Slave Driver',['../a00023.html',1,'']]],
   ['i3c_5fslave_5fedma_5fdriver',['I3c_slave_edma_driver',['../a00024.html',1,'']]],
-  ['iomuxc_3a_20iomux_20controller',['IOMUXC: IOMUX Controller',['../a00198.html',1,'']]]
+  ['iomuxc_3a_20iomux_20controller',['IOMUXC: IOMUX Controller',['../a00195.html',1,'']]]
 ];

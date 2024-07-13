@@ -74,7 +74,7 @@
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    100000
+  #define Heap_Size                    60000
 #endif
 
 LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; load region size_region

@@ -334,7 +334,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1176DVMAA_cm7, MODEL_SIZE=28*1024*1024, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, USE_RTOS=1, MODELRUNNER_HTTP=1, FSL_RTOS_FREE_RTOS, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_OS_FREE_RTOS, FSL_RTOS_BM, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_ICMP6=1</Define>
               <Undefine/>
-              <IncludePath>../source;..;../source/common;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../xmcd;../../../../../../components/phy;../../../../../../components/gpio;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../source/common;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../xmcd;../../../../../../components/phy;../../../../../../components/gpio;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../source</IncludePath>
+              <IncludePath>../source;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -704,9 +704,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -2199,16 +2214,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2217,6 +2222,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4063,7 +4078,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1176DVMAA_cm7, MODEL_SIZE=28*1024*1024, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, USE_RTOS=1, MODELRUNNER_HTTP=1, FSL_RTOS_FREE_RTOS, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_OS_FREE_RTOS, FSL_RTOS_BM, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_ICMP6=1</Define>
               <Undefine/>
-              <IncludePath>../source;..;../source/common;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../xmcd;../../../../../../components/phy;../../../../../../components/gpio;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../source/common;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/eiq/tensorflow-lite;../../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../xmcd;../../../../../../components/phy;../../../../../../components/gpio;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4081,7 +4096,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../source</IncludePath>
+              <IncludePath>../source;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4433,9 +4448,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -5928,16 +5958,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -5946,6 +5966,16 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -49,8 +49,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${SdkRootDirPath}/boards/evkmimxrt1180/freertos_examples/freertos_tickless/low_power_tickless/cm7/fsl_tickless_gpt.c"
-"${SdkRootDirPath}/boards/evkmimxrt1180/freertos_examples/freertos_tickless/low_power_tickless/cm7/fsl_tickless_gpt.h"
+"${ProjDirPath}/../fsl_tickless_gpt.c"
+"${ProjDirPath}/../fsl_tickless_gpt.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -59,7 +59,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${SdkRootDirPath}/boards/evkmimxrt1180/freertos_examples/freertos_tickless/low_power_tickless/cm7
 )
 
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")

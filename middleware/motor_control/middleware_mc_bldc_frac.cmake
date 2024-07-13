@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_CORE STREQUAL cm7f OR CONFIG_CORE STREQUAL cm33) AND CONFIG_USE_middleware_motor_control_bldc_frac_template AND (CONFIG_USE_middleware_rtcesl_cm33f OR CONFIG_USE_middleware_rtcesl_cm7f))
+if((CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm7f OR CONFIG_CORE STREQUAL cm33) AND CONFIG_USE_middleware_motor_control_bldc_frac_template AND (CONFIG_USE_middleware_rtcesl_cm33f OR CONFIG_USE_middleware_rtcesl_cm7f OR CONFIG_USE_middleware_rtcesl_cm4f))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/bldc/mc_algorithms/bldc_control.c

@@ -1,9 +1,9 @@
 var a00009 =
 [
-    [ "asrc_p2p_edma_config_t", "a00009.html#a00272", [
+    [ "asrc_p2p_edma_config_t", "a00009.html#a00270", [
       [ "startPeripheral", "a00009.html#a66100df9b196e37b2114f96ec7bee087", null ]
     ] ],
-    [ "asrc_in_edma_handle_t", "a00009.html#a00268", [
+    [ "asrc_in_edma_handle_t", "a00009.html#a00266", [
       [ "inDmaHandle", "a00009.html#a1600c6c428adc076fd751880121a9742", null ],
       [ "tcd", "a00009.html#ac0130c609fcc91ce26d75f33530c5f8a", null ],
       [ "sampleWidth", "a00009.html#ab84af5ef54fd5315f5a94d08d34642c9", null ],
@@ -15,7 +15,7 @@ var a00009 =
       [ "state", "a00009.html#aceaf6101bd885882a50104d95fb66ef0", null ],
       [ "peripheralConfig", "a00009.html#a6e0ab0036d47a24b6255a6862980cb4e", null ]
     ] ],
-    [ "asrc_out_edma_handle_t", "a00009.html#a00270", [
+    [ "asrc_out_edma_handle_t", "a00009.html#a00268", [
       [ "outDmaHandle", "a00009.html#a213ca87d2035c70ba87e8911b2fa90a8", null ],
       [ "tcd", "a00009.html#a5788b72de2993e2daa24c8a393b36f51", null ],
       [ "sampleWidth", "a00009.html#a0c875275f40b888e6c5795743fd3b30f", null ],
@@ -27,7 +27,7 @@ var a00009 =
       [ "state", "a00009.html#ac091ed7cfd4fc8f57c682f1908a7bc1c", null ],
       [ "peripheralConfig", "a00009.html#a19d33e78723311b8f1d5f413dbb1bf61", null ]
     ] ],
-    [ "asrc_edma_handle_t", "a00009.html#a00243", [
+    [ "asrc_edma_handle_t", "a00009.html#a00241", [
       [ "in", "a00009.html#a6865e1ede961d76d391c32df9ef3e869", null ],
       [ "out", "a00009.html#a410579eaba46f2e9cac82dfb9aed626d", null ],
       [ "channelPair", "a00009.html#a06a135755bb9e1d0fc9f720c8aa51ebc", null ],

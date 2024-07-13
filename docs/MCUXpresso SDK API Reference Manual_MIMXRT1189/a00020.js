@@ -1,6 +1,6 @@
 var a00020 =
 [
-    [ "i3c_config_t", "a00020.html#a00317", [
+    [ "i3c_config_t", "a00020.html#a00315", [
       [ "enableMaster", "a00020.html#ad1e4c2ce3253d98d040efd01171c5ca9", null ],
       [ "disableTimeout", "a00020.html#a3dfc24c094086ccfa26a5300c828382b", null ],
       [ "hKeep", "a00020.html#a2277cf58ff7c3e08b6def636857c03d4", null ],
@@ -8,7 +8,6 @@ var a00020 =
       [ "enableOpenDrainHigh", "a00020.html#a938627bdb23acafa9b37bfbee33b6880", null ],
       [ "baudRate_Hz", "a00020.html#a11f4e47370d23794b7d79a844ca8f26f", null ],
       [ "masterDynamicAddress", "a00020.html#ab34f6b3e5bf569531572c98af46c9080", null ],
-      [ "slowClock_Hz", "a00020.html#a87636d65387981401ccb483cfac0f7aa", null ],
       [ "maxWriteLength", "a00020.html#ad8d56a7a8329619ae874b1bce1a23b2a", null ],
       [ "maxReadLength", "a00020.html#ac22cf94704f22d8c2b044e0bed923d81", null ],
       [ "enableSlave", "a00020.html#a11b2561ca65e74fe702265242b2aa37a", null ],

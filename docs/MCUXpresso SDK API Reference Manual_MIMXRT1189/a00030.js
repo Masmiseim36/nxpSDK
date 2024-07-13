@@ -1,6 +1,6 @@
 var a00030 =
 [
-    [ "lpit_chnl_params_t", "a00030.html#a00337", [
+    [ "lpit_chnl_params_t", "a00030.html#a00335", [
       [ "chainChannel", "a00030.html#a4e6f9f8ee61cb5c97b631d123591f939", null ],
       [ "timerMode", "a00030.html#ab7b6285081f9331d3174f4ee73ac93c7", null ],
       [ "triggerSelect", "a00030.html#a94b0e51d887ee821b2cbf10b30e0b6e9", null ],
@@ -9,7 +9,7 @@ var a00030 =
       [ "enableStopOnTimeout", "a00030.html#a2a09b3ded9de84ca9009946afdaaeac8", null ],
       [ "enableStartOnTrigger", "a00030.html#a9cbd7d4c5fcdaa8071dfa2d930348e43", null ]
     ] ],
-    [ "lpit_config_t", "a00030.html#a00338", [
+    [ "lpit_config_t", "a00030.html#a00336", [
       [ "enableRunInDebug", "a00030.html#a95977bfcbb96665e2e2611285b515feb", null ],
       [ "enableRunInDoze", "a00030.html#a6efd24752c1c9166400ecbafe1162956", null ]
     ] ],

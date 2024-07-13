@@ -17,6 +17,10 @@
  * under the License.
  */
 
+/*
+ * Copyright (C) 2018-2020, ARM Limited, All Rights Reserved
+ */
+
 #ifndef H_UTIL_FLASH_MAP_
 #define H_UTIL_FLASH_MAP_
 

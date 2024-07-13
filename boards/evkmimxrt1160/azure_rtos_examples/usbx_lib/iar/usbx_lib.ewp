@@ -2283,9 +2283,6 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>
           </file>
           <file>
@@ -2356,6 +2353,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</name>

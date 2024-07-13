@@ -358,7 +358,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -373,6 +372,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -755,6 +755,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1459,7 +1461,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -1474,6 +1475,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1856,6 +1858,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2557,7 +2561,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -2572,6 +2575,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2954,6 +2958,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -3655,7 +3661,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -3670,6 +3675,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4052,6 +4058,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -4753,7 +4761,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -4768,6 +4775,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5150,6 +5158,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -5854,7 +5864,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -5869,6 +5878,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6251,6 +6261,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -6952,7 +6964,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -6967,6 +6978,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -7349,6 +7361,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -8050,7 +8064,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
@@ -8065,6 +8078,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -8447,6 +8461,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__heap_size__=0x2000</state>
+          <state>__stack_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -8827,12 +8843,6 @@
   <group>
     <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../source/board/clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../source/board/clock_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../source/board/pin_mux.c</name>
     </file>
     <file>
@@ -8843,6 +8853,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../source/board/board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/board/clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/board/clock_config.h</name>
     </file>
   </group>
   <group>
@@ -9112,12 +9128,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -9125,6 +9135,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -9185,6 +9204,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
     </file>
   </group>
   <group>

@@ -178,7 +178,7 @@ hal_audio_config_t txSpeakerConfig = {
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
     .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
-    .msaterSlave       = kHAL_AudioMaster,
+    .masterSlave       = kHAL_AudioMaster,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -214,7 +214,7 @@ hal_audio_config_t rxMicConfig = {
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
     .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
-    .msaterSlave       = kHAL_AudioMaster,
+    .masterSlave       = kHAL_AudioMaster,
     .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -254,7 +254,7 @@ hal_audio_config_t txMicConfig = {
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
     .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -294,7 +294,7 @@ hal_audio_config_t rxSpeakerConfig = {
     .srcClock_Hz       = 0,
     .sampleRate_Hz     = 0,
     .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNTn(DEMO_SAI) / 2U,
-    .msaterSlave       = kHAL_AudioSlave,
+    .masterSlave       = kHAL_AudioSlave,
     .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
     .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
     .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
@@ -417,7 +417,6 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-    SCB_DisableDCache();
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
     DMAMUX_Init(dmaMuxBases[EXAMPLE_DMAMUX_INSTANCE]);
     EDMA_GetDefaultConfig(&config);

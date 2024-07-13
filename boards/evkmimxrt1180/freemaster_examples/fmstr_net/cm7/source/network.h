@@ -10,6 +10,7 @@
 #define __FMSTR_NETWORK_H
 
 #include "board.h"
+#include "network_cfg.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,6 +19,7 @@ extern "C" {
 /******************************************************************************
  * Definitions
  ******************************************************************************/
+/* PHY */
 #ifdef PHY_RTL8201
 
 #include "fsl_phyrtl8201.h"
@@ -62,41 +64,29 @@ extern "C" {
 #error Undefined PHY
 #endif
 
-// This constant is typically defined in board.h
-#ifndef BOARD_NETWORK_USE_100M_ENET_PORT
-#define BOARD_NETWORK_USE_100M_ENET_PORT 1
-#endif
+/* NET speed */
+#ifndef EXAMPLE_NET_SPEED_100M
 
-// Use 100M when only ENET0 exists
-#if !((defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 1)) || \
-    (defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 1)))
-#undef BOARD_NETWORK_USE_100M_ENET_PORT
-#define BOARD_NETWORK_USE_100M_ENET_PORT 1
-#endif
-
-// Force use of ENET4 for RT1180 boards
-#if defined(CPU_MIMXRT1189CVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm7) || \
-    defined(CPU_MIMXRT1189CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8B_cm7) || \
-    defined(CPU_MIMXRT1187AVM8B_cm33) || defined(CPU_MIMXRT1187AVM8B_cm7)
-#define EXAMPLE_PHY_ADDRESS   BOARD_EP0_PHY_ADDR
-#endif
-
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-
-#ifndef EXAMPLE_ETHIF_INIT
-#define EXAMPLE_ETHIF_INIT    ethernetif0_init
-#endif
-#ifndef EXAMPLE_PHY_ADDRESS
-#define EXAMPLE_PHY_ADDRESS   BOARD_ENET0_PHY_ADDRESS
-#endif
-
+#if (!defined(BOARD_NETWORK_USE_100M_ENET_PORT) || (BOARD_NETWORK_USE_100M_ENET_PORT == 1))
+#define EXAMPLE_NET_SPEED_100M 1
 #else
-
-#ifndef EXAMPLE_ETHIF_INIT
-#define EXAMPLE_ETHIF_INIT    ethernetif1_init
+#define EXAMPLE_NET_SPEED_100M 0
 #endif
+
+#endif
+
+/* PHY address and init function based on speed */
 #ifndef EXAMPLE_PHY_ADDRESS
+
+#if !(EXAMPLE_NET_SPEED_100M) && \
+    ((defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 1)) || \
+    (defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 1)))
+
 #define EXAMPLE_PHY_ADDRESS   BOARD_ENET1_PHY_ADDRESS
+#define EXAMPLE_ETHIF_INIT    ethernetif1_init
+#else
+#define EXAMPLE_PHY_ADDRESS   BOARD_ENET0_PHY_ADDRESS
+#define EXAMPLE_ETHIF_INIT    ethernetif0_init
 #endif
 
 #endif

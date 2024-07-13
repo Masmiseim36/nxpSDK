@@ -228,7 +228,7 @@ static inline uint32_t SRC_GetResetStatusFlags(SRC_GENERAL_Type *base)
  * @brief Clears the status of global reset.
  *
  * @param base SRC peripheral base address.
- * @param mask The reset status flag to be cleared. See @ref _src_global_system_reset_status_flags for more details.
+ * @param mask The reset status flag to be cleared. See @ref _src_reset_status_flags for more details.
  */
 static inline void SRC_ClearGlobalSystemResetStatus(SRC_GENERAL_Type *base, uint32_t mask)
 {

@@ -6,7 +6,7 @@
 
 /*
     * FILE NAME: ../boards/evkmimxrt1180/mc_pmsm/pmsm_enc/m2_pmsm_appconfig.h
-    * DATE: Fri Jan 05 2024, 14:45:42
+    * DATE: Tue Apr 16 2024, 13:51:20
 */
 
 /*
@@ -84,7 +84,7 @@
 
 /*
 {
-    "motorName": "Teknic",
+    "motorName": "Teknic M-2310P-LN-04K",
     "motorDescription": "Configuration for the Teknic motor."
 }
 */

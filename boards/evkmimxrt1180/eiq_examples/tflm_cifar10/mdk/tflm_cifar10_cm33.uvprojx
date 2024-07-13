@@ -335,7 +335,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1189CVM8B_cm33, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, __FPU_PRESENT=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../source;../source/image;../source/model;../../../../../devices/MIMXRT1189/utilities/str;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../source;../source/image;../source/model;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../devices/MIMXRT1189/utilities/str;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -492,7 +492,7 @@
             <File>
               <FileName>image_load.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_load.c</FilePath>
+              <FilePath>../source/image/image_load.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -565,16 +565,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -588,6 +578,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -898,6 +903,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2540,7 +2565,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1189CVM8B_cm33, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, __FPU_PRESENT=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../source;../source/image;../source/model;../../../../../devices/MIMXRT1189/utilities/str;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../source;../source/image;../source/model;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../devices/MIMXRT1189/utilities/str;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2697,7 +2722,7 @@
             <File>
               <FileName>image_load.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_load.c</FilePath>
+              <FilePath>../source/image/image_load.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2770,16 +2795,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2793,6 +2808,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3103,6 +3133,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>

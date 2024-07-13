@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -9,6 +9,8 @@
 #include "network.h"
 #include "fsl_netc_mdio.h"
 #include "fsl_debug_console.h"
+#include "fsl_netc_soc.h"
+#include "fsl_netc_ierb.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -20,12 +22,25 @@ static netc_mdio_handle_t mdio_handle;
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#define EXAMPLE_SWT_PORT0_PHY_ADDR BOARD_SWT_PORT0_PHY_ADDR
-#define EXAMPLE_SWT_PORT1_PHY_ADDR BOARD_SWT_PORT1_PHY_ADDR
+#ifdef NETC_MII_MODE
 
-#define PHY_PAGE_SELECT_REG        0x1FU /*!< The PHY page select register. */
+#define EXAMPLE_MII_MODE       NETC_MII_MODE
 
-#define EXAMPLE_MDIO_HANDLE &mdio_handle
+#else // Set MII mode based on speed definition
+
+#if EXAMPLE_NET_SPEED_100M
+#define EXAMPLE_MII_MODE       kNETC_RmiiMode
+#else
+#define EXAMPLE_MII_MODE       kNETC_RgmiiMode
+#endif
+
+#endif // NETC_MII_MODE
+
+#ifndef EXAMPLE_NETC_LINK_PORT
+#define EXAMPLE_NETC_LINK_PORT 4
+#endif
+
+#define PHY_PAGE_SELECT_REG    0x1FU /*!< The PHY page select register. */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -77,12 +92,12 @@ static status_t PHY_InitConf(phy_handle_t *handle, const phy_config_t *config)
 
 static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
 {
-    return NETC_MDIOWrite(EXAMPLE_MDIO_HANDLE, phyAddr, regAddr, data);
+    return NETC_MDIOWrite(&mdio_handle, phyAddr, regAddr, data);
 }
 
 static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 {
-    return NETC_MDIORead(EXAMPLE_MDIO_HANDLE, phyAddr, regAddr, pData);
+    return NETC_MDIORead(&mdio_handle, phyAddr, regAddr, pData);
 }
 
 void Network_PhyInit(EXAMPLE_PHY_RES *phy_res, phy_operations_t *phy_ops, uint32_t csrClock_Hz)
@@ -102,7 +117,7 @@ void Network_PhyInit(EXAMPLE_PHY_RES *phy_res, phy_operations_t *phy_ops, uint32
     };
 
     mdioConfig.mdio.port = (netc_hw_eth_port_idx_t)kNETC_ENETC0EthPort;
-    status_t status = NETC_MDIOInit(EXAMPLE_MDIO_HANDLE, &mdioConfig);
+    status_t status = NETC_MDIOInit(&mdio_handle, &mdioConfig);
     if (status != kStatus_Success)
     {
         PRINTF("ERROR: NETC_MDIOInit returned %d\n", status);
@@ -118,37 +133,48 @@ void Network_PhyInit(EXAMPLE_PHY_RES *phy_res, phy_operations_t *phy_ops, uint32
     phy_ops->setLinkSpeedDuplex = EXAMPLE_PHY_PREFIX(SetLinkSpeedDuplex);
     phy_ops->enableLoopback     = EXAMPLE_PHY_PREFIX(EnableLoopback);
 
-    /* RMII mode */
-    BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[0] = BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(1);
-    BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[4] = BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(1);
-
-    /* RGMII mode */
-    BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[1] = BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(2);
-
-    /* Output reference clock for RMII */
-    BLK_CTRL_WAKEUPMIX->NETC_PORT_MISC_CFG |= BLK_CTRL_WAKEUPMIX_NETC_PORT_MISC_CFG_PORT0_RMII_REF_CLK_DIR_MASK |
-                                              BLK_CTRL_WAKEUPMIX_NETC_PORT_MISC_CFG_PORT4_RMII_REF_CLK_DIR_MASK;
-
-    /* Unlock the IERB. It will warm reset whole NETC. */
-    NETC_PRIV->NETCRR &= ~NETC_PRIV_NETCRR_LOCK_MASK;
-    if ((NETC_PRIV->NETCRR & NETC_PRIV_NETCRR_LOCK_MASK) != 0U)
+    if (EXAMPLE_NETC_LINK_PORT < BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_COUNT)
     {
-        PRINTF("ERROR: Cannot unlock the IERB\n");
-    }
+        /* Set RMII or RGMII mode*/
+        status = NETC_SocSetMiiMode((netc_soc_link_t)EXAMPLE_NETC_LINK_PORT, EXAMPLE_MII_MODE);
+        if (status != kStatus_Success)
+        {
+            PRINTF("ERROR: Cannot set the MII mode, returned %d\n", status);
+        }
 
-    /* Set PHY address in IERB to use MAC port MDIO, otherwise the access will be blocked. */
-    NETC_IERB->L0BCR = NETC_IERB_L0BCR_MDIO_PHYAD_PRTAD(EXAMPLE_SWT_PORT0_PHY_ADDR);
-    NETC_IERB->L1BCR = NETC_IERB_L0BCR_MDIO_PHYAD_PRTAD(EXAMPLE_SWT_PORT1_PHY_ADDR);
-    NETC_IERB->L4BCR = NETC_IERB_L0BCR_MDIO_PHYAD_PRTAD(EXAMPLE_PHY_ADDRESS);
+        /* Output reference clock for RMII */
+        status = NETC_SocSetRmiiRefClk((netc_soc_link_t)EXAMPLE_NETC_LINK_PORT, true);
+        if (status != kStatus_Success)
+        {
+            PRINTF("ERROR: Cannot set RMII clock reference, returned %d\n", status);
+        }
 
-    /* Set the access attribute, otherwise MSIX access will be blocked. */
-    NETC_IERB->ARRAY_NUM_RC[0].RCMSIAMQR &= ~(7U << 27);
-    NETC_IERB->ARRAY_NUM_RC[0].RCMSIAMQR |= (1U << 27);
+        /* Unlock the IERB. It will warm reset whole NETC. */
+        if (!NETC_IERBIsLockOver())
+        {
+            status = NETC_IERBUnlock();
+            if (status != kStatus_Success)
+            {
+                PRINTF("ERROR: Cannot unlock the IERB, returned %d\n", status);
+            }
+        }
 
-    /* Lock the IERB. */
-    NETC_PRIV->NETCRR |= NETC_PRIV_NETCRR_LOCK_MASK;
-    if ((NETC_PRIV->NETCSR & NETC_PRIV_NETCSR_STATE_MASK) != 0U)
-    {
-        PRINTF("ERROR: Cannot lock the IERB\n");
+        /* Set link port PHY address */
+        status = NETC_SocSetLinkAddr((netc_soc_link_t)EXAMPLE_NETC_LINK_PORT, EXAMPLE_PHY_ADDRESS);
+        if (status != kStatus_Success)
+        {
+            PRINTF("ERROR: Cannot set link address, returned %d\n", status);
+        }
+
+        /* Set the access attribute, otherwise MSIX access will be blocked. */
+        NETC_IERB->ARRAY_NUM_RC[0].RCMSIAMQR &= ~(7U << 27);
+        NETC_IERB->ARRAY_NUM_RC[0].RCMSIAMQR |= (1U << 27);
+
+        /* Lock the IERB. */
+        status = NETC_IERBLock();
+        if (status != kStatus_Success)
+        {
+            PRINTF("ERROR: Cannot lock the IERB, returned %d\n", status);
+        }
     }
 }

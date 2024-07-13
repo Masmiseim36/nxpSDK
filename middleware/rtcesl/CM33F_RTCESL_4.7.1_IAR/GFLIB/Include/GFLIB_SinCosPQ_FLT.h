@@ -130,7 +130,7 @@ static inline float_t GFLIB_CosPQ_FLT_FCi(float_t fltAngle)
 *******************************************************************************/
 static inline float_t GFLIB_SinPQ_FLTa_FCi(acc32_t a32AngleExt)
 {
-    float_t pfltTemp = 0.0F;
+    volatile float_t pfltTemp = 0.0F;
     uint32_t u32Temp;
     
     pfltTemp = (float_t)((float_t)(frac16_t)a32AngleExt *
@@ -165,7 +165,7 @@ static inline float_t GFLIB_SinPQ_FLTa_FCi(acc32_t a32AngleExt)
 **************************************************************/                                                         
 static inline float_t GFLIB_CosPQ_FLTa_FCi(acc32_t a32AngleExt)
 {
-    float_t pfltTemp = 0.0F;
+    volatile float_t pfltTemp = 0.0F;
     uint32_t u32Temp;
 
     pfltTemp = (float_t)((float_t)(frac16_t)a32AngleExt *

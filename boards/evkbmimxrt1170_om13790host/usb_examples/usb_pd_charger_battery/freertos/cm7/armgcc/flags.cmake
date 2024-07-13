@@ -74,6 +74,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DI2C_RETRY_TIMES=40000 \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=8192 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -85,7 +86,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -102,6 +102,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DI2C_RETRY_TIMES=40000 \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=8192 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
@@ -112,7 +113,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -130,6 +130,7 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DI2C_RETRY_TIMES=40000 \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=8192 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -141,7 +142,6 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -159,6 +159,7 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DI2C_RETRY_TIMES=40000 \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=8192 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
@@ -169,7 +170,6 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -187,6 +187,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DI2C_RETRY_TIMES=40000 \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=8192 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -198,7 +199,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -216,6 +216,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DI2C_RETRY_TIMES=40000 \
     -DUSB_STACK_FREERTOS_HEAP_SIZE=8192 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
@@ -226,7 +227,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -238,6 +238,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -249,7 +250,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -262,6 +262,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
@@ -272,7 +273,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -285,6 +285,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -296,7 +297,6 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -309,6 +309,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
@@ -319,7 +320,6 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -332,6 +332,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
@@ -343,7 +344,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -356,6 +356,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DMCUXPRESSO_SDK \
+    -DTIMER_PORT_TYPE_GPT=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m7 \
@@ -366,7 +367,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -382,7 +382,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -412,7 +411,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -443,7 +441,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -473,7 +470,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -504,7 +500,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -536,7 +531,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

@@ -71,7 +71,7 @@
 
 #define NUM_1M      (1000000UL)
 
-#define SOEM_PORT_NAME "netc0"
+#define SOEM_PORT_NAME "EtherCAT0"
 
 #define BOARD_IMX_RT1180 (1)
 

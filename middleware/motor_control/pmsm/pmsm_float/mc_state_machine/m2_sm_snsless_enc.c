@@ -919,7 +919,10 @@ static void M2_StateRunStartupFast(void)
     switch (g_sM2Drive.eControl)
     {
         case kControlMode_Scalar:
-            /* Switch directly to SPIN state */
+            /* Init BEMF and TO */
+			AMCLIB_PMSMBemfObsrvDQInit_A32fff(&g_sM2Drive.sFocPMSM.sBemfObsrv);
+            AMCLIB_TrackObsrvInit_A32af(ACC32(0.0), &g_sM2Drive.sFocPMSM.sTo);
+			/* Switch to SPIN state */
             M2_TransRunStartupSpin();
             break;
 

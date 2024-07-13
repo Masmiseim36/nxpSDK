@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, DEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_KEY_EXCHANGE_RSA_ENABLED, MCUXPRESSO_SDK, MBEDTLS_MCUX_ELE_S400_API, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_KEY_EXCHANGE_RSA_ENABLED, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, MBEDTLS_MCUX_ELE_S400_API, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../keys;../flash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../components/flash/mflash;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../keys;../flash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../components/flash/mflash;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -377,6 +377,66 @@
       </TargetOption>
       <Groups>
         <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sblconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sblconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../flash_partitioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../flash_partitioning.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -390,24 +450,9 @@
               <FilePath>../boot.h</FilePath>
             </File>
             <File>
-              <FileName>bootutil_hooks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../bootutil_hooks.c</FilePath>
-            </File>
-            <File>
               <FileName>keys.c</FileName>
               <FileType>1</FileType>
               <FilePath>../keys.c</FilePath>
-            </File>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../os.c</FilePath>
-            </File>
-            <File>
-              <FileName>sbl_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sbl_boot.c</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -423,16 +468,6 @@
               <FileName>mbedtls_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../include/mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../include/sbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbldef.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../include/sbldef.h</FilePath>
             </File>
             <File>
               <FileName>flash_map.h</FileName>
@@ -493,66 +528,6 @@
               <FileName>flash_api.c</FileName>
               <FileType>1</FileType>
               <FilePath>../flash/flash_api.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>sblconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sblconfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_partitioning.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../flash_partitioning.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_partitioning.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../flash_partitioning.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1083,6 +1058,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -1874,6 +1854,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1900,24 +1890,14 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bench.h</FilePath>
             </File>
             <File>
-              <FileName>bootutil.h</FileName>
+              <FileName>boot_hooks.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_hooks.h</FilePath>
             </File>
             <File>
-              <FileName>bootutil_log.h</FileName>
+              <FileName>boot_public_hooks.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootutil_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootutil_public.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_public.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_public_hooks.h</FilePath>
             </File>
             <File>
               <FileName>boot_record.h</FileName>
@@ -1930,14 +1910,24 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_status.h</FilePath>
             </File>
             <File>
-              <FileName>boot_hooks.h</FileName>
+              <FileName>bootutil.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_hooks.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil.h</FilePath>
             </File>
             <File>
-              <FileName>boot_public_hooks.h</FileName>
+              <FileName>bootutil_log.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_public_hooks.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_public.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_public.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_test.h</FilePath>
             </File>
             <File>
               <FileName>caps.h</FileName>
@@ -1975,6 +1965,16 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/image.h</FilePath>
             </File>
             <File>
+              <FileName>mcuboot_status.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</FilePath>
+            </File>
+            <File>
+              <FileName>ramload.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</FilePath>
+            </File>
+            <File>
               <FileName>security_cnt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/security_cnt.h</FilePath>
@@ -1983,16 +1983,6 @@
               <FileName>sign_key.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/sign_key.h</FilePath>
-            </File>
-            <File>
-              <FileName>ramload.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_status.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2025,9 +2015,9 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdh_x25519.h</FilePath>
             </File>
             <File>
-              <FileName>ecdsa_p256.h</FileName>
+              <FileName>ecdsa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdsa_p256.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdsa.h</FilePath>
             </File>
             <File>
               <FileName>hmac_sha256.h</FileName>
@@ -2035,9 +2025,14 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/hmac_sha256.h</FilePath>
             </File>
             <File>
-              <FileName>sha256.h</FileName>
+              <FileName>rsa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/sha256.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/sha.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2058,6 +2053,11 @@
               <FileName>bootutil_misc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_priv.h</FilePath>
             </File>
             <File>
               <FileName>bootutil_public.c</FileName>
@@ -2085,14 +2085,9 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/fault_injection_hardening_delay_rng_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>image_ec.c</FileName>
+              <FileName>image_ecdsa.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ec.c</FilePath>
-            </File>
-            <File>
-              <FileName>image_ec256.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ec256.c</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ecdsa.c</FilePath>
             </File>
             <File>
               <FileName>image_ed25519.c</FileName>
@@ -2125,6 +2120,11 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_move.c</FilePath>
             </File>
             <File>
+              <FileName>swap_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_priv.h</FilePath>
+            </File>
+            <File>
               <FileName>swap_scratch.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_scratch.c</FilePath>
@@ -2133,16 +2133,6 @@
               <FileName>tlv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/tlv.c</FilePath>
-            </File>
-            <File>
-              <FileName>swap_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_priv.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootutil_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_priv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2180,16 +2170,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2208,6 +2188,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2709,7 +2704,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>6</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2732,10 +2727,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_KEY_EXCHANGE_RSA_ENABLED, MCUXPRESSO_SDK, MBEDTLS_MCUX_ELE_S400_API, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_KEY_EXCHANGE_RSA_ENABLED, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, MBEDTLS_MCUX_ELE_S400_API, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../keys;../flash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../components/flash/mflash;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../keys;../flash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../components/flash/mflash;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2777,6 +2772,66 @@
       </TargetOption>
       <Groups>
         <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sblconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sblconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../flash_partitioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../flash_partitioning.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -2790,24 +2845,9 @@
               <FilePath>../boot.h</FilePath>
             </File>
             <File>
-              <FileName>bootutil_hooks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../bootutil_hooks.c</FilePath>
-            </File>
-            <File>
               <FileName>keys.c</FileName>
               <FileType>1</FileType>
               <FilePath>../keys.c</FilePath>
-            </File>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../os.c</FilePath>
-            </File>
-            <File>
-              <FileName>sbl_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sbl_boot.c</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -2823,16 +2863,6 @@
               <FileName>mbedtls_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../include/mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../include/sbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbldef.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../include/sbldef.h</FilePath>
             </File>
             <File>
               <FileName>flash_map.h</FileName>
@@ -2893,66 +2923,6 @@
               <FileName>flash_api.c</FileName>
               <FileType>1</FileType>
               <FilePath>../flash/flash_api.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>sblconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sblconfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_partitioning.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../flash_partitioning.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_partitioning.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../flash_partitioning.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3483,6 +3453,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -4274,6 +4249,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4300,24 +4285,14 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bench.h</FilePath>
             </File>
             <File>
-              <FileName>bootutil.h</FileName>
+              <FileName>boot_hooks.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_hooks.h</FilePath>
             </File>
             <File>
-              <FileName>bootutil_log.h</FileName>
+              <FileName>boot_public_hooks.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootutil_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootutil_public.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_public.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_public_hooks.h</FilePath>
             </File>
             <File>
               <FileName>boot_record.h</FileName>
@@ -4330,14 +4305,24 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_status.h</FilePath>
             </File>
             <File>
-              <FileName>boot_hooks.h</FileName>
+              <FileName>bootutil.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_hooks.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil.h</FilePath>
             </File>
             <File>
-              <FileName>boot_public_hooks.h</FileName>
+              <FileName>bootutil_log.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_public_hooks.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_public.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_public.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_test.h</FilePath>
             </File>
             <File>
               <FileName>caps.h</FileName>
@@ -4375,6 +4360,16 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/image.h</FilePath>
             </File>
             <File>
+              <FileName>mcuboot_status.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</FilePath>
+            </File>
+            <File>
+              <FileName>ramload.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</FilePath>
+            </File>
+            <File>
               <FileName>security_cnt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/security_cnt.h</FilePath>
@@ -4383,16 +4378,6 @@
               <FileName>sign_key.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/sign_key.h</FilePath>
-            </File>
-            <File>
-              <FileName>ramload.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_status.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4425,9 +4410,9 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdh_x25519.h</FilePath>
             </File>
             <File>
-              <FileName>ecdsa_p256.h</FileName>
+              <FileName>ecdsa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdsa_p256.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdsa.h</FilePath>
             </File>
             <File>
               <FileName>hmac_sha256.h</FileName>
@@ -4435,9 +4420,14 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/hmac_sha256.h</FilePath>
             </File>
             <File>
-              <FileName>sha256.h</FileName>
+              <FileName>rsa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/sha256.h</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/sha.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4458,6 +4448,11 @@
               <FileName>bootutil_misc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_priv.h</FilePath>
             </File>
             <File>
               <FileName>bootutil_public.c</FileName>
@@ -4485,14 +4480,9 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/fault_injection_hardening_delay_rng_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>image_ec.c</FileName>
+              <FileName>image_ecdsa.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ec.c</FilePath>
-            </File>
-            <File>
-              <FileName>image_ec256.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ec256.c</FilePath>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ecdsa.c</FilePath>
             </File>
             <File>
               <FileName>image_ed25519.c</FileName>
@@ -4525,6 +4515,11 @@
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_move.c</FilePath>
             </File>
             <File>
+              <FileName>swap_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_priv.h</FilePath>
+            </File>
+            <File>
               <FileName>swap_scratch.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_scratch.c</FilePath>
@@ -4533,16 +4528,6 @@
               <FileName>tlv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/tlv.c</FilePath>
-            </File>
-            <File>
-              <FileName>swap_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_priv.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootutil_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_priv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4580,16 +4565,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4608,6 +4583,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

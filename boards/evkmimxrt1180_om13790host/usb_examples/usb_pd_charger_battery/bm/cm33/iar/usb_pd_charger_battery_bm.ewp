@@ -231,6 +231,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -368,12 +369,13 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1331,6 +1333,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1468,12 +1471,13 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2430,6 +2434,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2567,12 +2572,13 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3529,6 +3535,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3666,12 +3673,13 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4629,6 +4637,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -4766,12 +4775,13 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5728,6 +5738,7 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -5865,12 +5876,13 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6960,6 +6972,18 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</name>
     </file>
     <file>
@@ -6987,10 +7011,7 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
@@ -7000,6 +7021,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

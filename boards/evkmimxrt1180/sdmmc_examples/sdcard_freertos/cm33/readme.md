@@ -8,14 +8,14 @@ Note: If DATA3 is used as the card detect PIN, please make sure DATA3 is pull do
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.50.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.3.1
-- MCUXpresso  11.9.0
+- IAR embedded Workbench  9.60.1
+- Keil MDK  5.39.0
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================

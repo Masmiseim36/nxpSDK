@@ -25,8 +25,6 @@
 /* Version info */
 #define MCRSP_VER "2.0.0" /* motor control package version */
 
-#define DAPENG_TEST       /* Dapeng test */
-
 /* Example's feature set in form of bits inside ui16featureSet.
    This feature set is expected to be growing over time.
    ... | FEATURE_S_RAMP | FEATURE_FIELD_WEAKENING | FEATURE_ENC
@@ -57,11 +55,12 @@
         __ISB();      \
     }
 
-/* Init SDK HW */
-static void BOARD_Init(void);
 /* ADC COCO interrupt */
 RAM_FUNC_LIB
 void ADC1_IRQHandler(void);
+
+/* Init UART for FreeMASTER communication */
+static void BOARD_InitUART(uint32_t u32BaudRate);
 
 static void BOARD_InitSysTick(void);
 
@@ -75,14 +74,10 @@ lpadc_conv_result_t g_LpadcResultConfigStruct;
 uint32_t g_ui32NumberOfCycles    = 0U;
 uint32_t g_ui32MaxNumberOfCycles = 0U;
 
-#ifdef DAPENG_TEST
-/* ISR counters */
-uint32_t ui32FastIsrCount = 0U;
-uint32_t ui32SlowIsrCount = 0U;
-#endif
-
 /* Structure used in FM to get required ID's */
 app_ver_t g_sAppIdFM = {
+    "../../../boards/src/ecat_examples/servo_motor",   /* User Path 1- the highest priority */
+    "../../../boards/evkmimxrt1180/ecat_examples/servo_motor/cm7",   /* User Path 2 */
     "evkmimxrt1180", /* board id */
     "pmsm_enc",      /* example id */
     MCRSP_VER,       /* sw version */
@@ -91,6 +86,10 @@ app_ver_t g_sAppIdFM = {
 
 mid_app_cmd_t g_eMidCmd;        /* Start/Stop MID command */
 ctrl_m1_mid_t g_sSpinMidSwitch; /* Control Spin/MID switching */
+
+/* Demo mode enabled/disabled */
+volatile bool_t bDemoModeSpeed;
+volatile bool_t bDemoModePosition;
 
 /*******************************************************************************
  * Prototypes
@@ -105,7 +104,9 @@ ctrl_m1_mid_t g_sSpinMidSwitch; /* Control Spin/MID switching */
  */
 int servo_motor_init(void)
 {
-    /*Accessing ID structure to prevent optimization*/
+    /* Accessing variables to prevent optimization */
+    bDemoModeSpeed = FALSE;
+    bDemoModePosition = FALSE;
     g_sAppIdFM.ui16FeatureSet = FEATURE_SET;
 
     uint32_t ui32PrimaskReg;
@@ -118,6 +119,10 @@ int servo_motor_init(void)
 
     /* Init peripheral motor control driver for motor M1 */
     MCDRV_Init_M1();
+    
+
+   /* Init UART for FreeMaster communication */
+    BOARD_InitUART(BOARD_FMSTR_UART_BAUDRATE);
 
     /* FreeMaster init */
     FMSTR_Init();
@@ -139,6 +144,9 @@ int servo_motor_init(void)
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
 
+    /* Enable PWM clock */
+    PWM1->MCTRL |= PWM_MCTRL_RUN(0xF);
+    
     return 0;
 }
 
@@ -178,17 +186,6 @@ void ADC1_IRQHandler(void)
     /* Call FreeMASTER recorder */
     FMSTR_Recorder(0);
 
-#ifdef DAPENG_TEST
-    /* Increment ISR counter */
-    ui32FastIsrCount++;
-
-    if (ui32FastIsrCount > 16000U)
-    {
-        ui32FastIsrCount = 0;
-    }
-
-#endif
-
     TP0_OFF();
 
     /* Add empty instructions for correct interrupt flag clearing */
@@ -210,17 +207,6 @@ void SM_StateMachineSlowTask(void)
 
     /* M1 Slow StateMachine call */
     SM_StateMachineSlow(&g_sM1Ctrl);
-
-#ifdef DAPENG_TEST
-    /* Increment ISR counter */
-    ui32SlowIsrCount++;
-
-    if (ui32SlowIsrCount > 1000U)
-    {
-        ui32SlowIsrCount = 0;
-    }
-
-#endif
 
     TP2_OFF();
 }
@@ -310,4 +296,26 @@ static void BOARD_InitSysTick(void)
 
     /*Start Sys Timer*/
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+}
+
+/* Initialization of the UART module */
+static void BOARD_InitUART(uint32_t u32BaudRate)
+{
+    lpuart_config_t config;
+
+    LPUART_GetDefaultConfig(&config);
+    config.baudRate_Bps = BOARD_FMSTR_UART_BAUDRATE;
+    config.enableTx     = true;
+    config.enableRx     = true;
+
+    LPUART_Init(BOARD_FMSTR_UART_PORT, &config, BOARD_DebugConsoleSrcFreq());
+
+    /* Register communication module used by FreeMASTER driver. */
+    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
+
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+    /* Enable UART interrupts. */
+    EnableIRQ(BOARD_UART_IRQ);
+    EnableGlobalIRQ(0);
+#endif
 }

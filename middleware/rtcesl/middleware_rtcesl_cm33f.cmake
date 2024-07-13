@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_CORE STREQUAL cm33))
+if((CONFIG_CORE STREQUAL cm33) AND (NOT (CONFIG_NOT STREQUAL NO_FPU)))
 
 if(CONFIG_TOOLCHAIN STREQUAL iar)
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

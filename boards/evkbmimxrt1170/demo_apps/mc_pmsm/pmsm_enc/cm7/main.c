@@ -56,16 +56,16 @@
 /* Init SDK HW */
 static void BOARD_Init(void);
 /* ADC COCO interrupt */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void ADC_ETC_IRQ0_IRQHandler(void);
 /* TMR1 reload ISR called with 1ms period */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void TMR1_IRQHandler(void);
 /* SW8 Button interrupt handler */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void GPIO13_Combined_0_31_IRQHandler(void);
 /* Demo Speed Stimulator */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void DemoSpeedStimulator(void);
 /* Demo Position Stimulator */
 RAM_FUNC_LIB
@@ -102,6 +102,8 @@ static uint32_t ui32ButtonFilter = 0U;
 
 /* Structure used in FM to get required ID's */
 app_ver_t g_sAppIdFM = {
+    "../boards/evkbmimxrt1170/mc_pmsm/pmsm_enc",                       /* User Path 1- the highest priority */
+    "../../../boards/evkbmimxrt1170/demo_apps/mc_pmsm/pmsm_enc/cm7",       /* User Path 2 */
     "evkbmimxrt1170", /* board id */
     "pmsm_enc", /* example id */
     MCRSP_VER,      /* sw version */
@@ -149,19 +151,19 @@ int main(void)
     M1_SetAppSwitch(FALSE);
 
     /* Init MID state machine - call before the spin state machine */
-    g_sSpinMidSwitch.eAppState = kAppStateMID;         
-    
+    g_sSpinMidSwitch.eAppState = kAppStateMID;
+
     if(g_sSpinMidSwitch.eAppState == kAppStateMID)
     {
       MID_Init_AR();
     }
-    
+
     /* Spin state machine is default */
-    g_sSpinMidSwitch.eAppState = kAppStateSpin; 
+    g_sSpinMidSwitch.eAppState = kAppStateSpin;
 
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
-     
+
     /* Enable PWM clock */
     g_sM1Pwm3ph.pui32PwmBaseAddress->MCTRL |= PWM_MCTRL_RUN(0xF);
 
@@ -169,7 +171,7 @@ int main(void)
     while (1)
     {
         Application_Control_BL();
-        
+
         /* FreeMASTER Polling function */
         FMSTR_Poll();
     }
@@ -208,12 +210,12 @@ void ADC_ETC_IRQ0_IRQHandler(void)
 
     /* Call FreeMASTER recorder */
     FMSTR_Recorder(0);
-    
+
 #ifdef DAPENG_TEST
     /* Increment ISR counter */
     ui32FastIsrCount++;
 #endif
-        
+
     ADC_ETC_ClearInterruptStatusFlags(ADC_ETC, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done0StatusFlagMask);
     ADC_ETC_ClearInterruptStatusFlags(ADC_ETC, kADC_ETC_Trg4TriggerSource, kADC_ETC_Done0StatusFlagMask);
 
@@ -231,7 +233,7 @@ void ADC_ETC_IRQ0_IRQHandler(void)
  */
 RAM_FUNC_LIB
 void TMR1_IRQHandler(void)
-{    
+{
     /* M1 Slow StateMachine call */
     SM_StateMachineSlow(&g_sM1Ctrl);
 
@@ -249,11 +251,11 @@ void TMR1_IRQHandler(void)
     /* Demo position stimulator */
     DemoPositionStimulator();
 
-#ifdef DAPENG_TEST    
+#ifdef DAPENG_TEST
     /* Increment ISR counter */
     ui32SlowIsrCount++;
 #endif
-    
+
     /* Clear the CSCTRL0[TCF1] flag */
     TMR1->CHANNEL[0].CSCTRL |= TMR_CSCTRL_TCF1(0x00);
     TMR1->CHANNEL[0].CSCTRL &= ~(TMR_CSCTRL_TCF1_MASK);
@@ -439,14 +441,14 @@ static void Application_Control_BL(void)
             MID_Init_AR();
             g_sSpinMidSwitch.sFaultCtrlM1_Mid &= ~(FAULT_APP_SPIN);
             g_eMidCmd = kMID_Cmd_Stop;                          /* Reset MID control command */
-            g_sSpinMidSwitch.eAppState = kAppStateMID;          /* MID routines will be processed */ 
+            g_sSpinMidSwitch.eAppState = kAppStateMID;          /* MID routines will be processed */
           }
           else
             g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_SPIN;
-                           
+
           g_sSpinMidSwitch.bCmdRunMid = FALSE;                  /* Always clear request */
         }
-        
+
         g_sSpinMidSwitch.bCmdRunM1 = FALSE;
         break;
     default:
@@ -461,13 +463,13 @@ static void Application_Control_BL(void)
           }
           else
             g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_MID;
-          
-           /* Always clear request */ 
-          g_sSpinMidSwitch.bCmdRunM1 = FALSE;   
+
+           /* Always clear request */
+          g_sSpinMidSwitch.bCmdRunM1 = FALSE;
           g_sSpinMidSwitch.bCmdRunMid = FALSE;
           break;
         }
-        
+
         g_sSpinMidSwitch.bCmdRunMid = FALSE;
         MID_Process_BL(&g_eMidCmd);
         break;

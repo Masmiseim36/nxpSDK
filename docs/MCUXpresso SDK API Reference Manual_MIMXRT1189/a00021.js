@@ -3,7 +3,7 @@ var a00021 =
     [ "I3C Common Driver", "a00020.html", "a00020" ],
     [ "I3C Master Driver", "a00019.html", "a00019" ],
     [ "I3C Slave Driver", "a00023.html", "a00023" ],
-    [ "i3c_device_info_t", "a00021.html#a00318", [
+    [ "i3c_device_info_t", "a00021.html#a00316", [
       [ "dynamicAddr", "a00021.html#a8d2a160d24239705091dd376479ed1f0", null ],
       [ "staticAddr", "a00021.html#a09e37502a282097247f768f72bac40cc", null ],
       [ "dcr", "a00021.html#a496110aa4a2316bd53e0e776e4a632b3", null ],

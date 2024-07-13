@@ -82,9 +82,9 @@ var searchData=
   ['i3c_5fslavetransfergetcount',['I3C_SlaveTransferGetCount',['../a00023.html#ga9f19df9a2dd5d99440e7707aa662d49c',1,'fsl_i3c.h']]],
   ['i3c_5fslavetransferhandleirq',['I3C_SlaveTransferHandleIRQ',['../a00023.html#gaf604d3e51fccadaa37e28bd6ba6d37c3',1,'fsl_i3c.h']]],
   ['i3c_5fslavetransfernonblocking',['I3C_SlaveTransferNonBlocking',['../a00023.html#ga6105a83b8c488151a17eb8d93d51f00d',1,'fsl_i3c.h']]],
-  ['icache_5finvalidatebyrange',['ICACHE_InvalidateByRange',['../a00202.html#ga00cdccb5c53201a747f2a3e2009f43cc',1,'ICACHE_InvalidateByRange(uint32_t address, uint32_t size_byte):&#160;fsl_cache.h'],['../a00203.html#gab9e79fa88e11db521b74f5316de68676',1,'ICACHE_InvalidateByRange(uint32_t address, uint32_t size_byte):&#160;fsl_cache.h']]],
-  ['iomuxc_5fsetpinconfig',['IOMUXC_SetPinConfig',['../a00198.html#gab7a6f9e42bd00d9e80457b53712748de',1,'fsl_iomuxc.h']]],
-  ['iomuxc_5fsetpinmux',['IOMUXC_SetPinMux',['../a00198.html#gaff65bf655b0d541b868b4a9d15415ce8',1,'fsl_iomuxc.h']]],
-  ['irq_5fclearpendingirq',['IRQ_ClearPendingIRQ',['../a00204.html#gac9b0f720fcb617b3aa9cb554d87dbc55',1,'fsl_common_arm.h']]],
-  ['irq_5fsetpriority',['IRQ_SetPriority',['../a00204.html#ga9d1df086c696c7864d98ea6ec28846f3',1,'fsl_common_arm.h']]]
+  ['icache_5finvalidatebyrange',['ICACHE_InvalidateByRange',['../a00199.html#ga00cdccb5c53201a747f2a3e2009f43cc',1,'ICACHE_InvalidateByRange(uint32_t address, uint32_t size_byte):&#160;fsl_cache.h'],['../a00200.html#gab9e79fa88e11db521b74f5316de68676',1,'ICACHE_InvalidateByRange(uint32_t address, uint32_t size_byte):&#160;fsl_cache.h']]],
+  ['iomuxc_5fsetpinconfig',['IOMUXC_SetPinConfig',['../a00195.html#gab7a6f9e42bd00d9e80457b53712748de',1,'fsl_iomuxc.h']]],
+  ['iomuxc_5fsetpinmux',['IOMUXC_SetPinMux',['../a00195.html#gaff65bf655b0d541b868b4a9d15415ce8',1,'fsl_iomuxc.h']]],
+  ['irq_5fclearpendingirq',['IRQ_ClearPendingIRQ',['../a00201.html#gac9b0f720fcb617b3aa9cb554d87dbc55',1,'fsl_common_arm.h']]],
+  ['irq_5fsetpriority',['IRQ_SetPriority',['../a00201.html#ga9d1df086c696c7864d98ea6ec28846f3',1,'fsl_common_arm.h']]]
 ];

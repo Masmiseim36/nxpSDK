@@ -7,14 +7,14 @@ its services with direct use of Messaging Unit driver.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.50.1
-- GCC ARM Embedded  12.3.1
-- Keil MDK  5.38.1
-- MCUXpresso  11.9.0
+- IAR embedded Workbench  9.60.1
+- GCC ARM Embedded  13.2.1
+- Keil MDK  5.39.0
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================
@@ -44,6 +44,9 @@ The log below shows the output of the ELE baseline API demo in the terminal wind
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 EdgeLock Enclave Sub-System crypto base API example:
 
+****************** Initialize EdgeLock services ***********
+EdgeLock services initialized successfully.
+
 ****************** Get FW status ELE **********************
 Get FW status successfully. Status: 0x0
 This means no ELE FW in place
@@ -57,19 +60,16 @@ Get FW version successfully. Version: 0xb0300
 Bit 27 of fwversion is not set - this means response come from ROM
 
 ****************** Load EdgeLock FW ***********************
-EndgeLock FW loaded and authenticated successfully.
+EdgeLock FW loaded and authenticated successfully.
 
 ****************** Get FW version ELE *********************
-Get FW version successfully. Version: 0x8000011
+Get FW version successfully. Version: 0x8010010
 Bit 27 is set - this means response come from FW
 Bit 24 is not set - BASE FW is running
 
 ****************** Get FW status ELE **********************
 Get FW status successfully. Status: 0x1
 This means ELE FW is authenticated and operational
-
-****************** Initialize EdgeLock services ***********
-EdgeLock services initialized successfully.
 
 ****************** Read common fuse ***********************
 Fuse read successfully. Value of EARLY_FUSES_PGRM is 1.
@@ -93,8 +93,18 @@ ELE clock change start completed successfully.
 ****************** ELE clock change finish ****************
 ELE clock change finish completed successfully.
 
+ELE clock is now 100Mhz as expected.
+
 ****************** Device attestation *********************
 Device attestation completed successfully.
+
+****************** BBSM (Battery-Backed Security Module) **
+BBSM register write completed successfully.
+BBSM register read success, value=cafecafe
+Get ELE Events successfully
+Set ELE Event policy successfully
+Get ELE Events successfully
+ELE Event triggered successfully
 
 End of Example with SUCCESS!!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

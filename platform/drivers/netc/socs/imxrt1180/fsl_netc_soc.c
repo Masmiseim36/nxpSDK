@@ -203,3 +203,8 @@ status_t NETC_SocSetLinkAddr(netc_soc_link_t link, uint8_t phyAddr)
 
     return result;
 }
+
+status_t NETC_SocPreInitVsi(netc_enetc_hw_t *hw, netc_hw_si_idx_t si)
+{
+    return kStatus_Success;
+}

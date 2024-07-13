@@ -13,7 +13,7 @@
 #include "board.h"
 
 #include "fsl_soc_src.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -127,7 +127,7 @@ void APP_BootCore1(void)
     /* Enble CM7 */
     do
     {
-        sts = ELE_EnableAPC(MU_RT_S3MUA);
+        sts = ELE_BaseAPI_EnableAPC(MU_RT_S3MUA);
     } while (ELE_IS_FAILED(sts));
 
     /* Deassert Wait */

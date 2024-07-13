@@ -1,7 +1,7 @@
 var a00038 =
 [
     [ "FlexIO eDMA I2S Driver", "a00039.html", "a00039" ],
-    [ "_flexio_i2s_type", "a00038.html#a00516", [
+    [ "_flexio_i2s_type", "a00038.html#a00514", [
       [ "flexioBase", "a00038.html#ab449013f40d8a8a2d597e5d1e88a8b97", null ],
       [ "txPinIndex", "a00038.html#aa53e30ebdd5c5f646dca2543fcd9b76e", null ],
       [ "rxPinIndex", "a00038.html#a712be31b7f9d3d6b759eb12c3b667ddd", null ],
@@ -12,7 +12,7 @@ var a00038 =
       [ "bclkTimerIndex", "a00038.html#afcd9b14fce1388d2b6e18eb1108a5858", null ],
       [ "fsTimerIndex", "a00038.html#abd009d69ef6c06fdcdde60e2b3fb1875", null ]
     ] ],
-    [ "_flexio_i2s_config", "a00038.html#a00511", [
+    [ "_flexio_i2s_config", "a00038.html#a00509", [
       [ "enableI2S", "a00038.html#adb49e8c4018f36d415c3f27b7b4a45ce", null ],
       [ "masterSlave", "a00038.html#adb6202db43c51c67124a7a2507356d20", null ],
       [ "txPinPolarity", "a00038.html#a5afd952a94b5ec444bcc17ae1fa5b3b0", null ],
@@ -22,15 +22,15 @@ var a00038 =
       [ "txTimerPolarity", "a00038.html#a39495ea95a20060dec9f4c1779749370", null ],
       [ "rxTimerPolarity", "a00038.html#a42a66f46fb56b064f1ba7ffb36a8db90", null ]
     ] ],
-    [ "_flexio_i2s_format", "a00038.html#a00513", [
+    [ "_flexio_i2s_format", "a00038.html#a00511", [
       [ "bitWidth", "a00038.html#a9f3f738467fa2ad3d971b67f74bf7183", null ],
       [ "sampleRate_Hz", "a00038.html#a0bfe7e50f67660594c07d8af2ddb9fda", null ]
     ] ],
-    [ "_flexio_i2s_transfer", "a00038.html#a00515", [
+    [ "_flexio_i2s_transfer", "a00038.html#a00513", [
       [ "data", "a00038.html#a138c2a667eb11137ede4bce12bcae674", null ],
       [ "dataSize", "a00038.html#a273a94a7eff323bc25c653f485be30b4", null ]
     ] ],
-    [ "_flexio_i2s_handle", "a00038.html#a00514", [
+    [ "_flexio_i2s_handle", "a00038.html#a00512", [
       [ "state", "a00038.html#ab174c57d2ddb32975053a804610196df", null ],
       [ "callback", "a00038.html#a2db2fd7655807590d6c7222aae46a136", null ],
       [ "userData", "a00038.html#a57746c8830cc4bd7b878be18a71cf669", null ],

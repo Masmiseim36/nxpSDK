@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,40 +102,40 @@ $(document).ready(function(){initNavTree('a00028.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C Master DMA Driver<div class="ingroups"><a class="el" href="a00208.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">LPI2C Master DMA Driver<div class="ingroups"><a class="el" href="a00205.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00253"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00253">lpi2c_master_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver handle for master DMA APIs.  <a href="a00028.html#a00253">More...</a><br/></td></tr>
-<tr class="separator:a00253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00251"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00251">lpi2c_master_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver handle for master DMA APIs.  <a href="a00028.html#a00251">More...</a><br/></td></tr>
+<tr class="separator:a00251"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga912fd1b24e90d46f274ea60152967df3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga912fd1b24e90d46f274ea60152967df3">lpi2c_master_edma_transfer_callback_t</a> )(LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, <a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
+<tr class="memitem:ga912fd1b24e90d46f274ea60152967df3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga912fd1b24e90d46f274ea60152967df3">lpi2c_master_edma_transfer_callback_t</a> )(LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, <a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td></tr>
 <tr class="memdesc:ga912fd1b24e90d46f274ea60152967df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master DMA completion callback function pointer type.  <a href="#ga912fd1b24e90d46f274ea60152967df3">More...</a><br/></td></tr>
 <tr class="separator:ga912fd1b24e90d46f274ea60152967df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Master DMA</h2></td></tr>
-<tr class="memitem:ga6c1e29ea2310a600be54440afe2cb908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga6c1e29ea2310a600be54440afe2cb908">LPI2C_MasterCreateEDMAHandle</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, <a class="el" href="a00014.html#a00292">edma_handle_t</a> *rxDmaHandle, <a class="el" href="a00014.html#a00292">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00028.html#ga912fd1b24e90d46f274ea60152967df3">lpi2c_master_edma_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga6c1e29ea2310a600be54440afe2cb908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga6c1e29ea2310a600be54440afe2cb908">LPI2C_MasterCreateEDMAHandle</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, <a class="el" href="a00014.html#a00290">edma_handle_t</a> *rxDmaHandle, <a class="el" href="a00014.html#a00290">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00028.html#ga912fd1b24e90d46f274ea60152967df3">lpi2c_master_edma_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga6c1e29ea2310a600be54440afe2cb908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new handle for the LPI2C master DMA APIs.  <a href="#ga6c1e29ea2310a600be54440afe2cb908">More...</a><br/></td></tr>
 <tr class="separator:ga6c1e29ea2310a600be54440afe2cb908"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga476b7cc660bb47d8e587319c4eb8cc81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga476b7cc660bb47d8e587319c4eb8cc81">LPI2C_MasterTransferEDMA</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, lpi2c_master_transfer_t *transfer)</td></tr>
+<tr class="memitem:ga476b7cc660bb47d8e587319c4eb8cc81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga476b7cc660bb47d8e587319c4eb8cc81">LPI2C_MasterTransferEDMA</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, lpi2c_master_transfer_t *transfer)</td></tr>
 <tr class="memdesc:ga476b7cc660bb47d8e587319c4eb8cc81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking DMA-based transaction on the I2C bus.  <a href="#ga476b7cc660bb47d8e587319c4eb8cc81">More...</a><br/></td></tr>
 <tr class="separator:ga476b7cc660bb47d8e587319c4eb8cc81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8562c2ad1d79fb4bc573adfec9d6d28f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga8562c2ad1d79fb4bc573adfec9d6d28f">LPI2C_MasterTransferGetCountEDMA</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga8562c2ad1d79fb4bc573adfec9d6d28f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga8562c2ad1d79fb4bc573adfec9d6d28f">LPI2C_MasterTransferGetCountEDMA</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga8562c2ad1d79fb4bc573adfec9d6d28f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of bytes transferred so far.  <a href="#ga8562c2ad1d79fb4bc573adfec9d6d28f">More...</a><br/></td></tr>
 <tr class="separator:ga8562c2ad1d79fb4bc573adfec9d6d28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45434e05020c1859a83f7c06c9ba173e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga45434e05020c1859a83f7c06c9ba173e">LPI2C_MasterTransferAbortEDMA</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle)</td></tr>
+<tr class="memitem:ga45434e05020c1859a83f7c06c9ba173e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga45434e05020c1859a83f7c06c9ba173e">LPI2C_MasterTransferAbortEDMA</a> (LPI2C_Type *base, lpi2c_master_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:ga45434e05020c1859a83f7c06c9ba173e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates a non-blocking LPI2C master transmission early.  <a href="#ga45434e05020c1859a83f7c06c9ba173e">More...</a><br/></td></tr>
 <tr class="separator:ga45434e05020c1859a83f7c06c9ba173e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00253" id="a00253"></a>
+<a name="a00251" id="a00251"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -169,10 +169,10 @@ Master DMA</h2></td></tr>
 <tr class="memitem:a732af16fd6652ebe44a6ec8584644f87"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a732af16fd6652ebe44a6ec8584644f87">userData</a></td></tr>
 <tr class="memdesc:a732af16fd6652ebe44a6ec8584644f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application data passed to callback.  <a href="#a732af16fd6652ebe44a6ec8584644f87">More...</a><br/></td></tr>
 <tr class="separator:a732af16fd6652ebe44a6ec8584644f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5e069483ad1c1563924f9721fc37d2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ac5e069483ad1c1563924f9721fc37d2c">rx</a></td></tr>
+<tr class="memitem:ac5e069483ad1c1563924f9721fc37d2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ac5e069483ad1c1563924f9721fc37d2c">rx</a></td></tr>
 <tr class="memdesc:ac5e069483ad1c1563924f9721fc37d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for receive DMA channel.  <a href="#ac5e069483ad1c1563924f9721fc37d2c">More...</a><br/></td></tr>
 <tr class="separator:ac5e069483ad1c1563924f9721fc37d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34f2297e0a8b3531676e3f8de07ec3b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a34f2297e0a8b3531676e3f8de07ec3b5">tx</a></td></tr>
+<tr class="memitem:a34f2297e0a8b3531676e3f8de07ec3b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a34f2297e0a8b3531676e3f8de07ec3b5">tx</a></td></tr>
 <tr class="memdesc:a34f2297e0a8b3531676e3f8de07ec3b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for transmit DMA channel.  <a href="#a34f2297e0a8b3531676e3f8de07ec3b5">More...</a><br/></td></tr>
 <tr class="separator:a34f2297e0a8b3531676e3f8de07ec3b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a13c0aac780ff9945e3c312d6222402"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#ga30c002c19c87dccaace466ac1c5dc391">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a5a13c0aac780ff9945e3c312d6222402">tcds</a> [3]</td></tr>
@@ -270,7 +270,7 @@ Master DMA</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00014.html#a00292">edma_handle_t</a>* lpi2c_master_edma_handle_t::rx</td>
+          <td class="memname"><a class="el" href="a00014.html#a00290">edma_handle_t</a>* lpi2c_master_edma_handle_t::rx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -282,7 +282,7 @@ Master DMA</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00014.html#a00292">edma_handle_t</a>* lpi2c_master_edma_handle_t::tx</td>
+          <td class="memname"><a class="el" href="a00014.html#a00290">edma_handle_t</a>* lpi2c_master_edma_handle_t::tx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -311,7 +311,7 @@ Master DMA</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpi2c_master_edma_transfer_callback_t)(LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, <a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
+          <td class="memname">typedef void(* lpi2c_master_edma_transfer_callback_t)(LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, <a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -348,13 +348,13 @@ Master DMA</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxDmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txDmaHandle</em>, </td>
         </tr>
         <tr>
@@ -397,7 +397,7 @@ Master DMA</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_MasterTransferEDMA </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_MasterTransferEDMA </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -433,7 +433,7 @@ Master DMA</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>The transaction was started successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00208.html#ggafa9be5679ab03d785820f2474c5ccc6eaf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Either another master is currently utilizing the bus, or another DMA transaction is already in progress. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00205.html#ggafa9be5679ab03d785820f2474c5ccc6eaf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Either another master is currently utilizing the bus, or another DMA transaction is already in progress. </td></tr>
   </table>
   </dd>
 </dl>
@@ -445,7 +445,7 @@ Master DMA</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_MasterTransferGetCountEDMA </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_MasterTransferGetCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -492,7 +492,7 @@ Master DMA</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_MasterTransferAbortEDMA </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_MasterTransferAbortEDMA </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -521,7 +521,7 @@ Master DMA</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>A transaction was successfully aborted. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00208.html#ggafa9be5679ab03d785820f2474c5ccc6ea6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td>There is not a DMA transaction currently in progress. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00205.html#ggafa9be5679ab03d785820f2474c5ccc6ea6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td>There is not a DMA transaction currently in progress. </td></tr>
   </table>
   </dd>
 </dl>

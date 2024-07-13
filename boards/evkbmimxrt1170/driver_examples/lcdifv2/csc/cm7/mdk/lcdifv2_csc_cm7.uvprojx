@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_I2C_BASED_COMPONENT_USED=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../..;../../../cm7;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../components/video/display/rpi;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,26 +389,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdifv2_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdifv2_support.h</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -437,6 +417,26 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdifv2_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -528,6 +528,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_rpi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rpi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -552,6 +562,16 @@
               <FileName>fsl_soc_src.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -704,16 +724,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -732,6 +742,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1200,10 +1220,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_I2C_BASED_COMPONENT_USED=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../..;../../../cm7;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../components/video/display/rpi;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1258,26 +1278,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdifv2_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdifv2_support.h</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -1306,6 +1306,26 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdifv2_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -1397,6 +1417,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_rpi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rpi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1421,6 +1451,16 @@
               <FileName>fsl_soc_src.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1573,16 +1613,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -1601,6 +1631,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2069,10 +2109,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_I2C_BASED_COMPONENT_USED=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../..;../../../cm7;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../components/video/display/rpi;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2127,26 +2167,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdifv2_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdifv2_support.h</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -2175,6 +2195,26 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdifv2_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -2266,6 +2306,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_rpi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rpi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2290,6 +2340,16 @@
               <FileName>fsl_soc_src.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -2442,16 +2502,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -2470,6 +2520,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2938,10 +2998,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_I2C_BASED_COMPONENT_USED=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../..;../../../cm7;../../../../../../../components/video;../../../../../../../components/video/display;../../../../../../../components/video/display/rm68191;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../../components/video/display/rm68200;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/video/display/hx8394;../../../../../../../components/video/display/rpi;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../xmcd;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2996,26 +3056,6 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lcdifv2_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcdifv2_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lcdifv2_support.h</FilePath>
-            </File>
-            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -3044,6 +3084,26 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lcdifv2_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdifv2_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -3135,6 +3195,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_rpi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rpi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/video/display/rpi/fsl_rpi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3159,6 +3229,16 @@
               <FileName>fsl_soc_src.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -3311,16 +3391,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3339,6 +3409,16 @@
               <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

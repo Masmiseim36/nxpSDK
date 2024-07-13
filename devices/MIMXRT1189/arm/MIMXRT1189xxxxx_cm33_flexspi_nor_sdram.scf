@@ -64,7 +64,7 @@
 #define m_fcb_offset                   0x400
 #define m_fcb_size                     0x200
 #define m_xmcd_offset                  0x800
-#define m_xmcd_size                    0x200
+#define m_xmcd_size                    0x400
 #define m_container_offset             0x1000
 #define m_container_size               0x2000
 

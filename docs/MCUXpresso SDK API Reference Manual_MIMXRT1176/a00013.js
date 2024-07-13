@@ -1,18 +1,18 @@
 var a00013 =
 [
-    [ "CAAM Blob driver", "a00334.html", "a00334" ],
-    [ "CAAM Blocking APIs", "a00324.html", "a00324" ],
-    [ "CAAM CRC driver", "a00335.html", "a00335" ],
-    [ "CAAM Key Blankening driver", "a00333.html", "a00333" ],
-    [ "CAAM Non-blocking APIs", "a00328.html", "a00328" ],
-    [ "_caam_job_callback", "a00013.html#a00406", [
+    [ "CAAM Blob driver", "a00330.html", "a00330" ],
+    [ "CAAM Blocking APIs", "a00320.html", "a00320" ],
+    [ "CAAM CRC driver", "a00331.html", "a00331" ],
+    [ "CAAM Key Blankening driver", "a00329.html", "a00329" ],
+    [ "CAAM Non-blocking APIs", "a00324.html", "a00324" ],
+    [ "_caam_job_callback", "a00013.html#a00403", [
       [ "JobCompleted", "a00013.html#a2d58178273a0aa81a9bebc7cb824c1c3", null ]
     ] ],
-    [ "_caam_handle_t", "a00013.html#a00405", [
+    [ "_caam_handle_t", "a00013.html#a00402", [
       [ "callback", "a00013.html#a334bbf893238d5f2bf71425a5f6aadbb", null ],
       [ "userData", "a00013.html#a29cc86eda8dbefe11ff266e2b3db7283", null ]
     ] ],
-    [ "_caam_config", "a00013.html#a00404", [
+    [ "_caam_config", "a00013.html#a00401", [
       [ "rngSampleMode", "a00013.html#aa67bc7bf73d806eeb1fb94947846b94a", null ],
       [ "rngRingOscDiv", "a00013.html#a40c47b0f74a8f83436304db60c968d1d", null ],
       [ "scfgrLockTrngProgramMode", "a00013.html#ac518a38b0c08743b7c89e345d522ac02", null ],

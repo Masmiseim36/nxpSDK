@@ -128,8 +128,10 @@ status_t CRYPTO_InitHardware(void)
         do
         {
             result = ELE_GetTrngState(S3MU, &trng_state);
-        } while ((trng_state & 0xFF) != kELE_TRNG_ready && result == kStatus_Success);
-        
+        } while (((trng_state & 0xFFu) != kELE_TRNG_ready) &&
+                 ((trng_state & 0xFF00u) != kELE_TRNG_CSAL_success << 8u ) &&
+                   result == kStatus_Success);
+
         /****************** Open EdgeLock session ******************/
         result = ELE_OpenSession(S3MU, &g_ele_ctx.session_handle);
         if (result != kStatus_Success) {

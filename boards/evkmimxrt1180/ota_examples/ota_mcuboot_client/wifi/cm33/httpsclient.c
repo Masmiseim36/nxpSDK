@@ -21,7 +21,7 @@
 #include "httpsclient.h"
 #include "lwip/netdb.h"
 #include "fsl_debug_console.h"
-#include "mbedtls/md5.h"
+#include "mbedtls/sha256.h"
 #include "mflash_drv.h"
 #include "flash_partitioning.h"
 #include "network_cfg.h"
@@ -98,6 +98,15 @@ static void my_debug(void *ctx, int level, const char *file, int line, const cha
     PRINTF("\r\n%s, at line %d in file %s\n", str, line, file);
 }
 #endif
+
+static void print_hash(const void *src, size_t size)
+{
+    const unsigned char *src8 = src;
+    for (size_t i = 0; i < size; i++)
+    {
+        PRINTF("%02X", src8[i]);
+    }
+}
 
 int https_client_tls_init(const char *host, const char *service)
 {
@@ -331,11 +340,11 @@ int https_client_ota_download(const char *host, const char *fPath, uint32_t dstA
     struct OtaHttpConf httpConf = {.ti = &ti, .dataBuf = https_buf, .dataBufSize = sizeof(https_buf), .hostName = host};
 
     int ret;
-    unsigned char md_net[16], md_flash[16];
-    mbedtls_md5_context md_ctx;
+    unsigned char md_net[32], md_flash[32];
+    mbedtls_sha256_context md_ctx;
 
-    mbedtls_md5_init(&md_ctx);
-    mbedtls_md5_starts_ret(&md_ctx);
+    mbedtls_sha256_init(&md_ctx);
+    mbedtls_sha256_starts_ret(&md_ctx, 0);
 
     uint32_t addr_phy   = dstAddrPhy;
     uint32_t file_size  = 0;
@@ -393,7 +402,7 @@ int https_client_ota_download(const char *host, const char *fPath, uint32_t dstA
             break;
         }
 
-        mbedtls_md5_update(&md_ctx, https_buf, cnt);
+        mbedtls_sha256_update(&md_ctx, https_buf, cnt);
 
         /* Flash erase is done on the fly with download since erasing large portion
          * of flash while executing from it would cause other system tasks to starve
@@ -426,17 +435,19 @@ int https_client_ota_download(const char *host, const char *fPath, uint32_t dstA
 
     /* Message Digest check */
 
-    PRINTF("MD5 hexdump of downloaded data:\n");
-    mbedtls_md5_finish(&md_ctx, md_net);
-    hexdump(md_net, sizeof(md_net));
+    PRINTF("SHA256 of downloaded data: ");
+    mbedtls_sha256_finish(&md_ctx, md_net);
+    print_hash(md_net, 10);
+    PRINTF("...\n");
 
-    PRINTF("MD5 hexdump of flashed data:\n");
-    flash_md5(addr_phy, file_size, md_flash);
-    hexdump(md_flash, sizeof(md_flash));
+    PRINTF("SHA256 of flashed data:    ");
+    flash_sha256(addr_phy, file_size, md_flash);
+    print_hash(md_flash, 10);
+    PRINTF("...\n");
 
     if (memcmp(md_net, md_flash, sizeof(md_flash)) != 0)
     {
-        PRINTF("FAILED to compare MD.\n");
+        PRINTF("FAILED to compare MD's.\n");
         return EXIT_FAILURE;
     }
 

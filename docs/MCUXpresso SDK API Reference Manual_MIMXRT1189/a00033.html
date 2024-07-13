@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -138,9 +138,9 @@ LPTMR tick example</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00342"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a00342">lptmr_config_t</a></td></tr>
-<tr class="memdesc:a00342"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPTMR config structure.  <a href="a00033.html#a00342">More...</a><br/></td></tr>
-<tr class="separator:a00342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00340"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a00340">lptmr_config_t</a></td></tr>
+<tr class="memdesc:a00340"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPTMR config structure.  <a href="a00033.html#a00340">More...</a><br/></td></tr>
+<tr class="separator:a00340"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -234,19 +234,19 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga2418e533da0b331dbcc7b04ebf90b54e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2418e533da0b331dbcc7b04ebf90b54e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga2418e533da0b331dbcc7b04ebf90b54e">FSL_LPTMR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga2418e533da0b331dbcc7b04ebf90b54e">FSL_LPTMR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00201.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
 <tr class="memdesc:ga2418e533da0b331dbcc7b04ebf90b54e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver Version. <br/></td></tr>
 <tr class="separator:ga2418e533da0b331dbcc7b04ebf90b54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga1f2e64506623dc66e329e136931b4e25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga1f2e64506623dc66e329e136931b4e25">LPTMR_Init</a> (LPTMR_Type *base, const <a class="el" href="a00033.html#a00342">lptmr_config_t</a> *config)</td></tr>
+<tr class="memitem:ga1f2e64506623dc66e329e136931b4e25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga1f2e64506623dc66e329e136931b4e25">LPTMR_Init</a> (LPTMR_Type *base, const <a class="el" href="a00033.html#a00340">lptmr_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga1f2e64506623dc66e329e136931b4e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the LPTMR clock and configures the peripheral for a basic operation.  <a href="#ga1f2e64506623dc66e329e136931b4e25">More...</a><br/></td></tr>
 <tr class="separator:ga1f2e64506623dc66e329e136931b4e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2436bf246a0aab4a0191d059b80ff088"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga2436bf246a0aab4a0191d059b80ff088">LPTMR_Deinit</a> (LPTMR_Type *base)</td></tr>
 <tr class="memdesc:ga2436bf246a0aab4a0191d059b80ff088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the LPTMR clock.  <a href="#ga2436bf246a0aab4a0191d059b80ff088">More...</a><br/></td></tr>
 <tr class="separator:ga2436bf246a0aab4a0191d059b80ff088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11a8100adcd8f9f0cf167b2d84a51d11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga11a8100adcd8f9f0cf167b2d84a51d11">LPTMR_GetDefaultConfig</a> (<a class="el" href="a00033.html#a00342">lptmr_config_t</a> *config)</td></tr>
+<tr class="memitem:ga11a8100adcd8f9f0cf167b2d84a51d11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga11a8100adcd8f9f0cf167b2d84a51d11">LPTMR_GetDefaultConfig</a> (<a class="el" href="a00033.html#a00340">lptmr_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga11a8100adcd8f9f0cf167b2d84a51d11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the LPTMR configuration structure with default settings.  <a href="#ga11a8100adcd8f9f0cf167b2d84a51d11">More...</a><br/></td></tr>
 <tr class="separator:ga11a8100adcd8f9f0cf167b2d84a51d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -290,7 +290,7 @@ Timer Start and Stop</h2></td></tr>
 <tr class="separator:ga465015ff7402acf300e4c45f6576291a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00342" id="a00342"></a>
+<a name="a00340" id="a00340"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -533,7 +533,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00033.html#a00342">lptmr_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00033.html#a00340">lptmr_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -583,7 +583,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">void LPTMR_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00033.html#a00342">lptmr_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00033.html#a00340">lptmr_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>

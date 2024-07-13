@@ -346,7 +346,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -364,6 +363,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/template</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -1444,7 +1444,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -1462,6 +1461,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/template</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -2541,7 +2541,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -2559,6 +2558,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/template</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -3637,7 +3637,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -3655,6 +3654,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/template</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -4735,7 +4735,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -4753,6 +4752,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/template</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -5832,7 +5832,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -5850,6 +5849,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/template</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
@@ -6631,12 +6631,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6644,6 +6638,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -6731,6 +6734,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
     </file>
   </group>
   <group>

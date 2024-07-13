@@ -1,59 +1,101 @@
 var a00099 =
 [
-    [ "_xecc_config", "a00099.html#a00716", [
-      [ "enableXECC", "a00099.html#a1f522db3ec0690aa1b490a41e76a77ca", null ],
-      [ "enableWriteECC", "a00099.html#a5e291e744247cc2c35966caccfceb8ca", null ],
-      [ "enableReadECC", "a00099.html#aa3604ceb1cbae27c7cba4312262f484e", null ],
-      [ "enableSwap", "a00099.html#ad130ba05d135e6152f6f01a1ad5a633f", null ],
-      [ "Region0BaseAddress", "a00099.html#a0116b4ef515e171431eb34bbe91175fa", null ],
-      [ "Region0EndAddress", "a00099.html#ae28dd8dae079b3bc47d973e3e99c2452", null ],
-      [ "Region1BaseAddress", "a00099.html#a77ac20a0e2f3806fc3807b0cc69c1834", null ],
-      [ "Region1EndAddress", "a00099.html#a33aeecc2de3e7cd76945c1674ea93ca2", null ],
-      [ "Region2BaseAddress", "a00099.html#a128bd458046d73ba352787443b1c694c", null ],
-      [ "Region2EndAddress", "a00099.html#a44ed3a40c52cb8262dcaee3e69aca49b", null ],
-      [ "Region3BaseAddress", "a00099.html#a8e857f7c9aabfb6d11c02f1384a770dd", null ],
-      [ "Region3EndAddress", "a00099.html#a78c3bcfc54e2b1118bbb4d3afa525278", null ]
+    [ "_xrdc2_master_domain_assignment", "a00099.html#a00716", [
+      [ "lock", "a00099.html#a07cffe164eab218d7cec55c55b5714a6", null ],
+      [ "privilegeAttr", "a00099.html#a2533984b25cdff55a433cac6d736ec1c", null ],
+      [ "secureAttr", "a00099.html#aa943d473f99733e3b70de9d3b1e29b81", null ],
+      [ "domainId", "a00099.html#a7d464402a6f4c62bb59e7dde135ce8f1", null ],
+      [ "mask", "a00099.html#a9bce1e0672726178a7d6e25219dbe1f1", null ],
+      [ "match", "a00099.html#a68f271a9d6949298aa281465550933d2", null ]
     ] ],
-    [ "_xecc_single_error_info", "a00099.html#a00718", [
-      [ "singleErrorAddress", "a00099.html#adadfd218e1679a59b4adbf684fcbc55b", null ],
-      [ "singleErrorData", "a00099.html#a26667e4427fcb2bfe15aae5d95b0886c", null ],
-      [ "singleErrorEccCode", "a00099.html#a4a1172af74c4d1e48976d89770fa9298", null ],
-      [ "singleErrorBitPos", "a00099.html#a85e390049f11712065286cf6a400e6b7", null ],
-      [ "singleErrorBitField", "a00099.html#adf8b67240324c28b9088583ddfa5b17f", null ]
+    [ "_xrdc2_periph_access_config", "a00099.html#a00719", [
+      [ "lockMode", "a00099.html#adf028bdb82d7b28e643d162db092f214", null ],
+      [ "policy", "a00099.html#adc5a34fd57b306e1df65dcff99098739", null ]
     ] ],
-    [ "_xecc_multi_error_info", "a00099.html#a00717", [
-      [ "multiErrorAddress", "a00099.html#af57a81b0d13be5e552277921aaf92635", null ],
-      [ "multiErrorData", "a00099.html#a89b99177d9fb7964e25536a64c6e92d9", null ],
-      [ "multiErrorEccCode", "a00099.html#a271b4e32ff74fc3b19af244034f7671f", null ],
-      [ "multiErrorBitField", "a00099.html#ad9e11e6bb8c59813fb025c381bb52cca", null ]
+    [ "_xrdc2_mem_access_config", "a00099.html#a00717", [
+      [ "startAddr", "a00099.html#a8a47c8a4e2c4dbc56193eddb464b5c8d", null ],
+      [ "endAddr", "a00099.html#a4a9201f21954fe3842657d7d018e49fe", null ],
+      [ "lockMode", "a00099.html#ac9ba2264eca903375157ead60fb9c1bd", null ],
+      [ "policy", "a00099.html#ad996c137daba0622f10a3f134d267386", null ]
     ] ],
-    [ "FSL_XECC_DRIVER_VERSION", "a00099.html#gad325431773b07bfed2a6b1c530529e9c", null ],
-    [ "xecc_config_t", "a00099.html#gaee26e25401960212d69f35f1cd788aa2", null ],
-    [ "xecc_single_error_info_t", "a00099.html#ga93d1ca62293111f5c68a5925652b4e75", null ],
-    [ "xecc_multi_error_info_t", "a00099.html#ga4e9f95c050bc741548e4b7aad6565cee", [
-      [ "kXECC_SingleErrorInterruptEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a53650da26c6dc6b6837c57d45625502f", null ],
-      [ "kXECC_MultiErrorInterruptEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a4f80bb192d6ccff4d622e708ab045e8a", null ],
-      [ "kXECC_AllInterruptsEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a65218ab45b840660134ca314debffd8a", null ],
-      [ "kXECC_SingleErrorInterruptStatusEnable", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da46b0747d6fc3d389c94e3d32c24ba1d7", null ],
-      [ "kXECC_MultiErrorInterruptStatusEnable", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da8af35a7daddd2d506a855f448f336ce9", null ],
-      [ "kXECC_AllInterruptsStatusEnable", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da98c732cf181522f6c578b31df6ab8445", null ],
-      [ "kXECC_SingleErrorInterruptFlag", "a00099.html#gga7ada2556f3c386db5f31969fb6d4d002ab611d76edf0b80e66e477265b193fd8a", null ],
-      [ "kXECC_MultiErrorInterruptFlag", "a00099.html#gga7ada2556f3c386db5f31969fb6d4d002a4e1a8eb52be75ce67b346467020d2b29", null ],
-      [ "kXECC_AllInterruptsFlag", "a00099.html#gga7ada2556f3c386db5f31969fb6d4d002a5cacabdbef71596e4b2608092bf52d45", null ]
+    [ "_xrdc2_mem_slot_access_config", "a00099.html#a00718", [
+      [ "lockMode", "a00099.html#a2b70af371cae3f1717e2980f2d432222", null ],
+      [ "policy", "a00099.html#a68997b35d8d01564672a7ae6de1392b8", null ]
     ] ],
-    [ "XECC_Init", "a00099.html#ga97311aae29bfc510fbb42c624df1031c", null ],
-    [ "XECC_Deinit", "a00099.html#ga242c4cc1dcde4ba11079b7d035d043b4", null ],
-    [ "XECC_GetDefaultConfig", "a00099.html#gacb10ed003d22ffce8a40a2b162fd8892", null ],
-    [ "XECC_GetStatusFlags", "a00099.html#ga170796336e05241a2f249d743070b848", null ],
-    [ "XECC_ClearStatusFlags", "a00099.html#gaee625e46485dfc88311d562833a61c8d", null ],
-    [ "XECC_EnableInterruptStatus", "a00099.html#ga90aae71b41bc645a4e58e6cd9023328d", null ],
-    [ "XECC_DisableInterruptStatus", "a00099.html#ga5f1dcc0c540a8c035033eec3da8af225", null ],
-    [ "XECC_EnableInterrupts", "a00099.html#ga971955f3ef901c91df7f944c8ccee2df", null ],
-    [ "XECC_DisableInterrupts", "a00099.html#ga726e40ce8cfdf46f6d5add0ebceacd1a", null ],
-    [ "XECC_WriteECCEnable", "a00099.html#ga9d885d27b94053bfc27cc6e326e1161c", null ],
-    [ "XECC_ReadECCEnable", "a00099.html#ga46d062c8b186031c0fda12b9c73855ec", null ],
-    [ "XECC_SwapECCEnable", "a00099.html#gafed7d786907690c7dc6d71f97a8d061e", null ],
-    [ "XECC_ErrorInjection", "a00099.html#gaaca758e6d607ea7d598a46e74c429710", null ],
-    [ "XECC_GetSingleErrorInfo", "a00099.html#ga37e71e730b2513d22704ed9bca718a36", null ],
-    [ "XECC_GetMultiErrorInfo", "a00099.html#ga33588746ea450cf41f40ba94a0e6990a", null ]
+    [ "FSL_XRDC2_DRIVER_VERSION", "a00099.html#gae7b3c49f5049cca4ef7e567cbf8238ae", null ],
+    [ "xrdc2_global_config_lock_t", "a00099.html#ga5c3bf549bb4b4467cc9296febc1b3ec7", null ],
+    [ "xrdc2_secure_attr_t", "a00099.html#ga070925294995ce7886ecc5287a434c7a", null ],
+    [ "xrdc2_privilege_attr_t", "a00099.html#ga96c0ae306865c487498c3cc1ecee26f7", null ],
+    [ "xrdc2_master_domain_assignment_t", "a00099.html#ga3ab91a96f48e74235e024cfb64c44875", null ],
+    [ "xrdc2_access_policy_t", "a00099.html#ga4b55338d6c3302c650383fcff37c8887", null ],
+    [ "xrdc2_access_config_lock_t", "a00099.html#ga36efb779660f2e3566a2fbe0e0362c80", null ],
+    [ "xrdc2_periph_access_config_t", "a00099.html#ga459ab0110c9f79135c12fdfb4919f2dd", null ],
+    [ "xrdc2_mem_access_config_t", "a00099.html#gaecf6ea92e36dd78e00f74921f9c11457", null ],
+    [ "xrdc2_mem_slot_access_config_t", "a00099.html#ga4fa3d1823add3f7ee842c96b67ba095c", null ],
+    [ "_xrdc2_global_config_lock", "a00099.html#ga998cb23aafdbaeb961e94c74e9850576", [
+      [ "kXRDC2_GlobalConfigLockDisabled", "a00099.html#gga998cb23aafdbaeb961e94c74e9850576aa23629c1ddc809fc20a88472be6bc72d", null ],
+      [ "kXRDC2_GlobalConfigLockDisabledUntilReset", "a00099.html#gga998cb23aafdbaeb961e94c74e9850576a1a150694e7db7e7fb4797ca44c6567b3", null ],
+      [ "kXRDC2_GlobalConfigLockOwnerOnly", "a00099.html#gga998cb23aafdbaeb961e94c74e9850576a238da4b4a96b50fdb268afdbbac7789f", null ],
+      [ "kXRDC2_GlobalConfigLockEnabledUntilReset", "a00099.html#gga998cb23aafdbaeb961e94c74e9850576a2840ec049b8261f9e902a81d209d161d", null ]
+    ] ],
+    [ "_xrdc2_secure_attr", "a00099.html#gae37c569095308fab17113748fa70c243", [
+      [ "kXRDC2_MasterSecure", "a00099.html#ggae37c569095308fab17113748fa70c243a4c5a0177dead0e158326c6086505ac63", null ],
+      [ "kXRDC2_ForceSecure", "a00099.html#ggae37c569095308fab17113748fa70c243a13af2caf4eba286a3a74edf01e546c8c", null ],
+      [ "kXRDC2_ForceNonSecure", "a00099.html#ggae37c569095308fab17113748fa70c243a6c2bbfa6cf7b2b3664fc84617de18d8c", null ]
+    ] ],
+    [ "_xrdc2_privilege_attr", "a00099.html#ga8be50428de2c5716ce1c6436af780e4e", [
+      [ "kXRDC2_MasterPrivilege", "a00099.html#gga8be50428de2c5716ce1c6436af780e4eaaceaed2aa2117281476b8c3043b173cf", null ],
+      [ "kXRDC2_ForceUser", "a00099.html#gga8be50428de2c5716ce1c6436af780e4ea10585690a2613187c0cd1eccff3415d6", null ],
+      [ "kXRDC2_ForcePrivilege", "a00099.html#gga8be50428de2c5716ce1c6436af780e4ea03179f1cbc766fc20474fdaec76b9fe0", null ]
+    ] ],
+    [ "_xrdc2_access_policy", "a00099.html#gada1b984d7a983c49d1bd1453a1151765", null ],
+    [ "_xrdc2_access_config_lock", "a00099.html#gaa19e62fc10e7c5091ad0e18bd1051e9d", [
+      [ "kXRDC2_AccessConfigLockDisabled", "a00099.html#ggaa19e62fc10e7c5091ad0e18bd1051e9da37ff9c3e20d64f5342dc87f8475346f5", null ],
+      [ "kXRDC2_AccessConfigLockDisabledUntilReset", "a00099.html#ggaa19e62fc10e7c5091ad0e18bd1051e9da807051706f520f999654bacbf767f436", null ],
+      [ "kXRDC2_AccessConfigLockDomainXOnly", "a00099.html#ggaa19e62fc10e7c5091ad0e18bd1051e9da98397b1b0fa5819c9965138258ff51a8", null ],
+      [ "kXRDC2_AccessConfigLockEnabledUntilReset", "a00099.html#ggaa19e62fc10e7c5091ad0e18bd1051e9daa4390379e463dca6093e784e78d71375", null ]
+    ] ],
+    [ "XRDC2_Init", "a00099.html#gae2752e805f8b8e771acac62bf97dec51", null ],
+    [ "XRDC2_Deinit", "a00099.html#ga5ba91eec1a88d96c398331692789d6d9", null ],
+    [ "XRDC2_SetGlobalValid", "a00099.html#gabcb9a5874d8062d24fa8b21c253d5c36", null ],
+    [ "XRDC2_GetCurrentMasterDomainId", "a00099.html#ga0e27e427bb987515c8a9ad69ac4648a0", null ],
+    [ "XRDC2_SetGlobalConfigLock", "a00099.html#gaaba4b0ae1d8d7aeb43a57d754880258f", null ],
+    [ "XRDC2_GetCurrentGlobalConfigLockOwnerDomainId", "a00099.html#ga562d77547f9d463b7d60400106a1b610", null ],
+    [ "XRDC2_GetDefaultMasterDomainAssignment", "a00099.html#gadb71d13342d1263950507a71748c40f8", null ],
+    [ "XRDC2_SetMasterDomainAssignment", "a00099.html#ga4be324ffb0cd6dc6a3a7452dad57a936", null ],
+    [ "XRDC2_LockMasterDomainAssignment", "a00099.html#ga073679843368f43ce2c4f154cc9fba8d", null ],
+    [ "XRDC2_SetMasterDomainAssignmentValid", "a00099.html#ga04b4463f92a37cf1293a0393b4622074", null ],
+    [ "XRDC2_GetMemSlotAccessDefaultConfig", "a00099.html#gac50839a4312704443dc8f81b2f84acfe", null ],
+    [ "XRDC2_SetMemSlotAccessConfig", "a00099.html#ga965294046e2a02977467b0597023bef1", null ],
+    [ "XRDC2_SetMemSlotAccessValid", "a00099.html#gaf06b56452b3d29a1b85903ebb4c22f60", null ],
+    [ "XRDC2_SetMemSlotAccessLockMode", "a00099.html#ga947492eff8380ac22ba172b6830e52be", null ],
+    [ "XRDC2_SetMemSlotDomainAccessPolicy", "a00099.html#gaf9f14f3cbe9e253d74d15a705548a1dc", null ],
+    [ "XRDC2_EnableMemSlotExclAccessLock", "a00099.html#ga6d9cd54d13ae301cf53d78b515afee34", null ],
+    [ "XRDC2_GetMemSlotExclAccessLockDomainOwner", "a00099.html#ga424b65a3761e334401205cd1884e9df6", null ],
+    [ "XRDC2_TryLockMemSlotExclAccess", "a00099.html#gaa50e7765bbb27466cdc1babc5b1371fe", null ],
+    [ "XRDC2_LockMemSlotExclAccess", "a00099.html#ga04327800130751ffcf10418d2a8bf98a", null ],
+    [ "XRDC2_UnlockMemSlotExclAccess", "a00099.html#gaa2f3ca59533176b6e79e09d636ab13d2", null ],
+    [ "XRDC2_ForceMemSlotExclAccessLockRelease", "a00099.html#gad9aaa5e4cf75e17e3ad3f3b0fd4615db", null ],
+    [ "XRDC2_GetMemAccessDefaultConfig", "a00099.html#ga30b3ddfa1eeb9f2936a6278adbd3b060", null ],
+    [ "XRDC2_SetMemAccessConfig", "a00099.html#ga799072d5676c06567c784a4561e5be83", null ],
+    [ "XRDC2_SetMemAccessValid", "a00099.html#ga81094b8da3611fca6c23870a339cf487", null ],
+    [ "XRDC2_SetMemAccessLockMode", "a00099.html#gab3ad6f43ff5e03d7d110385a94c07d0c", null ],
+    [ "XRDC2_SetMemDomainAccessPolicy", "a00099.html#ga321dae09ace71f2fead23ef8d1981785", null ],
+    [ "XRDC2_EnableMemExclAccessLock", "a00099.html#ga608a9657e62b8b27902e0dba2eaf721b", null ],
+    [ "XRDC2_GetMemExclAccessLockDomainOwner", "a00099.html#ga273ce5b4718b676a1ec07607099c743f", null ],
+    [ "XRDC2_TryLockMemExclAccess", "a00099.html#ga5b22edad596eab335cc13d4f70fe2229", null ],
+    [ "XRDC2_LockMemExclAccess", "a00099.html#ga78a4122187cb4ce4ec4da0df7ead4912", null ],
+    [ "XRDC2_UnlockMemExclAccess", "a00099.html#gaa11b3afe53e888159bd6d7679ee60b18", null ],
+    [ "XRDC2_ForceMemExclAccessLockRelease", "a00099.html#ga68557ca5aef19310dd844d36ddb0e859", null ],
+    [ "XRDC2_GetPeriphAccessDefaultConfig", "a00099.html#ga32b3c778a8cff7c7cac990fed02343ec", null ],
+    [ "XRDC2_SetPeriphAccessConfig", "a00099.html#ga05dbb465d3e2a135cc18ede633162001", null ],
+    [ "XRDC2_SetPeriphAccessValid", "a00099.html#gaceaa96b49b473c786278ed828e3a8047", null ],
+    [ "XRDC2_SetPeriphAccessLockMode", "a00099.html#gac9c5c05edac1fd42c48f6d2606285f8f", null ],
+    [ "XRDC2_SetPeriphDomainAccessPolicy", "a00099.html#gaea8b2e493f6672de83ba81ec1fd181ec", null ],
+    [ "XRDC2_EnablePeriphExclAccessLock", "a00099.html#gad8ea43dac4c6f5876a0b5a1c98bca455", null ],
+    [ "XRDC2_GetPeriphExclAccessLockDomainOwner", "a00099.html#ga4421a6f031aa1d0089cb4777a57b4a85", null ],
+    [ "XRDC2_TryLockPeriphExclAccess", "a00099.html#ga9cd8dc5241d8862a3f0e9e965450e01b", null ],
+    [ "XRDC2_LockPeriphExclAccess", "a00099.html#ga9007ceeef5fbb54f7ec65a8380dfff25", null ],
+    [ "XRDC2_UnlockPeriphExclAccess", "a00099.html#gab76f82849f3691af707785098cf5c620", null ],
+    [ "XRDC2_ForcePeriphExclAccessLockRelease", "a00099.html#ga93059b6f5780407ebe35e863d9c8060c", null ]
 ];

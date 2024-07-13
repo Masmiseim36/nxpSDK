@@ -37,6 +37,7 @@
     <definition extID="middleware.motor_control.mcaa_cm7f.MIMXRT1176"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
+    <definition extID="utility.str.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -45,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbmimxrt1170_mc_pmsm_enc" name="mc_pmsm_enc" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.dmamux.MIMXRT1176 platform.drivers.xbara.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.adc_etc.MIMXRT1176 platform.drivers.lpadc.MIMXRT1176 platform.drivers.acmp.MIMXRT1176 middleware.rtcesl.cm7f.MIMXRT1176 middleware.motor_control.mc_drivers_adcimxrt11xx_pwma_enc.MIMXRT1176 middleware.motor_control_pmsm_float_imcat.MIMXRT1176 middleware.mc_pmsm_enc.float.MIMXRT1176 middleware.motor_control_pmsm_float.tsa.MIMXRT1176 middleware.pmsm_mid.float.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 component.lists.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 middleware.fmstr.MIMXRT1176 middleware.fmstr.platform_gen32le.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.drivers.xmcd.evkbmimxrt1170.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 middleware.motor_control_pmsm_float.template.MIMXRT1176 middleware.motor_control.mcaa_cm7f.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="demo_apps">
+  <example id="evkbmimxrt1170_mc_pmsm_enc" name="mc_pmsm_enc" device_core="cm7_MIMXRT1176xxxxx" dependency="platform.drivers.dmamux.MIMXRT1176 platform.drivers.xbara.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.adc_etc.MIMXRT1176 platform.drivers.lpadc.MIMXRT1176 platform.drivers.acmp.MIMXRT1176 middleware.rtcesl.cm7f.MIMXRT1176 middleware.motor_control.mc_drivers_adcimxrt11xx_pwma_enc.MIMXRT1176 middleware.motor_control_pmsm_float_imcat.MIMXRT1176 middleware.mc_pmsm_enc.float.MIMXRT1176 middleware.motor_control_pmsm_float.tsa.MIMXRT1176 middleware.pmsm_mid.float.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 component.lists.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 middleware.fmstr.MIMXRT1176 middleware.fmstr.platform_gen32le.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.drivers.xmcd.evkbmimxrt1170.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 middleware.motor_control_pmsm_float.template.MIMXRT1176 middleware.motor_control.mcaa_cm7f.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176 utility.str.MIMXRT1176" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -90,7 +91,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -173,6 +174,10 @@
     <source path="." project_relative_path="motor_control/docs" type="other">
       <files mask="PMSMRT1170B.pdf"/>
     </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="m3_pmsm_appconfig.h" hidden="true"/>
+      <files mask="m4_pmsm_appconfig.h" hidden="true"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="main.c"/>
     </source>
@@ -195,10 +200,8 @@
       <files mask="clock_config.h"/>
       <files mask="peripherals.h"/>
     </source>
-    <source path="." project_relative_path="source" type="c_include">
-      <files mask="freemaster_cfg.h"/>
-    </source>
     <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="freemaster_cfg.h"/>
       <files mask="mc_periph_init.h"/>
     </source>
     <source path="." project_relative_path="board" type="src">

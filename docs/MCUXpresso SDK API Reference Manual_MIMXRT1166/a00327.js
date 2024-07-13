@@ -1,7 +1,12 @@
 var a00327 =
 [
-    [ "CAAM Non-blocking AES driver", "a00331.html", "a00331" ],
-    [ "CAAM Non-blocking DES driver", "a00328.html", "a00328" ],
-    [ "CAAM Non-blocking HASH driver", "a00329.html", "a00329" ],
-    [ "CAAM Non-blocking RNG driver", "a00330.html", "a00330" ]
+    [ "CAAM_AES_EncryptEcbNonBlocking", "a00327.html#gaf17615d04159c190c4b5dbe849cd60fb", null ],
+    [ "CAAM_AES_DecryptEcbNonBlocking", "a00327.html#ga95932998da1e1e6f8acf8b07425920c5", null ],
+    [ "CAAM_AES_EncryptCbcNonBlocking", "a00327.html#gabb70bd768fda571c83dae0f19ae47960", null ],
+    [ "CAAM_AES_DecryptCbcNonBlocking", "a00327.html#ga8af780abeaba467ebeae110822bac7f4", null ],
+    [ "CAAM_AES_CryptCtrNonBlocking", "a00327.html#gaf8111bdbb0f0477dce2ee307ecea487c", null ],
+    [ "CAAM_AES_EncryptTagCcmNonBlocking", "a00327.html#ga8ba9f0a2d82d4a5e9219d221fb8452b3", null ],
+    [ "CAAM_AES_DecryptTagCcmNonBlocking", "a00327.html#ga33528456ae5c03460e6f6e2e404a29d6", null ],
+    [ "CAAM_AES_EncryptTagGcmNonBlocking", "a00327.html#ga1f256cafc754c9884fbfb6016a87ad5e", null ],
+    [ "CAAM_AES_DecryptTagGcmNonBlocking", "a00327.html#gac1080871a66e816b659c333449423f34", null ]
 ];

@@ -1,328 +1,323 @@
 var a00072 =
 [
-    [ "_pwm_signal_param", "a00072.html#a00612", [
-      [ "pwmChannel", "a00072.html#a9221d3f3b26c4e1a8dd060c9636893d8", null ],
-      [ "dutyCyclePercent", "a00072.html#abe4ec56f4d45feb292323168ea46b979", null ],
-      [ "level", "a00072.html#a44995982957ed3062dc5e0d9190060a6", null ],
-      [ "deadtimeValue", "a00072.html#af1314750a4fa633c3239f21b6e3d8011", null ],
-      [ "faultState", "a00072.html#aeb29f9cdd2bc095c801ec3af58066f5b", null ],
-      [ "pwmchannelenable", "a00072.html#a885b1c672030a08d19ab823aed181410", null ]
+    [ "_pxp_output_buffer_config", "a00072.html#a00615", [
+      [ "pixelFormat", "a00072.html#a976bb09d52f275e77216488c627a2ec3", null ],
+      [ "interlacedMode", "a00072.html#aefbdf8e9035d9ce82809affb09acc612", null ],
+      [ "buffer0Addr", "a00072.html#a2fc1bada9333c3f0867f0ce9f2d7cafa", null ],
+      [ "buffer1Addr", "a00072.html#a3b638c57a3f66395a81c4f562a4a7be2", null ],
+      [ "pitchBytes", "a00072.html#a61cc7a4a04f846fa69f883751375e5c6", null ],
+      [ "width", "a00072.html#a24f957f946ae6e82f20e955232389b8d", null ],
+      [ "height", "a00072.html#ab05b9577bc975ed9490abcd7b7ceea3d", null ]
     ] ],
-    [ "_pwm_config", "a00072.html#a00608", [
-      [ "enableDebugMode", "a00072.html#a0b5da900fdaa1bd52d02c42363062b1b", null ],
-      [ "initializationControl", "a00072.html#af06d70f7b6b8949762425be3adff0975", null ],
-      [ "clockSource", "a00072.html#a2b95dfc98986dd3411c2de60ca31d15f", null ],
-      [ "prescale", "a00072.html#a62b56478de0d52aff6968c180fb788f1", null ],
-      [ "pairOperation", "a00072.html#a46e1badfc5dacdb009f8ded2830ed929", null ],
-      [ "reloadLogic", "a00072.html#adf25444f7be7e79b0418c7dc811a3698", null ],
-      [ "reloadSelect", "a00072.html#ae07e4a6c085863185990b9a8c7be6c09", null ],
-      [ "reloadFrequency", "a00072.html#a05a5bb2a5940a061c05220e39967dc08", null ],
-      [ "forceTrigger", "a00072.html#a393f48b5f3e017f103e728e2192345ad", null ]
+    [ "_pxp_ps_buffer_config", "a00072.html#a00617", [
+      [ "pixelFormat", "a00072.html#a9208389bffc1094923fc5e22b8532a7b", null ],
+      [ "swapByte", "a00072.html#ad7f1d3da6b22925f973bf362f44ae4aa", null ],
+      [ "bufferAddr", "a00072.html#a7f70b9ba31e681137119cf5e5582df5b", null ],
+      [ "bufferAddrU", "a00072.html#a34db6bb7b7a36d7f2e306fdd81a875a7", null ],
+      [ "bufferAddrV", "a00072.html#a677550d2778f965e338ed39285ddcd7c", null ],
+      [ "pitchBytes", "a00072.html#ae2f6360bb5d904839fb831ad7e3a5c6e", null ]
     ] ],
-    [ "_pwm_fault_input_filter_param", "a00072.html#a00609", [
-      [ "faultFilterCount", "a00072.html#abb7e34c951669986c592e45a2eec0106", null ],
-      [ "faultFilterPeriod", "a00072.html#a931f76f38319d2076afed4fbecbfd2d1", null ],
-      [ "faultGlitchStretch", "a00072.html#a39a93e8a5be2ad94daf79c1ee65a6c69", null ]
+    [ "_pxp_as_buffer_config", "a00072.html#a00611", [
+      [ "pixelFormat", "a00072.html#a462c54a31e5f0f5c2f73b489ab2ef020", null ],
+      [ "bufferAddr", "a00072.html#a735cf80fdb2b86bb2fee8504a8a73184", null ],
+      [ "pitchBytes", "a00072.html#a811137ca20378ac2f30ad29d2295563f", null ]
     ] ],
-    [ "_pwm_fault_param", "a00072.html#a00610", [
-      [ "faultClearingMode", "a00072.html#a2f13b52bcddc37a16408f919dac81e71", null ],
-      [ "faultLevel", "a00072.html#a7479759363aa7db76a698904fbcfda76", null ],
-      [ "enableCombinationalPath", "a00072.html#abc88fd8edb612b2385ecca08528b84e2", null ],
-      [ "recoverMode", "a00072.html#ae11342f0f3c097f3d83a041de6efb5c8", null ]
+    [ "_pxp_as_blend_config", "a00072.html#a00610", [
+      [ "alpha", "a00072.html#a9125ad9c8860461c7b1ee979f8b79d6d", null ],
+      [ "invertAlpha", "a00072.html#ad36a1c631bc4c11fc8b2219fb8cef930", null ],
+      [ "alphaMode", "a00072.html#a0e17d36c254cd78a9ad05c00a43255fa", null ],
+      [ "ropMode", "a00072.html#a6b0b78553edc30741fe7fc04508b7347", null ]
     ] ],
-    [ "_pwm_input_capture_param", "a00072.html#a00611", [
-      [ "captureInputSel", "a00072.html#a8f9d3a5bc662c297ff86b20b9a3bf54e", null ],
-      [ "edgeCompareValue", "a00072.html#a3ede747ad1f85764f89fcd55c35ddafb", null ],
-      [ "edge0", "a00072.html#af75cea15828475a18a7ea477b3e8c793", null ],
-      [ "edge1", "a00072.html#a56656b38aca93a9bf249182e489a5054", null ],
-      [ "enableOneShotCapture", "a00072.html#af1fe05c7499701e25b7f1180e8320cd8", null ],
-      [ "fifoWatermark", "a00072.html#ae8c19c4ca894eac3a84e930c45f063dc", null ]
+    [ "_pxp_csc2_config", "a00072.html#a00612", [
+      [ "mode", "a00072.html#a345772698379b1bd250e35a871f21a85", null ],
+      [ "A1", "a00072.html#a7e273e30fef3a9974bf90e2bb8918146", null ],
+      [ "A2", "a00072.html#a5e175d2d772d4089c5081522ec1558c5", null ],
+      [ "A3", "a00072.html#a3a8b7a22be993dc42779ded9b0870b96", null ],
+      [ "B1", "a00072.html#ad85ed4632f8434c9b4a6416fefa4d6c2", null ],
+      [ "B2", "a00072.html#a66eebea30067a5b2c3053850cc2df0eb", null ],
+      [ "B3", "a00072.html#ac729efee1448d41972442cf14870fa24", null ],
+      [ "C1", "a00072.html#ab91a66aad7bebec8b8a963674c3de9d5", null ],
+      [ "C2", "a00072.html#ae7a76b2777b26748309974a425342dfb", null ],
+      [ "C3", "a00072.html#a5c8da00dab23554e2983d3caccc93f56", null ],
+      [ "D1", "a00072.html#a3eedab93bb44e50a20186613f49beba8", null ],
+      [ "D2", "a00072.html#a660b9e6b4567259e3b7250cbeb1d6cbb", null ],
+      [ "D3", "a00072.html#a6a5b38130164477d6b877da337de470d", null ]
     ] ],
-    [ "FSL_PWM_DRIVER_VERSION", "a00072.html#ga8bda5d1da1f6b7150e002c109a62d083", null ],
-    [ "PWM_SUBMODULE_SWCONTROL_WIDTH", "a00072.html#ga6e56de2326b1f4bf708bd7991010e63f", null ],
-    [ "PWM_SUBMODULE_CHANNEL", "a00072.html#ga7b52c5fec031c9b8be85697d36ae3959", null ],
-    [ "pwm_submodule_t", "a00072.html#ga15f7df9624973accb909c26128bd5533", null ],
-    [ "pwm_channels_t", "a00072.html#ga5bd1f23c82b402cb2f5a667982fd9a58", null ],
-    [ "pwm_value_register_t", "a00072.html#gacee48095cc392bcf2d7a0ed34d746695", null ],
-    [ "pwm_clock_source_t", "a00072.html#ga16c01b0c4438bd155b806221e213d81b", null ],
-    [ "pwm_clock_prescale_t", "a00072.html#gadaf15716fa1940551e8fb0d60695099d", null ],
-    [ "pwm_force_output_trigger_t", "a00072.html#ga59f732722481d586f4ce431a828cdce2", null ],
-    [ "pwm_output_state_t", "a00072.html#ga241fa6ae2ffcc987253b155ad2723865", null ],
-    [ "pwm_init_source_t", "a00072.html#ga99737e92fe6d7f99fe8bfa1ef45b99d7", null ],
-    [ "pwm_load_frequency_t", "a00072.html#gacb656f0b9876ae4e70b8c60778851f34", null ],
-    [ "pwm_fault_input_t", "a00072.html#gae4317fabf2d25e2e1bf031fd5591d606", null ],
-    [ "pwm_fault_disable_t", "a00072.html#ga7b6e0564b2c3997393ec4362c76d9b7e", null ],
-    [ "pwm_fault_channels_t", "a00072.html#ga603aafe893d81310b1b3d81796231571", null ],
-    [ "pwm_input_capture_edge_t", "a00072.html#ga3d7f16402e1dce2ec8dba9cd91ecb0b6", null ],
-    [ "pwm_force_signal_t", "a00072.html#ga431395b58e3fadec4c0598a58bd65eaa", null ],
-    [ "pwm_chnl_pair_operation_t", "a00072.html#ga91a3cb04559178512faf4d9753f8943c", null ],
-    [ "pwm_register_reload_t", "a00072.html#ga34882740e2c3bf950b16f348fb1bc033", null ],
-    [ "pwm_fault_recovery_mode_t", "a00072.html#ga32fcf427c485e5a6401d3c46fca7ee79", null ],
-    [ "pwm_interrupt_enable_t", "a00072.html#ga36af25274e927d9ebbe8ae96b42025e7", null ],
-    [ "pwm_status_flags_t", "a00072.html#gaf8b3b6e23f00bc167f2a57fdae9587d6", null ],
-    [ "pwm_dma_enable_t", "a00072.html#gaacd92e201f066c0f9c8c4dae5a0e9318", null ],
-    [ "pwm_dma_source_select_t", "a00072.html#ga17f659e6ffe11263ded41b7cde7f6fee", null ],
-    [ "pwm_watermark_control_t", "a00072.html#ga1371738ece2867d5721eeb1555a24500", null ],
-    [ "pwm_mode_t", "a00072.html#gaea9fca317b60bdd74f9dab95c495135d", null ],
-    [ "pwm_level_select_t", "a00072.html#gaa1855c8fdcb0ac815791a7588c753fc5", null ],
-    [ "pwm_fault_state_t", "a00072.html#ga5c2783b07f653575feb325d9f7ec85ab", null ],
-    [ "pwm_reload_source_select_t", "a00072.html#gac1b6ebf27fee41dc9dee2c4cbd69c191", null ],
-    [ "pwm_fault_clear_t", "a00072.html#ga8e38a628d5d80fc207cf8f263a9ac02c", null ],
-    [ "pwm_module_control_t", "a00072.html#gab4e7edf6158ea45d13393a7b6bc1d47b", null ],
-    [ "pwm_signal_param_t", "a00072.html#ga6feb5d21b4158e0e8f357e3e3daeb1e6", null ],
-    [ "pwm_config_t", "a00072.html#gacf55259c9d248a48161989cf5620ed9e", null ],
-    [ "pwm_fault_input_filter_param_t", "a00072.html#gacafef854e7f955ed8247e451cb2108b0", null ],
-    [ "pwm_fault_param_t", "a00072.html#gafaa0e9583f48a17753fc2192e97f130f", null ],
-    [ "pwm_input_capture_param_t", "a00072.html#ga714849a3064faf57a56dfc552fc7c78b", null ],
-    [ "_pwm_submodule", "a00072.html#ga6f836cf6b5fb89b2052853e8b3a7c316", [
-      [ "kPWM_Module_0", "a00072.html#gga6f836cf6b5fb89b2052853e8b3a7c316add38c1b5a7f784f71f3cebf9a1bf3ff6", null ],
-      [ "kPWM_Module_1", "a00072.html#gga6f836cf6b5fb89b2052853e8b3a7c316a47a6ce50cc1613c9988bf21d9bb44c4c", null ],
-      [ "kPWM_Module_2", "a00072.html#gga6f836cf6b5fb89b2052853e8b3a7c316a0340ee44d37ea0644debbc392abe0218", null ],
-      [ "kPWM_Module_3", "a00072.html#gga6f836cf6b5fb89b2052853e8b3a7c316a262d2987720c085ebda6b24b4e646ab9", null ]
+    [ "_pxp_dither_final_lut_data", "a00072.html#a00614", [
+      [ "data_3_0", "a00072.html#a92b21d04c4ee5c8a13c0071dbe0c69cb", null ],
+      [ "data_7_4", "a00072.html#ad0dd84c32bdf53748dc7c1ee8ac5d627", null ],
+      [ "data_11_8", "a00072.html#ac0ca08b14489e54f35c168df133a03cc", null ],
+      [ "data_15_12", "a00072.html#a8e74d634887f8ae2b7e0096f66e5c492", null ]
     ] ],
-    [ "_pwm_channels", "a00072.html#ga617cac07209ef33ae7a580c053720ff6", null ],
-    [ "_pwm_value_register", "a00072.html#ga33eaeada3c920a072989eb5b47a5374b", [
-      [ "kPWM_ValueRegister_0", "a00072.html#gga33eaeada3c920a072989eb5b47a5374ba2629df804c88f83f3934ff2fbb68aacc", null ],
-      [ "kPWM_ValueRegister_1", "a00072.html#gga33eaeada3c920a072989eb5b47a5374ba42790226368938e490216e5f2c63c2fd", null ],
-      [ "kPWM_ValueRegister_2", "a00072.html#gga33eaeada3c920a072989eb5b47a5374bae42d8eb24146ed351e0e42dc349885e2", null ],
-      [ "kPWM_ValueRegister_3", "a00072.html#gga33eaeada3c920a072989eb5b47a5374ba7539de4e419733b706a122acfe8b1b8a", null ],
-      [ "kPWM_ValueRegister_4", "a00072.html#gga33eaeada3c920a072989eb5b47a5374ba8bfe3c876423ba03198b0086bf95c9a3", null ],
-      [ "kPWM_ValueRegister_5", "a00072.html#gga33eaeada3c920a072989eb5b47a5374bae046f51b0c1edd5217aa3f4ed2cadfa0", null ]
+    [ "_pxp_dither_config", "a00072.html#a00613", [
+      [ "enableDither0", "a00072.html#a0c33b45d6acae704b57654975bae589c", null ],
+      [ "enableDither1", "a00072.html#a7c0e514c8f1e27eecf57ac669582c415", null ],
+      [ "enableDither2", "a00072.html#aa061fce713aa8b56fe6cfae97740aaad", null ],
+      [ "ditherMode0", "a00072.html#a3c6e228a56e6f6fc0b707c9edf0a7d5a", null ],
+      [ "ditherMode1", "a00072.html#ae3bbec34bd7dbad9e68ab61a9027b595", null ],
+      [ "ditherMode2", "a00072.html#ac3a782e454cc5269ab791736f561f741", null ],
+      [ "quantBitNum", "a00072.html#a958b45631b58d811fc5101c75501b2a1", null ],
+      [ "lutMode", "a00072.html#a94eff04d8d7ca74f82fe60124130e352", null ],
+      [ "idxMatrixSize0", "a00072.html#a2b382151679619b3c0b8f1a8f15bd421", null ],
+      [ "idxMatrixSize1", "a00072.html#ac7327e1a9260f838b5249d1f02c9a25a", null ],
+      [ "idxMatrixSize2", "a00072.html#a4bc09a88a6d6f9152a4be676b31bd51c", null ],
+      [ "enableFinalLut", "a00072.html#ab98896011008a0d8b661fa14a2179987", null ]
     ] ],
-    [ "_pwm_value_register_mask", "a00072.html#ga1ef571323a22659a47a056814c518928", [
-      [ "kPWM_ValueRegisterMask_0", "a00072.html#gga1ef571323a22659a47a056814c518928a69326d45df2c6ee651b821e0b6325855", null ],
-      [ "kPWM_ValueRegisterMask_1", "a00072.html#gga1ef571323a22659a47a056814c518928a16f9b677940307c9721e7322be3c60d6", null ],
-      [ "kPWM_ValueRegisterMask_2", "a00072.html#gga1ef571323a22659a47a056814c518928ad41f834769369cb8444d04b48ed06112", null ],
-      [ "kPWM_ValueRegisterMask_3", "a00072.html#gga1ef571323a22659a47a056814c518928a42baeac421f8acccb5dd97f62115f03e", null ],
-      [ "kPWM_ValueRegisterMask_4", "a00072.html#gga1ef571323a22659a47a056814c518928aa43d103a5a2fc1d7c175a5d2c0050cc8", null ],
-      [ "kPWM_ValueRegisterMask_5", "a00072.html#gga1ef571323a22659a47a056814c518928a87c70f83b1b4cedc4823944cd8344023", null ]
+    [ "pxp_porter_duff_config_t", "a00072.html#a00727", [
+      [ "enable", "a00072.html#a787a1ba56d6618f3abc0c875187dddce", null ],
+      [ "srcFactorMode", "a00072.html#a6ae62a90aa13889831af48c55a2f0290", null ],
+      [ "dstGlobalAlphaMode", "a00072.html#ad5df0e514e1e9059e98d355d7113bfe3", null ],
+      [ "dstAlphaMode", "a00072.html#a5eee57db4949f9aa1389bf8d5e372ebd", null ],
+      [ "dstColorMode", "a00072.html#a47a8894dc0dcf5ec3fb6d7c468eae01e", null ],
+      [ "dstFactorMode", "a00072.html#ab682e2c813fb6c8dc6d516326cfdd159", null ],
+      [ "srcGlobalAlphaMode", "a00072.html#adbee79f3bdfa1c109d31dc65a12e11c4", null ],
+      [ "srcAlphaMode", "a00072.html#ac0bf5134f12ca85986a6736df0abcc2d", null ],
+      [ "srcColorMode", "a00072.html#af0faaac9979245dd2a41f38969879b02", null ],
+      [ "dstGlobalAlpha", "a00072.html#abbda0ccb9aca0abd018b137cd5ea75ff", null ],
+      [ "srcGlobalAlpha", "a00072.html#a0a8ae0532dc1ae2d7429c4b13fe863be", null ]
     ] ],
-    [ "_pwm_clock_source", "a00072.html#gad24dbd7a287a6152a9a3237c318be541", [
-      [ "kPWM_BusClock", "a00072.html#ggad24dbd7a287a6152a9a3237c318be541aadd6fce563ffd4fcfa1b8fd32a6c8836", null ],
-      [ "kPWM_ExternalClock", "a00072.html#ggad24dbd7a287a6152a9a3237c318be541a5491a1f9512916febc4d1e5a241f4aa1", null ],
-      [ "kPWM_Submodule0Clock", "a00072.html#ggad24dbd7a287a6152a9a3237c318be541acb3515bd116d5f3603ddedcfe12f0ec8", null ]
+    [ "_pxp_pic_copy_config", "a00072.html#a00616", [
+      [ "srcPicBaseAddr", "a00072.html#a2cc66fc0c6147035636598fe82509eee", null ],
+      [ "srcPitchBytes", "a00072.html#a2fb659a2e5335c634ab9f0ddb83b27ef", null ],
+      [ "srcOffsetX", "a00072.html#a88f8e669eeb2b6ff3344c406533728b0", null ],
+      [ "srcOffsetY", "a00072.html#add896aa1b15eee97046f3aad4aa7ccbd", null ],
+      [ "destPicBaseAddr", "a00072.html#ad87aa5155aeaabc248f01d5e03a67434", null ],
+      [ "destPitchBytes", "a00072.html#ad1f47d15f92d2909cb219adb27888041", null ],
+      [ "destOffsetX", "a00072.html#a2239f2e3ed093bbcd0b9af6012f48f0a", null ],
+      [ "destOffsetY", "a00072.html#a104fe97de14dd9ba24ce3e13f52724e1", null ],
+      [ "width", "a00072.html#a311cf8c500271722c323fdf96297ab62", null ],
+      [ "height", "a00072.html#af60832ed1759f83bfa035dcd2aebde0d", null ],
+      [ "pixelFormat", "a00072.html#abb2676526229bc47f3ffc15b5686e1a3", null ]
     ] ],
-    [ "_pwm_clock_prescale", "a00072.html#ga95e14f2415bc08bc74dddd5ab3d21040", [
-      [ "kPWM_Prescale_Divide_1", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040af9a5a8f75935115c248270592ebc1958", null ],
-      [ "kPWM_Prescale_Divide_2", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040a23a1e736f7176595b5c8f6928aae92af", null ],
-      [ "kPWM_Prescale_Divide_4", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040a22a28a9f43a62602bd76c6891def7df3", null ],
-      [ "kPWM_Prescale_Divide_8", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040a815f3c6fe8ebbf7cbc8321370b748c01", null ],
-      [ "kPWM_Prescale_Divide_16", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040ab480291453a4ed9f12bb649c3999cd7a", null ],
-      [ "kPWM_Prescale_Divide_32", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040a3609a2960ea5f6af9395bd712c835cd7", null ],
-      [ "kPWM_Prescale_Divide_64", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040a9329060508da1a966a938982f0437092", null ],
-      [ "kPWM_Prescale_Divide_128", "a00072.html#gga95e14f2415bc08bc74dddd5ab3d21040a19e584bea4f6afaaf968fd6452763154", null ]
+    [ "pxp_flip_mode_t", "a00072.html#gad42038d0f63f489ab02cc05cbb42155c", null ],
+    [ "pxp_rotate_position_t", "a00072.html#ga3bfd748233a446438131d717111d5280", null ],
+    [ "pxp_rotate_degree_t", "a00072.html#ga431cd673cf1b4646bfd7b7a5a9a08956", null ],
+    [ "pxp_interlaced_output_mode_t", "a00072.html#ga21dff243f4d0c72ecdec06bcc2e117ee", null ],
+    [ "pxp_output_pixel_format_t", "a00072.html#ga885f698463a7751310165bb752c57192", null ],
+    [ "pxp_output_buffer_config_t", "a00072.html#ga0b57287a40ce675bdda5da564af3cd85", null ],
+    [ "pxp_ps_pixel_format_t", "a00072.html#ga8cfff4a98399f51f22dfd90aa44e76bc", null ],
+    [ "pxp_ps_yuv_format_t", "a00072.html#ga7135ce3adc489df5e2a20617d5371a3f", null ],
+    [ "pxp_ps_buffer_config_t", "a00072.html#ga221a49e717d531a0bd97e20a3f0c1ec2", null ],
+    [ "pxp_as_pixel_format_t", "a00072.html#gad554f9e3a14a9cf94cf4e525b5a6be2a", null ],
+    [ "pxp_as_buffer_config_t", "a00072.html#ga91ca43c014e509a2549db263d62f0f49", null ],
+    [ "pxp_alpha_mode_t", "a00072.html#gada337c37e80cbe5c4a3a5234825076ad", null ],
+    [ "pxp_rop_mode_t", "a00072.html#gab5340fc16ca668a4af5eaaa42a484cc7", null ],
+    [ "pxp_as_blend_config_t", "a00072.html#gae6fc9d99a658756059c184e35a740654", null ],
+    [ "pxp_block_size_t", "a00072.html#ga8d1ebce4e6c532b67d4a77bbf30c5c35", null ],
+    [ "pxp_csc1_mode_t", "a00072.html#ga0cacff0f78548378b397a089ab5e59e8", null ],
+    [ "pxp_csc2_mode_t", "a00072.html#ga482b6abf6a8a76bb8b4b8f9c79cd35c6", null ],
+    [ "pxp_csc2_config_t", "a00072.html#ga35e6edd028115773ee9bb4115a25a8d5", null ],
+    [ "pxp_ram_t", "a00072.html#gae2b85c09563ffebe481d081380d38e83", null ],
+    [ "pxp_dither_final_lut_data_t", "a00072.html#ga6b7afb7a023262382dd1642eb2c47db8", null ],
+    [ "pxp_dither_config_t", "a00072.html#gaec591090ac96dfe1443723bde4f14dd9", null ],
+    [ "pxp_porter_duff_blend_mode_t", "a00072.html#ga4396119df0d6516fdf4472972dbaa585", null ],
+    [ "pxp_pic_copy_config_t", "a00072.html#ga909ec776020ba6bc6e1158e92657c415", null ],
+    [ "_pxp_interrupt_enable", "a00072.html#ga787bb04b14535d1a7fb12858a5aff57a", [
+      [ "kPXP_CompleteInterruptEnable", "a00072.html#gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14", null ],
+      [ "kPXP_CommandLoadInterruptEnable", "a00072.html#gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65", null ]
     ] ],
-    [ "_pwm_force_output_trigger", "a00072.html#ga689754c6ffa0b9770abddbac251a9f7c", [
-      [ "kPWM_Force_Local", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7ca9e11b14bc1860c492200b1370c672c6a", null ],
-      [ "kPWM_Force_Master", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7cac4b4c049b4469672fa062ca8e4afe5b6", null ],
-      [ "kPWM_Force_LocalReload", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7ca9bb2f0d12171255d729380b2aacb92bb", null ],
-      [ "kPWM_Force_MasterReload", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7caccf9880be990d673848acdcb9c6d58db", null ],
-      [ "kPWM_Force_LocalSync", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7cab4286c65207f98e1c2fe3c018a4a183e", null ],
-      [ "kPWM_Force_MasterSync", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7cafea13339a2eeb6a11e8700cfd90dc8c3", null ],
-      [ "kPWM_Force_External", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7ca764ad229154a4eaeee4ae8c407d060f2", null ],
-      [ "kPWM_Force_ExternalSync", "a00072.html#gga689754c6ffa0b9770abddbac251a9f7ca941c421adc51446d05dd65a257e081b9", null ]
+    [ "_pxp_flags", "a00072.html#ga3c7b2be9f32c3f271db63e8407edf17b", [
+      [ "kPXP_CompleteFlag", "a00072.html#gga3c7b2be9f32c3f271db63e8407edf17ba13a71611ba7eae5d7c2ea22f52a295b0", null ],
+      [ "kPXP_Axi0WriteErrorFlag", "a00072.html#gga3c7b2be9f32c3f271db63e8407edf17ba5a551270574bf0f2af8e6ced72367acb", null ],
+      [ "kPXP_Axi0ReadErrorFlag", "a00072.html#gga3c7b2be9f32c3f271db63e8407edf17ba0ed4ec1c5c34a2e9a2297c5c1ea328c3", null ],
+      [ "kPXP_CommandLoadFlag", "a00072.html#gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb", null ]
     ] ],
-    [ "_pwm_output_state", "a00072.html#gac0301b626a3e2c030ad6355a4b88c7f0", [
-      [ "kPWM_HighState", "a00072.html#ggac0301b626a3e2c030ad6355a4b88c7f0a40e8775968875f204e05ea1d8bb8df91", null ],
-      [ "kPWM_LowState", "a00072.html#ggac0301b626a3e2c030ad6355a4b88c7f0aff20501cdadbeb76c35acbf2dcbfdeda", null ],
-      [ "kPWM_NormalState", "a00072.html#ggac0301b626a3e2c030ad6355a4b88c7f0a21eacc26123c1c12be908b4aa5f2e11e", null ],
-      [ "kPWM_InvertState", "a00072.html#ggac0301b626a3e2c030ad6355a4b88c7f0a6bfff92a047c3309594e642f4e2198c4", null ],
-      [ "kPWM_MaskState", "a00072.html#ggac0301b626a3e2c030ad6355a4b88c7f0a549e6d9331bfe063b10af324f9645e1d", null ]
+    [ "_pxp_flip_mode", "a00072.html#gab529355e314c03ead8b0abab21cc8a72", [
+      [ "kPXP_FlipDisable", "a00072.html#ggab529355e314c03ead8b0abab21cc8a72afb69e48028732dcbaac963b73e0edfab", null ],
+      [ "kPXP_FlipHorizontal", "a00072.html#ggab529355e314c03ead8b0abab21cc8a72a1455573c4494b550afa0d86117969eb3", null ],
+      [ "kPXP_FlipVertical", "a00072.html#ggab529355e314c03ead8b0abab21cc8a72a9fb84214b15b83f13c13cad4c470aa27", null ],
+      [ "kPXP_FlipBoth", "a00072.html#ggab529355e314c03ead8b0abab21cc8a72a6b2dcf41cf99ca9186c7732f63795632", null ]
     ] ],
-    [ "_pwm_init_source", "a00072.html#ga6e22b39950e0c29cd7aceb30bbee0080", [
-      [ "kPWM_Initialize_LocalSync", "a00072.html#gga6e22b39950e0c29cd7aceb30bbee0080abc2411b795be6f4f26efdc1d7abeadfa", null ],
-      [ "kPWM_Initialize_MasterReload", "a00072.html#gga6e22b39950e0c29cd7aceb30bbee0080a46121e203b79d6f4bfa0e65f3151ea97", null ],
-      [ "kPWM_Initialize_MasterSync", "a00072.html#gga6e22b39950e0c29cd7aceb30bbee0080a46d08f3cb3f213bfc543a5f31140dd89", null ],
-      [ "kPWM_Initialize_ExtSync", "a00072.html#gga6e22b39950e0c29cd7aceb30bbee0080a81e313c61b9f2ca344156d26c46b88b1", null ]
+    [ "_pxp_rotate_position", "a00072.html#gae76059b920a5196b691b7975db448743", [
+      [ "kPXP_RotateOutputBuffer", "a00072.html#ggae76059b920a5196b691b7975db448743ac43f1f6260a2cae369b94de38987404c", null ],
+      [ "kPXP_RotateProcessSurface", "a00072.html#ggae76059b920a5196b691b7975db448743aee1ae7a941479feca2062ced7d5109ab", null ]
     ] ],
-    [ "_pwm_load_frequency", "a00072.html#ga198cfd41e8dfb2e0e24f1f31836158a2", [
-      [ "kPWM_LoadEveryOportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a502575e9bd4268226093b0a60cb496f7", null ],
-      [ "kPWM_LoadEvery2Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2ae25e14c14030995b7bcafea1ce1cd0bb", null ],
-      [ "kPWM_LoadEvery3Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a8bef356364d1b93faecf843dd26071bb", null ],
-      [ "kPWM_LoadEvery4Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a994a426c30942ee491d83dcf14315f10", null ],
-      [ "kPWM_LoadEvery5Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a466a761a7e6855ac0f6ab43b4a5a4900", null ],
-      [ "kPWM_LoadEvery6Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2aa4b38e484380977443e365543194a83d", null ],
-      [ "kPWM_LoadEvery7Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a1eac6ad423d02507928c955a154c46e7", null ],
-      [ "kPWM_LoadEvery8Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a1ece67ccad5cbfe798eb8b2884d3d058", null ],
-      [ "kPWM_LoadEvery9Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a2afb25bbf82ea891d626ac5e7d5672a6", null ],
-      [ "kPWM_LoadEvery10Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a7a4c48816896b8ff0b2b574911329354", null ],
-      [ "kPWM_LoadEvery11Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a11bca58390b8d76d09df74743d40f90d", null ],
-      [ "kPWM_LoadEvery12Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a0ad8ab598380fb326ecaced36caae3b3", null ],
-      [ "kPWM_LoadEvery13Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2af01c1a29ee56d9971bf39066926c9b41", null ],
-      [ "kPWM_LoadEvery14Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a8d394dde4e8bee1e79602903744d1108", null ],
-      [ "kPWM_LoadEvery15Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2a9978f86435c6102452f6253d9b8e9f16", null ],
-      [ "kPWM_LoadEvery16Oportunity", "a00072.html#gga198cfd41e8dfb2e0e24f1f31836158a2ae5e40f251ac27cb47862be061094a04c", null ]
+    [ "_pxp_rotate_degree", "a00072.html#ga5d44239afa6aab0f87f51347cf504dfb", [
+      [ "kPXP_Rotate0", "a00072.html#gga5d44239afa6aab0f87f51347cf504dfba4e65bd336f1f038896305932fc23da8b", null ],
+      [ "kPXP_Rotate90", "a00072.html#gga5d44239afa6aab0f87f51347cf504dfbac5649d0b59cba071c8ea3bdbabfd2ced", null ],
+      [ "kPXP_Rotate180", "a00072.html#gga5d44239afa6aab0f87f51347cf504dfbab5b6a120bec9e07bc33386c5175c3dcf", null ],
+      [ "kPXP_Rotate270", "a00072.html#gga5d44239afa6aab0f87f51347cf504dfba0b0e5be9d43ce0fe1b72141ddbd60214", null ]
     ] ],
-    [ "_pwm_fault_input", "a00072.html#gac2965df6fd2fac8333f5465623ba7ebc", [
-      [ "kPWM_Fault_0", "a00072.html#ggac2965df6fd2fac8333f5465623ba7ebcaa50cf34eeaa8076d5ea0df6a38e2aee3", null ],
-      [ "kPWM_Fault_1", "a00072.html#ggac2965df6fd2fac8333f5465623ba7ebca3bd0bf391f22f4998a3086c6d711ec56", null ],
-      [ "kPWM_Fault_2", "a00072.html#ggac2965df6fd2fac8333f5465623ba7ebca7a3b2460e58d5ba0256d80b3be07b5bb", null ],
-      [ "kPWM_Fault_3", "a00072.html#ggac2965df6fd2fac8333f5465623ba7ebca4a75c3be4618667d27733b946d5a96c6", null ]
+    [ "_pxp_interlaced_output_mode", "a00072.html#gac76843acc86c1458cd654181ed7737f3", [
+      [ "kPXP_OutputProgressive", "a00072.html#ggac76843acc86c1458cd654181ed7737f3a89ca6dacbf643d7846a6841a91e1326a", null ],
+      [ "kPXP_OutputField0", "a00072.html#ggac76843acc86c1458cd654181ed7737f3a1c8933f94806beb2f5c0d707e6386925", null ],
+      [ "kPXP_OutputField1", "a00072.html#ggac76843acc86c1458cd654181ed7737f3a306bbb9c84f428f1b2def0fcb91644fd", null ],
+      [ "kPXP_OutputInterlaced", "a00072.html#ggac76843acc86c1458cd654181ed7737f3aa0f1864788e24872e575550a660ac7f2", null ]
     ] ],
-    [ "_pwm_fault_disable", "a00072.html#ga4127735f4033259b046dc3d7b7e6cc94", [
-      [ "kPWM_FaultDisable_0", "a00072.html#gga4127735f4033259b046dc3d7b7e6cc94a9ae335b5e1a904709d60ced25524e908", null ],
-      [ "kPWM_FaultDisable_1", "a00072.html#gga4127735f4033259b046dc3d7b7e6cc94aa65d2b110e545374d5afb5c5eb130b6b", null ],
-      [ "kPWM_FaultDisable_2", "a00072.html#gga4127735f4033259b046dc3d7b7e6cc94a36daf6bffafb09f096d749e82a522925", null ],
-      [ "kPWM_FaultDisable_3", "a00072.html#gga4127735f4033259b046dc3d7b7e6cc94a84c9c0fdc52cdc5d42fc2f9b7f57adc8", null ]
+    [ "_pxp_output_pixel_format", "a00072.html#ga661b90fe459fac0124c55aa02b83fa19", [
+      [ "kPXP_OutputPixelFormatARGB8888", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a79fe9f0d6fd2baa1f229cc13bf7f72c0", null ],
+      [ "kPXP_OutputPixelFormatRGB888", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a6ac5bc041dc906b129c55a1c9c5e0b96", null ],
+      [ "kPXP_OutputPixelFormatRGB888P", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19af0537dad5415505afca2dc00d8cfe9e1", null ],
+      [ "kPXP_OutputPixelFormatARGB1555", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19accdd6c12ff775a91e06d81fdc9e238f0", null ],
+      [ "kPXP_OutputPixelFormatARGB4444", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19abd55303837a4f7f0a15a2f4c46011b69", null ],
+      [ "kPXP_OutputPixelFormatRGB555", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19ab69ca605dc2375163a1844b2b775cfdc", null ],
+      [ "kPXP_OutputPixelFormatRGB444", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a5129ba096c0fed1c2085cfda36a926fd", null ],
+      [ "kPXP_OutputPixelFormatRGB565", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19aa52c9202f926fb52cb0c684b19cacc2f", null ],
+      [ "kPXP_OutputPixelFormatYUV1P444", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19aa79cb1de2a80a5bac09aded8ad3fca6c", null ],
+      [ "kPXP_OutputPixelFormatUYVY1P422", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a29a5f660cd51f4c3a24079e9c0073917", null ],
+      [ "kPXP_OutputPixelFormatVYUY1P422", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a24c16fa75ab09a624db8d621c9bf0aa5", null ],
+      [ "kPXP_OutputPixelFormatY8", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a4d13a47ce84e2cdc744c34cc1a4ed6f2", null ],
+      [ "kPXP_OutputPixelFormatY4", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19ad97a0145aaa5a214177c796f020f56a7", null ],
+      [ "kPXP_OutputPixelFormatYUV2P422", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a2177655a4fa5e8d16bdf2e711ffe2cb1", null ],
+      [ "kPXP_OutputPixelFormatYUV2P420", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a6dc28002b9bea03b8262c35d488f4b29", null ],
+      [ "kPXP_OutputPixelFormatYVU2P422", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a4684b13b8dcaa4e3ae655189c7321c01", null ],
+      [ "kPXP_OutputPixelFormatYVU2P420", "a00072.html#gga661b90fe459fac0124c55aa02b83fa19a0514a3708e4c90d967e2230783f23702", null ]
     ] ],
-    [ "_pwm_fault_channels", "a00072.html#ga486b322860d308450dd006ffffad8ef4", null ],
-    [ "_pwm_input_capture_edge", "a00072.html#gad0a9a2ef5029bc8fb7390421f35a4e72", [
-      [ "kPWM_Disable", "a00072.html#ggad0a9a2ef5029bc8fb7390421f35a4e72a3a9b563f19903f48e0dc698b1bd9e7cb", null ],
-      [ "kPWM_FallingEdge", "a00072.html#ggad0a9a2ef5029bc8fb7390421f35a4e72a789adc57426b9cab5e701edcfef6dd98", null ],
-      [ "kPWM_RisingEdge", "a00072.html#ggad0a9a2ef5029bc8fb7390421f35a4e72a3b3dfb3faa75faef27dca1156af8f930", null ],
-      [ "kPWM_RiseAndFallEdge", "a00072.html#ggad0a9a2ef5029bc8fb7390421f35a4e72a2287e78066381060836aa41f70f26395", null ]
+    [ "_pxp_ps_pixel_format", "a00072.html#gadc4983e6ec020447c1b60c07445f02b0", [
+      [ "kPXP_PsPixelFormatARGB8888", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a35af08f5a9e9c3462e7d89c26e5dfcea", null ],
+      [ "kPXP_PsPixelFormatARGB1555", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0acde8a4409d279fdb6a1ab523d797305b", null ],
+      [ "kPXP_PsPixelFormatARGB4444", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a8f5d4443752aec717961738b2dac309d", null ],
+      [ "kPXP_PsPixelFormatRGB565", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0aa333aa8285ac15200a422cd522c6a69d", null ],
+      [ "kPXP_PsPixelFormatYUV1P444", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a5831aa44386a856c3e211fe0708bb8c1", null ],
+      [ "kPXP_PsPixelFormatUYVY1P422", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a47b934d7c5e55e82edb5d634d048bc16", null ],
+      [ "kPXP_PsPixelFormatVYUY1P422", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a3990b4c8094dc20b8bb5e0b4822af9c9", null ],
+      [ "kPXP_PsPixelFormatY8", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a68d3312fd462fdfdd79ad5019856977e", null ],
+      [ "kPXP_PsPixelFormatY4", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0ab887c15f236209e0717257b79a9de610", null ],
+      [ "kPXP_PsPixelFormatYUV2P422", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0abf3c41ddbb8d86f92fc4f64161fc73af", null ],
+      [ "kPXP_PsPixelFormatYUV2P420", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a0d33cd39d2169d73fd982fe217fd42ef", null ],
+      [ "kPXP_PsPixelFormatYVU2P422", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a0f03df7aa8c74f4e265cd4d09699243c", null ],
+      [ "kPXP_PsPixelFormatYVU2P420", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a6621f8703534e6ccce8c2df181265c50", null ],
+      [ "kPXP_PsPixelFormatYVU422", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a91ebd70d50e8dd63a56a50e392d7c332", null ],
+      [ "kPXP_PsPixelFormatYVU420", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a16a2229fe1fa775c102f782a80efad51", null ],
+      [ "kPXP_PsPixelFormatRGBA8888", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a405f26ee17dfa10cce11a6ce9cdcce43", null ],
+      [ "kPXP_PsPixelFormatRGBA5551", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0a2940a00d4e5fbc1d8940c8a11acda701", null ],
+      [ "kPXP_PsPixelFormatRGBA4444", "a00072.html#ggadc4983e6ec020447c1b60c07445f02b0ae8e9b14eeedb62f8daf5048987235630", null ]
     ] ],
-    [ "_pwm_force_signal", "a00072.html#gaa7cbbbc1751d68bffcd391c323e24391", [
-      [ "kPWM_UsePwm", "a00072.html#ggaa7cbbbc1751d68bffcd391c323e24391a166c8c92dffb307770373f011f58d8b6", null ],
-      [ "kPWM_InvertedPwm", "a00072.html#ggaa7cbbbc1751d68bffcd391c323e24391a1c5e51e8f0bf695ca6d554719042f886", null ],
-      [ "kPWM_SoftwareControl", "a00072.html#ggaa7cbbbc1751d68bffcd391c323e24391acf2037b15d767df630652ecdcc0b6b5a", null ],
-      [ "kPWM_UseExternal", "a00072.html#ggaa7cbbbc1751d68bffcd391c323e24391aeaf780fe39f7852159d59b95361f5799", null ]
+    [ "_pxp_ps_yuv_format", "a00072.html#ga0f72b41c14b0f3ae37e4c9bf3d6aa477", [
+      [ "kPXP_PsYUVFormatYUV", "a00072.html#gga0f72b41c14b0f3ae37e4c9bf3d6aa477a42fe1180f7cab3443ac7eb7b70ffcb6f", null ],
+      [ "kPXP_PsYUVFormatYCbCr", "a00072.html#gga0f72b41c14b0f3ae37e4c9bf3d6aa477a5f2b8c94931485fc118048e60432151a", null ]
     ] ],
-    [ "_pwm_chnl_pair_operation", "a00072.html#ga63a8dfd89261e7acebd33a9f12f01574", [
-      [ "kPWM_Independent", "a00072.html#gga63a8dfd89261e7acebd33a9f12f01574a4e4e74c3efd797dcc5bd430df090c548", null ],
-      [ "kPWM_ComplementaryPwmA", "a00072.html#gga63a8dfd89261e7acebd33a9f12f01574a001cd311a33d4f1bf3bcfb0882ed30c2", null ],
-      [ "kPWM_ComplementaryPwmB", "a00072.html#gga63a8dfd89261e7acebd33a9f12f01574a1c1204d77dfefb55460b359c9911d3df", null ]
+    [ "_pxp_as_pixel_format", "a00072.html#ga5e85b95cb52f94a5eafadee8983c34f7", [
+      [ "kPXP_AsPixelFormatARGB8888", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a9c01bd1578cd6881598c9608ed91e9d1", null ],
+      [ "kPXP_AsPixelFormatRGB888", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a3f7b766bcf77ffb2fda0578f1de4db4a", null ],
+      [ "kPXP_AsPixelFormatARGB1555", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a202a8739a7c1f2bc3aa9e19df65c4711", null ],
+      [ "kPXP_AsPixelFormatARGB4444", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a1189887b17c18cf6085f798f7556ef1f", null ],
+      [ "kPXP_AsPixelFormatRGB555", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a1e9e3566ca3ce2948e57153318173825", null ],
+      [ "kPXP_AsPixelFormatRGB444", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7aebb3cf790031eff76e0606940d456b36", null ],
+      [ "kPXP_AsPixelFormatRGB565", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a1a1a787b1e5c0541f3f37a5586042a69", null ],
+      [ "kPXP_AsPixelFormatRGBA8888", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7aa9b52f6d820da73c9ecec00ec678be40", null ],
+      [ "kPXP_AsPixelFormatRGBA5551", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7a6e192b0c6c305d43f70ab47e21094d0c", null ],
+      [ "kPXP_AsPixelFormatRGBA4444", "a00072.html#gga5e85b95cb52f94a5eafadee8983c34f7ae31d1030fb7a5ffee5474cd12f2b19a2", null ]
     ] ],
-    [ "_pwm_register_reload", "a00072.html#ga95ad81203168f744a37710a07e51896a", [
-      [ "kPWM_ReloadImmediate", "a00072.html#gga95ad81203168f744a37710a07e51896aa0302e609960d4cdd2d9017d76dabb12f", null ],
-      [ "kPWM_ReloadPwmHalfCycle", "a00072.html#gga95ad81203168f744a37710a07e51896aa1f4ca50703a5f530ca5436647bee5d84", null ],
-      [ "kPWM_ReloadPwmFullCycle", "a00072.html#gga95ad81203168f744a37710a07e51896aa143f812e649672592ac6f2966239a80f", null ],
-      [ "kPWM_ReloadPwmHalfAndFullCycle", "a00072.html#gga95ad81203168f744a37710a07e51896aa87c32f53e2c480284ebd863c866d76c0", null ]
+    [ "_pxp_alpha_mode", "a00072.html#ga64a644312e8db1bf87223bf892162a6b", [
+      [ "kPXP_AlphaEmbedded", "a00072.html#gga64a644312e8db1bf87223bf892162a6baf83fdd2ee8731df781fb06fe95782f01", null ],
+      [ "kPXP_AlphaOverride", "a00072.html#gga64a644312e8db1bf87223bf892162a6ba28fa3fc72fc014e0b0839bc4aa320fd8", null ],
+      [ "kPXP_AlphaMultiply", "a00072.html#gga64a644312e8db1bf87223bf892162a6ba787e46e606cc59f3f00816ccae9b3aaa", null ],
+      [ "kPXP_AlphaRop", "a00072.html#gga64a644312e8db1bf87223bf892162a6bab904b562719a2285b8a2bb80b2467885", null ]
     ] ],
-    [ "_pwm_fault_recovery_mode", "a00072.html#ga7f64f46a31b5c3c4a60dbbb60d0b69a4", [
-      [ "kPWM_NoRecovery", "a00072.html#gga7f64f46a31b5c3c4a60dbbb60d0b69a4ad683c9a0ca12b4932bb3e753a1b71c44", null ],
-      [ "kPWM_RecoverHalfCycle", "a00072.html#gga7f64f46a31b5c3c4a60dbbb60d0b69a4a9438b2356162912bca02e9bc87a6218c", null ],
-      [ "kPWM_RecoverFullCycle", "a00072.html#gga7f64f46a31b5c3c4a60dbbb60d0b69a4a79b1439966e60152ede2e96789640b8a", null ],
-      [ "kPWM_RecoverHalfAndFullCycle", "a00072.html#gga7f64f46a31b5c3c4a60dbbb60d0b69a4a0759098353e5f56bb2aff98f46b57c7e", null ]
+    [ "_pxp_rop_mode", "a00072.html#ga234fe813deb04089a9510e494908d6ee", [
+      [ "kPXP_RopMaskAs", "a00072.html#gga234fe813deb04089a9510e494908d6eeab627e0682114b70ecf37562386be9796", null ],
+      [ "kPXP_RopMaskNotAs", "a00072.html#gga234fe813deb04089a9510e494908d6eeabe6d578eb64b45b042a99da187864250", null ],
+      [ "kPXP_RopMaskAsNot", "a00072.html#gga234fe813deb04089a9510e494908d6eea20f4f0d08d546c23c847f5f77e91dd40", null ],
+      [ "kPXP_RopMergeAs", "a00072.html#gga234fe813deb04089a9510e494908d6eea7905ff8da00f4ca2dee6045d4bbfdfe2", null ],
+      [ "kPXP_RopMergeNotAs", "a00072.html#gga234fe813deb04089a9510e494908d6eea3bd44b47f96d331aa6484f2768ad0dbd", null ],
+      [ "kPXP_RopMergeAsNot", "a00072.html#gga234fe813deb04089a9510e494908d6eea184c761a1e837e3eae587017e34221a7", null ],
+      [ "kPXP_RopNotCopyAs", "a00072.html#gga234fe813deb04089a9510e494908d6eeaa28860ede1b39bc35e5d90a893e78a6e", null ],
+      [ "kPXP_RopNot", "a00072.html#gga234fe813deb04089a9510e494908d6eead181132008cfc67e26d79cc96e039ff2", null ],
+      [ "kPXP_RopNotMaskAs", "a00072.html#gga234fe813deb04089a9510e494908d6eeaa232c5bb77a42f17e71d110dda0f5d1d", null ],
+      [ "kPXP_RopNotMergeAs", "a00072.html#gga234fe813deb04089a9510e494908d6eea900cdda2a6145bfb573725ddbb67b300", null ],
+      [ "kPXP_RopXorAs", "a00072.html#gga234fe813deb04089a9510e494908d6eea38822b53063ee738655c95d0b47cdbdb", null ],
+      [ "kPXP_RopNotXorAs", "a00072.html#gga234fe813deb04089a9510e494908d6eeaa48db807d2e659421dd2889e6e91747f", null ]
     ] ],
-    [ "_pwm_interrupt_enable", "a00072.html#ga34dec3dd0f1cd687ab28f2d6cf2938a1", [
-      [ "kPWM_CompareVal0InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1aafc673bd39a17c660c2b7ab0f8e3dc82", null ],
-      [ "kPWM_CompareVal1InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a2e38a714989c515bce7cf90f8526fe69", null ],
-      [ "kPWM_CompareVal2InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1af595e6cd0654614be3b013a40071e43b", null ],
-      [ "kPWM_CompareVal3InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a11b2ef7316b810c58d6da5374c15249c", null ],
-      [ "kPWM_CompareVal4InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a69a6bfc5caa28f56280900793223843b", null ],
-      [ "kPWM_CompareVal5InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1aa162e16f672b526d73a20c7bd9d596b8", null ],
-      [ "kPWM_CaptureX0InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1ab7fd23d9cbe1485ddfea034329bf21a4", null ],
-      [ "kPWM_CaptureX1InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a75e7a7c02cac25144674919fae5c988b", null ],
-      [ "kPWM_CaptureB0InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a60950ae650bdac58cc9d7525ee0d26f0", null ],
-      [ "kPWM_CaptureB1InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1abeb97760b062764028ce3548bf4bd4f0", null ],
-      [ "kPWM_CaptureA0InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a265b164e3f9f77535218f57a4be1b53d", null ],
-      [ "kPWM_CaptureA1InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1aea67600460b65ab0fdcc702cfe8dce41", null ],
-      [ "kPWM_ReloadInterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1acea7ba0ccfc25c688ccfbae5e9082949", null ],
-      [ "kPWM_ReloadErrorInterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a5c181e7dfc61241177e0a2e761c12bc6", null ],
-      [ "kPWM_Fault0InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1ad02badace3737fa894aa30c3d4cb78a2", null ],
-      [ "kPWM_Fault1InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1ae7860301d0be780fd19d84009205ee6d", null ],
-      [ "kPWM_Fault2InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1af84aa7e6052c1761a770927a22fa4061", null ],
-      [ "kPWM_Fault3InterruptEnable", "a00072.html#gga34dec3dd0f1cd687ab28f2d6cf2938a1a5da7daaf3baaf533de940613f720ef45", null ]
+    [ "_pxp_block_size", "a00072.html#gace29fa2a1e32e6c6f06db75d3ce890e8", [
+      [ "kPXP_BlockSize8", "a00072.html#ggace29fa2a1e32e6c6f06db75d3ce890e8a47a1eb901d6fe62130262a8124e6a145", null ],
+      [ "kPXP_BlockSize16", "a00072.html#ggace29fa2a1e32e6c6f06db75d3ce890e8a2d64fc9e70f24ce2e8eeaec8f2efb7a9", null ]
     ] ],
-    [ "_pwm_status_flags", "a00072.html#gabf7180682e00816d6f9fcecaf3ffa13b", [
-      [ "kPWM_CompareVal0Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba4085859503a306f4838b8708270aebd3", null ],
-      [ "kPWM_CompareVal1Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba76c8be56ca875e509cf7249e16051221", null ],
-      [ "kPWM_CompareVal2Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13babda314afa7b77b8fb1280ab8ad8c92e4", null ],
-      [ "kPWM_CompareVal3Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba9eb2effb85360b09a5823aa8821a1d85", null ],
-      [ "kPWM_CompareVal4Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba5574e42fdfbb30c9a22e0da0c703a351", null ],
-      [ "kPWM_CompareVal5Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba6c732459b6d238d783c9049d11d7541c", null ],
-      [ "kPWM_CaptureX0Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13baf0334248cfeec0e102b747c6112ddc52", null ],
-      [ "kPWM_CaptureX1Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13bac40ed759adecc7104fe66d77e226f5bd", null ],
-      [ "kPWM_CaptureB0Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba01e003611b957a607bc6f00df965af92", null ],
-      [ "kPWM_CaptureB1Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba8883f6fb88a1eafe3696a4e5287155cd", null ],
-      [ "kPWM_CaptureA0Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba8777414835e99f9d0f9376dbfe981a16", null ],
-      [ "kPWM_CaptureA1Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13bab80c16b4b478e220ccda0b6427fbbb1a", null ],
-      [ "kPWM_ReloadFlag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba335926bdcc79dfa6e3df0127d2d426c2", null ],
-      [ "kPWM_ReloadErrorFlag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13ba675549b86323ccf753f9189942f1d208", null ],
-      [ "kPWM_RegUpdatedFlag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13bab03a24483985e2a865ae61402a80a08e", null ],
-      [ "kPWM_Fault0Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13baa475a054c52a6f6d405221835bcec032", null ],
-      [ "kPWM_Fault1Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13baf2ac36eb7c23cd116999efb473ba5120", null ],
-      [ "kPWM_Fault2Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13baa4040bb373c31ab8f79a2960bc0a04fc", null ],
-      [ "kPWM_Fault3Flag", "a00072.html#ggabf7180682e00816d6f9fcecaf3ffa13badaca248c0c3948533401a8dad2c1f6d2", null ]
+    [ "_pxp_csc1_mode", "a00072.html#ga1289892c8e86eb7cfc1e95a617510084", [
+      [ "kPXP_Csc1YUV2RGB", "a00072.html#gga1289892c8e86eb7cfc1e95a617510084af7e1847d22583a2c03b2f72311d04f25", null ],
+      [ "kPXP_Csc1YCbCr2RGB", "a00072.html#gga1289892c8e86eb7cfc1e95a617510084a868e79049a3eb45959fd192728be776a", null ]
     ] ],
-    [ "_pwm_dma_enable", "a00072.html#gada47c95b218e71ed4d79738cc5b0299c", [
-      [ "kPWM_CaptureX0DMAEnable", "a00072.html#ggada47c95b218e71ed4d79738cc5b0299ca7e642c13a0b6db82aa3d7d5645f0b6ae", null ],
-      [ "kPWM_CaptureX1DMAEnable", "a00072.html#ggada47c95b218e71ed4d79738cc5b0299ca5dfeb4fe686f9ee45bf8122f7f2b737e", null ],
-      [ "kPWM_CaptureB0DMAEnable", "a00072.html#ggada47c95b218e71ed4d79738cc5b0299ca438b71dd5e4667303f4c728ec4397fb4", null ],
-      [ "kPWM_CaptureB1DMAEnable", "a00072.html#ggada47c95b218e71ed4d79738cc5b0299cabc1de00390af58663d14b4a4c0613bd4", null ],
-      [ "kPWM_CaptureA0DMAEnable", "a00072.html#ggada47c95b218e71ed4d79738cc5b0299cabe6e1b5d10408541556f1cdc5f5f8e32", null ],
-      [ "kPWM_CaptureA1DMAEnable", "a00072.html#ggada47c95b218e71ed4d79738cc5b0299ca4c8d87cc83b851250029545de8f6138e", null ]
+    [ "_pxp_csc2_mode", "a00072.html#ga2d8a62dfbea70b1a569de5b3a7e83874", [
+      [ "kPXP_Csc2YUV2RGB", "a00072.html#gga2d8a62dfbea70b1a569de5b3a7e83874aa810c9f64aea2d716179c3a166e20155", null ],
+      [ "kPXP_Csc2YCbCr2RGB", "a00072.html#gga2d8a62dfbea70b1a569de5b3a7e83874a0cc8e471aaa2c048e897eb83516e431f", null ],
+      [ "kPXP_Csc2RGB2YUV", "a00072.html#gga2d8a62dfbea70b1a569de5b3a7e83874ad9b37d3e3c2823a3c361be2a8b50529b", null ],
+      [ "kPXP_Csc2RGB2YCbCr", "a00072.html#gga2d8a62dfbea70b1a569de5b3a7e83874ad56193b4d022683d1c11bd6888b9a1ae", null ]
     ] ],
-    [ "_pwm_dma_source_select", "a00072.html#ga76ce75e627409ac0ea6cf6aa4a38ee4d", [
-      [ "kPWM_DMARequestDisable", "a00072.html#gga76ce75e627409ac0ea6cf6aa4a38ee4da37f70ddc17861bd440eadad75053e13b", null ],
-      [ "kPWM_DMAWatermarksEnable", "a00072.html#gga76ce75e627409ac0ea6cf6aa4a38ee4daa846cccab4b46052e26fc655dd5d2d1c", null ],
-      [ "kPWM_DMALocalSync", "a00072.html#gga76ce75e627409ac0ea6cf6aa4a38ee4da00a0a894a36b9d5e8b1c59618b1641d4", null ],
-      [ "kPWM_DMALocalReload", "a00072.html#gga76ce75e627409ac0ea6cf6aa4a38ee4dadd80df2e06dc89139243b44baf79b8d5", null ]
+    [ "_pxp_ram", "a00072.html#ga995f3692c1e0cd648c8adad5e7c70daf", [
+      [ "kPXP_RamDither0Lut", "a00072.html#gga995f3692c1e0cd648c8adad5e7c70dafa324827542420c2f009804a6d9724ea93", null ],
+      [ "kPXP_RamDither1Lut", "a00072.html#gga995f3692c1e0cd648c8adad5e7c70dafa3fbb77d61ecff7199eb30eaba1fc7473", null ],
+      [ "kPXP_RamDither2Lut", "a00072.html#gga995f3692c1e0cd648c8adad5e7c70dafad023336ba92766aa845c5c2f075b7dc2", null ]
     ] ],
-    [ "_pwm_watermark_control", "a00072.html#ga745ae556dba3c05def325918c20a84b4", [
-      [ "kPWM_FIFOWatermarksOR", "a00072.html#gga745ae556dba3c05def325918c20a84b4ab5fd05c006eba66611efc1a02211aad1", null ],
-      [ "kPWM_FIFOWatermarksAND", "a00072.html#gga745ae556dba3c05def325918c20a84b4aef42642a5864353de97246bdcac3193d", null ]
+    [ "_pxp_dither_mode", "a00072.html#ga9a3b7de382ab7c0e248bdbf1455d4e9d", [
+      [ "kPXP_DitherPassThrough", "a00072.html#gga9a3b7de382ab7c0e248bdbf1455d4e9daee11acef06e5c5d1b72942150f5f3e8f", null ],
+      [ "kPXP_DitherFloydSteinberg", "a00072.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da7470de3eef671f5fb19d002bf91e778b", null ],
+      [ "kPXP_DitherAtkinson", "a00072.html#gga9a3b7de382ab7c0e248bdbf1455d4e9dae05a63fd2ed52bcb06a152c6676165bf", null ],
+      [ "kPXP_DitherOrdered", "a00072.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1db96bc75153a786108b9561ad084310", null ],
+      [ "kPXP_DitherQuantOnly", "a00072.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1a8a1ba8ce7954f9876c206ebc9d16dc", null ],
+      [ "kPXP_DitherSierra", "a00072.html#gga9a3b7de382ab7c0e248bdbf1455d4e9dacdf0f29b5deb584ed7dec4a16879a076", null ]
     ] ],
-    [ "_pwm_mode", "a00072.html#ga77d865fa94f86ec54899f6cd0d5ac6ab", [
-      [ "kPWM_SignedCenterAligned", "a00072.html#gga77d865fa94f86ec54899f6cd0d5ac6aba62a713094bb4c628d40e801e07acab0a", null ],
-      [ "kPWM_CenterAligned", "a00072.html#gga77d865fa94f86ec54899f6cd0d5ac6aba74be077739ace445b92fbfb515a228ab", null ],
-      [ "kPWM_SignedEdgeAligned", "a00072.html#gga77d865fa94f86ec54899f6cd0d5ac6aba1ce6a8e531f0d012f2904435772adb59", null ],
-      [ "kPWM_EdgeAligned", "a00072.html#gga77d865fa94f86ec54899f6cd0d5ac6aba9e529b50dfb0c394a287c6f9e0ccf03a", null ]
+    [ "_pxp_dither_lut_mode", "a00072.html#gac35579ae4349603f9117a4fcdb8201a9", [
+      [ "kPXP_DitherLutOff", "a00072.html#ggac35579ae4349603f9117a4fcdb8201a9a5d80cca733746088c28f6f21df61478f", null ],
+      [ "kPXP_DitherLutPreDither", "a00072.html#ggac35579ae4349603f9117a4fcdb8201a9ac687c9ef44daddc0604506a9dfe1140b", null ],
+      [ "kPXP_DitherLutPostDither", "a00072.html#ggac35579ae4349603f9117a4fcdb8201a9afd50e5f33c9e35e6cd026a24ad023213", null ]
     ] ],
-    [ "_pwm_level_select", "a00072.html#ga0b8176f17dc553f3317cd3d285d13ff9", [
-      [ "kPWM_HighTrue", "a00072.html#gga0b8176f17dc553f3317cd3d285d13ff9a23232af7d53d18d6ae51cdef22bf89bd", null ],
-      [ "kPWM_LowTrue", "a00072.html#gga0b8176f17dc553f3317cd3d285d13ff9a7db3fb960191fb50008d3c8e17c640eb", null ]
+    [ "_pxp_dither_matrix_size", "a00072.html#ga43a03327d849a22a988027c42080c0a9", [
+      [ "kPXP_DitherMatrix4", "a00072.html#gga43a03327d849a22a988027c42080c0a9a46143a4e61d528043fc57e0c446d0d52", null ],
+      [ "kPXP_DitherMatrix8", "a00072.html#gga43a03327d849a22a988027c42080c0a9a1373965c19df33a172236e4559c88f02", null ],
+      [ "kPXP_DitherMatrix16", "a00072.html#gga43a03327d849a22a988027c42080c0a9a15a3e964fd00ffd6348e276082a2b953", null ],
+      [ "kPXP_PorterDuffFactorOne", "a00072.html#gga26e1124d33b4acdb532c49f6498df549aee2241ad5c9daeac9b38a37589fb748f", null ],
+      [ "kPXP_PorterDuffFactorZero", "a00072.html#gga26e1124d33b4acdb532c49f6498df549a2ab1a3fd87ba3856604c95b0ad5d4a38", null ],
+      [ "kPXP_PorterDuffFactorStraight", "a00072.html#gga26e1124d33b4acdb532c49f6498df549a59b12efaccc25cf0e4d7dc034b32c43f", null ],
+      [ "kPXP_PorterDuffFactorInversed", "a00072.html#gga26e1124d33b4acdb532c49f6498df549a27559c382f3af9deff6eae18edf5f41b", null ],
+      [ "kPXP_PorterDuffGlobalAlpha", "a00072.html#gga7ee8d0f117a79ca7eb1e0076a9182bcbae75721eabb972ffdafa9e675d796f597", null ],
+      [ "kPXP_PorterDuffLocalAlpha", "a00072.html#gga7ee8d0f117a79ca7eb1e0076a9182bcba8166913c9a1632a57aaf4d0d4f728112", null ],
+      [ "kPXP_PorterDuffScaledAlpha", "a00072.html#gga7ee8d0f117a79ca7eb1e0076a9182bcba82b9cf8233288be38c050f717be9bff0", null ],
+      [ "kPXP_PorterDuffAlphaStraight", "a00072.html#ggac34c4c978f4130a92a5068f9e21ea9fca7de36b466a57ae2f1ba33238982292af", null ],
+      [ "kPXP_PorterDuffAlphaInversed", "a00072.html#ggac34c4c978f4130a92a5068f9e21ea9fcaa2b5a615147ab5598c5d01e22a68d69a", null ],
+      [ "kPXP_PorterDuffColorStraight", "a00072.html#gga10e74d65d7876276a8f6061c71dcf469ad3d643eee9aa1f60c8a61bcca700fa84", null ],
+      [ "kPXP_PorterDuffColorInversed", "a00072.html#gga10e74d65d7876276a8f6061c71dcf469ae72c6dab16246a20e58c697abf031c20", null ],
+      [ "kPXP_PorterDuffColorNoAlpha", "a00072.html#gga10e74d65d7876276a8f6061c71dcf469a58c5d4b0d2c12c2b823af4ee2ab0e263", null ],
+      [ "kPXP_PorterDuffColorWithAlpha", "a00072.html#gga10e74d65d7876276a8f6061c71dcf469a0d4094855fc9a466d421e92bc0f60b72", null ]
     ] ],
-    [ "_pwm_fault_state", "a00072.html#gad79fe5e54e5cce6102bfeaa30db1f37a", [
-      [ "kPWM_PwmFaultState0", "a00072.html#ggad79fe5e54e5cce6102bfeaa30db1f37aa13d81f0365c7f9c3dccfcfa61f822e24", null ],
-      [ "kPWM_PwmFaultState1", "a00072.html#ggad79fe5e54e5cce6102bfeaa30db1f37aa783796fbb2d556e74749fa4126616d9e", null ],
-      [ "kPWM_PwmFaultState2", "a00072.html#ggad79fe5e54e5cce6102bfeaa30db1f37aa4b55a75f393e3066e5f48b994c504112", null ],
-      [ "kPWM_PwmFaultState3", "a00072.html#ggad79fe5e54e5cce6102bfeaa30db1f37aa2398fa058bbde6c2fe97dca183c8f77f", null ]
+    [ "_pxp_porter_duff_blend_mode", "a00072.html#gadef06289ecfbef9f6a40cfec3f0d7413", [
+      [ "kPXP_PorterDuffSrc", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a2c1040de8d98bf0337911b8250e90682", null ],
+      [ "kPXP_PorterDuffAtop", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a585420288d0426491e2ef41f948b75dd", null ],
+      [ "kPXP_PorterDuffOver", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413ace448e4db98a088fd11ee92cde8b69cd", null ],
+      [ "kPXP_PorterDuffIn", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a18e16678131e58d38efc05905a517b7f", null ],
+      [ "kPXP_PorterDuffOut", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a64a07cd44bb291729fa1d9b4edae8219", null ],
+      [ "kPXP_PorterDuffDst", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a92fa98e2695a03b2cdec8983a311fe59", null ],
+      [ "kPXP_PorterDuffDstAtop", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a217c9e4cac1597462f0d6b72f18afb58", null ],
+      [ "kPXP_PorterDuffDstOver", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a23a63095bc452bdf2a3bfbcf8847bccf", null ],
+      [ "kPXP_PorterDuffDstIn", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413ac0a7e1b6834694ec27ed0091bb810347", null ],
+      [ "kPXP_PorterDuffDstOut", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a075651ddfac488e551625eb2a94b64f6", null ],
+      [ "kPXP_PorterDuffXor", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413ae99c0917365072ee12d539d86e82c2e4", null ],
+      [ "kPXP_PorterDuffClear", "a00072.html#ggadef06289ecfbef9f6a40cfec3f0d7413a27fb0d041a0d7a722db2ffeb92d89b1d", null ]
     ] ],
-    [ "_pwm_reload_source_select", "a00072.html#gad3407f8c11427786f65b2c20b6deceee", [
-      [ "kPWM_LocalReload", "a00072.html#ggad3407f8c11427786f65b2c20b6deceeeaed91b2aede324d8f2242e5d1baf795d4", null ],
-      [ "kPWM_MasterReload", "a00072.html#ggad3407f8c11427786f65b2c20b6deceeea5570b1618c1b54d235fb14df8e2de4d5", null ]
-    ] ],
-    [ "_pwm_fault_clear", "a00072.html#gad57fb743b76a961fec5e1a0d2aa52ced", [
-      [ "kPWM_Automatic", "a00072.html#ggad57fb743b76a961fec5e1a0d2aa52cedabf68c2da0cf3a166bfbcb3936261e61d", null ],
-      [ "kPWM_ManualNormal", "a00072.html#ggad57fb743b76a961fec5e1a0d2aa52ceda9afba77080d761b13b132caf69d7b55a", null ],
-      [ "kPWM_ManualSafety", "a00072.html#ggad57fb743b76a961fec5e1a0d2aa52ceda2ab19200e6e01024b4ea5afb1c00091f", null ]
-    ] ],
-    [ "_pwm_module_control", "a00072.html#gad5cb199559168be857944ed41b7bfe32", [
-      [ "kPWM_Control_Module_0", "a00072.html#ggad5cb199559168be857944ed41b7bfe32a1f44c9b0cfe295515db31f8e9d7b166e", null ],
-      [ "kPWM_Control_Module_1", "a00072.html#ggad5cb199559168be857944ed41b7bfe32adfcd5cb91128996487412233496d9d67", null ],
-      [ "kPWM_Control_Module_2", "a00072.html#ggad5cb199559168be857944ed41b7bfe32adae0a8676b2afcba6a12b17ea2f68ba6", null ],
-      [ "kPWM_Control_Module_3", "a00072.html#ggad5cb199559168be857944ed41b7bfe32afb56a21760a3e3b74d4721c0c1028ae2", null ]
-    ] ],
-    [ "PWM_Init", "a00072.html#gab4d245c939c7cc9106065020244d84e2", null ],
-    [ "PWM_Deinit", "a00072.html#ga23a26fead175fa19dfe4617dde090bb5", null ],
-    [ "PWM_GetDefaultConfig", "a00072.html#gaead09677ab28bfd57dce26c6c161b18d", null ],
-    [ "PWM_SetupPwm", "a00072.html#ga50ecefa180c7ab83cb25c8ed58505b43", null ],
-    [ "PWM_SetupPwmPhaseShift", "a00072.html#gab73176c5684ced442299cc8c338ec555", null ],
-    [ "PWM_UpdatePwmDutycycle", "a00072.html#ga8324acc824d28acc111006c67746d6ae", null ],
-    [ "PWM_UpdatePwmDutycycleHighAccuracy", "a00072.html#ga46eebd874652ec8e9c9b128bbd6057df", null ],
-    [ "PWM_UpdatePwmPeriodAndDutycycle", "a00072.html#gad7b7c9c350cb85b47cba12ce6d68b5aa", null ],
-    [ "PWM_SetupInputCapture", "a00072.html#ga714adfb30a4bac917530e4f7ac9f8497", null ],
-    [ "PWM_SetupFaultInputFilter", "a00072.html#gac252a848de7f669f38c1c169af2750bd", null ],
-    [ "PWM_SetupFaults", "a00072.html#ga6dba321676f0d87b3bd294afd859fd6c", null ],
-    [ "PWM_FaultDefaultConfig", "a00072.html#ga83e933e310dea3c09772ce2bd880ec25", null ],
-    [ "PWM_SetupForceSignal", "a00072.html#gab149e523b4f42b2ef8380bcffb0ae899", null ],
-    [ "PWM_EnableInterrupts", "a00072.html#ga16b4ff14585b9b4898c2b0e296f45779", null ],
-    [ "PWM_DisableInterrupts", "a00072.html#gae4766d9e26c674a3ed9634b11888ce2c", null ],
-    [ "PWM_GetEnabledInterrupts", "a00072.html#ga448340a1df47236ffbf02c1da40d942a", null ],
-    [ "PWM_DMAFIFOWatermarkControl", "a00072.html#ga6333f9b93bd418d3cb4ad63fe95ec603", null ],
-    [ "PWM_DMACaptureSourceSelect", "a00072.html#gab01601e4ee370143095a156a0f059f48", null ],
-    [ "PWM_EnableDMACapture", "a00072.html#gac66323b0c9bae228d3d427adf14bb919", null ],
-    [ "PWM_EnableDMAWrite", "a00072.html#gaa1538892bd38b81af7d972553686f38d", null ],
-    [ "PWM_GetStatusFlags", "a00072.html#ga827ba4608c9021cb29b981c716dfe83f", null ],
-    [ "PWM_ClearStatusFlags", "a00072.html#ga66f5e7f2d2f671b35031e17f17ae5b0d", null ],
-    [ "PWM_StartTimer", "a00072.html#ga7da5f4910ad7945fee50bd642f871fcc", null ],
-    [ "PWM_StopTimer", "a00072.html#ga542db369e1459b8b7847d005937a5be9", null ],
-    [ "PWM_SetVALxValue", "a00072.html#gac610c4250011fd66c9197c49c207901f", null ],
-    [ "PWM_GetVALxValue", "a00072.html#ga46727b84b25524b019fbb0eb96a69861", null ],
-    [ "PWM_OutputTriggerEnable", "a00072.html#ga40256df62c18de1ab8fef8609d6b4060", null ],
-    [ "PWM_ActivateOutputTrigger", "a00072.html#ga88cdc0804a1619da24c387a38d3f6741", null ],
-    [ "PWM_DeactivateOutputTrigger", "a00072.html#gaf64233d8510927731ae458d31fa5512e", null ],
-    [ "PWM_SetupSwCtrlOut", "a00072.html#ga8236aa4d0e9beba91cdaabdadc841b32", null ],
-    [ "PWM_SetPwmLdok", "a00072.html#ga7ff017951793deb3e01659ab0f440133", null ],
-    [ "PWM_SetPwmFaultState", "a00072.html#gaf7a606468a735625a9f7f1409b1686ab", null ],
-    [ "PWM_SetupFaultDisableMap", "a00072.html#ga5c4a97812d828bc76cd1873abf1710f7", null ],
-    [ "PWM_OutputEnable", "a00072.html#ga646c67ec4031138ff5826f1b0fb649e8", null ],
-    [ "PWM_OutputDisable", "a00072.html#ga7f98c7daa79cf94c51685ee8586554ef", null ],
-    [ "PWM_GetPwmChannelState", "a00072.html#gaf5508876799328a445ca15ed60c4eba6", null ],
-    [ "PWM_SetOutputToIdle", "a00072.html#gac629bc123a2ce96ffccfba611a2d2e3b", null ],
-    [ "PWM_SetClockMode", "a00072.html#gae3c90bc3ec4b98b6e53f4e4b2e0f65b7", null ],
-    [ "PWM_SetPwmForceOutputToZero", "a00072.html#ga496cefe0b41a844b2f7f967bf681e9ff", null ],
-    [ "PWM_SetChannelOutput", "a00072.html#ga6ef08d759de5b19cf7423f5fc0024611", null ]
+    [ "PXP_Init", "a00072.html#ga3df43800a52871b1133ca07d71a36028", null ],
+    [ "PXP_Deinit", "a00072.html#gae5619626b61b61e4a4e18c352f5c7a3b", null ],
+    [ "PXP_Reset", "a00072.html#ga05aa38715b33aa8efa5a2b9ac6136b8f", null ],
+    [ "PXP_ResetControl", "a00072.html#ga09919d04423388ece9a41660bcd4be51", null ],
+    [ "PXP_Start", "a00072.html#ga403087332729f6b471321da69c4e5613", null ],
+    [ "PXP_EnableLcdHandShake", "a00072.html#gafc295e1f8141ee141879bf97875c86aa", null ],
+    [ "PXP_EnableContinousRun", "a00072.html#ga86e86a10d930e9e62ae0146312e56bf5", null ],
+    [ "PXP_SetProcessBlockSize", "a00072.html#gacdba101d5b8707e384f06ab18f7c6f90", null ],
+    [ "PXP_GetStatusFlags", "a00072.html#ga00e7821fa2a9af59af12dfeccdce0c2d", null ],
+    [ "PXP_ClearStatusFlags", "a00072.html#ga03abdf1ea37da9eb1d87d279068250aa", null ],
+    [ "PXP_GetAxiErrorId", "a00072.html#gacdb530e0e04b3b9b6fbf695a565c1289", null ],
+    [ "PXP_EnableInterrupts", "a00072.html#ga7ac0941e10242533856930801f8605a2", null ],
+    [ "PXP_DisableInterrupts", "a00072.html#ga937cc43a47f215e2d708180d5d38231e", null ],
+    [ "PXP_SetAlphaSurfaceBufferConfig", "a00072.html#gad5b76a210bcc98524c02d2fced232c2b", null ],
+    [ "PXP_SetAlphaSurfaceBlendConfig", "a00072.html#ga11d2577b61025b47196c3c81ada91f3c", null ],
+    [ "PXP_SetAlphaSurfaceOverlayColorKey", "a00072.html#gad816e326f4bfb30d116b837d64fcd1d4", null ],
+    [ "PXP_EnableAlphaSurfaceOverlayColorKey", "a00072.html#ga9bb30993dc029f7335b416756e777c49", null ],
+    [ "PXP_SetAlphaSurfacePosition", "a00072.html#gaad595b3143d2bc490ee4a48f281a8323", null ],
+    [ "PXP_SetProcessSurfaceBackGroundColor", "a00072.html#ga0057155e42559fb356f691404713b0b4", null ],
+    [ "PXP_SetProcessSurfaceBufferConfig", "a00072.html#gaa6165139d99e10759915c8419af4e585", null ],
+    [ "PXP_SetProcessSurfaceScaler", "a00072.html#ga0bb8c79014141a66b47b6d13889b6982", null ],
+    [ "PXP_SetProcessSurfacePosition", "a00072.html#ga03240c3336ade8cad9c55bda4ce6acdd", null ],
+    [ "PXP_SetProcessSurfaceColorKey", "a00072.html#ga1204bdf60e6fad9ea4a1b7bc0623792f", null ],
+    [ "PXP_SetProcessSurfaceYUVFormat", "a00072.html#ga1da6bab10d611e5c00a005d6c33c17e8", null ],
+    [ "PXP_SetOutputBufferConfig", "a00072.html#ga43472a71119310e4aa6d5ed6f6767dba", null ],
+    [ "PXP_SetOverwrittenAlphaValue", "a00072.html#gaeaeba8fb29eb8a2fa75cd40decfafaf9", null ],
+    [ "PXP_EnableOverWrittenAlpha", "a00072.html#ga3d9291f51c95e186ae89beed19961678", null ],
+    [ "PXP_SetRotateConfig", "a00072.html#ga0ae3e7e2b902aed4ad4a1e3de73e3345", null ],
+    [ "PXP_BuildRect", "a00072.html#gaf75a0bda73f3b24179509cf9e1eff23d", null ],
+    [ "PXP_SetNextCommand", "a00072.html#ga15216b9c7a873f10337efebe2358ae24", null ],
+    [ "PXP_IsNextCommandPending", "a00072.html#ga55f4c6c2b370e6fcf0bdfad3ab098196", null ],
+    [ "PXP_CancelNextCommand", "a00072.html#ga8261582d4b35311cd03231e4d27b8a19", null ],
+    [ "PXP_SetCsc1Mode", "a00072.html#ga158e8e23f871bef08cb3955817a469d4", null ],
+    [ "PXP_EnableCsc1", "a00072.html#ga4e968190d9fccbdfc32b668a3f48eff0", null ],
+    [ "PXP_SetPorterDuffConfig", "a00072.html#ga5fcb8f65b3ceba0e144564cec3957780", null ],
+    [ "PXP_GetPorterDuffConfigExt", "a00072.html#gacaae2e56ddb64ccc1998f10c2d825f56", null ],
+    [ "PXP_GetPorterDuffConfig", "a00072.html#ga3c656ae70b9fd9176ed8f13156eb3acd", null ]
 ];

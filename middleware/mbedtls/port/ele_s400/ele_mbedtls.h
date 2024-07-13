@@ -11,13 +11,14 @@
 
 #include "fsl_common.h"
 
-#if defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES)
+#if defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1182_SERIES) || \
+    defined(MIMXRT1181_SERIES)
 #define S3MU MU_RT_S3MUA
 #elif defined(MIMXRT1189_cm7_SERIES) || defined(MIMXRT1187_cm7_SERIES)
 #define S3MU MU_APPS_S3MUA
 #else
 #error "No valid SoC defined"
-#endif /* MIMXRT1189_cm33_SERIES | MIMXRT1189_cm7_SERIES */
+#endif /* MIMXRT118x_cm33_SERIES | MIMXRT118x_SERIES | MIMXRT118x_cm7_SERIES */
 
 typedef struct {
     uint32_t session_handle;

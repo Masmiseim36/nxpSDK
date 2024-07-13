@@ -1,10 +1,19 @@
 var a00356 =
 [
-    [ "FSL_PUF_DRIVER_VERSION", "a00356.html#ga7e9f1791013e2efc9bddbb202db774af", null ],
-    [ "PUF_GET_KEY_CODE_SIZE_FOR_KEY_SIZE", "a00356.html#ga3bdc651e62070fc7cdb52c3f1197fc84", null ],
-    [ "puf_key_slot_t", "a00356.html#ga5905e02be9ed347f883ea4d694eb0baa", null ],
-    [ "_puf_key_slot", "a00356.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d", [
-      [ "kPUF_KeySlot0", "a00356.html#gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dabc4b46985695e9640df2093f937be7f2", null ],
-      [ "kPUF_KeySlot1", "a00356.html#gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dad944437798712d481221671c3cd08212", null ]
-    ] ]
+    [ "FSL_SEMA4_DRIVER_VERSION", "a00356.html#ga1bb7148a101cd7925e5271374862802e", null ],
+    [ "SEMA4_GATE_NUM_RESET_ALL", "a00356.html#gacb7a70c49148b0186f0eaa3fe910ba79", null ],
+    [ "SEMA4_GATEn", "a00356.html#gaf1811869c70952983fa9cbd5aef3e933", null ],
+    [ "SEMA4_Init", "a00356.html#gac6380ed053744f451c5175db29f9f3d9", null ],
+    [ "SEMA4_Deinit", "a00356.html#gafc7188cb89c7522813d6be66f97c7e35", null ],
+    [ "SEMA4_TryLock", "a00356.html#ga30d848a2ce959c29af0f13bf8f0ee1dc", null ],
+    [ "SEMA4_Lock", "a00356.html#gae5ca0fa4f34ac84b2c3df0abeeadd9c0", null ],
+    [ "SEMA4_Unlock", "a00356.html#ga1c34c4b2eca52767539b73647e866e7f", null ],
+    [ "SEMA4_GetLockProc", "a00356.html#ga9869fbc634dce9bd292f85bd09661d37", null ],
+    [ "SEMA4_ResetGate", "a00356.html#gae5c7bc935b02303f51a8254886acff76", null ],
+    [ "SEMA4_ResetAllGates", "a00356.html#ga4d466ad087825369aeaa611140dccf55", null ],
+    [ "SEMA4_EnableGateNotifyInterrupt", "a00356.html#ga06ad2e8a81e220aefac8c9a2b49ce1cb", null ],
+    [ "SEMA4_DisableGateNotifyInterrupt", "a00356.html#gac3168fbde7570fc0ce56a92a8eb335fb", null ],
+    [ "SEMA4_GetGateNotifyStatus", "a00356.html#ga0ed4770fa9e88d5abb4b94a775e7db2b", null ],
+    [ "SEMA4_ResetGateNotify", "a00356.html#gab648c6d8479df0890ba2d654f0193f7a", null ],
+    [ "SEMA4_ResetAllGateNotify", "a00356.html#gaef68d23981bfc1c2fbbb823b28976353", null ]
 ];

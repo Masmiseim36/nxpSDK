@@ -357,7 +357,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -365,6 +364,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1450,7 +1450,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1458,6 +1457,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2542,7 +2542,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -2550,6 +2549,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3636,7 +3636,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/littlefs</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -3644,6 +3643,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4537,12 +4537,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</name>

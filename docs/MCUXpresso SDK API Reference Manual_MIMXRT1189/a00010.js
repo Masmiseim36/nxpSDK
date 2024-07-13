@@ -1,29 +1,29 @@
 var a00010 =
 [
-    [ "clock_arm_pll_config_t", "a00010.html#a00274", [
+    [ "clock_arm_pll_config_t", "a00010.html#a00272", [
       [ "postDivider", "a00010.html#a9deea0a62bc054875dc854b67f67d44f", null ],
       [ "loopDivider", "a00010.html#ab90e887bf4411ed0abf96c74b149f35b", null ]
     ] ],
-    [ "clock_usb_pll_config_t", "a00010.html#a00280", [
+    [ "clock_usb_pll_config_t", "a00010.html#a00278", [
       [ "loopDivider", "a00010.html#a18f99eca238751761ebbd094c26e33e2", null ],
       [ "src", "a00010.html#ae511151101b893b26a2ac1a9c1d65400", null ]
     ] ],
-    [ "clock_pll_ss_config_t", "a00010.html#a00276", [
+    [ "clock_pll_ss_config_t", "a00010.html#a00274", [
       [ "stop", "a00010.html#af24898c22fd7059fa1e2d3a455a133d8", null ],
       [ "step", "a00010.html#a9d3a19deaea641acd921f44ff5955b9b", null ]
     ] ],
-    [ "clock_sys_pll2_config_t", "a00010.html#a00279", [
+    [ "clock_sys_pll2_config_t", "a00010.html#a00277", [
       [ "mfd", "a00010.html#aa51bff1e0a9646bdfcc5790d7293fd0c", null ],
       [ "ss", "a00010.html#a061c9d1e3ab0b3d428c572b173345c66", null ],
       [ "ssEnable", "a00010.html#aad78f8d05dadf800e07303eeb5b9178b", null ]
     ] ],
-    [ "clock_sys_pll1_config_t", "a00010.html#a00278", [
+    [ "clock_sys_pll1_config_t", "a00010.html#a00276", [
       [ "pllDiv2En", "a00010.html#a49c7d6aa5b98166781e3d5ca7ff5c311", null ],
       [ "pllDiv5En", "a00010.html#af5eb5184cc42c83d94cde9d9002a0adb", null ],
       [ "ss", "a00010.html#adf7a970fc76120e6be24b452cc5f92a4", null ],
       [ "ssEnable", "a00010.html#a39a2d5bff8bc67ab921aa6d9d53efb4c", null ]
     ] ],
-    [ "clock_audio_pll_config_t", "a00010.html#a00275", [
+    [ "clock_audio_pll_config_t", "a00010.html#a00273", [
       [ "loopDivider", "a00010.html#ab37939b338dbfc0aca4d070ecf273e9f", null ],
       [ "postDivider", "a00010.html#a61f7c596a57b37d806c8af66f6bb8bc9", null ],
       [ "numerator", "a00010.html#a7cdf80b89c5dc408bcace6cd2e7096e5", null ],
@@ -31,7 +31,7 @@ var a00010 =
       [ "ss", "a00010.html#ad544fdc2bb17ddfabdac508d5cbfcbce", null ],
       [ "ssEnable", "a00010.html#a0db226318be8d36e990f210225d20122", null ]
     ] ],
-    [ "clock_root_config_t", "a00010.html#a00277", [
+    [ "clock_root_config_t", "a00010.html#a00275", [
       [ "mux", "a00010.html#a9f4ce8cdde91314cd6db82d925b39f40", null ],
       [ "div", "a00010.html#af1d480902502dace1f5128ec1cb80abe", null ]
     ] ],
@@ -115,8 +115,8 @@ var a00010 =
       [ "kCLOCK_Sema2", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861ad6f20742099a7af74614f1c4896842f7", null ],
       [ "kCLOCK_Mu_A", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861a3ab5dca30483c5a248cf24d088219ec9", null ],
       [ "kCLOCK_Mu_B", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861a5a1c74ab109d13e29a167e987b9b71a0", null ],
-      [ "kCLOCK_Edma1", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861adbdf4aebc12f0bd71fed83eacd9ba41d", null ],
-      [ "kCLOCK_Edma2", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861ad85b996e3e4a75d330a73dd5b7a80480", null ],
+      [ "kCLOCK_Edma3", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861a63e6e0d62253d86d571bb40367b4f2e0", null ],
+      [ "kCLOCK_Edma4", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861a329a900ce3b2f44597fca785680e0e0b", null ],
       [ "kCLOCK_Romcp", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861ae32279146672c056e190cd5a89e82b50", null ],
       [ "kCLOCK_Ocram1", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861a7b3bfedb117cebb10e8976c727aaad0d", null ],
       [ "kCLOCK_Ocram2", "a00010.html#ggaafd0bb3b49b4a0cfcb7810536d9ee861a14771e389ff5f3a33dc813ec32211d23", null ],

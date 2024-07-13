@@ -1,6 +1,6 @@
 var a00029 =
 [
-    [ "_enc_config", "a00029.html#a00457", [
+    [ "_enc_config", "a00029.html#a00454", [
       [ "enableReverseDirection", "a00029.html#ad754ab4be68e450ac01f5c5def997762", null ],
       [ "decoderWorkMode", "a00029.html#ac55e95a1ebbf9a703c63a05c723e040a", null ],
       [ "HOMETriggerMode", "a00029.html#a4c57c0fef10c4148b7bbf0014af81e27", null ],
@@ -20,7 +20,7 @@ var a00029 =
       [ "enablePeriodMeasurementFunction", "a00029.html#af8331e11687df85caf1995f583223741", null ],
       [ "prescalerValue", "a00029.html#a46b9eab04ef6e99b5e2adaafa55ba2f1", null ]
     ] ],
-    [ "_enc_self_test_config", "a00029.html#a00458", [
+    [ "_enc_self_test_config", "a00029.html#a00455", [
       [ "signalDirection", "a00029.html#af93dbcfe3bdec619dc4c3137ab435ef0", null ],
       [ "signalCount", "a00029.html#a88b049ae384312c2b4fb74c59924f7f5", null ],
       [ "signalPeriod", "a00029.html#a232136f38b57ce15fdf30a430a3ebff3", null ]

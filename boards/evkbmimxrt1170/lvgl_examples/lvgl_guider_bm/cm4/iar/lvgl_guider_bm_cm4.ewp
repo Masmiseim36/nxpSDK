@@ -372,11 +372,12 @@
           <state>$PROJ_DIR$/../../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -388,6 +389,7 @@
           <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1486,11 +1488,12 @@
           <state>$PROJ_DIR$/../../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1502,6 +1505,7 @@
           <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2391,6 +2395,12 @@
       <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rpi/fsl_rpi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rpi/fsl_rpi.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/fsl_dc_fb.h</name>
     </file>
   </group>
@@ -2509,6 +2519,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/gt911/fsl_gt911.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
     </file>
   </group>
   <group>
@@ -3765,12 +3781,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -3784,6 +3794,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

@@ -12,7 +12,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 #include "fsl_trdc.h"
 /*******************************************************************************
  * Definitions
@@ -77,7 +77,11 @@ const clock_audio_pll_config_t audioPllConfig = {
 AT_NONCACHEABLE_SECTION_ALIGN(pdm_edma_handle_t pdmRxHandle, 4);
 AT_NONCACHEABLE_SECTION_ALIGN(edma_handle_t dmaHandle, 4);
 AT_NONCACHEABLE_SECTION_ALIGN(static int16_t rxBuff[BUFFER_SIZE], 4);
+#if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
+AT_NONCACHEABLE_SECTION_ALIGN(edma_tcd_t s_edmaTcd[1], 32U);
+#else
 AT_QUICKACCESS_SECTION_DATA_ALIGN(edma_tcd_t s_edmaTcd[1], 32U);
+#endif
 #if (defined(FSL_FEATURE_PDM_HAS_STATUS_LOW_FREQ) && (FSL_FEATURE_PDM_HAS_STATUS_LOW_FREQ == 1U))
 static volatile bool s_lowFreqFlag = false;
 #endif
@@ -267,19 +271,19 @@ int main(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Release TRDC A to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     TRDC_EDMA4_ResetPermissions();

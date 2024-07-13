@@ -21,7 +21,7 @@
  ******************************************************************************/
 
 /*! @name Driver version */
-/*@{*/
+/*! @{ */
 /*! @brief IEE driver version. Version 2.1.1.
  *
  * Current version: 2.1.1
@@ -37,7 +37,7 @@
  *   - Add ELE (EdgeLock Enclave) key provisioning feature.
  */
 #define FSL_IEE_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
-/*@}*/
+/*! @} */
 
 /*! @brief IEE region. */
 typedef enum _iee_region

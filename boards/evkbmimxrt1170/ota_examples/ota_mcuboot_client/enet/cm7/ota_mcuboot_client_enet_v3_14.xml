@@ -87,7 +87,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -261,6 +261,16 @@
     <source path="." project_relative_path="source/config" type="c_include">
       <files mask="network_board_cfg.h"/>
     </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="mcuboot_app_support.c"/>
     </source>
@@ -282,28 +292,9 @@
     </source>
     <source path="bootutil_port" project_relative_path="bootutil_port" type="c_include">
       <files mask="flash_map.h"/>
-      <files mask="sbldef.h"/>
     </source>
     <source path="bootutil_port/sysflash" project_relative_path="bootutil_port/sysflash" type="c_include">
       <files mask="sysflash.h"/>
-    </source>
-    <source path="https_server" project_relative_path="https_server" type="other" exclude="true">
-      <files mask="httpsd_ota.py" hidden="true"/>
-      <files mask="LICENSE" hidden="true"/>
-    </source>
-    <source path="https_server/certs" project_relative_path="https_server" type="other" exclude="true">
-      <files mask="server.cert.pem" hidden="true"/>
-      <files mask="server.key.pem" hidden="true"/>
-    </source>
-    <source path="." project_relative_path="board" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
-      <files mask="dcd.c"/>
-    </source>
-    <source path="." project_relative_path="board" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
-      <files mask="dcd.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.md"/>
@@ -313,6 +304,14 @@
     </source>
     <source path="." project_relative_path="evkbmimxrt1170" type="other" toolchain="iar mdk armgcc">
       <files mask="evkbmimxrt1170_connect_cm4_cm7side.jlinkscript"/>
+    </source>
+    <source path="../../https_server" project_relative_path="https_server" type="other" exclude="true">
+      <files mask="httpsd_ota.py" hidden="true"/>
+      <files mask="LICENSE" hidden="true"/>
+    </source>
+    <source path="../../https_server/certs" project_relative_path="https_server" type="other" exclude="true">
+      <files mask="server.cert.pem" hidden="true"/>
+      <files mask="server.key.pem" hidden="true"/>
     </source>
   </example>
 </ksdk:examples>

@@ -1,11 +1,11 @@
 var a00022 =
 [
-    [ "i3c_master_edma_callback_t", "a00022.html#a00321", [
+    [ "i3c_master_edma_callback_t", "a00022.html#a00319", [
       [ "slave2Master", "a00022.html#a64ed6c345c00b32b1a9ee20a3480b689", null ],
       [ "ibiCallback", "a00022.html#a5e3407fea1769c28b630312525bef4c3", null ],
       [ "transferComplete", "a00022.html#a834813348710042123c1a9ba762e0113", null ]
     ] ],
-    [ "i3c_master_edma_handle_t", "a00022.html#a00248", [
+    [ "i3c_master_edma_handle_t", "a00022.html#a00246", [
       [ "base", "a00022.html#a629d9f0a8d4b80f97b2bc86e199228ff", null ],
       [ "state", "a00022.html#a151e3d44e7d5c2c80596edcfde4da54b", null ],
       [ "transferCount", "a00022.html#a59617f0a65770c0a5f64e9833d148a22", null ],

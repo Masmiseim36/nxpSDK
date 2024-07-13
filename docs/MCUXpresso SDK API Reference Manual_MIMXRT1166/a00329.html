@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking HASH driver</title>
+<title>MCUXpresso SDK API Reference Manual: CAAM Blob driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,125 +99,159 @@ $(document).ready(function(){initNavTree('a00329.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CAAM Non-blocking HASH driver<div class="ingroups"><a class="el" href="a00327.html">CAAM Non-blocking APIs</a></div></div>  </div>
+<div class="title">CAAM Blob driver<div class="ingroups"><a class="el" href="a00013.html">CAAM: Cryptographic Acceleration and Assurance Module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the CAAM Non-blocking HASH driver. </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga878fc65e38e70f81bb76f8f17f49b874"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00329.html#gab64c4aac04c7ac392cf549ab29729e16">_caam_fifost_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga878fc65e38e70f81bb76f8f17f49b874">caam_fifost_type_t</a></td></tr>
+<tr class="memdesc:ga878fc65e38e70f81bb76f8f17f49b874"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM FIFOST types.  <a href="#ga878fc65e38e70f81bb76f8f17f49b874">More...</a><br/></td></tr>
+<tr class="separator:ga878fc65e38e70f81bb76f8f17f49b874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3534bd84da969e436740135aea3b697c"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00329.html#ga4f7de733272c36461df158b6a42e5e46">_caam_desc_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga3534bd84da969e436740135aea3b697c">caam_desc_type_t</a></td></tr>
+<tr class="memdesc:ga3534bd84da969e436740135aea3b697c"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM descriptor types.  <a href="#ga3534bd84da969e436740135aea3b697c">More...</a><br/></td></tr>
+<tr class="separator:ga3534bd84da969e436740135aea3b697c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gab64c4aac04c7ac392cf549ab29729e16"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#gab64c4aac04c7ac392cf549ab29729e16">_caam_fifost_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00329.html#ggab64c4aac04c7ac392cf549ab29729e16a84e122bbbd2e66d5569a2d75be1f3b11">kCAAM_FIFOST_Type_Kek_Kek</a> = 0x24, 
+<br/>
+&#160;&#160;<a class="el" href="a00329.html#ggab64c4aac04c7ac392cf549ab29729e16ae5e276ab814d1be88c32d7de249ffa59">kCAAM_FIFOST_Type_Kek_TKek</a> = 0x25, 
+<br/>
+&#160;&#160;<a class="el" href="a00329.html#ggab64c4aac04c7ac392cf549ab29729e16a273bdfc76eae63ebc6c47f82e95d5fff">kCAAM_FIFOST_Type_Kek_Cmm_Jkek</a> = 0x14, 
+<br/>
+&#160;&#160;<a class="el" href="a00329.html#ggab64c4aac04c7ac392cf549ab29729e16aeb6eccc10120f32f24ae92cd974a3127">kCAAM_FIFOST_Type_Kek_Cmm_Tkek</a> = 0x15
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab64c4aac04c7ac392cf549ab29729e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM FIFOST types.  <a href="a00329.html#gab64c4aac04c7ac392cf549ab29729e16">More...</a><br/></td></tr>
+<tr class="separator:gab64c4aac04c7ac392cf549ab29729e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f7de733272c36461df158b6a42e5e46"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga4f7de733272c36461df158b6a42e5e46">_caam_desc_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00329.html#gga4f7de733272c36461df158b6a42e5e46a52b626477007f1366c4f1745fc4c70e6">kCAAM_Descriptor_Type_Kek_Kek</a> = 0x0, 
+<br/>
+&#160;&#160;<a class="el" href="a00329.html#gga4f7de733272c36461df158b6a42e5e46adf40e9dddb88fac261056714bf51ae82">kCAAM_Descriptor_Type_Kek_TKek</a> = 0x2, 
+<br/>
+&#160;&#160;<a class="el" href="a00329.html#gga4f7de733272c36461df158b6a42e5e46ac94c8c5849ea6eeed5f949b791da16e8">kCAAM_Descriptor_Type_Kek_Ccm_Jkek</a> = 0x1, 
+<br/>
+&#160;&#160;<a class="el" href="a00329.html#gga4f7de733272c36461df158b6a42e5e46a36e0bff142e85c9a663862ecc9de6323">kCAAM_Descriptor_Type_Kek_Ccm_Tkek</a> = 0x3
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga4f7de733272c36461df158b6a42e5e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM descriptor types.  <a href="a00329.html#ga4f7de733272c36461df158b6a42e5e46">More...</a><br/></td></tr>
+<tr class="separator:ga4f7de733272c36461df158b6a42e5e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga43f8383d9039e8e5143f23f99f32785f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga43f8383d9039e8e5143f23f99f32785f">CAAM_HASH_UpdateNonBlocking</a> (<a class="el" href="a00326.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
-<tr class="memdesc:ga43f8383d9039e8e5143f23f99f32785f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add input address and size to input data table.  <a href="#ga43f8383d9039e8e5143f23f99f32785f">More...</a><br/></td></tr>
-<tr class="separator:ga43f8383d9039e8e5143f23f99f32785f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f9428aae83622088c097e6e79c40b15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga3f9428aae83622088c097e6e79c40b15">CAAM_HASH_FinishNonBlocking</a> (<a class="el" href="a00326.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, <a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a> descriptor, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:ga3f9428aae83622088c097e6e79c40b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize hashing.  <a href="#ga3f9428aae83622088c097e6e79c40b15">More...</a><br/></td></tr>
-<tr class="separator:ga3f9428aae83622088c097e6e79c40b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga5ba5834bc5d2b08f7e4438e043094dc3">CAAM_HASH_NonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a> descriptor, <a class="el" href="a00326.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a> algo, const uint8_t *input, size_t inputSize, const uint8_t *key, size_t keySize, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create HASH on given data.  <a href="#ga5ba5834bc5d2b08f7e4438e043094dc3">More...</a><br/></td></tr>
-<tr class="separator:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4582fee721c9b8c35f17beac855bac1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga4582fee721c9b8c35f17beac855bac1f">CAAM_RedBlob_Encapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *data, size_t dataSize, uint8_t *blob_data)</td></tr>
+<tr class="memdesc:ga4582fee721c9b8c35f17beac855bac1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a encrypted Red Blob.  <a href="#ga4582fee721c9b8c35f17beac855bac1f">More...</a><br/></td></tr>
+<tr class="separator:ga4582fee721c9b8c35f17beac855bac1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga122fea38a73ae8e20e4bf23911554d72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga122fea38a73ae8e20e4bf23911554d72">CAAM_RedBlob_Decapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *blob_data, uint8_t *data, size_t dataSize)</td></tr>
+<tr class="memdesc:ga122fea38a73ae8e20e4bf23911554d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt red blob.  <a href="#ga122fea38a73ae8e20e4bf23911554d72">More...</a><br/></td></tr>
+<tr class="separator:ga122fea38a73ae8e20e4bf23911554d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga614684d41dc08a72f94d250484606d91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#ga614684d41dc08a72f94d250484606d91">CAAM_BlackBlob_Encapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *data, size_t dataSize, uint8_t *blob_data, <a class="el" href="a00329.html#ga3534bd84da969e436740135aea3b697c">caam_desc_type_t</a> blackKeyType)</td></tr>
+<tr class="memdesc:ga614684d41dc08a72f94d250484606d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a encrypted Black Blob.  <a href="#ga614684d41dc08a72f94d250484606d91">More...</a><br/></td></tr>
+<tr class="separator:ga614684d41dc08a72f94d250484606d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac20153a2d54d89fa2c05d1764a9dc658"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#gac20153a2d54d89fa2c05d1764a9dc658">CAAM_BlackBlob_Decapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *blob_data, uint8_t *data, size_t dataSize, <a class="el" href="a00329.html#ga3534bd84da969e436740135aea3b697c">caam_desc_type_t</a> blackKeyType)</td></tr>
+<tr class="memdesc:gac20153a2d54d89fa2c05d1764a9dc658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a decrypted black blob.  <a href="#gac20153a2d54d89fa2c05d1764a9dc658">More...</a><br/></td></tr>
+<tr class="separator:gac20153a2d54d89fa2c05d1764a9dc658"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga878fc65e38e70f81bb76f8f17f49b874"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00329.html#gab64c4aac04c7ac392cf549ab29729e16">_caam_fifost_type</a>  <a class="el" href="a00329.html#ga878fc65e38e70f81bb76f8f17f49b874">caam_fifost_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3534bd84da969e436740135aea3b697c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00329.html#ga4f7de733272c36461df158b6a42e5e46">_caam_desc_type</a>  <a class="el" href="a00329.html#ga3534bd84da969e436740135aea3b697c">caam_desc_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gab64c4aac04c7ac392cf549ab29729e16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00329.html#gab64c4aac04c7ac392cf549ab29729e16">_caam_fifost_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab64c4aac04c7ac392cf549ab29729e16a84e122bbbd2e66d5569a2d75be1f3b11"></a>kCAAM_FIFOST_Type_Kek_Kek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key Register, encrypted using AES-ECB with the job
+</pre><p> descriptor key encryption key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab64c4aac04c7ac392cf549ab29729e16ae5e276ab814d1be88c32d7de249ffa59"></a>kCAAM_FIFOST_Type_Kek_TKek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key Register, encrypted using AES-ECB with the
+</pre><p> trusted descriptor key encryption key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab64c4aac04c7ac392cf549ab29729e16a273bdfc76eae63ebc6c47f82e95d5fff"></a>kCAAM_FIFOST_Type_Kek_Cmm_Jkek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key Register, encrypted using AES-CCM with the
+</pre><p> job descriptor key encryption key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab64c4aac04c7ac392cf549ab29729e16aeb6eccc10120f32f24ae92cd974a3127"></a>kCAAM_FIFOST_Type_Kek_Cmm_Tkek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key register, encrypted using AES-CCM with the
+</pre><p> trusted descriptor key encryption key. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga4f7de733272c36461df158b6a42e5e46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00329.html#ga4f7de733272c36461df158b6a42e5e46">_caam_desc_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4f7de733272c36461df158b6a42e5e46a52b626477007f1366c4f1745fc4c70e6"></a>kCAAM_Descriptor_Type_Kek_Kek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key Register, encrypted using AES-ECB with the job
+</pre><p> descriptor key encryption key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4f7de733272c36461df158b6a42e5e46adf40e9dddb88fac261056714bf51ae82"></a>kCAAM_Descriptor_Type_Kek_TKek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key Register, encrypted using AES-ECB with the
+</pre><p> trusted descriptor key encryption key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4f7de733272c36461df158b6a42e5e46ac94c8c5849ea6eeed5f949b791da16e8"></a>kCAAM_Descriptor_Type_Kek_Ccm_Jkek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key Register, encrypted using AES-CCM with the
+</pre><p> job descriptor key encryption key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4f7de733272c36461df158b6a42e5e46a36e0bff142e85c9a663862ecc9de6323"></a>kCAAM_Descriptor_Type_Kek_Ccm_Tkek</em>&nbsp;</td><td class="fielddoc">
+<pre class="fragment">   Key register, encrypted using AES-CCM with the
+</pre><p> trusted descriptor key encryption key. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga43f8383d9039e8e5143f23f99f32785f"></a>
+<a class="anchor" id="ga4582fee721c9b8c35f17beac855bac1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_UpdateNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00326.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Add data input pointer to a table maintained internally in the context. Each call of this function creates one entry in the table. The entry consists of the input pointer and inputSize. All entries created by one or multiple calls of this function can be processed in one call to <a class="el" href="a00329.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a> function. Individual entries can point to non-continuous data in the memory. The processing will occur in the order in which the <a class="el" href="a00329.html#ga43f8383d9039e8e5143f23f99f32785f" title="Add input address and size to input data table. ">CAAM_HASH_UpdateNonBlocking()</a> have been called.</p>
-<p>Memory pointers will be later accessed by CAAM (at time of <a class="el" href="a00329.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a>), so the memory must stay valid until <a class="el" href="a00329.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a> has been called and CAAM completes the processing.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>HASH context </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3f9428aae83622088c097e6e79c40b15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_FinishNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00326.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The actual algorithm is computed with all input data, the memory pointers are accessed by CAAM after the function returns. The input data chunks have been specified by prior calls to <a class="el" href="a00329.html#ga43f8383d9039e8e5143f23f99f32785f" title="Add input address and size to input data table. ">CAAM_HASH_UpdateNonBlocking()</a>. The function schedules the request at CAAM, then returns. After a while, when the CAAM completes processing of the input data chunks, the result is written to the output[] array, outputSize is written and the context is cleared.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Input hash context </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash finish operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5ba5834bc5d2b08f7e4438e043094dc3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_NonBlocking </td>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_RedBlob_Encapsule </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -231,50 +265,32 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00326.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a>&#160;</td>
-          <td class="paramname"><em>algo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
+          <td class="paramname"><em>keyModifier</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>, </td>
+          <td class="paramname"><em>keyModifierSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
+          <td class="paramname"><em>dataSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
+          <td class="paramname"><em>blob_data</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -283,26 +299,244 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Perform the full keyed XCBC-MAC/CMAC or SHA in one function call.</p>
-<p>Key shall be supplied if the underlaying algoritm is AES XCBC-MAC or CMAC. Key shall be NULL if the underlaying algoritm is SHA.</p>
-<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For MDHA the key length argument is ignored.</p>
-<p>The function is non-blocking. The request is scheduled at CAAM.</p>
+<p>This function constructs a job descriptor capable of performing a encrypted blob operation on a plaintext object.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key (NULL if underlaying algorithm is SHA) </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">data</td><td>Data adress </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">blob_data</td><td>Output blob data adress </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga122fea38a73ae8e20e4bf23911554d72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_RedBlob_Decapsule </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>keyModifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keyModifierSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>blob_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dataSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function constructs a job descriptor capable of performing decrypting red blob .</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">blob_data</td><td>Address of blob data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Output data adress. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga614684d41dc08a72f94d250484606d91"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_BlackBlob_Encapsule </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>keyModifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keyModifierSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dataSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>blob_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00329.html#ga3534bd84da969e436740135aea3b697c">caam_desc_type_t</a>&#160;</td>
+          <td class="paramname"><em>blackKeyType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function constructs a job descriptor capable of performing a encrypted blob operation on a plaintext object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">data</td><td>Data adress </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">blob_data</td><td>Output blob data adress </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">blackKeyType</td><td>Type of black key see enum caam_desc_type_t for more info </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac20153a2d54d89fa2c05d1764a9dc658"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_BlackBlob_Decapsule </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>keyModifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keyModifierSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>blob_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dataSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00329.html#ga3534bd84da969e436740135aea3b697c">caam_desc_type_t</a>&#160;</td>
+          <td class="paramname"><em>blackKeyType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function constructs a job descriptor capable of performing decrypting black blob.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">blob_data</td><td>Address of blob data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Output data adress. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">blackKeyType</td><td>Type of black key see enum caam_desc_type_t for more info </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
 
 </div>
 </div>

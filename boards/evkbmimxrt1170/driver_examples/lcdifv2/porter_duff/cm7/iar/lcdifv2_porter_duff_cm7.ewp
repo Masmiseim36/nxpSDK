@@ -226,6 +226,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -351,6 +352,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68191</state>
@@ -358,8 +360,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/mipi_dsi_cmd</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -370,6 +372,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1323,6 +1326,7 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1448,6 +1452,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68191</state>
@@ -1455,8 +1460,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/mipi_dsi_cmd</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -1467,6 +1472,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2417,6 +2423,7 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -2542,6 +2549,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68191</state>
@@ -2549,8 +2557,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/mipi_dsi_cmd</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -2561,6 +2569,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3514,6 +3523,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -3639,6 +3649,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68191</state>
@@ -3646,8 +3657,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/mipi_dsi_cmd</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/rpi</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -3658,6 +3669,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4392,18 +4404,6 @@
   <group>
     <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../lcdifv2_support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../lcdifv2_support.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
@@ -4420,6 +4420,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lcdifv2_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lcdifv2_support.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../xmcd/xmcd.c</name>
@@ -4475,6 +4487,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/video/display/rpi/fsl_rpi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/video/display/rpi/fsl_rpi.c</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -4489,6 +4507,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.c</name>
@@ -4599,12 +4623,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4618,6 +4636,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

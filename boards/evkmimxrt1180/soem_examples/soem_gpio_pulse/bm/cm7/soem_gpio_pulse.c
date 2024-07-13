@@ -70,7 +70,7 @@
 #define NUM_1M      (1000000UL)
 #define SOEM_PERIOD 125 /* 125 us */
 
-#define SOEM_PORT_NAME "netc0"
+#define SOEM_PORT_NAME "EtherCAT0"
 
 /*******************************************************************************
  * Variables

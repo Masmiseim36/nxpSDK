@@ -132,12 +132,12 @@ int mbedtls_pk_parse_key( mbedtls_pk_context *pk,
 
     /****************** Open Key Store ************************************/
 
-    ele_keystore_t keystoreParam;
-    keystoreParam.id            = g_ele_ctx.key_store_id;
-    keystoreParam.nonce         = g_ele_ctx.key_store_nonce;
-    keystoreParam.max_updates   = 0xff;
-    keystoreParam.min_mac_check = false;
-    keystoreParam.min_mac_len   = 0u;
+    ele_keystore_t keystoreParam = { 0u };
+    keystoreParam.id             = g_ele_ctx.key_store_id;
+    keystoreParam.nonce          = g_ele_ctx.key_store_nonce;
+    keystoreParam.max_updates    = 0xff;
+    keystoreParam.min_mac_check  = false;
+    keystoreParam.min_mac_len    = 0u;
 
     if (ELE_OpenKeystore(S3MU, g_ele_ctx.session_handle, &keystoreParam, &g_ele_ctx.key_store_handle, chunks_ptr->KeyStoreChunkData, chunks_ptr->KeyStoreSize) != kStatus_Success)
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;

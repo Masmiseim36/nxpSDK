@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-include ../app_bluetooth_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, SDIO_ENABLED=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, SHELL_TASK_STACK_SIZE=2048, SHELL_TASK_PRIORITY=configMAX_PRIORITIES-2, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, EDGEFAST_BT_LITTLEFS_MFLASH, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_MCUX_ELE_S400_API, MCUXPRESSO_SDK, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, CACHE_MODE_WRITE_THROUGH=1, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1</Define>
+              <MiscControls>-include ../app_bluetooth_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, SDIO_ENABLED=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, SHELL_TASK_STACK_SIZE=2048, SHELL_TASK_PRIORITY=configMAX_PRIORITIES-2, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, EDGEFAST_BT_LITTLEFS_MFLASH, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_MCUX_ELE_S400_API, MCUXPRESSO_SDK, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, CACHE_MODE_WRITE_THROUGH=1, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_IGMP=1, _XOPEN_SOURCE=500</Define>
               <Undefine/>
-              <IncludePath>..;../controller/configs/mbedtls;../controller/configs/lwip;../controller/configs/wifi;../platform/configs;../../../../../../components/osa;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/utilities;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/common_task;../../../../../../components/ele_crypto;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../components/flash/mflash;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1189;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../components/log;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../controller/configs/mbedtls;../controller/configs/lwip;../controller/configs/wifi;../platform/configs;../../../../../../components/osa;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/utilities/shell;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/common_task;../../../../../../components/ele_crypto;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../components/flash/mflash;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1189;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../components/log;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +353,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../controller/configs/mbedtls;..</IncludePath>
+              <IncludePath>../controller/configs/mbedtls;..;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -760,6 +760,16 @@
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_edma_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_edma_soc.h</FilePath>
@@ -807,12 +817,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
@@ -820,14 +830,9 @@
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -940,9 +945,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -2065,6 +2085,11 @@
               <FilePath>../../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
+              <FileName>wifi_config_default.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_config_default.h</FilePath>
+            </File>
+            <File>
               <FileName>wifi_cal_data_ext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_ext.h</FilePath>
@@ -2100,11 +2125,6 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
             </File>
             <File>
-              <FileName>type_decls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
-            </File>
-            <File>
               <FileName>mlan_decl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
@@ -2114,21 +2134,51 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
             </File>
+            <File>
+              <FileName>type_decls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
           <Files>
             <File>
+              <FileName>sd8801_wlan.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</FilePath>
+            </File>
+            <File>
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>8801_cpu1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
           <Files>
+            <File>
+              <FileName>sduartIW416_wlan_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sdIW416_wlan.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sdIW416_wlan.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uartIW416_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.bin.inc</FilePath>
+            </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
@@ -2144,11 +2194,41 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.h</FilePath>
             </File>
+            <File>
+              <FileName>IW416_cpu12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/IW416_cpu12.c</FilePath>
+            </File>
+            <File>
+              <FileName>IW416_cpu1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/IW416_cpu1.c</FilePath>
+            </File>
+            <File>
+              <FileName>IW416_cpu2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/IW416_cpu2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/8987</GroupName>
           <Files>
+            <File>
+              <FileName>sduart8987_wlan_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sduart8987_wlan_bt.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sd8987_wlan.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sd8987_wlan.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uart8987_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.bin.inc</FilePath>
+            </File>
             <File>
               <FileName>sduart8987_wlan_bt.h</FileName>
               <FileType>5</FileType>
@@ -2164,11 +2244,41 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.h</FilePath>
             </File>
+            <File>
+              <FileName>8987_cpu12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/8987_cpu12.c</FilePath>
+            </File>
+            <File>
+              <FileName>8987_cpu1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/8987_cpu1.c</FilePath>
+            </File>
+            <File>
+              <FileName>8987_cpu2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/8987_cpu2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/nw61x</GroupName>
           <Files>
+            <File>
+              <FileName>sduart_nw61x.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sduart_nw61x.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sd_nw61x.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sd_nw61x.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uart_nw61x.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x.bin.se.inc</FilePath>
+            </File>
             <File>
               <FileName>sduart_nw61x_se.h</FileName>
               <FileType>5</FileType>
@@ -2183,6 +2293,21 @@
               <FileName>uart_nw61x_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>nw61x_cpu12_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/nw61x_cpu12_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>nw61x_cpu1_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/nw61x_cpu1_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>nw61x_cpu2_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/nw61x_cpu2_se.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2433,6 +2558,16 @@
               <FileName>bt_pal_l2cap_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_l2cap_br_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_br_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_l2cap_br_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_br_interface.h</FilePath>
             </File>
             <File>
               <FileName>bt_pal_monitor.c</FileName>
@@ -3215,6 +3350,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -3793,6 +3933,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -4707,16 +4852,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/incl/wifidriver</GroupName>
           <Files>
             <File>
@@ -4733,16 +4868,6 @@
               <FileName>wifi_events.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4832,6 +4957,76 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>wifi/incl/port/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/mem_pool.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/mem_pool_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>slist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/slist.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/stack_simple.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/mem_pool.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/mem_pool_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>slist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/slist.c</FilePath>
+            </File>
+            <File>
+              <FileName>stack_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/stack_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>osa_freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/osa_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>osa_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/osa_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>edgefast/bluetooth/crypto</GroupName>
           <Files>
             <File>
@@ -4863,16 +5058,6 @@
               <FileName>fsl_component_log.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5282,10 +5467,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-include ../app_bluetooth_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, SDIO_ENABLED=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, SHELL_TASK_STACK_SIZE=2048, SHELL_TASK_PRIORITY=configMAX_PRIORITIES-2, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, EDGEFAST_BT_LITTLEFS_MFLASH, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_MCUX_ELE_S400_API, MCUXPRESSO_SDK, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, CACHE_MODE_WRITE_THROUGH=1, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1</Define>
+              <MiscControls>-include ../app_bluetooth_config.h -fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, SDIO_ENABLED=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, SHELL_TASK_STACK_SIZE=2048, SHELL_TASK_PRIORITY=configMAX_PRIORITIES-2, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, EDGEFAST_BT_LITTLEFS_MFLASH, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_MCUX_ELE_S400_API, MCUXPRESSO_SDK, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, CACHE_MODE_WRITE_THROUGH=1, MFLASH_FILE_BASEADDR=14221312, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_IGMP=1, _XOPEN_SOURCE=500</Define>
               <Undefine/>
-              <IncludePath>..;../controller/configs/mbedtls;../controller/configs/lwip;../controller/configs/wifi;../platform/configs;../../../../../../components/osa;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/utilities;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/common_task;../../../../../../components/ele_crypto;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../components/flash/mflash;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1189;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../components/log;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../controller/configs/mbedtls;../controller/configs/lwip;../controller/configs/wifi;../platform/configs;../../../../../../components/osa;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189/utilities/shell;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/common_task;../../../../../../components/ele_crypto;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/flash/mflash/mimxrt1180;../../../../../../components/flash/mflash;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1189;../../../../xip;../../../../../../devices/MIMXRT1189/xip;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../middleware/wifi_nxp/incl/port/osa;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../middleware/wifi_nxp;../../../../../../middleware/wifi_nxp/port/osa;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../components/log;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5303,7 +5488,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../controller/configs/mbedtls;..</IncludePath>
+              <IncludePath>../controller/configs/mbedtls;..;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5710,6 +5895,16 @@
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_edma_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_edma_soc.h</FilePath>
@@ -5757,12 +5952,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
@@ -5770,14 +5965,9 @@
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -5890,9 +6080,24 @@
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -7015,6 +7220,11 @@
               <FilePath>../../../../../../middleware/wifi_nxp/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
+              <FileName>wifi_config_default.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_config_default.h</FilePath>
+            </File>
+            <File>
               <FileName>wifi_cal_data_ext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/incl/wifi_cal_data_ext.h</FilePath>
@@ -7050,11 +7260,6 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_main_defs.h</FilePath>
             </File>
             <File>
-              <FileName>type_decls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
-            </File>
-            <File>
               <FileName>mlan_decl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
@@ -7064,21 +7269,51 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_ioctl.h</FilePath>
             </File>
+            <File>
+              <FileName>type_decls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
           <Files>
             <File>
+              <FileName>sd8801_wlan.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.bin.inc</FilePath>
+            </File>
+            <File>
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>8801_cpu1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/8801_cpu1.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
           <Files>
+            <File>
+              <FileName>sduartIW416_wlan_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sdIW416_wlan.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sdIW416_wlan.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uartIW416_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.bin.inc</FilePath>
+            </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
@@ -7094,11 +7329,41 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.h</FilePath>
             </File>
+            <File>
+              <FileName>IW416_cpu12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/IW416_cpu12.c</FilePath>
+            </File>
+            <File>
+              <FileName>IW416_cpu1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/IW416_cpu1.c</FilePath>
+            </File>
+            <File>
+              <FileName>IW416_cpu2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/IW416_cpu2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/8987</GroupName>
           <Files>
+            <File>
+              <FileName>sduart8987_wlan_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sduart8987_wlan_bt.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sd8987_wlan.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sd8987_wlan.bin.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uart8987_bt.bin.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.bin.inc</FilePath>
+            </File>
             <File>
               <FileName>sduart8987_wlan_bt.h</FileName>
               <FileType>5</FileType>
@@ -7114,11 +7379,41 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.h</FilePath>
             </File>
+            <File>
+              <FileName>8987_cpu12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/8987_cpu12.c</FilePath>
+            </File>
+            <File>
+              <FileName>8987_cpu1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/8987_cpu1.c</FilePath>
+            </File>
+            <File>
+              <FileName>8987_cpu2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/8987_cpu2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi/wifi_bt_firmware/nw61x</GroupName>
           <Files>
+            <File>
+              <FileName>sduart_nw61x.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sduart_nw61x.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sd_nw61x.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sd_nw61x.bin.se.inc</FilePath>
+            </File>
+            <File>
+              <FileName>uart_nw61x.bin.se.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x.bin.se.inc</FilePath>
+            </File>
             <File>
               <FileName>sduart_nw61x_se.h</FileName>
               <FileType>5</FileType>
@@ -7133,6 +7428,21 @@
               <FileName>uart_nw61x_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>nw61x_cpu12_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/nw61x_cpu12_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>nw61x_cpu1_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/nw61x_cpu1_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>nw61x_cpu2_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/nw61x_cpu2_se.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7383,6 +7693,16 @@
               <FileName>bt_pal_l2cap_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_l2cap_br_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_br_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_l2cap_br_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_br_interface.h</FilePath>
             </File>
             <File>
               <FileName>bt_pal_monitor.c</FileName>
@@ -8165,6 +8485,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -8743,6 +9068,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -9657,16 +9987,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/incl/wifidriver</GroupName>
           <Files>
             <File>
@@ -9683,16 +10003,6 @@
               <FileName>wifi_events.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_events.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9782,6 +10092,76 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>wifi/incl/port/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/mem_pool.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/mem_pool_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>slist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/slist.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/osa/stack_simple.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/mem_pool.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/mem_pool_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>slist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/slist.c</FilePath>
+            </File>
+            <File>
+              <FileName>stack_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/stack_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>osa_freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/osa_freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>osa_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/port/osa/osa_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>edgefast/bluetooth/crypto</GroupName>
           <Files>
             <File>
@@ -9813,16 +10193,6 @@
               <FileName>fsl_component_log.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
             </File>
           </Files>
         </Group>

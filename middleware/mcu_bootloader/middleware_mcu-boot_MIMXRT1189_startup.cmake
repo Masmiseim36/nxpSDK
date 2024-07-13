@@ -7,19 +7,19 @@ if((CONFIG_DEVICE_ID STREQUAL MIMXRT1189xxxxx))
 
 if(CONFIG_CORE STREQUAL cm33)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/../../devices/MIMXRT1189/system_MIMXRT1189_cm33.c
+      ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1189/src/startup/system_MIMXRT1189_cm33.c
   )
 endif()
 
 if(CONFIG_CORE STREQUAL cm33 AND CONFIG_TOOLCHAIN STREQUAL iar)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/../../devices/MIMXRT1189/iar/startup_MIMXRT1189_cm33.s
+      ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1189/src/startup/iar/startup_MIMXRT1189_cm33.s
   )
 endif()
 
 if(CONFIG_CORE STREQUAL cm33 AND (CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/../../devices/MIMXRT1189/gcc/startup_MIMXRT1189_cm33.S
+      ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1189/src/startup/gcc/startup_MIMXRT1189_cm33.S
   )
 endif()
 

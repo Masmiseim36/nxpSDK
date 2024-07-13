@@ -45,17 +45,19 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
 "${ProjDirPath}/../boot.c"
 "${ProjDirPath}/../boot.h"
-"${ProjDirPath}/../bootutil_hooks.c"
 "${ProjDirPath}/../keys.c"
-"${ProjDirPath}/../os.c"
-"${ProjDirPath}/../sbl_boot.c"
 "${ProjDirPath}/../include/mbedtls_config.h"
 "${ProjDirPath}/../include/mcuboot_config/mcuboot_config.h"
 "${ProjDirPath}/../include/mcuboot_config/mcuboot_logging.h"
-"${ProjDirPath}/../include/sbl.h"
-"${ProjDirPath}/../include/sbldef.h"
 "${ProjDirPath}/../include/flash_map.h"
 "${ProjDirPath}/../include/flash_map_backend/flash_map_backend.h"
 "${ProjDirPath}/../include/os/os_malloc.h"
@@ -67,13 +69,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../flash_partitioning.h"
 "${ProjDirPath}/../flash_partitioning.c"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
-"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE

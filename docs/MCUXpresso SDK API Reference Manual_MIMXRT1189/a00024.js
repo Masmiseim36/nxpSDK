@@ -1,6 +1,6 @@
 var a00024 =
 [
-    [ "i3c_slave_edma_transfer_t", "a00024.html#a00325", [
+    [ "i3c_slave_edma_transfer_t", "a00024.html#a00323", [
       [ "event", "a00024.html#a78b06d707979aa16edc4dee868deaa38", null ],
       [ "txData", "a00024.html#ae18f8c520d71c9f599de9c3c0cc283e8", null ],
       [ "txDataSize", "a00024.html#a7647497ee41f0f709d97efa0fc6ab198", null ],
@@ -8,7 +8,7 @@ var a00024 =
       [ "rxDataSize", "a00024.html#a8d7d1dfde0321ed1ddd5ab40adadf968", null ],
       [ "completionStatus", "a00024.html#a7c42c213276ca00b9528737eb13627f2", null ]
     ] ],
-    [ "i3c_slave_edma_handle_t", "a00024.html#a00251", [
+    [ "i3c_slave_edma_handle_t", "a00024.html#a00249", [
       [ "base", "a00024.html#aba6afe0f8d8f3e9913735beba6ff952b", null ],
       [ "transfer", "a00024.html#ad7b755054cfc8a82748a9c4ae0e6ad40", null ],
       [ "isBusy", "a00024.html#a994a050216dca56c110f71bac50fe5b8", null ],

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,25 +109,25 @@ $(document).ready(function(){initNavTree('a00024.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00325"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a></td></tr>
-<tr class="memdesc:a00325"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer structure.  <a href="a00024.html#a00325">More...</a><br/></td></tr>
-<tr class="separator:a00325"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00251"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00251">i3c_slave_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00251"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave edma handle structure.  <a href="a00024.html#a00251">More...</a><br/></td></tr>
-<tr class="separator:a00251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00323"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a></td></tr>
+<tr class="memdesc:a00323"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer structure.  <a href="a00024.html#a00323">More...</a><br/></td></tr>
+<tr class="separator:a00323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00249"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00249">i3c_slave_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00249"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave edma handle structure.  <a href="a00024.html#a00249">More...</a><br/></td></tr>
+<tr class="separator:a00249"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gababee1101c93ff62cec27fdd3d1bd1da"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gababee1101c93ff62cec27fdd3d1bd1da">i3c_slave_edma_callback_t</a> )(I3C_Type *base, <a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a> *transfer, void *userData)</td></tr>
+<tr class="memitem:gababee1101c93ff62cec27fdd3d1bd1da"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gababee1101c93ff62cec27fdd3d1bd1da">i3c_slave_edma_callback_t</a> )(I3C_Type *base, <a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a> *transfer, void *userData)</td></tr>
 <tr class="memdesc:gababee1101c93ff62cec27fdd3d1bd1da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#gababee1101c93ff62cec27fdd3d1bd1da">More...</a><br/></td></tr>
 <tr class="separator:gababee1101c93ff62cec27fdd3d1bd1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Slave DMA</h2></td></tr>
-<tr class="memitem:ga01f294bb561f482797b293c3d3345452"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga01f294bb561f482797b293c3d3345452">I3C_SlaveTransferCreateHandleEDMA</a> (I3C_Type *base, i3c_slave_edma_handle_t *handle, <a class="el" href="a00024.html#gababee1101c93ff62cec27fdd3d1bd1da">i3c_slave_edma_callback_t</a> callback, void *userData, <a class="el" href="a00014.html#a00292">edma_handle_t</a> *rxDmaHandle, <a class="el" href="a00014.html#a00292">edma_handle_t</a> *txDmaHandle)</td></tr>
+<tr class="memitem:ga01f294bb561f482797b293c3d3345452"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga01f294bb561f482797b293c3d3345452">I3C_SlaveTransferCreateHandleEDMA</a> (I3C_Type *base, i3c_slave_edma_handle_t *handle, <a class="el" href="a00024.html#gababee1101c93ff62cec27fdd3d1bd1da">i3c_slave_edma_callback_t</a> callback, void *userData, <a class="el" href="a00014.html#a00290">edma_handle_t</a> *rxDmaHandle, <a class="el" href="a00014.html#a00290">edma_handle_t</a> *txDmaHandle)</td></tr>
 <tr class="memdesc:ga01f294bb561f482797b293c3d3345452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new handle for the I3C slave DMA APIs.  <a href="#ga01f294bb561f482797b293c3d3345452">More...</a><br/></td></tr>
 <tr class="separator:ga01f294bb561f482797b293c3d3345452"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacbb180d209e93050f97c7802107aca62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gacbb180d209e93050f97c7802107aca62">I3C_SlaveTransferEDMA</a> (I3C_Type *base, i3c_slave_edma_handle_t *handle, <a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a> *transfer, uint32_t eventMask)</td></tr>
+<tr class="memitem:gacbb180d209e93050f97c7802107aca62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gacbb180d209e93050f97c7802107aca62">I3C_SlaveTransferEDMA</a> (I3C_Type *base, i3c_slave_edma_handle_t *handle, <a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a> *transfer, uint32_t eventMask)</td></tr>
 <tr class="memdesc:gacbb180d209e93050f97c7802107aca62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares for a non-blocking DMA-based transaction on the I3C bus.  <a href="#gacbb180d209e93050f97c7802107aca62">More...</a><br/></td></tr>
 <tr class="separator:gacbb180d209e93050f97c7802107aca62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac88dd8f58b4e845c2162d56f945698f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac88dd8f58b4e845c2162d56f945698f7">I3C_SlaveTransferAbortEDMA</a> (I3C_Type *base, i3c_slave_edma_handle_t *handle)</td></tr>
@@ -138,7 +138,7 @@ Slave DMA</h2></td></tr>
 <tr class="separator:ga7b5983060cf5e1a526e1de1b2e0758c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00325" id="a00325"></a>
+<a name="a00323" id="a00323"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -168,7 +168,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a8d7d1dfde0321ed1ddd5ab40adadf968">rxDataSize</a></td></tr>
 <tr class="memdesc:a8d7d1dfde0321ed1ddd5ab40adadf968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
 <tr class="separator:a8d7d1dfde0321ed1ddd5ab40adadf968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c42c213276ca00b9528737eb13627f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a7c42c213276ca00b9528737eb13627f2">completionStatus</a></td></tr>
+<tr class="memitem:a7c42c213276ca00b9528737eb13627f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a7c42c213276ca00b9528737eb13627f2">completionStatus</a></td></tr>
 <tr class="memdesc:a7c42c213276ca00b9528737eb13627f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#a7c42c213276ca00b9528737eb13627f2">More...</a><br/></td></tr>
 <tr class="separator:a7c42c213276ca00b9528737eb13627f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -190,7 +190,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> i3c_slave_edma_transfer_t::completionStatus</td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> i3c_slave_edma_transfer_t::completionStatus</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -201,7 +201,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00251" id="a00251"></a>
+<a name="a00249" id="a00249"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -216,7 +216,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:aba6afe0f8d8f3e9913735beba6ff952b"><td class="memItemLeft" align="right" valign="top">I3C_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aba6afe0f8d8f3e9913735beba6ff952b">base</a></td></tr>
 <tr class="memdesc:aba6afe0f8d8f3e9913735beba6ff952b"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C base pointer.  <a href="#aba6afe0f8d8f3e9913735beba6ff952b">More...</a><br/></td></tr>
 <tr class="separator:aba6afe0f8d8f3e9913735beba6ff952b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7b755054cfc8a82748a9c4ae0e6ad40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ad7b755054cfc8a82748a9c4ae0e6ad40">transfer</a></td></tr>
+<tr class="memitem:ad7b755054cfc8a82748a9c4ae0e6ad40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ad7b755054cfc8a82748a9c4ae0e6ad40">transfer</a></td></tr>
 <tr class="memdesc:ad7b755054cfc8a82748a9c4ae0e6ad40"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer copy.  <a href="#ad7b755054cfc8a82748a9c4ae0e6ad40">More...</a><br/></td></tr>
 <tr class="separator:ad7b755054cfc8a82748a9c4ae0e6ad40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a994a050216dca56c110f71bac50fe5b8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a994a050216dca56c110f71bac50fe5b8">isBusy</a></td></tr>
@@ -231,10 +231,10 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:adcd235c916b145e6e8191969487a5df9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00024.html#gababee1101c93ff62cec27fdd3d1bd1da">i3c_slave_edma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#adcd235c916b145e6e8191969487a5df9">callback</a></td></tr>
 <tr class="memdesc:adcd235c916b145e6e8191969487a5df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#adcd235c916b145e6e8191969487a5df9">More...</a><br/></td></tr>
 <tr class="separator:adcd235c916b145e6e8191969487a5df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa61f3c047d81881d417eefa6b5e2af7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aa61f3c047d81881d417eefa6b5e2af7e">rxDmaHandle</a></td></tr>
+<tr class="memitem:aa61f3c047d81881d417eefa6b5e2af7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aa61f3c047d81881d417eefa6b5e2af7e">rxDmaHandle</a></td></tr>
 <tr class="memdesc:aa61f3c047d81881d417eefa6b5e2af7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for receive DMA channel.  <a href="#aa61f3c047d81881d417eefa6b5e2af7e">More...</a><br/></td></tr>
 <tr class="separator:aa61f3c047d81881d417eefa6b5e2af7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae70a35cfa2acecf25aec65bad7a954bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ae70a35cfa2acecf25aec65bad7a954bb">txDmaHandle</a></td></tr>
+<tr class="memitem:ae70a35cfa2acecf25aec65bad7a954bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ae70a35cfa2acecf25aec65bad7a954bb">txDmaHandle</a></td></tr>
 <tr class="memdesc:ae70a35cfa2acecf25aec65bad7a954bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for transmit DMA channel.  <a href="#ae70a35cfa2acecf25aec65bad7a954bb">More...</a><br/></td></tr>
 <tr class="separator:ae70a35cfa2acecf25aec65bad7a954bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca9d406a8ef88f83c9466c6a53caacaa"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aca9d406a8ef88f83c9466c6a53caacaa">userData</a></td></tr>
@@ -259,7 +259,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a> i3c_slave_edma_handle_t::transfer</td>
+          <td class="memname"><a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a> i3c_slave_edma_handle_t::transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -319,7 +319,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00014.html#a00292">edma_handle_t</a>* i3c_slave_edma_handle_t::rxDmaHandle</td>
+          <td class="memname"><a class="el" href="a00014.html#a00290">edma_handle_t</a>* i3c_slave_edma_handle_t::rxDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -331,7 +331,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00014.html#a00292">edma_handle_t</a>* i3c_slave_edma_handle_t::txDmaHandle</td>
+          <td class="memname"><a class="el" href="a00014.html#a00290">edma_handle_t</a>* i3c_slave_edma_handle_t::txDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -359,7 +359,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* i3c_slave_edma_callback_t)(I3C_Type *base, <a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a> *transfer, void *userData)</td>
+          <td class="memname">typedef void(* i3c_slave_edma_callback_t)(I3C_Type *base, <a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a> *transfer, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -408,13 +408,13 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxDmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00292">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00290">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txDmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -445,7 +445,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveTransferEDMA </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveTransferEDMA </td>
           <td>(</td>
           <td class="paramtype">I3C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -459,7 +459,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00024.html#a00325">i3c_slave_edma_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00024.html#a00323">i3c_slave_edma_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>transfer</em>, </td>
         </tr>
         <tr>
@@ -489,7 +489,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>The transaction was started successfully. </td></tr>
     <tr><td class="paramname"><a class="el" href="a00021.html#ggac9420823bfeba78fce625fc105e3b01da3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Either another master is currently utilizing the bus, or another DMA transaction is already in progress. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00204.html#gga6b7b47dd702d9e331586d485013fd1eaa8692e71089c7e81bd5f4503ff55035db" title="Generic status for Fail. ">kStatus_Fail</a></td><td>The transaction can't be set. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00201.html#gga6b7b47dd702d9e331586d485013fd1eaa8692e71089c7e81bd5f4503ff55035db" title="Generic status for Fail. ">kStatus_Fail</a></td><td>The transaction can't be set. </td></tr>
   </table>
   </dd>
 </dl>

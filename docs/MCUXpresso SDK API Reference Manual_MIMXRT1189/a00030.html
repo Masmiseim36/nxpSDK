@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -138,12 +138,12 @@ LPIT tick example</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00337"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#a00337">lpit_chnl_params_t</a></td></tr>
-<tr class="memdesc:a00337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to configure the channel timer.  <a href="a00030.html#a00337">More...</a><br/></td></tr>
-<tr class="separator:a00337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00338"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#a00338">lpit_config_t</a></td></tr>
-<tr class="memdesc:a00338"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPIT configuration structure.  <a href="a00030.html#a00338">More...</a><br/></td></tr>
-<tr class="separator:a00338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00335"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#a00335">lpit_chnl_params_t</a></td></tr>
+<tr class="memdesc:a00335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to configure the channel timer.  <a href="a00030.html#a00335">More...</a><br/></td></tr>
+<tr class="separator:a00335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00336"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#a00336">lpit_config_t</a></td></tr>
+<tr class="memdesc:a00336"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPIT configuration structure.  <a href="a00030.html#a00336">More...</a><br/></td></tr>
+<tr class="separator:a00336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -246,22 +246,22 @@ Driver version</h2></td></tr>
 <tr class="memdesc:ga6bf0e1450eab333c990e32c05ba705e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of LPIT status flags.  <a href="a00030.html#ga6bf0e1450eab333c990e32c05ba705e7">More...</a><br/></td></tr>
 <tr class="separator:ga6bf0e1450eab333c990e32c05ba705e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga005bae9cb8b7af561e2f859df8b22cb6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga005bae9cb8b7af561e2f859df8b22cb6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga005bae9cb8b7af561e2f859df8b22cb6">FSL_LPIT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga005bae9cb8b7af561e2f859df8b22cb6">FSL_LPIT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00201.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
 <tr class="memdesc:ga005bae9cb8b7af561e2f859df8b22cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.1.1. <br/></td></tr>
 <tr class="separator:ga005bae9cb8b7af561e2f859df8b22cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga2496e8e1575a2542a4e00b097263bba9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga2496e8e1575a2542a4e00b097263bba9">LPIT_Init</a> (LPIT_Type *base, const <a class="el" href="a00030.html#a00338">lpit_config_t</a> *config)</td></tr>
+<tr class="memitem:ga2496e8e1575a2542a4e00b097263bba9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga2496e8e1575a2542a4e00b097263bba9">LPIT_Init</a> (LPIT_Type *base, const <a class="el" href="a00030.html#a00336">lpit_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga2496e8e1575a2542a4e00b097263bba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the LPIT clock and configures the peripheral for a basic operation.  <a href="#ga2496e8e1575a2542a4e00b097263bba9">More...</a><br/></td></tr>
 <tr class="separator:ga2496e8e1575a2542a4e00b097263bba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6995a2b1cb4225b1923c048734e8c98b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga6995a2b1cb4225b1923c048734e8c98b">LPIT_Deinit</a> (LPIT_Type *base)</td></tr>
 <tr class="memdesc:ga6995a2b1cb4225b1923c048734e8c98b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the module and gates the LPIT clock.  <a href="#ga6995a2b1cb4225b1923c048734e8c98b">More...</a><br/></td></tr>
 <tr class="separator:ga6995a2b1cb4225b1923c048734e8c98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab32b9400f5cbcd4c8d7cfa92b3ca9c05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gab32b9400f5cbcd4c8d7cfa92b3ca9c05">LPIT_GetDefaultConfig</a> (<a class="el" href="a00030.html#a00338">lpit_config_t</a> *config)</td></tr>
+<tr class="memitem:gab32b9400f5cbcd4c8d7cfa92b3ca9c05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#gab32b9400f5cbcd4c8d7cfa92b3ca9c05">LPIT_GetDefaultConfig</a> (<a class="el" href="a00030.html#a00336">lpit_config_t</a> *config)</td></tr>
 <tr class="memdesc:gab32b9400f5cbcd4c8d7cfa92b3ca9c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the LPIT configuration structure with default settings.  <a href="#gab32b9400f5cbcd4c8d7cfa92b3ca9c05">More...</a><br/></td></tr>
 <tr class="separator:gab32b9400f5cbcd4c8d7cfa92b3ca9c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5402d455a5faa4194adf38fe9189e7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga5402d455a5faa4194adf38fe9189e7d5">LPIT_SetupChannel</a> (LPIT_Type *base, <a class="el" href="a00030.html#gad5bc1bd1dbb218913d805cf7bab5eeca">lpit_chnl_t</a> channel, const <a class="el" href="a00030.html#a00337">lpit_chnl_params_t</a> *chnlSetup)</td></tr>
+<tr class="memitem:ga5402d455a5faa4194adf38fe9189e7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html#ga5402d455a5faa4194adf38fe9189e7d5">LPIT_SetupChannel</a> (LPIT_Type *base, <a class="el" href="a00030.html#gad5bc1bd1dbb218913d805cf7bab5eeca">lpit_chnl_t</a> channel, const <a class="el" href="a00030.html#a00335">lpit_chnl_params_t</a> *chnlSetup)</td></tr>
 <tr class="memdesc:ga5402d455a5faa4194adf38fe9189e7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up an LPIT channel based on the user's preference.  <a href="#ga5402d455a5faa4194adf38fe9189e7d5">More...</a><br/></td></tr>
 <tr class="separator:ga5402d455a5faa4194adf38fe9189e7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -308,7 +308,7 @@ Timer Start and Stop</h2></td></tr>
 <tr class="separator:ga9407e1a42eabdce1bb647f30705a7b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00337" id="a00337"></a>
+<a name="a00335" id="a00335"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -374,7 +374,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00338" id="a00338"></a>
+<a name="a00336" id="a00336"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -605,7 +605,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00030.html#a00338">lpit_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00030.html#a00336">lpit_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -656,7 +656,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">void LPIT_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00030.html#a00338">lpit_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00030.html#a00336">lpit_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -680,7 +680,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPIT_SetupChannel </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPIT_SetupChannel </td>
           <td>(</td>
           <td class="paramtype">LPIT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -694,7 +694,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00030.html#a00337">lpit_chnl_params_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00030.html#a00335">lpit_chnl_params_t</a> *&#160;</td>
           <td class="paramname"><em>chnlSetup</em>&#160;</td>
         </tr>
         <tr>

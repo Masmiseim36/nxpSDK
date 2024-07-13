@@ -1,14 +1,32 @@
 var a00362 =
 [
-    [ "SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH", "a00362.html#gaff6176ea2af7001a012172a47622e204", null ],
-    [ "SERIAL_USE_CONFIGURE_STRUCTURE", "a00362.html#ga29c0fa5c543615a75f63bdcb7e086b16", null ],
-    [ "serial_port_uart_parity_mode_t", "a00362.html#ga89a4bbed0c24cfe5e085194add680ccc", [
-      [ "kSerialManager_UartParityDisabled", "a00362.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1", null ],
-      [ "kSerialManager_UartParityEven", "a00362.html#gga89a4bbed0c24cfe5e085194add680ccca7d9d6f05fb6e1099fdfbf1f79a699356", null ],
-      [ "kSerialManager_UartParityOdd", "a00362.html#gga89a4bbed0c24cfe5e085194add680ccca15bc11791c1f07fac71c808d083515db", null ]
+    [ "SMARTCARD_EMV_RX_NACK_THRESHOLD", "a00362.html#ga37c9079278fa53fc6671967d7fa659d1", null ],
+    [ "SMARTCARD_EMV_TX_NACK_THRESHOLD", "a00362.html#ga689c73e35bdc86ca3bca8335a1e31f34", null ],
+    [ "SMARTCARD_WWT_ADJUSTMENT", "a00362.html#ga415940e1d91fb5836e2de3cc21ec4530", null ],
+    [ "SMARTCARD_CWT_ADJUSTMENT", "a00362.html#ga62eae0976143c51330053a12722cfff3", null ],
+    [ "emvsim_gpc_clock_select_t", "a00362.html#ga97046ce136a41a0705510a23c5a3e595", null ],
+    [ "emvsim_presence_detect_edge_t", "a00362.html#ga6cf792867f8cd03cb5f72aefbcc95a50", null ],
+    [ "emvsim_presence_detect_status_t", "a00362.html#ga637b7bcb57edf8379bec3c3315fcb84d", null ],
+    [ "_emvsim_gpc_clock_select", "a00362.html#ga18098ca9b687031035837169dadc0123", [
+      [ "kEMVSIM_GPCClockDisable", "a00362.html#gga18098ca9b687031035837169dadc0123a8fb90ba8733a41521d93f2088fb63e3d", null ],
+      [ "kEMVSIM_GPCCardClock", "a00362.html#gga18098ca9b687031035837169dadc0123a063929de1a55dc769627e6c48e5b2e6e", null ],
+      [ "kEMVSIM_GPCRxClock", "a00362.html#gga18098ca9b687031035837169dadc0123ac96b15eca523e2644494f7573f2e7307", null ],
+      [ "kEMVSIM_GPCTxClock", "a00362.html#gga18098ca9b687031035837169dadc0123a79ad627623e1ac43cf112cf72bdfa386", null ]
     ] ],
-    [ "serial_port_uart_stop_bit_count_t", "a00362.html#ga8bdf0213026f54fd54c21971e07f2d56", [
-      [ "kSerialManager_UartOneStopBit", "a00362.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039", null ],
-      [ "kSerialManager_UartTwoStopBit", "a00362.html#gga8bdf0213026f54fd54c21971e07f2d56a83eb7aee91f3fd8964d283c0057880dc", null ]
-    ] ]
+    [ "_presence_detect_edge", "a00362.html#gabbd6705e2e20b864072187df23d1fdee", [
+      [ "kEMVSIM_DetectOnFallingEdge", "a00362.html#ggabbd6705e2e20b864072187df23d1fdeea039555fc8af765db943aba578cfa5d94", null ],
+      [ "kEMVSIM_DetectOnRisingEdge", "a00362.html#ggabbd6705e2e20b864072187df23d1fdeeafafb8119e71883d199bbeefe384a0e7b", null ]
+    ] ],
+    [ "_presence_detect_status", "a00362.html#ga30981f43989f9043453dda276432faf2", [
+      [ "kEMVSIM_DetectPinIsLow", "a00362.html#gga30981f43989f9043453dda276432faf2a4bb5a8cc8d0d73810c0d877da6cd2314", null ],
+      [ "kEMVSIM_DetectPinIsHigh", "a00362.html#gga30981f43989f9043453dda276432faf2a3dab39c83595d8e637846377cc42f253", null ]
+    ] ],
+    [ "SMARTCARD_EMVSIM_GetDefaultConfig", "a00362.html#gad69d847bed754e7ead81e9b2e9ad0bfb", null ],
+    [ "SMARTCARD_EMVSIM_Init", "a00362.html#ga07ddc400aa5d62296a3e64d2b0ecbde7", null ],
+    [ "SMARTCARD_EMVSIM_Deinit", "a00362.html#ga0417dcf491902a27c8146980bdc948d1", null ],
+    [ "SMARTCARD_EMVSIM_GetTransferRemainingBytes", "a00362.html#ga6ab4e721e1f497736b7d1a8bf50befd6", null ],
+    [ "SMARTCARD_EMVSIM_AbortTransfer", "a00362.html#gadb83e24714896d5ccf5acc0f8b7ad480", null ],
+    [ "SMARTCARD_EMVSIM_TransferNonBlocking", "a00362.html#gad16ebfe6c04c466a024bc832518bb089", null ],
+    [ "SMARTCARD_EMVSIM_Control", "a00362.html#gae6d4686bbd308d308ee183843cd0c9e7", null ],
+    [ "SMARTCARD_EMVSIM_IRQHandler", "a00362.html#ga117ab705974c45d57916edb09515c15c", null ]
 ];

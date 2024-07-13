@@ -1,6 +1,6 @@
 var a00049 =
 [
-    [ "_serial_nor_config_option", "a00049.html#a00674", [
+    [ "_serial_nor_config_option", "a00049.html#a00671", [
       [ "max_freq", "a00049.html#a02d4ab5ea1cc5a6d058826c77f9b04af", null ],
       [ "misc_mode", "a00049.html#ac9bbe891c36286970224bc26e240f030", null ],
       [ "quad_mode_setting", "a00049.html#a4ca9242549e9b29bec4adb7a85863c29", null ],
@@ -16,15 +16,15 @@ var a00049 =
       [ "drive_strength", "a00049.html#a4ba3420ee586110ccf303969b3a881ab", null ],
       [ "flash_connection", "a00049.html#a0ea42d6762951e653fc905660de33759", null ]
     ] ],
-    [ "_flexspi_lut_seq", "a00049.html#a00547", [
+    [ "_flexspi_lut_seq", "a00049.html#a00545", [
       [ "seqNum", "a00049.html#a44c6ec1fae0e6abca856e675400bb7f9", null ],
       [ "seqId", "a00049.html#a5c7ac6e48c90b1f08d464c5c14bd6eea", null ]
     ] ],
-    [ "flexspi_dll_time_t", "a00049.html#a00729", [
+    [ "flexspi_dll_time_t", "a00049.html#a00726", [
       [ "time_100ps", "a00049.html#aa7a09832fd3df0d99d62c5fcf89215e8", null ],
       [ "delay_cells", "a00049.html#af4bc247095a51ff5329d4b7890f49a46", null ]
     ] ],
-    [ "_flexspi_mem_config", "a00049.html#a00548", [
+    [ "_flexspi_mem_config", "a00049.html#a00546", [
       [ "tag", "a00049.html#ad20718a8722b6ae286fc01e270e2cc0c", null ],
       [ "version", "a00049.html#a621a8797dc305e19afcacf3ee5b9d9eb", null ],
       [ "reserved0", "a00049.html#a29c80db0ef12e7f6a51a9e4942ed053a", null ],
@@ -66,7 +66,7 @@ var a00049 =
       [ "lutCustomSeq", "a00049.html#abe46b0b2e6624c65d7bc94cf567eefab", null ],
       [ "reserved4", "a00049.html#a43d272828a2e15c9867a3a681b1e803d", null ]
     ] ],
-    [ "_flexspi_nor_config", "a00049.html#a00549", [
+    [ "_flexspi_nor_config", "a00049.html#a00547", [
       [ "memConfig", "a00049.html#a006ff9a51fa7c10465fd9d005880a399", null ],
       [ "pageSize", "a00049.html#ac6df0762158a3417668e58ee7d7c042f", null ],
       [ "sectorSize", "a00049.html#aed05462888e2e7299c385a0f1921419c", null ],
@@ -81,7 +81,7 @@ var a00049 =
       [ "blockSize", "a00049.html#a4e328ffd7e86163e15ed73b4d4f62613", null ],
       [ "reserve2", "a00049.html#a1ea37a7f5efa424b0f343a3209a2533f", null ]
     ] ],
-    [ "_flexspi_xfer", "a00049.html#a00551", [
+    [ "_flexspi_xfer", "a00049.html#a00549", [
       [ "operation", "a00049.html#a82e1054070d4a7af58af802443d5b9b4", null ],
       [ "baseAddress", "a00049.html#abb243149fbe0c732cf810a18b3d5f1fa", null ],
       [ "seqId", "a00049.html#ab968b18a776109a974221d68487d9ee2", null ],

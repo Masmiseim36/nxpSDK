@@ -180,12 +180,12 @@ int mbedtls_ecdsa_genkey(mbedtls_ecdsa_context *ctx,
     if(g_ele_ctx.is_keystore_opened == false)
     {
         /****************** Create Key Store  *********************************/
-        ele_keystore_t keystoreParam;
-        keystoreParam.id            = g_ele_ctx.key_store_id;
-        keystoreParam.nonce         = g_ele_ctx.key_store_nonce;
-        keystoreParam.max_updates   = 0xff;
-        keystoreParam.min_mac_check = false;
-        keystoreParam.min_mac_len   = 0u;
+        ele_keystore_t keystoreParam = { 0u };
+        keystoreParam.id             = g_ele_ctx.key_store_id;
+        keystoreParam.nonce          = g_ele_ctx.key_store_nonce;
+        keystoreParam.max_updates    = 0xff;
+        keystoreParam.min_mac_check  = false;
+        keystoreParam.min_mac_len    = 0u;
         result = ELE_CreateKeystore(S3MU, g_ele_ctx.session_handle, &keystoreParam, &g_ele_ctx.key_store_handle);
         if (result != kStatus_Success)
         {
@@ -207,7 +207,7 @@ int mbedtls_ecdsa_genkey(mbedtls_ecdsa_context *ctx,
     uint16_t keySize = 0;
 
     /* Keypair generation */
-    ele_gen_key_t NISTkeyGenParam;
+    ele_gen_key_t NISTkeyGenParam = { 0u };
     NISTkeyGenParam.key_type      = kKeyType_ECC_KEY_PAIR_SECP_R1_NIST;
     NISTkeyGenParam.key_lifetime  = kKey_Persistent;
     NISTkeyGenParam.key_lifecycle = ELE_KEY_LIFECYCLE;
@@ -318,9 +318,9 @@ static int ecdsa_sign_restartable(mbedtls_ecp_group *grp,
         }
     }
 
-    uint32_t signSize = 0;
+    uint32_t signSize = 0u;
 
-    ele_sign_t NISTsignGenParam;
+    ele_sign_t NISTsignGenParam = { 0u };
     NISTsignGenParam.key_id     = g_ele_ctx.keystore_chunks.ECDSA_KeyID;
     NISTsignGenParam.msg        = (const uint8_t *)buf;
     NISTsignGenParam.msg_size   = blen;
@@ -328,6 +328,7 @@ static int ecdsa_sign_restartable(mbedtls_ecp_group *grp,
     NISTsignGenParam.sig_size   = signatureSize;
     NISTsignGenParam.scheme     = kSig_ECDSA_SHA256;
     NISTsignGenParam.input_flag = false; // Hash message as input
+    NISTsignGenParam.salt_size  = 0u;
 
     if (ELE_Sign(S3MU, g_ele_ctx.signature_gen_handle, &NISTsignGenParam, &signSize) != kStatus_Success)
     {
@@ -401,7 +402,7 @@ static int ecdsa_verify_restartable(mbedtls_ecp_group *grp,
 {
     int ret;
     bool result_nist = false;
-    ele_verify_t NISTverifyParam;
+    ele_verify_t NISTverifyParam = { 0u };
 
     size_t coordinateLen   = (grp->pbits + 7u) / 8u;
     size_t signatureSize   = 2u * coordinateLen;
@@ -459,6 +460,7 @@ static int ecdsa_verify_restartable(mbedtls_ecp_group *grp,
     NISTverifyParam.input_flag        = false; // Message digest as input
     NISTverifyParam.key_security_size = 256u;
     NISTverifyParam.internal          = false;
+    NISTverifyParam.salt_size         = 0u;
 
     if (ELE_Verify(S3MU, g_ele_ctx.signature_verif_handle, &NISTverifyParam, &result_nist) != kStatus_Success)
     {

@@ -18,25 +18,25 @@
 #define PF5020_SWx_VOLT_1P0V (96U)
 #define PF5020_SWx_VOLT_1P1V (112U)
 
-#define CM33_DOMAIN_ID         kGPC_Domain1
-#define CM7_DOMAIN_ID          kGPC_Domain2
-
 #define NA                     31
 
 // Domain assignment
 #define UNASSIGNED             0
-#define CM33_DOMAIN            1
+#define CM33_DOMAIN            2
 #ifndef SINGLE_CORE_M33
-#define CM7_DOMAIN             2
+#define CM7_DOMAIN             4
 #else
 #define CM7_DOMAIN             CM33_DOMAIN
 #endif
 #define CM33_CM7_DOMAIN        3
 
+#define CM33_DOMAIN_MASK       (1UL << CM33_DOMAIN)
+#define CM7_DOMAIN_MASK        (1UL << CM7_DOMAIN)
+
 #define RUN_MODE_NUM       3
 #define RUN_MODE_DEF_TABLE \
-{/* Grade  DCDC             CM7 FREQ  CM33                                   EDGELOCK                                   BUS AON                                    BUS WAKEUP                                    WAKEUP AXI                                                    index*/ \
-{   0     , PF5020_SWx_VOLT_1P1V, kDCDC_1P0Target1P1V ,800  ,kCLOCK_M33_ClockRoot_MuxSysPll3Out, 2 ,kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M, 2, kCLOCK_BUS_AON_ClockRoot_MuxSysPll2Out, 4, kCLOCK_BUS_WAKEUP_ClockRoot_MuxSysPll2Out, 4, kCLOCK_WAKEUP_AXI_ClockRoot_MuxSysPll3Out,  4}, /* Over Drive   0  */ \
+{/* Grade   DCDC                  CM7 FREQ                   CM33                                   EDGELOCK                                   BUS AON                                    BUS WAKEUP                                    WAKEUP AXI                                                    index*/ \
+{   0     , PF5020_SWx_VOLT_1P1V, kDCDC_1P0Target1P1V ,800  ,kCLOCK_M33_ClockRoot_MuxSysPll3Out, 2 ,kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M, 2, kCLOCK_BUS_AON_ClockRoot_MuxSysPll2Out, 4, kCLOCK_BUS_WAKEUP_ClockRoot_MuxSysPll2Out, 4, kCLOCK_WAKEUP_AXI_ClockRoot_MuxSysPll3Out,  2}, /* Over Drive   0  */ \
 {   1     , PF5020_SWx_VOLT_1P0V, kDCDC_1P0Target1P0V ,600  ,kCLOCK_M33_ClockRoot_MuxSysPll3Out, 2 ,kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M, 2, kCLOCK_BUS_AON_ClockRoot_MuxSysPll2Out, 4, kCLOCK_BUS_WAKEUP_ClockRoot_MuxSysPll2Out, 4, kCLOCK_WAKEUP_AXI_ClockRoot_MuxSysPll2Pfd1, 4}, /* Normal       1  */ \
 {   2     , PF5020_SWx_VOLT_0P9V, kDCDC_1P0Target0P9V ,360  ,kCLOCK_M33_ClockRoot_MuxOscRc400M , 4 ,kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M, 6, kCLOCK_BUS_AON_ClockRoot_MuxOscRc400M,  8, kCLOCK_BUS_WAKEUP_ClockRoot_MuxOscRc400M,  8, kCLOCK_WAKEUP_AXI_ClockRoot_MuxSysPll2Pfd1, 8}} /* Under Drive  2  */ \
 
@@ -44,7 +44,7 @@
 #define SRC_CONFIGURATION_TABLE \
 {/*sliceName,             ctrlMode,     power level,            name,           index*/\
 { AON_MIX_SLICE          ,CM33_DOMAIN   ,kSRC_PowerLevel4 }, /* AON_MIX           0  */\
-{ CM7PLATFORM_MIX_SLICE  ,CM7_DOMAIN    ,kSRC_PowerLevel3 }, /* CM7PLATFORM_MIX   1  */\
+{ CM7PLATFORM_MIX_SLICE  ,CM7_DOMAIN    ,kSRC_PowerLevel4 }, /* CM7PLATFORM_MIX   1  */\
 { CM33PLATFORM_MIX_SLICE ,CM33_DOMAIN   ,kSRC_PowerLevel4 }, /* CM33PLATFORM_MIX  2  */\
 { MEGA_MIX_SLICE         ,CM33_DOMAIN   ,kSRC_PowerLevel2 }, /* MEGA_MIX          3  */\
 { NETC_MIX_SLICE         ,CM33_DOMAIN   ,kSRC_PowerLevel2 }, /* NETC_MIX          4  */\
@@ -81,29 +81,13 @@
 
 #ifndef SINGLE_CORE_M33
 #define CM7_CLK_LEVEL       kCLOCK_Level3
-#define POWER_DOMAIN_NUM       6
-#define MIX_CONFIGURATION_TABLE \
-{/*ctrlMode,     Mix Name,                  Power Level,            name,       index*/ \
-{  CM33_DOMAIN  , AON_MIX_SLICE,            kSRC_PowerLevel4 }, /* AON MIX        0  */ \
-{  CM7_DOMAIN  , CM7PLATFORM_MIX_SLICE,     kSRC_PowerLevel3 },  /* CM7 MIX       1  */ \
-{  CM33_DOMAIN  , CM33PLATFORM_MIX_SLICE,   kSRC_PowerLevel4 }, /* CM33 MIX       2  */ \
-{  CM33_DOMAIN  , MEGA_MIX_SLICE,           kSRC_PowerLevel2 }, /* MEGA MIX       3  */ \
-{  CM33_DOMAIN  , NETC_MIX_SLICE,           kSRC_PowerLevel2 }, /* NETC MIX       4  */ \
-{  CM33_DOMAIN  , WAKEUP_MIX_SLICE,         kSRC_PowerLevel4 }} /* WAKEUP MIX     5  */
 #else
 #define CM7_CLK_LEVEL       kCLOCK_Level4
-#define POWER_DOMAIN_NUM       5
-#define MIX_CONFIGURATION_TABLE \
-{/*ctrlMode,     Mix Name,                  Power Level,            name,       index*/ \
-{  CM33_DOMAIN  , AON_MIX_SLICE,            kSRC_PowerLevel4 }, /* AON MIX        0  */ \
-{  CM33_DOMAIN  , CM33PLATFORM_MIX_SLICE,   kSRC_PowerLevel4 }, /* CM33 MIX       1  */ \
-{  CM33_DOMAIN  , MEGA_MIX_SLICE,           kSRC_PowerLevel2 }, /* MEGA MIX       2  */ \
-{  CM33_DOMAIN  , NETC_MIX_SLICE,           kSRC_PowerLevel2 }, /* NETC MIX       3  */ \
-{  CM33_DOMAIN  , WAKEUP_MIX_SLICE,         kSRC_PowerLevel4 }} /* WAKEUP MIX     4  */
 #endif
+
 #define CM33_CLK_LEVEL      kCLOCK_Level3
 #define NETC_CLK_LEVEL      kCLOCK_Level2
-#define EDGELOCK_CLK_LEVEL  kCLOCK_Level4
+#define EDGELOCK_CLK_LEVEL  kCLOCK_Level2
 #define MEGA_CLK_LEVEL      kCLOCK_Level2
 #define AON_CLK_LEVEL       kCLOCK_Level3
 #define WAKEUP_CLK_LEVEL    kCLOCK_Level3

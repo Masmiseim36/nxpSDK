@@ -10,18 +10,18 @@ Note that the demo CAN NOT be built directly. Please see the below for more deta
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.50.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.3.1
-- MCUXpresso  11.9.0
+- IAR embedded Workbench  9.60.1
+- Keil MDK  5.39.0
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================
-- MIMXRT1180-EVK RevB
+- MIMXRT1180-EVK RevC
 - FRDM-MC-LVPMSM
 - Teknic2311P Motor
 - RJ45 Network cable
@@ -30,8 +30,7 @@ Hardware requirements
 
 Board settings
 ==============
-Board needs to rework, please refer to Chapter 2 of '.\docs\MC\PMSMRT1180.pdf' to rework board.
-Note: Don't remove R1052 resistor.
+Board needs to rework, please refer to '.\docs\ecatServoMotor\eCAT_Servo_Motor_Example_User_Guide.pdf' to rework board.
 
 Prepare the Demo
 ================

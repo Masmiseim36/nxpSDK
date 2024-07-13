@@ -38,6 +38,7 @@
     <definition extID="middleware.lwip.template.MIMXRT1176"/>
     <definition extID="component.igpio_adapter.MIMXRT1176"/>
     <definition extID="utility.debug_console.MIMXRT1176"/>
+    <definition extID="utility.str.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
@@ -49,7 +50,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbmimxrt1170_fmstr_example_net_cm7" name="fmstr_example_net_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="driver.phy-device-rtl8211f.MIMXRT1176 middleware.freertos-kernel.heap_3.MIMXRT1176 platform.drivers.enet.MIMXRT1176 middleware.lwip.kinetis_ethernetif.MIMXRT1176 middleware.lwip.MIMXRT1176 component.silicon_id_rt1170.MIMXRT1176 component.silicon_id.MIMXRT1176 middleware.fmstr.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 component.serial_manager.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 component.lists.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 middleware.fmstr.platform_gen32le.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.drivers.xmcd.evkbmimxrt1170.MIMXRT1176 driver.phy-common.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.template.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 middleware.lwip.template.MIMXRT1176 component.igpio_adapter.MIMXRT1176 utility.debug_console.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="FreeMASTER_examples">
+  <example id="evkbmimxrt1170_fmstr_example_net_cm7" name="fmstr_example_net_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="driver.phy-device-rtl8211f.MIMXRT1176 middleware.freertos-kernel.heap_3.MIMXRT1176 platform.drivers.enet.MIMXRT1176 middleware.lwip.kinetis_ethernetif.MIMXRT1176 middleware.lwip.MIMXRT1176 component.silicon_id_rt1170.MIMXRT1176 component.silicon_id.MIMXRT1176 middleware.fmstr.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 component.serial_manager.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 component.lists.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkbmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 middleware.fmstr.platform_gen32le.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.drivers.xmcd.evkbmimxrt1170.MIMXRT1176 driver.phy-common.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.template.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 middleware.lwip.template.MIMXRT1176 component.igpio_adapter.MIMXRT1176 utility.debug_console.MIMXRT1176 utility.str.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="FreeMASTER_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -76,6 +77,8 @@
           <value>DATA_SECTION_IS_CACHEABLE=1</value>
           <value>USE_RTOS=1</value>
           <value>PHY_RTL8211F=1</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>FSL_ETH_ENABLE_CACHE_CONTROL=1</value>
           <value>LWIP_ENET_FLEXIBLE_CONFIGURATION</value>
           <value>MCUXPRESSO_SDK</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
@@ -98,7 +101,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -180,16 +183,8 @@
     <source path="source" project_relative_path="source" type="src">
       <files mask="main.c"/>
     </source>
-    <source path="source/board" project_relative_path="board" type="src">
-      <files mask="clock_config.c"/>
-      <files mask="board.c"/>
-      <files mask="dcd.c"/>
-    </source>
-    <source path="source/board" project_relative_path="board" type="c_include">
-      <files mask="clock_config.h"/>
-      <files mask="FreeRTOSConfigBoard.h"/>
-      <files mask="board.h"/>
-      <files mask="dcd.h"/>
+    <source path="source" project_relative_path="source" type="c_include">
+      <files mask="network_cfg.h"/>
     </source>
     <source path="source/board" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
@@ -217,8 +212,19 @@
       <files mask="FreeRTOSConfig.h"/>
       <files mask="lwipopts.h"/>
     </source>
+    <source path="source/board" project_relative_path="board" type="c_include">
+      <files mask="FreeRTOSConfigBoard.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
+    </source>
     <source path="." project_relative_path="doc" type="doc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="source/board" project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
     </source>
     <source path="source/example_data" project_relative_path="example_data" type="c_include">
       <files mask="data_example_pmp.h"/>

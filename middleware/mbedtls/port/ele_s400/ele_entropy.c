@@ -35,7 +35,7 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     }
 #endif
 
-    result = ELE_RngGetRandom(S3MU, (uint32_t *) output, len);
+    result = ELE_RngGetRandom(S3MU, (uint32_t *) output, len, kNoReseed);
 
 #if defined(MBEDTLS_THREADING_C)
     if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_ele_mutex) != 0) {

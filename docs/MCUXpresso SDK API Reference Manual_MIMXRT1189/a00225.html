@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PDM EDMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: FGPIO Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,9 +99,19 @@ $(document).ready(function(){initNavTree('a00225.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PDM EDMA Driver</div>  </div>
+<div class="title">FGPIO Driver<div class="ingroups"><a class="el" href="a00050.html">RGPIO: Rapid General-Purpose Input/Output Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+<p>This section describes the programming interface of the FGPIO driver. The FGPIO driver configures the FGPIO module and provides a functional interface to build the RGPIO application.</p>
+<dl class="section note"><dt>Note</dt><dd>FGPIO (Fast GPIO) is only available in a few MCUs. FGPIO and RGPIO share the same peripheral but use different registers. FGPIO is closer to the core than the regular RGPIO and it's faster to read and write.</dd></dl>
+<h1><a class="anchor" id="FGPIOTpyUC"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="FGPIOOutOps"></a>
+Output Operation</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/rgpio </p>
+<h2><a class="anchor" id="FGPIOInOps"></a>
+Input Operation</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/rgpio </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -243,6 +243,12 @@ typedef void *(*ep_rx_alloc_cb_t)(ep_handle_t *handle, uint8_t ring, uint32_t le
 /*! @brief Defines the EP Rx memory buffer free function pointer. */
 typedef void (*ep_rx_free_cb_t)(ep_handle_t *handle, uint8_t ring, void *address, void *userData);
 
+/*! @brief Callback for getting link status */
+typedef status_t (*ep_get_link_status_cb_t)(ep_handle_t *handle, uint8_t *link);
+
+/*! @brief Callback for getting link speed */
+typedef status_t (*ep_get_link_speed_cb_t)(ep_handle_t *handle, netc_hw_mii_speed_t *speed, netc_hw_mii_duplex_t *duplex);
+
 /*! @brief Configuration for the endpoint handle. */
 typedef struct _ep_config
 {
@@ -316,6 +322,12 @@ struct _ep_handle
     uint8_t unicastHashCount[64];                             /*!< Unicast hash index collisions counter. */
     uint8_t multicastHashCount[64];                           /*!< Multicast hash index collisions counter. */
     uint8_t vlanHashCount[64];                                /*!< VLAN hash index collisions counter. */
+    uint8_t macFilterCount[64];                               /*!< mac address filter index collisions counter. */
+    uint8_t vlanFilterCount[64];                              /*!< vlan address filter index collisions counter. */
+    ep_get_link_status_cb_t getLinkStatus;                    /*!< Callback to get link status */
+    ep_get_link_speed_cb_t getLinkSpeed;                      /*!< Callback to get link speed */
+    uint16_t vsiBitMapNotifyLinkStatus;                       /*!< VSI bit map for link status notify */
+    uint16_t vsiBitMapNotifyLinkSpeed;                        /*!< VSI bit map for link speed notify */
 };
 
 /*! @} */ // end of netc_ep_config
@@ -1417,7 +1429,6 @@ void EP_ReclaimTxDescriptor(ep_handle_t *handle, uint8_t ring);
  * @param ring Ring index
  * @param frame Frame buffer point
  * @param attr Frame attribute pointer
- * @param isDrop Whether Frame need be drop
  * @param rxCacheMaintain Enable/Disable Rx buffer Cache maintain
  * @return status_t
  */
@@ -1426,7 +1437,6 @@ status_t EP_ReceiveFrameCommon(ep_handle_t *handle,
                                uint8_t ring,
                                netc_frame_struct_t *frame,
                                netc_frame_attr_t *attr,
-                               bool isDrop,
                                bool rxCacheMaintain);
 
 /*!
@@ -1448,6 +1458,17 @@ status_t EP_ReceiveFrameCommon(ep_handle_t *handle,
  * @return kStatus_NETC_LackOfResource    Appliction provided buffer is not enough
  */
 status_t EP_ReceiveFrame(ep_handle_t *handle, uint8_t ring, netc_frame_struct_t *frame, netc_frame_attr_t *attr);
+
+/*!
+ * @brief Drop one frame
+ *
+ * @note This function is internal used.
+ *
+ * @param handle
+ * @param rxBdRing Rx BD ring handle
+ * @param ring Ring index
+ */
+void EP_DropFrame(ep_handle_t *handle, netc_rx_bdr_t *rxBdRing, uint8_t ring);
 
 /*!
  * @brief Common part of receive regular frame or Switch management frame which will be copied in the provided buffer

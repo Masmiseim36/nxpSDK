@@ -1,11 +1,11 @@
 var a00046 =
 [
-    [ "_flexram_allocate_ram", "a00046.html#a00535", [
+    [ "_flexram_allocate_ram", "a00046.html#a00533", [
       [ "ocramBankNum", "a00046.html#a95e8a79967ab8b942dfa6d88deb5879e", null ],
       [ "dtcmBankNum", "a00046.html#af9d605ea93f398bc467b405fc4f944bc", null ],
       [ "itcmBankNum", "a00046.html#a6fdd9fadb00e2f1157442f5e45d40600", null ]
     ] ],
-    [ "_flexram_ecc_error_type", "a00046.html#a00538", [
+    [ "_flexram_ecc_error_type", "a00046.html#a00536", [
       [ "SingleBitPos", "a00046.html#a37d71afd96e7dcf8f515e87286fd4033", null ],
       [ "SecondBitPos", "a00046.html#a945eb508cf1e50d34f8b39d311f7f515", null ],
       [ "Fource1BitDataInversion", "a00046.html#aa577f0138a776f1c872c3fbad4bd3a2c", null ],
@@ -13,36 +13,36 @@ var a00046 =
       [ "FourceConti1BitDataInversion", "a00046.html#a97be898efbe91edb847b3036fa9640d6", null ],
       [ "FourceContiNCDataInversion", "a00046.html#a90bdb5b19d236f8d6ebc26e9f78a5258", null ]
     ] ],
-    [ "_flexram_ocram_ecc_single_error_info", "a00046.html#a00542", [
+    [ "_flexram_ocram_ecc_single_error_info", "a00046.html#a00540", [
       [ "OcramSingleErrorInfo", "a00046.html#a2f403ab4fb6afe1314b50fc588c4839c", null ],
       [ "OcramSingleErrorAddr", "a00046.html#a95708cda0199a9a10f743d0ada97d44f", null ],
       [ "OcramSingleErrorDataLSB", "a00046.html#ad94f8822eebfcb2c4bbd67c03a2585d1", null ],
       [ "OcramSingleErrorDataMSB", "a00046.html#a8f9c1510a86247a4c1f8d289a850a626", null ]
     ] ],
-    [ "_flexram_ocram_ecc_multi_error_info", "a00046.html#a00541", [
+    [ "_flexram_ocram_ecc_multi_error_info", "a00046.html#a00539", [
       [ "OcramMultiErrorInfo", "a00046.html#added7f953f0f0c011a1888268daba58f", null ],
       [ "OcramMultiErrorAddr", "a00046.html#a3b35a64024a4457ab1aa116e7fbf1be3", null ],
       [ "OcramMultiErrorDataLSB", "a00046.html#a08507175ffff331af6296379af753d41", null ],
       [ "OcramMultiErrorDataMSB", "a00046.html#a3f9732d7652aa06fcde2a96465245d75", null ]
     ] ],
-    [ "_flexram_itcm_ecc_single_error_info", "a00046.html#a00540", [
+    [ "_flexram_itcm_ecc_single_error_info", "a00046.html#a00538", [
       [ "ItcmSingleErrorInfo", "a00046.html#af68425662da9dc28dde30e10c6f70e39", null ],
       [ "ItcmSingleErrorAddr", "a00046.html#abfc4b198cfc57284528d7e6fb319708d", null ],
       [ "ItcmSingleErrorDataLSB", "a00046.html#a61ddc8ae265dfa4ca6c191f4a0ba0773", null ],
       [ "ItcmSingleErrorDataMSB", "a00046.html#ac294fa44dcccb9ee60b8721f1fbe143c", null ]
     ] ],
-    [ "_flexram_itcm_ecc_multi_error_info", "a00046.html#a00539", [
+    [ "_flexram_itcm_ecc_multi_error_info", "a00046.html#a00537", [
       [ "ItcmMultiErrorInfo", "a00046.html#ac3177561a83a36b1ef52e6623fcdcebc", null ],
       [ "ItcmMultiErrorAddr", "a00046.html#a071de67d7159dc663ac0bcda37c310bb", null ],
       [ "ItcmMultiErrorDataLSB", "a00046.html#a3162589cdb3c214648f9520667ef059d", null ],
       [ "ItcmMultiErrorDataMSB", "a00046.html#ad630fac4087b55d94b34d727d1626e39", null ]
     ] ],
-    [ "_flexram_dtcm_ecc_single_error_info", "a00046.html#a00537", [
+    [ "_flexram_dtcm_ecc_single_error_info", "a00046.html#a00535", [
       [ "DtcmSingleErrorInfo", "a00046.html#af9c572cc8d2c9e7ffccdce8776cdec22", null ],
       [ "DtcmSingleErrorAddr", "a00046.html#a1f573dd95651a5fb262090e7ae11ca23", null ],
       [ "DtcmSingleErrorData", "a00046.html#a5e438dbb4fec6e506828f319fbf92e73", null ]
     ] ],
-    [ "_flexram_dtcm_ecc_multi_error_info", "a00046.html#a00536", [
+    [ "_flexram_dtcm_ecc_multi_error_info", "a00046.html#a00534", [
       [ "DtcmMultiErrorInfo", "a00046.html#a9f3f8c95129f0a51e6441be43ac5cfdf", null ],
       [ "DtcmMultiErrorAddr", "a00046.html#ae83e64dd7917dee69230322298d4606f", null ],
       [ "DtcmMultiErrorData", "a00046.html#a8d74b4ce648d68c890034d3ee70b7e02", null ]

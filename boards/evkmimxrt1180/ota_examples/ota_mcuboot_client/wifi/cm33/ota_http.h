@@ -1,3 +1,10 @@
+/*
+ * Copyright 2022 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #ifndef _OTA_HTTP_H_
 #define _OTA_HTTP_H_
 

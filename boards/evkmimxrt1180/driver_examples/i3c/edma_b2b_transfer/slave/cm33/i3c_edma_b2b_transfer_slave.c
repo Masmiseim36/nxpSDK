@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,7 +15,7 @@
 
 #include "fsl_edma.h"
 #include "fsl_trdc.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -42,8 +42,7 @@
 #define EXAMPLE_I3C_OD_BAUDRATE        (1500000U)
 #define EXAMPLE_I3C_PP_BAUDRATE        (4000000U)
 #define I3C_SLAVE_CLOCK_FREQUENCY      CLOCK_GetRootClockFreq(kCLOCK_Root_I3c2)
-#define I3C_MASTER_SLAVE_ADDR_7BIT     (0x1EU)
-#define I3C_DATA_LENGTH                (33U)
+
 #define EXAMPLE_DMA                    DMA4
 #define EXAMPLE_I3C_TX_DMA_CHANNEL     (0U)
 #define EXAMPLE_I3C_RX_DMA_CHANNEL     (1U)
@@ -66,6 +65,13 @@
         config.channelConfig[0]          = &channelConfig;                       \
         config.channelConfig[1]          = &channelConfig;                       \
     }
+#ifndef I3C_MASTER_SLAVE_ADDR_7BIT
+#define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
+#endif
+
+#ifndef I3C_DATA_LENGTH
+#define I3C_DATA_LENGTH 33U
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -77,7 +83,7 @@
 i3c_slave_edma_handle_t g_i3c_s_handle;
 edma_handle_t g_tx_dma_handle;
 edma_handle_t g_rx_dma_handle;
-AT_NONCACHEABLE_SECTION(uint8_t g_slave_rxBuff[I3C_DATA_LENGTH + 1]);
+AT_NONCACHEABLE_SECTION(uint8_t g_slave_rxBuff[I3C_DATA_LENGTH]);
 volatile bool g_slaveCompletionFlag  = false;
 volatile bool g_slaveRequestSentFlag = false;
 
@@ -190,19 +196,19 @@ int main(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Release TRDC A to CM33 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM33 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
     } while (ELE_IS_FAILED(sts));
 
     /*

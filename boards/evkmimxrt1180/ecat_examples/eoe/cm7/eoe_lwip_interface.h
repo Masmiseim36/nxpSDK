@@ -12,7 +12,7 @@
 #ifndef _EOE_LWIP_INTERFACE_H_
 #define _EOE_LWIP_INTERFACE_H_
 
-#include "applinterface.h"
+#include "applInterface.h"
 #include "eoe_ethernetif.h"
 
 void EoE_RecvFrame(uint16_t *pFrame, uint16_t frameSize);

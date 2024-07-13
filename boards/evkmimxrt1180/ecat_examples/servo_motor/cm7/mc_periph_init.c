@@ -10,7 +10,6 @@
 #include "fsl_lpadc.h"
 #include "fsl_common.h"
 #include "fsl_xbar.h"
-#include "mcdrv_enc_eqd.h"
 
 /*******************************************************************************
  * Variables
@@ -348,20 +347,14 @@ void M1_InitPWM(void)
 
 void M1_OpenPWM(void)
 {
-    /* PWM base pointer (affects the entire initialization) */
-    PWM_Type *PWMBase = (PWM_Type *)PWM1;
-    /* Start PWMs (set load OK flags and run) */
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
+    /* Enable PWM outputs */
+    M1_MCDRV_PWM3PH_EN(&g_sM1Pwm3ph);
 }
 
 void M1_ClosePWM(void)
 {
-    /* PWM base pointer (affects the entire initialization) */
-    PWM_Type *PWMBase = (PWM_Type *)PWM1;
-    /* Start PWMs (set load OK flags and run) */
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_RUN_MASK);
+    /* Disable PWM outputs */
+    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
 }
 
 /*!

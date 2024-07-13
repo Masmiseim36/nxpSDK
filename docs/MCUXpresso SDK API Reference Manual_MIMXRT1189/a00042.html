@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hardware layer</title>
+<title>MCUXpresso SDK API Reference Manual: Hardware ENETC</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,488 +99,57 @@ $(document).ready(function(){initNavTree('a00042.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Hardware layer<div class="ingroups"><a class="el" href="a00040.html">NETC driver</a></div></div>  </div>
+<div class="title">Hardware ENETC<div class="ingroups"><a class="el" href="a00041.html">Hardware layer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The hardware layer is mainly designed for code reuse. For example, in the API layer, Switch and Endpoint module which share common code such as port and station interface (SI). In general, the hardware layer maps closely to the hardware modules. User should not invoke the hardware layer directly. </p>
+<p>Group for ENETC API and data structure. data structure with netc_enetc as part in the naming. API starts with NETC_Enetc. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00222"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html">Hardware Common Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00043"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html">Hardware ENETC</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00044"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html">Hardware Port</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00045"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html">Hardware Port MAC</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00039"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html">Hardware Station Interface(SI)</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00046"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html">Hardware Switch</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html">Hardware Table Access Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00370"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00370">netc_isi_kc_rule_t</a></td></tr>
-<tr class="memdesc:a00370"><td class="mdescLeft">&#160;</td><td class="mdescRight">NETC PSFP kc profile configuration, the key size (not include the spmp and portp) is up to 16 bytes.  <a href="a00042.html#a00370">More...</a><br/></td></tr>
-<tr class="separator:a00370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00556"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00556">netc_vlan_classify_config_t</a></td></tr>
-<tr class="memdesc:a00556"><td class="mdescLeft">&#160;</td><td class="mdescRight">NETC Vlan classification config.  <a href="a00042.html#a00556">More...</a><br/></td></tr>
-<tr class="separator:a00556"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00391"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00391">netc_qos_classify_profile_t</a></td></tr>
-<tr class="memdesc:a00391"><td class="mdescLeft">&#160;</td><td class="mdescRight">NETC Qos Classification profile file (vlan PCP/DEI to IPV/DR map)  <a href="a00042.html#a00391">More...</a><br/></td></tr>
-<tr class="separator:a00391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00369"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00369">netc_ipf_config_t</a></td></tr>
-<tr class="memdesc:a00369"><td class="mdescLeft">&#160;</td><td class="mdescRight">NETC Ingress Filter config.  <a href="a00042.html#a00369">More...</a><br/></td></tr>
-<tr class="separator:a00369"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00367"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00367">netc_func_t</a></td></tr>
-<tr class="memdesc:a00367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register groups for the PCIe function.  <a href="a00042.html#a00367">More...</a><br/></td></tr>
-<tr class="separator:a00367"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00375"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00375">netc_port_hw_t</a></td></tr>
-<tr class="memdesc:a00375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register groups for the Port/Link hardware.  <a href="a00042.html#a00375">More...</a><br/></td></tr>
-<tr class="separator:a00375"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00360">netc_enetc_hw_t</a></td></tr>
-<tr class="memdesc:a00360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register group for the ENETC peripheral hardware.  <a href="a00042.html#a00360">More...</a><br/></td></tr>
+<tr class="memitem:a00361"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00361">netc_enetc_vlan_tag_t</a></td></tr>
+<tr class="memdesc:a00361"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENETC Port outer/inner VLAN tag.  <a href="a00042.html#a00361">More...</a><br/></td></tr>
+<tr class="separator:a00361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00360">netc_enetc_port_discard_statistic_t</a></td></tr>
+<tr class="memdesc:a00360"><td class="mdescLeft">&#160;</td><td class="mdescRight">PORT discard count statistic.  <a href="a00042.html#a00360">More...</a><br/></td></tr>
 <tr class="separator:a00360"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00401"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00401">netc_switch_hw_t</a></td></tr>
-<tr class="memdesc:a00401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register group for the Switch peripheral hardware.  <a href="a00042.html#a00401">More...</a><br/></td></tr>
-<tr class="separator:a00401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00551"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00551">netc_timer_hw_t</a></td></tr>
-<tr class="memdesc:a00551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register group for the Timer peripheral hardware.  <a href="a00042.html#a00551">More...</a><br/></td></tr>
-<tr class="separator:a00551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00371"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00371">netc_mdio_hw_t</a></td></tr>
-<tr class="memdesc:a00371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register group for both EMDIO and port external MDIO.  <a href="a00042.html#a00371">More...</a><br/></td></tr>
-<tr class="separator:a00371"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga8f9676028414fa595a07a2b873e7051c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga8f9676028414fa595a07a2b873e7051c">getSiInstance</a>(si)&#160;&#160;&#160;((uint8_t)((uint16_t)(si) &gt;&gt; 8U))</td></tr>
-<tr class="memdesc:ga8f9676028414fa595a07a2b873e7051c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SI information from netc_hw_si_idx_t.  <a href="#ga8f9676028414fa595a07a2b873e7051c">More...</a><br/></td></tr>
-<tr class="separator:ga8f9676028414fa595a07a2b873e7051c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2fc2d0abbe3bf51d36acf6992ef679d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gae2fc2d0abbe3bf51d36acf6992ef679d">getSiNum</a>(si)&#160;&#160;&#160;((uint8_t)(((uint16_t)(si) &gt;&gt; 4U) &amp; 0xFU))</td></tr>
-<tr class="memdesc:gae2fc2d0abbe3bf51d36acf6992ef679d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SI number in the ENETC.  <a href="#gae2fc2d0abbe3bf51d36acf6992ef679d">More...</a><br/></td></tr>
-<tr class="separator:gae2fc2d0abbe3bf51d36acf6992ef679d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga596bdbb142cb7687241f083db54ab559"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga596bdbb142cb7687241f083db54ab559">getSiIdx</a>(si)&#160;&#160;&#160;((uint8_t)((uint16_t)(si)&amp;0xFU))</td></tr>
-<tr class="memdesc:ga596bdbb142cb7687241f083db54ab559"><td class="mdescLeft">&#160;</td><td class="mdescRight">The actaul index in the netc_hw_si_idx_t.  <a href="#ga596bdbb142cb7687241f083db54ab559">More...</a><br/></td></tr>
-<tr class="separator:ga596bdbb142cb7687241f083db54ab559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac67c7f14d480753c9b76b60397a4605d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gac67c7f14d480753c9b76b60397a4605d">NETC_MSIX_TABLE_OFFSET</a>&#160;&#160;&#160;(0x10000U)</td></tr>
-<tr class="memdesc:gac67c7f14d480753c9b76b60397a4605d"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSIX table address offset.  <a href="#gac67c7f14d480753c9b76b60397a4605d">More...</a><br/></td></tr>
-<tr class="separator:gac67c7f14d480753c9b76b60397a4605d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad16e28d067f181edd509a2171c345e0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gad16e28d067f181edd509a2171c345e0c">NETC_MSIX_TABLE_PBA_OFFSET</a>&#160;&#160;&#160;(0x800U)</td></tr>
-<tr class="memdesc:gad16e28d067f181edd509a2171c345e0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSIX PBA address offset.  <a href="#gad16e28d067f181edd509a2171c345e0c">More...</a><br/></td></tr>
-<tr class="separator:gad16e28d067f181edd509a2171c345e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadacd7efff2fa15524d1807c3117a4b2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gadacd7efff2fa15524d1807c3117a4b2f">NETC_NANOSECOND_ONE_SECOND</a>&#160;&#160;&#160;(1000000000UL)</td></tr>
-<tr class="memdesc:gadacd7efff2fa15524d1807c3117a4b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nanosecond in one second.  <a href="#gadacd7efff2fa15524d1807c3117a4b2f">More...</a><br/></td></tr>
-<tr class="separator:gadacd7efff2fa15524d1807c3117a4b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga7db8c668f6a0f45585841e580bb7ba38"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga7db8c668f6a0f45585841e580bb7ba38">netc_hw_enetc_idx_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#gga7db8c668f6a0f45585841e580bb7ba38a94f3dee351c3f6926e61ed446f111765">kNETC_ENETC0</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga7db8c668f6a0f45585841e580bb7ba38ac51a063cf1c96e3395648510bfce0732">kNETC_ENETC1</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga7db8c668f6a0f45585841e580bb7ba38"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENETC index enumerator.  <a href="a00042.html#ga7db8c668f6a0f45585841e580bb7ba38">More...</a><br/></td></tr>
-<tr class="separator:ga7db8c668f6a0f45585841e580bb7ba38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3dbbb93b427514b7ede8a15cd2666cef"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga3dbbb93b427514b7ede8a15cd2666cef">netc_hw_switch_idx_t</a> { <a class="el" href="a00042.html#gga3dbbb93b427514b7ede8a15cd2666cefaf23a344d06df2a30df812b3694dc3123">kNETC_SWITCH0</a>
- }</td></tr>
-<tr class="memdesc:ga3dbbb93b427514b7ede8a15cd2666cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWITCH index enumerator.  <a href="a00042.html#ga3dbbb93b427514b7ede8a15cd2666cef">More...</a><br/></td></tr>
-<tr class="separator:ga3dbbb93b427514b7ede8a15cd2666cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44dddc2c8caf8f9182d0e025657bf095"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga44dddc2c8caf8f9182d0e025657bf095">netc_hw_port_idx_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095a1201805f48b2d986dd84b81ec84d28e0">kNETC_ENETC0Port</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095a320d03ff2cee67864337b0683560e0de">kNETC_ENETC1Port</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095a9b64e6f00ce26476689de3e9dd79ebf4">kNETC_SWITCH0Port0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095ad1088ddbb218d41a09dd1ef6e15f9f28">kNETC_SWITCH0Port1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095add9866b7101ff5d892f946dcfd28b32b">kNETC_SWITCH0Port2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095a70351c270e4a15d26df394ef64d496e9">kNETC_SWITCH0Port3</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga44dddc2c8caf8f9182d0e025657bf095a58b8b93d5bbe27cd89508c0f66153646">kNETC_SWITCH0Port4</a> = 4U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga44dddc2c8caf8f9182d0e025657bf095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port Resource for the NETC module.  <a href="a00042.html#ga44dddc2c8caf8f9182d0e025657bf095">More...</a><br/></td></tr>
-<tr class="separator:ga44dddc2c8caf8f9182d0e025657bf095"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf9940a48d1c00131fabb32ed710ab754"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gaf9940a48d1c00131fabb32ed710ab754">netc_hw_tc_idx_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754a2089b3ddc5d82fb3f47eaec507e83b6d">kNETC_TxTC0</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754a188b7e6a65c8bb6df5d73351530f8c02">kNETC_TxTC1</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754a34faf11822c70576cda627c02329ce17">kNETC_TxTC2</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754a539ebcf18c2a8d2680acde23281a9ecc">kNETC_TxTC3</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754ae364ab4961e97b1df188cd6ea37b754c">kNETC_TxTC4</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754a5acf282d482969c7cdedbe46e297f355">kNETC_TxTC5</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754abb33f48fa024f65d23a12559b5d6b79e">kNETC_TxTC6</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggaf9940a48d1c00131fabb32ed710ab754a5f933c1f07063643345d0b85ed8cd388">kNETC_TxTC7</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf9940a48d1c00131fabb32ed710ab754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traffic class enumerator.  <a href="a00042.html#gaf9940a48d1c00131fabb32ed710ab754">More...</a><br/></td></tr>
-<tr class="separator:gaf9940a48d1c00131fabb32ed710ab754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7efef49e91500b71dedb383d4cc657d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gae7efef49e91500b71dedb383d4cc657d">netc_hw_bdr_idx_t</a> </td></tr>
-<tr class="memdesc:gae7efef49e91500b71dedb383d4cc657d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for the ENETC SI BDR identifier. <br/></td></tr>
-<tr class="separator:gae7efef49e91500b71dedb383d4cc657d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5b1930071450762fb8710801bd469d5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gad5b1930071450762fb8710801bd469d5">netc_hw_swt_cbdr_idx_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#ggad5b1930071450762fb8710801bd469d5aa211e60472ca41f5baee256883bf2c73">kNETC_SWTCBDR0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggad5b1930071450762fb8710801bd469d5a9243a9f98319b46206d77e2e15a4c9c1">kNETC_SWTCBDR1</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gad5b1930071450762fb8710801bd469d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch command BD ring index enumerator.  <a href="a00042.html#gad5b1930071450762fb8710801bd469d5">More...</a><br/></td></tr>
-<tr class="separator:gad5b1930071450762fb8710801bd469d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75be94f7f73725ec0bb5f8287f7978cd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga75be94f7f73725ec0bb5f8287f7978cd">netc_hw_etm_class_queue_idx_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cda3b708c052bcc8acb206d25567af15366">kNETC_ClassQueue0</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cdaacf5a33ba7f24c6be180969d45f18fc8">kNETC_ClassQueue1</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cda21f8fce8afe6e737ed0588a03e39f160">kNETC_ClassQueue2</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cdaea81e20b984f3bbff9d2e00f08f4654c">kNETC_ClassQueue3</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cda88c1b8184d96cd2f013ea48a8553298b">kNETC_ClassQueue4</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cdaaba9691a637bacc2d636a4897f7f3202">kNETC_ClassQueue5</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cda572a5af1abf4266c198a58567d1326a5">kNETC_ClassQueue6</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga75be94f7f73725ec0bb5f8287f7978cda686c103606ed08fc209b5153577db518">kNETC_ClassQueue7</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga75be94f7f73725ec0bb5f8287f7978cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator for ETM class queue identifier.  <a href="a00042.html#ga75be94f7f73725ec0bb5f8287f7978cd">More...</a><br/></td></tr>
-<tr class="separator:ga75be94f7f73725ec0bb5f8287f7978cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82a3ffe4f41cfa2cd3b7e57357030146"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga82a3ffe4f41cfa2cd3b7e57357030146">netc_hw_congestion_group_idx_t</a> </td></tr>
-<tr class="memdesc:ga82a3ffe4f41cfa2cd3b7e57357030146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator for the ETM congestion group. <br/></td></tr>
-<tr class="separator:ga82a3ffe4f41cfa2cd3b7e57357030146"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac257acb25e13a68ee83dcb394b472fca"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#gac257acb25e13a68ee83dcb394b472fca">netc_hw_mii_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#ggac257acb25e13a68ee83dcb394b472fcaa4e583aec78ab09dee72acf9675f89b27">kNETC_XgmiiMode</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggac257acb25e13a68ee83dcb394b472fcaa27942e26d8d37d453c04d5378d7381ae">kNETC_MiiMode</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggac257acb25e13a68ee83dcb394b472fcaac2efa08182233f57c4d23b6689a8d328">kNETC_GmiiMode</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggac257acb25e13a68ee83dcb394b472fcaa660289e16d23e124b81e8b60819942b1">kNETC_RmiiMode</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#ggac257acb25e13a68ee83dcb394b472fcaa52e588b0debce02f7a28a76aa1fa23e7">kNETC_RgmiiMode</a> = 4U
-<br/>
- }</td></tr>
-<tr class="memdesc:gac257acb25e13a68ee83dcb394b472fca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the MII/RGMII mode for data interface between the MAC and the PHY.  <a href="a00042.html#gac257acb25e13a68ee83dcb394b472fca">More...</a><br/></td></tr>
-<tr class="separator:gac257acb25e13a68ee83dcb394b472fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e585447ab2ceaef90d0c607b379900d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga9e585447ab2ceaef90d0c607b379900d">netc_hw_mii_speed_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#gga9e585447ab2ceaef90d0c607b379900daad38b9ebf5110eb03d4bbe69d21604dc">kNETC_MiiSpeed10M</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga9e585447ab2ceaef90d0c607b379900da031305b739e4418d9c27725f11f294ac">kNETC_MiiSpeed100M</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga9e585447ab2ceaef90d0c607b379900da0cf095f0569b217d26517bf3d491ee8a">kNETC_MiiSpeed1000M</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga9e585447ab2ceaef90d0c607b379900da5657110f928f550273abca315bc18a94">kNETC_MiiSpeed2500M</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga9e585447ab2ceaef90d0c607b379900da5377c880968ef7d4c896497706afe33f">kNETC_MiiSpeed5G</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga9e585447ab2ceaef90d0c607b379900da6363f55ba6e8a2fb52386011b37e9ec1">kNETC_MiiSpeed10G</a> = 5U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga9e585447ab2ceaef90d0c607b379900d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the speed for the *MII data interface.  <a href="a00042.html#ga9e585447ab2ceaef90d0c607b379900d">More...</a><br/></td></tr>
-<tr class="separator:ga9e585447ab2ceaef90d0c607b379900d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31b02d8809ef0ee71db47bb9c1d349b9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ga31b02d8809ef0ee71db47bb9c1d349b9">netc_hw_mii_duplex_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00042.html#gga31b02d8809ef0ee71db47bb9c1d349b9a7d58b2e0ddea8838659a875898fce60f">kNETC_MiiHalfDuplex</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00042.html#gga31b02d8809ef0ee71db47bb9c1d349b9a1058118c63a09642de3866b3e6dd9a97">kNETC_MiiFullDuplex</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga31b02d8809ef0ee71db47bb9c1d349b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the half or full duplex for the MII data interface.  <a href="a00042.html#ga31b02d8809ef0ee71db47bb9c1d349b9">More...</a><br/></td></tr>
-<tr class="separator:ga31b02d8809ef0ee71db47bb9c1d349b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00358"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00358">netc_enetc_native_vlan_config_t</a></td></tr>
+<tr class="memdesc:a00358"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENETC Port outer/inner native VLAN config.  <a href="a00042.html#a00358">More...</a><br/></td></tr>
+<tr class="separator:a00358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00359"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a00359">netc_enetc_parser_config_t</a></td></tr>
+<tr class="memdesc:a00359"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENETC parser configuration.  <a href="a00042.html#a00359">More...</a><br/></td></tr>
+<tr class="separator:a00359"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00370" id="a00370"></a>
+<a name="a00361" id="a00361"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_isi_kc_rule_t</td>
+          <td class="memname">struct netc_enetc_vlan_tag_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8153a5024f78cb02ca4aeae9085568c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8153a5024f78cb02ca4aeae9085568c3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a8153a5024f78cb02ca4aeae9085568c3">etp</a>: 1</td></tr>
-<tr class="memdesc:a8153a5024f78cb02ca4aeae9085568c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">2 Byte Ethertype field present in the key <br/></td></tr>
-<tr class="separator:a8153a5024f78cb02ca4aeae9085568c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a604c3cf9cba6afc830596e684fb87feb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a604c3cf9cba6afc830596e684fb87feb"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a604c3cf9cba6afc830596e684fb87feb">sqtp</a>: 1</td></tr>
-<tr class="memdesc:a604c3cf9cba6afc830596e684fb87feb"><td class="mdescLeft">&#160;</td><td class="mdescRight">1 Byte Sequence Tag present in the key <br/></td></tr>
-<tr class="separator:a604c3cf9cba6afc830596e684fb87feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a238f671b928eba4ce11c67c8cd708c44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a238f671b928eba4ce11c67c8cd708c44"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a238f671b928eba4ce11c67c8cd708c44">ipcpp</a>: 1</td></tr>
-<tr class="memdesc:a238f671b928eba4ce11c67c8cd708c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">inner VLAN header's PCP field present in the key <br/></td></tr>
-<tr class="separator:a238f671b928eba4ce11c67c8cd708c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba892ebd3d7a5efed81b261ae3a7cd2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba892ebd3d7a5efed81b261ae3a7cd2b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aba892ebd3d7a5efed81b261ae3a7cd2b">ividp</a>: 1</td></tr>
-<tr class="memdesc:aba892ebd3d7a5efed81b261ae3a7cd2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">inner VLAN ID present in the key <br/></td></tr>
-<tr class="separator:aba892ebd3d7a5efed81b261ae3a7cd2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f9d096932d592c32d82ef68baea653c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f9d096932d592c32d82ef68baea653c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a4f9d096932d592c32d82ef68baea653c">opcpp</a>: 1</td></tr>
-<tr class="memdesc:a4f9d096932d592c32d82ef68baea653c"><td class="mdescLeft">&#160;</td><td class="mdescRight">outer VLAN header's PCP field present in the key <br/></td></tr>
-<tr class="separator:a4f9d096932d592c32d82ef68baea653c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c77321e02c7035360328ea9edb29965"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c77321e02c7035360328ea9edb29965"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a4c77321e02c7035360328ea9edb29965">ovidp</a>: 1</td></tr>
-<tr class="memdesc:a4c77321e02c7035360328ea9edb29965"><td class="mdescLeft">&#160;</td><td class="mdescRight">outer VLAN ID present in the key <br/></td></tr>
-<tr class="separator:a4c77321e02c7035360328ea9edb29965"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb3639f94917cd7146c2918ccc2415ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb3639f94917cd7146c2918ccc2415ef"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#abb3639f94917cd7146c2918ccc2415ef">smacp</a>: 1</td></tr>
-<tr class="memdesc:abb3639f94917cd7146c2918ccc2415ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">6 bytes of source MAC address present in the key <br/></td></tr>
-<tr class="separator:abb3639f94917cd7146c2918ccc2415ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb404477c8c9eff389eb0756316a38c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb404477c8c9eff389eb0756316a38c7"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#abb404477c8c9eff389eb0756316a38c7">dmacp</a>: 1</td></tr>
-<tr class="memdesc:abb404477c8c9eff389eb0756316a38c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">6 bytes of destination MAC address present in the key <br/></td></tr>
-<tr class="separator:abb404477c8c9eff389eb0756316a38c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8b4416307c806ab384e78341f07c42e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8b4416307c806ab384e78341f07c42e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ab8b4416307c806ab384e78341f07c42e">spmp</a>: 1</td></tr>
-<tr class="memdesc:ab8b4416307c806ab384e78341f07c42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">switch port masquerading flag present in the key <br/></td></tr>
-<tr class="separator:ab8b4416307c806ab384e78341f07c42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acee5dc41a47925e89b5d959e92c003eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acee5dc41a47925e89b5d959e92c003eb"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#acee5dc41a47925e89b5d959e92c003eb">portp</a>: 1</td></tr>
-<tr class="memdesc:acee5dc41a47925e89b5d959e92c003eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">source port present in the key <br/></td></tr>
-<tr class="separator:acee5dc41a47925e89b5d959e92c003eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af44bbce26eb781692407704b5248e005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af44bbce26eb781692407704b5248e005"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#af44bbce26eb781692407704b5248e005">valid</a>: 1</td></tr>
-<tr class="memdesc:af44bbce26eb781692407704b5248e005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key Construction is valid. <br/></td></tr>
-<tr class="separator:af44bbce26eb781692407704b5248e005"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a413dc4fd3e743af26e5349ca3c9fd637"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a413dc4fd3e743af26e5349ca3c9fd637"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a413dc4fd3e743af26e5349ca3c9fd637">lbMask</a>: 3</td></tr>
-<tr class="memdesc:a413dc4fd3e743af26e5349ca3c9fd637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Payload Last Byte Mask. <br/></td></tr>
-<tr class="separator:a413dc4fd3e743af26e5349ca3c9fd637"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a605f8000ce431a4406b9f3328e799586"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a605f8000ce431a4406b9f3328e799586"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a605f8000ce431a4406b9f3328e799586">fbMask</a>: 3</td></tr>
-<tr class="memdesc:a605f8000ce431a4406b9f3328e799586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Payload First Byte Mask. <br/></td></tr>
-<tr class="separator:a605f8000ce431a4406b9f3328e799586"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf5f067422cb445661d180bdf06ccb87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf5f067422cb445661d180bdf06ccb87"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aaf5f067422cb445661d180bdf06ccb87">byteOffset</a>: 7</td></tr>
-<tr class="memdesc:aaf5f067422cb445661d180bdf06ccb87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Payload Byte Offset where field extraction begins. <br/></td></tr>
-<tr class="separator:aaf5f067422cb445661d180bdf06ccb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba4de00c08a84d814445f8476c8f312"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ba4de00c08a84d814445f8476c8f312"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a0ba4de00c08a84d814445f8476c8f312">numBytes</a>: 4</td></tr>
-<tr class="memdesc:a0ba4de00c08a84d814445f8476c8f312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the size (numBytes + 1) of the payload key field. <br/></td></tr>
-<tr class="separator:a0ba4de00c08a84d814445f8476c8f312"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab1b60e4fce513ebaffd3ac07526d642"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab1b60e4fce513ebaffd3ac07526d642"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aab1b60e4fce513ebaffd3ac07526d642">pfp</a>: 1</td></tr>
-<tr class="memdesc:aab1b60e4fce513ebaffd3ac07526d642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Payload field Present. <br/></td></tr>
-<tr class="separator:aab1b60e4fce513ebaffd3ac07526d642"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00556" id="a00556"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_vlan_classify_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a37eaad70833edcbbe18ee7f2efe046f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37eaad70833edcbbe18ee7f2efe046f9"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a37eaad70833edcbbe18ee7f2efe046f9">enableCustom1</a></td></tr>
-<tr class="memdesc:a37eaad70833edcbbe18ee7f2efe046f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable custom0 ether type. <br/></td></tr>
-<tr class="separator:a37eaad70833edcbbe18ee7f2efe046f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8f1fa51e4234ddf58e6f22e6bfbc4a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8f1fa51e4234ddf58e6f22e6bfbc4a5"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa8f1fa51e4234ddf58e6f22e6bfbc4a5">custom1EtherType</a></td></tr>
-<tr class="memdesc:aa8f1fa51e4234ddf58e6f22e6bfbc4a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ethertype. <br/></td></tr>
-<tr class="separator:aa8f1fa51e4234ddf58e6f22e6bfbc4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac455bffb5b10fb132abdb60787042e0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac455bffb5b10fb132abdb60787042e0b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ac455bffb5b10fb132abdb60787042e0b">enableCustom2</a></td></tr>
-<tr class="memdesc:ac455bffb5b10fb132abdb60787042e0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable custom0 ether type. <br/></td></tr>
-<tr class="separator:ac455bffb5b10fb132abdb60787042e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0ae0e5158fa4ba9c62f3ea4993febb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0ae0e5158fa4ba9c62f3ea4993febb2"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa0ae0e5158fa4ba9c62f3ea4993febb2">custom2EtherType</a></td></tr>
-<tr class="memdesc:aa0ae0e5158fa4ba9c62f3ea4993febb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ethertype. <br/></td></tr>
-<tr class="separator:aa0ae0e5158fa4ba9c62f3ea4993febb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac72f1dde1c61c6c57748d0a8bd0e48d3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ac72f1dde1c61c6c57748d0a8bd0e48d3">preStandRTAGType</a></td></tr>
-<tr class="memdesc:ac72f1dde1c61c6c57748d0a8bd0e48d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">802.1CB draft 2.0 R-TAG Ethertype value.  <a href="#ac72f1dde1c61c6c57748d0a8bd0e48d3">More...</a><br/></td></tr>
-<tr class="separator:ac72f1dde1c61c6c57748d0a8bd0e48d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ac72f1dde1c61c6c57748d0a8bd0e48d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t netc_vlan_classify_config_t::preStandRTAGType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>PSRTAGETR. Only applicable for switch </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00391" id="a00391"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_qos_classify_profile_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a515ae4cb2a9c488323187de11ef564b0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a515ae4cb2a9c488323187de11ef564b0">ipv</a> [16]</td></tr>
-<tr class="memdesc:a515ae4cb2a9c488323187de11ef564b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index is created from PCP (3 bits) + DEI (1 bit) field.  <a href="#a515ae4cb2a9c488323187de11ef564b0">More...</a><br/></td></tr>
-<tr class="separator:a515ae4cb2a9c488323187de11ef564b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6fa2d5d65a3f2e28e990f7ac43a1897"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ab6fa2d5d65a3f2e28e990f7ac43a1897">dr</a> [16]</td></tr>
-<tr class="memdesc:ab6fa2d5d65a3f2e28e990f7ac43a1897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index is created from PCP (3 bits) + DEI (1 bit) field.  <a href="#ab6fa2d5d65a3f2e28e990f7ac43a1897">More...</a><br/></td></tr>
-<tr class="separator:ab6fa2d5d65a3f2e28e990f7ac43a1897"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a515ae4cb2a9c488323187de11ef564b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t netc_qos_classify_profile_t::ipv[16]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Value is the mapped IPV for Qos. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab6fa2d5d65a3f2e28e990f7ac43a1897"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t netc_qos_classify_profile_t::dr[16]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Value is the mapped DR for QoS. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00369" id="a00369"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_ipf_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a85974420a67168baea6a858c9f9fcdb0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a85974420a67168baea6a858c9f9fcdb0">l2DiscardMCSmac</a></td></tr>
-<tr class="memdesc:a85974420a67168baea6a858c9f9fcdb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">DOSL2CR.  <a href="#a85974420a67168baea6a858c9f9fcdb0">More...</a><br/></td></tr>
-<tr class="separator:a85974420a67168baea6a858c9f9fcdb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc532f9e3e459c91e36f9f5b073aaef3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#acc532f9e3e459c91e36f9f5b073aaef3">l2DiscardSmacEquDmac</a></td></tr>
-<tr class="memdesc:acc532f9e3e459c91e36f9f5b073aaef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">DOSL2CR.  <a href="#acc532f9e3e459c91e36f9f5b073aaef3">More...</a><br/></td></tr>
-<tr class="separator:acc532f9e3e459c91e36f9f5b073aaef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a629c7b036c7ab754b23af98053e5e636"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a629c7b036c7ab754b23af98053e5e636">l3DiscardSipEquDip</a></td></tr>
-<tr class="memdesc:a629c7b036c7ab754b23af98053e5e636"><td class="mdescLeft">&#160;</td><td class="mdescRight">DOSL3CR.  <a href="#a629c7b036c7ab754b23af98053e5e636">More...</a><br/></td></tr>
-<tr class="separator:a629c7b036c7ab754b23af98053e5e636"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a85974420a67168baea6a858c9f9fcdb0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool netc_ipf_config_t::l2DiscardMCSmac</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Discard received frames with Multicast SMAC address </p>
-
-</div>
-</div>
-<a class="anchor" id="acc532f9e3e459c91e36f9f5b073aaef3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool netc_ipf_config_t::l2DiscardSmacEquDmac</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Discard received frames with SMAC = DMAC </p>
-
-</div>
-</div>
-<a class="anchor" id="a629c7b036c7ab754b23af98053e5e636"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool netc_ipf_config_t::l3DiscardSipEquDip</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Discard IPV3/IPV6 source address == destination address </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00367" id="a00367"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_func_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00375" id="a00375"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_port_hw_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a90a8aa29f05dc814a416326b7eba553f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90a8aa29f05dc814a416326b7eba553f"></a>
-NETC_PORT_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a90a8aa29f05dc814a416326b7eba553f">port</a></td></tr>
-<tr class="memdesc:a90a8aa29f05dc814a416326b7eba553f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port Address. <br/></td></tr>
-<tr class="separator:a90a8aa29f05dc814a416326b7eba553f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a750e0eb737d2b40fd1a7e3ab3ca0f876"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a750e0eb737d2b40fd1a7e3ab3ca0f876"></a>
-NETC_ETH_LINK_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a750e0eb737d2b40fd1a7e3ab3ca0f876">eth</a></td></tr>
-<tr class="memdesc:a750e0eb737d2b40fd1a7e3ab3ca0f876"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC Port Address. <br/></td></tr>
-<tr class="separator:a750e0eb737d2b40fd1a7e3ab3ca0f876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1873fdc78462efaa0481dd9e7e9cb998"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1873fdc78462efaa0481dd9e7e9cb998"></a>
-NETC_PSEUDO_LINK_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a1873fdc78462efaa0481dd9e7e9cb998">pseudo</a></td></tr>
-<tr class="memdesc:a1873fdc78462efaa0481dd9e7e9cb998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pseudo link port address. <br/></td></tr>
-<tr class="separator:a1873fdc78462efaa0481dd9e7e9cb998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1228066a0e49c7628cb7019f34896017"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1228066a0e49c7628cb7019f34896017"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a1228066a0e49c7628cb7019f34896017">pcp</a>: 3</td></tr>
+<tr class="memdesc:a1228066a0e49c7628cb7019f34896017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority code point. <br/></td></tr>
+<tr class="separator:a1228066a0e49c7628cb7019f34896017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa06f213a8e67e7043edbf36e5fe3870f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa06f213a8e67e7043edbf36e5fe3870f"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa06f213a8e67e7043edbf36e5fe3870f">dei</a>: 1</td></tr>
+<tr class="memdesc:aa06f213a8e67e7043edbf36e5fe3870f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Drop eligible indicator. <br/></td></tr>
+<tr class="separator:aa06f213a8e67e7043edbf36e5fe3870f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dc79b2707cbf8e2714c63e53f97f756"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7dc79b2707cbf8e2714c63e53f97f756"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a7dc79b2707cbf8e2714c63e53f97f756">vid</a>: 12</td></tr>
+<tr class="memdesc:a7dc79b2707cbf8e2714c63e53f97f756"><td class="mdescLeft">&#160;</td><td class="mdescRight">VLAN identifier. <br/></td></tr>
+<tr class="separator:a7dc79b2707cbf8e2714c63e53f97f756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a257a01e6f68ce2884bc478a027a8ec39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a257a01e6f68ce2884bc478a027a8ec39"></a>
+<a class="el" href="a00039.html#ga128d2ac2fb75c8edef7dfc7d7fcd5cf7">netc_vlan_tpid_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a257a01e6f68ce2884bc478a027a8ec39">tpid</a>: 2</td></tr>
+<tr class="memdesc:a257a01e6f68ce2884bc478a027a8ec39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag protocol identifier. <br/></td></tr>
+<tr class="separator:a257a01e6f68ce2884bc478a027a8ec39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -590,506 +159,164 @@ NETC_PSEUDO_LINK_Type *&#160;</td><td class="memItemRight" valign="bottom"><a cl
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_enetc_hw_t</td>
+          <td class="memname">struct netc_enetc_port_discard_statistic_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a71d1b4a181cdb9782578282273e2b9ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71d1b4a181cdb9782578282273e2b9ff"></a>
-<a class="el" href="a00042.html#a00367">netc_func_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a71d1b4a181cdb9782578282273e2b9ff">func</a></td></tr>
-<tr class="memdesc:a71d1b4a181cdb9782578282273e2b9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">PCIE function register. <br/></td></tr>
-<tr class="separator:a71d1b4a181cdb9782578282273e2b9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa6de06cbc09f7ad1ce4d2542aa1a98b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa6de06cbc09f7ad1ce4d2542aa1a98b"></a>
-NETC_ENETC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aaa6de06cbc09f7ad1ce4d2542aa1a98b">base</a></td></tr>
-<tr class="memdesc:aaa6de06cbc09f7ad1ce4d2542aa1a98b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base register of ENETC module. <br/></td></tr>
-<tr class="separator:aaa6de06cbc09f7ad1ce4d2542aa1a98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa35980b9f2573fb4b3f377972daaba4e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa35980b9f2573fb4b3f377972daaba4e"></a>
-NETC_SW_ENETC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa35980b9f2573fb4b3f377972daaba4e">common</a></td></tr>
-<tr class="memdesc:aa35980b9f2573fb4b3f377972daaba4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common register of ENETC module. <br/></td></tr>
-<tr class="separator:aa35980b9f2573fb4b3f377972daaba4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a639005a4574c49a181a988b8b502183c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a639005a4574c49a181a988b8b502183c"></a>
-<a class="el" href="a00042.html#a00375">netc_port_hw_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a639005a4574c49a181a988b8b502183c">portGroup</a></td></tr>
-<tr class="memdesc:a639005a4574c49a181a988b8b502183c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port register group. <br/></td></tr>
-<tr class="separator:a639005a4574c49a181a988b8b502183c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb43089494a95e3da08c8c6feb6f57a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb43089494a95e3da08c8c6feb6f57a1"></a>
-ENETC_GLOBAL_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aeb43089494a95e3da08c8c6feb6f57a1">global</a></td></tr>
-<tr class="memdesc:aeb43089494a95e3da08c8c6feb6f57a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global NETC address. <br/></td></tr>
-<tr class="separator:aeb43089494a95e3da08c8c6feb6f57a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac356ccc62abc008437011be46f4009b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac356ccc62abc008437011be46f4009b0"></a>
-ENETC_SI_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ac356ccc62abc008437011be46f4009b0">si</a></td></tr>
-<tr class="memdesc:ac356ccc62abc008437011be46f4009b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Station Interfce for the P/V SI. <br/></td></tr>
-<tr class="separator:ac356ccc62abc008437011be46f4009b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bb6e5a1808c29be06bfdf9595759236"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bb6e5a1808c29be06bfdf9595759236"></a>
-<a class="el" href="a00040.html#a00372">netc_msix_entry_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a6bb6e5a1808c29be06bfdf9595759236">msixTable</a></td></tr>
-<tr class="memdesc:a6bb6e5a1808c29be06bfdf9595759236"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSIX table address. <br/></td></tr>
-<tr class="separator:a6bb6e5a1808c29be06bfdf9595759236"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae41f8e94a78aab94866db39351261c5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae41f8e94a78aab94866db39351261c5c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ae41f8e94a78aab94866db39351261c5c">ingressDR</a> [4]</td></tr>
+<tr class="memdesc:ae41f8e94a78aab94866db39351261c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Discard count for port ingress congestion different DR. <br/></td></tr>
+<tr class="separator:ae41f8e94a78aab94866db39351261c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac540e4849860f82d2119206431265087"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac540e4849860f82d2119206431265087"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ac540e4849860f82d2119206431265087">broadcastReject</a></td></tr>
+<tr class="memdesc:ac540e4849860f82d2119206431265087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast frame drops count due to all SI enable broadcast reject. <br/></td></tr>
+<tr class="separator:ac540e4849860f82d2119206431265087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e5bdbf9a523c43d72095f657d3ec28e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e5bdbf9a523c43d72095f657d3ec28e"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a1e5bdbf9a523c43d72095f657d3ec28e">smacPruning</a></td></tr>
+<tr class="memdesc:a1e5bdbf9a523c43d72095f657d3ec28e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frames discard count due to port MAC source address pruning. <br/></td></tr>
+<tr class="separator:a1e5bdbf9a523c43d72095f657d3ec28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5425ac56e7ae9db3021b35dc09018c78"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5425ac56e7ae9db3021b35dc09018c78"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a5425ac56e7ae9db3021b35dc09018c78">unicastMacFilt</a></td></tr>
+<tr class="memdesc:a5425ac56e7ae9db3021b35dc09018c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unicast frame discard count due to port MAC filtering. <br/></td></tr>
+<tr class="separator:a5425ac56e7ae9db3021b35dc09018c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c2edb73df3ab4f92247681e2563228b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c2edb73df3ab4f92247681e2563228b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a6c2edb73df3ab4f92247681e2563228b">multicastMacFilt</a></td></tr>
+<tr class="memdesc:a6c2edb73df3ab4f92247681e2563228b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multicast frame discard count due to MAC filtering. <br/></td></tr>
+<tr class="separator:a6c2edb73df3ab4f92247681e2563228b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0e09d24acf564119e2f02654e4ef9cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0e09d24acf564119e2f02654e4ef9cd"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa0e09d24acf564119e2f02654e4ef9cd">unicastVlanFilt</a></td></tr>
+<tr class="memdesc:aa0e09d24acf564119e2f02654e4ef9cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unicast frame discard count due to VLAN filtering. <br/></td></tr>
+<tr class="separator:aa0e09d24acf564119e2f02654e4ef9cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac884b780c7ae728dcc94903279dfd4c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac884b780c7ae728dcc94903279dfd4c6"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ac884b780c7ae728dcc94903279dfd4c6">multicastVlanFilt</a></td></tr>
+<tr class="memdesc:ac884b780c7ae728dcc94903279dfd4c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multicast frame discard count due to VLAN filtering. <br/></td></tr>
+<tr class="separator:ac884b780c7ae728dcc94903279dfd4c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a364051960971a7e45775cac660c009c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a364051960971a7e45775cac660c009c7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a364051960971a7e45775cac660c009c7">boradcastVlanFilt</a></td></tr>
+<tr class="memdesc:a364051960971a7e45775cac660c009c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast frame discard count due to VLAN filtering. <br/></td></tr>
+<tr class="separator:a364051960971a7e45775cac660c009c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00401" id="a00401"></a>
+<a name="a00358" id="a00358"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_switch_hw_t</td>
+          <td class="memname">struct netc_enetc_native_vlan_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a448a13bf51bc0e1f37732fe6da40dd9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a448a13bf51bc0e1f37732fe6da40dd9a"></a>
-ENETC_PCI_TYPE0_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a448a13bf51bc0e1f37732fe6da40dd9a">func</a></td></tr>
-<tr class="memdesc:a448a13bf51bc0e1f37732fe6da40dd9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base address for PCIE function. <br/></td></tr>
-<tr class="separator:a448a13bf51bc0e1f37732fe6da40dd9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab52f8c396e6b34cc9728b3cd1161659"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab52f8c396e6b34cc9728b3cd1161659"></a>
-NETC_SW_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aab52f8c396e6b34cc9728b3cd1161659">base</a></td></tr>
-<tr class="memdesc:aab52f8c396e6b34cc9728b3cd1161659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base address for Switch. <br/></td></tr>
-<tr class="separator:aab52f8c396e6b34cc9728b3cd1161659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5adeb0d0ac0017af472e44b4a4c4b0e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5adeb0d0ac0017af472e44b4a4c4b0e4"></a>
-NETC_SW_ENETC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a5adeb0d0ac0017af472e44b4a4c4b0e4">common</a></td></tr>
-<tr class="memdesc:a5adeb0d0ac0017af472e44b4a4c4b0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common address of ENETC Module. <br/></td></tr>
-<tr class="separator:a5adeb0d0ac0017af472e44b4a4c4b0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab80aadbfa1cde8651a9488205739aaec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab80aadbfa1cde8651a9488205739aaec"></a>
-<a class="el" href="a00042.html#a00375">netc_port_hw_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ab80aadbfa1cde8651a9488205739aaec">ports</a> [FSL_FEATURE_NETC_SWITCH_MAX_PORT_NUMBER]</td></tr>
-<tr class="memdesc:ab80aadbfa1cde8651a9488205739aaec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port Register Group. <br/></td></tr>
-<tr class="separator:ab80aadbfa1cde8651a9488205739aaec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69b25c4dc2bf697b1fcca9ad74eb674e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69b25c4dc2bf697b1fcca9ad74eb674e"></a>
-ENETC_GLOBAL_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a69b25c4dc2bf697b1fcca9ad74eb674e">global</a></td></tr>
-<tr class="memdesc:a69b25c4dc2bf697b1fcca9ad74eb674e"><td class="mdescLeft">&#160;</td><td class="mdescRight">GLobal NETC Register Base Address. <br/></td></tr>
-<tr class="separator:a69b25c4dc2bf697b1fcca9ad74eb674e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac39927b7e4ac0562cd98b8b460dfd173"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac39927b7e4ac0562cd98b8b460dfd173"></a>
-<a class="el" href="a00040.html#a00372">netc_msix_entry_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ac39927b7e4ac0562cd98b8b460dfd173">msixTable</a></td></tr>
-<tr class="memdesc:ac39927b7e4ac0562cd98b8b460dfd173"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSIX table address. <br/></td></tr>
-<tr class="separator:ac39927b7e4ac0562cd98b8b460dfd173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab654ce122894375ad222cae4de84b193"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab654ce122894375ad222cae4de84b193"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ab654ce122894375ad222cae4de84b193">enUnderZeroVid</a></td></tr>
+<tr class="memdesc:ab654ce122894375ad222cae4de84b193"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable use the port default VLAN VID when the VID in the packet's is zero. <br/></td></tr>
+<tr class="separator:ab654ce122894375ad222cae4de84b193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c082c647b2ab7c77769259aa55510a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c082c647b2ab7c77769259aa55510a4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a2c082c647b2ab7c77769259aa55510a4">enUnderNoVlan</a></td></tr>
+<tr class="memdesc:a2c082c647b2ab7c77769259aa55510a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable use the port default VLAN VID when the VLAN tag is not present. <br/></td></tr>
+<tr class="separator:a2c082c647b2ab7c77769259aa55510a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd15320420cbb44dcda45772ef26d8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accd15320420cbb44dcda45772ef26d8c"></a>
+<a class="el" href="a00042.html#a00361">netc_enetc_vlan_tag_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#accd15320420cbb44dcda45772ef26d8c">vlanTag</a></td></tr>
+<tr class="memdesc:accd15320420cbb44dcda45772ef26d8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port native outer/inner VLAN tag, valid when enUnderZeroVid or enUnderNoVlan is true. <br/></td></tr>
+<tr class="separator:accd15320420cbb44dcda45772ef26d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00551" id="a00551"></a>
+<a name="a00359" id="a00359"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_timer_hw_t</td>
+          <td class="memname">struct netc_enetc_parser_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a5a357703431b4a7c6ed45a76da138f94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a357703431b4a7c6ed45a76da138f94"></a>
-ENETC_PCI_TYPE0_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a5a357703431b4a7c6ed45a76da138f94">func</a></td></tr>
-<tr class="memdesc:a5a357703431b4a7c6ed45a76da138f94"><td class="mdescLeft">&#160;</td><td class="mdescRight">PCIE function register. <br/></td></tr>
-<tr class="separator:a5a357703431b4a7c6ed45a76da138f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa66793d7c77d9803c2db0eb77b4b6759"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa66793d7c77d9803c2db0eb77b4b6759"></a>
-ENETC_PF_TMR_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa66793d7c77d9803c2db0eb77b4b6759">base</a></td></tr>
-<tr class="memdesc:aa66793d7c77d9803c2db0eb77b4b6759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base register address for timer module. <br/></td></tr>
-<tr class="separator:aa66793d7c77d9803c2db0eb77b4b6759"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a311444dac702c53dcaeeae82909da89e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a311444dac702c53dcaeeae82909da89e"></a>
-ENETC_GLOBAL_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a311444dac702c53dcaeeae82909da89e">global</a></td></tr>
-<tr class="memdesc:a311444dac702c53dcaeeae82909da89e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global NETC register address. <br/></td></tr>
-<tr class="separator:a311444dac702c53dcaeeae82909da89e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45e0dc7f1ca8712ef01414d23fedb49b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45e0dc7f1ca8712ef01414d23fedb49b"></a>
-<a class="el" href="a00040.html#a00372">netc_msix_entry_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a45e0dc7f1ca8712ef01414d23fedb49b">msixTable</a></td></tr>
-<tr class="memdesc:a45e0dc7f1ca8712ef01414d23fedb49b"><td class="mdescLeft">&#160;</td><td class="mdescRight">MSIX table address. <br/></td></tr>
-<tr class="separator:a45e0dc7f1ca8712ef01414d23fedb49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c3fa885e122c9e88ec072ad098223d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a6c3fa885e122c9e88ec072ad098223d5">disL3Checksum</a></td></tr>
+<tr class="memdesc:a6c3fa885e122c9e88ec072ad098223d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Layer 3 IPv4 Header checksum validation.  <a href="#a6c3fa885e122c9e88ec072ad098223d5">More...</a><br/></td></tr>
+<tr class="separator:a6c3fa885e122c9e88ec072ad098223d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57395907def1d4cd85a879d27abc2204"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a57395907def1d4cd85a879d27abc2204">disL4Checksum</a></td></tr>
+<tr class="memdesc:a57395907def1d4cd85a879d27abc2204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Layer 4 TCP and UDP checksum validation.  <a href="#a57395907def1d4cd85a879d27abc2204">More...</a><br/></td></tr>
+<tr class="separator:a57395907def1d4cd85a879d27abc2204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fbff8c7545515b725fee4dac0728d1f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a1fbff8c7545515b725fee4dac0728d1f">etype</a></td></tr>
+<tr class="memdesc:a1fbff8c7545515b725fee4dac0728d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom Ethertype value.  <a href="#a1fbff8c7545515b725fee4dac0728d1f">More...</a><br/></td></tr>
+<tr class="separator:a1fbff8c7545515b725fee4dac0728d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0382b7b15f6e570aee7c604d9f828162"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a0382b7b15f6e570aee7c604d9f828162">en</a></td></tr>
+<tr class="memdesc:a0382b7b15f6e570aee7c604d9f828162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the detection and mapping.  <a href="#a0382b7b15f6e570aee7c604d9f828162">More...</a><br/></td></tr>
+<tr class="separator:a0382b7b15f6e570aee7c604d9f828162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8cf1466cbfcca8e768b2edd47de0819"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#ab8cf1466cbfcca8e768b2edd47de0819">cp</a></td></tr>
+<tr class="memdesc:ab8cf1466cbfcca8e768b2edd47de0819"><td class="mdescLeft">&#160;</td><td class="mdescRight">This value is mapped to the parse summary as a Non IP code point.  <a href="#ab8cf1466cbfcca8e768b2edd47de0819">More...</a><br/></td></tr>
+<tr class="separator:ab8cf1466cbfcca8e768b2edd47de0819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-
-</div>
-</div>
-<a name="a00371" id="a00371"></a>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a6c3fa885e122c9e88ec072ad098223d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_mdio_hw_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7c6cad8e87413c33d544e16734f81652"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c6cad8e87413c33d544e16734f81652"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a7c6cad8e87413c33d544e16734f81652">EMDIO_CFG</a></td></tr>
-<tr class="memdesc:a7c6cad8e87413c33d544e16734f81652"><td class="mdescLeft">&#160;</td><td class="mdescRight">External MDIO configuration register, offset: 0x1C00. <br/></td></tr>
-<tr class="separator:a7c6cad8e87413c33d544e16734f81652"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8266208c1fb80ca81d28fa15476a8756"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8266208c1fb80ca81d28fa15476a8756"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a8266208c1fb80ca81d28fa15476a8756">EMDIO_CTL</a></td></tr>
-<tr class="memdesc:a8266208c1fb80ca81d28fa15476a8756"><td class="mdescLeft">&#160;</td><td class="mdescRight">External MDIO interface control register, offset: 0x1C04. <br/></td></tr>
-<tr class="separator:a8266208c1fb80ca81d28fa15476a8756"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08a3047783259a63559bdc9d0e9eb0d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08a3047783259a63559bdc9d0e9eb0d3"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a08a3047783259a63559bdc9d0e9eb0d3">EMDIO_DATA</a></td></tr>
-<tr class="memdesc:a08a3047783259a63559bdc9d0e9eb0d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">External MDIO interface data register, offset: 0x1C08. <br/></td></tr>
-<tr class="separator:a08a3047783259a63559bdc9d0e9eb0d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89aa79c0539edd2ad369c7f58ee4a9a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89aa79c0539edd2ad369c7f58ee4a9a2"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a89aa79c0539edd2ad369c7f58ee4a9a2">EMDIO_ADDR</a></td></tr>
-<tr class="memdesc:a89aa79c0539edd2ad369c7f58ee4a9a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">External MDIO register address register, offset: 0x1C0C. <br/></td></tr>
-<tr class="separator:a89aa79c0539edd2ad369c7f58ee4a9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd787f1651badf328aead59d8672b6fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd787f1651badf328aead59d8672b6fa"></a>
-__I uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#afd787f1651badf328aead59d8672b6fa">EMDIO_STAT</a></td></tr>
-<tr class="memdesc:afd787f1651badf328aead59d8672b6fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">External MDIO status register, offset: 0x1C10. <br/></td></tr>
-<tr class="separator:afd787f1651badf328aead59d8672b6fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa136260247f3c7a7f7cc4c9192eb6b89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa136260247f3c7a7f7cc4c9192eb6b89"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#aa136260247f3c7a7f7cc4c9192eb6b89">PHY_STATUS_CFG</a></td></tr>
-<tr class="memdesc:aa136260247f3c7a7f7cc4c9192eb6b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY status configuration register, offset: 0x1C20. <br/></td></tr>
-<tr class="separator:aa136260247f3c7a7f7cc4c9192eb6b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d180166edd3123836255dfe7766012"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29d180166edd3123836255dfe7766012"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a29d180166edd3123836255dfe7766012">PHY_STATUS_CTL</a></td></tr>
-<tr class="memdesc:a29d180166edd3123836255dfe7766012"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY status control register, offset: 0x1C24. <br/></td></tr>
-<tr class="separator:a29d180166edd3123836255dfe7766012"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cd7672fe27a5b77bb3031a991c8e19f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cd7672fe27a5b77bb3031a991c8e19f"></a>
-__I uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a4cd7672fe27a5b77bb3031a991c8e19f">PHY_STATUS_DATA</a></td></tr>
-<tr class="memdesc:a4cd7672fe27a5b77bb3031a991c8e19f"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY status data register, offset: 0x1C28. <br/></td></tr>
-<tr class="separator:a4cd7672fe27a5b77bb3031a991c8e19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82ef606f54ce91dc42709b6725ab485c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82ef606f54ce91dc42709b6725ab485c"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a82ef606f54ce91dc42709b6725ab485c">PHY_STATUS_ADDR</a></td></tr>
-<tr class="memdesc:a82ef606f54ce91dc42709b6725ab485c"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY status register address register, offset: 0x1C2C. <br/></td></tr>
-<tr class="separator:a82ef606f54ce91dc42709b6725ab485c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1837a439bfdaa9507a386d8fe24dddc2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1837a439bfdaa9507a386d8fe24dddc2"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a1837a439bfdaa9507a386d8fe24dddc2">PHY_STATUS_EVENT</a></td></tr>
-<tr class="memdesc:a1837a439bfdaa9507a386d8fe24dddc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY status event register, offset: 0x1C30. <br/></td></tr>
-<tr class="separator:a1837a439bfdaa9507a386d8fe24dddc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17925e64d25fed4278466293d39018c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17925e64d25fed4278466293d39018c5"></a>
-__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html#a17925e64d25fed4278466293d39018c5">PHY_STATUS_MASK</a></td></tr>
-<tr class="memdesc:a17925e64d25fed4278466293d39018c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY status mask register, offset: 0x1C34. <br/></td></tr>
-<tr class="separator:a17925e64d25fed4278466293d39018c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga8f9676028414fa595a07a2b873e7051c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define getSiInstance</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">si</td><td>)</td>
-          <td>&#160;&#160;&#160;((uint8_t)((uint16_t)(si) &gt;&gt; 8U))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The ENETC instance of this SI. </p>
-
-</div>
-</div>
-<a class="anchor" id="gae2fc2d0abbe3bf51d36acf6992ef679d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define getSiNum</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">si</td><td>)</td>
-          <td>&#160;&#160;&#160;((uint8_t)(((uint16_t)(si) &gt;&gt; 4U) &amp; 0xFU))</td>
+          <td class="memname">bool netc_enetc_parser_config_t::disL3Checksum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga596bdbb142cb7687241f083db54ab559"></a>
+<a class="anchor" id="a57395907def1d4cd85a879d27abc2204"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define getSiIdx</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">si</td><td>)</td>
-          <td>&#160;&#160;&#160;((uint8_t)((uint16_t)(si)&amp;0xFU))</td>
+          <td class="memname">bool netc_enetc_parser_config_t::disL4Checksum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gac67c7f14d480753c9b76b60397a4605d"></a>
+<a class="anchor" id="a1fbff8c7545515b725fee4dac0728d1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NETC_MSIX_TABLE_OFFSET&#160;&#160;&#160;(0x10000U)</td>
+          <td class="memname">uint16_t netc_enetc_parser_config_t::etype</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Upon detecting this ether type the associated code point will be mapped to the parse summary as a Non IP code point. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0382b7b15f6e570aee7c604d9f828162"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool netc_enetc_parser_config_t::en</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gad16e28d067f181edd509a2171c345e0c"></a>
+<a class="anchor" id="ab8cf1466cbfcca8e768b2edd47de0819"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NETC_MSIX_TABLE_PBA_OFFSET&#160;&#160;&#160;(0x800U)</td>
+          <td class="memname">uint8_t netc_enetc_parser_config_t::cp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gadacd7efff2fa15524d1807c3117a4b2f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NETC_NANOSECOND_ONE_SECOND&#160;&#160;&#160;(1000000000UL)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga7db8c668f6a0f45585841e580bb7ba38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#ga7db8c668f6a0f45585841e580bb7ba38">netc_hw_enetc_idx_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7db8c668f6a0f45585841e580bb7ba38a94f3dee351c3f6926e61ed446f111765"></a>kNETC_ENETC0</em>&nbsp;</td><td class="fielddoc">
-<p>ENETC hardware 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7db8c668f6a0f45585841e580bb7ba38ac51a063cf1c96e3395648510bfce0732"></a>kNETC_ENETC1</em>&nbsp;</td><td class="fielddoc">
-<p>ENETC hardware 0. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga3dbbb93b427514b7ede8a15cd2666cef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#ga3dbbb93b427514b7ede8a15cd2666cef">netc_hw_switch_idx_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3dbbb93b427514b7ede8a15cd2666cefaf23a344d06df2a30df812b3694dc3123"></a>kNETC_SWITCH0</em>&nbsp;</td><td class="fielddoc">
-<p>SWITCH hardware 0. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga44dddc2c8caf8f9182d0e025657bf095"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#ga44dddc2c8caf8f9182d0e025657bf095">netc_hw_port_idx_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095a1201805f48b2d986dd84b81ec84d28e0"></a>kNETC_ENETC0Port</em>&nbsp;</td><td class="fielddoc">
-<p>MAC port for ENETC0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095a320d03ff2cee67864337b0683560e0de"></a>kNETC_ENETC1Port</em>&nbsp;</td><td class="fielddoc">
-<p>Pseudo MAC port for ENETC1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095a9b64e6f00ce26476689de3e9dd79ebf4"></a>kNETC_SWITCH0Port0</em>&nbsp;</td><td class="fielddoc">
-<p>MAC port0 for SWITCH. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095ad1088ddbb218d41a09dd1ef6e15f9f28"></a>kNETC_SWITCH0Port1</em>&nbsp;</td><td class="fielddoc">
-<p>MAC port1 for SWITCH. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095add9866b7101ff5d892f946dcfd28b32b"></a>kNETC_SWITCH0Port2</em>&nbsp;</td><td class="fielddoc">
-<p>MAC port2 for SWITCH. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095a70351c270e4a15d26df394ef64d496e9"></a>kNETC_SWITCH0Port3</em>&nbsp;</td><td class="fielddoc">
-<p>MAC port3 for SWITCH. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga44dddc2c8caf8f9182d0e025657bf095a58b8b93d5bbe27cd89508c0f66153646"></a>kNETC_SWITCH0Port4</em>&nbsp;</td><td class="fielddoc">
-<p>Pseudo port4 for SWITCH. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaf9940a48d1c00131fabb32ed710ab754"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#gaf9940a48d1c00131fabb32ed710ab754">netc_hw_tc_idx_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754a2089b3ddc5d82fb3f47eaec507e83b6d"></a>kNETC_TxTC0</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754a188b7e6a65c8bb6df5d73351530f8c02"></a>kNETC_TxTC1</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754a34faf11822c70576cda627c02329ce17"></a>kNETC_TxTC2</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754a539ebcf18c2a8d2680acde23281a9ecc"></a>kNETC_TxTC3</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754ae364ab4961e97b1df188cd6ea37b754c"></a>kNETC_TxTC4</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754a5acf282d482969c7cdedbe46e297f355"></a>kNETC_TxTC5</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 5. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754abb33f48fa024f65d23a12559b5d6b79e"></a>kNETC_TxTC6</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 6. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf9940a48d1c00131fabb32ed710ab754a5f933c1f07063643345d0b85ed8cd388"></a>kNETC_TxTC7</em>&nbsp;</td><td class="fielddoc">
-<p>Traffic class 7. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad5b1930071450762fb8710801bd469d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#gad5b1930071450762fb8710801bd469d5">netc_hw_swt_cbdr_idx_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad5b1930071450762fb8710801bd469d5aa211e60472ca41f5baee256883bf2c73"></a>kNETC_SWTCBDR0</em>&nbsp;</td><td class="fielddoc">
-<p>Switch command BD ring 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad5b1930071450762fb8710801bd469d5a9243a9f98319b46206d77e2e15a4c9c1"></a>kNETC_SWTCBDR1</em>&nbsp;</td><td class="fielddoc">
-<p>Switch command BD ring 1. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga75be94f7f73725ec0bb5f8287f7978cd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#ga75be94f7f73725ec0bb5f8287f7978cd">netc_hw_etm_class_queue_idx_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cda3b708c052bcc8acb206d25567af15366"></a>kNETC_ClassQueue0</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cdaacf5a33ba7f24c6be180969d45f18fc8"></a>kNETC_ClassQueue1</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cda21f8fce8afe6e737ed0588a03e39f160"></a>kNETC_ClassQueue2</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cdaea81e20b984f3bbff9d2e00f08f4654c"></a>kNETC_ClassQueue3</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cda88c1b8184d96cd2f013ea48a8553298b"></a>kNETC_ClassQueue4</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cdaaba9691a637bacc2d636a4897f7f3202"></a>kNETC_ClassQueue5</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 5. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cda572a5af1abf4266c198a58567d1326a5"></a>kNETC_ClassQueue6</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 6. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga75be94f7f73725ec0bb5f8287f7978cda686c103606ed08fc209b5153577db518"></a>kNETC_ClassQueue7</em>&nbsp;</td><td class="fielddoc">
-<p>ETM Class Queue 7. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gac257acb25e13a68ee83dcb394b472fca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#gac257acb25e13a68ee83dcb394b472fca">netc_hw_mii_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac257acb25e13a68ee83dcb394b472fcaa4e583aec78ab09dee72acf9675f89b27"></a>kNETC_XgmiiMode</em>&nbsp;</td><td class="fielddoc">
-<p>XGMII mode for data interface. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac257acb25e13a68ee83dcb394b472fcaa27942e26d8d37d453c04d5378d7381ae"></a>kNETC_MiiMode</em>&nbsp;</td><td class="fielddoc">
-<p>MII mode for data interface. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac257acb25e13a68ee83dcb394b472fcaac2efa08182233f57c4d23b6689a8d328"></a>kNETC_GmiiMode</em>&nbsp;</td><td class="fielddoc">
-<p>GMII mode for data interface. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac257acb25e13a68ee83dcb394b472fcaa660289e16d23e124b81e8b60819942b1"></a>kNETC_RmiiMode</em>&nbsp;</td><td class="fielddoc">
-<p>RMII mode for data interface. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac257acb25e13a68ee83dcb394b472fcaa52e588b0debce02f7a28a76aa1fa23e7"></a>kNETC_RgmiiMode</em>&nbsp;</td><td class="fielddoc">
-<p>RGMII mode for data interface. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga9e585447ab2ceaef90d0c607b379900d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#ga9e585447ab2ceaef90d0c607b379900d">netc_hw_mii_speed_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9e585447ab2ceaef90d0c607b379900daad38b9ebf5110eb03d4bbe69d21604dc"></a>kNETC_MiiSpeed10M</em>&nbsp;</td><td class="fielddoc">
-<p>Speed 10 Mbps. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9e585447ab2ceaef90d0c607b379900da031305b739e4418d9c27725f11f294ac"></a>kNETC_MiiSpeed100M</em>&nbsp;</td><td class="fielddoc">
-<p>Speed 100 Mbps. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9e585447ab2ceaef90d0c607b379900da0cf095f0569b217d26517bf3d491ee8a"></a>kNETC_MiiSpeed1000M</em>&nbsp;</td><td class="fielddoc">
-<p>Speed 1000 Mbps. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9e585447ab2ceaef90d0c607b379900da5657110f928f550273abca315bc18a94"></a>kNETC_MiiSpeed2500M</em>&nbsp;</td><td class="fielddoc">
-<p>Speed 2500 Mbps. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9e585447ab2ceaef90d0c607b379900da5377c880968ef7d4c896497706afe33f"></a>kNETC_MiiSpeed5G</em>&nbsp;</td><td class="fielddoc">
-<p>Speed 5Gbps. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9e585447ab2ceaef90d0c607b379900da6363f55ba6e8a2fb52386011b37e9ec1"></a>kNETC_MiiSpeed10G</em>&nbsp;</td><td class="fielddoc">
-<p>Speed 10Gbps Mbps. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga31b02d8809ef0ee71db47bb9c1d349b9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00042.html#ga31b02d8809ef0ee71db47bb9c1d349b9">netc_hw_mii_duplex_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga31b02d8809ef0ee71db47bb9c1d349b9a7d58b2e0ddea8838659a875898fce60f"></a>kNETC_MiiHalfDuplex</em>&nbsp;</td><td class="fielddoc">
-<p>Half duplex mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga31b02d8809ef0ee71db47bb9c1d349b9a1058118c63a09642de3866b3e6dd9a97"></a>kNETC_MiiFullDuplex</em>&nbsp;</td><td class="fielddoc">
-<p>Full duplex mode. </p>
-</td></tr>
-</table>
 
 </div>
 </div>

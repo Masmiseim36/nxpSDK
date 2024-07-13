@@ -1,23 +1,11 @@
 var a00362 =
 [
-    [ "SWO", "a00364.html", null ],
-    [ "Semihosting", "a00363.html", null ],
-    [ "DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN", "a00362.html#gabb8f0adbec02f143b4f84d2eb42126df", null ],
-    [ "DEBUGCONSOLE_REDIRECT_TO_SDK", "a00362.html#gac33031f28afa29dc8fe1718bbc86ee23", null ],
-    [ "DEBUGCONSOLE_DISABLE", "a00362.html#gaf8f85fd102e4aedcee3d061dc2d3e0c2", null ],
-    [ "SDK_DEBUGCONSOLE", "a00362.html#ga7fdd594efdc8374ecd8684ed758d6cec", null ],
-    [ "PRINTF", "a00362.html#gae1649fc947ca37a86917a08354f48d1a", null ],
-    [ "DbgConsole_Init", "a00362.html#ga12e50ee0450679fd8ca950a89338d366", null ],
-    [ "DbgConsole_Deinit", "a00362.html#gad80e7aa70bbb3fce1a9168621372833e", null ],
-    [ "DbgConsole_EnterLowpower", "a00362.html#ga9ce272e795c2b235265d3dfb50669bee", null ],
-    [ "DbgConsole_ExitLowpower", "a00362.html#ga21831f5ee970f3a1f13ff375405f3592", null ],
-    [ "DbgConsole_Printf", "a00362.html#ga7f9e0678f4c708ed5640b0823c07dc35", null ],
-    [ "DbgConsole_Vprintf", "a00362.html#ga48560c409b88fbe195e140aa20c5307b", null ],
-    [ "DbgConsole_Putchar", "a00362.html#gada572d86a06f028b5b1a5d0440f683e3", null ],
-    [ "DbgConsole_Scanf", "a00362.html#ga53b115907016172dcf58fcffab144a6d", null ],
-    [ "DbgConsole_Getchar", "a00362.html#ga11898c5015274863741c4f3f4d9edc08", null ],
-    [ "DbgConsole_BlockingPrintf", "a00362.html#ga23e7c243b07d594a0a1016dcab28d3a3", null ],
-    [ "DbgConsole_BlockingVprintf", "a00362.html#gaed722925a966ae462d5d44cd33f836c3", null ],
-    [ "DbgConsole_Flush", "a00362.html#ga3194467c3dae6c5015b8b29c3cc1db1e", null ],
-    [ "g_serialHandle", "a00362.html#gaad3c4240a1364156a239471ccdb9aa0b", null ]
+    [ "SMARTCARD_ATR_DURATION_ADJUSTMENT", "a00362.html#ga7106f115c4c1b51c19ec9758cb14a51d", null ],
+    [ "SMARTCARD_INIT_DELAY_CLOCK_CYCLES_ADJUSTMENT", "a00362.html#gaeebf4642169ffb6ad767b7433382ff1c", null ],
+    [ "SMARTCARD_PHY_GetDefaultConfig", "a00362.html#ga8e01ab09cbd161d85a0ecc29b3230db7", null ],
+    [ "SMARTCARD_PHY_Init", "a00362.html#gad7d80be0c1867711f3673dede0d574e6", null ],
+    [ "SMARTCARD_PHY_Deinit", "a00362.html#gaa6dcbfb856a038cc1724ecc766973417", null ],
+    [ "SMARTCARD_PHY_Activate", "a00362.html#gaa8f968b1ffeca4f4813ce6b11b5b964b", null ],
+    [ "SMARTCARD_PHY_Deactivate", "a00362.html#gaa8a7e36f264ca216943b8d923681efd9", null ],
+    [ "SMARTCARD_PHY_Control", "a00362.html#ga56a8cf967f64d7b0d2332dae3640cc3e", null ]
 ];

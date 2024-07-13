@@ -18,7 +18,7 @@
 #include "fsl_wm8962.h"
 #include "fsl_edma.h"
 #include "fsl_trdc.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 #if defined DEMO_CODEC_WM8962
 #else
 #include "fsl_cs42448.h"
@@ -182,8 +182,13 @@ const clock_audio_pll_config_t audioPllConfig = {
     .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
     .denominator = 1000, /* 30 bit denominator of fractional loop divider */
 };
+#if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
+AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
+AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t rxHandle);
+#else
 AT_QUICKACCESS_SECTION_DATA(sai_edma_handle_t txHandle);
 AT_QUICKACCESS_SECTION_DATA(sai_edma_handle_t rxHandle);
+#endif
 static edma_handle_t s_dmaTxHandle = {0};
 static edma_handle_t s_dmaRxHandle = {0};
 extern codec_config_t boardCodecConfig;
@@ -372,19 +377,19 @@ int main(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Release TRDC A to CM33 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM33 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
     } while (ELE_IS_FAILED(sts));
 
     TRDC_EDMA3_EDMA4_ResetPermissions();

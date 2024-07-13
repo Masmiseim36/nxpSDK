@@ -231,6 +231,7 @@
           <state>USB_STACK_FREERTOS_HEAP_SIZE=8192</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -370,13 +371,14 @@
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -643,6 +645,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1180</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1336,6 +1339,7 @@
           <state>USB_STACK_FREERTOS_HEAP_SIZE=8192</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1475,13 +1479,14 @@
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1748,6 +1753,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1180</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2440,6 +2446,7 @@
           <state>USB_STACK_FREERTOS_HEAP_SIZE=8192</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2579,13 +2586,14 @@
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2852,6 +2860,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1180</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3544,6 +3553,7 @@
           <state>USB_STACK_FREERTOS_HEAP_SIZE=8192</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3683,13 +3693,14 @@
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3956,6 +3967,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1180</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4649,6 +4661,7 @@
           <state>USB_STACK_FREERTOS_HEAP_SIZE=8192</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -4788,13 +4801,14 @@
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5061,6 +5075,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1180</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5753,6 +5768,7 @@
           <state>USB_STACK_FREERTOS_HEAP_SIZE=8192</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TIMER_PORT_TYPE_GPT=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -5892,13 +5908,14 @@
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6165,6 +6182,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1180</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6829,6 +6847,9 @@
             <group>
               <name>non_secure</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.S</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
               <file>
@@ -6883,7 +6904,16 @@
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -7122,6 +7152,18 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_gpt.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_lpi2c.c</name>
     </file>
     <file>
@@ -7149,10 +7191,7 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
@@ -7162,6 +7201,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

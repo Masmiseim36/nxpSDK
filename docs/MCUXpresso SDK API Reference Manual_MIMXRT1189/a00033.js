@@ -1,6 +1,6 @@
 var a00033 =
 [
-    [ "lptmr_config_t", "a00033.html#a00342", [
+    [ "lptmr_config_t", "a00033.html#a00340", [
       [ "timerMode", "a00033.html#ae10df9843af6a69d53830c97af9e9abb", null ],
       [ "pinSelect", "a00033.html#aa90bd0e225cefb56ad31b9c11776e5f3", null ],
       [ "pinPolarity", "a00033.html#a45bb2872fa671f6eecc3d863f8567b36", null ],

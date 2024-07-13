@@ -46,22 +46,23 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lcdifv2_embedded_alpha.c"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../lcdifv2_support.c"
-"${ProjDirPath}/../lcdifv2_support.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../lcdifv2_support.h"
+"${ProjDirPath}/../lcdifv2_support.c"
 "${ProjDirPath}/../evkbmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkbmimxrt1170/driver_examples/lcdifv2
+    ${SdkRootDirPath}/boards/evkbmimxrt1170/driver_examples/lcdifv2/cm7
 )
 
 

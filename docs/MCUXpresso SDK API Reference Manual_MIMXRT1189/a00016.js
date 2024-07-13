@@ -1,6 +1,6 @@
 var a00016 =
 [
-    [ "flexspi_config_t", "a00016.html#a00307", [
+    [ "flexspi_config_t", "a00016.html#a00305", [
       [ "rxSampleClock", "a00016.html#a9a6d5f8a07fb46097107c9eb286b274f", null ],
       [ "enableSckFreeRunning", "a00016.html#aff3b7741db982d0de6b123e449173fea", null ],
       [ "enableCombination", "a00016.html#ac9919bbdaeaf47d77de8503dc794562f", null ],
@@ -24,7 +24,7 @@ var a00016 =
       [ "enableAHBBufferable", "a00016.html#aa85616f967cd9582bf3212e25d8aaee9", null ],
       [ "enableAHBCachable", "a00016.html#a201560e33a07598c65cb1ccb7d510446", null ]
     ] ],
-    [ "flexspi_device_config_t", "a00016.html#a00308", [
+    [ "flexspi_device_config_t", "a00016.html#a00306", [
       [ "flexspiRootClk", "a00016.html#a809837315f7851315f2eb83bfee03b9d", null ],
       [ "isSck2Enabled", "a00016.html#a4dc1ab693f5c62858f216eeafc8dcdaa", null ],
       [ "flashSize", "a00016.html#a341c39425de7eb023afb4245b8953377", null ],
@@ -43,7 +43,7 @@ var a00016 =
       [ "AHBWriteWaitInterval", "a00016.html#ac257c0df9ebe1e95af1b2eccd9bac6da", null ],
       [ "enableWriteMask", "a00016.html#a537cacf6f847b62d33ef849149984ee3", null ]
     ] ],
-    [ "flexspi_transfer_t", "a00016.html#a00313", [
+    [ "flexspi_transfer_t", "a00016.html#a00311", [
       [ "deviceAddress", "a00016.html#ad60ddfe61616ffc2b1c289b398249687", null ],
       [ "port", "a00016.html#a494f8e3695226d89469edfacf040c779", null ],
       [ "cmdType", "a00016.html#a2d9a15603f7c60495351d6e784efa21f", null ],
@@ -52,7 +52,7 @@ var a00016 =
       [ "data", "a00016.html#a9f868d6eaf921590653512ce58480f6b", null ],
       [ "dataSize", "a00016.html#a80b74d7879a7359ad5f79980ca5f3e53", null ]
     ] ],
-    [ "flexspi_handle_t", "a00016.html#a00247", [
+    [ "flexspi_handle_t", "a00016.html#a00245", [
       [ "state", "a00016.html#a933e9a2e61686adbe8e85cc6e996c707", null ],
       [ "data", "a00016.html#a295ef5147af8f1d4079af11f0c649060", null ],
       [ "dataSize", "a00016.html#af398d4e2e49ebb106f29a2afe50e0f97", null ],

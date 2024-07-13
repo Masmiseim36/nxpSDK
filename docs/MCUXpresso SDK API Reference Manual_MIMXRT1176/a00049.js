@@ -1,6 +1,6 @@
 var a00049 =
 [
-    [ "_gpc_tran_step_config", "a00049.html#a00547", [
+    [ "_gpc_tran_step_config", "a00049.html#a00545", [
       [ "stepCount", "a00049.html#aec32ab013bb9c59891e627fd9880ca07", null ],
       [ "cntMode", "a00049.html#a6204c130e0df337e6ffba7393c5146f4", null ],
       [ "enableStep", "a00049.html#a831fe80bd5e6cd10a994ebb81f216714", null ]
@@ -139,8 +139,8 @@ var a00049 =
     [ "GPC_CM_ConfigCpuModeTransitionStep", "a00049.html#gaa3a0dc6a9b39bfa1e4d11494ed1a5bf5", null ],
     [ "GPC_CM_RequestSleepModeSetPointTransition", "a00049.html#gaa4d2f1205a4055be16279934f02803a0", null ],
     [ "GPC_CM_RequestRunModeSetPointTransition", "a00049.html#ga954b0f2f2200d10b73b710ad24d24161", null ],
-    [ "GPC_CM_SetSetPointMapping", "a00049.html#ga7e59d4e4b6b567124bd7a5f8b633f2b7", null ],
-    [ "GPC_CM_SetCpuModeSetPointMapping", "a00049.html#ga29b6fee33efc78edf2528c5e710791d1", null ],
+    [ "GPC_CM_SetSetPointMapping", "a00049.html#gafcb73729ee55f10d4f2a145366db4811", null ],
+    [ "GPC_CM_SetCpuModeSetPointMapping", "a00049.html#ga749ea68e2a8926b83332c67e757e8331", null ],
     [ "GPC_CM_RequestStandbyMode", "a00049.html#ga96fbd5cfad8d068b527bac7e897c433c", null ],
     [ "GPC_CM_ClearStandbyModeRequest", "a00049.html#ga8b5edcbb1d0bc85311f7e82d0e8cc120", null ],
     [ "GPC_CM_GetStandbyModeStatus", "a00049.html#ga44b74a92c7b9da6533fc26bbfa511c44", null ],

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: RDC: Resource Domain Controller</title>
+<title>MCUXpresso SDK API Reference Manual: RTWDOG: 32-bit Watchdog Timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,369 +101,199 @@ $(document).ready(function(){initNavTree('a00075.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">RDC: Resource Domain Controller</div>  </div>
+<div class="title">RTWDOG: 32-bit Watchdog Timer</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the RDC module of MCUXpresso SDK devices.</p>
-<p>The Resource Domain Controller (RDC) provides robust support for the isolation of destination memory mapped locations such as peripherals and memory to a single core, a bus master, or set of cores and bus masters.<br/>
- The RDC driver should be used together with the RDC_SEMA42 driver. </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the RTWDOG module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="RTWDOGTypUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/rtwdog </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00623"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00623">_rdc_hardware_config</a></td></tr>
-<tr class="memdesc:a00623"><td class="mdescLeft">&#160;</td><td class="mdescRight">RDC hardware configuration.  <a href="a00075.html#a00623">More...</a><br/></td></tr>
-<tr class="separator:a00623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00622"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00622">_rdc_domain_assignment</a></td></tr>
-<tr class="memdesc:a00622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master domain assignment.  <a href="a00075.html#a00622">More...</a><br/></td></tr>
-<tr class="separator:a00622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00626"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00626">_rdc_periph_access_config</a></td></tr>
-<tr class="memdesc:a00626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peripheral domain access permission configuration.  <a href="a00075.html#a00626">More...</a><br/></td></tr>
-<tr class="separator:a00626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00624"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00624">_rdc_mem_access_config</a></td></tr>
-<tr class="memdesc:a00624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory region domain access control configuration.  <a href="a00075.html#a00624">More...</a><br/></td></tr>
-<tr class="separator:a00624"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00625"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00625">_rdc_mem_status</a></td></tr>
-<tr class="memdesc:a00625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory region access violation status.  <a href="a00075.html#a00625">More...</a><br/></td></tr>
+<tr class="memitem:a00625"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00625">_rtwdog_work_mode</a></td></tr>
+<tr class="memdesc:a00625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines RTWDOG work mode.  <a href="a00075.html#a00625">More...</a><br/></td></tr>
 <tr class="separator:a00625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00624"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a00624">_rtwdog_config</a></td></tr>
+<tr class="memdesc:a00624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG configuration structure.  <a href="a00075.html#a00624">More...</a><br/></td></tr>
+<tr class="separator:a00624"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga5809f23a3763c0c2d114c8b991b19224"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5809f23a3763c0c2d114c8b991b19224"></a>
-typedef struct <a class="el" href="a00075.html#a00623">_rdc_hardware_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga5809f23a3763c0c2d114c8b991b19224">rdc_hardware_config_t</a></td></tr>
-<tr class="memdesc:ga5809f23a3763c0c2d114c8b991b19224"><td class="mdescLeft">&#160;</td><td class="mdescRight">RDC hardware configuration. <br/></td></tr>
-<tr class="separator:ga5809f23a3763c0c2d114c8b991b19224"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2fa0f432125eabe3c7444a58ac406b10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2fa0f432125eabe3c7444a58ac406b10"></a>
-typedef struct <br class="typebreak"/>
-<a class="el" href="a00075.html#a00622">_rdc_domain_assignment</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga2fa0f432125eabe3c7444a58ac406b10">rdc_domain_assignment_t</a></td></tr>
-<tr class="memdesc:ga2fa0f432125eabe3c7444a58ac406b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master domain assignment. <br/></td></tr>
-<tr class="separator:ga2fa0f432125eabe3c7444a58ac406b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab34ae3929d80075974affc8e2e4a1225"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab34ae3929d80075974affc8e2e4a1225"></a>
-typedef struct <br class="typebreak"/>
-<a class="el" href="a00075.html#a00626">_rdc_periph_access_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gab34ae3929d80075974affc8e2e4a1225">rdc_periph_access_config_t</a></td></tr>
-<tr class="memdesc:gab34ae3929d80075974affc8e2e4a1225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peripheral domain access permission configuration. <br/></td></tr>
-<tr class="separator:gab34ae3929d80075974affc8e2e4a1225"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7fa4bee53cb416b150b75ad4a5bfca61"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
-<a class="el" href="a00075.html#a00624">_rdc_mem_access_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61">rdc_mem_access_config_t</a></td></tr>
-<tr class="memdesc:ga7fa4bee53cb416b150b75ad4a5bfca61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory region domain access control configuration.  <a href="#ga7fa4bee53cb416b150b75ad4a5bfca61">More...</a><br/></td></tr>
-<tr class="separator:ga7fa4bee53cb416b150b75ad4a5bfca61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccf5405a9b3fc24040bd8f066f8b8a83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaccf5405a9b3fc24040bd8f066f8b8a83"></a>
-typedef struct <a class="el" href="a00075.html#a00625">_rdc_mem_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gaccf5405a9b3fc24040bd8f066f8b8a83">rdc_mem_status_t</a></td></tr>
-<tr class="memdesc:gaccf5405a9b3fc24040bd8f066f8b8a83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory region access violation status. <br/></td></tr>
-<tr class="separator:gaccf5405a9b3fc24040bd8f066f8b8a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6510de305373a14b2dfcbf69b4287110"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00075.html#gab629a7621b77e082b75e69afa58c3dc1">_rtwdog_clock_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga6510de305373a14b2dfcbf69b4287110">rtwdog_clock_source_t</a></td></tr>
+<tr class="memdesc:ga6510de305373a14b2dfcbf69b4287110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG clock source.  <a href="#ga6510de305373a14b2dfcbf69b4287110">More...</a><br/></td></tr>
+<tr class="separator:ga6510de305373a14b2dfcbf69b4287110"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf559a88c22204ba1a1f85a8b47a80fea"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00075.html#gaaf27dd1c76710401d0eeba0b2df024b0">_rtwdog_clock_prescaler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gaf559a88c22204ba1a1f85a8b47a80fea">rtwdog_clock_prescaler_t</a></td></tr>
+<tr class="memdesc:gaf559a88c22204ba1a1f85a8b47a80fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes the selection of the clock prescaler.  <a href="#gaf559a88c22204ba1a1f85a8b47a80fea">More...</a><br/></td></tr>
+<tr class="separator:gaf559a88c22204ba1a1f85a8b47a80fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4548feb648f1760081293173d086a45b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00075.html#a00625">_rtwdog_work_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga4548feb648f1760081293173d086a45b">rtwdog_work_mode_t</a></td></tr>
+<tr class="memdesc:ga4548feb648f1760081293173d086a45b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines RTWDOG work mode.  <a href="#ga4548feb648f1760081293173d086a45b">More...</a><br/></td></tr>
+<tr class="separator:ga4548feb648f1760081293173d086a45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab89ed9805e309b8ba7e064005203aef9"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00075.html#ga48fe3f029b0c9b005bae2f132f3d5a63">_rtwdog_test_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gab89ed9805e309b8ba7e064005203aef9">rtwdog_test_mode_t</a></td></tr>
+<tr class="memdesc:gab89ed9805e309b8ba7e064005203aef9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG test mode.  <a href="#gab89ed9805e309b8ba7e064005203aef9">More...</a><br/></td></tr>
+<tr class="separator:gab89ed9805e309b8ba7e064005203aef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1ba5d3818230a3eb79df2725ab0009b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00075.html#a00624">_rtwdog_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b">rtwdog_config_t</a></td></tr>
+<tr class="memdesc:gae1ba5d3818230a3eb79df2725ab0009b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG configuration structure.  <a href="#gae1ba5d3818230a3eb79df2725ab0009b">More...</a><br/></td></tr>
+<tr class="separator:gae1ba5d3818230a3eb79df2725ab0009b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga43f5d8d1ed667a8c73ab204a74925892"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">_rdc_interrupts</a> { <a class="el" href="a00075.html#gga43f5d8d1ed667a8c73ab204a74925892a5088cfe20c6ef9e259657e6f6ecc7387">kRDC_RestoreCompleteInterrupt</a> = RDC_INTCTRL_RCI_EN_MASK
- }</td></tr>
-<tr class="memdesc:ga43f5d8d1ed667a8c73ab204a74925892"><td class="mdescLeft">&#160;</td><td class="mdescRight">RDC interrupts.  <a href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">More...</a><br/></td></tr>
-<tr class="separator:ga43f5d8d1ed667a8c73ab204a74925892"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30afa024532b0207bdeeee3344af9ebd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga30afa024532b0207bdeeee3344af9ebd">_rdc_flags</a> { <a class="el" href="a00075.html#gga30afa024532b0207bdeeee3344af9ebda5e58c4dabb46b1f4a47b7ae8cd0f61e3">kRDC_PowerDownDomainOn</a> = RDC_STAT_PDS_MASK
- }</td></tr>
-<tr class="memdesc:ga30afa024532b0207bdeeee3344af9ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">RDC status.  <a href="a00075.html#ga30afa024532b0207bdeeee3344af9ebd">More...</a><br/></td></tr>
-<tr class="separator:ga30afa024532b0207bdeeee3344af9ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1f726221167c740e1500317ea80beb2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gad1f726221167c740e1500317ea80beb2">_rdc_access_policy</a> { <br/>
-&#160;&#160;<a class="el" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a3abbfd7f6818ca32df8d30300aba7f1a">kRDC_NoAccess</a> = 0, 
+<tr class="memitem:gab629a7621b77e082b75e69afa58c3dc1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gab629a7621b77e082b75e69afa58c3dc1">_rtwdog_clock_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a89fe3caec9c47ea18afbea78fa7b75db">kRTWDOG_ClockSource0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00075.html#ggad1f726221167c740e1500317ea80beb2af704f2f758ba0d96ddea53e686325efe">kRDC_WriteOnly</a> = 1, 
+&#160;&#160;<a class="el" href="a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a0490435c4f8e6b5f2bfb4d4959ee6ce5">kRTWDOG_ClockSource1</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00075.html#ggad1f726221167c740e1500317ea80beb2acad6ad0fa9f2d31d48ec9e7b2898cdb6">kRDC_ReadOnly</a> = 2, 
+&#160;&#160;<a class="el" href="a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a596c695b96b5287f927f74d78577fe84">kRTWDOG_ClockSource2</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a> = 3
+&#160;&#160;<a class="el" href="a00075.html#ggab629a7621b77e082b75e69afa58c3dc1ad51ba4630b31474e7d497d1defc3075a">kRTWDOG_ClockSource3</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:gad1f726221167c740e1500317ea80beb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access permission policy.  <a href="a00075.html#gad1f726221167c740e1500317ea80beb2">More...</a><br/></td></tr>
-<tr class="separator:gad1f726221167c740e1500317ea80beb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gab629a7621b77e082b75e69afa58c3dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG clock source.  <a href="a00075.html#gab629a7621b77e082b75e69afa58c3dc1">More...</a><br/></td></tr>
+<tr class="separator:gab629a7621b77e082b75e69afa58c3dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf27dd1c76710401d0eeba0b2df024b0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gaaf27dd1c76710401d0eeba0b2df024b0">_rtwdog_clock_prescaler</a> { <br/>
+&#160;&#160;<a class="el" href="a00075.html#ggaaf27dd1c76710401d0eeba0b2df024b0affcd087724256907ae1e47f896461e78">kRTWDOG_ClockPrescalerDivide1</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00075.html#ggaaf27dd1c76710401d0eeba0b2df024b0a1b8252427d181ff4de3e4ea7eb1aac52">kRTWDOG_ClockPrescalerDivide256</a> = 0x1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaaf27dd1c76710401d0eeba0b2df024b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes the selection of the clock prescaler.  <a href="a00075.html#gaaf27dd1c76710401d0eeba0b2df024b0">More...</a><br/></td></tr>
+<tr class="separator:gaaf27dd1c76710401d0eeba0b2df024b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48fe3f029b0c9b005bae2f132f3d5a63"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga48fe3f029b0c9b005bae2f132f3d5a63">_rtwdog_test_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63a62fe6bb45f28e5b1275bfa1aad708124">kRTWDOG_TestModeDisabled</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63ae12fd7134b26ac7e621f2117f3312598">kRTWDOG_UserModeEnabled</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63ab885cb05aaad282ee54fe47b8ad270cc">kRTWDOG_LowByteTest</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63aaf013b692ea93f0de8a9c47a814ac09d">kRTWDOG_HighByteTest</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga48fe3f029b0c9b005bae2f132f3d5a63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG test mode.  <a href="a00075.html#ga48fe3f029b0c9b005bae2f132f3d5a63">More...</a><br/></td></tr>
+<tr class="separator:ga48fe3f029b0c9b005bae2f132f3d5a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4225d9230a4625186e9b65be501bbc24"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga4225d9230a4625186e9b65be501bbc24">_rtwdog_interrupt_enable_t</a> { <a class="el" href="a00075.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a">kRTWDOG_InterruptEnable</a> = RTWDOG_CS_INT_MASK
+ }</td></tr>
+<tr class="memdesc:ga4225d9230a4625186e9b65be501bbc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTWDOG interrupt configuration structure.  <a href="a00075.html#ga4225d9230a4625186e9b65be501bbc24">More...</a><br/></td></tr>
+<tr class="separator:ga4225d9230a4625186e9b65be501bbc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1ef76bc31ec6ca52a50e1aba88a08d8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gab1ef76bc31ec6ca52a50e1aba88a08d8">_rtwdog_status_flags_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00075.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38">kRTWDOG_RunningFlag</a> = RTWDOG_CS_EN_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00075.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3">kRTWDOG_InterruptFlag</a> = RTWDOG_CS_FLG_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab1ef76bc31ec6ca52a50e1aba88a08d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTWDOG status flags.  <a href="a00075.html#gab1ef76bc31ec6ca52a50e1aba88a08d8">More...</a><br/></td></tr>
+<tr class="separator:gab1ef76bc31ec6ca52a50e1aba88a08d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga5e55854cf5534e9ea2844c6447630d29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga5e55854cf5534e9ea2844c6447630d29">RDC_Init</a> (RDC_Type *base)</td></tr>
-<tr class="memdesc:ga5e55854cf5534e9ea2844c6447630d29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the RDC module.  <a href="#ga5e55854cf5534e9ea2844c6447630d29">More...</a><br/></td></tr>
-<tr class="separator:ga5e55854cf5534e9ea2844c6447630d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad67bd7441a6770382a42871a73cab1e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gad67bd7441a6770382a42871a73cab1e9">RDC_Deinit</a> (RDC_Type *base)</td></tr>
-<tr class="memdesc:gad67bd7441a6770382a42871a73cab1e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the RDC module.  <a href="#gad67bd7441a6770382a42871a73cab1e9">More...</a><br/></td></tr>
-<tr class="separator:gad67bd7441a6770382a42871a73cab1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga70d043c746306a1518a9d76c708a45a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga70d043c746306a1518a9d76c708a45a7">RDC_GetHardwareConfig</a> (RDC_Type *base, <a class="el" href="a00075.html#ga5809f23a3763c0c2d114c8b991b19224">rdc_hardware_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga70d043c746306a1518a9d76c708a45a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the RDC hardware configuration.  <a href="#ga70d043c746306a1518a9d76c708a45a7">More...</a><br/></td></tr>
-<tr class="separator:ga70d043c746306a1518a9d76c708a45a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4fd27fb3b91add96b402a316f5257d1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gac4fd27fb3b91add96b402a316f5257d1">RDC_EnableInterrupts</a> (RDC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gac4fd27fb3b91add96b402a316f5257d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable interrupts.  <a href="#gac4fd27fb3b91add96b402a316f5257d1">More...</a><br/></td></tr>
-<tr class="separator:gac4fd27fb3b91add96b402a316f5257d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8431d5742c72d100e9d5ea8acb828164"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga8431d5742c72d100e9d5ea8acb828164">RDC_DisableInterrupts</a> (RDC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga8431d5742c72d100e9d5ea8acb828164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable interrupts.  <a href="#ga8431d5742c72d100e9d5ea8acb828164">More...</a><br/></td></tr>
-<tr class="separator:ga8431d5742c72d100e9d5ea8acb828164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2daf610d7330112bdefdaf737d88057d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga2daf610d7330112bdefdaf737d88057d">RDC_GetInterruptStatus</a> (RDC_Type *base)</td></tr>
-<tr class="memdesc:ga2daf610d7330112bdefdaf737d88057d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the interrupt pending status.  <a href="#ga2daf610d7330112bdefdaf737d88057d">More...</a><br/></td></tr>
-<tr class="separator:ga2daf610d7330112bdefdaf737d88057d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46324815d4934688c553fa427068aebf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga46324815d4934688c553fa427068aebf">RDC_ClearInterruptStatus</a> (RDC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga46324815d4934688c553fa427068aebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear interrupt pending status.  <a href="#ga46324815d4934688c553fa427068aebf">More...</a><br/></td></tr>
-<tr class="separator:ga46324815d4934688c553fa427068aebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga607d3cb8467e3dad81c01b99b262b025"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga607d3cb8467e3dad81c01b99b262b025">RDC_GetStatus</a> (RDC_Type *base)</td></tr>
-<tr class="memdesc:ga607d3cb8467e3dad81c01b99b262b025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get RDC status.  <a href="#ga607d3cb8467e3dad81c01b99b262b025">More...</a><br/></td></tr>
-<tr class="separator:ga607d3cb8467e3dad81c01b99b262b025"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa78b6ce74c4abe2fb4f8696dba4bab58"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gaa78b6ce74c4abe2fb4f8696dba4bab58">RDC_ClearStatus</a> (RDC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaa78b6ce74c4abe2fb4f8696dba4bab58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear RDC status.  <a href="#gaa78b6ce74c4abe2fb4f8696dba4bab58">More...</a><br/></td></tr>
-<tr class="separator:gaa78b6ce74c4abe2fb4f8696dba4bab58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe2b9840b82e64d3cc421df537450dca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gabe2b9840b82e64d3cc421df537450dca">RDC_SetMasterDomainAssignment</a> (RDC_Type *base, rdc_master_t master, const <a class="el" href="a00075.html#ga2fa0f432125eabe3c7444a58ac406b10">rdc_domain_assignment_t</a> *domainAssignment)</td></tr>
-<tr class="memdesc:gabe2b9840b82e64d3cc421df537450dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set master domain assignment.  <a href="#gabe2b9840b82e64d3cc421df537450dca">More...</a><br/></td></tr>
-<tr class="separator:gabe2b9840b82e64d3cc421df537450dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5079802654902bb5b1bb618958b136e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga5079802654902bb5b1bb618958b136e1">RDC_GetDefaultMasterDomainAssignment</a> (<a class="el" href="a00075.html#ga2fa0f432125eabe3c7444a58ac406b10">rdc_domain_assignment_t</a> *domainAssignment)</td></tr>
-<tr class="memdesc:ga5079802654902bb5b1bb618958b136e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get default master domain assignment.  <a href="#ga5079802654902bb5b1bb618958b136e1">More...</a><br/></td></tr>
-<tr class="separator:ga5079802654902bb5b1bb618958b136e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bac728610bbf0d1fc8ef54684453a67"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga7bac728610bbf0d1fc8ef54684453a67">RDC_LockMasterDomainAssignment</a> (RDC_Type *base, rdc_master_t master)</td></tr>
-<tr class="memdesc:ga7bac728610bbf0d1fc8ef54684453a67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock master domain assignment.  <a href="#ga7bac728610bbf0d1fc8ef54684453a67">More...</a><br/></td></tr>
-<tr class="separator:ga7bac728610bbf0d1fc8ef54684453a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7761fcab34b52ebf80024199d0390bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gad7761fcab34b52ebf80024199d0390bc">RDC_SetPeriphAccessConfig</a> (RDC_Type *base, const <a class="el" href="a00075.html#gab34ae3929d80075974affc8e2e4a1225">rdc_periph_access_config_t</a> *config)</td></tr>
-<tr class="memdesc:gad7761fcab34b52ebf80024199d0390bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set peripheral access policy.  <a href="#gad7761fcab34b52ebf80024199d0390bc">More...</a><br/></td></tr>
-<tr class="separator:gad7761fcab34b52ebf80024199d0390bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3960b46c770474ae90a3efe6bbf0848f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga3960b46c770474ae90a3efe6bbf0848f">RDC_GetDefaultPeriphAccessConfig</a> (<a class="el" href="a00075.html#gab34ae3929d80075974affc8e2e4a1225">rdc_periph_access_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga3960b46c770474ae90a3efe6bbf0848f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get default peripheral access policy.  <a href="#ga3960b46c770474ae90a3efe6bbf0848f">More...</a><br/></td></tr>
-<tr class="separator:ga3960b46c770474ae90a3efe6bbf0848f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad726f804c6f29e6f08014749883816f8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gad726f804c6f29e6f08014749883816f8">RDC_LockPeriphAccessConfig</a> (RDC_Type *base, rdc_periph_t periph)</td></tr>
-<tr class="memdesc:gad726f804c6f29e6f08014749883816f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock peripheral access policy configuration.  <a href="#gad726f804c6f29e6f08014749883816f8">More...</a><br/></td></tr>
-<tr class="separator:gad726f804c6f29e6f08014749883816f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5629cde26ba781eeb933acef2a6f95e5"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga5629cde26ba781eeb933acef2a6f95e5">RDC_GetPeriphAccessPolicy</a> (RDC_Type *base, rdc_periph_t periph, uint8_t domainId)</td></tr>
-<tr class="memdesc:ga5629cde26ba781eeb933acef2a6f95e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the peripheral access policy for specific domain.  <a href="#ga5629cde26ba781eeb933acef2a6f95e5">More...</a><br/></td></tr>
-<tr class="separator:ga5629cde26ba781eeb933acef2a6f95e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a2282cbee8cbb2eeb38c98325351d64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga8a2282cbee8cbb2eeb38c98325351d64">RDC_SetMemAccessConfig</a> (RDC_Type *base, const <a class="el" href="a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61">rdc_mem_access_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga8a2282cbee8cbb2eeb38c98325351d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set memory region access policy.  <a href="#ga8a2282cbee8cbb2eeb38c98325351d64">More...</a><br/></td></tr>
-<tr class="separator:ga8a2282cbee8cbb2eeb38c98325351d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad38513d641ad47ccbb003c47bb3c9727"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gad38513d641ad47ccbb003c47bb3c9727">RDC_GetDefaultMemAccessConfig</a> (<a class="el" href="a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61">rdc_mem_access_config_t</a> *config)</td></tr>
-<tr class="memdesc:gad38513d641ad47ccbb003c47bb3c9727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get default memory region access policy.  <a href="#gad38513d641ad47ccbb003c47bb3c9727">More...</a><br/></td></tr>
-<tr class="separator:gad38513d641ad47ccbb003c47bb3c9727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e9f9b9bb90724ed625ee5b5cd2a8d41"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga8e9f9b9bb90724ed625ee5b5cd2a8d41">RDC_LockMemAccessConfig</a> (RDC_Type *base, rdc_mem_t mem)</td></tr>
-<tr class="memdesc:ga8e9f9b9bb90724ed625ee5b5cd2a8d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock memory access policy configuration.  <a href="#ga8e9f9b9bb90724ed625ee5b5cd2a8d41">More...</a><br/></td></tr>
-<tr class="separator:ga8e9f9b9bb90724ed625ee5b5cd2a8d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50e5d41f56901ea8924e6bb1f6e92fbd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga50e5d41f56901ea8924e6bb1f6e92fbd">RDC_SetMemAccessValid</a> (RDC_Type *base, rdc_mem_t mem, bool valid)</td></tr>
-<tr class="memdesc:ga50e5d41f56901ea8924e6bb1f6e92fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable memory access policy configuration.  <a href="#ga50e5d41f56901ea8924e6bb1f6e92fbd">More...</a><br/></td></tr>
-<tr class="separator:ga50e5d41f56901ea8924e6bb1f6e92fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76711caa424d57a32847831f60cac1aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga76711caa424d57a32847831f60cac1aa">RDC_GetMemViolationStatus</a> (RDC_Type *base, rdc_mem_t mem, <a class="el" href="a00075.html#gaccf5405a9b3fc24040bd8f066f8b8a83">rdc_mem_status_t</a> *status)</td></tr>
-<tr class="memdesc:ga76711caa424d57a32847831f60cac1aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the memory region violation status.  <a href="#ga76711caa424d57a32847831f60cac1aa">More...</a><br/></td></tr>
-<tr class="separator:ga76711caa424d57a32847831f60cac1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf594d7e71d47df3bdc89a62e45b944a1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gaf594d7e71d47df3bdc89a62e45b944a1">RDC_ClearMemViolationFlag</a> (RDC_Type *base, rdc_mem_t mem)</td></tr>
-<tr class="memdesc:gaf594d7e71d47df3bdc89a62e45b944a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the memory region violation flag.  <a href="#gaf594d7e71d47df3bdc89a62e45b944a1">More...</a><br/></td></tr>
-<tr class="separator:gaf594d7e71d47df3bdc89a62e45b944a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4b8ce2df7a0ccd22d90d897a80616fb"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gab4b8ce2df7a0ccd22d90d897a80616fb">RDC_GetMemAccessPolicy</a> (RDC_Type *base, rdc_mem_t mem, uint8_t domainId)</td></tr>
-<tr class="memdesc:gab4b8ce2df7a0ccd22d90d897a80616fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the memory region access policy for specific domain.  <a href="#gab4b8ce2df7a0ccd22d90d897a80616fb">More...</a><br/></td></tr>
-<tr class="separator:gab4b8ce2df7a0ccd22d90d897a80616fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacf0861a99d3a45d022fef5dd35f158c5"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gacf0861a99d3a45d022fef5dd35f158c5">RDC_GetCurrentMasterDomainId</a> (RDC_Type *base)</td></tr>
-<tr class="memdesc:gacf0861a99d3a45d022fef5dd35f158c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the domain ID of the current bus master.  <a href="#gacf0861a99d3a45d022fef5dd35f158c5">More...</a><br/></td></tr>
-<tr class="separator:gacf0861a99d3a45d022fef5dd35f158c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Unlock sequence</h2></td></tr>
+<tr class="memitem:ga8825b35bd62726165737f5dc0f5f61e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8825b35bd62726165737f5dc0f5f61e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga8825b35bd62726165737f5dc0f5f61e4">WDOG_FIRST_WORD_OF_UNLOCK</a>&#160;&#160;&#160;(RTWDOG_UPDATE_KEY &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:ga8825b35bd62726165737f5dc0f5f61e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">First word of unlock sequence. <br/></td></tr>
+<tr class="separator:ga8825b35bd62726165737f5dc0f5f61e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2018a4151df654f86822786500cf2d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae2018a4151df654f86822786500cf2d3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gae2018a4151df654f86822786500cf2d3">WDOG_SECOND_WORD_OF_UNLOCK</a>&#160;&#160;&#160;((RTWDOG_UPDATE_KEY &gt;&gt; 16U) &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:gae2018a4151df654f86822786500cf2d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second word of unlock sequence. <br/></td></tr>
+<tr class="separator:gae2018a4151df654f86822786500cf2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Refresh sequence</h2></td></tr>
+<tr class="memitem:ga10f1df824e5965d6413b2e892fd04659"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10f1df824e5965d6413b2e892fd04659"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga10f1df824e5965d6413b2e892fd04659">WDOG_FIRST_WORD_OF_REFRESH</a>&#160;&#160;&#160;(RTWDOG_REFRESH_KEY &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:ga10f1df824e5965d6413b2e892fd04659"><td class="mdescLeft">&#160;</td><td class="mdescRight">First word of refresh sequence. <br/></td></tr>
+<tr class="separator:ga10f1df824e5965d6413b2e892fd04659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a375c7e4d71e7f52e899bce0a9106ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a375c7e4d71e7f52e899bce0a9106ee"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga2a375c7e4d71e7f52e899bce0a9106ee">WDOG_SECOND_WORD_OF_REFRESH</a>&#160;&#160;&#160;((RTWDOG_REFRESH_KEY &gt;&gt; 16U) &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:ga2a375c7e4d71e7f52e899bce0a9106ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second word of refresh sequence. <br/></td></tr>
+<tr class="separator:ga2a375c7e4d71e7f52e899bce0a9106ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga036d8fa82f101485bb1bef62fbe0efec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga036d8fa82f101485bb1bef62fbe0efec">FSL_RTWDOG_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
+<tr class="memdesc:ga036d8fa82f101485bb1bef62fbe0efec"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTWDOG driver version 2.1.2.  <a href="#ga036d8fa82f101485bb1bef62fbe0efec">More...</a><br/></td></tr>
+<tr class="separator:ga036d8fa82f101485bb1bef62fbe0efec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+RTWDOG Initialization and De-initialization</h2></td></tr>
+<tr class="memitem:ga9b0f93e60a4ad521b60ea546e2b7cde5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga9b0f93e60a4ad521b60ea546e2b7cde5">RTWDOG_GetDefaultConfig</a> (<a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b">rtwdog_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga9b0f93e60a4ad521b60ea546e2b7cde5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the RTWDOG configuration structure.  <a href="#ga9b0f93e60a4ad521b60ea546e2b7cde5">More...</a><br/></td></tr>
+<tr class="separator:ga9b0f93e60a4ad521b60ea546e2b7cde5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf45b60f55a83c5f3632b4136a3ad2b52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gaf45b60f55a83c5f3632b4136a3ad2b52">RTWDOG_Init</a> (RTWDOG_Type *base, const <a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b">rtwdog_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaf45b60f55a83c5f3632b4136a3ad2b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the RTWDOG module.  <a href="#gaf45b60f55a83c5f3632b4136a3ad2b52">More...</a><br/></td></tr>
+<tr class="separator:gaf45b60f55a83c5f3632b4136a3ad2b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga470b1d21c8013531100e7c3c605046a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga470b1d21c8013531100e7c3c605046a7">RTWDOG_Deinit</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga470b1d21c8013531100e7c3c605046a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the RTWDOG module.  <a href="#ga470b1d21c8013531100e7c3c605046a7">More...</a><br/></td></tr>
+<tr class="separator:ga470b1d21c8013531100e7c3c605046a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+RTWDOG functional Operation</h2></td></tr>
+<tr class="memitem:gab07abcef0c2d984783ab36df5b08ffa4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gab07abcef0c2d984783ab36df5b08ffa4">RTWDOG_Enable</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:gab07abcef0c2d984783ab36df5b08ffa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the RTWDOG module.  <a href="#gab07abcef0c2d984783ab36df5b08ffa4">More...</a><br/></td></tr>
+<tr class="separator:gab07abcef0c2d984783ab36df5b08ffa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7526eb9df0830431e942fcbca32ca6cd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga7526eb9df0830431e942fcbca32ca6cd">RTWDOG_Disable</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga7526eb9df0830431e942fcbca32ca6cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the RTWDOG module.  <a href="#ga7526eb9df0830431e942fcbca32ca6cd">More...</a><br/></td></tr>
+<tr class="separator:ga7526eb9df0830431e942fcbca32ca6cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69c0e214f7424205a23a902b688cb00d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga69c0e214f7424205a23a902b688cb00d">RTWDOG_EnableInterrupts</a> (RTWDOG_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga69c0e214f7424205a23a902b688cb00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the RTWDOG interrupt.  <a href="#ga69c0e214f7424205a23a902b688cb00d">More...</a><br/></td></tr>
+<tr class="separator:ga69c0e214f7424205a23a902b688cb00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58a299966ea5b0d72eab1e3a95916459"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga58a299966ea5b0d72eab1e3a95916459">RTWDOG_DisableInterrupts</a> (RTWDOG_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga58a299966ea5b0d72eab1e3a95916459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the RTWDOG interrupt.  <a href="#ga58a299966ea5b0d72eab1e3a95916459">More...</a><br/></td></tr>
+<tr class="separator:ga58a299966ea5b0d72eab1e3a95916459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcee9521ed7f9e2106cbc8844c915910"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gabcee9521ed7f9e2106cbc8844c915910">RTWDOG_GetStatusFlags</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:gabcee9521ed7f9e2106cbc8844c915910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the RTWDOG all status flags.  <a href="#gabcee9521ed7f9e2106cbc8844c915910">More...</a><br/></td></tr>
+<tr class="separator:gabcee9521ed7f9e2106cbc8844c915910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6467fc58dc00affb0daf4df8c2edec9d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga6467fc58dc00affb0daf4df8c2edec9d">RTWDOG_EnableWindowMode</a> (RTWDOG_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga6467fc58dc00affb0daf4df8c2edec9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the window mode.  <a href="#ga6467fc58dc00affb0daf4df8c2edec9d">More...</a><br/></td></tr>
+<tr class="separator:ga6467fc58dc00affb0daf4df8c2edec9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc86c177da23e2aea8980c9722f2d2af"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gafc86c177da23e2aea8980c9722f2d2af">RTWDOG_CountToMesec</a> (RTWDOG_Type *base, uint32_t count, uint32_t clockFreqInHz)</td></tr>
+<tr class="memdesc:gafc86c177da23e2aea8980c9722f2d2af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts raw count value to millisecond.  <a href="#gafc86c177da23e2aea8980c9722f2d2af">More...</a><br/></td></tr>
+<tr class="separator:gafc86c177da23e2aea8980c9722f2d2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49c1f47ae1f5eacc9d33035a96919bd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga49c1f47ae1f5eacc9d33035a96919bd6">RTWDOG_ClearStatusFlags</a> (RTWDOG_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga49c1f47ae1f5eacc9d33035a96919bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the RTWDOG flag.  <a href="#ga49c1f47ae1f5eacc9d33035a96919bd6">More...</a><br/></td></tr>
+<tr class="separator:ga49c1f47ae1f5eacc9d33035a96919bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ef5c238172a1384ca3add569094505d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga1ef5c238172a1384ca3add569094505d">RTWDOG_SetTimeoutValue</a> (RTWDOG_Type *base, uint16_t timeoutCount)</td></tr>
+<tr class="memdesc:ga1ef5c238172a1384ca3add569094505d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the RTWDOG timeout value.  <a href="#ga1ef5c238172a1384ca3add569094505d">More...</a><br/></td></tr>
+<tr class="separator:ga1ef5c238172a1384ca3add569094505d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c32aa54a50e5ef0fc68945cb74549ad"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga8c32aa54a50e5ef0fc68945cb74549ad">RTWDOG_SetWindowValue</a> (RTWDOG_Type *base, uint16_t windowValue)</td></tr>
+<tr class="memdesc:ga8c32aa54a50e5ef0fc68945cb74549ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the RTWDOG window value.  <a href="#ga8c32aa54a50e5ef0fc68945cb74549ad">More...</a><br/></td></tr>
+<tr class="separator:ga8c32aa54a50e5ef0fc68945cb74549ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacac03752d33b0b906a9bc09c7b83d1d1"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#gacac03752d33b0b906a9bc09c7b83d1d1">RTWDOG_Unlock</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:gacac03752d33b0b906a9bc09c7b83d1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlocks the RTWDOG register written.  <a href="#gacac03752d33b0b906a9bc09c7b83d1d1">More...</a><br/></td></tr>
+<tr class="separator:gacac03752d33b0b906a9bc09c7b83d1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d8b4744fc5ad161c8e5fbc47255328e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga0d8b4744fc5ad161c8e5fbc47255328e">RTWDOG_Refresh</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga0d8b4744fc5ad161c8e5fbc47255328e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the RTWDOG timer.  <a href="#ga0d8b4744fc5ad161c8e5fbc47255328e">More...</a><br/></td></tr>
+<tr class="separator:ga0d8b4744fc5ad161c8e5fbc47255328e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c3760e127cbcf22983a65d13c8a4bcd"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ga8c3760e127cbcf22983a65d13c8a4bcd">RTWDOG_GetCounterValue</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga8c3760e127cbcf22983a65d13c8a4bcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the RTWDOG counter value.  <a href="#ga8c3760e127cbcf22983a65d13c8a4bcd">More...</a><br/></td></tr>
+<tr class="separator:ga8c3760e127cbcf22983a65d13c8a4bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00623" id="a00623"></a>
+<a name="a00625" id="a00625"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _rdc_hardware_config</td>
+          <td class="memname">struct _rtwdog_work_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a0a1c71ea8794188dc975c8308c737dbb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a0a1c71ea8794188dc975c8308c737dbb">domainNumber</a>: 4</td></tr>
-<tr class="memdesc:a0a1c71ea8794188dc975c8308c737dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of domains.  <a href="#a0a1c71ea8794188dc975c8308c737dbb">More...</a><br/></td></tr>
-<tr class="separator:a0a1c71ea8794188dc975c8308c737dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5173b5ae360696c710d9c28696342e7e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a5173b5ae360696c710d9c28696342e7e">masterNumber</a>: 8</td></tr>
-<tr class="memdesc:a5173b5ae360696c710d9c28696342e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bus masters.  <a href="#a5173b5ae360696c710d9c28696342e7e">More...</a><br/></td></tr>
-<tr class="separator:a5173b5ae360696c710d9c28696342e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f5b8abeaf670f544b25bd22e51f584d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a7f5b8abeaf670f544b25bd22e51f584d">periphNumber</a>: 8</td></tr>
-<tr class="memdesc:a7f5b8abeaf670f544b25bd22e51f584d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of peripherals.  <a href="#a7f5b8abeaf670f544b25bd22e51f584d">More...</a><br/></td></tr>
-<tr class="separator:a7f5b8abeaf670f544b25bd22e51f584d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ed986154479237da36ccd3f6241ffee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a8ed986154479237da36ccd3f6241ffee">memNumber</a>: 8</td></tr>
-<tr class="memdesc:a8ed986154479237da36ccd3f6241ffee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of memory regions.  <a href="#a8ed986154479237da36ccd3f6241ffee">More...</a><br/></td></tr>
-<tr class="separator:a8ed986154479237da36ccd3f6241ffee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab20c5eef573eae84c4ee7e1af59a19d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab20c5eef573eae84c4ee7e1af59a19d7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ab20c5eef573eae84c4ee7e1af59a19d7">enableWait</a></td></tr>
+<tr class="memdesc:ab20c5eef573eae84c4ee7e1af59a19d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG in wait mode. <br/></td></tr>
+<tr class="separator:ab20c5eef573eae84c4ee7e1af59a19d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f8ede7afeb712e61a3d92c95ef779b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11f8ede7afeb712e61a3d92c95ef779b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a11f8ede7afeb712e61a3d92c95ef779b">enableStop</a></td></tr>
+<tr class="memdesc:a11f8ede7afeb712e61a3d92c95ef779b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG in stop mode. <br/></td></tr>
+<tr class="separator:a11f8ede7afeb712e61a3d92c95ef779b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afae9e4adf38445df26f3ca9edb3c47df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afae9e4adf38445df26f3ca9edb3c47df"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#afae9e4adf38445df26f3ca9edb3c47df">enableDebug</a></td></tr>
+<tr class="memdesc:afae9e4adf38445df26f3ca9edb3c47df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG in debug mode. <br/></td></tr>
+<tr class="separator:afae9e4adf38445df26f3ca9edb3c47df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a0a1c71ea8794188dc975c8308c737dbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_hardware_config::domainNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5173b5ae360696c710d9c28696342e7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_hardware_config::masterNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7f5b8abeaf670f544b25bd22e51f584d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_hardware_config::periphNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8ed986154479237da36ccd3f6241ffee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_hardware_config::memNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00622" id="a00622"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _rdc_domain_assignment</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a5bbfcb6e3db56bcca10e6c5f7ee9de4d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a5bbfcb6e3db56bcca10e6c5f7ee9de4d">domainId</a>: 2U</td></tr>
-<tr class="memdesc:a5bbfcb6e3db56bcca10e6c5f7ee9de4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Domain ID.  <a href="#a5bbfcb6e3db56bcca10e6c5f7ee9de4d">More...</a><br/></td></tr>
-<tr class="separator:a5bbfcb6e3db56bcca10e6c5f7ee9de4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48fe208537eb4029cbe45bbb77fcae66"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a48fe208537eb4029cbe45bbb77fcae66">__pad0__</a>: 29U</td></tr>
-<tr class="memdesc:a48fe208537eb4029cbe45bbb77fcae66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved.  <a href="#a48fe208537eb4029cbe45bbb77fcae66">More...</a><br/></td></tr>
-<tr class="separator:a48fe208537eb4029cbe45bbb77fcae66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41881095499e658420cfc5efda6c5caa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a41881095499e658420cfc5efda6c5caa">lock</a>: 1U</td></tr>
-<tr class="memdesc:a41881095499e658420cfc5efda6c5caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the domain assignment.  <a href="#a41881095499e658420cfc5efda6c5caa">More...</a><br/></td></tr>
-<tr class="separator:a41881095499e658420cfc5efda6c5caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a5bbfcb6e3db56bcca10e6c5f7ee9de4d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_domain_assignment::domainId</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a48fe208537eb4029cbe45bbb77fcae66"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_domain_assignment::__pad0__</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a41881095499e658420cfc5efda6c5caa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t _rdc_domain_assignment::lock</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00626" id="a00626"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _rdc_periph_access_config</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a242a1e54f86e21e833da3140902eaec1"><td class="memItemLeft" align="right" valign="top">rdc_periph_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a242a1e54f86e21e833da3140902eaec1">periph</a></td></tr>
-<tr class="memdesc:a242a1e54f86e21e833da3140902eaec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peripheral name.  <a href="#a242a1e54f86e21e833da3140902eaec1">More...</a><br/></td></tr>
-<tr class="separator:a242a1e54f86e21e833da3140902eaec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8b7b20b2b41579fea486131de105468"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ab8b7b20b2b41579fea486131de105468">lock</a></td></tr>
-<tr class="memdesc:ab8b7b20b2b41579fea486131de105468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the permission until reset.  <a href="#ab8b7b20b2b41579fea486131de105468">More...</a><br/></td></tr>
-<tr class="separator:ab8b7b20b2b41579fea486131de105468"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d0c915fee91b8ec6fea7c2391c17e8f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a8d0c915fee91b8ec6fea7c2391c17e8f">enableSema</a></td></tr>
-<tr class="memdesc:a8d0c915fee91b8ec6fea7c2391c17e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable semaphore or not, when enabled, master should call <a class="el" href="a00355.html#ga55f710fde1530472af83d2192a1003d6">RDC_SEMA42_Lock</a> to lock the semaphore gate accordingly before access the peripheral.  <a href="#a8d0c915fee91b8ec6fea7c2391c17e8f">More...</a><br/></td></tr>
-<tr class="separator:a8d0c915fee91b8ec6fea7c2391c17e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b0f6bba021eb4c36e304ff2ac9a6b66"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a7b0f6bba021eb4c36e304ff2ac9a6b66">policy</a></td></tr>
-<tr class="memdesc:a7b0f6bba021eb4c36e304ff2ac9a6b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access policy.  <a href="#a7b0f6bba021eb4c36e304ff2ac9a6b66">More...</a><br/></td></tr>
-<tr class="separator:a7b0f6bba021eb4c36e304ff2ac9a6b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a242a1e54f86e21e833da3140902eaec1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">rdc_periph_t _rdc_periph_access_config::periph</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab8b7b20b2b41579fea486131de105468"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool _rdc_periph_access_config::lock</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8d0c915fee91b8ec6fea7c2391c17e8f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool _rdc_periph_access_config::enableSema</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7b0f6bba021eb4c36e304ff2ac9a6b66"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t _rdc_periph_access_config::policy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
@@ -472,810 +302,294 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _rdc_mem_access_config</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Note that when setting the <a class="el" href="a00075.html#af42d89ec16e7b15c75c8a63b667d5ded">rdc_mem_access_config_t::baseAddress</a> and <a class="el" href="a00075.html#a57f9536d7f3b6f2f8b4bd38104e280eb">rdc_mem_access_config_t::endAddress</a>, should be aligned to the region resolution, see rdc_mem_t definitions. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aab16c859d011f27f18e8ef76f81439f4"><td class="memItemLeft" align="right" valign="top">rdc_mem_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#aab16c859d011f27f18e8ef76f81439f4">mem</a></td></tr>
-<tr class="memdesc:aab16c859d011f27f18e8ef76f81439f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory region descriptor name.  <a href="#aab16c859d011f27f18e8ef76f81439f4">More...</a><br/></td></tr>
-<tr class="separator:aab16c859d011f27f18e8ef76f81439f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2dac0a75be9929c8e12a92b37f1b8e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ab2dac0a75be9929c8e12a92b37f1b8e4">lock</a></td></tr>
-<tr class="memdesc:ab2dac0a75be9929c8e12a92b37f1b8e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the configuration.  <a href="#ab2dac0a75be9929c8e12a92b37f1b8e4">More...</a><br/></td></tr>
-<tr class="separator:ab2dac0a75be9929c8e12a92b37f1b8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af42d89ec16e7b15c75c8a63b667d5ded"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#af42d89ec16e7b15c75c8a63b667d5ded">baseAddress</a></td></tr>
-<tr class="memdesc:af42d89ec16e7b15c75c8a63b667d5ded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address of the memory region.  <a href="#af42d89ec16e7b15c75c8a63b667d5ded">More...</a><br/></td></tr>
-<tr class="separator:af42d89ec16e7b15c75c8a63b667d5ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57f9536d7f3b6f2f8b4bd38104e280eb"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a57f9536d7f3b6f2f8b4bd38104e280eb">endAddress</a></td></tr>
-<tr class="memdesc:a57f9536d7f3b6f2f8b4bd38104e280eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">End address of the memory region.  <a href="#a57f9536d7f3b6f2f8b4bd38104e280eb">More...</a><br/></td></tr>
-<tr class="separator:a57f9536d7f3b6f2f8b4bd38104e280eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac58d77bc6cc194f6902dffe4e80e0d6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#aac58d77bc6cc194f6902dffe4e80e0d6">policy</a></td></tr>
-<tr class="memdesc:aac58d77bc6cc194f6902dffe4e80e0d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access policy.  <a href="#aac58d77bc6cc194f6902dffe4e80e0d6">More...</a><br/></td></tr>
-<tr class="separator:aac58d77bc6cc194f6902dffe4e80e0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aab16c859d011f27f18e8ef76f81439f4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">rdc_mem_t _rdc_mem_access_config::mem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab2dac0a75be9929c8e12a92b37f1b8e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool _rdc_mem_access_config::lock</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af42d89ec16e7b15c75c8a63b667d5ded"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t _rdc_mem_access_config::baseAddress</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a57f9536d7f3b6f2f8b4bd38104e280eb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t _rdc_mem_access_config::endAddress</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aac58d77bc6cc194f6902dffe4e80e0d6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t _rdc_mem_access_config::policy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00625" id="a00625"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _rdc_mem_status</td>
+          <td class="memname">struct _rtwdog_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad4dad1cd9f4e66b664b525ecd4b1be37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ad4dad1cd9f4e66b664b525ecd4b1be37">hasViolation</a></td></tr>
-<tr class="memdesc:ad4dad1cd9f4e66b664b525ecd4b1be37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Violating happens or not.  <a href="#ad4dad1cd9f4e66b664b525ecd4b1be37">More...</a><br/></td></tr>
-<tr class="separator:ad4dad1cd9f4e66b664b525ecd4b1be37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28ba9cfc8af0f862635ded4738718c78"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a28ba9cfc8af0f862635ded4738718c78">domainID</a></td></tr>
-<tr class="memdesc:a28ba9cfc8af0f862635ded4738718c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Violating Domain ID.  <a href="#a28ba9cfc8af0f862635ded4738718c78">More...</a><br/></td></tr>
-<tr class="separator:a28ba9cfc8af0f862635ded4738718c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8613c0efb2da82d09f7f67a5a3efee4f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a8613c0efb2da82d09f7f67a5a3efee4f">address</a></td></tr>
-<tr class="memdesc:a8613c0efb2da82d09f7f67a5a3efee4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Violating Address.  <a href="#a8613c0efb2da82d09f7f67a5a3efee4f">More...</a><br/></td></tr>
-<tr class="separator:a8613c0efb2da82d09f7f67a5a3efee4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa4fb2c22c60cc777bff07374e5506dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa4fb2c22c60cc777bff07374e5506dc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#afa4fb2c22c60cc777bff07374e5506dc">enableRtwdog</a></td></tr>
+<tr class="memdesc:afa4fb2c22c60cc777bff07374e5506dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG. <br/></td></tr>
+<tr class="separator:afa4fb2c22c60cc777bff07374e5506dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad52338f92dcea3eddaccb25cec208f19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad52338f92dcea3eddaccb25cec208f19"></a>
+<a class="el" href="a00075.html#ga6510de305373a14b2dfcbf69b4287110">rtwdog_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ad52338f92dcea3eddaccb25cec208f19">clockSource</a></td></tr>
+<tr class="memdesc:ad52338f92dcea3eddaccb25cec208f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source select. <br/></td></tr>
+<tr class="separator:ad52338f92dcea3eddaccb25cec208f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc90ebdecad715af2209a72977c4f355"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc90ebdecad715af2209a72977c4f355"></a>
+<a class="el" href="a00075.html#gaf559a88c22204ba1a1f85a8b47a80fea">rtwdog_clock_prescaler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#abc90ebdecad715af2209a72977c4f355">prescaler</a></td></tr>
+<tr class="memdesc:abc90ebdecad715af2209a72977c4f355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock prescaler value. <br/></td></tr>
+<tr class="separator:abc90ebdecad715af2209a72977c4f355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1882a3dece4f84b6968fecc018adcc33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1882a3dece4f84b6968fecc018adcc33"></a>
+<a class="el" href="a00075.html#ga4548feb648f1760081293173d086a45b">rtwdog_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a1882a3dece4f84b6968fecc018adcc33">workMode</a></td></tr>
+<tr class="memdesc:a1882a3dece4f84b6968fecc018adcc33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures RTWDOG work mode in debug stop and wait mode. <br/></td></tr>
+<tr class="separator:a1882a3dece4f84b6968fecc018adcc33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c4356a888d6a2ac2f74cbe873f3150"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16c4356a888d6a2ac2f74cbe873f3150"></a>
+<a class="el" href="a00075.html#gab89ed9805e309b8ba7e064005203aef9">rtwdog_test_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a16c4356a888d6a2ac2f74cbe873f3150">testMode</a></td></tr>
+<tr class="memdesc:a16c4356a888d6a2ac2f74cbe873f3150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures RTWDOG test mode. <br/></td></tr>
+<tr class="separator:a16c4356a888d6a2ac2f74cbe873f3150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99a56cd1f4a3cc1f44c71b29145d2d4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99a56cd1f4a3cc1f44c71b29145d2d4a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a99a56cd1f4a3cc1f44c71b29145d2d4a">enableUpdate</a></td></tr>
+<tr class="memdesc:a99a56cd1f4a3cc1f44c71b29145d2d4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update write-once register enable. <br/></td></tr>
+<tr class="separator:a99a56cd1f4a3cc1f44c71b29145d2d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd2cdea7f69e8c9a2caffbc9219e91b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd2cdea7f69e8c9a2caffbc9219e91b7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#abd2cdea7f69e8c9a2caffbc9219e91b7">enableInterrupt</a></td></tr>
+<tr class="memdesc:abd2cdea7f69e8c9a2caffbc9219e91b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG interrupt. <br/></td></tr>
+<tr class="separator:abd2cdea7f69e8c9a2caffbc9219e91b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ebda995494fa4c4b7178f7e374ef466"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ebda995494fa4c4b7178f7e374ef466"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a2ebda995494fa4c4b7178f7e374ef466">enableWindowMode</a></td></tr>
+<tr class="memdesc:a2ebda995494fa4c4b7178f7e374ef466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG window mode. <br/></td></tr>
+<tr class="separator:a2ebda995494fa4c4b7178f7e374ef466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1542dd58d7ec8845f2cf6421711c8368"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1542dd58d7ec8845f2cf6421711c8368"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a1542dd58d7ec8845f2cf6421711c8368">windowValue</a></td></tr>
+<tr class="memdesc:a1542dd58d7ec8845f2cf6421711c8368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window value. <br/></td></tr>
+<tr class="separator:a1542dd58d7ec8845f2cf6421711c8368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a434445985209fce91ae93d25ea06c22b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a434445985209fce91ae93d25ea06c22b"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a434445985209fce91ae93d25ea06c22b">timeoutValue</a></td></tr>
+<tr class="memdesc:a434445985209fce91ae93d25ea06c22b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value. <br/></td></tr>
+<tr class="separator:a434445985209fce91ae93d25ea06c22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad4dad1cd9f4e66b664b525ecd4b1be37"></a>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga036d8fa82f101485bb1bef62fbe0efec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool _rdc_mem_status::hasViolation</td>
+          <td class="memname">#define FSL_RTWDOG_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a28ba9cfc8af0f862635ded4738718c78"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t _rdc_mem_status::domainID</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8613c0efb2da82d09f7f67a5a3efee4f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t _rdc_mem_status::address</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga7fa4bee53cb416b150b75ad4a5bfca61"></a>
+<a class="anchor" id="ga6510de305373a14b2dfcbf69b4287110"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00075.html#a00624">_rdc_mem_access_config</a>  <a class="el" href="a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61">rdc_mem_access_config_t</a></td>
+          <td class="memname">typedef enum <a class="el" href="a00075.html#gab629a7621b77e082b75e69afa58c3dc1">_rtwdog_clock_source</a>  <a class="el" href="a00075.html#ga6510de305373a14b2dfcbf69b4287110">rtwdog_clock_source_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Note that when setting the <a class="el" href="a00075.html#af42d89ec16e7b15c75c8a63b667d5ded">rdc_mem_access_config_t::baseAddress</a> and <a class="el" href="a00075.html#a57f9536d7f3b6f2f8b4bd38104e280eb">rdc_mem_access_config_t::endAddress</a>, should be aligned to the region resolution, see rdc_mem_t definitions. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf559a88c22204ba1a1f85a8b47a80fea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00075.html#gaaf27dd1c76710401d0eeba0b2df024b0">_rtwdog_clock_prescaler</a>  <a class="el" href="a00075.html#gaf559a88c22204ba1a1f85a8b47a80fea">rtwdog_clock_prescaler_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4548feb648f1760081293173d086a45b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00075.html#a00625">_rtwdog_work_mode</a>  <a class="el" href="a00075.html#ga4548feb648f1760081293173d086a45b">rtwdog_work_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gab89ed9805e309b8ba7e064005203aef9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00075.html#ga48fe3f029b0c9b005bae2f132f3d5a63">_rtwdog_test_mode</a>  <a class="el" href="a00075.html#gab89ed9805e309b8ba7e064005203aef9">rtwdog_test_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae1ba5d3818230a3eb79df2725ab0009b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00075.html#a00624">_rtwdog_config</a>  <a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b">rtwdog_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga43f5d8d1ed667a8c73ab204a74925892"></a>
+<a class="anchor" id="gab629a7621b77e082b75e69afa58c3dc1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">_rdc_interrupts</a></td>
+          <td class="memname">enum <a class="el" href="a00075.html#gab629a7621b77e082b75e69afa58c3dc1">_rtwdog_clock_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga43f5d8d1ed667a8c73ab204a74925892a5088cfe20c6ef9e259657e6f6ecc7387"></a>kRDC_RestoreCompleteInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Interrupt generated when the RDC has completed restoring state to a recently re-powered memory regions. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab629a7621b77e082b75e69afa58c3dc1a89fe3caec9c47ea18afbea78fa7b75db"></a>kRTWDOG_ClockSource0</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab629a7621b77e082b75e69afa58c3dc1a0490435c4f8e6b5f2bfb4d4959ee6ce5"></a>kRTWDOG_ClockSource1</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab629a7621b77e082b75e69afa58c3dc1a596c695b96b5287f927f74d78577fe84"></a>kRTWDOG_ClockSource2</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab629a7621b77e082b75e69afa58c3dc1ad51ba4630b31474e7d497d1defc3075a"></a>kRTWDOG_ClockSource3</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga30afa024532b0207bdeeee3344af9ebd"></a>
+<a class="anchor" id="gaaf27dd1c76710401d0eeba0b2df024b0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00075.html#ga30afa024532b0207bdeeee3344af9ebd">_rdc_flags</a></td>
+          <td class="memname">enum <a class="el" href="a00075.html#gaaf27dd1c76710401d0eeba0b2df024b0">_rtwdog_clock_prescaler</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga30afa024532b0207bdeeee3344af9ebda5e58c4dabb46b1f4a47b7ae8cd0f61e3"></a>kRDC_PowerDownDomainOn</em>&nbsp;</td><td class="fielddoc">
-<p>Power down domain is ON. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaaf27dd1c76710401d0eeba0b2df024b0affcd087724256907ae1e47f896461e78"></a>kRTWDOG_ClockPrescalerDivide1</em>&nbsp;</td><td class="fielddoc">
+<p>Divided by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaaf27dd1c76710401d0eeba0b2df024b0a1b8252427d181ff4de3e4ea7eb1aac52"></a>kRTWDOG_ClockPrescalerDivide256</em>&nbsp;</td><td class="fielddoc">
+<p>Divided by 256. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gad1f726221167c740e1500317ea80beb2"></a>
+<a class="anchor" id="ga48fe3f029b0c9b005bae2f132f3d5a63"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00075.html#gad1f726221167c740e1500317ea80beb2">_rdc_access_policy</a></td>
+          <td class="memname">enum <a class="el" href="a00075.html#ga48fe3f029b0c9b005bae2f132f3d5a63">_rtwdog_test_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad1f726221167c740e1500317ea80beb2a3abbfd7f6818ca32df8d30300aba7f1a"></a>kRDC_NoAccess</em>&nbsp;</td><td class="fielddoc">
-<p>Could not read or write. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga48fe3f029b0c9b005bae2f132f3d5a63a62fe6bb45f28e5b1275bfa1aad708124"></a>kRTWDOG_TestModeDisabled</em>&nbsp;</td><td class="fielddoc">
+<p>Test Mode disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad1f726221167c740e1500317ea80beb2af704f2f758ba0d96ddea53e686325efe"></a>kRDC_WriteOnly</em>&nbsp;</td><td class="fielddoc">
-<p>Write only. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga48fe3f029b0c9b005bae2f132f3d5a63ae12fd7134b26ac7e621f2117f3312598"></a>kRTWDOG_UserModeEnabled</em>&nbsp;</td><td class="fielddoc">
+<p>User Mode enabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad1f726221167c740e1500317ea80beb2acad6ad0fa9f2d31d48ec9e7b2898cdb6"></a>kRDC_ReadOnly</em>&nbsp;</td><td class="fielddoc">
-<p>Read only. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga48fe3f029b0c9b005bae2f132f3d5a63ab885cb05aaad282ee54fe47b8ad270cc"></a>kRTWDOG_LowByteTest</em>&nbsp;</td><td class="fielddoc">
+<p>Test Mode enabled, only low byte is used. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd"></a>kRDC_ReadWrite</em>&nbsp;</td><td class="fielddoc">
-<p>Read and write. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga48fe3f029b0c9b005bae2f132f3d5a63aaf013b692ea93f0de8a9c47a814ac09d"></a>kRTWDOG_HighByteTest</em>&nbsp;</td><td class="fielddoc">
+<p>Test Mode enabled, only high byte is used. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga4225d9230a4625186e9b65be501bbc24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00075.html#ga4225d9230a4625186e9b65be501bbc24">_rtwdog_interrupt_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the settings for all of the RTWDOG interrupt configurations. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a"></a>kRTWDOG_InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt is generated before forcing a reset. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab1ef76bc31ec6ca52a50e1aba88a08d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00075.html#gab1ef76bc31ec6ca52a50e1aba88a08d8">_rtwdog_status_flags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the RTWDOG status flags for use in the RTWDOG functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38"></a>kRTWDOG_RunningFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Running flag, set when RTWDOG is enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3"></a>kRTWDOG_InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt flag, set when interrupt occurs. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga5e55854cf5534e9ea2844c6447630d29"></a>
+<a class="anchor" id="ga9b0f93e60a4ad521b60ea546e2b7cde5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RDC_Init </td>
+          <td class="memname">void RTWDOG_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function enables the RDC clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad67bd7441a6770382a42871a73cab1e9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the RDC clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga70d043c746306a1518a9d76c708a45a7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_GetHardwareConfig </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00075.html#ga5809f23a3763c0c2d114c8b991b19224">rdc_hardware_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gets the RDC hardware configurations, including number of bus masters, number of domains, number of memory regions and number of peripherals.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the structure to get the configuration. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac4fd27fb3b91add96b402a316f5257d1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RDC_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Interrupts to enable, it is OR'ed value of enum <a class="el" href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">_rdc_interrupts</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8431d5742c72d100e9d5ea8acb828164"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RDC_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Interrupts to disable, it is OR'ed value of enum <a class="el" href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">_rdc_interrupts</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2daf610d7330112bdefdaf737d88057d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t RDC_GetInterruptStatus </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Interrupts pending status, it is OR'ed value of enum <a class="el" href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">_rdc_interrupts</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga46324815d4934688c553fa427068aebf"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RDC_ClearInterruptStatus </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Status to clear, it is OR'ed value of enum <a class="el" href="a00075.html#ga43f5d8d1ed667a8c73ab204a74925892">_rdc_interrupts</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga607d3cb8467e3dad81c01b99b262b025"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t RDC_GetStatus </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>mask RDC status, it is OR'ed value of enum <a class="el" href="a00075.html#ga30afa024532b0207bdeeee3344af9ebd">_rdc_flags</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa78b6ce74c4abe2fb4f8696dba4bab58"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RDC_ClearStatus </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>RDC status to clear, it is OR'ed value of enum <a class="el" href="a00075.html#ga30afa024532b0207bdeeee3344af9ebd">_rdc_flags</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabe2b9840b82e64d3cc421df537450dca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_SetMasterDomainAssignment </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">rdc_master_t&#160;</td>
-          <td class="paramname"><em>master</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00075.html#ga2fa0f432125eabe3c7444a58ac406b10">rdc_domain_assignment_t</a> *&#160;</td>
-          <td class="paramname"><em>domainAssignment</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">master</td><td>Which master to set. </td></tr>
-    <tr><td class="paramname">domainAssignment</td><td>Pointer to the assignment. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5079802654902bb5b1bb618958b136e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_GetDefaultMasterDomainAssignment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00075.html#ga2fa0f432125eabe3c7444a58ac406b10">rdc_domain_assignment_t</a> *&#160;</td>
-          <td class="paramname"><em>domainAssignment</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default configuration is: </p>
-<div class="fragment"><div class="line">assignment-&gt;domainId = 0U;</div>
-<div class="line">assignment-&gt;lock = 0U;</div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">domainAssignment</td><td>Pointer to the assignment. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7bac728610bbf0d1fc8ef54684453a67"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void RDC_LockMasterDomainAssignment </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">rdc_master_t&#160;</td>
-          <td class="paramname"><em>master</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Once locked, it could not be unlocked until next reset.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">master</td><td>Which master to lock. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad7761fcab34b52ebf80024199d0390bc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_SetPeriphAccessConfig </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00075.html#gab34ae3929d80075974affc8e2e4a1225">rdc_periph_access_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the policy configuration. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3960b46c770474ae90a3efe6bbf0848f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_GetDefaultPeriphAccessConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00075.html#gab34ae3929d80075974affc8e2e4a1225">rdc_periph_access_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b">rtwdog_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The default configuration is: </p>
-<div class="fragment"><div class="line">config-&gt;lock = <span class="keyword">false</span>;</div>
-<div class="line">config-&gt;enableSema = <span class="keyword">false</span>;</div>
-<div class="line">config-&gt;policy = RDC_ACCESS_POLICY(0, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>) |</div>
-<div class="line">                 RDC_ACCESS_POLICY(1, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>) |</div>
-<div class="line">                 RDC_ACCESS_POLICY(2, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>) |</div>
-<div class="line">                 RDC_ACCESS_POLICY(3, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>);</div>
+<p>This function initializes the RTWDOG configuration structure to default values. The default values are: </p>
+<div class="fragment"><div class="line">*   rtwdogConfig-&gt;enableRtwdog = <span class="keyword">true</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;clockSource = <a class="code" href="a00075.html#ggab629a7621b77e082b75e69afa58c3dc1a0490435c4f8e6b5f2bfb4d4959ee6ce5">kRTWDOG_ClockSource1</a>;</div>
+<div class="line">*   rtwdogConfig-&gt;prescaler = <a class="code" href="a00075.html#ggaaf27dd1c76710401d0eeba0b2df024b0affcd087724256907ae1e47f896461e78">kRTWDOG_ClockPrescalerDivide1</a>;</div>
+<div class="line">*   rtwdogConfig-&gt;workMode.enableWait = <span class="keyword">true</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;workMode.enableStop = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;workMode.enableDebug = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;testMode = <a class="code" href="a00075.html#gga48fe3f029b0c9b005bae2f132f3d5a63a62fe6bb45f28e5b1275bfa1aad708124">kRTWDOG_TestModeDisabled</a>;</div>
+<div class="line">*   rtwdogConfig-&gt;enableUpdate = <span class="keyword">true</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;enableInterrupt = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;enableWindowMode = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;windowValue = 0U;</div>
+<div class="line">*   rtwdogConfig-&gt;timeoutValue = 0xFFFFU;</div>
+<div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the policy configuration. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the RTWDOG configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b" title="Describes RTWDOG configuration structure. ">rtwdog_config_t</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gad726f804c6f29e6f08014749883816f8"></a>
+<a class="anchor" id="gaf45b60f55a83c5f3632b4136a3ad2b52"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void RDC_LockPeriphAccessConfig </td>
+          <td class="memname">void RTWDOG_Init </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">rdc_periph_t&#160;</td>
-          <td class="paramname"><em>periph</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Once locked, it could not be unlocked until reset.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">periph</td><td>Which peripheral to lock. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5629cde26ba781eeb933acef2a6f95e5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint8_t RDC_GetPeriphAccessPolicy </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">rdc_periph_t&#160;</td>
-          <td class="paramname"><em>periph</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>domainId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">periph</td><td>Which peripheral to get. </td></tr>
-    <tr><td class="paramname">domainId</td><td>Get policy for which domain. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Access policy, see <a class="el" href="a00075.html#gad1f726221167c740e1500317ea80beb2">_rdc_access_policy</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8a2282cbee8cbb2eeb38c98325351d64"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_SetMemAccessConfig </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61">rdc_mem_access_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00075.html#gae1ba5d3818230a3eb79df2725ab0009b">rtwdog_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1285,48 +599,48 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Note that when setting the baseAddress and endAddress in <code>config</code>, should be aligned to the region resolution, see rdc_mem_t definitions.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function initializes the RTWDOG. To reconfigure the RTWDOG without forcing a reset first, enableUpdate must be set to true in the configuration.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00075.html#a00624">rtwdog_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00075.html#ga9b0f93e60a4ad521b60ea546e2b7cde5">RTWDOG_GetDefaultConfig</a>(&amp;config);</div>
+<div class="line">*   config.<a class="code" href="a00075.html#a434445985209fce91ae93d25ea06c22b">timeoutValue</a> = 0x7ffU;</div>
+<div class="line">*   config.<a class="code" href="a00075.html#a99a56cd1f4a3cc1f44c71b29145d2d4a">enableUpdate</a> = <span class="keyword">true</span>;</div>
+<div class="line">*   <a class="code" href="a00075.html#gaf45b60f55a83c5f3632b4136a3ad2b52">RTWDOG_Init</a>(wdog_base,&amp;config);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the policy configuration. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>The configuration of the RTWDOG. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gad38513d641ad47ccbb003c47bb3c9727"></a>
+<a class="anchor" id="ga470b1d21c8013531100e7c3c605046a7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RDC_GetDefaultMemAccessConfig </td>
+          <td class="memname">void RTWDOG_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00075.html#ga7fa4bee53cb416b150b75ad4a5bfca61">rdc_mem_access_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The default configuration is: </p>
-<div class="fragment"><div class="line">config-&gt;lock = <span class="keyword">false</span>;</div>
-<div class="line">config-&gt;baseAddress = 0;</div>
-<div class="line">config-&gt;endAddress = 0;</div>
-<div class="line">config-&gt;policy = RDC_ACCESS_POLICY(0, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>) |</div>
-<div class="line">                 RDC_ACCESS_POLICY(1, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>) |</div>
-<div class="line">                 RDC_ACCESS_POLICY(2, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>) |</div>
-<div class="line">                 RDC_ACCESS_POLICY(3, <a class="code" href="a00075.html#ggad1f726221167c740e1500317ea80beb2a45a95e9ad49ab28807dc57a67e770ebd">kRDC_ReadWrite</a>);</div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<p>This function shuts down the RTWDOG. Ensure that the WDOG_CS.UPDATE is 1, which means that the register update is enabled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the policy configuration. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8e9f9b9bb90724ed625ee5b5cd2a8d41"></a>
+<a class="anchor" id="gab07abcef0c2d984783ab36df5b08ffa4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1334,16 +648,78 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void RDC_LockMemAccessConfig </td>
+          <td class="memname">static void RTWDOG_Enable </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a value into the WDOG_CS register to enable the RTWDOG. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7526eb9df0830431e942fcbca32ca6cd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void RTWDOG_Disable </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a value into the WDOG_CS register to disable the RTWDOG. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga69c0e214f7424205a23a902b688cb00d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void RTWDOG_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">rdc_mem_t&#160;</td>
-          <td class="paramname"><em>mem</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1357,18 +733,21 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Once locked, it could not be unlocked until reset. After locked, you can only call <a class="el" href="a00075.html#ga50e5d41f56901ea8924e6bb1f6e92fbd">RDC_SetMemAccessValid</a> to enable the configuration, but can not disable it or change other settings.</p>
+<p>This function writes a value into the WDOG_CS register to enable the RTWDOG interrupt. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mem</td><td>Which memory region to lock. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. The parameter can be a combination of the following source if defined: <ul>
+<li>kRTWDOG_InterruptEnable </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga50e5d41f56901ea8924e6bb1f6e92fbd"></a>
+<a class="anchor" id="ga58a299966ea5b0d72eab1e3a95916459"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1376,22 +755,102 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void RDC_SetMemAccessValid </td>
+          <td class="memname">static void RTWDOG_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">rdc_mem_t&#160;</td>
-          <td class="paramname"><em>mem</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a value into the WDOG_CS register to disable the RTWDOG interrupt. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disabled. The parameter can be a combination of the following source if defined: <ul>
+<li>kRTWDOG_InterruptEnable </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabcee9521ed7f9e2106cbc8844c915910"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t RTWDOG_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function gets all status flags.</p>
+<p>Example to get the running flag: </p>
+<div class="fragment"><div class="line">*   uint32_t status;</div>
+<div class="line">*   status = <a class="code" href="a00075.html#gabcee9521ed7f9e2106cbc8844c915910">RTWDOG_GetStatusFlags</a>(wdog_base) &amp; <a class="code" href="a00075.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38">kRTWDOG_RunningFlag</a>;</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the status flag: asserted (true) or not-asserted (false). </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00075.html#gab1ef76bc31ec6ca52a50e1aba88a08d8" title="RTWDOG status flags. ">_rtwdog_status_flags_t</a><ul>
+<li>true: related status flag has been set.</li>
+<li>false: related status flag is not set. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6467fc58dc00affb0daf4df8c2edec9d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void RTWDOG_EnableWindowMode </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>valid</em>&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1407,57 +866,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mem</td><td>Which memory region to operate. </td></tr>
-    <tr><td class="paramname">valid</td><td>Pass in true to valid, false to invalid. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enables(true) or disables(false) the feature. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga76711caa424d57a32847831f60cac1aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RDC_GetMemViolationStatus </td>
-          <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">rdc_mem_t&#160;</td>
-          <td class="paramname"><em>mem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00075.html#gaccf5405a9b3fc24040bd8f066f8b8a83">rdc_mem_status_t</a> *&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The first access violation is captured. Subsequent violations are ignored until the status register is cleared. Contents are cleared upon reading the register. Clearing of contents occurs only when the status is read by the memory region's associated domain ID(s).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mem</td><td>Which memory region to get. </td></tr>
-    <tr><td class="paramname">status</td><td>The returned status. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf594d7e71d47df3bdc89a62e45b944a1"></a>
+<a class="anchor" id="gafc86c177da23e2aea8980c9722f2d2af"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1465,16 +882,22 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void RDC_ClearMemViolationFlag </td>
+          <td class="memname">static uint32_t RTWDOG_CountToMesec </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">rdc_mem_t&#160;</td>
-          <td class="paramname"><em>mem</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>clockFreqInHz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1488,17 +911,59 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Note that if the clock frequency is too high the timeout period can be less than 1 ms. In this case this api will return 0 value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mem</td><td>Which memory region to clear. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">count</td><td>Raw count value. </td></tr>
+    <tr><td class="paramname">clockFreqInHz</td><td>The frequency of the clock source RTWDOG uses. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gab4b8ce2df7a0ccd22d90d897a80616fb"></a>
+<a class="anchor" id="ga49c1f47ae1f5eacc9d33035a96919bd6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RTWDOG_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function clears the RTWDOG status flag.</p>
+<p>Example to clear an interrupt flag: </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00075.html#ga49c1f47ae1f5eacc9d33035a96919bd6">RTWDOG_ClearStatusFlags</a>(wdog_base,<a class="code" href="a00075.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3">kRTWDOG_InterruptFlag</a>);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. The parameter can be any combination of the following values: <ul>
+<li>kRTWDOG_InterruptFlag </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1ef5c238172a1384ca3add569094505d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1506,22 +971,16 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint8_t RDC_GetMemAccessPolicy </td>
+          <td class="memname">static void RTWDOG_SetTimeoutValue </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">rdc_mem_t&#160;</td>
-          <td class="paramname"><em>mem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>domainId</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>timeoutCount</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1535,19 +994,18 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>This function writes a timeout value into the WDOG_TOVAL register. The WDOG_TOVAL register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
-    <tr><td class="paramname">mem</td><td>Which memory region to get. </td></tr>
-    <tr><td class="paramname">domainId</td><td>Get policy for which domain. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
+    <tr><td class="paramname">timeoutCount</td><td>RTWDOG timeout value, count of RTWDOG clock ticks. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Access policy, see <a class="el" href="a00075.html#gad1f726221167c740e1500317ea80beb2">_rdc_access_policy</a>. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gacf0861a99d3a45d022fef5dd35f158c5"></a>
+<a class="anchor" id="ga8c32aa54a50e5ef0fc68945cb74549ad"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1555,9 +1013,75 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint8_t RDC_GetCurrentMasterDomainId </td>
+          <td class="memname">static void RTWDOG_SetWindowValue </td>
           <td>(</td>
-          <td class="paramtype">RDC_Type *&#160;</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>windowValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a window value into the WDOG_WIN register. The WDOG_WIN register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">windowValue</td><td>RTWDOG window value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacac03752d33b0b906a9bc09c7b83d1d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_FORCEINLINE void RTWDOG_Unlock </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function unlocks the RTWDOG register written.</p>
+<p>Before starting the unlock sequence and following the configuration, disable the global interrupts. Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire. After the configuration finishes, re-enable the global interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0d8b4744fc5ad161c8e5fbc47255328e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void RTWDOG_Refresh </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1568,14 +1092,45 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the domain ID of the current bus master.</p>
+<p>This function feeds the RTWDOG. This function should be called before the Watchdog timer is in timeout. Otherwise, a reset is asserted.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>RDC peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Domain ID of current bus master. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8c3760e127cbcf22983a65d13c8a4bcd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t RTWDOG_GetCounterValue </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function gets the RTWDOG counter value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current RTWDOG counter value. </dd></dl>
 
 </div>
 </div>

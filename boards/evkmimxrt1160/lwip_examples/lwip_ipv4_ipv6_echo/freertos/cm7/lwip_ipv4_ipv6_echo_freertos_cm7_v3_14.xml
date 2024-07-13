@@ -119,7 +119,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -168,10 +168,6 @@
       <files mask="build_flexspi_nor_sdram_debug.sh"/>
       <files mask="build_flexspi_nor_sdram_release.bat"/>
       <files mask="build_flexspi_nor_sdram_release.sh"/>
-      <files mask="build_sdram_debug.bat"/>
-      <files mask="build_sdram_debug.sh"/>
-      <files mask="build_sdram_release.bat"/>
-      <files mask="build_sdram_release.sh"/>
     </source>
     <source path="../../../../../../devices/MIMXRT1166" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="all_lib_device.cmake"/>
@@ -212,22 +208,18 @@
       <files mask="readme.md"/>
     </source>
     <source path="iar" project_relative_path="MIMXRT1166/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1166xxxxx_cm7_sdram.icf"/>
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.icf"/>
     </source>
     <source path="mdk" project_relative_path="MIMXRT1166/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1166xxxxx_cm7_sdram.scf"/>
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf"/>
     </source>
     <source path="armgcc" project_relative_path="MIMXRT1166/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1166xxxxx_cm7_sdram.ld"/>
       <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld"/>
     </source>
     <source path="iar" project_relative_path="evkmimxrt1160" type="other" toolchain="iar">
       <files mask="evkmimxrt1160_connect_cm7.mac"/>
     </source>
     <source path="mdk" project_relative_path="evkmimxrt1160" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1160_sdram_init.ini"/>
       <files mask="evkmimxrt1160_flexspi_nor_sdram.ini"/>
     </source>
     <source path="." project_relative_path="evkmimxrt1160" type="other" toolchain="iar mdk armgcc">

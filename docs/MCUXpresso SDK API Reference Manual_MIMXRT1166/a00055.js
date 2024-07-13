@@ -1,6 +1,6 @@
 var a00055 =
 [
-    [ "_lcdifv2_display_config", "a00055.html#a00559", [
+    [ "_lcdifv2_display_config", "a00055.html#a00557", [
       [ "panelWidth", "a00055.html#a9d604f80c32d04b8729ba72c93fdf6ed", null ],
       [ "panelHeight", "a00055.html#a84ab9cc7b9ad9b6254bb00533874f7e2", null ],
       [ "hsw", "a00055.html#a827d70c05f0260098f0c9a8662d9be76", null ],
@@ -12,11 +12,11 @@ var a00055 =
       [ "polarityFlags", "a00055.html#a0a19e6b49af670b92501bc332d7fecef", null ],
       [ "lineOrder", "a00055.html#a2ea50e8d05a41cee97ed95e1b411af75", null ]
     ] ],
-    [ "_lcdifv2_buffer_config", "a00055.html#a00558", [
+    [ "_lcdifv2_buffer_config", "a00055.html#a00556", [
       [ "strideBytes", "a00055.html#a0f2b74087de20779c54487011f42b764", null ],
       [ "pixelFormat", "a00055.html#a76ab3a9ef2f5f3dd257015f5d7946fa9", null ]
     ] ],
-    [ "_lcdifv2_blend_config", "a00055.html#a00557", [
+    [ "_lcdifv2_blend_config", "a00055.html#a00555", [
       [ "globalAlpha", "a00055.html#adb03566cbdf4110bfc9b170cf32f9e4b", null ],
       [ "alphaMode", "a00055.html#a04dfa9cab136d198d47c694afca2505b", null ],
       [ "pdAlphaMode", "a00055.html#a871185cac19ea882de48e55fef15615a", null ],

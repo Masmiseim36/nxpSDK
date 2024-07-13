@@ -1,18 +1,18 @@
 var a00014 =
 [
-    [ "eDMA core Driver", "a00205.html", null ],
-    [ "eDMA soc Driver", "a00206.html", "a00206" ],
-    [ "edma_channel_Preemption_config_t", "a00014.html#a00290", [
+    [ "eDMA core Driver", "a00202.html", null ],
+    [ "eDMA soc Driver", "a00203.html", "a00203" ],
+    [ "edma_channel_Preemption_config_t", "a00014.html#a00288", [
       [ "enableChannelPreemption", "a00014.html#aa1230352459f3f47b0e396ef7971bbd6", null ],
       [ "enablePreemptAbility", "a00014.html#ab7329f8b16f7e8bb0283c9305d9902ce", null ],
       [ "channelPriority", "a00014.html#a38fbcb827c573361d0043d95faca2d8f", null ]
     ] ],
-    [ "edma_minor_offset_config_t", "a00014.html#a00293", [
+    [ "edma_minor_offset_config_t", "a00014.html#a00291", [
       [ "enableSrcMinorOffset", "a00014.html#aa2b34fbdc053b7f2f3ea476048e9f80f", null ],
       [ "enableDestMinorOffset", "a00014.html#a5a2ce555e51bc7694fec6443c191fb5b", null ],
       [ "minorOffset", "a00014.html#aff7bae6e4e019c2b49508bbfec6cd1ea", null ]
     ] ],
-    [ "edma_channel_config_t", "a00014.html#a00289", [
+    [ "edma_channel_config_t", "a00014.html#a00287", [
       [ "channelPreemptionConfig", "a00014.html#a0d5d6243dd4b0049e4c610b0e59ededd", null ],
       [ "channelReadMemoryAttribute", "a00014.html#a1e1d96ffc12cd592b6dad86e8f2ed7c3", null ],
       [ "channelWriteMemoryAttribute", "a00014.html#a918d998a555ca3d57d2ab7f164207126", null ],
@@ -24,7 +24,7 @@ var a00014 =
       [ "securityLevel", "a00014.html#a7cd164c2625d8ee767e5492df0848f9b", null ],
       [ "protectionLevel", "a00014.html#af40bb318090509c5dc478dc36d9870d8", null ]
     ] ],
-    [ "edma_transfer_config_t", "a00014.html#a00294", [
+    [ "edma_transfer_config_t", "a00014.html#a00292", [
       [ "srcAddr", "a00014.html#aa1ff988241ea8238e8793f4236c55553", null ],
       [ "destAddr", "a00014.html#a70e10c552f356c4d2935e9f308a3317a", null ],
       [ "srcTransferSize", "a00014.html#ae5f96bb8d80f6f7a6c8a687e8a42a77e", null ],
@@ -47,7 +47,7 @@ var a00014 =
       [ "minorLoopLinkChannel", "a00014.html#a31d78ea5b3aa5d07c830c15b44014ff3", null ],
       [ "linkTCD", "a00014.html#a552d054737eddf2f3e42ae9fac1d6f03", null ]
     ] ],
-    [ "edma_config_t", "a00014.html#a00291", [
+    [ "edma_config_t", "a00014.html#a00289", [
       [ "enableMasterIdReplication", "a00014.html#a1b93d01d514b771aba6f26dfce9c5b8d", null ],
       [ "enableGlobalChannelLink", "a00014.html#ad568833f3f99401325d6a860c8433f51", null ],
       [ "enableHaltOnError", "a00014.html#a4d319e29ce0ab4f2406aae26a136422a", null ],
@@ -55,7 +55,7 @@ var a00014 =
       [ "enableRoundRobinArbitration", "a00014.html#aef3200ba1711d6649c69fca888cf3468", null ],
       [ "channelConfig", "a00014.html#ab81a4e34fbeb904549fbc8e780728345", null ]
     ] ],
-    [ "edma_handle_t", "a00014.html#a00292", [
+    [ "edma_handle_t", "a00014.html#a00290", [
       [ "callback", "a00014.html#a2103986f2733a5b6ce42b5983eabcb11", null ],
       [ "userData", "a00014.html#a6af5d18677d40167da0d0219cb3bed01", null ],
       [ "channelBase", "a00014.html#a45492a46024dde446d15902ad7cbd047", null ],
@@ -198,7 +198,7 @@ var a00014 =
     ] ],
     [ "EDMA_Init", "a00014.html#gac9ac0d8983270150ff59f5d6fcb640ad", null ],
     [ "EDMA_Deinit", "a00014.html#gaef26e952740aa51e98f6a9ba9abf1cff", null ],
-    [ "EDMA_InstallTCD", "a00014.html#ga5be90a7d94f8cb2eace9448071d27908", null ],
+    [ "EDMA_InstallTCD", "a00014.html#ga8fa86ef70519bef2e13f32821ee93151", null ],
     [ "EDMA_GetDefaultConfig", "a00014.html#ga9851dc5addd6a1fc557bfdb625aa5c19", null ],
     [ "EDMA_InitChannel", "a00014.html#ga03155e91cdd0b2a9d25c6e85e4e4f59e", null ],
     [ "EDMA_SetChannelMemoryAttribute", "a00014.html#ga24c11d0c86f991509066ad328cb49e33", null ],
@@ -232,6 +232,17 @@ var a00014 =
     [ "EDMA_TcdEnableInterrupts", "a00014.html#gaff194ee32f2848aa721f8d65f4329fce", null ],
     [ "EDMA_TcdDisableInterrupts", "a00014.html#ga1dad41c69a12e8abb772f60c66d9f162", null ],
     [ "EDMA_TcdSetMajorOffsetConfig", "a00014.html#ga1de61e7f86f4f9f00f757dafe2dbc5d5", null ],
+    [ "EDMA_ConfigChannelSoftwareTCDExt", "a00014.html#gac003e5a6d2b15ace3f73cb1b840985ba", null ],
+    [ "EDMA_TcdResetExt", "a00014.html#gaa0fbada2c78b8147ef4b943d74b121b3", null ],
+    [ "EDMA_TcdSetTransferConfigExt", "a00014.html#gaa8a3f6a03aff966fdcbe69fdf2bcf096", null ],
+    [ "EDMA_TcdSetMinorOffsetConfigExt", "a00014.html#ga68bedd45487c8fab9e57d9dd5af5d690", null ],
+    [ "EDMA_TcdSetChannelLinkExt", "a00014.html#ga67178edea945b25a30e3d10a033ee44a", null ],
+    [ "EDMA_TcdSetBandWidthExt", "a00014.html#ga85805fac851bf8b33ca359ec9c1b5e13", null ],
+    [ "EDMA_TcdSetModuloExt", "a00014.html#ga20c4f2669e1b41ccd3375a9879a0f5ea", null ],
+    [ "EDMA_TcdEnableAutoStopRequestExt", "a00014.html#ga35a6093e409394ef60e95eba568aed5e", null ],
+    [ "EDMA_TcdEnableInterruptsExt", "a00014.html#ga71a3471358ba052292f6055cfd0f3fc6", null ],
+    [ "EDMA_TcdDisableInterruptsExt", "a00014.html#gabf703ca9db5fe2389f3af1618c09b892", null ],
+    [ "EDMA_TcdSetMajorOffsetConfigExt", "a00014.html#ga95cabae68d7fb436e92f6d1124eae065", null ],
     [ "EDMA_EnableChannelRequest", "a00014.html#ga01f2480f3cf21e9bdd55356c18547dd1", null ],
     [ "EDMA_DisableChannelRequest", "a00014.html#gade300e98dc0021cde353b4cc5f370ada", null ],
     [ "EDMA_TriggerChannelStart", "a00014.html#ga7cf09dd082102c80ad7f29d31c89d192", null ],
@@ -245,7 +256,7 @@ var a00014 =
     [ "EDMA_PrepareTransferConfig", "a00014.html#ga5d1bb30d93e3fd08656d77f0e3a9f75f", null ],
     [ "EDMA_PrepareTransfer", "a00014.html#ga9ae2d264213737df083b4a7089f826d8", null ],
     [ "EDMA_PrepareTransferTCD", "a00014.html#ga71e05df342fc4a9f12c7724d39857df5", null ],
-    [ "EDMA_SubmitTransferTCD", "a00014.html#ga6425024eec16006e4353a6f052b5f886", null ],
+    [ "EDMA_SubmitTransferTCD", "a00014.html#gaed54da0834622af4370fb66efae493b3", null ],
     [ "EDMA_SubmitTransfer", "a00014.html#ga8a78ca4c4c941f0ba5fa60033b81b61b", null ],
     [ "EDMA_SubmitLoopTransfer", "a00014.html#ga7a875f256e7792a023ec5eba060c68a7", null ],
     [ "EDMA_StartTransfer", "a00014.html#gab4a5570a9a0936f6666ec3c6a619296f", null ],

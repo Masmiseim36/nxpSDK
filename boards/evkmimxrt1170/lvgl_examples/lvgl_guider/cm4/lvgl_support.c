@@ -83,12 +83,6 @@
 #define LVGL_BUFFER_HEIGHT DEMO_BUFFER_HEIGHT
 #endif
 
-#if __CORTEX_M == 4
-#define DEMO_FLUSH_DCACHE() L1CACHE_CleanInvalidateSystemCache()
-#else
-#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache()
-#endif
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -124,6 +118,16 @@ static void DEMO_SetLcdColorPalette(void);
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 #if DEMO_USE_ROTATE
 SDK_ALIGN(static uint8_t s_lvglBuffer[1][DEMO_FB_SIZE], DEMO_FB_ALIGN);
+#endif
+
+#if __CORTEX_M == 4
+#define DEMO_FLUSH_DCACHE() L1CACHE_CleanInvalidateSystemCache()
+#else
+#if DEMO_USE_ROTATE
+#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache_by_Addr(s_lvglBuffer[0], DEMO_FB_SIZE)
+#else
+#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache()
+#endif
 #endif
 
 #if defined(SDK_OS_FREE_RTOS)
@@ -395,10 +399,14 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
         DEMO_WaitBufferSwitchOff();
     }
 
-    DEMO_FLUSH_DCACHE();
-
     /* Copy buffer. */
     void *inactiveFrameBuffer = s_inactiveFrameBuffer;
+
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)s_inactiveFrameBuffer, DEMO_FB_SIZE);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(inactiveFrameBuffer, DEMO_FB_SIZE);
+#endif
 
 #if LV_USE_GPU_NXP_PXP /* Use PXP to rotate the panel. */
     lv_area_t dest_area = {
@@ -423,7 +431,11 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
     }
 #endif
 
-    DEMO_FLUSH_DCACHE();
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)s_inactiveFrameBuffer, DEMO_FB_SIZE);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(inactiveFrameBuffer, DEMO_FB_SIZE);
+#endif
 
     g_dc.ops->setFrameBuffer(&g_dc, 0, inactiveFrameBuffer);
 
@@ -432,7 +444,12 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
     lv_disp_flush_ready(disp_drv);
 
 #else  /* DEMO_USE_ROTATE */
-    DEMO_FLUSH_DCACHE();
+
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)color_p, DEMO_FB_SIZE);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(color_p, DEMO_FB_SIZE);
+#endif
 
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)color_p);
 

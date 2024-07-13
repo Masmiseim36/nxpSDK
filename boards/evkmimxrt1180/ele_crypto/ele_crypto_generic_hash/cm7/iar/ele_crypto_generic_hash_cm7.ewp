@@ -347,7 +347,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
@@ -360,6 +359,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1434,7 +1434,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
@@ -1447,6 +1446,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2519,7 +2519,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
@@ -2532,6 +2531,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3606,7 +3606,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
@@ -3619,6 +3618,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4384,12 +4384,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4397,6 +4391,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -4464,6 +4467,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
   </group>
   <group>
     <name>component</name>
@@ -4524,10 +4533,25 @@
         <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0-ahab-container.img</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0alt-1c00-ahab-container.img</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0alt-ahab-container.img</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/Readme.md</name>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0el2goprov-1c00-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0el2goprov-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0oemprov-1c00-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0oemprov-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/Readme_rt1180.md</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../firmware/edgelock/SCR.txt</name>

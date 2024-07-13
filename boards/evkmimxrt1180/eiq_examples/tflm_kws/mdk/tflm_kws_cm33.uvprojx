@@ -335,7 +335,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1189CVM8B_cm33, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, __FPU_PRESENT=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK, DISABLEFLOAT16</Define>
               <Undefine/>
-              <IncludePath>..;../source;../source/audio;../source/model;../../../../../devices/MIMXRT1189/utilities/str;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../source;../source/audio;../source/model;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../devices/MIMXRT1189/utilities/str;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -547,7 +547,7 @@
             <File>
               <FileName>audio_load.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/common/audio/audio_load.cpp</FilePath>
+              <FilePath>../source/audio/audio_load.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -585,16 +585,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -609,6 +599,21 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -620,19 +625,14 @@
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
             </File>
             <File>
               <FileName>arm_const_structs_f16.h</FileName>
@@ -643,6 +643,11 @@
               <FileName>arm_helium_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>arm_math_f16.h</FileName>
@@ -730,6 +735,11 @@
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
             </File>
             <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/debug.h</FilePath>
+            </File>
+            <File>
               <FileName>distance_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
@@ -778,6 +788,11 @@
               <FileName>matrix_functions_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</FilePath>
             </File>
             <File>
               <FileName>none.h</FileName>
@@ -838,6 +853,11 @@
               <FileName>utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>window_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/window_functions.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1078,6 +1098,16 @@
               <FileName>TransformFunctionsF16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Source/WindowFunctions</GroupName>
+          <Files>
+            <File>
+              <FileName>WindowFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1388,6 +1418,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3030,7 +3080,7 @@
               <MiscControls>-ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1189CVM8B_cm33, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM33, __FPU_PRESENT=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK, DISABLEFLOAT16</Define>
               <Undefine/>
-              <IncludePath>..;../source;../source/audio;../source/model;../../../../../devices/MIMXRT1189/utilities/str;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../source;../source/audio;../source/model;../../../../../devices/MIMXRT1189/utilities/debug_console_lite;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/tensorflow-lite;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../components/lists;../../../../../components/uart;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../devices/MIMXRT1189/drivers;../../../../../devices/MIMXRT1189;../../../../../devices/MIMXRT1189/xip;../../../xip;../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../devices/MIMXRT1189/utilities/str;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3242,7 +3292,7 @@
             <File>
               <FileName>audio_load.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/common/audio/audio_load.cpp</FilePath>
+              <FilePath>../source/audio/audio_load.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -3280,16 +3330,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
@@ -3304,6 +3344,21 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3315,19 +3370,14 @@
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
             </File>
             <File>
               <FileName>arm_const_structs_f16.h</FileName>
@@ -3338,6 +3388,11 @@
               <FileName>arm_helium_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>arm_math_f16.h</FileName>
@@ -3425,6 +3480,11 @@
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
             </File>
             <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/debug.h</FilePath>
+            </File>
+            <File>
               <FileName>distance_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
@@ -3473,6 +3533,11 @@
               <FileName>matrix_functions_f16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</FilePath>
             </File>
             <File>
               <FileName>none.h</FileName>
@@ -3533,6 +3598,11 @@
               <FileName>utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>window_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/dsp/window_functions.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3773,6 +3843,16 @@
               <FileName>TransformFunctionsF16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Source/WindowFunctions</GroupName>
+          <Files>
+            <File>
+              <FileName>WindowFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4083,6 +4163,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>

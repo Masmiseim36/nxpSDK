@@ -82,7 +82,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT1189CVM8B_cm7 \
     -DFLEXCAN_WAIT_TIMEOUT=1000 \
     -DMCUXPRESSO_SDK \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -93,7 +92,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -106,7 +104,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT1189CVM8B_cm7 \
     -DFLEXCAN_WAIT_TIMEOUT=1000 \
     -DMCUXPRESSO_SDK \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -116,7 +113,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -130,7 +126,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_DEBUG " \
     -DCPU_MIMXRT1189CVM8B_cm7 \
     -DFLEXCAN_WAIT_TIMEOUT=1000 \
     -DMCUXPRESSO_SDK \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -141,7 +136,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -155,7 +149,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_RELEASE " \
     -DCPU_MIMXRT1189CVM8B_cm7 \
     -DFLEXCAN_WAIT_TIMEOUT=1000 \
     -DMCUXPRESSO_SDK \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -165,7 +158,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -180,7 +172,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1189CVM8B_cm7 \
     -DFLEXCAN_WAIT_TIMEOUT=1000 \
     -DMCUXPRESSO_SDK \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -191,7 +182,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -206,7 +196,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1189CVM8B_cm7 \
     -DFLEXCAN_WAIT_TIMEOUT=1000 \
     -DMCUXPRESSO_SDK \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -216,7 +205,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -238,7 +226,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -260,7 +247,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -283,7 +269,6 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -305,7 +290,6 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -328,7 +312,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -350,7 +333,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -366,7 +348,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -392,7 +373,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -419,7 +399,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -445,7 +424,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -472,7 +450,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -498,7 +475,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

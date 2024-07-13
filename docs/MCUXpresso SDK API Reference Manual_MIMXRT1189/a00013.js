@@ -1,20 +1,20 @@
 var a00013 =
 [
-    [ "dcdc_config_t", "a00013.html#a00284", [
+    [ "dcdc_config_t", "a00013.html#a00282", [
       [ "controlMode", "a00013.html#a57fad28f2ce8adadf869ab25dd4d7bf7", null ],
       [ "trimInputMode", "a00013.html#abea97833ac17f3964ff8f245a844e33e", null ]
     ] ],
-    [ "dcdc_min_power_config_t", "a00013.html#a00288", [
+    [ "dcdc_min_power_config_t", "a00013.html#a00286", [
       [ "enableUseHalfFreqForContinuous", "a00013.html#adbe01c99b380a3d872f7fd6f787ab7cc", null ]
     ] ],
-    [ "dcdc_detection_config_t", "a00013.html#a00285", [
+    [ "dcdc_detection_config_t", "a00013.html#a00283", [
       [ "enableXtalokDetection", "a00013.html#a26388a555904c467f343d5cee515f268", null ],
       [ "powerDownOverVoltageVdd1P8Detection", "a00013.html#a2a9b0a8787655203b68e8de03f6631bc", null ],
       [ "powerDownOverVoltageVdd1P0Detection", "a00013.html#a8c04b2503cf750c6c29169ca8853e3a7", null ],
       [ "powerDownLowVoltageDetection", "a00013.html#a71fcd5c8c79e6d78fc88eafdd40c3a2d", null ],
       [ "powerDownOverCurrentDetection", "a00013.html#a6782ff659baff137d41d8945b5ae6e7c", null ]
     ] ],
-    [ "dcdc_loop_control_config_t", "a00013.html#a00287", [
+    [ "dcdc_loop_control_config_t", "a00013.html#a00285", [
       [ "enableCommonHysteresis", "a00013.html#aa585f6efdba3cb2bc66b4c658c0b0e80", null ],
       [ "enableCommonThresholdDetection", "a00013.html#ad5a97673aa667b4aeb7549173d4e8516", null ],
       [ "enableDifferentialHysteresis", "a00013.html#a67568ebe798a99683fb8ea5b02e53abf", null ],
@@ -26,7 +26,7 @@ var a00013 =
       [ "controlParameterMagnitude", "a00013.html#a741144ac35c33c5ab3060a22b0614ee2", null ],
       [ "integralProportionalRatio", "a00013.html#a0925787c658e4643d658fa91fd344b32", null ]
     ] ],
-    [ "dcdc_internal_regulator_config_t", "a00013.html#a00286", [
+    [ "dcdc_internal_regulator_config_t", "a00013.html#a00284", [
       [ "feedbackPoint", "a00013.html#a7494dc737ae93a739c944037610372b2", null ]
     ] ],
     [ "FSL_DCDC_DRIVER_VERSION", "a00013.html#gaead28d0a1704d502fa7e4d83448530d9", null ],

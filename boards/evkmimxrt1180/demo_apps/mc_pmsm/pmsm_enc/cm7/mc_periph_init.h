@@ -13,7 +13,7 @@
 #include "mcdrv_adc_imxrt118x.h"
 
 #include "mcdrv_pwm3ph_pwma.h"
-#include "mcdrv_enc_eqd.h"
+#include "mcdrv_enc_eqd2.h"
 #include "m1_pmsm_appconfig.h"
 
 /*******************************************************************************
@@ -139,9 +139,13 @@ typedef struct _clock_setup
  * Define position and speed sensor - quadrature encoder for motor 1
  ******************************************************************************/
 #define M1_MCDRV_QD_PERIPH_INIT() M1_InitQD()
-#define M1_MCDRV_QD_GET(par) (MCDRV_QdEncGet(par))
+#define M1_MCDRV_QD_GET(par) \
+        MCDRV_QdEncGetPosition(par); \
+        MCDRV_QdEncGetSpeed(par); 
 #define M1_MCDRV_QD_SET_DIRECTION(par) (MCDRV_QdEncSetDirection(par))
-#define M1_MCDRV_QD_SET_PULSES(par) (MCDRV_QdEncSetPulses(par))
+#define M1_MCDRV_QD_SET_PULSES(par) \
+        MCDRV_QdEncSetPulses(par);  \
+        MCDRV_QdEncUpdateParameters(par);
 #define M1_MCDRV_QD_CLEAR(par) (MCDRV_QdEncClear(par))
 
 /******************************************************************************

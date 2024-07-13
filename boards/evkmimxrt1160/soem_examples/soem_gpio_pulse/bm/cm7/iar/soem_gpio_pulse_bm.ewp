@@ -360,7 +360,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -371,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1459,7 +1459,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -1470,6 +1469,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2556,7 +2556,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -2567,6 +2566,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3655,7 +3655,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -3666,6 +3665,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4705,12 +4705,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4724,6 +4718,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

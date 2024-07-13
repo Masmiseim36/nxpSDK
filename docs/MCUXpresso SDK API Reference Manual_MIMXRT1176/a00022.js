@@ -1,15 +1,15 @@
 var a00022 =
 [
-    [ "_dcdc_config", "a00022.html#a00428", [
+    [ "_dcdc_config", "a00022.html#a00425", [
       [ "controlMode", "a00022.html#a6cbf1739b2b83d7d0ef9b20cc2062fb9", null ],
       [ "trimInputMode", "a00022.html#a82d92d5ab8f3f21f2bc7505e5c2045ab", null ],
       [ "enableDcdcTimeout", "a00022.html#a35fae5cf83c64ed7f6010fde38352492", null ],
       [ "enableSwitchingConverterOutput", "a00022.html#a7449cdceca9168937e78ba34861f8f8a", null ]
     ] ],
-    [ "_dcdc_min_power_config", "a00022.html#a00433", [
+    [ "_dcdc_min_power_config", "a00022.html#a00430", [
       [ "enableUseHalfFreqForContinuous", "a00022.html#a29dbd85401dd919ad76feac9f7b8818f", null ]
     ] ],
-    [ "_dcdc_detection_config", "a00022.html#a00429", [
+    [ "_dcdc_detection_config", "a00022.html#a00426", [
       [ "enableXtalokDetection", "a00022.html#acafdc0e5a6fbc536578310b4962aacb0", null ],
       [ "powerDownOverVoltageVdd1P8Detection", "a00022.html#afa8c5ae5f793b26c0b052ae7038d1873", null ],
       [ "powerDownOverVoltageVdd1P0Detection", "a00022.html#a9d2efa19c344229807eb76576df392bb", null ],
@@ -19,7 +19,7 @@ var a00022 =
       [ "powerDownZeroCrossDetection", "a00022.html#a46275391caeb9c45282524ed53cd7c93", null ],
       [ "PeakCurrentThreshold", "a00022.html#a3ce4c432fc8c583cdc7614b96fd047ec", null ]
     ] ],
-    [ "_dcdc_loop_control_config", "a00022.html#a00431", [
+    [ "_dcdc_loop_control_config", "a00022.html#a00428", [
       [ "enableCommonHysteresis", "a00022.html#ad0a09ad1b990e59530c3ddbb322b9404", null ],
       [ "enableCommonThresholdDetection", "a00022.html#a7607542942eee2f96a9656490767ffaf", null ],
       [ "enableDifferentialHysteresis", "a00022.html#a9312d6827d024ba400f8b5dd241f6a0a", null ],
@@ -31,13 +31,13 @@ var a00022 =
       [ "controlParameterMagnitude", "a00022.html#a5c48c46ecdd4dddc50279189f8df8604", null ],
       [ "integralProportionalRatio", "a00022.html#a26a94dae56e46f439aa4c4bebaa4e538", null ]
     ] ],
-    [ "_dcdc_internal_regulator_config", "a00022.html#a00430", [
+    [ "_dcdc_internal_regulator_config", "a00022.html#a00427", [
       [ "feedbackPoint", "a00022.html#a9aa87e49e076cbf61c3e2940143ff409", null ]
     ] ],
-    [ "_dcdc_low_power_config", "a00022.html#a00432", [
+    [ "_dcdc_low_power_config", "a00022.html#a00429", [
       [ "enableAdjustHystereticValue", "a00022.html#ac009f10f5d80ab76becf338357dbe36d", null ]
     ] ],
-    [ "_dcdc_setpoint_config", "a00022.html#a00434", [
+    [ "_dcdc_setpoint_config", "a00022.html#a00431", [
       [ "enableDCDCMap", "a00022.html#af59d35b5e9ffa15c06490cfe7011ff58", null ],
       [ "enableDigLogicMap", "a00022.html#a9130fe87780af564efb0f1c99f6b4823", null ],
       [ "lowpowerMap", "a00022.html#a9a1486145bab7443fa27a0212873df48", null ],

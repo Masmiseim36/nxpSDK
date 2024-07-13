@@ -224,9 +224,11 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>MBEDTLS_CONFIG_FILE="ele_s400_mbedtls_config.h"</state>
           <state>MBEDTLS_KEY_EXCHANGE_RSA_ENABLED</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>MBEDTLS_MCUX_ELE_S400_API</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
@@ -271,7 +273,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pe257,Pa039,Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -367,11 +369,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
@@ -379,6 +381,7 @@
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1327,10 +1330,12 @@
         <option>
           <name>CCDefines</name>
           <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
           <state>MBEDTLS_CONFIG_FILE="ele_s400_mbedtls_config.h"</state>
           <state>MBEDTLS_KEY_EXCHANGE_RSA_ENABLED</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>MBEDTLS_MCUX_ELE_S400_API</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
@@ -1375,7 +1380,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pe257,Pa039,Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1471,11 +1476,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
@@ -1483,6 +1488,7 @@
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2210,6 +2216,42 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sblconfig.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../flash_partitioning.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../flash_partitioning.c</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+  </group>
+  <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../boot.c</name>
@@ -2218,16 +2260,7 @@
       <name>$PROJ_DIR$/../boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../bootutil_hooks.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../keys.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../os.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sbl_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../main.c</name>
@@ -2247,12 +2280,6 @@
         <name>$PROJ_DIR$/../include/mcuboot_config/mcuboot_logging.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../include/sbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../include/sbldef.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../include/flash_map.h</name>
     </file>
@@ -2295,42 +2322,6 @@
         <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_common.h</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../sblconfig.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../flash_partitioning.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../flash_partitioning.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../readme.md</name>
-    </file>
   </group>
   <group>
     <name>mbedtls</name>
@@ -2653,6 +2644,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/base64.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/bignum_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/bignum.c</name>
@@ -3132,6 +3126,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
   </group>
   <group>
     <name>bootutil</name>
@@ -3143,16 +3143,10 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bench.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_hooks.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_log.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_test.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_public.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_public_hooks.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_record.h</name>
@@ -3161,10 +3155,16 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_status.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_hooks.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/boot_public_hooks.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_log.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_public.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/bootutil_test.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/caps.h</name>
@@ -3188,16 +3188,16 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/image.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/security_cnt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/sign_key.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/security_cnt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/sign_key.h</name>
         </file>
         <group>
           <name>crypto</name>
@@ -3217,13 +3217,16 @@
             <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdh_x25519.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdsa_p256.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/ecdsa.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/hmac_sha256.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/sha256.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/rsa.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/crypto/sha.h</name>
           </file>
         </group>
       </group>
@@ -3238,6 +3241,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_priv.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_public.c</name>
@@ -3255,10 +3261,7 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/fault_injection_hardening_delay_rng_mbedtls.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ec.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ec256.c</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ecdsa.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/image_ed25519.c</name>
@@ -3279,16 +3282,13 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_move.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_priv.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_scratch.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/tlv.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/swap_priv.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_priv.h</name>
       </file>
     </group>
   </group>
@@ -3313,12 +3313,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -3329,6 +3323,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

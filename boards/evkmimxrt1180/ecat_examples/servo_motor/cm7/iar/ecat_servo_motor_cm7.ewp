@@ -359,8 +359,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GFLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
@@ -374,11 +374,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
@@ -386,6 +386,7 @@
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1478,8 +1479,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GFLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
@@ -1493,11 +1494,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
@@ -1505,6 +1506,7 @@
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2595,8 +2597,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GFLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
@@ -2610,11 +2612,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
@@ -2622,6 +2624,7 @@
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3714,8 +3717,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GFLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
@@ -3729,11 +3732,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7</state>
@@ -3741,6 +3744,7 @@
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4691,6 +4695,18 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+    </file>
   </group>
   <group>
     <name>rtcesl</name>
@@ -5388,78 +5404,6 @@
   <group>
     <name>motor_control</name>
     <group>
-      <name>freemaster</name>
-      <group>
-        <name>pmsm_float</name>
-        <group>
-          <name>mcat</name>
-          <group>
-            <name>assets</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/speedfocwolswbemf.gif</name>
-            </file>
-          </group>
-          <group>
-            <name>css</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/css/app.css</name>
-            </file>
-          </group>
-          <group>
-            <name>js</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/chunk.js</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/chunk.js.map</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/mcat.js</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/mcat.js.map</name>
-            </file>
-          </group>
-          <group>
-            <name>license</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/license/LA_OPT_NXP_Software_License.txt</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/license/SW-Content-Register.txt</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/freemaster-client.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/index.html</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/init.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/simple-jsonrpc-js.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/m1_pmsm_appconfig.h</name>
-          </file>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
-      </file>
-    </group>
-    <group>
       <name>pmsm</name>
       <group>
         <name>pmsm_float</name>
@@ -5478,10 +5422,10 @@
             <name>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</name>
           </file>
         </group>
         <group>
@@ -5589,12 +5533,81 @@
       </group>
     </group>
     <group>
+      <name>freemaster</name>
+      <group>
+        <name>pmsm_float</name>
+        <group>
+          <name>mcat</name>
+          <group>
+            <name>assets</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/speedfocwolswbemf.gif</name>
+            </file>
+          </group>
+          <group>
+            <name>css</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/css/app.css</name>
+            </file>
+          </group>
+          <group>
+            <name>js</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/chunk.js</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/chunk.js.map</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/mcat.js</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/js/mcat.js.map</name>
+            </file>
+          </group>
+          <group>
+            <name>license</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/license/LA_OPT_NXP_Software_License.txt</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/license/SW-Content-Register.txt</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/freemaster-client.js</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/index.html</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/init.js</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/simple-jsonrpc-js.js</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/m1_pmsm_appconfig.h</name>
+          </file>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
+      </file>
+    </group>
+    <group>
       <name>docs</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/motor_control/docs/readme.txt</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/motor_control/docs/readme_pmsm.txt</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
@@ -5778,12 +5791,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -5794,6 +5801,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

@@ -1,9 +1,9 @@
 var a00021 =
 [
-    [ "_dac12_hardware_info", "a00021.html#a00427", [
+    [ "_dac12_hardware_info", "a00021.html#a00424", [
       [ "fifoSizeInfo", "a00021.html#a999393e00b1f3f14e01e0c126e340b76", null ]
     ] ],
-    [ "dac12_config_t", "a00021.html#a00718", [
+    [ "dac12_config_t", "a00021.html#a00715", [
       [ "fifoWatermarkLevel", "a00021.html#ad322ec3e28469a481c1f8a1a25c1de37", null ],
       [ "fifoWorkMode", "a00021.html#accf3a2a8368437c7972f585072c5d7dd", null ],
       [ "referenceVoltageSource", "a00021.html#a6693bae76733313e207aca983379b09a", null ],

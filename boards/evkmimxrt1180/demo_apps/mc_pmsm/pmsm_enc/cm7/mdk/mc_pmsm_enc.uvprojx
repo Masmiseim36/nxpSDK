@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1189CVM8B_cm7, MC_EXAMPLE, MCUXPRESSO_SDK, PMSM_SNSLESS, PMSM_SNSLESS_ENC, MID_EN, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -390,9 +390,9 @@
               <FilePath>../../../../../../../middleware/motor_control/docs/Release_notes.pdf</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme_pmsm.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/docs/readme.txt</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</FilePath>
             </File>
             <File>
               <FileName>Release_notes.pdf</FileName>
@@ -593,6 +593,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1740,14 +1760,14 @@
               <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.c</FileName>
+              <FileName>mcdrv_enc_eqd2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.h</FileName>
+              <FileName>mcdrv_enc_eqd2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1758,11 +1778,6 @@
               <FileName>NXP_logo_RGB_web.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</FilePath>
-            </File>
-            <File>
-              <FileName>nxp-logo-small-121x52.png</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</FilePath>
             </File>
             <File>
               <FileName>speedfocwolswbemf.gif</FileName>
@@ -2125,14 +2140,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -2148,6 +2158,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2847,10 +2867,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm7, MC_EXAMPLE, MCUXPRESSO_SDK, PMSM_SNSLESS, PMSM_SNSLESS_ENC, MID_EN, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2905,9 +2925,9 @@
               <FilePath>../../../../../../../middleware/motor_control/docs/Release_notes.pdf</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme_pmsm.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/docs/readme.txt</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</FilePath>
             </File>
             <File>
               <FileName>Release_notes.pdf</FileName>
@@ -3108,6 +3128,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4255,14 +4295,14 @@
               <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.c</FileName>
+              <FileName>mcdrv_enc_eqd2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.h</FileName>
+              <FileName>mcdrv_enc_eqd2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4273,11 +4313,6 @@
               <FileName>NXP_logo_RGB_web.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</FilePath>
-            </File>
-            <File>
-              <FileName>nxp-logo-small-121x52.png</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</FilePath>
             </File>
             <File>
               <FileName>speedfocwolswbemf.gif</FileName>
@@ -4640,14 +4675,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -4663,6 +4693,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5362,10 +5402,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE, DEBUG, CPU_MIMXRT1189CVM8B_cm7, MC_EXAMPLE, MCUXPRESSO_SDK, PMSM_SNSLESS, PMSM_SNSLESS_ENC, MID_EN, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5420,9 +5460,9 @@
               <FilePath>../../../../../../../middleware/motor_control/docs/Release_notes.pdf</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme_pmsm.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/docs/readme.txt</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</FilePath>
             </File>
             <File>
               <FileName>Release_notes.pdf</FileName>
@@ -5623,6 +5663,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6770,14 +6830,14 @@
               <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.c</FileName>
+              <FileName>mcdrv_enc_eqd2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.h</FileName>
+              <FileName>mcdrv_enc_eqd2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6788,11 +6848,6 @@
               <FileName>NXP_logo_RGB_web.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</FilePath>
-            </File>
-            <File>
-              <FileName>nxp-logo-small-121x52.png</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</FilePath>
             </File>
             <File>
               <FileName>speedfocwolswbemf.gif</FileName>
@@ -7155,14 +7210,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -7178,6 +7228,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7877,10 +7937,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1189CVM8B_cm7, MC_EXAMPLE, MCUXPRESSO_SDK, PMSM_SNSLESS, PMSM_SNSLESS_ENC, MID_EN, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7935,9 +7995,9 @@
               <FilePath>../../../../../../../middleware/motor_control/docs/Release_notes.pdf</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme_pmsm.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/docs/readme.txt</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</FilePath>
             </File>
             <File>
               <FileName>Release_notes.pdf</FileName>
@@ -8138,6 +8198,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9285,14 +9365,14 @@
               <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.c</FileName>
+              <FileName>mcdrv_enc_eqd2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.h</FileName>
+              <FileName>mcdrv_enc_eqd2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9303,11 +9383,6 @@
               <FileName>NXP_logo_RGB_web.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</FilePath>
-            </File>
-            <File>
-              <FileName>nxp-logo-small-121x52.png</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</FilePath>
             </File>
             <File>
               <FileName>speedfocwolswbemf.gif</FileName>
@@ -9670,14 +9745,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -9693,6 +9763,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10392,10 +10472,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm7, MC_EXAMPLE, MCUXPRESSO_SDK, PMSM_SNSLESS, PMSM_SNSLESS_ENC, MID_EN, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10450,9 +10530,9 @@
               <FilePath>../../../../../../../middleware/motor_control/docs/Release_notes.pdf</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme_pmsm.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/docs/readme.txt</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</FilePath>
             </File>
             <File>
               <FileName>Release_notes.pdf</FileName>
@@ -10653,6 +10733,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -11800,14 +11900,14 @@
               <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.c</FileName>
+              <FileName>mcdrv_enc_eqd2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.h</FileName>
+              <FileName>mcdrv_enc_eqd2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -11818,11 +11918,6 @@
               <FileName>NXP_logo_RGB_web.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</FilePath>
-            </File>
-            <File>
-              <FileName>nxp-logo-small-121x52.png</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</FilePath>
             </File>
             <File>
               <FileName>speedfocwolswbemf.gif</FileName>
@@ -12185,14 +12280,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -12208,6 +12298,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -12907,10 +13007,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_HYPERRAM, DATA_SECTION_IS_CACHEABLE, NDEBUG, CPU_MIMXRT1189CVM8B_cm7, MC_EXAMPLE, MCUXPRESSO_SDK, PMSM_SNSLESS, PMSM_SNSLESS_ENC, MID_EN, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include;../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_KEIL/MLIB/Include;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers;../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms;../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine;../../../../../../../middleware/motor_control/pmsm/pmsm_float;../../../../../../../middleware/motor_control/freemaster;../../../../../../../middleware/motor_control/docs;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification;../../../../../../../devices/MIMXRT1189;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../middleware/freemaster/src/common;../../../../../../../middleware/freemaster/src/template/gen32le;../../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -12965,9 +13065,9 @@
               <FilePath>../../../../../../../middleware/motor_control/docs/Release_notes.pdf</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme_pmsm.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/docs/readme.txt</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</FilePath>
             </File>
             <File>
               <FileName>Release_notes.pdf</FileName>
@@ -13168,6 +13268,26 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_s3mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -14315,14 +14435,14 @@
               <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.c</FileName>
+              <FileName>mcdrv_enc_eqd2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.c</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.c</FilePath>
             </File>
             <File>
-              <FileName>mcdrv_enc_eqd.h</FileName>
+              <FileName>mcdrv_enc_eqd2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd.h</FilePath>
+              <FilePath>../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_eqd2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -14333,11 +14453,6 @@
               <FileName>NXP_logo_RGB_web.jpg</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</FilePath>
-            </File>
-            <File>
-              <FileName>nxp-logo-small-121x52.png</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</FilePath>
             </File>
             <File>
               <FileName>speedfocwolswbemf.gif</FileName>
@@ -14700,14 +14815,9 @@
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -14723,6 +14833,16 @@
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

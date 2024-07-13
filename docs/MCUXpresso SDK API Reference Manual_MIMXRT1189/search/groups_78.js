@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xbar',['Xbar',['../a00070.html',1,'']]]
+  ['xbar',['Xbar',['../a00069.html',1,'']]]
 ];

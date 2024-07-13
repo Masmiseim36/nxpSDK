@@ -18,6 +18,6 @@ void hexdump(const void *src, size_t size);
 int flash_verify_erase(uint32_t offset, size_t size);
 int flash_erase(uint32_t offset, size_t size);
 int flash_program(uint32_t offset, void *data, size_t size);
-int flash_md5(uint32_t offset, size_t size, uint8_t md[16]);
+int flash_sha256(uint32_t offset, size_t size, uint8_t md[32]);
 
 #endif /* __FLASH_HELPER_H__ */

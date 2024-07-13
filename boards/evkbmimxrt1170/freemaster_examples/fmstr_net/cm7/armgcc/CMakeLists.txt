@@ -46,8 +46,7 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../source/main.c"
-"${ProjDirPath}/../source/board/clock_config.c"
-"${ProjDirPath}/../source/board/clock_config.h"
+"${ProjDirPath}/../source/network_cfg.h"
 "${ProjDirPath}/../source/board/pin_mux.c"
 "${ProjDirPath}/../source/board/pin_mux.h"
 "${ProjDirPath}/../source/freemaster_cfg.h"
@@ -61,6 +60,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../source/network_enet.c"
 "${ProjDirPath}/../source/board/board.c"
 "${ProjDirPath}/../source/board/board.h"
+"${ProjDirPath}/../source/board/clock_config.c"
+"${ProjDirPath}/../source/board/clock_config.h"
 "${ProjDirPath}/../source/example_data/data_example_pmp.h"
 "${ProjDirPath}/../source/example_data/data_img_logo.h"
 "${ProjDirPath}/../source/example_data/data_img_file.h"
@@ -77,6 +78,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../source/example_data
 )
 
+set_source_files_properties("${ProjDirPath}/../source/freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_platform_gen32le")
 set_source_files_properties("${ProjDirPath}/../source/FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 set_source_files_properties("${ProjDirPath}/../source/lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
 

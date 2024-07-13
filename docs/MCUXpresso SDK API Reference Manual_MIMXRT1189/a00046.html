@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hardware Switch</title>
+<title>MCUXpresso SDK API Reference Manual: Notification Framework</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,780 +100,709 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Hardware Switch<div class="ingroups"><a class="el" href="a00042.html">Hardware layer</a></div></div>  </div>
+<div class="title">Notification Framework</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>Group for switch specific hardware API and data structure. </p>
-<table class="memberdecls">
+<p>This section describes the programming interface of the Notifier driver.</p>
+<h1><a class="anchor" id="NotifierOv"></a>
+Notifier Overview</h1>
+<p>The Notifier provides a configuration dynamic change service. Based on this service, applications can switch between pre-defined configurations. The Notifier enables drivers and applications to register callback functions to this framework. Each time that the configuration is changed, drivers and applications receive a notification and change their settings. To simplify, the Notifier only supports the static callback registration. This means that, for applications, all callback functions are collected into a static table and passed to the Notifier.</p>
+<p>These are the steps for the configuration transition.</p>
+<ol type="1">
+<li>Before configuration transition, the Notifier sends a "BEFORE" message to the callback table. When this message is received, IP drivers should check whether any current processes can be stopped and stop them. If the processes cannot be stopped, the callback function returns an error.<br/>
+ The Notifier supports two types of transition policies, a graceful policy and a forceful policy. When the graceful policy is used, if some callbacks return an error while sending a "BEFORE" message, the configuration transition stops and the Notifier sends a "RECOVER" message to all drivers that have stopped. Then, these drivers can recover the previous status and continue to work. When the forceful policy is used, drivers are stopped forcefully.</li>
+<li>After the "BEFORE" message is processed successfully, the system switches to the new configuration.</li>
+<li>After the configuration changes, the Notifier sends an "AFTER" message to the callback table to notify drivers that the configuration transition is finished.</li>
+</ol>
+<p>This example shows how to use the Notifier in the Power Manager application.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
+<div class="line"><a class="code" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00046.html#a00558">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00201.html#gga6b7b47dd702d9e331586d485013fd1eaa829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line"></div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
+<div class="line"><a class="code" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">}</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line"><span class="comment">// Main function.</span></div>
+<div class="line">int main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Define a notifier handle.</span></div>
+<div class="line">    <a class="code" href="a00046.html#a00557">notifier_handle_t</a> powerModeHandle;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Callback configuration.</span></div>
+<div class="line">    user_callback_data_t callbackData0;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00046.html#a00556">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
+<div class="line">                <a class="code" href="a00046.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
+<div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00046.html#a00556">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Power mode configurations.</span></div>
+<div class="line">    power_user_config_t vlprConfig;</div>
+<div class="line">    power_user_config_t stopConfig;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *powerConfigs[] = {&amp;vlprConfig, &amp;stopConfig};</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Definition of a transition to and out the power modes.</span></div>
+<div class="line">    vlprConfig.mode = kAPP_PowerModeVlpr;</div>
+<div class="line">    vlprConfig.enableLowPowerWakeUpOnInterrupt = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    stopConfig = vlprConfig;</div>
+<div class="line">    stopConfig.mode = kAPP_PowerModeStop;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Create Notifier handle.</span></div>
+<div class="line">    <a class="code" href="a00046.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a>(&amp;powerModeHandle, powerConfigs, 2U, callbacks, 1U, APP_PowerModeSwitch, NULL);</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    <span class="comment">// Power mode switch.</span></div>
+<div class="line">    NOTIFIER_switchConfig(&amp;powerModeHandle, targetConfigIndex, <a class="code" href="a00046.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>);</div>
+<div class="line">}</div>
+</div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00405"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00405">netc_swt_imr_config_t</a></td></tr>
-<tr class="memdesc:a00405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch Ingress mirror destination config.  <a href="a00046.html#a00405">More...</a><br/></td></tr>
-<tr class="separator:a00405"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00406"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00406">netc_swt_port_bridge_config_t</a></td></tr>
-<tr class="memdesc:a00406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch port bridge configuration.  <a href="a00046.html#a00406">More...</a><br/></td></tr>
-<tr class="separator:a00406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00407"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00407">netc_swt_port_fm_config_t</a></td></tr>
-<tr class="memdesc:a00407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch Port level Frame Modification configuration (PPCPDEIMR and PQOSMR[QVMP])  <a href="a00046.html#a00407">More...</a><br/></td></tr>
-<tr class="separator:a00407"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00404"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00404">netc_swt_default_vlan_filter_t</a></td></tr>
-<tr class="memdesc:a00404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch VLAN filter hash table default entry configuration, which determines the default entry when not found in VLAN filter lookup.  <a href="a00046.html#a00404">More...</a><br/></td></tr>
-<tr class="separator:a00404"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00403"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00403">netc_swt_bridge_config_t</a></td></tr>
-<tr class="memdesc:a00403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bridge config.  <a href="a00046.html#a00403">More...</a><br/></td></tr>
-<tr class="separator:a00403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00408"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00408">netc_swt_psfp_config_t</a></td></tr>
-<tr class="memdesc:a00408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch PSFP configuration.  <a href="a00046.html#a00408">More...</a><br/></td></tr>
-<tr class="separator:a00408"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00409"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00409">netc_swt_qos_classify_config_t</a></td></tr>
-<tr class="memdesc:a00409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch Qos Classification configuration (include two profiles)  <a href="a00046.html#a00409">More...</a><br/></td></tr>
-<tr class="separator:a00409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00410"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00410">netc_swt_qos_to_vlan_config_t</a></td></tr>
-<tr class="memdesc:a00410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch QoS to PCP mapping and PCP to PCP mapping configuration when egress packet modification the VLAN tag.  <a href="a00046.html#a00410">More...</a><br/></td></tr>
-<tr class="separator:a00410"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00402"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00402">netc_switch_inuse_fdb_statistic_t</a></td></tr>
-<tr class="memdesc:a00402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch static/dynamic FDB entries in-use statistic.  <a href="a00046.html#a00402">More...</a><br/></td></tr>
-<tr class="separator:a00402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00558"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00558">notifier_notification_block_t</a></td></tr>
+<tr class="memdesc:a00558"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00046.html#a00558">More...</a><br/></td></tr>
+<tr class="separator:a00558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00556"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00556">notifier_callback_config_t</a></td></tr>
+<tr class="memdesc:a00556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00046.html#a00556">More...</a><br/></td></tr>
+<tr class="separator:a00556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00557"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00557">notifier_handle_t</a></td></tr>
+<tr class="memdesc:a00557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00046.html#a00557">More...</a><br/></td></tr>
+<tr class="separator:a00557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
+<tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
+<tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
+<tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
+<tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00046.html#a00558">notifier_notification_block_t</a> *notify, void *data)</td></tr>
+<tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
+<tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga1093dace50999dade58b16228b34880a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga1093dace50999dade58b16228b34880a">netc_swt_port_bitmap_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga1093dace50999dade58b16228b34880aa81cff3fdb68e41feb8f26c36674de6d1">kNETC_SWTPort0Bit</a> = 0x1U, 
+<tr class="memitem:gacac871f1b98f53906b07b2663943c784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c">kStatus_NOTIFIER_ErrorNotificationBefore</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga1093dace50999dade58b16228b34880aabbad493510d6c5f8d011c16bc9809f73">kNETC_SWTPort1Bit</a> = 0x2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga1093dace50999dade58b16228b34880aa339244733134fa61543ee28e5ea334c7">kNETC_SWTPort2Bit</a> = 0x4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga1093dace50999dade58b16228b34880aa8961b8657306c53eca9d6e8df9b88eb1">kNETC_SWTPort3Bit</a> = 0x8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga1093dace50999dade58b16228b34880aadc5e0a0aab3e29b28b09a4e2345f9ff1">kNETC_SWTPort4Bit</a> = 0x10U
+&#160;&#160;<a class="el" href="a00046.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58">kStatus_NOTIFIER_ErrorNotificationAfter</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1093dace50999dade58b16228b34880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch port bitmap.  <a href="a00046.html#ga1093dace50999dade58b16228b34880a">More...</a><br/></td></tr>
-<tr class="separator:ga1093dace50999dade58b16228b34880a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b13a295d9e98c3aa1772a1b10ab92c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">netc_swt_imr_dest_port_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga7b13a295d9e98c3aa1772a1b10ab92c9a962882b2bec06c5b0396b0ececa06773">kNETC_SWTPort0</a> = 0U, 
+<tr class="memdesc:gacac871f1b98f53906b07b2663943c784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier error codes.  <a href="a00046.html#gacac871f1b98f53906b07b2663943c784">More...</a><br/></td></tr>
+<tr class="separator:gacac871f1b98f53906b07b2663943c784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62e961564dc31b8155d128a3f6566409"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga7b13a295d9e98c3aa1772a1b10ab92c9a2e27cbf0a503aaa4b69c05403d8efd19">kNETC_SWTPort1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga7b13a295d9e98c3aa1772a1b10ab92c9a28c14d834c216368e857ebc2e12601b1">kNETC_SWTPort2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga7b13a295d9e98c3aa1772a1b10ab92c9ae0ebcc15e4f3eb9ac08eb7f57252a4f9">kNETC_SWTPort3</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga7b13a295d9e98c3aa1772a1b10ab92c9aedf6749b6f29b630b8b7bd1c30882fb6">kNETC_SWTPort4</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga7b13a295d9e98c3aa1772a1b10ab92c9ad9d8dc2b781a4cb7a47971df2fcbd0b4">kNETC_SWTMPort</a> = 5U
+&#160;&#160;<a class="el" href="a00046.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8">kNOTIFIER_PolicyForcible</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7b13a295d9e98c3aa1772a1b10ab92c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch ingress mirror destination port.  <a href="a00046.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">More...</a><br/></td></tr>
-<tr class="separator:ga7b13a295d9e98c3aa1772a1b10ab92c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93b4ff855f09e33f204fd9a451fd2f19"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga93b4ff855f09e33f204fd9a451fd2f19">netc_swt_mac_forward_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga93b4ff855f09e33f204fd9a451fd2f19a937c09038eabf58e775704d486522a29">kNETC_NoFDBLookUp</a> = 1U, 
+<tr class="memdesc:ga62e961564dc31b8155d128a3f6566409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="a00046.html#ga62e961564dc31b8155d128a3f6566409">More...</a><br/></td></tr>
+<tr class="separator:ga62e961564dc31b8155d128a3f6566409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94">kNOTIFIER_NotifyRecover</a> = 0x00U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga93b4ff855f09e33f204fd9a451fd2f19a0125d1cfd210f9d01973c0652e1e9cba">kNETC_FDBLookUpWithFlood</a> = 2U, 
+&#160;&#160;<a class="el" href="a00046.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c">kNOTIFIER_NotifyBefore</a> = 0x01U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga93b4ff855f09e33f204fd9a451fd2f19a864a7c04327cbed0546d2e68918f965a">kNETC_FDBLookUpWithDiscard</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga93b4ff855f09e33f204fd9a451fd2f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch MAC forwarding options.  <a href="a00046.html#ga93b4ff855f09e33f204fd9a451fd2f19">More...</a><br/></td></tr>
-<tr class="separator:ga93b4ff855f09e33f204fd9a451fd2f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53cb2239e2ed8f9d2e00ef50112b364a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga53cb2239e2ed8f9d2e00ef50112b364a">netc_swt_mac_learn_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga53cb2239e2ed8f9d2e00ef50112b364aa5b69ec6eec3f3b9309f640fe24aed875">kNETC_DisableMACLearn</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga53cb2239e2ed8f9d2e00ef50112b364aae13ea4371b42d77179400aa6a52b3772">kNETC_HardwareMACLearn</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga53cb2239e2ed8f9d2e00ef50112b364aad02b62cc1d684eff87393c4cbb3d1f70">kNETC_SeSoftwareMACLearn</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga53cb2239e2ed8f9d2e00ef50112b364aa92f2b6b9be03bbbd0b1b8c590a391263">kNETC_UnseSoftwareMACLearn</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga53cb2239e2ed8f9d2e00ef50112b364aa78f8f2f14cb9c432ff64a5f47279ffe6">kNETC_DisableMACLearnWithSMAC</a>
+&#160;&#160;<a class="el" href="a00046.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00">kNOTIFIER_NotifyAfter</a> = 0x02U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga53cb2239e2ed8f9d2e00ef50112b364a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch MAC learning options.  <a href="a00046.html#ga53cb2239e2ed8f9d2e00ef50112b364a">More...</a><br/></td></tr>
-<tr class="separator:ga53cb2239e2ed8f9d2e00ef50112b364a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb9b0f9c5254125195847bf0ef633405"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gacb9b0f9c5254125195847bf0ef633405">netc_swt_port_tx_vlan_act_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggacb9b0f9c5254125195847bf0ef633405a8e543517b76617b51a56562b1991c1cd">kNETC_NoTxVlanModify</a> = 0U, 
+<tr class="memdesc:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="a00046.html#ga5ee4314c2a52ee0af61985e7163a1be9">More...</a><br/></td></tr>
+<tr class="separator:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad75237e3cea51f8315cf6577b35db91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1">kNOTIFIER_CallbackBefore</a> = 0x01U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggacb9b0f9c5254125195847bf0ef633405a247250821c2334dc760d82bda9809d68">kNETC_TxDelOuterVlan</a>, 
+&#160;&#160;<a class="el" href="a00046.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc">kNOTIFIER_CallbackAfter</a> = 0x02U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggacb9b0f9c5254125195847bf0ef633405a06a45ccc50138f2af29968a38c8a64b1">kNETC_TxReplOuterVlanVid</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gacb9b0f9c5254125195847bf0ef633405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch transmit Bridge Port VLAN Tag Action.  <a href="a00046.html#gacb9b0f9c5254125195847bf0ef633405">More...</a><br/></td></tr>
-<tr class="separator:gacb9b0f9c5254125195847bf0ef633405"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga720df95d878c6da34f14dec26c0800ed"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga720df95d878c6da34f14dec26c0800ed">netc_swt_port_stg_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga720df95d878c6da34f14dec26c0800eda1f58a8027b469da9a3e6435e6b81c1a1">kNETC_DiscardFrame</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga720df95d878c6da34f14dec26c0800edaa3aeb92223320811b7c652445cb3d0c1">kNETC_LearnWithoutFowrad</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga720df95d878c6da34f14dec26c0800eda9c8209fda59accbdbe7becf8db86fd1c">kNETC_ForwardFrame</a>
+&#160;&#160;<a class="el" href="a00046.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a> = 0x03U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga720df95d878c6da34f14dec26c0800ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch port spanning tree group work mode.  <a href="a00046.html#ga720df95d878c6da34f14dec26c0800ed">More...</a><br/></td></tr>
-<tr class="separator:ga720df95d878c6da34f14dec26c0800ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaad75237e3cea51f8315cf6577b35db91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="a00046.html#gaad75237e3cea51f8315cf6577b35db91">More...</a><br/></td></tr>
+<tr class="separator:gaad75237e3cea51f8315cf6577b35db91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00046.html#a00557">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00046.html#a00556">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00046.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
+<tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
+<tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00046.html#a00557">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00046.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
+<tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
+<tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00046.html#a00557">notifier_handle_t</a> *notifierHandle)</td></tr>
+<tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
+<tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00405" id="a00405"></a>
+<a name="a00558" id="a00558"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_swt_imr_config_t</td>
+          <td class="memname">struct notifier_notification_block_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a848d777dda1afd9c6ff6addf638c76a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a848d777dda1afd9c6ff6addf638c76a6"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a848d777dda1afd9c6ff6addf638c76a6">enMirror</a></td></tr>
-<tr class="memdesc:a848d777dda1afd9c6ff6addf638c76a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable ingress mirroring. <br/></td></tr>
-<tr class="separator:a848d777dda1afd9c6ff6addf638c76a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64d11999f40705eeebdc3d917d70fb83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64d11999f40705eeebdc3d917d70fb83"></a>
-<a class="el" href="a00046.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">netc_swt_imr_dest_port_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a64d11999f40705eeebdc3d917d70fb83">destPort</a></td></tr>
-<tr class="memdesc:a64d11999f40705eeebdc3d917d70fb83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port where ingress mirrored frames are sent. <br/></td></tr>
-<tr class="separator:a64d11999f40705eeebdc3d917d70fb83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabb02a35fa1f0dd8bd9a5a2039189608"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabb02a35fa1f0dd8bd9a5a2039189608"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aabb02a35fa1f0dd8bd9a5a2039189608">dr</a></td></tr>
-<tr class="memdesc:aabb02a35fa1f0dd8bd9a5a2039189608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mirrored packet's DR (drop resilience) <br/></td></tr>
-<tr class="separator:aabb02a35fa1f0dd8bd9a5a2039189608"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab23e87ee059e63be95577467b20820a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab23e87ee059e63be95577467b20820a2"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ab23e87ee059e63be95577467b20820a2">ipv</a></td></tr>
-<tr class="memdesc:ab23e87ee059e63be95577467b20820a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mirrored packet's IPV (internal priority value) <br/></td></tr>
-<tr class="separator:ab23e87ee059e63be95577467b20820a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab10795bfcf1aa09aa28767b2e682a3ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab10795bfcf1aa09aa28767b2e682a3ef"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ab10795bfcf1aa09aa28767b2e682a3ef">efmLengthChange</a></td></tr>
-<tr class="memdesc:ab10795bfcf1aa09aa28767b2e682a3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress Frame Modification Frame Length change in 2s complement notation, Vaild if efmEntryID is noy null. <br/></td></tr>
-<tr class="separator:ab10795bfcf1aa09aa28767b2e682a3ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9f3d56956c4b96fe88ed3b8db65e945"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9f3d56956c4b96fe88ed3b8db65e945"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ad9f3d56956c4b96fe88ed3b8db65e945">efmEntryID</a></td></tr>
-<tr class="memdesc:ad9f3d56956c4b96fe88ed3b8db65e945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress Frame Modification Entry Id, note 0xFFFF is a Null Frame Modification Entry, Only applicable if destPort != kNETC_SWTMPort. <br/></td></tr>
-<tr class="separator:ad9f3d56956c4b96fe88ed3b8db65e945"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00406" id="a00406"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_swt_port_bridge_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aea63d276a2ca9d118a798fcd2d2b1112"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea63d276a2ca9d118a798fcd2d2b1112"></a>
-<a class="el" href="a00046.html#gacb9b0f9c5254125195847bf0ef633405">netc_swt_port_tx_vlan_act_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aea63d276a2ca9d118a798fcd2d2b1112">txVlanAction</a>: 2</td></tr>
-<tr class="memdesc:aea63d276a2ca9d118a798fcd2d2b1112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Only applies for the frame outer VLAN tag's VID is equal to the port default VID. <br/></td></tr>
-<tr class="separator:aea63d276a2ca9d118a798fcd2d2b1112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52e94f8fcbe92e69465a9e7f03336e9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52e94f8fcbe92e69465a9e7f03336e9d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a52e94f8fcbe92e69465a9e7f03336e9d">isRxVlanAware</a>: 1</td></tr>
-<tr class="memdesc:a52e94f8fcbe92e69465a9e7f03336e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive VLAN Aware Mode. <br/></td></tr>
-<tr class="separator:a52e94f8fcbe92e69465a9e7f03336e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8d36087587efb2f926dee533062b83f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8d36087587efb2f926dee533062b83f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ac8d36087587efb2f926dee533062b83f">acceptUntag</a>: 1</td></tr>
-<tr class="memdesc:ac8d36087587efb2f926dee533062b83f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept untagged frame. <br/></td></tr>
-<tr class="separator:ac8d36087587efb2f926dee533062b83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af32db0ea196b361ac3764b4330a0b206"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af32db0ea196b361ac3764b4330a0b206"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#af32db0ea196b361ac3764b4330a0b206">acceptPriorityTag</a>: 1</td></tr>
-<tr class="memdesc:af32db0ea196b361ac3764b4330a0b206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept priority tagged frame (VID = 0) <br/></td></tr>
-<tr class="separator:af32db0ea196b361ac3764b4330a0b206"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a034bb44018c57dd26afc6ad2d42c8da7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a034bb44018c57dd26afc6ad2d42c8da7"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a034bb44018c57dd26afc6ad2d42c8da7">acceptSingleTag</a>: 1</td></tr>
-<tr class="memdesc:a034bb44018c57dd26afc6ad2d42c8da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept single tagged frame. <br/></td></tr>
-<tr class="separator:a034bb44018c57dd26afc6ad2d42c8da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46eaf228f8ad6d73be48cd80658ac722"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46eaf228f8ad6d73be48cd80658ac722"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a46eaf228f8ad6d73be48cd80658ac722">acceptDoubleTag</a>: 1</td></tr>
-<tr class="memdesc:a46eaf228f8ad6d73be48cd80658ac722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept double tagged frame (ounter and inner) <br/></td></tr>
-<tr class="separator:a46eaf228f8ad6d73be48cd80658ac722"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4aa8ecc1b701aae039a58dc0d63a5710"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4aa8ecc1b701aae039a58dc0d63a5710"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a4aa8ecc1b701aae039a58dc0d63a5710">enSrcPortPrun</a>: 1</td></tr>
-<tr class="memdesc:a4aa8ecc1b701aae039a58dc0d63a5710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable received frame be transmitted to same port it was received. <br/></td></tr>
-<tr class="separator:a4aa8ecc1b701aae039a58dc0d63a5710"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a147625f0199738bfb6e3e1cd397628c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a147625f0199738bfb6e3e1cd397628c6"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a147625f0199738bfb6e3e1cd397628c6">enMacStationMove</a>: 1</td></tr>
-<tr class="memdesc:a147625f0199738bfb6e3e1cd397628c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable received frame which ingress port not match the FDB entry Destination Port Bitmap. <br/></td></tr>
-<tr class="separator:a147625f0199738bfb6e3e1cd397628c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abae989a43fcda6e790ed0348ec0f49ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abae989a43fcda6e790ed0348ec0f49ff"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#abae989a43fcda6e790ed0348ec0f49ff">enBcastStormCtrl</a>: 1</td></tr>
-<tr class="memdesc:abae989a43fcda6e790ed0348ec0f49ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for broadcast frames. <br/></td></tr>
-<tr class="separator:abae989a43fcda6e790ed0348ec0f49ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a584c53d25de423b535bfe1941ae26aa0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a584c53d25de423b535bfe1941ae26aa0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a584c53d25de423b535bfe1941ae26aa0">enMcastStormCtrl</a>: 1</td></tr>
-<tr class="memdesc:a584c53d25de423b535bfe1941ae26aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for multicast frames. <br/></td></tr>
-<tr class="separator:a584c53d25de423b535bfe1941ae26aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f6eb487cf15e442f0674c5be272e80b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f6eb487cf15e442f0674c5be272e80b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a1f6eb487cf15e442f0674c5be272e80b">enUnMcastStormCtrl</a>: 1</td></tr>
-<tr class="memdesc:a1f6eb487cf15e442f0674c5be272e80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for unknown multicast frames. <br/></td></tr>
-<tr class="separator:a1f6eb487cf15e442f0674c5be272e80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfe4478e210381cc5d34c6c93ac818ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe4478e210381cc5d34c6c93ac818ed"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#acfe4478e210381cc5d34c6c93ac818ed">enUnUcastStormCtrl</a>: 1</td></tr>
-<tr class="memdesc:acfe4478e210381cc5d34c6c93ac818ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for unknown unicast frames. <br/></td></tr>
-<tr class="separator:acfe4478e210381cc5d34c6c93ac818ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f255b40965c2d8fe8de7c9f33676df1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a8f255b40965c2d8fe8de7c9f33676df1">bcastRpEntryID</a></td></tr>
-<tr class="memdesc:a8f255b40965c2d8fe8de7c9f33676df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast rate policer entry ID.  <a href="#a8f255b40965c2d8fe8de7c9f33676df1">More...</a><br/></td></tr>
-<tr class="separator:a8f255b40965c2d8fe8de7c9f33676df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d612346d78a4f53a0e261a03aad37d3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a0d612346d78a4f53a0e261a03aad37d3">mcastEntryID</a></td></tr>
-<tr class="memdesc:a0d612346d78a4f53a0e261a03aad37d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Known multicast rate policer entry ID.  <a href="#a0d612346d78a4f53a0e261a03aad37d3">More...</a><br/></td></tr>
-<tr class="separator:a0d612346d78a4f53a0e261a03aad37d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4986c8f15e83d15d544a43e157e370ee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a4986c8f15e83d15d544a43e157e370ee">unMcastRpEntryID</a></td></tr>
-<tr class="memdesc:a4986c8f15e83d15d544a43e157e370ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unknown multicast policer entry ID.  <a href="#a4986c8f15e83d15d544a43e157e370ee">More...</a><br/></td></tr>
-<tr class="separator:a4986c8f15e83d15d544a43e157e370ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a164782e38ed99a1b57f584a2d314b1e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a164782e38ed99a1b57f584a2d314b1e0">unUcastRpEntryID</a></td></tr>
-<tr class="memdesc:a164782e38ed99a1b57f584a2d314b1e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unknown unicast rate policer entry ID.  <a href="#a164782e38ed99a1b57f584a2d314b1e0">More...</a><br/></td></tr>
-<tr class="separator:a164782e38ed99a1b57f584a2d314b1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61acc952fa15dce9b6e47c047bb96d45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61acc952fa15dce9b6e47c047bb96d45"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a61acc952fa15dce9b6e47c047bb96d45">maxDynaFDBEntry</a></td></tr>
-<tr class="memdesc:a61acc952fa15dce9b6e47c047bb96d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximium number of dynamic entries in the FDB table, 0 means no limit. <br/></td></tr>
-<tr class="separator:a61acc952fa15dce9b6e47c047bb96d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28fe405b5a294fb9ec95780255608cf7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a28fe405b5a294fb9ec95780255608cf7">vid</a>: 12</td></tr>
-<tr class="memdesc:a28fe405b5a294fb9ec95780255608cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vlan Identifier.  <a href="#a28fe405b5a294fb9ec95780255608cf7">More...</a><br/></td></tr>
-<tr class="separator:a28fe405b5a294fb9ec95780255608cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa3d1c146af32d2cb9aaeffb3a751fd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa3d1c146af32d2cb9aaeffb3a751fd7"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#afa3d1c146af32d2cb9aaeffb3a751fd7">dei</a>: 1</td></tr>
-<tr class="memdesc:afa3d1c146af32d2cb9aaeffb3a751fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Drop eligible indicator. <br/></td></tr>
-<tr class="separator:afa3d1c146af32d2cb9aaeffb3a751fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd9c64f1f545d0670e3eb05f509bf679"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#acd9c64f1f545d0670e3eb05f509bf679">pcp</a>: 3</td></tr>
-<tr class="memdesc:acd9c64f1f545d0670e3eb05f509bf679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority code point.  <a href="#acd9c64f1f545d0670e3eb05f509bf679">More...</a><br/></td></tr>
-<tr class="separator:acd9c64f1f545d0670e3eb05f509bf679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9243b4b9f731aa94b6d18a818d240e4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ac9243b4b9f731aa94b6d18a818d240e4">tpid</a>: 1</td></tr>
-<tr class="memdesc:ac9243b4b9f731aa94b6d18a818d240e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag protocol identifier, 0 = Standard C-VLAN 0x8100, 1 = Standard S-VLAN 0x88A8.  <a href="#ac9243b4b9f731aa94b6d18a818d240e4">More...</a><br/></td></tr>
-<tr class="separator:ac9243b4b9f731aa94b6d18a818d240e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa">targetConfig</a></td></tr>
+<tr class="memdesc:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to target configuration.  <a href="#a2e0b1d4d7e3ebf8f454b55af953e3ffa">More...</a><br/></td></tr>
+<tr class="separator:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a26aef2519eb2f9990e04f2ce961dfc9b">policy</a></td></tr>
+<tr class="memdesc:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure transition policy.  <a href="#a26aef2519eb2f9990e04f2ce961dfc9b">More...</a><br/></td></tr>
+<tr class="separator:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a2ca3b1a52e315e072a8ab48fcc1dd62a">notifyType</a></td></tr>
+<tr class="memdesc:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure notification type.  <a href="#a2ca3b1a52e315e072a8ab48fcc1dd62a">More...</a><br/></td></tr>
+<tr class="separator:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a28fe405b5a294fb9ec95780255608cf7"></a>
+<a class="anchor" id="a2e0b1d4d7e3ebf8f454b55af953e3ffa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::vid</td>
+          <td class="memname"><a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>* notifier_notification_block_t::targetConfig</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="acd9c64f1f545d0670e3eb05f509bf679"></a>
+<a class="anchor" id="a26aef2519eb2f9990e04f2ce961dfc9b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::pcp</td>
+          <td class="memname"><a class="el" href="a00046.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> notifier_notification_block_t::policy</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac9243b4b9f731aa94b6d18a818d240e4"></a>
+<a class="anchor" id="a2ca3b1a52e315e072a8ab48fcc1dd62a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::tpid</td>
+          <td class="memname"><a class="el" href="a00046.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> notifier_notification_block_t::notifyType</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8f255b40965c2d8fe8de7c9f33676df1"></a>
+
+</div>
+</div>
+<a name="a00556" id="a00556"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::bcastRpEntryID</td>
+          <td class="memname">struct notifier_callback_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Valid if enBroadStormCtrl = true </p>
-
-</div>
-</div>
-<a class="anchor" id="a0d612346d78a4f53a0e261a03aad37d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::mcastEntryID</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Valid if enBroadStormCtrl = true </p>
-
-</div>
-</div>
-<a class="anchor" id="a4986c8f15e83d15d544a43e157e370ee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::unMcastRpEntryID</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Valid if enUnMultiStormCtrl = true </p>
-
-</div>
-</div>
-<a class="anchor" id="a164782e38ed99a1b57f584a2d314b1e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_swt_port_bridge_config_t::unUcastRpEntryID</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Valid if enUnUniStormCtrl = true </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00407" id="a00407"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_swt_port_fm_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a20adb9e1aefbc33f0b67781cff83cf8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20adb9e1aefbc33f0b67781cff83cf8f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a20adb9e1aefbc33f0b67781cff83cf8f">ignoreFMMiscfg</a>: 1</td></tr>
-<tr class="memdesc:a20adb9e1aefbc33f0b67781cff83cf8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable ignore the Frame Modification Misconfiguration Action. <br/></td></tr>
-<tr class="separator:a20adb9e1aefbc33f0b67781cff83cf8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a30260882f5f8f0923c1166639877cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a30260882f5f8f0923c1166639877cf"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a3a30260882f5f8f0923c1166639877cf">enEgressPcpMap</a>: 1</td></tr>
-<tr class="memdesc:a3a30260882f5f8f0923c1166639877cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable egress frame modification of outer VLAN tag's PCP value is mapped to a new value based on egressPcpMap, used for Frame Modification VLAN Outer PCP action. <br/></td></tr>
-<tr class="separator:a3a30260882f5f8f0923c1166639877cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea920e1643b5d9fc57ca188c83a657af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea920e1643b5d9fc57ca188c83a657af"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aea920e1643b5d9fc57ca188c83a657af">enIngressPcpMap</a>: 1</td></tr>
-<tr class="memdesc:aea920e1643b5d9fc57ca188c83a657af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable ingress frame modification of outer VLAN tag's PCP value is mapped to a new value based on egressPcpMap, used for Frame Modification VLAN Outer PCP action. <br/></td></tr>
-<tr class="separator:aea920e1643b5d9fc57ca188c83a657af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9740ebc71ce2fe1c67111353ed80692f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9740ebc71ce2fe1c67111353ed80692f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a9740ebc71ce2fe1c67111353ed80692f">enUpdateVlanDei</a>: 1</td></tr>
-<tr class="memdesc:a9740ebc71ce2fe1c67111353ed80692f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable update DR value in the outer VLAN based on DEnDEI field, used for egress Frame Modification Outer DEI action. <br/></td></tr>
-<tr class="separator:a9740ebc71ce2fe1c67111353ed80692f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a54e98ac4ce81c0fa7038e984f6d653"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a54e98ac4ce81c0fa7038e984f6d653"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a1a54e98ac4ce81c0fa7038e984f6d653">drToDeiMap</a>: 4</td></tr>
-<tr class="memdesc:a1a54e98ac4ce81c0fa7038e984f6d653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mapping of internal QoS's DR value n to VLAN DEI, The 4 bits correspond to the DR3 ~ DR0, and 1 means DRn mapping to DEI 1, 0 means DRn mapping to DEI 0. <br/></td></tr>
-<tr class="separator:a1a54e98ac4ce81c0fa7038e984f6d653"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeb7ab898cc283175c0769c2a98e8dcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeeb7ab898cc283175c0769c2a98e8dcc"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aeeb7ab898cc283175c0769c2a98e8dcc">egressPcpMap</a>: 4</td></tr>
-<tr class="memdesc:aeeb7ab898cc283175c0769c2a98e8dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress PCP to PCP Mapping Profile instance, active when enEgressPcpMap is true. <br/></td></tr>
-<tr class="separator:aeeb7ab898cc283175c0769c2a98e8dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae649f6734114c244cfbc4023781c746f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae649f6734114c244cfbc4023781c746f"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ae649f6734114c244cfbc4023781c746f">ingressPcpMap</a>: 4</td></tr>
-<tr class="memdesc:ae649f6734114c244cfbc4023781c746f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingress PCP to PCP Mapping Profile instance, active when enIngressPcpMap is true. <br/></td></tr>
-<tr class="separator:ae649f6734114c244cfbc4023781c746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae36a4a2339fe7d5357f1b77784c9446d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae36a4a2339fe7d5357f1b77784c9446d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ae36a4a2339fe7d5357f1b77784c9446d">qosVlanMap</a>: 4</td></tr>
-<tr class="memdesc:ae36a4a2339fe7d5357f1b77784c9446d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit QoS to VLAN PCP Mapping Profile index, used for egress Frame Modification VLAN Add/Replace Action. <br/></td></tr>
-<tr class="separator:ae36a4a2339fe7d5357f1b77784c9446d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00404" id="a00404"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_swt_default_vlan_filter_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae9c54dfcf80479782afb0f2071ebe070"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9c54dfcf80479782afb0f2071ebe070"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ae9c54dfcf80479782afb0f2071ebe070">enIPMFlood</a></td></tr>
-<tr class="memdesc:ae9c54dfcf80479782afb0f2071ebe070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable IP Multicast Flooding. <br/></td></tr>
-<tr class="separator:ae9c54dfcf80479782afb0f2071ebe070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dde88168394f0eff7dc9dcdbacb065a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1dde88168394f0eff7dc9dcdbacb065a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a1dde88168394f0eff7dc9dcdbacb065a">enIPMFilter</a></td></tr>
-<tr class="memdesc:a1dde88168394f0eff7dc9dcdbacb065a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable IP Multicast Filtering. <br/></td></tr>
-<tr class="separator:a1dde88168394f0eff7dc9dcdbacb065a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cfce56106461ad136dde384d4227c7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cfce56106461ad136dde384d4227c7e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a8cfce56106461ad136dde384d4227c7e">stgID</a></td></tr>
-<tr class="memdesc:a8cfce56106461ad136dde384d4227c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spanning Tree Group Member ID, range in 0 ~ 15. <br/></td></tr>
-<tr class="separator:a8cfce56106461ad136dde384d4227c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac997fad184d65c0e3d9eae1e9d693456"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ac997fad184d65c0e3d9eae1e9d693456">portMembership</a></td></tr>
-<tr class="memdesc:ac997fad184d65c0e3d9eae1e9d693456"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bit 0 ~ 4 correspond to the 5 ports, When bit set (0b1), means the port is a member of this VLAN.  <a href="#ac997fad184d65c0e3d9eae1e9d693456">More...</a><br/></td></tr>
-<tr class="separator:ac997fad184d65c0e3d9eae1e9d693456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97d8b5b7429963fe49218b46c1bfce29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97d8b5b7429963fe49218b46c1bfce29"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a97d8b5b7429963fe49218b46c1bfce29">enUseFilterID</a></td></tr>
-<tr class="memdesc:a97d8b5b7429963fe49218b46c1bfce29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable use the specified filterID as FID, otherwise will use the frame VID. <br/></td></tr>
-<tr class="separator:a97d8b5b7429963fe49218b46c1bfce29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6513c3d9f0b50dccd066a53bf6648168"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a6513c3d9f0b50dccd066a53bf6648168">filterID</a></td></tr>
-<tr class="memdesc:a6513c3d9f0b50dccd066a53bf6648168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used as a key value to do FDB table and the L2 IPV4 Multicast Filter table lookup.  <a href="#a6513c3d9f0b50dccd066a53bf6648168">More...</a><br/></td></tr>
-<tr class="separator:a6513c3d9f0b50dccd066a53bf6648168"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9b7fd425a56defa2f7ab7bbd54fd073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9b7fd425a56defa2f7ab7bbd54fd073"></a>
-<a class="el" href="a00046.html#ga93b4ff855f09e33f204fd9a451fd2f19">netc_swt_mac_forward_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#af9b7fd425a56defa2f7ab7bbd54fd073">mfo</a></td></tr>
-<tr class="memdesc:af9b7fd425a56defa2f7ab7bbd54fd073"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC forwarding options. <br/></td></tr>
-<tr class="separator:af9b7fd425a56defa2f7ab7bbd54fd073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade9fa03e93f22025218f36aaaceb6a77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade9fa03e93f22025218f36aaaceb6a77"></a>
-<a class="el" href="a00046.html#ga53cb2239e2ed8f9d2e00ef50112b364a">netc_swt_mac_learn_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ade9fa03e93f22025218f36aaaceb6a77">mlo</a></td></tr>
-<tr class="memdesc:ade9fa03e93f22025218f36aaaceb6a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC learning options. <br/></td></tr>
-<tr class="separator:ade9fa03e93f22025218f36aaaceb6a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d095efbf9d1b6cbad95e3ba89d299e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d095efbf9d1b6cbad95e3ba89d299e2"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a6d095efbf9d1b6cbad95e3ba89d299e2">baseETEID</a></td></tr>
-<tr class="memdesc:a6d095efbf9d1b6cbad95e3ba89d299e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base Egress Treatment Entry ID. <br/></td></tr>
-<tr class="separator:a6d095efbf9d1b6cbad95e3ba89d299e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a3be99768ea08ae9aa5c0c8e65412a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a6a3be99768ea08ae9aa5c0c8e65412a7">etaPortBitmap</a></td></tr>
-<tr class="memdesc:a6a3be99768ea08ae9aa5c0c8e65412a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress Treatment Applicability Port.  <a href="#a6a3be99768ea08ae9aa5c0c8e65412a7">More...</a><br/></td></tr>
-<tr class="separator:a6a3be99768ea08ae9aa5c0c8e65412a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a116c9dd621ffc21178e769edbd9192e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a116c9dd621ffc21178e769edbd9192e4">callback</a></td></tr>
+<tr class="memdesc:a116c9dd621ffc21178e769edbd9192e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the callback function.  <a href="#a116c9dd621ffc21178e769edbd9192e4">More...</a><br/></td></tr>
+<tr class="separator:a116c9dd621ffc21178e769edbd9192e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">callbackType</a></td></tr>
+<tr class="memdesc:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback type.  <a href="#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">More...</a><br/></td></tr>
+<tr class="separator:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a4e7db701bbf36647da1e6d0f0efe2ebf">callbackData</a></td></tr>
+<tr class="memdesc:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data passed to the callback.  <a href="#a4e7db701bbf36647da1e6d0f0efe2ebf">More...</a><br/></td></tr>
+<tr class="separator:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ac997fad184d65c0e3d9eae1e9d693456"></a>
+<a class="anchor" id="a116c9dd621ffc21178e769edbd9192e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t netc_swt_default_vlan_filter_t::portMembership</td>
+          <td class="memname"><a class="el" href="a00046.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> notifier_callback_config_t::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Port membership is used for source/destination pruning </p>
 
 </div>
 </div>
-<a class="anchor" id="a6513c3d9f0b50dccd066a53bf6648168"></a>
+<a class="anchor" id="ad9e6ec8e23a48ef8d97b2f6d16fb68ec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t netc_swt_default_vlan_filter_t::filterID</td>
+          <td class="memname"><a class="el" href="a00046.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> notifier_callback_config_t::callbackType</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Valid if enUseFilterID is true </p>
 
 </div>
 </div>
-<a class="anchor" id="a6a3be99768ea08ae9aa5c0c8e65412a7"></a>
+<a class="anchor" id="a4e7db701bbf36647da1e6d0f0efe2ebf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t netc_swt_default_vlan_filter_t::etaPortBitmap</td>
+          <td class="memname">void* notifier_callback_config_t::callbackData</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Valid if baseETEID is not null. </p>
 
 </div>
 </div>
 
 </div>
 </div>
-<a name="a00403" id="a00403"></a>
+<a name="a00557" id="a00557"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_swt_bridge_config_t</td>
+          <td class="memname">struct notifier_handle_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00046.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afee2777a7c72c49ffa3868007213f55b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afee2777a7c72c49ffa3868007213f55b"></a>
-<a class="el" href="a00046.html#a00404">netc_swt_default_vlan_filter_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#afee2777a7c72c49ffa3868007213f55b">dVFCfg</a></td></tr>
-<tr class="memdesc:afee2777a7c72c49ffa3868007213f55b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default VLAN filter entry configuration when not found in VLAN filter lookup. <br/></td></tr>
-<tr class="separator:afee2777a7c72c49ffa3868007213f55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00408" id="a00408"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_swt_psfp_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a3f0c0a1602bc3635f6831a8e037a40d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f0c0a1602bc3635f6831a8e037a40d5"></a>
-<a class="el" href="a00042.html#a00370">netc_isi_kc_rule_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a3f0c0a1602bc3635f6831a8e037a40d5">kcRule</a> [4]</td></tr>
-<tr class="memdesc:a3f0c0a1602bc3635f6831a8e037a40d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key construction rules. <br/></td></tr>
-<tr class="separator:a3f0c0a1602bc3635f6831a8e037a40d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00409" id="a00409"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_swt_qos_classify_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00410" id="a00410"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_swt_qos_to_vlan_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00402" id="a00402"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_switch_inuse_fdb_statistic_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad0f9a8b414eac165e397850e73df8c72"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ad0f9a8b414eac165e397850e73df8c72">camEntries</a></td></tr>
-<tr class="memdesc:ad0f9a8b414eac165e397850e73df8c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of FDB entries in-use in the CAM.  <a href="#ad0f9a8b414eac165e397850e73df8c72">More...</a><br/></td></tr>
-<tr class="separator:ad0f9a8b414eac165e397850e73df8c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6251e9a59ebe340b749434ffe4f3e31"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aa6251e9a59ebe340b749434ffe4f3e31">staticEntries</a></td></tr>
-<tr class="memdesc:aa6251e9a59ebe340b749434ffe4f3e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of static FDB entries in-use (both hash-based and CAM-based entries).  <a href="#aa6251e9a59ebe340b749434ffe4f3e31">More...</a><br/></td></tr>
-<tr class="separator:aa6251e9a59ebe340b749434ffe4f3e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0825246e2a1b9811cb045c978bf34d2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ac0825246e2a1b9811cb045c978bf34d2">dynamicEntries</a></td></tr>
-<tr class="memdesc:ac0825246e2a1b9811cb045c978bf34d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of dynamic FDB entries in-use (hash-based and CAM-based entries).  <a href="#ac0825246e2a1b9811cb045c978bf34d2">More...</a><br/></td></tr>
-<tr class="separator:ac0825246e2a1b9811cb045c978bf34d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d968bb7cdfe2a1477090119f9deaa8f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a3d968bb7cdfe2a1477090119f9deaa8f">dynamicEntriesHWM</a></td></tr>
-<tr class="memdesc:a3d968bb7cdfe2a1477090119f9deaa8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">High water mark of dynamic entries in-use in the FDB table.  <a href="#a3d968bb7cdfe2a1477090119f9deaa8f">More...</a><br/></td></tr>
-<tr class="separator:a3d968bb7cdfe2a1477090119f9deaa8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a8fd95d668f17b8a7705e2a4ff49f2e16">configsTable</a></td></tr>
+<tr class="memdesc:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to configure table.  <a href="#a8fd95d668f17b8a7705e2a4ff49f2e16">More...</a><br/></td></tr>
+<tr class="separator:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a59bdd44c33254cfd4626f5906d3c0a7a">configsNumber</a></td></tr>
+<tr class="memdesc:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#a59bdd44c33254cfd4626f5906d3c0a7a">More...</a><br/></td></tr>
+<tr class="separator:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#a00556">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
+<tr class="memdesc:a423480d080ea2580628222dc6c492735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#a423480d080ea2580628222dc6c492735">More...</a><br/></td></tr>
+<tr class="separator:a423480d080ea2580628222dc6c492735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#acd4e9338f2cd47c46fc0c02886daafbb">callbacksNumber</a></td></tr>
+<tr class="memdesc:acd4e9338f2cd47c46fc0c02886daafbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of callback configurations.  <a href="#acd4e9338f2cd47c46fc0c02886daafbb">More...</a><br/></td></tr>
+<tr class="separator:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a8447a4b6045219363883663f40d300"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a6a8447a4b6045219363883663f40d300">errorCallbackIndex</a></td></tr>
+<tr class="memdesc:a6a8447a4b6045219363883663f40d300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of callback returns error.  <a href="#a6a8447a4b6045219363883663f40d300">More...</a><br/></td></tr>
+<tr class="separator:a6a8447a4b6045219363883663f40d300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9d6d2cc9c47485863c098c0284a021"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aae9d6d2cc9c47485863c098c0284a021">currentConfigIndex</a></td></tr>
+<tr class="memdesc:aae9d6d2cc9c47485863c098c0284a021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of current configuration.  <a href="#aae9d6d2cc9c47485863c098c0284a021">More...</a><br/></td></tr>
+<tr class="separator:aae9d6d2cc9c47485863c098c0284a021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f6589fa386e93c40c52ed292da4f47f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a4f6589fa386e93c40c52ed292da4f47f">userFunction</a></td></tr>
+<tr class="memdesc:a4f6589fa386e93c40c52ed292da4f47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">User function.  <a href="#a4f6589fa386e93c40c52ed292da4f47f">More...</a><br/></td></tr>
+<tr class="separator:a4f6589fa386e93c40c52ed292da4f47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a5e90e1dafbe97f2ea5187530ee04af0a">userData</a></td></tr>
+<tr class="memdesc:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User data passed to user function.  <a href="#a5e90e1dafbe97f2ea5187530ee04af0a">More...</a><br/></td></tr>
+<tr class="separator:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad0f9a8b414eac165e397850e73df8c72"></a>
+<a class="anchor" id="a8fd95d668f17b8a7705e2a4ff49f2e16"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::camEntries</td>
+          <td class="memname"><a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>** notifier_handle_t::configsTable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa6251e9a59ebe340b749434ffe4f3e31"></a>
+<a class="anchor" id="a59bdd44c33254cfd4626f5906d3c0a7a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::staticEntries</td>
+          <td class="memname">uint8_t notifier_handle_t::configsNumber</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac0825246e2a1b9811cb045c978bf34d2"></a>
+<a class="anchor" id="a423480d080ea2580628222dc6c492735"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::dynamicEntries</td>
+          <td class="memname"><a class="el" href="a00046.html#a00556">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3d968bb7cdfe2a1477090119f9deaa8f"></a>
+<a class="anchor" id="acd4e9338f2cd47c46fc0c02886daafbb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::dynamicEntriesHWM</td>
+          <td class="memname">uint8_t notifier_handle_t::callbacksNumber</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
+<a class="anchor" id="a6a8447a4b6045219363883663f40d300"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t notifier_handle_t::errorCallbackIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aae9d6d2cc9c47485863c098c0284a021"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t notifier_handle_t::currentConfigIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4f6589fa386e93c40c52ed292da4f47f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00046.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> notifier_handle_t::userFunction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5e90e1dafbe97f2ea5187530ee04af0a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* notifier_handle_t::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gad0b6e919f3ff69992b36a2734a650ec7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reference of the user defined configuration is stored in an array; the notifier switches between these configurations based on this array. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacb6a6d6f99e6ddfbb96dae53382949b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Before and after this function execution, different notification is sent to registered callbacks. If this function returns any error code, <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetConfig</td><td>target Configuration. </td></tr>
+    <tr><td class="paramname">userData</td><td>Refers to other specific data passed to user function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafd1d8cc01c496de8b4cd3990ff85415c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00046.html#a00558">notifier_notification_block_t</a> *notify, void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00046.html#a00556" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00046.html#a00558" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
+    <tr><td class="paramname">data</td><td>Callback data. Refers to the data passed during callback registration. Intended to pass any driver or application data such as internal state information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga1093dace50999dade58b16228b34880a"></a>
+<a class="anchor" id="gacac871f1b98f53906b07b2663943c784"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga1093dace50999dade58b16228b34880a">netc_swt_port_bitmap_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used as return value of Notifier functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aa81cff3fdb68e41feb8f26c36674de6d1"></a>kNETC_SWTPort0Bit</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port0 bitmap. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c"></a>kStatus_NOTIFIER_ErrorNotificationBefore</em>&nbsp;</td><td class="fielddoc">
+<p>An error occurs during send "BEFORE" notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aabbad493510d6c5f8d011c16bc9809f73"></a>kNETC_SWTPort1Bit</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port1 bitmap. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aa339244733134fa61543ee28e5ea334c7"></a>kNETC_SWTPort2Bit</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port2 bitmap. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aa8961b8657306c53eca9d6e8df9b88eb1"></a>kNETC_SWTPort3Bit</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port3 bitmap. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aadc5e0a0aab3e29b28b09a4e2345f9ff1"></a>kNETC_SWTPort4Bit</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port4 (internal port) bitmap. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58"></a>kStatus_NOTIFIER_ErrorNotificationAfter</em>&nbsp;</td><td class="fielddoc">
+<p>An error occurs during send "AFTER" notification. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga7b13a295d9e98c3aa1772a1b10ab92c9"></a>
+<a class="anchor" id="ga62e961564dc31b8155d128a3f6566409"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">netc_swt_imr_dest_port_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9a962882b2bec06c5b0396b0ececa06773"></a>kNETC_SWTPort0</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964"></a>kNOTIFIER_PolicyAgreement</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> method is exited when any of the callbacks returns error code. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9a2e27cbf0a503aaa4b69c05403d8efd19"></a>kNETC_SWTPort1</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9a28c14d834c216368e857ebc2e12601b1"></a>kNETC_SWTPort2</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9ae0ebcc15e4f3eb9ac08eb7f57252a4f9"></a>kNETC_SWTPort3</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9aedf6749b6f29b630b8b7bd1c30882fb6"></a>kNETC_SWTPort4</em>&nbsp;</td><td class="fielddoc">
-<p>Switch port4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9ad9d8dc2b781a4cb7a47971df2fcbd0b4"></a>kNETC_SWTMPort</em>&nbsp;</td><td class="fielddoc">
-<p>Switch management port. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8"></a>kNOTIFIER_PolicyForcible</em>&nbsp;</td><td class="fielddoc">
+<p>The user function is executed regardless of the results. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga93b4ff855f09e33f204fd9a451fd2f19"></a>
+<a class="anchor" id="ga5ee4314c2a52ee0af61985e7163a1be9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga93b4ff855f09e33f204fd9a451fd2f19">netc_swt_mac_forward_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used to notify registered callbacks </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga93b4ff855f09e33f204fd9a451fd2f19a937c09038eabf58e775704d486522a29"></a>kNETC_NoFDBLookUp</em>&nbsp;</td><td class="fielddoc">
-<p>No FDB lookup is performed, the frame is flooded. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94"></a>kNOTIFIER_NotifyRecover</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP to recover to previous work state. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93b4ff855f09e33f204fd9a451fd2f19a0125d1cfd210f9d01973c0652e1e9cba"></a>kNETC_FDBLookUpWithFlood</em>&nbsp;</td><td class="fielddoc">
-<p>FDB lookup is performed, and if there is no match, the frame is flooded to the port bitmap in VLAN filter entry. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c"></a>kNOTIFIER_NotifyBefore</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP that configuration setting is going to change. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93b4ff855f09e33f204fd9a451fd2f19a864a7c04327cbed0546d2e68918f965a"></a>kNETC_FDBLookUpWithDiscard</em>&nbsp;</td><td class="fielddoc">
-<p>FDB lookup is performed, and if there is no match, the frame is discarded. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00"></a>kNOTIFIER_NotifyAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP that configuration setting has been changed. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga53cb2239e2ed8f9d2e00ef50112b364a"></a>
+<a class="anchor" id="gaad75237e3cea51f8315cf6577b35db91"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga53cb2239e2ed8f9d2e00ef50112b364a">netc_swt_mac_learn_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used in the callback configuration structure (<a class="el" href="a00046.html#a00556" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
+<ul>
+<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
+<li>After an unsuccessful attempt to switch configuration</li>
+<li>After a successful configuration switch </li>
+</ul>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aa5b69ec6eec3f3b9309f640fe24aed875"></a>kNETC_DisableMACLearn</em>&nbsp;</td><td class="fielddoc">
-<p>Disable MAC learning. </p>
-<p>SMAC FDB lookup is by-passed. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1"></a>kNOTIFIER_CallbackBefore</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles BEFORE notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aae13ea4371b42d77179400aa6a52b3772"></a>kNETC_HardwareMACLearn</em>&nbsp;</td><td class="fielddoc">
-<p>Hardware MAC learning is enabled. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc"></a>kNOTIFIER_CallbackAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles AFTER notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aad02b62cc1d684eff87393c4cbb3d1f70"></a>kNETC_SeSoftwareMACLearn</em>&nbsp;</td><td class="fielddoc">
-<p>Software MAC learning secure. </p>
-<p>FDB lookup based on FID and SMAC is performed and if an entry is not found, the frame is redirected to the switch management port. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aa92f2b6b9be03bbbd0b1b8c590a391263"></a>kNETC_UnseSoftwareMACLearn</em>&nbsp;</td><td class="fielddoc">
-<p>Software MAC learning unsecure. </p>
-<p>FDB lookup based on FID and SMAC is performed and if an entry is not found, the frame is copied to the switch management port. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aa78f8f2f14cb9c432ff64a5f47279ffe6"></a>kNETC_DisableMACLearnWithSMAC</em>&nbsp;</td><td class="fielddoc">
-<p>Disable MAC learning with SMAC validation. </p>
-<p>FDB lookup based on FID and SMAC is performed and if an entry is not found, the frame is discarded. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005"></a>kNOTIFIER_CallbackBeforeAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles BEFORE and AFTER notification. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gacb9b0f9c5254125195847bf0ef633405"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaa2dfe33b4724d9c1025acdde1b1b3c31"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#gacb9b0f9c5254125195847bf0ef633405">netc_swt_port_tx_vlan_act_t</a></td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00046.html#a00557">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td>
+          <td class="paramname"><em>configs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>configsNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#a00556">notifier_callback_config_t</a> *&#160;</td>
+          <td class="paramname"><em>callbacks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>callbacksNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td>
+          <td class="paramname"><em>userFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacb9b0f9c5254125195847bf0ef633405a8e543517b76617b51a56562b1991c1cd"></a>kNETC_NoTxVlanModify</em>&nbsp;</td><td class="fielddoc">
-<p>No egress VLAN modification performed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacb9b0f9c5254125195847bf0ef633405a247250821c2334dc760d82bda9809d68"></a>kNETC_TxDelOuterVlan</em>&nbsp;</td><td class="fielddoc">
-<p>Delete outer VLAN tag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacb9b0f9c5254125195847bf0ef633405a06a45ccc50138f2af29968a38c8a64b1"></a>kNETC_TxReplOuterVlanVid</em>&nbsp;</td><td class="fielddoc">
-<p>Replace outer VLAN tag's VID with 0; frame to be transmitted as a priority tag frame. </p>
-</td></tr>
-</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notifierHandle</td><td>A pointer to the notifier handle. </td></tr>
+    <tr><td class="paramname">configs</td><td>A pointer to an array with references to all configurations which is handled by the Notifier. </td></tr>
+    <tr><td class="paramname">configsNumber</td><td>Number of configurations. Size of the configuration array. </td></tr>
+    <tr><td class="paramname">callbacks</td><td>A pointer to an array of callback configurations. If there are no callbacks to register during Notifier initialization, use NULL value. </td></tr>
+    <tr><td class="paramname">callbacksNumber</td><td>Number of registered callbacks. Size of the callbacks array. </td></tr>
+    <tr><td class="paramname">userFunction</td><td>User function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User data passed to user function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error Code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga720df95d878c6da34f14dec26c0800ed"></a>
+<a class="anchor" id="ga9ca08c8f6fa9a7bafa9ecbe08603cd97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga720df95d878c6da34f14dec26c0800ed">netc_swt_port_stg_mode_t</a></td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00046.html#a00557">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td>
+          <td class="paramname"><em>policy</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga720df95d878c6da34f14dec26c0800eda1f58a8027b469da9a3e6435e6b81c1a1"></a>kNETC_DiscardFrame</em>&nbsp;</td><td class="fielddoc">
-<p>Tx or RX Frames on this port with current spanning tree group ID will be discarded. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga720df95d878c6da34f14dec26c0800edaa3aeb92223320811b7c652445cb3d0c1"></a>kNETC_LearnWithoutFowrad</em>&nbsp;</td><td class="fielddoc">
-<p>RX Frames on this port with current spanning tree group ID will do Learn SMAC, but do not forward, Tx Frame will be discarded. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga720df95d878c6da34f14dec26c0800eda9c8209fda59accbdbe7becf8db86fd1c"></a>kNETC_ForwardFrame</em>&nbsp;</td><td class="fielddoc">
-<p>RX Frames on this port with current spanning tree group ID will do both MAC learning and forwarding, , Tx Frame will be forwarded. </p>
-</td></tr>
-</table>
+<p>This function sets the system to the target configuration. Before transition, the Notifier sends notifications to all callbacks registered to the callback table. Callbacks are invoked in the following order: All registered callbacks are notified ordered by index in the callbacks array. The same order is used for before and after switch notifications. The notifications before the configuration switch can be used to obtain confirmation about the change from registered callbacks. If any registered callback denies the configuration change, further execution of this function depends on the notifier policy: the configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement). When configuration change is forced, the result of the before switch notifications are ignored. If an agreement is required, if any callback returns an error code, further notifications before switch notifications are cancelled and all already notified callbacks are re-invoked. The index of the callback which returned error code during pre-switch notifications is stored (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it. Regardless of the policies, if any callback returns an error code, an error code indicating in which phase the error occurred is returned when <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notifierHandle</td><td>pointer to notifier handle </td></tr>
+    <tr><td class="paramname">configIndex</td><td>Index of the target configuration. </td></tr>
+    <tr><td class="paramname">policy</td><td>Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9736632c3beca486ec3f8dab504b839c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00046.html#a00557">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function returns an index of the last callback that failed during the configuration switch while the last <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> was called. If the last <a class="el" href="a00046.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> call ended successfully value equal to callbacks number is returned. The returned value represents an index in the array of static call-backs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notifierHandle</td><td>Pointer to the notifier handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Callback Index of the last failed callback or value equal to callbacks count. </dd></dl>
 
 </div>
 </div>

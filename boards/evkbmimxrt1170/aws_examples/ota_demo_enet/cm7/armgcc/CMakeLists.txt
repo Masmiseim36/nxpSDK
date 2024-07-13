@@ -71,7 +71,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
 "${ProjDirPath}/../bootutil_port/flash_map.h"
 "${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
-"${ProjDirPath}/../bootutil_port/sbldef.h"
 "${ProjDirPath}/../ota/ota_pal.c"
 "${ProjDirPath}/../ota/ota_pal.h"
 "${ProjDirPath}/../ota/ota_signature_validation.c"

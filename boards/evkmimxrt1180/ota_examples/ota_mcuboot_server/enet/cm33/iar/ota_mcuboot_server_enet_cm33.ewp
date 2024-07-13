@@ -226,15 +226,12 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
-          <state>MBEDTLS_CONFIG_FILE="ele_s400_mbedtls_config.h"</state>
-          <state>MBEDTLS_USER_CONFIG_FILE="mbedtls_user_config.h"</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
           <state>MCUBOOT_APPLICATION=1</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=0</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>HTTPSRV_CFG_DEFAULT_SES_CNT=4</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
           <state>CHECKSUM_GEN_UDP=1</state>
@@ -243,12 +240,8 @@
           <state>CHECKSUM_GEN_ICMP6=1</state>
           <state>CHECKSUM_CHECK_ICMP=1</state>
           <state>CHECKSUM_CHECK_ICMP6=1</state>
-          <state>MBEDTLS_MCUX_ELE_S400_API</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
-          <state>MBEDTLS_THREADING_C</state>
-          <state>MBEDTLS_THREADING_ALT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -289,7 +282,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -381,28 +374,25 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/flash/mflash/mimxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../platform/drivers/netc/socs/imxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -668,6 +658,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -785,7 +776,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=1000</state>
-          <state>__heap_size__=100000</state>
+          <state>__heap_size__=60000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1355,15 +1346,12 @@
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1189CVM8B_cm33</state>
-          <state>MBEDTLS_CONFIG_FILE="ele_s400_mbedtls_config.h"</state>
-          <state>MBEDTLS_USER_CONFIG_FILE="mbedtls_user_config.h"</state>
           <state>FSL_ETH_ENABLE_CACHE_CONTROL</state>
           <state>MCUBOOT_APPLICATION=1</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=0</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>HTTPSRV_CFG_DEFAULT_SES_CNT=4</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_IP=1</state>
           <state>CHECKSUM_GEN_UDP=1</state>
@@ -1372,12 +1360,8 @@
           <state>CHECKSUM_GEN_ICMP6=1</state>
           <state>CHECKSUM_CHECK_ICMP=1</state>
           <state>CHECKSUM_CHECK_ICMP6=1</state>
-          <state>MBEDTLS_MCUX_ELE_S400_API</state>
           <state>MFLASH_FILE_BASEADDR=14221312</state>
-          <state>MBEDTLS_THREADING_C</state>
-          <state>MBEDTLS_THREADING_ALT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
@@ -1418,7 +1402,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1510,28 +1494,25 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/flash/mflash/mimxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../platform/drivers/netc/socs/imxrt1180</state>
           <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1797,6 +1778,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1914,7 +1896,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=1000</state>
-          <state>__heap_size__=100000</state>
+          <state>__heap_size__=60000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2348,9 +2330,6 @@
         <name>$PROJ_DIR$/../bootutil_port/sysflash/sysflash.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../bootutil_port/sbldef.h</name>
-    </file>
   </group>
   <group>
     <name>doc</name>
@@ -2436,18 +2415,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/gpio/fsl_adapter_rgpio.c</name>
-      </file>
-    </group>
-    <group>
-      <name>ele_crypto</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/ele_crypto/ele_crypto.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/ele_crypto/ele_crypto.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/ele_crypto/ele_crypto_internal.h</name>
       </file>
     </group>
   </group>
@@ -2586,16 +2553,22 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
     </file>
   </group>
   <group>
@@ -3400,732 +3373,6 @@
     </group>
   </group>
   <group>
-    <name>mbedtls</name>
-    <group>
-      <name>include</name>
-      <group>
-        <name>mbedtls</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/aes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/aesni.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/arc4.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/aria.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/asn1.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/asn1write.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/base64.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/bignum.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/blowfish.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/bn_mul.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/camellia.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ccm.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/certs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/chacha20.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/check_config.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/cipher.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/cipher_internal.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/cmac.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/compat-1.3.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/config.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/constant_time.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ctr_drbg.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/debug.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/des.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/dhm.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ecdh.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ecdsa.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ecjpake.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ecp.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ecp_internal.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/entropy.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/entropy_poll.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/error.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/gcm.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/havege.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/hkdf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/md.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/md2.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/md4.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/md5.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/memory_buffer_alloc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/net.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/oid.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/padlock.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/pem.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/pk.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/platform.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/platform_time.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/platform_util.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/rsa.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/sha1.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/sha256.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/sha512.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ssl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ssl_cache.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ssl_ciphersuites.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ssl_cookie.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ssl_internal.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/ssl_ticket.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/threading.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/timing.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/version.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/x509.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/x509_crl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/x509_crt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/x509_csr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/mbedtls/xtea.h</name>
-        </file>
-      </group>
-      <group>
-        <name>psa</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_config.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_types.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/include/psa/crypto_values.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>library</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/aes.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/aesni.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/arc4.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/aria.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/asn1parse.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/asn1write.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/base64.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/bignum.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/blowfish.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/camellia.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ccm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/certs.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/chacha20.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/chachapoly.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/check_crypto_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/cipher.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/cipher_wrap.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/cmac.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/constant_time.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/constant_time_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/constant_time_invasive.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ctr_drbg.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/debug.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/des.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/dhm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ecdh.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ecdsa.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ecjpake.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ecp.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ecp_curves.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ecp_invasive.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/entropy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/entropy_poll.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/error.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/gcm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/havege.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/hkdf.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/hmac_drbg.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/md.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/md2.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/md4.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/md5.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/memory_buffer_alloc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/mps_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/mps_error.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/mps_reader.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/mps_reader.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/mps_trace.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/mps_trace.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/net_sockets.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/nist_kw.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/oid.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/padlock.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pem.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pk.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pk_wrap.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pkcs5.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pkcs11.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pkcs12.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pkparse.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/pkwrite.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/platform.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/platform_util.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/poly1305.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_client.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_its.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_se.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_se.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/psa_its_file.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ripemd160.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/rsa.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/rsa_internal.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/sha1.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/sha256.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/sha512.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_cache.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_ciphersuites.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_cli.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_cookie.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_msg.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_srv.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_ticket.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_tls.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/threading.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/timing.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/version.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/version_features.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509_create.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509_crl.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509_crt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509_csr.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509write_crt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/x509write_csr.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/xtea.c</name>
-      </file>
-    </group>
-    <group>
-      <name>port</name>
-      <group>
-        <name>ele_s400</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ele_mbedtls.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ele_mbedtls.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ele_s400_mbedtls_config.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ele_fw.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ele_entropy.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/aes_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/aes_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ccm_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/ccm_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/gcm_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/gcm_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/rsa_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/rsa_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/threading_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/sha256_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/sha256_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/sha512_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/sha512_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400/hmac_alt.c</name>
-        </file>
-      </group>
-    </group>
-  </group>
-  <group>
     <name>freertos</name>
     <group>
       <name>freertos-kernel</name>
@@ -4137,6 +3384,9 @@
             <name>ARM_CM33_NTZ</name>
             <group>
               <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.S</name>
+              </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
@@ -4201,7 +3451,16 @@
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -4293,12 +3552,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4309,6 +3562,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

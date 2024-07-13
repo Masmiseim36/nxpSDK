@@ -1,20 +1,20 @@
 var searchData=
 [
   ['nanosecond',['nanosecond',['../a00029.html#a1d1a21e515c607e70394282a52e97d5d',1,'_enet_qos_ptp_time']]],
-  ['nbytes',['NBYTES',['../a00025.html#ad18f3c5a19e9bb70c46541ce7caa537c',1,'_edma_tcd::NBYTES()'],['../a00034.html#a310ccb52e90227a84cbb06104dde79d5',1,'_flexio_camera_edma_handle::nbytes()'],['../a00038.html#a78dcdba57cf5066213ea461457dffcb6',1,'_flexio_i2s_edma_handle::nbytes()'],['../a00042.html#a0031d44f585927e4e39c6dd41104472d',1,'_flexio_spi_master_edma_handle::nbytes()'],['../a00044.html#aae237261bf33afdcd17114cd2b2bde92',1,'_flexio_uart_edma_handle::nbytes()'],['../a00047.html#ad51f282e886b30cfb36e6d560aa29ace',1,'_flexspi_edma_handle::nbytes()'],['../a00056.html#a528a576ba6e3e6821d8e35ce82f20342',1,'_lpi2c_master_edma_handle::nbytes()'],['../a00059.html#ac5f995d95b3dd80cfb40c242fcd2210b',1,'_lpspi_master_edma_handle::nbytes()'],['../a00059.html#a062641d46358cc81299b44f13e954bea',1,'_lpspi_slave_edma_handle::nbytes()'],['../a00061.html#a03dc8e0516d31d6e8c51e8e9304861cf',1,'_lpuart_edma_handle::nbytes()'],['../a00101.html#a2ffb3c5dda8cbc7c9c304d0148e615d4',1,'sai_edma_handle::nbytes()'],['../a00091.html#ab2da0a7b6e0edb696a64b4cd5e811fd5',1,'_spdif_edma_handle::nbytes()']]],
+  ['nbytes',['nbytes',['../a00034.html#a310ccb52e90227a84cbb06104dde79d5',1,'_flexio_camera_edma_handle::nbytes()'],['../a00038.html#a78dcdba57cf5066213ea461457dffcb6',1,'_flexio_i2s_edma_handle::nbytes()'],['../a00042.html#a0031d44f585927e4e39c6dd41104472d',1,'_flexio_spi_master_edma_handle::nbytes()'],['../a00044.html#aae237261bf33afdcd17114cd2b2bde92',1,'_flexio_uart_edma_handle::nbytes()'],['../a00047.html#ad51f282e886b30cfb36e6d560aa29ace',1,'_flexspi_edma_handle::nbytes()'],['../a00056.html#a528a576ba6e3e6821d8e35ce82f20342',1,'_lpi2c_master_edma_handle::nbytes()'],['../a00059.html#ac5f995d95b3dd80cfb40c242fcd2210b',1,'_lpspi_master_edma_handle::nbytes()'],['../a00059.html#a062641d46358cc81299b44f13e954bea',1,'_lpspi_slave_edma_handle::nbytes()'],['../a00061.html#a03dc8e0516d31d6e8c51e8e9304861cf',1,'_lpuart_edma_handle::nbytes()'],['../a00100.html#a2ffb3c5dda8cbc7c9c304d0148e615d4',1,'sai_edma_handle::nbytes()'],['../a00090.html#ab2da0a7b6e0edb696a64b4cd5e811fd5',1,'_spdif_edma_handle::nbytes()'],['../a00025.html#ad18f3c5a19e9bb70c46541ce7caa537c',1,'_edma_tcd::NBYTES()']]],
   ['needexitnocmdmode',['needExitNoCmdMode',['../a00048.html#ae1d08e9725d30a5d16f0cf198ddfb44e',1,'_flexspi_nor_config']]],
   ['needrestart',['needRestart',['../a00036.html#af59e068af6c05ffa9e2906aa992ef6cf',1,'_flexio_i2c_master_handle']]],
   ['needrestorenocmdmode',['needRestoreNoCmdMode',['../a00048.html#af69c168ff5f822b48746412d13cda3b1',1,'_flexspi_nor_config']]],
   ['nextcontrol',['nextControl',['../a00029.html#a4314a71ab993c67a37011fab9150d42b',1,'_enet_qos_rxp_config']]],
-  ['nointeralalign',['noInteralAlign',['../a00065.html#a96cacb1bff48c1038b9a652914a8e368',1,'_mmc_card::noInteralAlign()'],['../a00078.html#ababa71848d9c23d678799bddfe512119',1,'_sd_card::noInteralAlign()']]],
-  ['nointernalalign',['noInternalAlign',['../a00079.html#a67b7bd9b132180212052138dfb23e4c0',1,'_sdio_card']]],
-  ['noisefilteradjustment',['noiseFilterAdjustment',['../a00067.html#aaf52e6a8f7bc86b3c53fbebfdbfa5e03',1,'_pdm_hwvad_noise_filter']]],
-  ['noisegain',['noiseGain',['../a00067.html#ad8d32164f78e56a7e4f60d5a6fb5af93',1,'_pdm_hwvad_noise_filter']]],
-  ['notifytype',['notifyType',['../a00066.html#adc67fe829150c3c2a679db904432d7ea',1,'_notifier_notification_block']]],
+  ['nointeralalign',['noInteralAlign',['../a00064.html#a96cacb1bff48c1038b9a652914a8e368',1,'_mmc_card::noInteralAlign()'],['../a00077.html#ababa71848d9c23d678799bddfe512119',1,'_sd_card::noInteralAlign()']]],
+  ['nointernalalign',['noInternalAlign',['../a00078.html#a67b7bd9b132180212052138dfb23e4c0',1,'_sdio_card']]],
+  ['noisefilteradjustment',['noiseFilterAdjustment',['../a00066.html#aaf52e6a8f7bc86b3c53fbebfdbfa5e03',1,'_pdm_hwvad_noise_filter']]],
+  ['noisegain',['noiseGain',['../a00066.html#ad8d32164f78e56a7e4f60d5a6fb5af93',1,'_pdm_hwvad_noise_filter']]],
+  ['notifytype',['notifyType',['../a00065.html#adc67fe829150c3c2a679db904432d7ea',1,'_notifier_notification_block']]],
   ['nsize',['nsize',['../a00047.html#a6c271ce07f7ddca22daf39770d654573',1,'_flexspi_edma_handle']]],
   ['numentries',['numEntries',['../a00029.html#ad25fb0cf9b84a1f4918ddb5a0e186dc1',1,'_enet_qos_est_gcl']]],
   ['numerator',['numerator',['../a00016.html#ac34dd639bce5c377db430aed06a685d2',1,'_clock_audio_pll_config::numerator()'],['../a00016.html#a0f2d7e5e8fb5651bc6f5691bbdbac629',1,'_clock_audio_pll_gpc_config::numerator()']]],
   ['numextraeotp',['numExtraEoTp',['../a00024.html#a404952330073c3d75b03d5b60c1d731b',1,'_dsi_config']]],
   ['numlanes',['numLanes',['../a00024.html#a2aef122425e1d6903fc384c8ed165f4c',1,'_dsi_config']]],
-  ['nwellregulatorsize',['NWELLRegulatorSize',['../a00071.html#aa53d4c10d935956dbd1cc315e889fb6b',1,'_pmu_gpc_body_bias_config']]]
+  ['nwellregulatorsize',['NWELLRegulatorSize',['../a00070.html#aa53d4c10d935956dbd1cc315e889fb6b',1,'_pmu_gpc_body_bias_config']]]
 ];

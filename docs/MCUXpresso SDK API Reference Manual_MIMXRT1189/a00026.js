@@ -1,6 +1,6 @@
 var a00026 =
 [
-    [ "lpadc_config_t", "a00026.html#a00329", [
+    [ "lpadc_config_t", "a00026.html#a00327", [
       [ "enableInDozeMode", "a00026.html#ac47a5a50ba40ca3b021b4be239a048f3", null ],
       [ "conversionAverageMode", "a00026.html#a4d193c5aac89c8098e6c4b56aa7b9d62", null ],
       [ "enableAnalogPreliminary", "a00026.html#ab62dd78747ca5df971c30ad59d0127ba", null ],
@@ -12,7 +12,7 @@ var a00026 =
       [ "FIFO0Watermark", "a00026.html#a5ca017520f60b0ece2907f4797ef1b2b", null ],
       [ "FIFO1Watermark", "a00026.html#af849ddcf7997df4d3481225972626472", null ]
     ] ],
-    [ "lpadc_conv_command_config_t", "a00026.html#a00330", [
+    [ "lpadc_conv_command_config_t", "a00026.html#a00328", [
       [ "sampleScaleMode", "a00026.html#aa8a989a84f3f494e8a222a14e4fa2740", null ],
       [ "channelBScaleMode", "a00026.html#a056e2296724d5bcb6e34f694a9159347", null ],
       [ "sampleChannelMode", "a00026.html#ad83d6cc054bd648551aa7a875e5e8a58", null ],
@@ -29,19 +29,19 @@ var a00026 =
       [ "conversionResolutionMode", "a00026.html#ab4258a9f4e7702729248d2c4bc5fad55", null ],
       [ "enableWaitTrigger", "a00026.html#aaebaf295fa7a725ae26273e4a79735a8", null ]
     ] ],
-    [ "lpadc_conv_trigger_config_t", "a00026.html#a00332", [
+    [ "lpadc_conv_trigger_config_t", "a00026.html#a00330", [
       [ "targetCommandId", "a00026.html#ae1c77e5afcb5c9d2b80ac92cc5de597e", null ],
       [ "delayPower", "a00026.html#a33fd3b422ca9c26c1eb915ef8fdc3c3e", null ],
       [ "priority", "a00026.html#a2e4d3a907597cd2c8c712ae967c5ac2f", null ],
       [ "enableHardwareTrigger", "a00026.html#a32a44ab0d65a0666b659027b93738c95", null ]
     ] ],
-    [ "lpadc_conv_result_t", "a00026.html#a00331", [
+    [ "lpadc_conv_result_t", "a00026.html#a00329", [
       [ "commandIdSource", "a00026.html#a7ed6dcbf44ad017014525335013c817b", null ],
       [ "loopCountIndex", "a00026.html#a87e1ee666c960928797ca574f1bcae1b", null ],
       [ "triggerIdSource", "a00026.html#ad3b63c03e1c136e4293dd82a443f1de2", null ],
       [ "convValue", "a00026.html#a4add4f13e761e8048d4434eb195f44d5", null ]
     ] ],
-    [ "lpadc_calibration_value_t", "a00026.html#a00328", null ],
+    [ "lpadc_calibration_value_t", "a00026.html#a00326", null ],
     [ "FSL_LPADC_DRIVER_VERSION", "a00026.html#gab8a795637177dc9973e0fd2f5b29b6c3", null ],
     [ "LPADC_GET_ACTIVE_COMMAND_STATUS", "a00026.html#gae305eca1c95975e49ea88d0d39aeb3e0", null ],
     [ "LPADC_GET_ACTIVE_TRIGGER_STATUE", "a00026.html#ga48a0c8b6bac1e45cc7bdc93ccc288786", null ],

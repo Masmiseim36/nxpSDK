@@ -347,10 +347,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/tsn/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,6 +417,76 @@
               <FileName>nx_user.h</FileName>
               <FileType>5</FileType>
               <FilePath>../nx_user.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/tsn</GroupName>
+          <Files>
+            <File>
+              <FileName>CMakeLists.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/CMakeLists.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/tsn/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_mrp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_mrp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_msrp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_msrp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_mvrp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_mvrp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_shaper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_shaper.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_srp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_srp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/tsn/src</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_mrp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_mrp.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_msrp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_msrp.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_mvrp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_mvrp.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_shaper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_shaper.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_srp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_srp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2589,11 +2659,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
@@ -2682,6 +2747,11 @@
               <FileName>nx_ipv6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_link.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</FilePath>
             </File>
             <File>
               <FileName>nx_md5.h</FileName>
@@ -3106,10 +3176,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/tsn/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3176,6 +3246,76 @@
               <FileName>nx_user.h</FileName>
               <FileType>5</FileType>
               <FilePath>../nx_user.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/tsn</GroupName>
+          <Files>
+            <File>
+              <FileName>CMakeLists.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/CMakeLists.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/tsn/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_mrp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_mrp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_msrp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_msrp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_mvrp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_mvrp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_shaper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_shaper.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_srp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/inc/nx_srp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/tsn/src</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_mrp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_mrp.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_msrp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_msrp.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_mvrp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_mvrp.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_shaper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_shaper.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_srp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/tsn/src/nx_srp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5348,11 +5488,6 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
@@ -5441,6 +5576,11 @@
               <FileName>nx_ipv6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_link.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_link.h</FilePath>
             </File>
             <File>
               <FileName>nx_md5.h</FileName>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: eDMA soc Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPI2C FreeRTOS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,52 +98,10 @@ $(document).ready(function(){initNavTree('a00206.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">eDMA soc Driver<div class="ingroups"><a class="el" href="a00014.html">eDMA: Enhanced Direct Memory Access (eDMA) Controller Driver</a></div></div>  </div>
+<div class="title">LPI2C FreeRTOS Driver<div class="ingroups"><a class="el" href="a00205.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga4ba2841202cf12aa54753d5d88d16777"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4ba2841202cf12aa54753d5d88d16777"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html#ga4ba2841202cf12aa54753d5d88d16777">FSL_EDMA_SOC_IP_DMA3</a>&#160;&#160;&#160;(1)</td></tr>
-<tr class="memdesc:ga4ba2841202cf12aa54753d5d88d16777"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA IP version. <br/></td></tr>
-<tr class="separator:ga4ba2841202cf12aa54753d5d88d16777"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2ad368d3a0b53d823af4fee8e0260ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae2ad368d3a0b53d823af4fee8e0260ba"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html#gae2ad368d3a0b53d823af4fee8e0260ba">EDMA_BASE_PTRS</a></td></tr>
-<tr class="memdesc:gae2ad368d3a0b53d823af4fee8e0260ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA base table. <br/></td></tr>
-<tr class="separator:gae2ad368d3a0b53d823af4fee8e0260ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba3c4951ff0843152a10cff5d29961b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba3c4951ff0843152a10cff5d29961b5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html#gaba3c4951ff0843152a10cff5d29961b5">EDMA_CHN_IRQS</a></td></tr>
-<tr class="memdesc:gaba3c4951ff0843152a10cff5d29961b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify dma base and request source. <br/></td></tr>
-<tr class="separator:gaba3c4951ff0843152a10cff5d29961b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2727967e9e2e1be65e12ad7bc4ada456"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2727967e9e2e1be65e12ad7bc4ada456"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html#ga2727967e9e2e1be65e12ad7bc4ada456">EDMA_CHANNEL_OFFSET</a>&#160;&#160;&#160;0x10000U</td></tr>
-<tr class="memdesc:ga2727967e9e2e1be65e12ad7bc4ada456"><td class="mdescLeft">&#160;</td><td class="mdescRight">EDMA base address convert macro. <br/></td></tr>
-<tr class="separator:ga2727967e9e2e1be65e12ad7bc4ada456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga831120489cc9d849c4b52872c89a07bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html#ga831120489cc9d849c4b52872c89a07bf">FSL_EDMA_SOC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
-<tr class="memdesc:ga831120489cc9d849c4b52872c89a07bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version 2.1.0.  <a href="#ga831120489cc9d849c4b52872c89a07bf">More...</a><br/></td></tr>
-<tr class="separator:ga831120489cc9d849c4b52872c89a07bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga831120489cc9d849c4b52872c89a07bf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_EDMA_SOC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

@@ -1,0 +1,37 @@
+Release Name: Industrial Motor Control Application Tuning
+Release Version: 1.0.0
+Package License: LA_OPT_NXP_Software_License.txt - Additional Distribution License granted, license in Section 2.3 applies
+Bootstrap                   Name: Bootstrap
+                            Version: 5.1.3
+                            Outgoing License: MIT
+                            License File: https://github.com/twbs/bootstrap/blob/v5.0.2/LICENSE
+                            Format: import
+                            Description: a CSS library used for application styling 
+                            Location: mcat.js <import in minified version>
+                            Origin: https://getbootstrap.com
+
+Font Awesome                Name: Font Awesome
+                            Version: 5.7.0
+                            Outgoing License: CC BY 4.0.
+                            License File: https://creativecommons.org/licenses/by/4.0/
+                            Format: link
+                            Description: a free icons database used for freeMaster integration icons 
+                            Location: index.html <link tag>
+                            Origin: https://fontawesome.com/
+
+simple-jsonrpc-js           Name: simple-jsonrpc-js
+                            License: MIT License
+                            Original source: https://www.npmjs.org/package/simple-jsonrpc-js
+                            Format: source code
+                            Description: JSON-RPC implementation in JavaScript used by FreeMASTER HTML Welcome pages
+                            Files: simple-jsonrpc-js.js
+                            Origin: https://www.npmjs.org/package/simple-jsonrpc-js
+
+freemaster-client-js:       Name: motor_control
+                            Version: 3.2.1.6
+                            Outgoing License: LA_OPT_NXP_Software_License.txt - Additional Distribution License granted, license in Section 2.3 applies
+                            License File: LA_OPT_NXP_Software_License.txt
+                            Format: source code
+                            Description: JSON-RPC library for Freemaster communication
+                            Location: middleware/motor_control/freemaster
+                            Origin: NXP (Proprietary)

@@ -5,7 +5,7 @@
 	</main>
 	<objects>
 		<object name="ObjId0000" type="CPrjDoc">
-			<member name="version" type="string">3.2.1.6</member>
+			<member name="version" type="string">3.2.2.2</member>
 			<member name="enum_db_man" type="CEnumList">ObjId0001</member>
 			<member name="variables" type="CObListEx">ObjId0003</member>
 			<member name="stimulators" type="CObListEx">ObjId0004</member>
@@ -6093,7 +6093,7 @@
 			<member name="virtual" type="sint32">0</member>
 			<member name="virtual_default" type="string">0</member>
 			<member name="treat_as" type="sint32">3</member>
-			<member name="type_fmt" type="string">Q15.16 &lt;-32768,32768)</member>
+			<member name="type_fmt" type="string">Q16.15 &lt;-65536,65536)</member>
 			<member name="bit_shift" type="sint32">0</member>
 			<member name="bit_mask" type="string">no mask (-1)</member>
 			<member name="value_trf" type="CObject_ptr">NULL</member>
@@ -6142,7 +6142,7 @@
 			<member name="virtual" type="sint32">0</member>
 			<member name="virtual_default" type="string">0</member>
 			<member name="treat_as" type="sint32">3</member>
-			<member name="type_fmt" type="string">Q15.16 &lt;-32768,32768)</member>
+			<member name="type_fmt" type="string">Q16.15 &lt;-65536,65536)</member>
 			<member name="bit_shift" type="sint32">0</member>
 			<member name="bit_mask" type="string">no mask (-1)</member>
 			<member name="value_trf" type="CObject_ptr">NULL</member>
@@ -19673,7 +19673,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Speed</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -19698,11 +19698,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId0783</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId0784</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId0785</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.50000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -19712,23 +19711,23 @@ b#10 0000 - Missing Pp value</member>
 		<object name="ObjId0777" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0395</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId0778" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0381</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId0779" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0444</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xFF0000</member>
 		</object>
 		<object name="ObjId0780" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">1</member>
+			<member name="join_class" type="sint32">0</member>
 			<member name="laxis_label" type="string">Hz</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-7.50000000000000000000e+02</member>
@@ -19744,7 +19743,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="raxis_subsets" type="sint32">0</member>
 		</object>
 		<object name="ObjId0781" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">2</member>
+			<member name="join_class" type="sint32">1</member>
 			<member name="laxis_label" type="string">rpm</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -19828,7 +19827,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Encoder</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -19852,11 +19851,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId0792</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId0793</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId0794</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -19866,17 +19864,17 @@ b#10 0000 - Missing Pp value</member>
 		<object name="ObjId0787" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0475</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId0788" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0473</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId0789" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">1</member>
+			<member name="join_class" type="sint32">0</member>
 			<member name="laxis_label" type="string">rpm</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -19892,7 +19890,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="raxis_subsets" type="sint32">0</member>
 		</object>
 		<object name="ObjId0790" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">2</member>
+			<member name="join_class" type="sint32">1</member>
 			<member name="laxis_label" type="string">dec</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -19976,7 +19974,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Encoder Direction Scope</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -20000,11 +19998,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId0801</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId0802</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId0803</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -20014,13 +20011,13 @@ b#10 0000 - Missing Pp value</member>
 		<object name="ObjId0796" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0444</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId0797" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0475</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId0798" type="CPrjItemRS_YBlockInfo">
@@ -20163,7 +20160,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -20348,7 +20344,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -20480,12 +20475,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId0828" type="CObArray" length="5">
+		<object name="ObjId0828" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId0829</member>
 			<member name="index1" type="CObject_ptr">ObjId0830</member>
 			<member name="index2" type="CObject_ptr">ObjId0831</member>
 			<member name="index3" type="CObject_ptr">ObjId0832</member>
 			<member name="index4" type="CObject_ptr">ObjId0833</member>
+			<member name="index5" type="CObject_ptr">ObjId3583</member>
 		</object>
 		<object name="ObjId0829" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -20511,6 +20507,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3583" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId0834" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -21908,7 +21909,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -22077,7 +22077,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -22250,7 +22249,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -22418,7 +22416,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -22556,12 +22553,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1027" type="CObArray" length="5">
+		<object name="ObjId1027" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1028</member>
 			<member name="index1" type="CObject_ptr">ObjId1029</member>
 			<member name="index2" type="CObject_ptr">ObjId1030</member>
 			<member name="index3" type="CObject_ptr">ObjId1031</member>
 			<member name="index4" type="CObject_ptr">ObjId1032</member>
+			<member name="index5" type="CObject_ptr">ObjId3584</member>
 		</object>
 		<object name="ObjId1028" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -22587,6 +22585,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3584" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1033" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -23803,7 +23806,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -23960,7 +23962,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -24134,7 +24135,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -24297,7 +24297,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -24466,7 +24465,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -24641,7 +24639,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -24820,12 +24817,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1227" type="CObArray" length="5">
+		<object name="ObjId1227" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1228</member>
 			<member name="index1" type="CObject_ptr">ObjId1229</member>
 			<member name="index2" type="CObject_ptr">ObjId1230</member>
 			<member name="index3" type="CObject_ptr">ObjId1231</member>
 			<member name="index4" type="CObject_ptr">ObjId1232</member>
+			<member name="index5" type="CObject_ptr">ObjId3585</member>
 		</object>
 		<object name="ObjId1228" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -24851,6 +24849,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3585" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1233" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -26063,7 +26066,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -26227,7 +26229,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -26399,7 +26400,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -26525,12 +26525,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1394" type="CObArray" length="5">
+		<object name="ObjId1394" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1395</member>
 			<member name="index1" type="CObject_ptr">ObjId1396</member>
 			<member name="index2" type="CObject_ptr">ObjId1397</member>
 			<member name="index3" type="CObject_ptr">ObjId1398</member>
 			<member name="index4" type="CObject_ptr">ObjId1399</member>
+			<member name="index5" type="CObject_ptr">ObjId3586</member>
 		</object>
 		<object name="ObjId1395" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -26556,6 +26557,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3586" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1400" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -27694,7 +27700,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -27874,7 +27879,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -28036,7 +28040,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -28204,7 +28207,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -28330,12 +28332,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1561" type="CObArray" length="5">
+		<object name="ObjId1561" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1562</member>
 			<member name="index1" type="CObject_ptr">ObjId1563</member>
 			<member name="index2" type="CObject_ptr">ObjId1564</member>
 			<member name="index3" type="CObject_ptr">ObjId1565</member>
 			<member name="index4" type="CObject_ptr">ObjId1566</member>
+			<member name="index5" type="CObject_ptr">ObjId3587</member>
 		</object>
 		<object name="ObjId1562" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -28361,6 +28364,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3587" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1567" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0494</member>
@@ -32071,12 +32079,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1944" type="CObArray" length="5">
+		<object name="ObjId1944" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1945</member>
 			<member name="index1" type="CObject_ptr">ObjId1946</member>
 			<member name="index2" type="CObject_ptr">ObjId1947</member>
 			<member name="index3" type="CObject_ptr">ObjId1948</member>
 			<member name="index4" type="CObject_ptr">ObjId1949</member>
+			<member name="index5" type="CObject_ptr">ObjId3588</member>
 		</object>
 		<object name="ObjId1945" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -32102,6 +32111,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3588" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1950" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -33580,12 +33594,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2166" type="CObArray" length="5">
+		<object name="ObjId2166" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId2167</member>
 			<member name="index1" type="CObject_ptr">ObjId2168</member>
 			<member name="index2" type="CObject_ptr">ObjId2169</member>
 			<member name="index3" type="CObject_ptr">ObjId2170</member>
 			<member name="index4" type="CObject_ptr">ObjId2171</member>
+			<member name="index5" type="CObject_ptr">ObjId3589</member>
 		</object>
 		<object name="ObjId2167" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -33611,6 +33626,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3589" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2172" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0574</member>
@@ -34067,12 +34087,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2246" type="CObArray" length="5">
+		<object name="ObjId2246" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId2247</member>
 			<member name="index1" type="CObject_ptr">ObjId2248</member>
 			<member name="index2" type="CObject_ptr">ObjId2249</member>
 			<member name="index3" type="CObject_ptr">ObjId2250</member>
 			<member name="index4" type="CObject_ptr">ObjId2251</member>
+			<member name="index5" type="CObject_ptr">ObjId3590</member>
 		</object>
 		<object name="ObjId2247" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -34098,6 +34119,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3590" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2252" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -36192,7 +36218,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.50000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -36346,7 +36371,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -36494,7 +36518,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -36653,7 +36676,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -36838,7 +36860,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -36970,12 +36991,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2527" type="CObArray" length="5">
+		<object name="ObjId2527" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId2528</member>
 			<member name="index1" type="CObject_ptr">ObjId2529</member>
 			<member name="index2" type="CObject_ptr">ObjId2530</member>
 			<member name="index3" type="CObject_ptr">ObjId2531</member>
 			<member name="index4" type="CObject_ptr">ObjId2532</member>
+			<member name="index5" type="CObject_ptr">ObjId3591</member>
 		</object>
 		<object name="ObjId2528" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -37001,6 +37023,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3591" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2533" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0605</member>
@@ -38177,7 +38204,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -38346,7 +38372,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -38519,7 +38544,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -38687,7 +38711,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -38825,12 +38848,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2704" type="CObArray" length="5">
+		<object name="ObjId2704" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId2705</member>
 			<member name="index1" type="CObject_ptr">ObjId2706</member>
 			<member name="index2" type="CObject_ptr">ObjId2707</member>
 			<member name="index3" type="CObject_ptr">ObjId2708</member>
 			<member name="index4" type="CObject_ptr">ObjId2709</member>
+			<member name="index5" type="CObject_ptr">ObjId3592</member>
 		</object>
 		<object name="ObjId2705" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -38856,6 +38880,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3592" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2710" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0605</member>
@@ -39844,7 +39873,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -40001,7 +40029,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -40175,7 +40202,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -40338,7 +40364,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -40507,7 +40532,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -40682,7 +40706,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -40861,12 +40884,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2880" type="CObArray" length="5">
+		<object name="ObjId2880" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId3578</member>
 			<member name="index1" type="CObject_ptr">ObjId3579</member>
 			<member name="index2" type="CObject_ptr">ObjId3580</member>
 			<member name="index3" type="CObject_ptr">ObjId3581</member>
 			<member name="index4" type="CObject_ptr">ObjId3582</member>
+			<member name="index5" type="CObject_ptr">ObjId3593</member>
 		</object>
 		<object name="ObjId3578" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -40892,6 +40916,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3593" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2886" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0605</member>
@@ -41925,7 +41954,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -42089,7 +42117,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -42261,7 +42288,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -42387,12 +42413,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId3027" type="CObArray" length="5">
+		<object name="ObjId3027" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId3028</member>
 			<member name="index1" type="CObject_ptr">ObjId3029</member>
 			<member name="index2" type="CObject_ptr">ObjId3030</member>
 			<member name="index3" type="CObject_ptr">ObjId3031</member>
 			<member name="index4" type="CObject_ptr">ObjId3032</member>
+			<member name="index5" type="CObject_ptr">ObjId3594</member>
 		</object>
 		<object name="ObjId3028" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -42418,6 +42445,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3594" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId3033" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0605</member>
@@ -43315,12 +43347,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId3125" type="CObArray" length="5">
+		<object name="ObjId3125" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId3126</member>
 			<member name="index1" type="CObject_ptr">ObjId3127</member>
 			<member name="index2" type="CObject_ptr">ObjId3128</member>
 			<member name="index3" type="CObject_ptr">ObjId3129</member>
 			<member name="index4" type="CObject_ptr">ObjId3130</member>
+			<member name="index5" type="CObject_ptr">ObjId3595</member>
 		</object>
 		<object name="ObjId3126" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -43346,6 +43379,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3595" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId3131" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0605</member>
@@ -44822,12 +44860,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId3347" type="CObArray" length="5">
+		<object name="ObjId3347" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId3348</member>
 			<member name="index1" type="CObject_ptr">ObjId3349</member>
 			<member name="index2" type="CObject_ptr">ObjId3350</member>
 			<member name="index3" type="CObject_ptr">ObjId3351</member>
 			<member name="index4" type="CObject_ptr">ObjId3352</member>
+			<member name="index5" type="CObject_ptr">ObjId3596</member>
 		</object>
 		<object name="ObjId3348" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -44853,6 +44892,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3596" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId3353" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0463</member>
@@ -46582,12 +46626,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId0029" type="CObArray" length="5">
+		<object name="ObjId0029" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId0278</member>
 			<member name="index1" type="CObject_ptr">ObjId0279</member>
 			<member name="index2" type="CObject_ptr">ObjId0280</member>
 			<member name="index3" type="CObject_ptr">ObjId0281</member>
 			<member name="index4" type="CObject_ptr">ObjId0282</member>
+			<member name="index5" type="CObject_ptr">ObjId3597</member>
 		</object>
 		<object name="ObjId0278" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -46613,6 +46658,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId3597" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId0035" type="CMapObToObEx"/>
 		<object name="ObjId0036" type="CFlashProgDlg">

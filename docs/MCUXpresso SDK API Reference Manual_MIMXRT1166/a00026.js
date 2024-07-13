@@ -1,12 +1,12 @@
 var a00026 =
 [
-    [ "MIPI_DSI_Type", "a00026.html#a00734", [
+    [ "MIPI_DSI_Type", "a00026.html#a00731", [
       [ "host", "a00026.html#a6012274780345325eef46fa2ab1a305d", null ],
       [ "apb", "a00026.html#a9f9e9ba7c608984e1b0717f1ad52f4b6", null ],
       [ "dpi", "a00026.html#a2df581c4f66b6192eb26bf7d356eeba2", null ],
       [ "dphy", "a00026.html#a8cc2fb6d8966e355673718e333d338e4", null ]
     ] ],
-    [ "_dsi_config", "a00026.html#a00442", [
+    [ "_dsi_config", "a00026.html#a00439", [
       [ "numLanes", "a00026.html#a2aef122425e1d6903fc384c8ed165f4c", null ],
       [ "enableNonContinuousHsClk", "a00026.html#a01a09748b97685e1af7d757fb5ae8547", null ],
       [ "enableTxUlps", "a00026.html#aa224f76c34b1fbe8f61880513eb36434", null ],
@@ -16,7 +16,7 @@ var a00026 =
       [ "lrxHostTo_ByteClk", "a00026.html#adc44a629b5842711410dd23caa330fde", null ],
       [ "btaTo_ByteClk", "a00026.html#ad53045de1f82562b47404851d6c06eb8", null ]
     ] ],
-    [ "_dsi_dpi_config", "a00026.html#a00444", [
+    [ "_dsi_dpi_config", "a00026.html#a00441", [
       [ "pixelPayloadSize", "a00026.html#a4f098a8513dbf2a7cb26c818ad78b897", null ],
       [ "dpiColorCoding", "a00026.html#aa72f542087da6ac18240edc252d031db", null ],
       [ "pixelPacket", "a00026.html#a9d484c1500b12190e25b1a3c4cfe3449", null ],
@@ -31,7 +31,7 @@ var a00026 =
       [ "panelHeight", "a00026.html#a3d59905d512e113246c8ec57e58f3b46", null ],
       [ "virtualChannel", "a00026.html#a8dabf8347559868b419f90879fb795b3", null ]
     ] ],
-    [ "_dsi_dphy_config", "a00026.html#a00443", [
+    [ "_dsi_dphy_config", "a00026.html#a00440", [
       [ "txHsBitClk_Hz", "a00026.html#a5321fa9b7b13dc0b2f1137b186afe98c", null ],
       [ "tClkPre_ByteClk", "a00026.html#a5a7c78a49b20fbee162554dee144b6df", null ],
       [ "tClkPost_ByteClk", "a00026.html#a35699412728c69346d855a6674a84a74", null ],
@@ -44,7 +44,7 @@ var a00026 =
       [ "tHsTrail_ByteClk", "a00026.html#adc73c372dd3e1a6620497ccc4eb4e495", null ],
       [ "tClkTrail_ByteClk", "a00026.html#ade8eb271f2889285cc0c761a4c422f83", null ]
     ] ],
-    [ "_dsi_transfer", "a00026.html#a00446", [
+    [ "_dsi_transfer", "a00026.html#a00443", [
       [ "virtualChannel", "a00026.html#a31e7affb3297549e63d05915a8085f0c", null ],
       [ "txDataType", "a00026.html#a2b905ae70e1d631354b3db5905f6a56a", null ],
       [ "flags", "a00026.html#a2c9afe49000bf94970d2e9d0bef83806", null ],
@@ -55,7 +55,7 @@ var a00026 =
       [ "sendDscCmd", "a00026.html#a2f557be05f2feeb54487522fc508c117", null ],
       [ "dscCmd", "a00026.html#aefd087e82ed875700bead9ca29770f31", null ]
     ] ],
-    [ "_dsi_handle", "a00026.html#a00445", [
+    [ "_dsi_handle", "a00026.html#a00442", [
       [ "isBusy", "a00026.html#aaa7e810fa19c414bff3fe46861486c87", null ],
       [ "xfer", "a00026.html#a4dd129d234ee123666f6ecec53837055", null ],
       [ "callback", "a00026.html#a82a35dfa36addf4b4116efefc31260b3", null ],
@@ -74,10 +74,10 @@ var a00026 =
     [ "dsi_transfer_t", "a00026.html#gac203dd0674726225f608a62b2f9ec759", null ],
     [ "dsi_handle_t", "a00026.html#ga5a15dce40422de8f3156760f72a0a9fa", null ],
     [ "dsi_callback_t", "a00026.html#gae04b53640614864862c37996d8ccb4eb", [
-      [ "kStatus_DSI_Busy", "a00026.html#gga950bf8e3371138ceb9649d45e9a96340a6dc42631dd13b3a386ccc97d918c2020", null ],
-      [ "kStatus_DSI_RxDataError", "a00026.html#gga950bf8e3371138ceb9649d45e9a96340acd8b3eeb40ff906e95c567b9826de7e6", null ],
-      [ "kStatus_DSI_ErrorReportReceived", "a00026.html#gga950bf8e3371138ceb9649d45e9a96340abdf7231314f285596b023c7f5a9fa676", null ],
-      [ "kStatus_DSI_NotSupported", "a00026.html#gga950bf8e3371138ceb9649d45e9a96340a4aa4ed83710e911e39f923c177581c60", null ]
+      [ "kStatus_DSI_Busy", "a00026.html#gga7495a48740c9d555f7fbcb48246dbd93a6dc42631dd13b3a386ccc97d918c2020", null ],
+      [ "kStatus_DSI_RxDataError", "a00026.html#gga7495a48740c9d555f7fbcb48246dbd93acd8b3eeb40ff906e95c567b9826de7e6", null ],
+      [ "kStatus_DSI_ErrorReportReceived", "a00026.html#gga7495a48740c9d555f7fbcb48246dbd93abdf7231314f285596b023c7f5a9fa676", null ],
+      [ "kStatus_DSI_NotSupported", "a00026.html#gga7495a48740c9d555f7fbcb48246dbd93a4aa4ed83710e911e39f923c177581c60", null ]
     ] ],
     [ "_dsi_dpi_color_coding", "a00026.html#gad5ed183ddac69e4545d6967bceb2d253", [
       [ "kDSI_Dpi16BitConfig1", "a00026.html#ggad5ed183ddac69e4545d6967bceb2d253a8c6b2a5daee928f90b1451db61f0f37e", null ],
@@ -92,10 +92,10 @@ var a00026 =
       [ "kDSI_PixelPacket18Bit", "a00026.html#gga4b7bf1414d9c2010ee6d4960fb157d49a40f09592ce9bd1184e04f3322cf869ef", null ],
       [ "kDSI_PixelPacket18BitLoosely", "a00026.html#gga4b7bf1414d9c2010ee6d4960fb157d49aa70d58b89922f31ff162c431bf16bc53", null ],
       [ "kDSI_PixelPacket24Bit", "a00026.html#gga4b7bf1414d9c2010ee6d4960fb157d49a4d95db036d42fde8e654e8884d909e23", null ],
-      [ "kDSI_DpiVsyncActiveLow", "a00026.html#gga5a77d65f4abba81d4456fa6ba8136e24afa4f2e00fe13b82b735294f94f7831ef", null ],
-      [ "kDSI_DpiHsyncActiveLow", "a00026.html#gga5a77d65f4abba81d4456fa6ba8136e24ac2ded051135ea40f2727d036a588e335", null ],
-      [ "kDSI_DpiVsyncActiveHigh", "a00026.html#gga5a77d65f4abba81d4456fa6ba8136e24a547516fecfe5fde87c79fb657accd838", null ],
-      [ "kDSI_DpiHsyncActiveHigh", "a00026.html#gga5a77d65f4abba81d4456fa6ba8136e24a15f1ea5d9f03397af3194f4a7e8af108", null ]
+      [ "kDSI_DpiVsyncActiveLow", "a00026.html#gga9a3be2d66956bd67c0b66c32d8b30f17afa4f2e00fe13b82b735294f94f7831ef", null ],
+      [ "kDSI_DpiHsyncActiveLow", "a00026.html#gga9a3be2d66956bd67c0b66c32d8b30f17ac2ded051135ea40f2727d036a588e335", null ],
+      [ "kDSI_DpiVsyncActiveHigh", "a00026.html#gga9a3be2d66956bd67c0b66c32d8b30f17a547516fecfe5fde87c79fb657accd838", null ],
+      [ "kDSI_DpiHsyncActiveHigh", "a00026.html#gga9a3be2d66956bd67c0b66c32d8b30f17a15f1ea5d9f03397af3194f4a7e8af108", null ]
     ] ],
     [ "_dsi_dpi_video_mode", "a00026.html#ga26b5fce67006efe48a81a6c632754a53", [
       [ "kDSI_DpiNonBurstWithSyncPulse", "a00026.html#gga26b5fce67006efe48a81a6c632754a53ac8a17d7a651706923d99446889b56008", null ],
@@ -106,21 +106,21 @@ var a00026 =
       [ "kDSI_DpiBllpLowPower", "a00026.html#ggadb57e4dc5b0704363cef7ab2631e7e94a22868c055913ef32b07f960775cba1d2", null ],
       [ "kDSI_DpiBllpBlanking", "a00026.html#ggadb57e4dc5b0704363cef7ab2631e7e94ac54054d520fac23c185625c336382346", null ],
       [ "kDSI_DpiBllpNull", "a00026.html#ggadb57e4dc5b0704363cef7ab2631e7e94a713f1f603c5e15d6fee83126a5af8f55", null ],
-      [ "kDSI_ApbNotIdle", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027da6923cf7eab105bb817593d692a6fc056", null ],
-      [ "kDSI_ApbTxDone", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027da432175f8fb65d43f474fd884ffb0e3fa", null ],
-      [ "kDSI_ApbRxControl", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027da0907a630356601ecc243ce461f76c98f", null ],
-      [ "kDSI_ApbTxOverflow", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027dae958a0b78426f083d36e356b6fd4a8f7", null ],
-      [ "kDSI_ApbTxUnderflow", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027da17e12fd894942f8fe9a50209133d8413", null ],
-      [ "kDSI_ApbRxOverflow", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027da9a3e29e9fdf7fdb0c4e6003732c1574f", null ],
-      [ "kDSI_ApbRxUnderflow", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027dab199a82243f818329d5edd1ee066d206", null ],
-      [ "kDSI_ApbRxHeaderReceived", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027dae902872ec9fc5ed1711b1ec73ae2c573", null ],
-      [ "kDSI_ApbRxPacketReceived", "a00026.html#ggaad393aa3e173d7f081ab4bbc6ba5027dae8228b974c366c49e0a62b1efa5b9f96", null ],
-      [ "kDSI_RxErrorEccOneBit", "a00026.html#gga4f126a0a9b1d8c6a8f46a051ef8830bbae5dbd23e0df466c8115f1d3edf9b8c4e", null ],
-      [ "kDSI_RxErrorEccMultiBit", "a00026.html#gga4f126a0a9b1d8c6a8f46a051ef8830bba970f1375c7520d35acb9b71212aa2d8d", null ],
-      [ "kDSI_RxErrorCrc", "a00026.html#gga4f126a0a9b1d8c6a8f46a051ef8830bba0660ee4a09247fe383aa41ae885259c7", null ],
-      [ "kDSI_RxErrorHtxTo", "a00026.html#gga4f126a0a9b1d8c6a8f46a051ef8830bbaf84dbbd049c2d983ba9ddfd7034b7958", null ],
-      [ "kDSI_RxErrorLrxTo", "a00026.html#gga4f126a0a9b1d8c6a8f46a051ef8830bbae3acd18f59a9f77dc894e2763fe62d39", null ],
-      [ "kDSI_RxErrorBtaTo", "a00026.html#gga4f126a0a9b1d8c6a8f46a051ef8830bbae77bd659a4201f0a8ddc3f2f73c8abca", null ]
+      [ "kDSI_ApbNotIdle", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709a6923cf7eab105bb817593d692a6fc056", null ],
+      [ "kDSI_ApbTxDone", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709a432175f8fb65d43f474fd884ffb0e3fa", null ],
+      [ "kDSI_ApbRxControl", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709a0907a630356601ecc243ce461f76c98f", null ],
+      [ "kDSI_ApbTxOverflow", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709ae958a0b78426f083d36e356b6fd4a8f7", null ],
+      [ "kDSI_ApbTxUnderflow", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709a17e12fd894942f8fe9a50209133d8413", null ],
+      [ "kDSI_ApbRxOverflow", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709a9a3e29e9fdf7fdb0c4e6003732c1574f", null ],
+      [ "kDSI_ApbRxUnderflow", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709ab199a82243f818329d5edd1ee066d206", null ],
+      [ "kDSI_ApbRxHeaderReceived", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709ae902872ec9fc5ed1711b1ec73ae2c573", null ],
+      [ "kDSI_ApbRxPacketReceived", "a00026.html#gga2dbb833ef0dcc466dd02ee76badaf709ae8228b974c366c49e0a62b1efa5b9f96", null ],
+      [ "kDSI_RxErrorEccOneBit", "a00026.html#ggaea33efd5e2c69d615faad5c5965510aaae5dbd23e0df466c8115f1d3edf9b8c4e", null ],
+      [ "kDSI_RxErrorEccMultiBit", "a00026.html#ggaea33efd5e2c69d615faad5c5965510aaa970f1375c7520d35acb9b71212aa2d8d", null ],
+      [ "kDSI_RxErrorCrc", "a00026.html#ggaea33efd5e2c69d615faad5c5965510aaa0660ee4a09247fe383aa41ae885259c7", null ],
+      [ "kDSI_RxErrorHtxTo", "a00026.html#ggaea33efd5e2c69d615faad5c5965510aaaf84dbbd049c2d983ba9ddfd7034b7958", null ],
+      [ "kDSI_RxErrorLrxTo", "a00026.html#ggaea33efd5e2c69d615faad5c5965510aaae3acd18f59a9f77dc894e2763fe62d39", null ],
+      [ "kDSI_RxErrorBtaTo", "a00026.html#ggaea33efd5e2c69d615faad5c5965510aaae77bd659a4201f0a8ddc3f2f73c8abca", null ]
     ] ],
     [ "_dsi_host_status", "a00026.html#ga2285120a015be7eb8a83fee095ef5bbf", [
       [ "kDSI_HostSoTError", "a00026.html#gga2285120a015be7eb8a83fee095ef5bbfae9ed021588f72d138504f52d98b49019", null ],
@@ -141,39 +141,39 @@ var a00026 =
       [ "kDSI_HostResetTriggerReceived", "a00026.html#gga2285120a015be7eb8a83fee095ef5bbfac28187f7c4cafb5f70e7c19047cbb795", null ],
       [ "kDSI_HostTearTriggerReceived", "a00026.html#gga2285120a015be7eb8a83fee095ef5bbfaad783f0de8c1261dd5f187f33e47bf2a", null ],
       [ "kDSI_HostAckTriggerReceived", "a00026.html#gga2285120a015be7eb8a83fee095ef5bbfaffa96afa709e801b652ebaf96b7b4207", null ],
-      [ "kDSI_InterruptGroup1ApbNotIdle", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329aebdadd046af13291e3aef276d94a29aa", null ],
-      [ "kDSI_InterruptGroup1ApbTxDone", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a68a59f20db306589cccae1c2d215fc2a", null ],
-      [ "kDSI_InterruptGroup1ApbRxControl", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329aace45f1527e890b35eb033a606ff71ab", null ],
-      [ "kDSI_InterruptGroup1ApbTxOverflow", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a066218007d7396537bbfce5192077879", null ],
-      [ "kDSI_InterruptGroup1ApbTxUnderflow", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a2de7d012fcbb5a97594bc2c8d65b88e8", null ],
-      [ "kDSI_InterruptGroup1ApbRxOverflow", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ae169f0187f72f7bc45768ee490ae0d28", null ],
-      [ "kDSI_InterruptGroup1ApbRxUnderflow", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a0e9e6c75709fa98d2848eb221bba3f7d", null ],
-      [ "kDSI_InterruptGroup1ApbRxHeaderReceived", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ab280d0815c06fec822fcd1db3178eb3c", null ],
-      [ "kDSI_InterruptGroup1ApbRxPacketReceived", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a6e4a41f0fc6ae84bfb3926c2fb05c051", null ],
-      [ "kDSI_InterruptGroup1SoTError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a339330d2f5fbd91cde854c0ca9377dda", null ],
-      [ "kDSI_InterruptGroup1SoTSyncError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329aab65dc4b3f122067a4423c6fa8ccc7b9", null ],
-      [ "kDSI_InterruptGroup1EoTSyncError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a39f9f0880d48baf374b3aa6d3e1a769c", null ],
-      [ "kDSI_InterruptGroup1EscEntryCmdError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329adebcddea2024108e824551d0d13653ee", null ],
-      [ "kDSI_InterruptGroup1LpTxSyncError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a61a66da32600fa52696717683ba720d8", null ],
-      [ "kDSI_InterruptGroup1PeriphToError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a9bae83a71b6332f4d0694d68dd4575dc", null ],
-      [ "kDSI_InterruptGroup1FalseControlError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ab2dc9fd805d97024f1ef67ea2d7a510b", null ],
-      [ "kDSI_InterruptGroup1ContentionDetected", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a074cfcbd72043f75ba0f9d4c49108b9e", null ],
-      [ "kDSI_InterruptGroup1EccErrorOneBit", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329af2a20f9ec5930b5b140a8f3758894ef6", null ],
-      [ "kDSI_InterruptGroup1EccErrorMultiBit", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ac8d9c1fd2104921dd12f5369c589c920", null ],
-      [ "kDSI_InterruptGroup1ChecksumError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ab5cbec7cf76f00486689308c33b6f073", null ],
-      [ "kDSI_InterruptGroup1InvalidDataType", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a547fc492134a94934ea0144d7329ef4b", null ],
-      [ "kDSI_InterruptGroup1InvalidVcId", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a16d1f59e9658e059e1ae960cc528b158", null ],
-      [ "kDSI_InterruptGroup1InvalidTxLength", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a0542a8b7455ebe6981b9423863ff455f", null ],
-      [ "kDSI_InterruptGroup1ProtocalViolation", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a61bdb684e4e25f8b15598139da492b4e", null ],
-      [ "kDSI_InterruptGroup1ResetTriggerReceived", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a411cac218c2764f485e408a97903b066", null ],
-      [ "kDSI_InterruptGroup1TearTriggerReceived", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329afae054ac43338379336c29bccba646de", null ],
-      [ "kDSI_InterruptGroup1AckTriggerReceived", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ae0b7afccc68486aa726ff0fb92688f59", null ],
-      [ "kDSI_InterruptGroup1HtxTo", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329acba7ecb3bdce3bfe08af42e081a15c5d", null ],
-      [ "kDSI_InterruptGroup1LrxTo", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a693ab658bade360e42d09d777c83889f", null ],
-      [ "kDSI_InterruptGroup1BtaTo", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a1bd84e09200ae1a0b8e74296a5605421", null ],
-      [ "kDSI_InterruptGroup2EccOneBit", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329ac8d081946b220f4a70015602365c9677", null ],
-      [ "kDSI_InterruptGroup2EccMultiBit", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a32c33e8f15222ebdd23d8b403ca92403", null ],
-      [ "kDSI_InterruptGroup2CrcError", "a00026.html#ggadbaf9202177df73e6880eab6e6aab329a139b069215d5b38b6b586a9c0c51321e", null ]
+      [ "kDSI_InterruptGroup1ApbNotIdle", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815aebdadd046af13291e3aef276d94a29aa", null ],
+      [ "kDSI_InterruptGroup1ApbTxDone", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a68a59f20db306589cccae1c2d215fc2a", null ],
+      [ "kDSI_InterruptGroup1ApbRxControl", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815aace45f1527e890b35eb033a606ff71ab", null ],
+      [ "kDSI_InterruptGroup1ApbTxOverflow", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a066218007d7396537bbfce5192077879", null ],
+      [ "kDSI_InterruptGroup1ApbTxUnderflow", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a2de7d012fcbb5a97594bc2c8d65b88e8", null ],
+      [ "kDSI_InterruptGroup1ApbRxOverflow", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ae169f0187f72f7bc45768ee490ae0d28", null ],
+      [ "kDSI_InterruptGroup1ApbRxUnderflow", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a0e9e6c75709fa98d2848eb221bba3f7d", null ],
+      [ "kDSI_InterruptGroup1ApbRxHeaderReceived", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ab280d0815c06fec822fcd1db3178eb3c", null ],
+      [ "kDSI_InterruptGroup1ApbRxPacketReceived", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a6e4a41f0fc6ae84bfb3926c2fb05c051", null ],
+      [ "kDSI_InterruptGroup1SoTError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a339330d2f5fbd91cde854c0ca9377dda", null ],
+      [ "kDSI_InterruptGroup1SoTSyncError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815aab65dc4b3f122067a4423c6fa8ccc7b9", null ],
+      [ "kDSI_InterruptGroup1EoTSyncError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a39f9f0880d48baf374b3aa6d3e1a769c", null ],
+      [ "kDSI_InterruptGroup1EscEntryCmdError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815adebcddea2024108e824551d0d13653ee", null ],
+      [ "kDSI_InterruptGroup1LpTxSyncError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a61a66da32600fa52696717683ba720d8", null ],
+      [ "kDSI_InterruptGroup1PeriphToError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a9bae83a71b6332f4d0694d68dd4575dc", null ],
+      [ "kDSI_InterruptGroup1FalseControlError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ab2dc9fd805d97024f1ef67ea2d7a510b", null ],
+      [ "kDSI_InterruptGroup1ContentionDetected", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a074cfcbd72043f75ba0f9d4c49108b9e", null ],
+      [ "kDSI_InterruptGroup1EccErrorOneBit", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815af2a20f9ec5930b5b140a8f3758894ef6", null ],
+      [ "kDSI_InterruptGroup1EccErrorMultiBit", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ac8d9c1fd2104921dd12f5369c589c920", null ],
+      [ "kDSI_InterruptGroup1ChecksumError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ab5cbec7cf76f00486689308c33b6f073", null ],
+      [ "kDSI_InterruptGroup1InvalidDataType", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a547fc492134a94934ea0144d7329ef4b", null ],
+      [ "kDSI_InterruptGroup1InvalidVcId", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a16d1f59e9658e059e1ae960cc528b158", null ],
+      [ "kDSI_InterruptGroup1InvalidTxLength", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a0542a8b7455ebe6981b9423863ff455f", null ],
+      [ "kDSI_InterruptGroup1ProtocalViolation", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a61bdb684e4e25f8b15598139da492b4e", null ],
+      [ "kDSI_InterruptGroup1ResetTriggerReceived", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a411cac218c2764f485e408a97903b066", null ],
+      [ "kDSI_InterruptGroup1TearTriggerReceived", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815afae054ac43338379336c29bccba646de", null ],
+      [ "kDSI_InterruptGroup1AckTriggerReceived", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ae0b7afccc68486aa726ff0fb92688f59", null ],
+      [ "kDSI_InterruptGroup1HtxTo", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815acba7ecb3bdce3bfe08af42e081a15c5d", null ],
+      [ "kDSI_InterruptGroup1LrxTo", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a693ab658bade360e42d09d777c83889f", null ],
+      [ "kDSI_InterruptGroup1BtaTo", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a1bd84e09200ae1a0b8e74296a5605421", null ],
+      [ "kDSI_InterruptGroup2EccOneBit", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815ac8d081946b220f4a70015602365c9677", null ],
+      [ "kDSI_InterruptGroup2EccMultiBit", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a32c33e8f15222ebdd23d8b403ca92403", null ],
+      [ "kDSI_InterruptGroup2CrcError", "a00026.html#gga0b887f38fa71033f0904f8e2330b6815a139b069215d5b38b6b586a9c0c51321e", null ]
     ] ],
     [ "_dsi_tx_data_type", "a00026.html#ga30930bbb6e9019f5ce0ca7101feb038f", [
       [ "kDSI_TxDataVsyncStart", "a00026.html#gga30930bbb6e9019f5ce0ca7101feb038fac9d99453bdc0494982d4ef6ccef5ad9c", null ],
@@ -219,8 +219,8 @@ var a00026 =
       [ "kDSI_RxDataDcsLongRdResponse", "a00026.html#gga34c4d95bcf741a798858c08ee38ed019a3753ac2fe96ef406822ac3b190bdcffe", null ],
       [ "kDSI_RxDataDcsShortRdResponseOneByte", "a00026.html#gga34c4d95bcf741a798858c08ee38ed019af2b1328d17425ecbb5882ef072691e1a", null ],
       [ "kDSI_RxDataDcsShortRdResponseTwoByte", "a00026.html#gga34c4d95bcf741a798858c08ee38ed019a3624439cb49f73e471b65a3d1413acb9", null ],
-      [ "kDSI_TransferUseHighSpeed", "a00026.html#gga7495a48740c9d555f7fbcb48246dbd93a7e84d3aada91497e344e77a9a8c7d08e", null ],
-      [ "kDSI_TransferPerformBTA", "a00026.html#gga7495a48740c9d555f7fbcb48246dbd93a5f8fcedf5fa0fb49764ece88a0fc0100", null ]
+      [ "kDSI_TransferUseHighSpeed", "a00026.html#gga84fe57ba52f8e237004a413b27ea4db8a7e84d3aada91497e344e77a9a8c7d08e", null ],
+      [ "kDSI_TransferPerformBTA", "a00026.html#gga84fe57ba52f8e237004a413b27ea4db8a5f8fcedf5fa0fb49764ece88a0fc0100", null ]
     ] ],
     [ "DSI_Init", "a00026.html#ga3718863609718b6b22a643b483bf67d1", null ],
     [ "DSI_Deinit", "a00026.html#ga876d5de3c6a3f30ed3dcb99100420a7a", null ],

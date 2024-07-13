@@ -24,7 +24,7 @@
 #include "fsl_cs42448.h"
 #include "fsl_trdc.h"
 #include "fsl_edma.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -129,7 +129,11 @@ static void DEMO_InitCodec(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
+AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
+#else
 AT_QUICKACCESS_SECTION_DATA(sai_edma_handle_t txHandle);
+#endif
 edma_handle_t dmaTxHandle = {0};
 extern codec_config_t boardCodecConfig;
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_buffer[BUFFER_NUM][BUFFER_SIZE], 4);
@@ -343,19 +347,19 @@ int main(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Release TRDC A to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM7 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM7_ID);
     } while (ELE_IS_FAILED(sts));
 
     TRDC_EDMA3_EDMA4_ResetPermissions();

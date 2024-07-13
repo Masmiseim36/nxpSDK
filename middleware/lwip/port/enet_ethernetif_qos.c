@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -223,7 +223,10 @@ static void ethernet_callback(
             {
                 xResult =
                     xEventGroupSetBitsFromISR(ethernetif->enetTransmitAccessEvent, ethernetif->txFlag, &taskToWake);
-                if ((pdPASS == xResult) && (pdTRUE == taskToWake))
+                LWIP_ASSERT(
+                    "xEventGroupSetBitsFromISR failed, increase configTIMER_QUEUE_LENGTH or configTIMER_TASK_PRIORITY",
+                    pdPASS == xResult);
+                if (pdPASS == xResult)
                 {
                     portYIELD_FROM_ISR(taskToWake);
                 }
@@ -363,7 +366,7 @@ static void *ethernetif_rx_alloc(ENET_QOS_Type *base, void *userData, uint8_t ch
         }
     }
 
-#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     if (buffer == NULL)
     {
         ENET_QOS_DisableInterrupts(base, (uint32_t)kENET_QOS_DmaRx);
@@ -393,7 +396,7 @@ static void ethernetif_rx_free(ENET_QOS_Type *base, void *buffer, void *userData
     LWIP_ASSERT("ethernetif_rx_free: freeing unallocated buffer", ethernetif->RxPbufs[idx].buffer_used);
     ethernetif->RxPbufs[idx].buffer_used = false;
 
-#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     ENET_QOS_EnableInterrupts(base, (uint32_t)kENET_QOS_DmaRx);
 #else
     (void)base;
@@ -550,13 +553,21 @@ phy_duplex_t ethernetif_get_link_duplex(struct netif *netif_)
 void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t duplex)
 {
     struct ethernetif *eif = netif_->state;
+    status_t status;
 
     if (!eif->last_link_up || (speed != eif->last_speed) || (duplex != eif->last_duplex))
     {
-        ENET_QOS_SetMII(eif->base, ethernetif_convert_phy_speed(speed), (enet_qos_mii_duplex_t)duplex);
-        eif->last_speed   = speed;
-        eif->last_duplex  = duplex;
-        eif->last_link_up = true;
+        status = ENET_QOS_SetMII(eif->base, ethernetif_convert_phy_speed(speed), (enet_qos_mii_duplex_t)duplex);
+        if (status == kStatus_Success)
+        {
+            eif->last_speed   = speed;
+            eif->last_duplex  = duplex;
+            eif->last_link_up = true;
+        }
+        else
+        {
+            LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_on_link_up: Failed to set MII link speed/duplex\n"));
+        }
     }
 }
 

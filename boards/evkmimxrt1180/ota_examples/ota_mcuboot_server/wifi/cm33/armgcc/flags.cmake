@@ -35,32 +35,30 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
-    -include ${ProjDirPath}/../app_config.h \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
     -DDEBUG \
     -D_POSIX_SOURCE \
     -DCPU_MIMXRT1189CVM8B_cm33 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DMLAN_STA_AMPDU_DEF_RXWINSIZE=32 \
     -DMCUBOOT_APPLICATION=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DHTTPSRV_CFG_WEBSOCKET_ENABLED=0 \
     -DMCUXPRESSO_SDK \
-    -DHTTPSRV_CFG_DEFAULT_SES_CNT=4 \
     -DSDIO_ENABLED \
-    -DMBEDTLS_MCUX_ELE_S400_API \
     -DMFLASH_FILE_BASEADDR=14221312 \
-    -DMBEDTLS_THREADING_C \
-    -DMBEDTLS_THREADING_ALT \
     -DSDK_OS_FREE_RTOS \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DOSA_USED \
+    -DFSL_OSA_TASK_ENABLE=1 \
     -DLWIP_DNS=1 \
     -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
+    -D_XOPEN_SOURCE=500 \
+    -DSO_REUSE=1 \
     -Og \
     -g \
     -mcpu=cortex-m33 \
@@ -71,43 +69,38 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -include ${ProjDirPath}/../app_config.h \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
     -DNDEBUG \
     -D_POSIX_SOURCE \
     -DCPU_MIMXRT1189CVM8B_cm33 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DMLAN_STA_AMPDU_DEF_RXWINSIZE=32 \
     -DMCUBOOT_APPLICATION=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DHTTPSRV_CFG_WEBSOCKET_ENABLED=0 \
     -DMCUXPRESSO_SDK \
-    -DHTTPSRV_CFG_DEFAULT_SES_CNT=4 \
     -DSDIO_ENABLED \
-    -DMBEDTLS_MCUX_ELE_S400_API \
     -DMFLASH_FILE_BASEADDR=14221312 \
-    -DMBEDTLS_THREADING_C \
-    -DMBEDTLS_THREADING_ALT \
     -DSDK_OS_FREE_RTOS \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DOSA_USED \
+    -DFSL_OSA_TASK_ENABLE=1 \
     -DLWIP_DNS=1 \
     -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
+    -D_XOPEN_SOURCE=500 \
+    -DSO_REUSE=1 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -117,12 +110,9 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -142,7 +132,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -165,7 +154,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -181,7 +169,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -199,7 +186,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -Xlinker \
     --defsym=__stack_size__=1000 \
     -Xlinker \
-    --defsym=__heap_size__=100000 \
+    --defsym=__heap_size__=60000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor_mcuboot.ld\" -static \
@@ -211,7 +198,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -229,7 +215,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Xlinker \
     --defsym=__stack_size__=1000 \
     -Xlinker \
-    --defsym=__heap_size__=100000 \
+    --defsym=__heap_size__=60000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor_mcuboot.ld\" -static \

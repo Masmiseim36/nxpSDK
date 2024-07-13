@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CACHE: CACHE Memory Controller</title>
+<title>MCUXpresso SDK API Reference Manual: eDMA soc Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,497 +101,46 @@ $(document).ready(function(){initNavTree('a00203.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">CACHE: CACHE Memory Controller</div>  </div>
+<div class="title">eDMA soc Driver<div class="ingroups"><a class="el" href="a00014.html">eDMA: Enhanced Direct Memory Access (eDMA) Controller Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the CACHE Controller of MCUXpresso SDK devices.</p>
-<p>The CACHE driver is created to help the user more easily operate the cache memory. The APIs for basic operations are including the following three levels: 1L. The local cache driver API. This level provides the caches controller drivers.</p>
-<p>2L. The unified cache driver API. This level provides many APIs for unified cache driver APIs for combined L1 and L2 cache maintain operations. This is provided for SDK drivers (DMA, ENET, USDHC, etc) which should do the cache maintenance in their transactional APIs. Because in this arch, there is no L2 cache so the unified cache driver API directly calls local driver APIs.</p>
-<h1><a class="anchor" id="CACHEFuncGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="CACHEMaintainOperation"></a>
-CACHE Operation</h2>
-<p>There are Enable/Disable APIs for cache control and cache maintenance operations as Invalidate/Clean/CleanInvalidate by all and by address range. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga4d4a67c9d12b228ce34b31c9d580bf15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga4d4a67c9d12b228ce34b31c9d580bf15">XCACHE_LINESIZE_BYTE</a>&#160;&#160;&#160;(FSL_FEATURE_XCACHE_LINESIZE_BYTE)</td></tr>
-<tr class="memdesc:ga4d4a67c9d12b228ce34b31c9d580bf15"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache line size.  <a href="#ga4d4a67c9d12b228ce34b31c9d580bf15">More...</a><br/></td></tr>
-<tr class="separator:ga4d4a67c9d12b228ce34b31c9d580bf15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ba2841202cf12aa54753d5d88d16777"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4ba2841202cf12aa54753d5d88d16777"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga4ba2841202cf12aa54753d5d88d16777">FSL_EDMA_SOC_IP_DMA3</a>&#160;&#160;&#160;(1)</td></tr>
+<tr class="memdesc:ga4ba2841202cf12aa54753d5d88d16777"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA IP version. <br/></td></tr>
+<tr class="separator:ga4ba2841202cf12aa54753d5d88d16777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2ad368d3a0b53d823af4fee8e0260ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae2ad368d3a0b53d823af4fee8e0260ba"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gae2ad368d3a0b53d823af4fee8e0260ba">EDMA_BASE_PTRS</a></td></tr>
+<tr class="memdesc:gae2ad368d3a0b53d823af4fee8e0260ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA base table. <br/></td></tr>
+<tr class="separator:gae2ad368d3a0b53d823af4fee8e0260ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba3c4951ff0843152a10cff5d29961b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba3c4951ff0843152a10cff5d29961b5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gaba3c4951ff0843152a10cff5d29961b5">EDMA_CHN_IRQS</a></td></tr>
+<tr class="memdesc:gaba3c4951ff0843152a10cff5d29961b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify dma base and request source. <br/></td></tr>
+<tr class="separator:gaba3c4951ff0843152a10cff5d29961b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2727967e9e2e1be65e12ad7bc4ada456"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2727967e9e2e1be65e12ad7bc4ada456"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga2727967e9e2e1be65e12ad7bc4ada456">EDMA_CHANNEL_OFFSET</a>&#160;&#160;&#160;0x10000U</td></tr>
+<tr class="memdesc:ga2727967e9e2e1be65e12ad7bc4ada456"><td class="mdescLeft">&#160;</td><td class="mdescRight">EDMA base address convert macro. <br/></td></tr>
+<tr class="separator:ga2727967e9e2e1be65e12ad7bc4ada456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gac954b8be2bb59a983a9594c59e4b4fa5">FSL_CACHE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
-<tr class="memdesc:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache driver version.  <a href="#gac954b8be2bb59a983a9594c59e4b4fa5">More...</a><br/></td></tr>
-<tr class="separator:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-cache control for XCACHE</h2></td></tr>
-<tr class="memitem:ga75b402aafc3393510ff590a9ab1f1d0f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga75b402aafc3393510ff590a9ab1f1d0f">XCACHE_GetInstanceByAddr</a> (uint32_t address)</td></tr>
-<tr class="memdesc:ga75b402aafc3393510ff590a9ab1f1d0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">brief Returns an instance number given physical memory address.  <a href="#ga75b402aafc3393510ff590a9ab1f1d0f">More...</a><br/></td></tr>
-<tr class="separator:ga75b402aafc3393510ff590a9ab1f1d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga561256f16519421bd7221cf3a9fddf99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga561256f16519421bd7221cf3a9fddf99">XCACHE_EnableCache</a> (XCACHE_Type *base)</td></tr>
-<tr class="memdesc:ga561256f16519421bd7221cf3a9fddf99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the cache.  <a href="#ga561256f16519421bd7221cf3a9fddf99">More...</a><br/></td></tr>
-<tr class="separator:ga561256f16519421bd7221cf3a9fddf99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5f85f478d692dc264845feea1544cd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gab5f85f478d692dc264845feea1544cd5">XCACHE_DisableCache</a> (XCACHE_Type *base)</td></tr>
-<tr class="memdesc:gab5f85f478d692dc264845feea1544cd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the cache.  <a href="#gab5f85f478d692dc264845feea1544cd5">More...</a><br/></td></tr>
-<tr class="separator:gab5f85f478d692dc264845feea1544cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e08d32e216df16ad734290c63202be9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga5e08d32e216df16ad734290c63202be9">XCACHE_InvalidateCache</a> (XCACHE_Type *base)</td></tr>
-<tr class="memdesc:ga5e08d32e216df16ad734290c63202be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates the cache.  <a href="#ga5e08d32e216df16ad734290c63202be9">More...</a><br/></td></tr>
-<tr class="separator:ga5e08d32e216df16ad734290c63202be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga355128c24c65eb68d9c490100c704b96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga355128c24c65eb68d9c490100c704b96">XCACHE_InvalidateCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:ga355128c24c65eb68d9c490100c704b96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cache by range.  <a href="#ga355128c24c65eb68d9c490100c704b96">More...</a><br/></td></tr>
-<tr class="separator:ga355128c24c65eb68d9c490100c704b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2cf19c337ac6e40530832648b3682453"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga2cf19c337ac6e40530832648b3682453">XCACHE_CleanCache</a> (XCACHE_Type *base)</td></tr>
-<tr class="memdesc:ga2cf19c337ac6e40530832648b3682453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans the cache.  <a href="#ga2cf19c337ac6e40530832648b3682453">More...</a><br/></td></tr>
-<tr class="separator:ga2cf19c337ac6e40530832648b3682453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8939a0b8433f27d8a3a4a3be478e9188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga8939a0b8433f27d8a3a4a3be478e9188">XCACHE_CleanCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:ga8939a0b8433f27d8a3a4a3be478e9188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cache by range.  <a href="#ga8939a0b8433f27d8a3a4a3be478e9188">More...</a><br/></td></tr>
-<tr class="separator:ga8939a0b8433f27d8a3a4a3be478e9188"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34458f439a20e2e89270fd8ab2058b54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga34458f439a20e2e89270fd8ab2058b54">XCACHE_CleanInvalidateCache</a> (XCACHE_Type *base)</td></tr>
-<tr class="memdesc:ga34458f439a20e2e89270fd8ab2058b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and invalidates the cache.  <a href="#ga34458f439a20e2e89270fd8ab2058b54">More...</a><br/></td></tr>
-<tr class="separator:ga34458f439a20e2e89270fd8ab2058b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1c0a3024295cce7651b1e1137a10c75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gae1c0a3024295cce7651b1e1137a10c75">XCACHE_CleanInvalidateCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:gae1c0a3024295cce7651b1e1137a10c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and invalidate cache by range.  <a href="#gae1c0a3024295cce7651b1e1137a10c75">More...</a><br/></td></tr>
-<tr class="separator:gae1c0a3024295cce7651b1e1137a10c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Unified Cache Control for all caches</h2></td></tr>
-<tr class="memitem:gab9e79fa88e11db521b74f5316de68676"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gab9e79fa88e11db521b74f5316de68676">ICACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:gab9e79fa88e11db521b74f5316de68676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates instruction cache by range.  <a href="#gab9e79fa88e11db521b74f5316de68676">More...</a><br/></td></tr>
-<tr class="separator:gab9e79fa88e11db521b74f5316de68676"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a4a0028d417cbce2b62222ca06ad185"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga4a4a0028d417cbce2b62222ca06ad185">DCACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:ga4a4a0028d417cbce2b62222ca06ad185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates data cache by range.  <a href="#ga4a4a0028d417cbce2b62222ca06ad185">More...</a><br/></td></tr>
-<tr class="separator:ga4a4a0028d417cbce2b62222ca06ad185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa201659a87d58936f5e7e07ab12d634c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#gaa201659a87d58936f5e7e07ab12d634c">DCACHE_CleanByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:gaa201659a87d58936f5e7e07ab12d634c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean data cache by range.  <a href="#gaa201659a87d58936f5e7e07ab12d634c">More...</a><br/></td></tr>
-<tr class="separator:gaa201659a87d58936f5e7e07ab12d634c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga829a56918d5a245ffc86121703bdc160"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga829a56918d5a245ffc86121703bdc160">DCACHE_CleanInvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
-<tr class="memdesc:ga829a56918d5a245ffc86121703bdc160"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates data cache by range.  <a href="#ga829a56918d5a245ffc86121703bdc160">More...</a><br/></td></tr>
-<tr class="separator:ga829a56918d5a245ffc86121703bdc160"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga831120489cc9d849c4b52872c89a07bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ga831120489cc9d849c4b52872c89a07bf">FSL_EDMA_SOC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00201.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+<tr class="memdesc:ga831120489cc9d849c4b52872c89a07bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version 2.1.0.  <a href="#ga831120489cc9d849c4b52872c89a07bf">More...</a><br/></td></tr>
+<tr class="separator:ga831120489cc9d849c4b52872c89a07bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gac954b8be2bb59a983a9594c59e4b4fa5"></a>
+<a class="anchor" id="ga831120489cc9d849c4b52872c89a07bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_CACHE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
+          <td class="memname">#define FSL_EDMA_SOC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00201.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga4d4a67c9d12b228ce34b31c9d580bf15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define XCACHE_LINESIZE_BYTE&#160;&#160;&#160;(FSL_FEATURE_XCACHE_LINESIZE_BYTE)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga75b402aafc3393510ff590a9ab1f1d0f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t XCACHE_GetInstanceByAddr </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>param address The physical memory address. </p>
-<dl class="section return"><dt>Returns</dt><dd>XCACHE instance number starting from 0. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga561256f16519421bd7221cf3a9fddf99"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_EnableCache </td>
-          <td>(</td>
-          <td class="paramtype">XCACHE_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XCACHE peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab5f85f478d692dc264845feea1544cd5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_DisableCache </td>
-          <td>(</td>
-          <td class="paramtype">XCACHE_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XCACHE peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5e08d32e216df16ad734290c63202be9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_InvalidateCache </td>
-          <td>(</td>
-          <td class="paramtype">XCACHE_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XCACHE peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga355128c24c65eb68d9c490100c704b96"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_InvalidateCacheByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address of cache. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to "XCACHE_LINESIZE_BYTE". The startAddr here will be forced to align to XCACHE_LINESIZE_BYTE if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2cf19c337ac6e40530832648b3682453"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_CleanCache </td>
-          <td>(</td>
-          <td class="paramtype">XCACHE_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XCACHE peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8939a0b8433f27d8a3a4a3be478e9188"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_CleanCacheByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address of cache. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to "XCACHE_LINESIZE_BYTE". The startAddr here will be forced to align to XCACHE_LINESIZE_BYTE if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga34458f439a20e2e89270fd8ab2058b54"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_CleanInvalidateCache </td>
-          <td>(</td>
-          <td class="paramtype">XCACHE_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XCACHE peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae1c0a3024295cce7651b1e1137a10c75"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XCACHE_CleanInvalidateCacheByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address of cache. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be Cleaned and Invalidated, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to "XCACHE_LINESIZE_BYTE". The startAddr here will be forced to align to XCACHE_LINESIZE_BYTE if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab9e79fa88e11db521b74f5316de68676"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void ICACHE_InvalidateByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to XCACHE_LINESIZE_BYTE due to the cache operation unit FSL_FEATURE_XCACHE_LINESIZE_BYTE. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4a4a0028d417cbce2b62222ca06ad185"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DCACHE_InvalidateByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to XCACHE_LINESIZE_BYTE due to the cache operation unit FSL_FEATURE_XCACHE_LINESIZE_BYTE. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa201659a87d58936f5e7e07ab12d634c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DCACHE_CleanByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to XCACHE_LINESIZE_BYTE due to the cache operation unit FSL_FEATURE_XCACHE_LINESIZE_BYTE. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga829a56918d5a245ffc86121703bdc160"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DCACHE_CleanInvalidateByRange </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
-    <tr><td class="paramname">size_byte</td><td>size of the memory to be Cleaned and Invalidated, should be larger than 0, better to align with cache line size. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Address and size should be aligned to XCACHE_LINESIZE_BYTE due to the cache operation unit FSL_FEATURE_XCACHE_LINESIZE_BYTE. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>

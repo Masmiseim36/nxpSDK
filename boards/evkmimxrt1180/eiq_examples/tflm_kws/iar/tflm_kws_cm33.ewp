@@ -359,7 +359,6 @@
           <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/../source/audio</state>
           <state>$PROJ_DIR$/../source/model</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/PrivateInclude</state>
@@ -376,6 +375,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -1463,7 +1463,6 @@
           <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/../source/audio</state>
           <state>$PROJ_DIR$/../source/model</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/PrivateInclude</state>
@@ -1480,6 +1479,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
@@ -2289,7 +2289,7 @@
         <name>$PROJ_DIR$/../source/audio/mfcc.hpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/audio_load.cpp</name>
+        <name>$PROJ_DIR$/../source/audio/audio_load.cpp</name>
       </file>
     </group>
     <file>
@@ -2335,12 +2335,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2348,6 +2342,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>
@@ -2360,19 +2363,19 @@
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_helium_utils.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math_f16.h</name>
@@ -2425,6 +2428,9 @@
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/debug.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</name>
           </file>
           <file>
@@ -2453,6 +2459,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/matrix_utils.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/none.h</name>
@@ -2489,6 +2498,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/dsp/window_functions.h</name>
           </file>
         </group>
       </group>
@@ -2636,6 +2648,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>WindowFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c</name>
           </file>
         </group>
       </group>
@@ -3587,6 +3605,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
     </file>
   </group>
   <group>

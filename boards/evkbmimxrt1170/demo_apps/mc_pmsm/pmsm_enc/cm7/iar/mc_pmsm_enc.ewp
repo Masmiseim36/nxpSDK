@@ -372,14 +372,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1487,14 +1488,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2599,14 +2601,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3711,14 +3714,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4820,14 +4824,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5935,14 +5940,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -7047,14 +7053,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -8159,14 +8166,15 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/template/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -8908,7 +8916,7 @@
         <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/readme.txt</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/readme_pmsm.txt</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
@@ -9053,9 +9061,6 @@
             <name>assets</name>
             <file>
               <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/NXP_logo_RGB_web.jpg</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/nxp-logo-small-121x52.png</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat/assets/speedfocwolswbemf.gif</name>
@@ -10169,12 +10174,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -10185,6 +10184,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

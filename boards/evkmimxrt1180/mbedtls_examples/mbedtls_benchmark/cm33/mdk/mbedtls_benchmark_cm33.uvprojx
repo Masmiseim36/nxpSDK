@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MCUXPRESSO_SDK, MBEDTLS_MCUX_ELE_S400_API, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -545,14 +545,39 @@
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0-ahab-container.img</FilePath>
             </File>
             <File>
+              <FileName>mxrt1180b0alt-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
               <FileName>mxrt1180b0alt-ahab-container.img</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-ahab-container.img</FilePath>
             </File>
             <File>
-              <FileName>Readme.md</FileName>
+              <FileName>mxrt1180b0el2goprov-1c00-ahab-container.img</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../firmware/edgelock/Readme.md</FilePath>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0el2goprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>Readme_rt1180.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/Readme_rt1180.md</FilePath>
             </File>
             <File>
               <FileName>SCR.txt</FileName>
@@ -1088,6 +1113,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -1759,6 +1789,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1795,16 +1835,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1823,6 +1853,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2337,10 +2382,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MCUXPRESSO_SDK, MBEDTLS_MCUX_ELE_S400_API, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../firmware/edgelock;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1189/drivers;../../../../../../devices/MIMXRT1189;../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1189/utilities;../../../../../../devices/MIMXRT1189/xip;../../../../xip;../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../components/ele_crypto;../../../../../../CMSIS/Core/Include;../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2550,14 +2595,39 @@
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0-ahab-container.img</FilePath>
             </File>
             <File>
+              <FileName>mxrt1180b0alt-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
               <FileName>mxrt1180b0alt-ahab-container.img</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../firmware/edgelock/mxrt1180b0alt-ahab-container.img</FilePath>
             </File>
             <File>
-              <FileName>Readme.md</FileName>
+              <FileName>mxrt1180b0el2goprov-1c00-ahab-container.img</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../firmware/edgelock/Readme.md</FilePath>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0el2goprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0el2goprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-1c00-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-1c00-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>mxrt1180b0oemprov-ahab-container.img</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/mxrt1180b0oemprov-ahab-container.img</FilePath>
+            </File>
+            <File>
+              <FileName>Readme_rt1180.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../firmware/edgelock/Readme_rt1180.md</FilePath>
             </File>
             <File>
               <FileName>SCR.txt</FileName>
@@ -3093,6 +3163,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -3764,6 +3839,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3800,16 +3885,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3828,6 +3903,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -208,5 +208,12 @@ export class PcmObject {
             callback(data);
         }
     }
+
+    onBoardDetected(callback) {
+        this.pcm.OnBoardDetected = () => {
+            console.log("Board detected...");
+            callback();
+        }
+    }
 }
 /* eslint-enable */

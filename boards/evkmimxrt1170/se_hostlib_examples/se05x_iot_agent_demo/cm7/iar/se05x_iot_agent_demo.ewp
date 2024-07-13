@@ -244,10 +244,10 @@
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_ICMP6=1</state>
           <state>CHECKSUM_CHECK_ICMP6=1</state>
-          <state>PB_FIELD_32BIT</state>
-          <state>EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
+          <state>PB_FIELD_32BIT</state>
+          <state>EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1</state>
           <state>T1oI2C</state>
           <state>T1oI2C_UM11225</state>
           <state>SSS_USE_FTR_FILE</state>
@@ -399,13 +399,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/logging</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corejson/source/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -418,6 +415,8 @@
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf</state>
           <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/sss/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/sss/ex/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/sss/port/ksdk</state>
@@ -443,6 +442,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corepkcs11/source/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/template</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -709,6 +709,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1414,10 +1415,10 @@
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>CHECKSUM_GEN_ICMP6=1</state>
           <state>CHECKSUM_CHECK_ICMP6=1</state>
-          <state>PB_FIELD_32BIT</state>
-          <state>EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
+          <state>PB_FIELD_32BIT</state>
+          <state>EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1</state>
           <state>T1oI2C</state>
           <state>T1oI2C_UM11225</state>
           <state>SSS_USE_FTR_FILE</state>
@@ -1569,13 +1570,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/logging</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corejson/source/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1588,6 +1586,8 @@
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/library</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf</state>
           <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/sss/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/sss/ex/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/se_hostlib/sss/port/ksdk</state>
@@ -1613,6 +1613,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corepkcs11/source/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/template</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1879,6 +1880,7 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3720,6 +3722,9 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/base64.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/bignum_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/library/bignum.c</name>
       </file>
       <file>
@@ -4065,6 +4070,42 @@
     <group>
       <name>nxp_iot_agent</name>
       <group>
+        <name>ex</name>
+        <group>
+          <name>src</name>
+          <group>
+            <name>network</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/network/iot_agent_network_lwip.c</name>
+            </file>
+          </group>
+          <group>
+            <name>utils</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils/iot_agent_claimcode_inject.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils/iot_agent_mqtt_freertos.c</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_claimcode_inject.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_demo_config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_mqtt_freertos.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_network.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
         <name>inc</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/inc/nxp_iot_agent.h</name>
@@ -4137,6 +4178,24 @@
         </file>
       </group>
       <group>
+        <name>platform</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/network.h</name>
+        </file>
+        <group>
+          <name>mbedtls</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls/network_mbedtls.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls/network_mbedtls.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls/net_lwip.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
         <name>src</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/nxp_iot_agent.c</name>
@@ -4180,6 +4239,15 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/nxp_iot_agent_utils_protobuf_socket.c</name>
         </file>
+        <group>
+          <name>common</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/common/nxp_iot_agent_dispatcher.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/common/nxp_iot_agent_utils_protobuf.c</name>
+          </file>
+        </group>
         <group>
           <name>protobuf</name>
           <file>
@@ -4258,69 +4326,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf/pb_encode.c</name>
           </file>
         </group>
-        <group>
-          <name>common</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/common/nxp_iot_agent_dispatcher.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/src/common/nxp_iot_agent_utils_protobuf.c</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>platform</name>
-        <group>
-          <name>mbedtls</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls/network_mbedtls.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls/network_mbedtls.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls/net_lwip.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/platform/network.h</name>
-        </file>
-      </group>
-      <group>
-        <name>ex</name>
-        <group>
-          <name>inc</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_network.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_mqtt_freertos.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_demo_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc/iot_agent_claimcode_inject.h</name>
-          </file>
-        </group>
-        <group>
-          <name>src</name>
-          <group>
-            <name>utils</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils/iot_agent_mqtt_freertos.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/utils/iot_agent_claimcode_inject.c</name>
-            </file>
-          </group>
-          <group>
-            <name>network</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/nxp_iot_agent/ex/src/network/iot_agent_network_lwip.c</name>
-            </file>
-          </group>
-        </group>
       </group>
     </group>
     <group>
@@ -4330,10 +4335,10 @@
         <group>
           <name>tstUtil</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tst_sm_time_kinetis.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tst_sm_time.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tst_sm_time.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tst_sm_time_kinetis.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tstHostCrypto.h</name>
@@ -5120,7 +5125,16 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -5305,12 +5319,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -5324,6 +5332,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

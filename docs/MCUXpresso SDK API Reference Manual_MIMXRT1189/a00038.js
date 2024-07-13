@@ -1,77 +1,168 @@
 var a00038 =
 [
-    [ "mmc_usr_param_t", "a00038.html#a00352", [
-      [ "ioStrength", "a00038.html#a8f74c9dd9fd1f4d4982010c9c8f81d1a", null ],
-      [ "maxFreq", "a00038.html#a4329e1d007e30129bb4544a58bd84f13", null ],
-      [ "capability", "a00038.html#ae3d0401fb63d202b3d1d1cbb7c741468", null ]
+    [ "netc_hw_enetc_si_config_t", "a00038.html#a00365", [
+      [ "bandWeight", "a00038.html#aba98ee9267fba2c88185c4a3f58f8300", null ],
+      [ "vlanCtrl", "a00038.html#a53293199f6b85c8cd9fae12ef43c1307", null ],
+      [ "antiSpoofEnable", "a00038.html#a0911a36da763a7e06a996983d5252f5f", null ],
+      [ "vlanInsertEnable", "a00038.html#ab5cf35b902dfa6f66382bb9c34e4de1a", null ],
+      [ "vlanExtractEnable", "a00038.html#a4c30dcfea9694569b2116fd71c5afe65", null ],
+      [ "sourcePruneEnable", "a00038.html#a1aae9afa21e7642b9126dd9f35ce47c2", null ],
+      [ "rxRingUse", "a00038.html#ad28cf9383a5ac843c95ce9607fd1c3fd", null ],
+      [ "txRingUse", "a00038.html#a183575b8bba53334546cf24961121bbf", null ],
+      [ "valnToIpvEnable", "a00038.html#a56d3b376cd4f7c026c9aa1151d7dbaad", null ],
+      [ "rxBdrGroupNum", "a00038.html#a34397f490348d7e409ca28a5c760e30c", null ],
+      [ "ringPerBdrGroup", "a00038.html#a0a72b2715a3c0354decc0166cab4e8e2", null ],
+      [ "defaultRxBdrGroup", "a00038.html#af7e6af7a0a3362a05a86cbc94e7aca01", null ],
+      [ "vlanToIpvMap", "a00038.html#a671901153c262baac56ca87bd9d57220", null ],
+      [ "ipvToRingMap", "a00038.html#adc835b1729d6c6c03dc8e34a8f17862f", null ],
+      [ "vsiTcToTC", "a00038.html#adb70162dc980b49a3b41b975d3b644cf", null ],
+      [ "enSIBaseVlan", "a00038.html#a6191ac0897a80c04ff5c2500c823e93e", null ],
+      [ "siBaseVlan", "a00038.html#ab6ab58c2da6e4ac24757c464c9db31de", null ]
     ] ],
-    [ "mmc_card_t", "a00038.html#a00347", [
-      [ "host", "a00038.html#a12ab48f6985e78ef81d34ab22b8fc878", null ],
-      [ "usrParam", "a00038.html#ad1054b9eecc0633e8ca70ba164918b2a", null ],
-      [ "isHostReady", "a00038.html#ab14a00fcc66890836622884227bd1873", null ],
-      [ "noInteralAlign", "a00038.html#a306fbd3a3215259f9b380f8e8423f172", null ],
-      [ "busClock_Hz", "a00038.html#a70c3243e9802d253fb260c6ee2557c8e", null ],
-      [ "relativeAddress", "a00038.html#a2056ad945bf983dcf197d682508d1035", null ],
-      [ "enablePreDefinedBlockCount", "a00038.html#ac163495eae9eb73be22075956d62aa64", null ],
-      [ "flags", "a00038.html#a234ecfb0c811094377b4b829ea3ba0ac", null ],
-      [ "internalBuffer", "a00038.html#ac62c08dd4ae6fa2938127e5ca556b614", null ],
-      [ "ocr", "a00038.html#a0b3899f0be098f696fd5bc212d4b597e", null ],
-      [ "cid", "a00038.html#a31922f2befc3b24acfae2fb948a1398b", null ],
-      [ "csd", "a00038.html#a70c9d4972f53e5b156eb65ed719e773a", null ],
-      [ "extendedCsd", "a00038.html#a1abe5e60e629c2e8cd6f52f70c147053", null ],
-      [ "blockSize", "a00038.html#a4cbb05171fc7209226ac22515fcdf365", null ],
-      [ "userPartitionBlocks", "a00038.html#aaf035e6ccfee3bd92ef690d2aff5254d", null ],
-      [ "bootPartitionBlocks", "a00038.html#af76cbe7469a71b0695dae5b8e42088bf", null ],
-      [ "eraseGroupBlocks", "a00038.html#a73c3b6a62f48d65719f95ae41ad9456d", null ],
-      [ "currentPartition", "a00038.html#a8be2e5d491724a446334e871f06207af", null ],
-      [ "hostVoltageWindowVCCQ", "a00038.html#ae9a7cc5d13cc3cb5b7921f4d4073e681", null ],
-      [ "hostVoltageWindowVCC", "a00038.html#ac9c494f7476052a7eff992d03abdd0d5", null ],
-      [ "busTiming", "a00038.html#aa77eb86df76d49460eb2b9de2a2a3ccd", null ],
-      [ "busWidth", "a00038.html#aed7ad8dbb338c62d7290c6b8fcea0d09", null ],
-      [ "lock", "a00038.html#a90649f0ffe1dc3f76848f91bd1e94416", null ]
+    [ "netc_si_l2mf_config_t", "a00038.html#a00395", [
+      [ "macUCPromis", "a00038.html#aa3e41c78f2a2ad29044eb6953ed9abb2", null ],
+      [ "macMCPromis", "a00038.html#a3dcbff05ba4813d0b3feb83de6a83285", null ],
+      [ "rejectUC", "a00038.html#ae485fae4aa03ae9169d45eb6e5d7b37c", null ],
+      [ "rejectMC", "a00038.html#aee27ee64a85f2b6548da312da5806658", null ],
+      [ "rejectBC", "a00038.html#a13f450f2ac26f089b83f587a72f3d9ad", null ]
     ] ],
-    [ "FSL_MMC_DRIVER_VERSION", "a00038.html#gaa853e6ed145fdde29cb8277c789ab5cb", null ],
-    [ "mmc_io_strength_t", "a00038.html#ga5615d27683e82898b6d4526eff8efcd8", [
-      [ "kMMC_SupportHighSpeed26MHZFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a0f2e16ba804bfabd3c81fee5fa780c95", null ],
-      [ "kMMC_SupportHighSpeed52MHZFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305adb778db370818747d81df90b23298bf1", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ180V300VFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305af873861eb6356bd1a236d4741d3bd382", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ120VFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305ab26ad5455afddab2dd5909435243d8de", null ],
-      [ "kMMC_SupportHS200200MHZ180VFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a39b3765119b6f0134b9c3d00e78ccdc3", null ],
-      [ "kMMC_SupportHS200200MHZ120VFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a7875676a63cb3e3f3bce09d60b12cf88", null ],
-      [ "kMMC_SupportHS400DDR200MHZ180VFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a5b1fc45cb6e3fee016907e5d13f1ad83", null ],
-      [ "kMMC_SupportHS400DDR200MHZ120VFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305af2976472059a8701c26ed30e0f28c5fa", null ],
-      [ "kMMC_SupportHighCapacityFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a067279b27baf58ed3266df38e848b128", null ],
-      [ "kMMC_SupportAlternateBootFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305ac18882ad0cc699401c3e3483633ed77b", null ],
-      [ "kMMC_SupportDDRBootFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305af9baef828e6536d54f64295e1ce57548", null ],
-      [ "kMMC_SupportHighSpeedBootFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a57438a043537958e8324400ce3788ed0", null ],
-      [ "kMMC_SupportEnhanceHS400StrobeFlag", "a00038.html#gga15b8f0a0cc23d28aafa1b827c46a5305a39d546b05b2c725a822419330606bba5", null ]
+    [ "netc_si_l2vf_config_t", "a00038.html#a00396", [
+      [ "acceptUntagged", "a00038.html#ad4961489ead8c5ce36ddd324c9992905", null ],
+      [ "enPromis", "a00038.html#a44ada3b9361ee3a704759d7ff3f324c4", null ],
+      [ "useOuterVlanTag", "a00038.html#a64dc4f35de626e801d57f3ff84790f62", null ]
     ] ],
-    [ "mmc_sleep_awake_t", "a00038.html#gab89d4d12909a44eb53f0f366ea542cf4", [
-      [ "kMMC_Sleep", "a00038.html#ggab89d4d12909a44eb53f0f366ea542cf4a766aba45b5704265a1dfdf8d8d1ef5b2", null ],
-      [ "kMMC_Awake", "a00038.html#ggab89d4d12909a44eb53f0f366ea542cf4a68ce50ee0ddf66b369033f79da5328e9", null ]
+    [ "netc_si_discard_statistic_t", "a00038.html#a00394", [
+      [ "programError", "a00038.html#a1bc5e0baca95b9af1e316e057fb1a2e5", null ],
+      [ "busError", "a00038.html#a7a75c862240156d03f418ac196075f00", null ],
+      [ "lackBD", "a00038.html#ae82c81c95542096a2a67dfa4d96d122b", null ]
     ] ],
-    [ "MMC_Init", "a00038.html#ga03f006d98725caeee8162ebb1250ff86", null ],
-    [ "MMC_Deinit", "a00038.html#gab67cdb5a21909356c4abadf3a4d8b40c", null ],
-    [ "MMC_CardInit", "a00038.html#ga9adb1349b4f9415c631e94a375bc7db0", null ],
-    [ "MMC_CardDeinit", "a00038.html#ga83e4e9e390a6c817f06999bbf887a3b3", null ],
-    [ "MMC_HostInit", "a00038.html#ga44f98e6d4caefbac4ee0237890f651e6", null ],
-    [ "MMC_HostDeinit", "a00038.html#ga56005088e0e2a575190bf7829520c7f1", null ],
-    [ "MMC_HostDoReset", "a00038.html#ga260f33fc882cd4eaef78f05ef9069fc9", null ],
-    [ "MMC_HostReset", "a00038.html#ga4f61aee1889a7a09e6dea3735714b1ce", null ],
-    [ "MMC_SetCardPower", "a00038.html#ga5231adac523a9314ba4aceb89e67c492", null ],
-    [ "MMC_CheckReadOnly", "a00038.html#gac08db377dfecee284aedd579d445999a", null ],
-    [ "MMC_ReadBlocks", "a00038.html#ga60a99fbb416b500761d668779ebe01f7", null ],
-    [ "MMC_WriteBlocks", "a00038.html#ga504ade2cd3eeb1891913271521bc9562", null ],
-    [ "MMC_EraseGroups", "a00038.html#ga90ca5cb83516ede64e9af6ece3439bab", null ],
-    [ "MMC_SelectPartition", "a00038.html#gad36b22249e056b0dda1da583a5530d61", null ],
-    [ "MMC_SetBootConfig", "a00038.html#gafd26b8b19b85f99d23175bfb3ddf6ff0", null ],
-    [ "MMC_StartBoot", "a00038.html#ga86dbfbd824a0f5243a960d343e3f9176", null ],
-    [ "MMC_SetBootConfigWP", "a00038.html#ga9b18b799d48e0b39672d89d5f6148548", null ],
-    [ "MMC_ReadBootData", "a00038.html#ga1e27e4af5916f5f501cd1d9912a42643", null ],
-    [ "MMC_StopBoot", "a00038.html#ga1976bb2986bd2dd53de05101cde394a7", null ],
-    [ "MMC_SetBootPartitionWP", "a00038.html#ga4e212f50660aa5fd7ff36a9232fecf93", null ],
-    [ "MMC_EnableCacheControl", "a00038.html#gab41ad4bb9f654d8cd213effffcbbae06", null ],
-    [ "MMC_FlushCache", "a00038.html#ga61bd93105cac69d83956086927d30dce", null ],
-    [ "MMC_SetSleepAwake", "a00038.html#gac8ecc09f078dc2e7e8f85eb24d939ed0", null ],
-    [ "MMC_PollingCardStatusBusy", "a00038.html#ga255bea62892cc6c3859caf2b1a57e24e", null ]
+    [ "netc_si_traffic_statistic_t", "a00038.html#a00397", null ],
+    [ "netc_si_config_t", "a00038.html#a00393", [
+      [ "tcBWWeight", "a00038.html#a625a3b48225b0607722939b16aec8c96", null ]
+    ] ],
+    [ "netc_tx_bd_t", "a00038.html#a00549", [
+      [ "addr", "a00038.html#a0fe8f857da6fb2443ec2351d21f87822", null ],
+      [ "bufLen", "a00038.html#a2ca32ad65395ec306f84ab4327e39185", null ],
+      [ "frameLen", "a00038.html#a75eef9dcaeaf4385bd1467a32ed40e0e", null ],
+      [ "flags", "a00038.html#a59915650ec48214a6300adb408ab8740", null ],
+      [ "enableInterrupt", "a00038.html#a25574ea384c341ba5941fbd9e0ef4a50", null ],
+      [ "isExtended", "a00038.html#acd3e9f4707faaa10f797641933d9a0dc", null ],
+      [ "isFinal", "a00038.html#ac47f5b75f807671939b9d7b05acbc370", null ],
+      [ "timestamp", "a00038.html#ac8ebce0e64123441620996a7574e1fae", null ],
+      [ "__pad0__", "a00038.html#ace2a095b8893d52f863c8fbdd6196e97", null ],
+      [ "tpid", "a00038.html#afc75b8862c594ea8168153c6a2b6241d", null ],
+      [ "vid", "a00038.html#af9cde2043d657466729865ec558df744", null ],
+      [ "dei", "a00038.html#a1404f5fba9e787f1b768f4c15c0b232a", null ],
+      [ "pcp", "a00038.html#aaa2870379d5b2142a1965536e974391a", null ],
+      [ "eFlags", "a00038.html#a6d740f5adc7198e8b88a0cfbd8ebf30f", null ],
+      [ "isFinal", "a00038.html#a31a174a992a530cacd251704678e627c", null ],
+      [ "status", "a00038.html#a533d1a4ba844050f0e8c0ec5f12f5c49", null ],
+      [ "written", "a00038.html#a8ebea7adaef7abe648809a9f528bfa9b", null ]
+    ] ],
+    [ "netc_rx_bd_t", "a00038.html#a00389", [
+      [ "addr", "a00038.html#ab2cee70769d7a0be7771ae561531b036", null ],
+      [ "internetChecksum", "a00038.html#abe7bbee0f266c61efaf5d144b2c60fa4", null ],
+      [ "parserSummary", "a00038.html#a82f58840d5a8e652a6ec0f8ece6eadb7", null ],
+      [ "srcPort", "a00038.html#aaa4b6ddf98f35d3d5e6be24142ace5d3", null ],
+      [ "rssHash", "a00038.html#ab98d9f8d0cbdc0547fea7be52e2f1675", null ],
+      [ "rssHashSwt", "a00038.html#a18bfb5334f8f2d4a165b3aa2d7f86c03", null ],
+      [ "bufLen", "a00038.html#aab5f73cf298e67806cb60b6d33416ce4", null ],
+      [ "vid", "a00038.html#afeed237a10f9750c6b29cec1bd5b904f", null ],
+      [ "dei", "a00038.html#adc8d8b205bf7e1773145550e2def6733", null ],
+      [ "pcp", "a00038.html#afb110642de008c4f785866122772b247", null ],
+      [ "tpid", "a00038.html#a41457f32554649c65bc7c4a4941d2d95", null ],
+      [ "hr", "a00038.html#aaefc5ed90b801d066d2bb97e6cbe3752", null ],
+      [ "flags", "a00038.html#a3972136aae86b91f0f4883e1c87cd11c", null ],
+      [ "error", "a00038.html#a023625986ccfcf32d13edf5caebc362b", null ],
+      [ "isReady", "a00038.html#af13c41abf003721a00c11bbe466c5910", null ],
+      [ "isFinal", "a00038.html#ac9816c9c5d81f4a1912971d5d98743ad", null ],
+      [ "timestamp", "a00038.html#a35ce690549f3f0f508a9b1af989aefbc", null ],
+      [ "txtsid", "a00038.html#ae8cd6842b8641e5a35b9c01b683545bf", null ],
+      [ "hr", "a00038.html#ab191339d468a30f86a33a601809a8c3b", null ],
+      [ "isReady", "a00038.html#a4161dff75737ffb7948c2170b7abf0a3", null ],
+      [ "isFinal", "a00038.html#a4a42619df2f94531fffa39176acaf1d8", null ]
+    ] ],
+    [ "netc_tx_bdr_config_t", "a00038.html#a00550", [
+      [ "len", "a00038.html#adc66679c8cdfe87998590a4695dff5be", null ],
+      [ "bdArray", "a00038.html#a5296cf287683b2cfbdb6fa80290c3bfc", null ],
+      [ "dirtyArray", "a00038.html#a5581b686f141075f903308d5adbaab9d", null ],
+      [ "enIntr", "a00038.html#ae4ad86a0f24b1d06d7da80b215cb9286", null ],
+      [ "enThresIntr", "a00038.html#aa87a6a20dd7f0181403af695084b2896", null ],
+      [ "enCoalIntr", "a00038.html#a63445386032dcf1b5f6104bdcbd42151", null ],
+      [ "intrThreshold", "a00038.html#a88138a622714f521ab3b87eeaa5d2669", null ],
+      [ "intrTimerThres", "a00038.html#ac161b19d77db0f1872d061f60b586ea7", null ],
+      [ "msixEntryIdx", "a00038.html#a811a582fffd855faffce8ab201b4b392", null ],
+      [ "isVlanInsert", "a00038.html#a81b3f0bf29a0311d0107b4dbdf0893ea", null ],
+      [ "isUserCRC", "a00038.html#ac5f60784065a16a2ab283d98d52a7452", null ],
+      [ "wrrWeight", "a00038.html#a2c3c5739f9a8b1b76f2f65f50a84d252", null ],
+      [ "priority", "a00038.html#a70f062056342985563ada9100138d270", null ]
+    ] ],
+    [ "netc_tx_bdr_t", "a00038.html#a00551", [
+      [ "bdBase", "a00038.html#a767a78dcd4c5fd851f2858fffdd28dea", null ],
+      [ "dirtyBase", "a00038.html#a64df149078685a3fdf02b05d97857288", null ],
+      [ "producerIndex", "a00038.html#a98240dca23a0748cdde96ceb3a2d4075", null ],
+      [ "cleanIndex", "a00038.html#a6403831c050eb335957d41656399e92c", null ],
+      [ "len", "a00038.html#a72426f42d64d50a225c8892ae03f791f", null ]
+    ] ],
+    [ "netc_rx_bdr_config_t", "a00038.html#a00390", [
+      [ "extendDescEn", "a00038.html#a3e9f52d54300a9eee160440a6a450f7c", null ],
+      [ "bdArray", "a00038.html#a19ad7fc536c398a750ce74e3d6438046", null ],
+      [ "len", "a00038.html#a9f20cc2180bbc4aca98d2a1d2d3f7867", null ],
+      [ "buffAddrArray", "a00038.html#a75c99ff9f6ec696112f1ad1c00c7d4ea", null ],
+      [ "buffSize", "a00038.html#a30144656c97ce9fe942e553a6ad34d77", null ],
+      [ "enThresIntr", "a00038.html#a780465da17d0f8e30e085af32c5ec781", null ],
+      [ "enCoalIntr", "a00038.html#a5ef0fd4fee2874abd76b6aee5e088afb", null ],
+      [ "intrThreshold", "a00038.html#a6a089c776f86e3a9402b61d23044390c", null ],
+      [ "intrTimerThres", "a00038.html#a9d1335f4619a1fb989e2826ae89b06f6", null ],
+      [ "msixEntryIdx", "a00038.html#a278db2157852e6497119dd4180873432", null ],
+      [ "disVlanPresent", "a00038.html#af77cc03790bb3c89b0ca0dbd0d797649", null ],
+      [ "enVlanExtract", "a00038.html#aa0497fcf574571db34ce00b8e5d9a014", null ],
+      [ "isKeepCRC", "a00038.html#a1a6c92e4d2b77e720a34fee123d15c43", null ],
+      [ "congestionMode", "a00038.html#a6402e729ec08e752f67193ad854c49b5", null ],
+      [ "enHeaderAlign", "a00038.html#ac65972a136dc8378b6a40f7f90773984", null ]
+    ] ],
+    [ "netc_rx_bdr_t", "a00038.html#a00391", [
+      [ "bdBase", "a00038.html#a431022db8217d02b98c21326d97d8ceb", null ],
+      [ "extendDesc", "a00038.html#ae45e23cc2111bc2e0f85afc4aba727f8", null ],
+      [ "index", "a00038.html#a033993136eb53b72d4fd4cbbba24d659", null ],
+      [ "len", "a00038.html#a6c95f6216fe398baa5361563eade6058", null ],
+      [ "buffArray", "a00038.html#a00e86025a0a216e50d1e4c8e7bd99b57", null ],
+      [ "buffSize", "a00038.html#add625338bc317a10e3822fa4114d8166", null ]
+    ] ],
+    [ "netc_bdr_config_t", "a00038.html#a00350", [
+      [ "rxBdrConfig", "a00038.html#a93933ee2728d31ba4b26174a8a0e3f6d", null ],
+      [ "txBdrConfig", "a00038.html#a0829eeb283bfd1c50d1087f870bee465", null ]
+    ] ],
+    [ "netc_psi_rx_msg_t", "a00038.html#a00387", [
+      [ "msgBuff", "a00038.html#a57e1f7696c848e9f6261b312e4dff16c", null ],
+      [ "msgLen", "a00038.html#ad481cf2eab6e4fd5a85918a2041d0c3d", null ]
+    ] ],
+    [ "netc_vsi_msg_tx_status_t", "a00038.html#a00555", [
+      [ "txBusy", "a00038.html#a6b47237089d616a18758fe44c858af98", null ],
+      [ "isTxErr", "a00038.html#af50b064199e4a00a2af132c86714d57e", null ],
+      [ "msgCode", "a00038.html#a4b97418df561f81f9677ed19aab1ec53", null ]
+    ] ],
+    [ "NETC_VLAN_PCP_DEI_VALUE", "a00038.html#gaca8ef0a1dea333f22d1d1f5d8a5c7684", null ],
+    [ "netc_hw_enetc_si_vlan_type", "a00038.html#gafd8586c27647901150e1639e5026111d", [
+      [ "kNETC_ENETC_StanCVlan", "a00038.html#ggafd8586c27647901150e1639e5026111daf1c55a1dc0789dcd36150416848ae580", null ],
+      [ "kNETC_ENETC_StanSVlan", "a00038.html#ggafd8586c27647901150e1639e5026111da035dd1dfec064bce5c0b3cebf7b73568", null ],
+      [ "kNETC_ENETC_CustomVlan1", "a00038.html#ggafd8586c27647901150e1639e5026111da9a1725a81dae559c0730d3eb80a7e1a0", null ],
+      [ "kNETC_ENETC_CustomVlan2", "a00038.html#ggafd8586c27647901150e1639e5026111dabe82af557cc2acbd198cf3856eef4903", null ]
+    ] ],
+    [ "netc_hw_enetc_si_rxr_group", "a00038.html#gad7765240e51f9ea32cb89cedf4a2ae54", [
+      [ "kNETC_SiBDRGroupOne", "a00038.html#ggad7765240e51f9ea32cb89cedf4a2ae54a0cd24be7c08a8fe7dabbb72b15c10892", null ],
+      [ "kNETC_SiBDRGroupTwo", "a00038.html#ggad7765240e51f9ea32cb89cedf4a2ae54a8601b9f13d13b7339bdbdf87c6dfc913", null ]
+    ] ],
+    [ "netc_tx_bdr_flags_t", "a00038.html#gacba1684dc5ce714ac6515aeba48e7407", null ],
+    [ "netc_rx_bdr_flags_t", "a00038.html#ga40b1d53771aeae93950d6ee956076c53", null ],
+    [ "netc_psi_msg_flags_t", "a00038.html#gae218b67ec497c8573985371d3f0a502a", [
+      [ "kNETC_PsiRxMsgFromVsi1Flag", "a00038.html#ggae218b67ec497c8573985371d3f0a502aa67fa863b19a739c65a8ede24b3da4e7f", null ],
+      [ "kNETC_PsiRxMsgFromVsi2Flag", "a00038.html#ggae218b67ec497c8573985371d3f0a502aa6f4e4d8afdd578420500878f9561e1f7", null ],
+      [ "kNETC_PsiFLRFromVsi1Flag", "a00038.html#ggae218b67ec497c8573985371d3f0a502aa778deace1254c680f466047b18763b3a", null ]
+    ] ],
+    [ "netc_vsi_msg_flags_t", "a00038.html#ga35665d73a691e7fa2ee8c60b94181363", [
+      [ "kNETC_VsiMsgTxFlag", "a00038.html#gga35665d73a691e7fa2ee8c60b94181363a951a9c3da655c03f7ee0234302e4b6db", null ],
+      [ "kNETC_VsiMsgRxFlag", "a00038.html#gga35665d73a691e7fa2ee8c60b94181363a1e0644a92f8bf2044c3f2a2d0520fa03", null ]
+    ] ],
+    [ "netc_vsi_number_t", "a00038.html#ga250cbf76861a7bd0418c736b3cecb450", null ]
 ];

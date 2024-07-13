@@ -44,6 +44,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCRYPTO \
     -DPSA_CRYPTO_DRIVER_ELE_S4XX \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DDISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DFSL_FEATURE_SOC_ELE_S4XX \
     -g \
@@ -57,7 +58,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -75,6 +75,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCRYPTO \
     -DPSA_CRYPTO_DRIVER_ELE_S4XX \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DDISABLE_ECC_R1_CURVE_TESTS_LESS_THAN_255_BITS \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DFSL_FEATURE_SOC_ELE_S4XX \
     -Os \
@@ -87,7 +88,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -110,7 +110,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -133,7 +132,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -149,7 +147,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -179,7 +176,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

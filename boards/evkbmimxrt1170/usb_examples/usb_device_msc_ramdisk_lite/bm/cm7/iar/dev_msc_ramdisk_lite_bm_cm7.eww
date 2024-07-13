@@ -5,6 +5,14 @@
       <name>all</name>
       <member>
         <project>dev_msc_ramdisk_lite_bm_cm7</project>
+        <configuration>sdram_debug</configuration>
+      </member>
+      <member>
+        <project>dev_msc_ramdisk_lite_bm_cm7</project>
+        <configuration>sdram_release</configuration>
+      </member>
+      <member>
+        <project>dev_msc_ramdisk_lite_bm_cm7</project>
         <configuration>debug</configuration>
       </member>
       <member>
@@ -19,10 +27,16 @@
         <project>dev_msc_ramdisk_lite_bm_cm7</project>
         <configuration>release</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_debug</name>
       <member>
         <project>dev_msc_ramdisk_lite_bm_cm7</project>
         <configuration>sdram_debug</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
       <member>
         <project>dev_msc_ramdisk_lite_bm_cm7</project>
         <configuration>sdram_release</configuration>
@@ -54,20 +68,6 @@
       <member>
         <project>dev_msc_ramdisk_lite_bm_cm7</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_debug</name>
-      <member>
-        <project>dev_msc_ramdisk_lite_bm_cm7</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>dev_msc_ramdisk_lite_bm_cm7</project>
-        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

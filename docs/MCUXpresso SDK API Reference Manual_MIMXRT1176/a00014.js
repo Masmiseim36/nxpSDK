@@ -1,6 +1,6 @@
 var a00014 =
 [
-    [ "_caam_pkha_ecc_point_t", "a00014.html#a00407", [
+    [ "_caam_pkha_ecc_point_t", "a00014.html#a00404", [
       [ "X", "a00014.html#acea3e6952ae688c9be2fa0137cddfb32", null ],
       [ "Y", "a00014.html#a5651572f785fa49c9f27be4202aed268", null ]
     ] ],

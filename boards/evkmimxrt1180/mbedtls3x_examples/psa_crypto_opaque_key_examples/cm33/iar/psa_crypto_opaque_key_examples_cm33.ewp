@@ -356,7 +356,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal/baremetal</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal/baremetal</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
@@ -364,7 +364,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
@@ -378,16 +377,17 @@
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/psa_its</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1470,7 +1470,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal/baremetal</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal/baremetal</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library</state>
@@ -1478,7 +1478,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
@@ -1492,16 +1491,17 @@
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/ele_crypto</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/psa_its</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal</state>
+          <state>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2293,24 +2293,252 @@
     </file>
   </group>
   <group>
-    <name>mbedtls3x</name>
+    <name>component</name>
     <group>
-      <name>port</name>
+      <name>psa_crypto_driver</name>
       <group>
         <name>osal</name>
         <group>
           <name>baremetal</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal/baremetal/osal_mutex.c</name>
+            <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal/baremetal/osal_mutex_platform.h</name>
+            <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal/baremetal/osal_mutex_platform.h</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/osal/osal_mutex.h</name>
+          <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/osal/osal_mutex.h</name>
         </file>
       </group>
+      <group>
+        <name>ele_s4xx</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/ele_s4xx.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/ele_fw.h</name>
+        </file>
+        <group>
+          <name>src</name>
+          <group>
+            <name>common</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_common_init.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_entropy.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_common_key_management.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_common_key_management.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/common/mcux_psa_s4xx_sdmmc_nvm_manager.c</name>
+            </file>
+          </group>
+          <group>
+            <name>opaque</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_init.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_key_generation.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_asymmetric_signature.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_cipher.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_aead.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_mac.c</name>
+            </file>
+          </group>
+          <group>
+            <name>transparent</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_init.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_key_generation.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_hash.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_aead.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_cipher.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_asymmetric_encryption.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/src/transparent/mcux_psa_s4xx_asymmetric_signature.c</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>include</name>
+          <group>
+            <name>common</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_common_init.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_common_key_management.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_common_key_management.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/common/mcux_psa_s4xx_sdmmc_nvm_manager.h</name>
+            </file>
+          </group>
+          <group>
+            <name>opaque</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_init.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_key_generation.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_asymmetric_signature.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_cipher.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_aead.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_mac.h</name>
+            </file>
+          </group>
+          <group>
+            <name>transparent</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_init.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_key_generation.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_hash.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_aead.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_cipher.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_asymmetric_encryption.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/include/transparent/mcux_psa_s4xx_asymmetric_signature.h</name>
+            </file>
+          </group>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/ele_s4xx_crypto_primitives.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/psa_crypto_driver/ele_s4xx/ele_s4xx_crypto_primitives.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>gpio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_rgpio.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+    </group>
+    <group>
+      <name>ele_crypto</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_crypto.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_crypto.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_crypto_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_nvm_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_nvm_manager.h</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>mbedtls3x</name>
+    <group>
+      <name>port</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_config.h</name>
       </file>
@@ -2320,162 +2548,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
-      </file>
-      <group>
-        <name>ele_s4xx</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_s4xx.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_fw.h</name>
-        </file>
-        <group>
-          <name>src</name>
-          <group>
-            <name>common</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_common_init.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_entropy.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_common_key_management.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_common_key_management.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/common/mcux_psa_s4xx_sdmmc_nvm_manager.c</name>
-            </file>
-          </group>
-          <group>
-            <name>opaque</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_init.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_key_generation.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_asymmetric_signature.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_cipher.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_aead.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/opaque/mcux_psa_s4xx_opaque_mac.c</name>
-            </file>
-          </group>
-          <group>
-            <name>transparent</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_init.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_key_generation.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_hash.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_aead.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_cipher.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_asymmetric_encryption.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/src/transparent/mcux_psa_s4xx_asymmetric_signature.c</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>include</name>
-          <group>
-            <name>common</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_common_init.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_entropy.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_common_key_management.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_common_key_management.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/common/mcux_psa_s4xx_sdmmc_nvm_manager.h</name>
-            </file>
-          </group>
-          <group>
-            <name>opaque</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_init.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_key_generation.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_asymmetric_signature.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_cipher.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_aead.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/opaque/mcux_psa_s4xx_opaque_mac.h</name>
-            </file>
-          </group>
-          <group>
-            <name>transparent</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_init.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_key_generation.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_hash.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_aead.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_cipher.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_asymmetric_encryption.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/include/transparent/mcux_psa_s4xx_asymmetric_signature.h</name>
-            </file>
-          </group>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_s4xx_crypto_primitives.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/ele_s4xx/ele_s4xx_crypto_primitives.h</name>
-        </file>
-      </group>
       <group>
         <name>psa_its</name>
         <file>
@@ -2485,6 +2557,15 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/psa_its/psa_its_fatfs.h</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_psa_crypto_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_mbedtls_accelerator_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/port/mcux_psa_defines.h</name>
+      </file>
     </group>
     <group>
       <name>library</name>
@@ -2495,100 +2576,40 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_client.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_invasive.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_random_impl.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_se.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_se.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_util.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_util_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</name>
@@ -2651,6 +2672,12 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bignum_mod_raw_invasive.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/block_cipher.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/block_cipher_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/bn_mul.h</name>
       </file>
       <file>
@@ -2694,6 +2721,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/ctr_drbg.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/ctr.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/des.c</name>
@@ -2789,6 +2819,9 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/pk.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/pk_ecc.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/pk_internal.h</name>
       </file>
       <file>
@@ -2822,6 +2855,66 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/poly1305.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_aead.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_cipher.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_hash.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_invasive.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_its.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_mac.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_pake.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_random_impl.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_rsa.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_se.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_slot_management.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_util_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/psa_util.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/ripemd160.c</name>
       </file>
       <file>
@@ -2832,6 +2925,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/rsa_alt_helpers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/rsa_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/library/sha1.c</name>
@@ -2879,6 +2975,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/mbedtls/bignum.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/mbedtls/block_cipher.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls3x/include/mbedtls/build_info.h</name>
@@ -3131,10 +3230,25 @@
         <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0-ahab-container.img</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0alt-1c00-ahab-container.img</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0alt-ahab-container.img</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/Readme.md</name>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0el2goprov-1c00-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0el2goprov-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0oemprov-1c00-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/mxrt1180b0oemprov-ahab-container.img</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../firmware/edgelock/Readme_rt1180.md</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../firmware/edgelock/SCR.txt</name>
@@ -3212,6 +3326,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
   </group>
   <group>
     <name>sdmmc</name>
@@ -3276,12 +3396,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -3290,84 +3404,15 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>gpio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_rgpio.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>silicon_id</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-    </group>
-    <group>
-      <name>ele_crypto</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_crypto.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_crypto.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_crypto_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_nvm_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/ele_crypto/ele_nvm_manager.h</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
+    </file>
   </group>
   <group>
     <name>fatfs</name>

@@ -1,13 +1,13 @@
 var a00015 =
 [
-    [ "flexcan_memory_error_report_status_t", "a00015.html#a00303", [
+    [ "flexcan_memory_error_report_status_t", "a00015.html#a00301", [
       [ "errorType", "a00015.html#aebb855401e2eee9409ede8120ca9633a", null ],
       [ "accessType", "a00015.html#a0a297294f026f9bc81fa51762352c5f7", null ],
       [ "accessAddress", "a00015.html#aaf29baac7fb4c043f68c5e47811606eb", null ],
       [ "errorData", "a00015.html#a12ddbdad63aa4403261fc555e2059c1b", null ],
       [ "byteIsRead", "a00015.html#a9ff831a783006488b2707a4cd0a76008", null ]
     ] ],
-    [ "flexcan_frame_t", "a00015.html#a00301", [
+    [ "flexcan_frame_t", "a00015.html#a00299", [
       [ "timestamp", "a00015.html#acf56bef24748e5d4498edfbaac4e174c", null ],
       [ "length", "a00015.html#a86c748c660b5a447d73b601d65464d68", null ],
       [ "type", "a00015.html#a21ceef28a120648fbd3bf3c72c414e89", null ],
@@ -26,7 +26,7 @@ var a00015 =
       [ "dataByte5", "a00015.html#a7fb79a7e48cef3eef8c2bb652d521404", null ],
       [ "dataByte4", "a00015.html#a744b38402f1ccd4fbb0b1f851401ea87", null ]
     ] ],
-    [ "flexcan_fd_frame_t", "a00015.html#a00299", [
+    [ "flexcan_fd_frame_t", "a00015.html#a00297", [
       [ "timestamp", "a00015.html#a66127fac4f3e307d483696a4adbb2ef2", null ],
       [ "length", "a00015.html#a58ab201715c781de7839c8ca6ebb4aee", null ],
       [ "type", "a00015.html#a7e141dfa1a9bd04ccfa3ca2305ee6d77", null ],
@@ -48,7 +48,7 @@ var a00015 =
       [ "dataByte4", "a00015.html#a6d9890f7eea616bee3249f2ef3adea17", null ],
       [ "idhit", "a00015.html#a58f94e14a32c8e40ccfe45c207d8ea49", null ]
     ] ],
-    [ "flexcan_timing_config_t", "a00015.html#a00306", [
+    [ "flexcan_timing_config_t", "a00015.html#a00304", [
       [ "preDivider", "a00015.html#ab9be8b37a583ead557316b6e8a52087a", null ],
       [ "rJumpwidth", "a00015.html#a328cafc9d9d4536e888a2392c52936af", null ],
       [ "phaseSeg1", "a00015.html#a70c5ba7b5325b4cc0d8579bd93701541", null ],
@@ -60,7 +60,7 @@ var a00015 =
       [ "fphaseSeg2", "a00015.html#ae6b56d6b686118589e8d6938f79f4165", null ],
       [ "fpropSeg", "a00015.html#a218160bfea95e63c14f2b43711af0acf", null ]
     ] ],
-    [ "flexcan_config_t", "a00015.html#a00295", [
+    [ "flexcan_config_t", "a00015.html#a00293", [
       [ "baudRate", "a00015.html#a19acff49da11171e316b5c02d08fe898", null ],
       [ "baudRateFD", "a00015.html#a16dac8bdd1f488c09755a8c2e545acc3", null ],
       [ "bitRate", "a00015.html#ac166a2d27b9be4d8ff39c67c28f5d9c9", null ],
@@ -80,32 +80,32 @@ var a00015 =
       [ "enableNonCorrectableErrorEnterFreeze", "a00015.html#a64a1b42a9a8b5ef8c1d957c69fd34c79", null ],
       [ "enableTransceiverDelayMeasure", "a00015.html#a468716937c4dc9d61d5485a91a7b923a", null ]
     ] ],
-    [ "flexcan_rx_mb_config_t", "a00015.html#a00305", [
+    [ "flexcan_rx_mb_config_t", "a00015.html#a00303", [
       [ "id", "a00015.html#a711c0fe1870b35216e51c48b615af102", null ],
       [ "format", "a00015.html#aa7f296319a192fb82f137f82bb126f7a", null ],
       [ "type", "a00015.html#a258245b77982b70b8d82fc75ee993503", null ]
     ] ],
-    [ "flexcan_rx_fifo_config_t", "a00015.html#a00304", [
+    [ "flexcan_rx_fifo_config_t", "a00015.html#a00302", [
       [ "idFilterTable", "a00015.html#abbf208769efc96e928bd623fc7f5da19", null ],
       [ "idFilterNum", "a00015.html#a02ebd3a71c29bb55faf784e871324c52", null ],
       [ "idFilterType", "a00015.html#a35f41ecbd9d9dd163b05758f0aa51e6e", null ],
       [ "priority", "a00015.html#a2247025f9a26b65bc6fa4d59f507657c", null ]
     ] ],
-    [ "flexcan_enhanced_rx_fifo_std_id_filter_t", "a00015.html#a00298", [
+    [ "flexcan_enhanced_rx_fifo_std_id_filter_t", "a00015.html#a00296", [
       [ "filterType", "a00015.html#a87d1991ae8fc3273376ae7b40539becb", null ],
       [ "rtr1", "a00015.html#a51a97498c41d8ea9ca198a1c249bd5dc", null ],
       [ "std1", "a00015.html#a6b58922eca9b34e52de0f7e6531abc7f", null ],
       [ "rtr2", "a00015.html#ae78291d4f8b6094ce043a67bd779a1e5", null ],
       [ "std2", "a00015.html#aaf1cf32c3bc40d645e168279768f95e3", null ]
     ] ],
-    [ "flexcan_enhanced_rx_fifo_ext_id_filter_t", "a00015.html#a00297", [
+    [ "flexcan_enhanced_rx_fifo_ext_id_filter_t", "a00015.html#a00295", [
       [ "filterType", "a00015.html#a5d1446cdaa0c3f212dc9f19b28737565", null ],
       [ "rtr1", "a00015.html#a9556293471f99a4698784f8fa6ed731d", null ],
       [ "std1", "a00015.html#a67011298168fd38bf9dba879bed97482", null ],
       [ "rtr2", "a00015.html#ae31a341113ae90855b65cc33e753a5db", null ],
       [ "std2", "a00015.html#a2f0836420b838bf18aa677efe046f619", null ]
     ] ],
-    [ "flexcan_enhanced_rx_fifo_config_t", "a00015.html#a00296", [
+    [ "flexcan_enhanced_rx_fifo_config_t", "a00015.html#a00294", [
       [ "idFilterTable", "a00015.html#a2706862d19164c2a64cf7b65dfc8ae5b", null ],
       [ "idFilterPairNum", "a00015.html#acc4e3914fefd2a68f0bc2bb7385e87ca", null ],
       [ "extendIdFilterNum", "a00015.html#a65ab1537af94c9ae74f5de5aa525dafb", null ],
@@ -113,16 +113,16 @@ var a00015 =
       [ "dmaPerReadLength", "a00015.html#a30c063f5d95c2c0132474967ef37b790", null ],
       [ "priority", "a00015.html#a07ed824c3626e8d52d8e0c6ca8ab60dc", null ]
     ] ],
-    [ "flexcan_mb_transfer_t", "a00015.html#a00302", [
+    [ "flexcan_mb_transfer_t", "a00015.html#a00300", [
       [ "frame", "a00015.html#af38b9852b65061e18ee7d6232a7ef3be", null ],
       [ "mbIdx", "a00015.html#a35b306312bcc47c5569f770f3341543d", null ]
     ] ],
-    [ "flexcan_fifo_transfer_t", "a00015.html#a00300", [
+    [ "flexcan_fifo_transfer_t", "a00015.html#a00298", [
       [ "framefd", "a00015.html#ade9601728a0063d507d29ccb1b277da8", null ],
       [ "frame", "a00015.html#ad3420cfcbd536444d54b6a223b615d6f", null ],
       [ "frameNum", "a00015.html#ab7f277f9a0f8a1369657808a5c9c8ff6", null ]
     ] ],
-    [ "flexcan_handle_t", "a00015.html#a00246", [
+    [ "flexcan_handle_t", "a00015.html#a00244", [
       [ "callback", "a00015.html#afd5494a415932b8008ce8db6a9ea2b6f", null ],
       [ "userData", "a00015.html#ab6e0932c11eba224663bec6ead9f5e78", null ],
       [ "mbFrameBuf", "a00015.html#ad7693cd6966ea1e887a60c39a7a0c029", null ],

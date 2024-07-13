@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hardware Port MAC</title>
+<title>MCUXpresso SDK API Reference Manual: Hardware Switch</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,704 +102,608 @@ $(document).ready(function(){initNavTree('a00045.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Hardware Port MAC<div class="ingroups"><a class="el" href="a00042.html">Hardware layer</a></div></div>  </div>
+<div class="title">Hardware Switch<div class="ingroups"><a class="el" href="a00041.html">Hardware layer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>Group for the Port Mac functionalities </p>
+<p>Group for switch specific hardware API and data structure. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00380"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00380">netc_port_phy_mac_preemption_status_t</a></td></tr>
-<tr class="memdesc:a00380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port MAC preemption Status.  <a href="a00045.html#a00380">More...</a><br/></td></tr>
-<tr class="separator:a00380"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00381"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00381">netc_port_phy_mac_traffic_statistic_t</a></td></tr>
-<tr class="memdesc:a00381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ethernet MAC physical port traffic (Tx/Rx) statistics counters, when enable frame preemption, one physical MAC will be divided into a pMAC and a eMAC and statistics counters will also have two groups.  <a href="a00045.html#a00381">More...</a><br/></td></tr>
-<tr class="separator:a00381"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00378"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00378">netc_port_phy_mac_discard_statistic_t</a></td></tr>
-<tr class="memdesc:a00378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ethernet MAC physical port frame discard/errors status statistics counters, when enable frame preemption, one physical MAC will be divided into a pMAC and a eMAC and statistics counters will also have two groups.  <a href="a00045.html#a00378">More...</a><br/></td></tr>
-<tr class="separator:a00378"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00379"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00379">netc_port_phy_mac_preemption_statistic_t</a></td></tr>
-<tr class="memdesc:a00379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ethernet physical MAC port preemption (Tx/Rx) related statistics counters.  <a href="a00045.html#a00379">More...</a><br/></td></tr>
-<tr class="separator:a00379"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00382"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00382">netc_port_pseudo_mac_traffic_statistic_t</a></td></tr>
-<tr class="memdesc:a00382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ethernet pseudo MAC port traffic (Tx/Rx) statistics counters.  <a href="a00045.html#a00382">More...</a><br/></td></tr>
-<tr class="separator:a00382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00402"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00402">netc_swt_imr_config_t</a></td></tr>
+<tr class="memdesc:a00402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch Ingress mirror destination config.  <a href="a00045.html#a00402">More...</a><br/></td></tr>
+<tr class="separator:a00402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00403"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00403">netc_swt_port_bridge_config_t</a></td></tr>
+<tr class="memdesc:a00403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch port bridge configuration.  <a href="a00045.html#a00403">More...</a><br/></td></tr>
+<tr class="separator:a00403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00404"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00404">netc_swt_port_fm_config_t</a></td></tr>
+<tr class="memdesc:a00404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch Port level Frame Modification configuration (PPCPDEIMR and PQOSMR[QVMP])  <a href="a00045.html#a00404">More...</a><br/></td></tr>
+<tr class="separator:a00404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00401"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00401">netc_swt_default_vlan_filter_t</a></td></tr>
+<tr class="memdesc:a00401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch VLAN filter hash table default entry configuration, which determines the default entry when not found in VLAN filter lookup.  <a href="a00045.html#a00401">More...</a><br/></td></tr>
+<tr class="separator:a00401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00400"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00400">netc_swt_bridge_config_t</a></td></tr>
+<tr class="memdesc:a00400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bridge config.  <a href="a00045.html#a00400">More...</a><br/></td></tr>
+<tr class="separator:a00400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00405"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00405">netc_swt_psfp_config_t</a></td></tr>
+<tr class="memdesc:a00405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch PSFP configuration.  <a href="a00045.html#a00405">More...</a><br/></td></tr>
+<tr class="separator:a00405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00406"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00406">netc_swt_qos_classify_config_t</a></td></tr>
+<tr class="memdesc:a00406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch Qos Classification configuration (include two profiles)  <a href="a00045.html#a00406">More...</a><br/></td></tr>
+<tr class="separator:a00406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00407"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00407">netc_swt_qos_to_vlan_config_t</a></td></tr>
+<tr class="memdesc:a00407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch QoS to PCP mapping and PCP to PCP mapping configuration when egress packet modification the VLAN tag.  <a href="a00045.html#a00407">More...</a><br/></td></tr>
+<tr class="separator:a00407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00399"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a00399">netc_switch_inuse_fdb_statistic_t</a></td></tr>
+<tr class="memdesc:a00399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch static/dynamic FDB entries in-use statistic.  <a href="a00045.html#a00399">More...</a><br/></td></tr>
+<tr class="separator:a00399"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga1ef100f28bb1ba1bbe7e65e951fa7f2b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga1ef100f28bb1ba1bbe7e65e951fa7f2b">netc_port_phy_mac_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00045.html#gga1ef100f28bb1ba1bbe7e65e951fa7f2bac9376c374fbf735bc1e5f39e1203c1cb">kNETC_ExpressMAC</a> = 0U, 
+<tr class="memitem:ga1093dace50999dade58b16228b34880a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga1093dace50999dade58b16228b34880a">netc_swt_port_bitmap_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00045.html#gga1093dace50999dade58b16228b34880aa81cff3fdb68e41feb8f26c36674de6d1">kNETC_SWTPort0Bit</a> = 0x1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00045.html#gga1ef100f28bb1ba1bbe7e65e951fa7f2badf83fbbfd22c3732927fd976366d86e0">kNETC_PreemptableMAC</a>
+&#160;&#160;<a class="el" href="a00045.html#gga1093dace50999dade58b16228b34880aabbad493510d6c5f8d011c16bc9809f73">kNETC_SWTPort1Bit</a> = 0x2U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga1ef100f28bb1ba1bbe7e65e951fa7f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the Ethernet MAC physical port type.  <a href="a00045.html#ga1ef100f28bb1ba1bbe7e65e951fa7f2b">More...</a><br/></td></tr>
-<tr class="separator:ga1ef100f28bb1ba1bbe7e65e951fa7f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97920bfd99bbf6887b779cf7220ba1e1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga97920bfd99bbf6887b779cf7220ba1e1">netc_port_preemption_verify_status_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00045.html#gga97920bfd99bbf6887b779cf7220ba1e1a8f102ea7a5ec320624debfdcbf1d5783">kNETC_VerifyDisable</a> = 0U, 
+&#160;&#160;<a class="el" href="a00045.html#gga1093dace50999dade58b16228b34880aa339244733134fa61543ee28e5ea334c7">kNETC_SWTPort2Bit</a> = 0x4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00045.html#gga97920bfd99bbf6887b779cf7220ba1e1a9d6dc4291a181892cc4d42f24e3e9e7a">kNETC_VerifyInProgress</a> = 2U, 
+&#160;&#160;<a class="el" href="a00045.html#gga1093dace50999dade58b16228b34880aa8961b8657306c53eca9d6e8df9b88eb1">kNETC_SWTPort3Bit</a> = 0x8U, 
 <br/>
-&#160;&#160;<a class="el" href="a00045.html#gga97920bfd99bbf6887b779cf7220ba1e1a0687182beea1e3a4aa8b278e21fcd64f">kNETC_VerifySuccess</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00045.html#gga97920bfd99bbf6887b779cf7220ba1e1ab304e55011c3fcd0f9d52b7195fe9784">kNETC_VerifyFaile</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00045.html#gga97920bfd99bbf6887b779cf7220ba1e1a6cb3da115a2b39497dd843bf70b195fa">kNETC_VerifyUndefined</a>
+&#160;&#160;<a class="el" href="a00045.html#gga1093dace50999dade58b16228b34880aadc5e0a0aab3e29b28b09a4e2345f9ff1">kNETC_SWTPort4Bit</a> = 0x10U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga97920bfd99bbf6887b779cf7220ba1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definesthe state of the mac merge sublayer with respect to verification as defined in IEEE Std 802.3br-2016.  <a href="a00045.html#ga97920bfd99bbf6887b779cf7220ba1e1">More...</a><br/></td></tr>
-<tr class="separator:ga97920bfd99bbf6887b779cf7220ba1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga1093dace50999dade58b16228b34880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch port bitmap.  <a href="a00045.html#ga1093dace50999dade58b16228b34880a">More...</a><br/></td></tr>
+<tr class="separator:ga1093dace50999dade58b16228b34880a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b13a295d9e98c3aa1772a1b10ab92c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">netc_swt_imr_dest_port_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00045.html#gga7b13a295d9e98c3aa1772a1b10ab92c9a962882b2bec06c5b0396b0ececa06773">kNETC_SWTPort0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga7b13a295d9e98c3aa1772a1b10ab92c9a2e27cbf0a503aaa4b69c05403d8efd19">kNETC_SWTPort1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga7b13a295d9e98c3aa1772a1b10ab92c9a28c14d834c216368e857ebc2e12601b1">kNETC_SWTPort2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga7b13a295d9e98c3aa1772a1b10ab92c9ae0ebcc15e4f3eb9ac08eb7f57252a4f9">kNETC_SWTPort3</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga7b13a295d9e98c3aa1772a1b10ab92c9aedf6749b6f29b630b8b7bd1c30882fb6">kNETC_SWTPort4</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga7b13a295d9e98c3aa1772a1b10ab92c9ad9d8dc2b781a4cb7a47971df2fcbd0b4">kNETC_SWTMPort</a> = 5U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga7b13a295d9e98c3aa1772a1b10ab92c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch ingress mirror destination port.  <a href="a00045.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">More...</a><br/></td></tr>
+<tr class="separator:ga7b13a295d9e98c3aa1772a1b10ab92c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93b4ff855f09e33f204fd9a451fd2f19"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga93b4ff855f09e33f204fd9a451fd2f19">netc_swt_mac_forward_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00045.html#gga93b4ff855f09e33f204fd9a451fd2f19a937c09038eabf58e775704d486522a29">kNETC_NoFDBLookUp</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga93b4ff855f09e33f204fd9a451fd2f19a0125d1cfd210f9d01973c0652e1e9cba">kNETC_FDBLookUpWithFlood</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga93b4ff855f09e33f204fd9a451fd2f19a864a7c04327cbed0546d2e68918f965a">kNETC_FDBLookUpWithDiscard</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga93b4ff855f09e33f204fd9a451fd2f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch MAC forwarding options.  <a href="a00045.html#ga93b4ff855f09e33f204fd9a451fd2f19">More...</a><br/></td></tr>
+<tr class="separator:ga93b4ff855f09e33f204fd9a451fd2f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53cb2239e2ed8f9d2e00ef50112b364a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga53cb2239e2ed8f9d2e00ef50112b364a">netc_swt_mac_learn_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00045.html#gga53cb2239e2ed8f9d2e00ef50112b364aa5b69ec6eec3f3b9309f640fe24aed875">kNETC_DisableMACLearn</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga53cb2239e2ed8f9d2e00ef50112b364aae13ea4371b42d77179400aa6a52b3772">kNETC_HardwareMACLearn</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga53cb2239e2ed8f9d2e00ef50112b364aad02b62cc1d684eff87393c4cbb3d1f70">kNETC_SeSoftwareMACLearn</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga53cb2239e2ed8f9d2e00ef50112b364aa92f2b6b9be03bbbd0b1b8c590a391263">kNETC_UnseSoftwareMACLearn</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga53cb2239e2ed8f9d2e00ef50112b364aa78f8f2f14cb9c432ff64a5f47279ffe6">kNETC_DisableMACLearnWithSMAC</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga53cb2239e2ed8f9d2e00ef50112b364a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The switch MAC learning options.  <a href="a00045.html#ga53cb2239e2ed8f9d2e00ef50112b364a">More...</a><br/></td></tr>
+<tr class="separator:ga53cb2239e2ed8f9d2e00ef50112b364a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb9b0f9c5254125195847bf0ef633405"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#gacb9b0f9c5254125195847bf0ef633405">netc_swt_port_tx_vlan_act_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00045.html#ggacb9b0f9c5254125195847bf0ef633405a8e543517b76617b51a56562b1991c1cd">kNETC_NoTxVlanModify</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#ggacb9b0f9c5254125195847bf0ef633405a247250821c2334dc760d82bda9809d68">kNETC_TxDelOuterVlan</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#ggacb9b0f9c5254125195847bf0ef633405a06a45ccc50138f2af29968a38c8a64b1">kNETC_TxReplOuterVlanVid</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gacb9b0f9c5254125195847bf0ef633405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch transmit Bridge Port VLAN Tag Action.  <a href="a00045.html#gacb9b0f9c5254125195847bf0ef633405">More...</a><br/></td></tr>
+<tr class="separator:gacb9b0f9c5254125195847bf0ef633405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga720df95d878c6da34f14dec26c0800ed"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ga720df95d878c6da34f14dec26c0800ed">netc_swt_port_stg_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00045.html#gga720df95d878c6da34f14dec26c0800eda1f58a8027b469da9a3e6435e6b81c1a1">kNETC_DiscardFrame</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga720df95d878c6da34f14dec26c0800edaa3aeb92223320811b7c652445cb3d0c1">kNETC_LearnWithoutFowrad</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00045.html#gga720df95d878c6da34f14dec26c0800eda9c8209fda59accbdbe7becf8db86fd1c">kNETC_ForwardFrame</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga720df95d878c6da34f14dec26c0800ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch port spanning tree group work mode.  <a href="a00045.html#ga720df95d878c6da34f14dec26c0800ed">More...</a><br/></td></tr>
+<tr class="separator:ga720df95d878c6da34f14dec26c0800ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00380" id="a00380"></a>
+<a name="a00402" id="a00402"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_port_phy_mac_preemption_status_t</td>
+          <td class="memname">struct netc_swt_imr_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:af7658158b6076e15334038c68281f02a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7658158b6076e15334038c68281f02a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#af7658158b6076e15334038c68281f02a">mergeActive</a></td></tr>
-<tr class="memdesc:af7658158b6076e15334038c68281f02a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit preemption is active or not. <br/></td></tr>
-<tr class="separator:af7658158b6076e15334038c68281f02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ef90abb301c3ae93799b477bfa5e608"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ef90abb301c3ae93799b477bfa5e608"></a>
-<a class="el" href="a00045.html#ga97920bfd99bbf6887b779cf7220ba1e1">netc_port_preemption_verify_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a5ef90abb301c3ae93799b477bfa5e608">verifyStatus</a></td></tr>
-<tr class="memdesc:a5ef90abb301c3ae93799b477bfa5e608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit preemption is active or not. <br/></td></tr>
-<tr class="separator:a5ef90abb301c3ae93799b477bfa5e608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a848d777dda1afd9c6ff6addf638c76a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a848d777dda1afd9c6ff6addf638c76a6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a848d777dda1afd9c6ff6addf638c76a6">enMirror</a></td></tr>
+<tr class="memdesc:a848d777dda1afd9c6ff6addf638c76a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable ingress mirroring. <br/></td></tr>
+<tr class="separator:a848d777dda1afd9c6ff6addf638c76a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64d11999f40705eeebdc3d917d70fb83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64d11999f40705eeebdc3d917d70fb83"></a>
+<a class="el" href="a00045.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">netc_swt_imr_dest_port_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a64d11999f40705eeebdc3d917d70fb83">destPort</a></td></tr>
+<tr class="memdesc:a64d11999f40705eeebdc3d917d70fb83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port where ingress mirrored frames are sent. <br/></td></tr>
+<tr class="separator:a64d11999f40705eeebdc3d917d70fb83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb02a35fa1f0dd8bd9a5a2039189608"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabb02a35fa1f0dd8bd9a5a2039189608"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aabb02a35fa1f0dd8bd9a5a2039189608">dr</a></td></tr>
+<tr class="memdesc:aabb02a35fa1f0dd8bd9a5a2039189608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mirrored packet's DR (drop resilience) <br/></td></tr>
+<tr class="separator:aabb02a35fa1f0dd8bd9a5a2039189608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab23e87ee059e63be95577467b20820a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab23e87ee059e63be95577467b20820a2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ab23e87ee059e63be95577467b20820a2">ipv</a></td></tr>
+<tr class="memdesc:ab23e87ee059e63be95577467b20820a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mirrored packet's IPV (internal priority value) <br/></td></tr>
+<tr class="separator:ab23e87ee059e63be95577467b20820a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10795bfcf1aa09aa28767b2e682a3ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab10795bfcf1aa09aa28767b2e682a3ef"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ab10795bfcf1aa09aa28767b2e682a3ef">efmLengthChange</a></td></tr>
+<tr class="memdesc:ab10795bfcf1aa09aa28767b2e682a3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress Frame Modification Frame Length change in 2s complement notation, Vaild if efmEntryID is noy null. <br/></td></tr>
+<tr class="separator:ab10795bfcf1aa09aa28767b2e682a3ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9f3d56956c4b96fe88ed3b8db65e945"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9f3d56956c4b96fe88ed3b8db65e945"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad9f3d56956c4b96fe88ed3b8db65e945">efmEntryID</a></td></tr>
+<tr class="memdesc:ad9f3d56956c4b96fe88ed3b8db65e945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress Frame Modification Entry Id, note 0xFFFF is a Null Frame Modification Entry, Only applicable if destPort != kNETC_SWTMPort. <br/></td></tr>
+<tr class="separator:ad9f3d56956c4b96fe88ed3b8db65e945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00381" id="a00381"></a>
+<a name="a00403" id="a00403"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct netc_port_phy_mac_traffic_statistic_t</td>
+          <td class="memname">struct netc_swt_port_bridge_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aaac40ee7ab3293a9c0c8ca9b7f41e1af"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aaac40ee7ab3293a9c0c8ca9b7f41e1af">totalOctet</a></td></tr>
-<tr class="memdesc:aaac40ee7ab3293a9c0c8ca9b7f41e1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted good/error Ethernet octets.  <a href="#aaac40ee7ab3293a9c0c8ca9b7f41e1af">More...</a><br/></td></tr>
-<tr class="separator:aaac40ee7ab3293a9c0c8ca9b7f41e1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7074c5606db061d313852e1666544b85"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a7074c5606db061d313852e1666544b85">validOctet</a></td></tr>
-<tr class="memdesc:a7074c5606db061d313852e1666544b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted good Ethernet octets.  <a href="#a7074c5606db061d313852e1666544b85">More...</a><br/></td></tr>
-<tr class="separator:a7074c5606db061d313852e1666544b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa54a1dff4e635911bce5fbda10ea5ff8"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aa54a1dff4e635911bce5fbda10ea5ff8">pauseFrame</a></td></tr>
-<tr class="memdesc:aa54a1dff4e635911bce5fbda10ea5ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted valid PAUSE frames.  <a href="#aa54a1dff4e635911bce5fbda10ea5ff8">More...</a><br/></td></tr>
-<tr class="separator:aa54a1dff4e635911bce5fbda10ea5ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b803bbc8576b9372c57542ef6370fff"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6b803bbc8576b9372c57542ef6370fff">validFrame</a></td></tr>
-<tr class="memdesc:a6b803bbc8576b9372c57542ef6370fff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted valid frames.  <a href="#a6b803bbc8576b9372c57542ef6370fff">More...</a><br/></td></tr>
-<tr class="separator:a6b803bbc8576b9372c57542ef6370fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ca03564d2811c8ba5d0cb823a3499b9"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a5ca03564d2811c8ba5d0cb823a3499b9">vlanFrame</a></td></tr>
-<tr class="memdesc:a5ca03564d2811c8ba5d0cb823a3499b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted valid VLAN tagged frames.  <a href="#a5ca03564d2811c8ba5d0cb823a3499b9">More...</a><br/></td></tr>
-<tr class="separator:a5ca03564d2811c8ba5d0cb823a3499b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca584a4695e8c461496b1676defd9f2e"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aca584a4695e8c461496b1676defd9f2e">unicastFrame</a></td></tr>
-<tr class="memdesc:aca584a4695e8c461496b1676defd9f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted valid unicast frames.  <a href="#aca584a4695e8c461496b1676defd9f2e">More...</a><br/></td></tr>
-<tr class="separator:aca584a4695e8c461496b1676defd9f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e3b93d1d0b1d9641763b20817b674e4"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a5e3b93d1d0b1d9641763b20817b674e4">multicastFrame</a></td></tr>
-<tr class="memdesc:a5e3b93d1d0b1d9641763b20817b674e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted valid multicast frames.  <a href="#a5e3b93d1d0b1d9641763b20817b674e4">More...</a><br/></td></tr>
-<tr class="separator:a5e3b93d1d0b1d9641763b20817b674e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4966c808ea2e3a0210e9100f10cf4c3"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ac4966c808ea2e3a0210e9100f10cf4c3">boradcastFrame</a></td></tr>
-<tr class="memdesc:ac4966c808ea2e3a0210e9100f10cf4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted valid broadcast frames.  <a href="#ac4966c808ea2e3a0210e9100f10cf4c3">More...</a><br/></td></tr>
-<tr class="separator:ac4966c808ea2e3a0210e9100f10cf4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6802f241962205b776adaeadd530492"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad6802f241962205b776adaeadd530492">totalPacket</a></td></tr>
-<tr class="memdesc:ad6802f241962205b776adaeadd530492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted good/error packets.  <a href="#ad6802f241962205b776adaeadd530492">More...</a><br/></td></tr>
-<tr class="separator:ad6802f241962205b776adaeadd530492"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e8ca67cd0e7846d52ccef9b9403344a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6e8ca67cd0e7846d52ccef9b9403344a">rxMinPacket</a></td></tr>
-<tr class="memdesc:a6e8ca67cd0e7846d52ccef9b9403344a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received min to 63-octet packets.  <a href="#a6e8ca67cd0e7846d52ccef9b9403344a">More...</a><br/></td></tr>
-<tr class="separator:a6e8ca67cd0e7846d52ccef9b9403344a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace4fd94a4173f78fbd0e45e7984bd421"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ace4fd94a4173f78fbd0e45e7984bd421">total64BPacket</a></td></tr>
-<tr class="memdesc:ace4fd94a4173f78fbd0e45e7984bd421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 64 octet packets.  <a href="#ace4fd94a4173f78fbd0e45e7984bd421">More...</a><br/></td></tr>
-<tr class="separator:ace4fd94a4173f78fbd0e45e7984bd421"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8101f39b6ed62f39987fae3e627d1384"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a8101f39b6ed62f39987fae3e627d1384">total65To127BPacket</a></td></tr>
-<tr class="memdesc:a8101f39b6ed62f39987fae3e627d1384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 65 to 127 octet packets.  <a href="#a8101f39b6ed62f39987fae3e627d1384">More...</a><br/></td></tr>
-<tr class="separator:a8101f39b6ed62f39987fae3e627d1384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03fc027e117e8becf56be3de145be56d"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a03fc027e117e8becf56be3de145be56d">total128To255BPacket</a></td></tr>
-<tr class="memdesc:a03fc027e117e8becf56be3de145be56d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 128 to 255 octet packets.  <a href="#a03fc027e117e8becf56be3de145be56d">More...</a><br/></td></tr>
-<tr class="separator:a03fc027e117e8becf56be3de145be56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7adeb8c0c8b2c87b7b845d397da8235"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad7adeb8c0c8b2c87b7b845d397da8235">total256To511BPacket</a></td></tr>
-<tr class="memdesc:ad7adeb8c0c8b2c87b7b845d397da8235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 256 to 511 octet packets.  <a href="#ad7adeb8c0c8b2c87b7b845d397da8235">More...</a><br/></td></tr>
-<tr class="separator:ad7adeb8c0c8b2c87b7b845d397da8235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cabd91fbd8e299238cca52445ff369f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a9cabd91fbd8e299238cca52445ff369f">total511To1023BPacket</a></td></tr>
-<tr class="memdesc:a9cabd91fbd8e299238cca52445ff369f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 512 to 1023 octet packets.  <a href="#a9cabd91fbd8e299238cca52445ff369f">More...</a><br/></td></tr>
-<tr class="separator:a9cabd91fbd8e299238cca52445ff369f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9deb11bfcb7c67a14f1438aeb69e01c2"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a9deb11bfcb7c67a14f1438aeb69e01c2">total1024To1522BPacket</a></td></tr>
-<tr class="memdesc:a9deb11bfcb7c67a14f1438aeb69e01c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 1024 to 1522 octet packets.  <a href="#a9deb11bfcb7c67a14f1438aeb69e01c2">More...</a><br/></td></tr>
-<tr class="separator:a9deb11bfcb7c67a14f1438aeb69e01c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2755c08eadb1ca785f2d8362b72dbe86"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a2755c08eadb1ca785f2d8362b72dbe86">total1523ToMaxBPacket</a></td></tr>
-<tr class="memdesc:a2755c08eadb1ca785f2d8362b72dbe86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted 1523 to Max octet packets.  <a href="#a2755c08eadb1ca785f2d8362b72dbe86">More...</a><br/></td></tr>
-<tr class="separator:a2755c08eadb1ca785f2d8362b72dbe86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ecbbb190baac80aa7c7d1f559cf43cd"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a9ecbbb190baac80aa7c7d1f559cf43cd">controlPacket</a></td></tr>
-<tr class="memdesc:a9ecbbb190baac80aa7c7d1f559cf43cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted control packets.  <a href="#a9ecbbb190baac80aa7c7d1f559cf43cd">More...</a><br/></td></tr>
-<tr class="separator:a9ecbbb190baac80aa7c7d1f559cf43cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aaac40ee7ab3293a9c0c8ca9b7f41e1af"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::totalOctet</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7074c5606db061d313852e1666544b85"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::validOctet</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa54a1dff4e635911bce5fbda10ea5ff8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::pauseFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6b803bbc8576b9372c57542ef6370fff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::validFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5ca03564d2811c8ba5d0cb823a3499b9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::vlanFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aca584a4695e8c461496b1676defd9f2e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::unicastFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5e3b93d1d0b1d9641763b20817b674e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::multicastFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac4966c808ea2e3a0210e9100f10cf4c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::boradcastFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad6802f241962205b776adaeadd530492"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::totalPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6e8ca67cd0e7846d52ccef9b9403344a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::rxMinPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ace4fd94a4173f78fbd0e45e7984bd421"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total64BPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8101f39b6ed62f39987fae3e627d1384"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total65To127BPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a03fc027e117e8becf56be3de145be56d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total128To255BPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad7adeb8c0c8b2c87b7b845d397da8235"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total256To511BPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9cabd91fbd8e299238cca52445ff369f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total511To1023BPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9deb11bfcb7c67a14f1438aeb69e01c2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total1024To1522BPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2755c08eadb1ca785f2d8362b72dbe86"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::total1523ToMaxBPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9ecbbb190baac80aa7c7d1f559cf43cd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_traffic_statistic_t::controlPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00378" id="a00378"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_port_phy_mac_discard_statistic_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a1070ecc78868e0c55d5babbcff06e7de"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a1070ecc78868e0c55d5babbcff06e7de">rxError</a></td></tr>
-<tr class="memdesc:a1070ecc78868e0c55d5babbcff06e7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received error frames.  <a href="#a1070ecc78868e0c55d5babbcff06e7de">More...</a><br/></td></tr>
-<tr class="separator:a1070ecc78868e0c55d5babbcff06e7de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb984b24d3fc2ad4576c7b96480a8b5b"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#afb984b24d3fc2ad4576c7b96480a8b5b">rxUndersized</a></td></tr>
-<tr class="memdesc:afb984b24d3fc2ad4576c7b96480a8b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received undersized frames.  <a href="#afb984b24d3fc2ad4576c7b96480a8b5b">More...</a><br/></td></tr>
-<tr class="separator:afb984b24d3fc2ad4576c7b96480a8b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e8f507bbc21cb31614269bc6f6d31fd"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a8e8f507bbc21cb31614269bc6f6d31fd">rxOversized</a></td></tr>
-<tr class="memdesc:a8e8f507bbc21cb31614269bc6f6d31fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received oversized frames.  <a href="#a8e8f507bbc21cb31614269bc6f6d31fd">More...</a><br/></td></tr>
-<tr class="separator:a8e8f507bbc21cb31614269bc6f6d31fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad283a5d123a7ed05bb6bf18d43ceda66"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad283a5d123a7ed05bb6bf18d43ceda66">rxErrorFCS</a></td></tr>
-<tr class="memdesc:ad283a5d123a7ed05bb6bf18d43ceda66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received check sequence (FCS) error frames.  <a href="#ad283a5d123a7ed05bb6bf18d43ceda66">More...</a><br/></td></tr>
-<tr class="separator:ad283a5d123a7ed05bb6bf18d43ceda66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30ebb061278f63a9c4ad6518caf9969f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a30ebb061278f63a9c4ad6518caf9969f">rxFragment</a></td></tr>
-<tr class="memdesc:a30ebb061278f63a9c4ad6518caf9969f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC frames which is shorter than the MIN length and received with a wrong FCS/CRC.  <a href="#a30ebb061278f63a9c4ad6518caf9969f">More...</a><br/></td></tr>
-<tr class="separator:a30ebb061278f63a9c4ad6518caf9969f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaaaec98b5fdfb59edd2434e0b357dfe"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#acaaaec98b5fdfb59edd2434e0b357dfe">rxJabber</a></td></tr>
-<tr class="memdesc:acaaaec98b5fdfb59edd2434e0b357dfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC frames which is larger than the MAX length and received with a wrong FCS/CRC.  <a href="#acaaaec98b5fdfb59edd2434e0b357dfe">More...</a><br/></td></tr>
-<tr class="separator:acaaaec98b5fdfb59edd2434e0b357dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66efe4338a1904ed29a9246660034216"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a66efe4338a1904ed29a9246660034216">rxDiscard</a></td></tr>
-<tr class="memdesc:a66efe4338a1904ed29a9246660034216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC drops frame.  <a href="#a66efe4338a1904ed29a9246660034216">More...</a><br/></td></tr>
-<tr class="separator:a66efe4338a1904ed29a9246660034216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfa80c33737a44ff4bf4598acfe98234"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#acfa80c33737a44ff4bf4598acfe98234">rxDiscardNoTruncated</a></td></tr>
-<tr class="memdesc:acfa80c33737a44ff4bf4598acfe98234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC non-truncated drops frame.  <a href="#acfa80c33737a44ff4bf4598acfe98234">More...</a><br/></td></tr>
-<tr class="separator:acfa80c33737a44ff4bf4598acfe98234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58917853d224106389cd9881e635402c"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a58917853d224106389cd9881e635402c">txErrorFCS</a></td></tr>
-<tr class="memdesc:a58917853d224106389cd9881e635402c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC transmitted bad FCS frames.  <a href="#a58917853d224106389cd9881e635402c">More...</a><br/></td></tr>
-<tr class="separator:a58917853d224106389cd9881e635402c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f388cc5d119e75138eef835766bce63"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a4f388cc5d119e75138eef835766bce63">txUndersized</a></td></tr>
-<tr class="memdesc:a4f388cc5d119e75138eef835766bce63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC transmitted less than 64B with good FCS frames.  <a href="#a4f388cc5d119e75138eef835766bce63">More...</a><br/></td></tr>
-<tr class="separator:a4f388cc5d119e75138eef835766bce63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea63d276a2ca9d118a798fcd2d2b1112"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea63d276a2ca9d118a798fcd2d2b1112"></a>
+<a class="el" href="a00045.html#gacb9b0f9c5254125195847bf0ef633405">netc_swt_port_tx_vlan_act_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aea63d276a2ca9d118a798fcd2d2b1112">txVlanAction</a>: 2</td></tr>
+<tr class="memdesc:aea63d276a2ca9d118a798fcd2d2b1112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Only applies for the frame outer VLAN tag's VID is equal to the port default VID. <br/></td></tr>
+<tr class="separator:aea63d276a2ca9d118a798fcd2d2b1112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52e94f8fcbe92e69465a9e7f03336e9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52e94f8fcbe92e69465a9e7f03336e9d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a52e94f8fcbe92e69465a9e7f03336e9d">isRxVlanAware</a>: 1</td></tr>
+<tr class="memdesc:a52e94f8fcbe92e69465a9e7f03336e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive VLAN Aware Mode. <br/></td></tr>
+<tr class="separator:a52e94f8fcbe92e69465a9e7f03336e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8d36087587efb2f926dee533062b83f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8d36087587efb2f926dee533062b83f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ac8d36087587efb2f926dee533062b83f">acceptUntag</a>: 1</td></tr>
+<tr class="memdesc:ac8d36087587efb2f926dee533062b83f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept untagged frame. <br/></td></tr>
+<tr class="separator:ac8d36087587efb2f926dee533062b83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af32db0ea196b361ac3764b4330a0b206"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af32db0ea196b361ac3764b4330a0b206"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#af32db0ea196b361ac3764b4330a0b206">acceptPriorityTag</a>: 1</td></tr>
+<tr class="memdesc:af32db0ea196b361ac3764b4330a0b206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept priority tagged frame (VID = 0) <br/></td></tr>
+<tr class="separator:af32db0ea196b361ac3764b4330a0b206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a034bb44018c57dd26afc6ad2d42c8da7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a034bb44018c57dd26afc6ad2d42c8da7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a034bb44018c57dd26afc6ad2d42c8da7">acceptSingleTag</a>: 1</td></tr>
+<tr class="memdesc:a034bb44018c57dd26afc6ad2d42c8da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept single tagged frame. <br/></td></tr>
+<tr class="separator:a034bb44018c57dd26afc6ad2d42c8da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46eaf228f8ad6d73be48cd80658ac722"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46eaf228f8ad6d73be48cd80658ac722"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a46eaf228f8ad6d73be48cd80658ac722">acceptDoubleTag</a>: 1</td></tr>
+<tr class="memdesc:a46eaf228f8ad6d73be48cd80658ac722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept double tagged frame (ounter and inner) <br/></td></tr>
+<tr class="separator:a46eaf228f8ad6d73be48cd80658ac722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aa8ecc1b701aae039a58dc0d63a5710"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4aa8ecc1b701aae039a58dc0d63a5710"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a4aa8ecc1b701aae039a58dc0d63a5710">enSrcPortPrun</a>: 1</td></tr>
+<tr class="memdesc:a4aa8ecc1b701aae039a58dc0d63a5710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable received frame be transmitted to same port it was received. <br/></td></tr>
+<tr class="separator:a4aa8ecc1b701aae039a58dc0d63a5710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147625f0199738bfb6e3e1cd397628c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a147625f0199738bfb6e3e1cd397628c6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a147625f0199738bfb6e3e1cd397628c6">enMacStationMove</a>: 1</td></tr>
+<tr class="memdesc:a147625f0199738bfb6e3e1cd397628c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable received frame which ingress port not match the FDB entry Destination Port Bitmap. <br/></td></tr>
+<tr class="separator:a147625f0199738bfb6e3e1cd397628c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abae989a43fcda6e790ed0348ec0f49ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abae989a43fcda6e790ed0348ec0f49ff"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#abae989a43fcda6e790ed0348ec0f49ff">enBcastStormCtrl</a>: 1</td></tr>
+<tr class="memdesc:abae989a43fcda6e790ed0348ec0f49ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for broadcast frames. <br/></td></tr>
+<tr class="separator:abae989a43fcda6e790ed0348ec0f49ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584c53d25de423b535bfe1941ae26aa0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a584c53d25de423b535bfe1941ae26aa0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a584c53d25de423b535bfe1941ae26aa0">enMcastStormCtrl</a>: 1</td></tr>
+<tr class="memdesc:a584c53d25de423b535bfe1941ae26aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for multicast frames. <br/></td></tr>
+<tr class="separator:a584c53d25de423b535bfe1941ae26aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f6eb487cf15e442f0674c5be272e80b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f6eb487cf15e442f0674c5be272e80b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a1f6eb487cf15e442f0674c5be272e80b">enUnMcastStormCtrl</a>: 1</td></tr>
+<tr class="memdesc:a1f6eb487cf15e442f0674c5be272e80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for unknown multicast frames. <br/></td></tr>
+<tr class="separator:a1f6eb487cf15e442f0674c5be272e80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe4478e210381cc5d34c6c93ac818ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe4478e210381cc5d34c6c93ac818ed"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#acfe4478e210381cc5d34c6c93ac818ed">enUnUcastStormCtrl</a>: 1</td></tr>
+<tr class="memdesc:acfe4478e210381cc5d34c6c93ac818ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Storm control for unknown unicast frames. <br/></td></tr>
+<tr class="separator:acfe4478e210381cc5d34c6c93ac818ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f255b40965c2d8fe8de7c9f33676df1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a8f255b40965c2d8fe8de7c9f33676df1">bcastRpEntryID</a></td></tr>
+<tr class="memdesc:a8f255b40965c2d8fe8de7c9f33676df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast rate policer entry ID.  <a href="#a8f255b40965c2d8fe8de7c9f33676df1">More...</a><br/></td></tr>
+<tr class="separator:a8f255b40965c2d8fe8de7c9f33676df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d612346d78a4f53a0e261a03aad37d3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a0d612346d78a4f53a0e261a03aad37d3">mcastEntryID</a></td></tr>
+<tr class="memdesc:a0d612346d78a4f53a0e261a03aad37d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Known multicast rate policer entry ID.  <a href="#a0d612346d78a4f53a0e261a03aad37d3">More...</a><br/></td></tr>
+<tr class="separator:a0d612346d78a4f53a0e261a03aad37d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4986c8f15e83d15d544a43e157e370ee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a4986c8f15e83d15d544a43e157e370ee">unMcastRpEntryID</a></td></tr>
+<tr class="memdesc:a4986c8f15e83d15d544a43e157e370ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unknown multicast policer entry ID.  <a href="#a4986c8f15e83d15d544a43e157e370ee">More...</a><br/></td></tr>
+<tr class="separator:a4986c8f15e83d15d544a43e157e370ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a164782e38ed99a1b57f584a2d314b1e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a164782e38ed99a1b57f584a2d314b1e0">unUcastRpEntryID</a></td></tr>
+<tr class="memdesc:a164782e38ed99a1b57f584a2d314b1e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unknown unicast rate policer entry ID.  <a href="#a164782e38ed99a1b57f584a2d314b1e0">More...</a><br/></td></tr>
+<tr class="separator:a164782e38ed99a1b57f584a2d314b1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61acc952fa15dce9b6e47c047bb96d45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61acc952fa15dce9b6e47c047bb96d45"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a61acc952fa15dce9b6e47c047bb96d45">maxDynaFDBEntry</a></td></tr>
+<tr class="memdesc:a61acc952fa15dce9b6e47c047bb96d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximium number of dynamic entries in the FDB table, 0 means no limit. <br/></td></tr>
+<tr class="separator:a61acc952fa15dce9b6e47c047bb96d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28fe405b5a294fb9ec95780255608cf7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a28fe405b5a294fb9ec95780255608cf7">vid</a>: 12</td></tr>
+<tr class="memdesc:a28fe405b5a294fb9ec95780255608cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vlan Identifier.  <a href="#a28fe405b5a294fb9ec95780255608cf7">More...</a><br/></td></tr>
+<tr class="separator:a28fe405b5a294fb9ec95780255608cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa3d1c146af32d2cb9aaeffb3a751fd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa3d1c146af32d2cb9aaeffb3a751fd7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#afa3d1c146af32d2cb9aaeffb3a751fd7">dei</a>: 1</td></tr>
+<tr class="memdesc:afa3d1c146af32d2cb9aaeffb3a751fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Drop eligible indicator. <br/></td></tr>
+<tr class="separator:afa3d1c146af32d2cb9aaeffb3a751fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd9c64f1f545d0670e3eb05f509bf679"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#acd9c64f1f545d0670e3eb05f509bf679">pcp</a>: 3</td></tr>
+<tr class="memdesc:acd9c64f1f545d0670e3eb05f509bf679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority code point.  <a href="#acd9c64f1f545d0670e3eb05f509bf679">More...</a><br/></td></tr>
+<tr class="separator:acd9c64f1f545d0670e3eb05f509bf679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9243b4b9f731aa94b6d18a818d240e4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ac9243b4b9f731aa94b6d18a818d240e4">tpid</a>: 1</td></tr>
+<tr class="memdesc:ac9243b4b9f731aa94b6d18a818d240e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag protocol identifier, 0 = Standard C-VLAN 0x8100, 1 = Standard S-VLAN 0x88A8.  <a href="#ac9243b4b9f731aa94b6d18a818d240e4">More...</a><br/></td></tr>
+<tr class="separator:ac9243b4b9f731aa94b6d18a818d240e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a1070ecc78868e0c55d5babbcff06e7de"></a>
+<a class="anchor" id="a28fe405b5a294fb9ec95780255608cf7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxError</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::vid</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afb984b24d3fc2ad4576c7b96480a8b5b"></a>
+<a class="anchor" id="acd9c64f1f545d0670e3eb05f509bf679"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxUndersized</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::pcp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8e8f507bbc21cb31614269bc6f6d31fd"></a>
+<a class="anchor" id="ac9243b4b9f731aa94b6d18a818d240e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxOversized</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::tpid</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad283a5d123a7ed05bb6bf18d43ceda66"></a>
+<a class="anchor" id="a8f255b40965c2d8fe8de7c9f33676df1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxErrorFCS</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::bcastRpEntryID</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Valid if enBroadStormCtrl = true </p>
 
 </div>
 </div>
-<a class="anchor" id="a30ebb061278f63a9c4ad6518caf9969f"></a>
+<a class="anchor" id="a0d612346d78a4f53a0e261a03aad37d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxFragment</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::mcastEntryID</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Valid if enBroadStormCtrl = true </p>
 
 </div>
 </div>
-<a class="anchor" id="acaaaec98b5fdfb59edd2434e0b357dfe"></a>
+<a class="anchor" id="a4986c8f15e83d15d544a43e157e370ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxJabber</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::unMcastRpEntryID</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Valid if enUnMultiStormCtrl = true </p>
 
 </div>
 </div>
-<a class="anchor" id="a66efe4338a1904ed29a9246660034216"></a>
+<a class="anchor" id="a164782e38ed99a1b57f584a2d314b1e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxDiscard</td>
+          <td class="memname">uint32_t netc_swt_port_bridge_config_t::unUcastRpEntryID</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Valid if enUnUniStormCtrl = true </p>
 
 </div>
 </div>
-<a class="anchor" id="acfa80c33737a44ff4bf4598acfe98234"></a>
+
+</div>
+</div>
+<a name="a00404" id="a00404"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::rxDiscardNoTruncated</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a58917853d224106389cd9881e635402c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::txErrorFCS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4f388cc5d119e75138eef835766bce63"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t netc_port_phy_mac_discard_statistic_t::txUndersized</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00379" id="a00379"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_port_phy_mac_preemption_statistic_t</td>
+          <td class="memname">struct netc_swt_port_fm_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a41e54f3c3be34cae38f7c9f03d4b29d8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a41e54f3c3be34cae38f7c9f03d4b29d8">rxReassembledFrame</a></td></tr>
-<tr class="memdesc:a41e54f3c3be34cae38f7c9f03d4b29d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC frames that were successfully reassembled and delivered to the MAC.  <a href="#a41e54f3c3be34cae38f7c9f03d4b29d8">More...</a><br/></td></tr>
-<tr class="separator:a41e54f3c3be34cae38f7c9f03d4b29d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc0728e1e645c006761acfaa910ae4ff"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#acc0728e1e645c006761acfaa910ae4ff">rxReassembledError</a></td></tr>
-<tr class="memdesc:acc0728e1e645c006761acfaa910ae4ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC frames with reassembly errors.  <a href="#acc0728e1e645c006761acfaa910ae4ff">More...</a><br/></td></tr>
-<tr class="separator:acc0728e1e645c006761acfaa910ae4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95a6e0cf27e779baf0c7ca83de644b04"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a95a6e0cf27e779baf0c7ca83de644b04">rxMPacket</a></td></tr>
-<tr class="memdesc:a95a6e0cf27e779baf0c7ca83de644b04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of the number of additional mPackets received due to preemption.  <a href="#a95a6e0cf27e779baf0c7ca83de644b04">More...</a><br/></td></tr>
-<tr class="separator:a95a6e0cf27e779baf0c7ca83de644b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47081ba9897839f1047563a51d8a0542"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a47081ba9897839f1047563a51d8a0542">rxSMDError</a></td></tr>
-<tr class="memdesc:a47081ba9897839f1047563a51d8a0542"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of received MAC frames / MAC frame fragments rejected due to unknown SMD.  <a href="#a47081ba9897839f1047563a51d8a0542">More...</a><br/></td></tr>
-<tr class="separator:a47081ba9897839f1047563a51d8a0542"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0deb13dde5ce2a2554071bb88d27db11"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a0deb13dde5ce2a2554071bb88d27db11">txPreemptionReq</a></td></tr>
-<tr class="memdesc:a0deb13dde5ce2a2554071bb88d27db11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of the number of tx preemption HOLD requests.  <a href="#a0deb13dde5ce2a2554071bb88d27db11">More...</a><br/></td></tr>
-<tr class="separator:a0deb13dde5ce2a2554071bb88d27db11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b205822bc83ba81f805d01fdc91b4d0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a9b205822bc83ba81f805d01fdc91b4d0">txMPacket</a></td></tr>
-<tr class="memdesc:a9b205822bc83ba81f805d01fdc91b4d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of the number of additional mPackets transmitted due to preemption.  <a href="#a9b205822bc83ba81f805d01fdc91b4d0">More...</a><br/></td></tr>
-<tr class="separator:a9b205822bc83ba81f805d01fdc91b4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20adb9e1aefbc33f0b67781cff83cf8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20adb9e1aefbc33f0b67781cff83cf8f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a20adb9e1aefbc33f0b67781cff83cf8f">ignoreFMMiscfg</a>: 1</td></tr>
+<tr class="memdesc:a20adb9e1aefbc33f0b67781cff83cf8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable ignore the Frame Modification Misconfiguration Action. <br/></td></tr>
+<tr class="separator:a20adb9e1aefbc33f0b67781cff83cf8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a30260882f5f8f0923c1166639877cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a30260882f5f8f0923c1166639877cf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a3a30260882f5f8f0923c1166639877cf">enEgressPcpMap</a>: 1</td></tr>
+<tr class="memdesc:a3a30260882f5f8f0923c1166639877cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable egress frame modification of outer VLAN tag's PCP value is mapped to a new value based on egressPcpMap, used for Frame Modification VLAN Outer PCP action. <br/></td></tr>
+<tr class="separator:a3a30260882f5f8f0923c1166639877cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea920e1643b5d9fc57ca188c83a657af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea920e1643b5d9fc57ca188c83a657af"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aea920e1643b5d9fc57ca188c83a657af">enIngressPcpMap</a>: 1</td></tr>
+<tr class="memdesc:aea920e1643b5d9fc57ca188c83a657af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable ingress frame modification of outer VLAN tag's PCP value is mapped to a new value based on egressPcpMap, used for Frame Modification VLAN Outer PCP action. <br/></td></tr>
+<tr class="separator:aea920e1643b5d9fc57ca188c83a657af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9740ebc71ce2fe1c67111353ed80692f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9740ebc71ce2fe1c67111353ed80692f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a9740ebc71ce2fe1c67111353ed80692f">enUpdateVlanDei</a>: 1</td></tr>
+<tr class="memdesc:a9740ebc71ce2fe1c67111353ed80692f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable update DR value in the outer VLAN based on DEnDEI field, used for egress Frame Modification Outer DEI action. <br/></td></tr>
+<tr class="separator:a9740ebc71ce2fe1c67111353ed80692f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a54e98ac4ce81c0fa7038e984f6d653"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a54e98ac4ce81c0fa7038e984f6d653"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a1a54e98ac4ce81c0fa7038e984f6d653">drToDeiMap</a>: 4</td></tr>
+<tr class="memdesc:a1a54e98ac4ce81c0fa7038e984f6d653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mapping of internal QoS's DR value n to VLAN DEI, The 4 bits correspond to the DR3 ~ DR0, and 1 means DRn mapping to DEI 1, 0 means DRn mapping to DEI 0. <br/></td></tr>
+<tr class="separator:a1a54e98ac4ce81c0fa7038e984f6d653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeb7ab898cc283175c0769c2a98e8dcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeeb7ab898cc283175c0769c2a98e8dcc"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aeeb7ab898cc283175c0769c2a98e8dcc">egressPcpMap</a>: 4</td></tr>
+<tr class="memdesc:aeeb7ab898cc283175c0769c2a98e8dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress PCP to PCP Mapping Profile instance, active when enEgressPcpMap is true. <br/></td></tr>
+<tr class="separator:aeeb7ab898cc283175c0769c2a98e8dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae649f6734114c244cfbc4023781c746f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae649f6734114c244cfbc4023781c746f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ae649f6734114c244cfbc4023781c746f">ingressPcpMap</a>: 4</td></tr>
+<tr class="memdesc:ae649f6734114c244cfbc4023781c746f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingress PCP to PCP Mapping Profile instance, active when enIngressPcpMap is true. <br/></td></tr>
+<tr class="separator:ae649f6734114c244cfbc4023781c746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae36a4a2339fe7d5357f1b77784c9446d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae36a4a2339fe7d5357f1b77784c9446d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ae36a4a2339fe7d5357f1b77784c9446d">qosVlanMap</a>: 4</td></tr>
+<tr class="memdesc:ae36a4a2339fe7d5357f1b77784c9446d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit QoS to VLAN PCP Mapping Profile index, used for egress Frame Modification VLAN Add/Replace Action. <br/></td></tr>
+<tr class="separator:ae36a4a2339fe7d5357f1b77784c9446d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a41e54f3c3be34cae38f7c9f03d4b29d8"></a>
+
+</div>
+</div>
+<a name="a00401" id="a00401"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t netc_port_phy_mac_preemption_statistic_t::rxReassembledFrame</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acc0728e1e645c006761acfaa910ae4ff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_port_phy_mac_preemption_statistic_t::rxReassembledError</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a95a6e0cf27e779baf0c7ca83de644b04"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_port_phy_mac_preemption_statistic_t::rxMPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a47081ba9897839f1047563a51d8a0542"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_port_phy_mac_preemption_statistic_t::rxSMDError</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a0deb13dde5ce2a2554071bb88d27db11"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_port_phy_mac_preemption_statistic_t::txPreemptionReq</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9b205822bc83ba81f805d01fdc91b4d0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t netc_port_phy_mac_preemption_statistic_t::txMPacket</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00382" id="a00382"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct netc_port_pseudo_mac_traffic_statistic_t</td>
+          <td class="memname">struct netc_swt_default_vlan_filter_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a0b9ece4284f7a669ed73b3c5bffe524b"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a0b9ece4284f7a669ed73b3c5bffe524b">totalOctet</a></td></tr>
-<tr class="memdesc:a0b9ece4284f7a669ed73b3c5bffe524b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted octets.  <a href="#a0b9ece4284f7a669ed73b3c5bffe524b">More...</a><br/></td></tr>
-<tr class="separator:a0b9ece4284f7a669ed73b3c5bffe524b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a139fcfcbf1cd45b9596d56c326586bfb"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a139fcfcbf1cd45b9596d56c326586bfb">unicastFrame</a></td></tr>
-<tr class="memdesc:a139fcfcbf1cd45b9596d56c326586bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted unicast frames.  <a href="#a139fcfcbf1cd45b9596d56c326586bfb">More...</a><br/></td></tr>
-<tr class="separator:a139fcfcbf1cd45b9596d56c326586bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91d332a1d488cd9166c5f4fa0696d8ac"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a91d332a1d488cd9166c5f4fa0696d8ac">multicastFrame</a></td></tr>
-<tr class="memdesc:a91d332a1d488cd9166c5f4fa0696d8ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted multicast frames.  <a href="#a91d332a1d488cd9166c5f4fa0696d8ac">More...</a><br/></td></tr>
-<tr class="separator:a91d332a1d488cd9166c5f4fa0696d8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6e814bc1f2786774ce36222c0c5208a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aa6e814bc1f2786774ce36222c0c5208a">boradcastFrame</a></td></tr>
-<tr class="memdesc:aa6e814bc1f2786774ce36222c0c5208a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of MAC received/transmitted broadcast frames .  <a href="#aa6e814bc1f2786774ce36222c0c5208a">More...</a><br/></td></tr>
-<tr class="separator:aa6e814bc1f2786774ce36222c0c5208a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9c54dfcf80479782afb0f2071ebe070"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9c54dfcf80479782afb0f2071ebe070"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ae9c54dfcf80479782afb0f2071ebe070">enIPMFlood</a></td></tr>
+<tr class="memdesc:ae9c54dfcf80479782afb0f2071ebe070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable IP Multicast Flooding. <br/></td></tr>
+<tr class="separator:ae9c54dfcf80479782afb0f2071ebe070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dde88168394f0eff7dc9dcdbacb065a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1dde88168394f0eff7dc9dcdbacb065a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a1dde88168394f0eff7dc9dcdbacb065a">enIPMFilter</a></td></tr>
+<tr class="memdesc:a1dde88168394f0eff7dc9dcdbacb065a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable IP Multicast Filtering. <br/></td></tr>
+<tr class="separator:a1dde88168394f0eff7dc9dcdbacb065a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cfce56106461ad136dde384d4227c7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cfce56106461ad136dde384d4227c7e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a8cfce56106461ad136dde384d4227c7e">stgID</a></td></tr>
+<tr class="memdesc:a8cfce56106461ad136dde384d4227c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spanning Tree Group Member ID, range in 0 ~ 15. <br/></td></tr>
+<tr class="separator:a8cfce56106461ad136dde384d4227c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac997fad184d65c0e3d9eae1e9d693456"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ac997fad184d65c0e3d9eae1e9d693456">portMembership</a></td></tr>
+<tr class="memdesc:ac997fad184d65c0e3d9eae1e9d693456"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bit 0 ~ 4 correspond to the 5 ports, When bit set (0b1), means the port is a member of this VLAN.  <a href="#ac997fad184d65c0e3d9eae1e9d693456">More...</a><br/></td></tr>
+<tr class="separator:ac997fad184d65c0e3d9eae1e9d693456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d8b5b7429963fe49218b46c1bfce29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97d8b5b7429963fe49218b46c1bfce29"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a97d8b5b7429963fe49218b46c1bfce29">enUseFilterID</a></td></tr>
+<tr class="memdesc:a97d8b5b7429963fe49218b46c1bfce29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable use the specified filterID as FID, otherwise will use the frame VID. <br/></td></tr>
+<tr class="separator:a97d8b5b7429963fe49218b46c1bfce29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6513c3d9f0b50dccd066a53bf6648168"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6513c3d9f0b50dccd066a53bf6648168">filterID</a></td></tr>
+<tr class="memdesc:a6513c3d9f0b50dccd066a53bf6648168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used as a key value to do FDB table and the L2 IPV4 Multicast Filter table lookup.  <a href="#a6513c3d9f0b50dccd066a53bf6648168">More...</a><br/></td></tr>
+<tr class="separator:a6513c3d9f0b50dccd066a53bf6648168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b7fd425a56defa2f7ab7bbd54fd073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9b7fd425a56defa2f7ab7bbd54fd073"></a>
+<a class="el" href="a00045.html#ga93b4ff855f09e33f204fd9a451fd2f19">netc_swt_mac_forward_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#af9b7fd425a56defa2f7ab7bbd54fd073">mfo</a></td></tr>
+<tr class="memdesc:af9b7fd425a56defa2f7ab7bbd54fd073"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC forwarding options. <br/></td></tr>
+<tr class="separator:af9b7fd425a56defa2f7ab7bbd54fd073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade9fa03e93f22025218f36aaaceb6a77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade9fa03e93f22025218f36aaaceb6a77"></a>
+<a class="el" href="a00045.html#ga53cb2239e2ed8f9d2e00ef50112b364a">netc_swt_mac_learn_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ade9fa03e93f22025218f36aaaceb6a77">mlo</a></td></tr>
+<tr class="memdesc:ade9fa03e93f22025218f36aaaceb6a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC learning options. <br/></td></tr>
+<tr class="separator:ade9fa03e93f22025218f36aaaceb6a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d095efbf9d1b6cbad95e3ba89d299e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d095efbf9d1b6cbad95e3ba89d299e2"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6d095efbf9d1b6cbad95e3ba89d299e2">baseETEID</a></td></tr>
+<tr class="memdesc:a6d095efbf9d1b6cbad95e3ba89d299e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base Egress Treatment Entry ID. <br/></td></tr>
+<tr class="separator:a6d095efbf9d1b6cbad95e3ba89d299e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a3be99768ea08ae9aa5c0c8e65412a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6a3be99768ea08ae9aa5c0c8e65412a7">etaPortBitmap</a></td></tr>
+<tr class="memdesc:a6a3be99768ea08ae9aa5c0c8e65412a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Egress Treatment Applicability Port.  <a href="#a6a3be99768ea08ae9aa5c0c8e65412a7">More...</a><br/></td></tr>
+<tr class="separator:a6a3be99768ea08ae9aa5c0c8e65412a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a0b9ece4284f7a669ed73b3c5bffe524b"></a>
+<a class="anchor" id="ac997fad184d65c0e3d9eae1e9d693456"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_pseudo_mac_traffic_statistic_t::totalOctet</td>
+          <td class="memname">uint8_t netc_swt_default_vlan_filter_t::portMembership</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Port membership is used for source/destination pruning </p>
+
+</div>
+</div>
+<a class="anchor" id="a6513c3d9f0b50dccd066a53bf6648168"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t netc_swt_default_vlan_filter_t::filterID</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valid if enUseFilterID is true </p>
+
+</div>
+</div>
+<a class="anchor" id="a6a3be99768ea08ae9aa5c0c8e65412a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t netc_swt_default_vlan_filter_t::etaPortBitmap</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valid if baseETEID is not null. </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00400" id="a00400"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct netc_swt_bridge_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:afee2777a7c72c49ffa3868007213f55b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afee2777a7c72c49ffa3868007213f55b"></a>
+<a class="el" href="a00045.html#a00401">netc_swt_default_vlan_filter_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#afee2777a7c72c49ffa3868007213f55b">dVFCfg</a></td></tr>
+<tr class="memdesc:afee2777a7c72c49ffa3868007213f55b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default VLAN filter entry configuration when not found in VLAN filter lookup. <br/></td></tr>
+<tr class="separator:afee2777a7c72c49ffa3868007213f55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00405" id="a00405"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct netc_swt_psfp_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a3f0c0a1602bc3635f6831a8e037a40d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f0c0a1602bc3635f6831a8e037a40d5"></a>
+<a class="el" href="a00041.html#a00367">netc_isi_kc_rule_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a3f0c0a1602bc3635f6831a8e037a40d5">kcRule</a> [4]</td></tr>
+<tr class="memdesc:a3f0c0a1602bc3635f6831a8e037a40d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key construction rules. <br/></td></tr>
+<tr class="separator:a3f0c0a1602bc3635f6831a8e037a40d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00406" id="a00406"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct netc_swt_qos_classify_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div>
+</div>
+</div>
+<a name="a00407" id="a00407"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct netc_swt_qos_to_vlan_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div>
+</div>
+</div>
+<a name="a00399" id="a00399"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct netc_switch_inuse_fdb_statistic_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad0f9a8b414eac165e397850e73df8c72"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad0f9a8b414eac165e397850e73df8c72">camEntries</a></td></tr>
+<tr class="memdesc:ad0f9a8b414eac165e397850e73df8c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of FDB entries in-use in the CAM.  <a href="#ad0f9a8b414eac165e397850e73df8c72">More...</a><br/></td></tr>
+<tr class="separator:ad0f9a8b414eac165e397850e73df8c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6251e9a59ebe340b749434ffe4f3e31"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aa6251e9a59ebe340b749434ffe4f3e31">staticEntries</a></td></tr>
+<tr class="memdesc:aa6251e9a59ebe340b749434ffe4f3e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of static FDB entries in-use (both hash-based and CAM-based entries).  <a href="#aa6251e9a59ebe340b749434ffe4f3e31">More...</a><br/></td></tr>
+<tr class="separator:aa6251e9a59ebe340b749434ffe4f3e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0825246e2a1b9811cb045c978bf34d2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ac0825246e2a1b9811cb045c978bf34d2">dynamicEntries</a></td></tr>
+<tr class="memdesc:ac0825246e2a1b9811cb045c978bf34d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of dynamic FDB entries in-use (hash-based and CAM-based entries).  <a href="#ac0825246e2a1b9811cb045c978bf34d2">More...</a><br/></td></tr>
+<tr class="separator:ac0825246e2a1b9811cb045c978bf34d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d968bb7cdfe2a1477090119f9deaa8f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a3d968bb7cdfe2a1477090119f9deaa8f">dynamicEntriesHWM</a></td></tr>
+<tr class="memdesc:a3d968bb7cdfe2a1477090119f9deaa8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">High water mark of dynamic entries in-use in the FDB table.  <a href="#a3d968bb7cdfe2a1477090119f9deaa8f">More...</a><br/></td></tr>
+<tr class="separator:a3d968bb7cdfe2a1477090119f9deaa8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="ad0f9a8b414eac165e397850e73df8c72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::camEntries</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a139fcfcbf1cd45b9596d56c326586bfb"></a>
+<a class="anchor" id="aa6251e9a59ebe340b749434ffe4f3e31"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_pseudo_mac_traffic_statistic_t::unicastFrame</td>
+          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::staticEntries</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a91d332a1d488cd9166c5f4fa0696d8ac"></a>
+<a class="anchor" id="ac0825246e2a1b9811cb045c978bf34d2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_pseudo_mac_traffic_statistic_t::multicastFrame</td>
+          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::dynamicEntries</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa6e814bc1f2786774ce36222c0c5208a"></a>
+<a class="anchor" id="a3d968bb7cdfe2a1477090119f9deaa8f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t netc_port_pseudo_mac_traffic_statistic_t::boradcastFrame</td>
+          <td class="memname">uint16_t netc_switch_inuse_fdb_statistic_t::dynamicEntriesHWM</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -810,50 +714,164 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga1ef100f28bb1ba1bbe7e65e951fa7f2b"></a>
+<a class="anchor" id="ga1093dace50999dade58b16228b34880a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00045.html#ga1ef100f28bb1ba1bbe7e65e951fa7f2b">netc_port_phy_mac_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00045.html#ga1093dace50999dade58b16228b34880a">netc_swt_port_bitmap_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1ef100f28bb1ba1bbe7e65e951fa7f2bac9376c374fbf735bc1e5f39e1203c1cb"></a>kNETC_ExpressMAC</em>&nbsp;</td><td class="fielddoc">
-<p>The MAC which handles express traffic when frame preemption is enabled or handles all traffic when frame preemption is disabled. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aa81cff3fdb68e41feb8f26c36674de6d1"></a>kNETC_SWTPort0Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port0 bitmap. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1ef100f28bb1ba1bbe7e65e951fa7f2badf83fbbfd22c3732927fd976366d86e0"></a>kNETC_PreemptableMAC</em>&nbsp;</td><td class="fielddoc">
-<p>The MAC which handles preemptive traffic when frame preemption is enabled. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aabbad493510d6c5f8d011c16bc9809f73"></a>kNETC_SWTPort1Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port1 bitmap. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aa339244733134fa61543ee28e5ea334c7"></a>kNETC_SWTPort2Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port2 bitmap. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aa8961b8657306c53eca9d6e8df9b88eb1"></a>kNETC_SWTPort3Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port3 bitmap. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1093dace50999dade58b16228b34880aadc5e0a0aab3e29b28b09a4e2345f9ff1"></a>kNETC_SWTPort4Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port4 (internal port) bitmap. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga97920bfd99bbf6887b779cf7220ba1e1"></a>
+<a class="anchor" id="ga7b13a295d9e98c3aa1772a1b10ab92c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00045.html#ga97920bfd99bbf6887b779cf7220ba1e1">netc_port_preemption_verify_status_t</a></td>
+          <td class="memname">enum <a class="el" href="a00045.html#ga7b13a295d9e98c3aa1772a1b10ab92c9">netc_swt_imr_dest_port_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga97920bfd99bbf6887b779cf7220ba1e1a8f102ea7a5ec320624debfdcbf1d5783"></a>kNETC_VerifyDisable</em>&nbsp;</td><td class="fielddoc">
-<p>Verification is disabled. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9a962882b2bec06c5b0396b0ececa06773"></a>kNETC_SWTPort0</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga97920bfd99bbf6887b779cf7220ba1e1a9d6dc4291a181892cc4d42f24e3e9e7a"></a>kNETC_VerifyInProgress</em>&nbsp;</td><td class="fielddoc">
-<p>Verification is in progress. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9a2e27cbf0a503aaa4b69c05403d8efd19"></a>kNETC_SWTPort1</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga97920bfd99bbf6887b779cf7220ba1e1a0687182beea1e3a4aa8b278e21fcd64f"></a>kNETC_VerifySuccess</em>&nbsp;</td><td class="fielddoc">
-<p>Verification was successful. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9a28c14d834c216368e857ebc2e12601b1"></a>kNETC_SWTPort2</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga97920bfd99bbf6887b779cf7220ba1e1ab304e55011c3fcd0f9d52b7195fe9784"></a>kNETC_VerifyFaile</em>&nbsp;</td><td class="fielddoc">
-<p>Verification failed. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9ae0ebcc15e4f3eb9ac08eb7f57252a4f9"></a>kNETC_SWTPort3</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port3. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga97920bfd99bbf6887b779cf7220ba1e1a6cb3da115a2b39497dd843bf70b195fa"></a>kNETC_VerifyUndefined</em>&nbsp;</td><td class="fielddoc">
-<p>Verification is in an undefined state. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9aedf6749b6f29b630b8b7bd1c30882fb6"></a>kNETC_SWTPort4</em>&nbsp;</td><td class="fielddoc">
+<p>Switch port4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7b13a295d9e98c3aa1772a1b10ab92c9ad9d8dc2b781a4cb7a47971df2fcbd0b4"></a>kNETC_SWTMPort</em>&nbsp;</td><td class="fielddoc">
+<p>Switch management port. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga93b4ff855f09e33f204fd9a451fd2f19"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00045.html#ga93b4ff855f09e33f204fd9a451fd2f19">netc_swt_mac_forward_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga93b4ff855f09e33f204fd9a451fd2f19a937c09038eabf58e775704d486522a29"></a>kNETC_NoFDBLookUp</em>&nbsp;</td><td class="fielddoc">
+<p>No FDB lookup is performed, the frame is flooded. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga93b4ff855f09e33f204fd9a451fd2f19a0125d1cfd210f9d01973c0652e1e9cba"></a>kNETC_FDBLookUpWithFlood</em>&nbsp;</td><td class="fielddoc">
+<p>FDB lookup is performed, and if there is no match, the frame is flooded to the port bitmap in VLAN filter entry. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga93b4ff855f09e33f204fd9a451fd2f19a864a7c04327cbed0546d2e68918f965a"></a>kNETC_FDBLookUpWithDiscard</em>&nbsp;</td><td class="fielddoc">
+<p>FDB lookup is performed, and if there is no match, the frame is discarded. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga53cb2239e2ed8f9d2e00ef50112b364a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00045.html#ga53cb2239e2ed8f9d2e00ef50112b364a">netc_swt_mac_learn_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aa5b69ec6eec3f3b9309f640fe24aed875"></a>kNETC_DisableMACLearn</em>&nbsp;</td><td class="fielddoc">
+<p>Disable MAC learning. </p>
+<p>SMAC FDB lookup is by-passed. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aae13ea4371b42d77179400aa6a52b3772"></a>kNETC_HardwareMACLearn</em>&nbsp;</td><td class="fielddoc">
+<p>Hardware MAC learning is enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aad02b62cc1d684eff87393c4cbb3d1f70"></a>kNETC_SeSoftwareMACLearn</em>&nbsp;</td><td class="fielddoc">
+<p>Software MAC learning secure. </p>
+<p>FDB lookup based on FID and SMAC is performed and if an entry is not found, the frame is redirected to the switch management port. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aa92f2b6b9be03bbbd0b1b8c590a391263"></a>kNETC_UnseSoftwareMACLearn</em>&nbsp;</td><td class="fielddoc">
+<p>Software MAC learning unsecure. </p>
+<p>FDB lookup based on FID and SMAC is performed and if an entry is not found, the frame is copied to the switch management port. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga53cb2239e2ed8f9d2e00ef50112b364aa78f8f2f14cb9c432ff64a5f47279ffe6"></a>kNETC_DisableMACLearnWithSMAC</em>&nbsp;</td><td class="fielddoc">
+<p>Disable MAC learning with SMAC validation. </p>
+<p>FDB lookup based on FID and SMAC is performed and if an entry is not found, the frame is discarded. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gacb9b0f9c5254125195847bf0ef633405"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00045.html#gacb9b0f9c5254125195847bf0ef633405">netc_swt_port_tx_vlan_act_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacb9b0f9c5254125195847bf0ef633405a8e543517b76617b51a56562b1991c1cd"></a>kNETC_NoTxVlanModify</em>&nbsp;</td><td class="fielddoc">
+<p>No egress VLAN modification performed. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb9b0f9c5254125195847bf0ef633405a247250821c2334dc760d82bda9809d68"></a>kNETC_TxDelOuterVlan</em>&nbsp;</td><td class="fielddoc">
+<p>Delete outer VLAN tag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb9b0f9c5254125195847bf0ef633405a06a45ccc50138f2af29968a38c8a64b1"></a>kNETC_TxReplOuterVlanVid</em>&nbsp;</td><td class="fielddoc">
+<p>Replace outer VLAN tag's VID with 0; frame to be transmitted as a priority tag frame. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga720df95d878c6da34f14dec26c0800ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00045.html#ga720df95d878c6da34f14dec26c0800ed">netc_swt_port_stg_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga720df95d878c6da34f14dec26c0800eda1f58a8027b469da9a3e6435e6b81c1a1"></a>kNETC_DiscardFrame</em>&nbsp;</td><td class="fielddoc">
+<p>Tx or RX Frames on this port with current spanning tree group ID will be discarded. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga720df95d878c6da34f14dec26c0800edaa3aeb92223320811b7c652445cb3d0c1"></a>kNETC_LearnWithoutFowrad</em>&nbsp;</td><td class="fielddoc">
+<p>RX Frames on this port with current spanning tree group ID will do Learn SMAC, but do not forward, Tx Frame will be discarded. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga720df95d878c6da34f14dec26c0800eda9c8209fda59accbdbe7becf8db86fd1c"></a>kNETC_ForwardFrame</em>&nbsp;</td><td class="fielddoc">
+<p>RX Frames on this port with current spanning tree group ID will do both MAC learning and forwarding, , Tx Frame will be forwarded. </p>
 </td></tr>
 </table>
 

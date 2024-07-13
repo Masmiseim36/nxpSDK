@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"mbedtls_user_config.h\"', FSL_ETH_ENABLE_CACHE_CONTROL, PRINTF_ADVANCED_ENABLE=1, MCUBOOT_APPLICATION=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, ENET_RXBUFF_NUM=14, SHELL_BUFFER_SIZE=128U, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CHECKSUM_GEN_IP=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, MBEDTLS_MCUX_ELE_S400_API, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../components/flash/mflash/mimxrt1180;../../../../../../../rtos/freertos/corehttp/source/include;../../../../../../../rtos/freertos/corehttp/source/interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../components/flash/mflash;../../../../../../../middleware/llhttp/include;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../components/flash/mflash/mimxrt1180;../../../../../../../rtos/freertos/corehttp/source/include;../../../../../../../rtos/freertos/corehttp/source/interface;../../../../../../../devices/MIMXRT1189/utilities/shell;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../components/flash/mflash;../../../../../../../middleware/llhttp/include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +353,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -553,11 +553,6 @@
               <FileName>flash_map.h</FileName>
               <FileType>5</FileType>
               <FilePath>../bootutil_port/flash_map.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbldef.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../bootutil_port/sbldef.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -853,6 +848,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2570,6 +2575,11 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -3240,6 +3250,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -3342,22 +3357,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_shell.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -3378,6 +3383,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -3635,9 +3645,24 @@
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
@@ -4117,10 +4142,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm33, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"mbedtls_user_config.h\"', FSL_ETH_ENABLE_CACHE_CONTROL, PRINTF_ADVANCED_ENABLE=1, MCUBOOT_APPLICATION=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, ENET_RXBUFF_NUM=14, SHELL_BUFFER_SIZE=128U, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CHECKSUM_GEN_IP=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, MBEDTLS_MCUX_ELE_S400_API, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../components/flash/mflash/mimxrt1180;../../../../../../../rtos/freertos/corehttp/source/include;../../../../../../../rtos/freertos/corehttp/source/interface;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../components/flash/mflash;../../../../../../../middleware/llhttp/include;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../bootutil_port;../bootutil_port/mcuboot_config;../bootutil_port/sysflash;../bootutil_port/board_specific;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../../devices/MIMXRT1189/drivers/cm33;../../../../../../../components/flash/mflash/mimxrt1180;../../../../../../../rtos/freertos/corehttp/source/include;../../../../../../../rtos/freertos/corehttp/source/interface;../../../../../../../devices/MIMXRT1189/utilities/shell;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../components/phy;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../components/flash/mflash;../../../../../../../middleware/llhttp/include;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4138,7 +4163,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4338,11 +4363,6 @@
               <FileName>flash_map.h</FileName>
               <FileType>5</FileType>
               <FilePath>../bootutil_port/flash_map.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbldef.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../bootutil_port/sbldef.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4638,6 +4658,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6355,6 +6385,11 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -7025,6 +7060,11 @@
           <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
+              <FileName>mpu_wrappers_v2_asm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c</FilePath>
+            </File>
+            <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
@@ -7127,22 +7167,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_shell.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
@@ -7163,6 +7193,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -7420,9 +7455,24 @@
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_syscall_numbers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>newlib-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</FilePath>
+            </File>
+            <File>
+              <FileName>picolibc-freertos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>

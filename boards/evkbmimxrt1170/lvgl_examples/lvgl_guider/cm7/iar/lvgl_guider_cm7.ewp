@@ -383,11 +383,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -400,6 +401,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -665,6 +667,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1508,11 +1511,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lvgl</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1525,6 +1529,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1790,6 +1795,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2428,6 +2434,12 @@
       <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rpi/fsl_rpi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rpi/fsl_rpi.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/fsl_dc_fb.h</name>
     </file>
   </group>
@@ -2558,6 +2570,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/gt911/fsl_gt911.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
     </file>
   </group>
   <group>
@@ -2795,7 +2813,16 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_syscall_numbers.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -4102,12 +4129,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4121,6 +4142,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

@@ -32,7 +32,7 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(hello_world_demo_cm7)
 
-set(MCUX_BUILD_TYPES debug release hyperram_debug hyperram_release flexspi_nor_debug flexspi_nor_release)
+set(MCUX_BUILD_TYPES flexspi_nor_hyperram_debug flexspi_nor_hyperram_release debug release hyperram_debug hyperram_release flexspi_nor_debug flexspi_nor_release)
 
 set(MCUX_SDK_PROJECT_NAME hello_world_demo_cm7.elf)
 

@@ -372,7 +372,6 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
@@ -380,6 +379,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1477,7 +1477,6 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
@@ -1485,6 +1484,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2298,16 +2298,25 @@
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_256byte_ecc_compute.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_full_update.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_allocate.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_obsoleted_check.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_data_move.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_reclaim.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_find.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_mapping_set.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_block_status_set.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_close.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_data_page_copy.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_defragment.c</name>
@@ -2325,31 +2334,43 @@
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_block_status_set.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_get.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_extra_bytes_set.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_page_erased_verify.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_read.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_driver_write.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_erase_count_set.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_extended_cache_enable.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_format.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_free_block_list_add.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_initialize.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_logical_sector_find.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_add.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_next_block_to_erase_find.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_get.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_mapped_block_list_remove.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_memory_initialize.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_allocate.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_build.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_metadata_write.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_open.c</name>
@@ -2364,12 +2385,6 @@
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_partial_defragment.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_physical_page_allocate.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_mapping_cache_invalidate.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_read.c</name>
           </file>
           <file>
@@ -2377,6 +2392,15 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sector_write.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_read.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_release.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_sectors_write.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/levelx/common/src/lx_nand_flash_simulator.c</name>
@@ -2455,9 +2479,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>
@@ -2775,12 +2796,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2788,6 +2803,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

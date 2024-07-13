@@ -46,8 +46,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../source/main.c"
-"${ProjDirPath}/../source/board/clock_config.c"
-"${ProjDirPath}/../source/board/clock_config.h"
 "${ProjDirPath}/../source/board/pin_mux.c"
 "${ProjDirPath}/../source/board/pin_mux.h"
 "${ProjDirPath}/../source/freemaster_cfg.h"
@@ -55,6 +53,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../source/freemaster_example.h"
 "${ProjDirPath}/../source/board/board.c"
 "${ProjDirPath}/../source/board/board.h"
+"${ProjDirPath}/../source/board/clock_config.c"
+"${ProjDirPath}/../source/board/clock_config.h"
 "${ProjDirPath}/../source/example_data/data_example_pmp.h"
 "${ProjDirPath}/../source/example_data/data_img_logo.h"
 "${ProjDirPath}/../source/example_data/data_img_file.h"

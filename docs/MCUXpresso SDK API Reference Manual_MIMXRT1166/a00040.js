@@ -1,7 +1,7 @@
 var a00040 =
 [
     [ "FlexIO eDMA MCU Interface LCD Driver", "a00041.html", "a00041" ],
-    [ "_flexio_mculcd_type", "a00040.html#a00521", [
+    [ "_flexio_mculcd_type", "a00040.html#a00519", [
       [ "flexioBase", "a00040.html#ad4a8709e9822a28059567d55f5de213a", null ],
       [ "busType", "a00040.html#a8e28f6d8f9269ed7bffe2e72c6973055", null ],
       [ "dataPinStartIndex", "a00040.html#a678ed37ba6bf12f9b7b483c2b9aaf92e", null ],
@@ -16,21 +16,21 @@ var a00040 =
       [ "setRSPin", "a00040.html#a51f9474741c657f2271ac0d0e2ee691f", null ],
       [ "setRDWRPin", "a00040.html#a64e89409e7c35777ca08ad53979e05c8", null ]
     ] ],
-    [ "_flexio_mculcd_config", "a00040.html#a00517", [
+    [ "_flexio_mculcd_config", "a00040.html#a00515", [
       [ "enable", "a00040.html#a6ecf576ffc2c510e857095de606da73e", null ],
       [ "enableInDoze", "a00040.html#aa7a8c87890c599b2db8b92ec2a3ce773", null ],
       [ "enableInDebug", "a00040.html#a910eaa4d7c00795538c00a7e659d8ae8", null ],
       [ "enableFastAccess", "a00040.html#aaed3328990f02488c51676f5e4d1985c", null ],
       [ "baudRate_Bps", "a00040.html#a1e6a6eedaa816bdcab4fca223ce832b5", null ]
     ] ],
-    [ "_flexio_mculcd_transfer", "a00040.html#a00520", [
+    [ "_flexio_mculcd_transfer", "a00040.html#a00518", [
       [ "command", "a00040.html#afc3f24d440340a3f523eb4fa616f88fa", null ],
       [ "dataAddrOrSameValue", "a00040.html#a6e38ef35c8929a910014c661491b83c0", null ],
       [ "dataSize", "a00040.html#a5862d20c534066e61fe747dae872c6c2", null ],
       [ "mode", "a00040.html#a3550ebdbf45e16191eec9f8458846c55", null ],
       [ "dataOnly", "a00040.html#a75653bf6324911220a0dbd48bbfc0744", null ]
     ] ],
-    [ "_flexio_mculcd_handle", "a00040.html#a00519", [
+    [ "_flexio_mculcd_handle", "a00040.html#a00517", [
       [ "dataAddrOrSameValue", "a00040.html#aeff17c303cd6614768efb94f91b15dae", null ],
       [ "dataCount", "a00040.html#a7bc0fc05ac33de74b7916cbe19eaeead", null ],
       [ "remainingCount", "a00040.html#a69da3f3e5901488ec9f895aa0ccc046a", null ],

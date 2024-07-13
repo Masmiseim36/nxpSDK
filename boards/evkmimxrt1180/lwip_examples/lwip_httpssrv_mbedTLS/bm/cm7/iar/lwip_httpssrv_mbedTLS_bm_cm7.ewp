@@ -373,11 +373,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm7</state>
@@ -390,6 +390,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/http</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1488,11 +1489,11 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ele_s400</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm7</state>
@@ -1505,6 +1506,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/http</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2415,6 +2417,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
     </file>
   </group>
   <group>
@@ -3586,6 +3594,9 @@
         <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/base64.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/bignum_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/library/bignum.c</name>
       </file>
       <file>
@@ -4010,12 +4021,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4026,6 +4031,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

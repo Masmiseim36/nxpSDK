@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,24 +109,24 @@ $(document).ready(function(){initNavTree('a00020.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00317"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a00317">i3c_config_t</a></td></tr>
-<tr class="memdesc:a00317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C module, could both initialize master and slave functionality.  <a href="a00020.html#a00317">More...</a><br/></td></tr>
-<tr class="separator:a00317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00315"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a00315">i3c_config_t</a></td></tr>
+<tr class="memdesc:a00315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C module, could both initialize master and slave functionality.  <a href="a00020.html#a00315">More...</a><br/></td></tr>
+<tr class="separator:a00315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gab720082aac7fe2d9e785af098423ac4f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gab720082aac7fe2d9e785af098423ac4f">I3C_GetInstance</a> (I3C_Type *base)</td></tr>
 <tr class="memdesc:gab720082aac7fe2d9e785af098423ac4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get which instance current I3C is used.  <a href="#gab720082aac7fe2d9e785af098423ac4f">More...</a><br/></td></tr>
 <tr class="separator:gab720082aac7fe2d9e785af098423ac4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga3d32d7648da36b4fd0581fce78c4a13b">I3C_GetDefaultConfig</a> (<a class="el" href="a00020.html#a00317">i3c_config_t</a> *config)</td></tr>
+<tr class="memitem:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga3d32d7648da36b4fd0581fce78c4a13b">I3C_GetDefaultConfig</a> (<a class="el" href="a00020.html#a00315">i3c_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I3C peripheral, the configuration covers both master functionality and slave functionality.  <a href="#ga3d32d7648da36b4fd0581fce78c4a13b">More...</a><br/></td></tr>
 <tr class="separator:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacac08d592a3da29d975f3d96a0b073c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gacac08d592a3da29d975f3d96a0b073c7">I3C_Init</a> (I3C_Type *base, const <a class="el" href="a00020.html#a00317">i3c_config_t</a> *config, uint32_t sourceClock_Hz)</td></tr>
+<tr class="memitem:gacac08d592a3da29d975f3d96a0b073c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gacac08d592a3da29d975f3d96a0b073c7">I3C_Init</a> (I3C_Type *base, const <a class="el" href="a00020.html#a00315">i3c_config_t</a> *config, uint32_t sourceClock_Hz)</td></tr>
 <tr class="memdesc:gacac08d592a3da29d975f3d96a0b073c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I3C peripheral.  <a href="#gacac08d592a3da29d975f3d96a0b073c7">More...</a><br/></td></tr>
 <tr class="separator:gacac08d592a3da29d975f3d96a0b073c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00317" id="a00317"></a>
+<a name="a00315" id="a00315"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -154,15 +154,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a938627bdb23acafa9b37bfbee33b6880"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a938627bdb23acafa9b37bfbee33b6880">enableOpenDrainHigh</a></td></tr>
 <tr class="memdesc:a938627bdb23acafa9b37bfbee33b6880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Open-Drain High to be 1 PPBAUD count for i3c messages, or 1 ODBAUD.  <a href="#a938627bdb23acafa9b37bfbee33b6880">More...</a><br/></td></tr>
 <tr class="separator:a938627bdb23acafa9b37bfbee33b6880"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11f4e47370d23794b7d79a844ca8f26f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00019.html#a00316">i3c_baudrate_hz_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a11f4e47370d23794b7d79a844ca8f26f">baudRate_Hz</a></td></tr>
+<tr class="memitem:a11f4e47370d23794b7d79a844ca8f26f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00019.html#a00314">i3c_baudrate_hz_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a11f4e47370d23794b7d79a844ca8f26f">baudRate_Hz</a></td></tr>
 <tr class="memdesc:a11f4e47370d23794b7d79a844ca8f26f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired baud rate settings.  <a href="#a11f4e47370d23794b7d79a844ca8f26f">More...</a><br/></td></tr>
 <tr class="separator:a11f4e47370d23794b7d79a844ca8f26f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab34f6b3e5bf569531572c98af46c9080"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ab34f6b3e5bf569531572c98af46c9080">masterDynamicAddress</a></td></tr>
 <tr class="memdesc:ab34f6b3e5bf569531572c98af46c9080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main master dynamic address configuration.  <a href="#ab34f6b3e5bf569531572c98af46c9080">More...</a><br/></td></tr>
 <tr class="separator:ab34f6b3e5bf569531572c98af46c9080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87636d65387981401ccb483cfac0f7aa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a87636d65387981401ccb483cfac0f7aa">slowClock_Hz</a></td></tr>
-<tr class="memdesc:a87636d65387981401ccb483cfac0f7aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slow clock frequency for time control.  <a href="#a87636d65387981401ccb483cfac0f7aa">More...</a><br/></td></tr>
-<tr class="separator:a87636d65387981401ccb483cfac0f7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8d56a7a8329619ae874b1bce1a23b2a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ad8d56a7a8329619ae874b1bce1a23b2a">maxWriteLength</a></td></tr>
 <tr class="memdesc:ad8d56a7a8329619ae874b1bce1a23b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum write length.  <a href="#ad8d56a7a8329619ae874b1bce1a23b2a">More...</a><br/></td></tr>
 <tr class="separator:ad8d56a7a8329619ae874b1bce1a23b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -270,7 +267,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00019.html#a00316">i3c_baudrate_hz_t</a> i3c_config_t::baudRate_Hz</td>
+          <td class="memname"><a class="el" href="a00019.html#a00314">i3c_baudrate_hz_t</a> i3c_config_t::baudRate_Hz</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -283,18 +280,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       <table class="memname">
         <tr>
           <td class="memname">uint8_t i3c_config_t::masterDynamicAddress</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a87636d65387981401ccb483cfac0f7aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t i3c_config_t::slowClock_Hz</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -478,7 +463,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void I3C_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00020.html#a00317">i3c_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00315">i3c_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -510,7 +495,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the common I3C driver with <a class="el" href="a00020.html#gacac08d592a3da29d975f3d96a0b073c7" title="Initializes the I3C peripheral. ">I3C_Init()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">config</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00020.html#a00317" title="Structure with settings to initialize the I3C module, could both initialize master and slave function...">i3c_config_t</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">config</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00020.html#a00315" title="Structure with settings to initialize the I3C module, could both initialize master and slave function...">i3c_config_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -530,7 +515,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00020.html#a00317">i3c_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00020.html#a00315">i3c_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>, </td>
         </tr>
         <tr>

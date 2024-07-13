@@ -1,9 +1,9 @@
 var searchData=
 [
   ['g_5flpspidummydata',['g_lpspiDummyData',['../a00059.html#ga95e4847cd333277614975d46280df9dd',1,'fsl_lpspi.h']]],
-  ['g_5fserialhandle',['g_serialHandle',['../a00370.html#gaad3c4240a1364156a239471ccdb9aa0b',1,'fsl_debug_console.h']]],
-  ['gain',['gain',['../a00068.html#a7592570f6e9c343e06d3d0cd1c1b8ffb',1,'_pdm_channel_config::gain()'],['../a00091.html#a3a1e182777e71240d7f049c77cb51cf2',1,'_spdif_config::gain()']]],
-  ['genericcmd6timeout',['genericCMD6Timeout',['../a00065.html#a26edb9fa4327e6021bf43c33b951d727',1,'_mmc_extended_csd']]],
+  ['g_5fserialhandle',['g_serialHandle',['../a00367.html#gaad3c4240a1364156a239471ccdb9aa0b',1,'fsl_debug_console.h']]],
+  ['gain',['gain',['../a00067.html#a7592570f6e9c343e06d3d0cd1c1b8ffb',1,'_pdm_channel_config::gain()'],['../a00090.html#a3a1e182777e71240d7f049c77cb51cf2',1,'_spdif_config::gain()']]],
+  ['genericcmd6timeout',['genericCMD6Timeout',['../a00064.html#a26edb9fa4327e6021bf43c33b951d727',1,'_mmc_extended_csd']]],
   ['globalalpha',['globalAlpha',['../a00055.html#adb03566cbdf4110bfc9b170cf32f9e4b',1,'_lcdifv2_blend_config']]],
   ['gpc',['Gpc',['../a00050.html',1,'']]],
   ['gpc_5fclocks',['GPC_CLOCKS',['../a00016.html#ga5e6c0492bdf029f56e2e24917f94f23c',1,'fsl_clock.h']]],
@@ -21,9 +21,9 @@ var searchData=
   ['gpc_5fcm_5frequestrunmodesetpointtransition',['GPC_CM_RequestRunModeSetPointTransition',['../a00050.html#ga954b0f2f2200d10b73b710ad24d24161',1,'fsl_gpc.h']]],
   ['gpc_5fcm_5frequestsleepmodesetpointtransition',['GPC_CM_RequestSleepModeSetPointTransition',['../a00050.html#gaa4d2f1205a4055be16279934f02803a0',1,'fsl_gpc.h']]],
   ['gpc_5fcm_5frequeststandbymode',['GPC_CM_RequestStandbyMode',['../a00050.html#ga96fbd5cfad8d068b527bac7e897c433c',1,'fsl_gpc.h']]],
-  ['gpc_5fcm_5fsetcpumodesetpointmapping',['GPC_CM_SetCpuModeSetPointMapping',['../a00050.html#ga29b6fee33efc78edf2528c5e710791d1',1,'fsl_gpc.h']]],
+  ['gpc_5fcm_5fsetcpumodesetpointmapping',['GPC_CM_SetCpuModeSetPointMapping',['../a00050.html#ga749ea68e2a8926b83332c67e757e8331',1,'fsl_gpc.h']]],
   ['gpc_5fcm_5fsetnextcpumode',['GPC_CM_SetNextCpuMode',['../a00050.html#gaac4ce9e5ac154856a17715f961374c07',1,'fsl_gpc.h']]],
-  ['gpc_5fcm_5fsetsetpointmapping',['GPC_CM_SetSetPointMapping',['../a00050.html#ga7e59d4e4b6b567124bd7a5f8b633f2b7',1,'fsl_gpc.h']]],
+  ['gpc_5fcm_5fsetsetpointmapping',['GPC_CM_SetSetPointMapping',['../a00050.html#gafcb73729ee55f10d4f2a145366db4811',1,'fsl_gpc.h']]],
   ['gpc_5fcm_5fstandby_5fmode_5fstatus_5ft',['gpc_cm_standby_mode_status_t',['../a00050.html#ga093ab3b3a103f8d711211220f051183a',1,'fsl_gpc.h']]],
   ['gpc_5fcm_5ftran_5fstep_5ft',['gpc_cm_tran_step_t',['../a00050.html#gaa6f049ba9ef89c54e327512b93a5de9e',1,'fsl_gpc.h']]],
   ['gpc_5fcm_5fwakeup_5fsp_5fsel_5ft',['gpc_cm_wakeup_sp_sel_t',['../a00050.html#ga2902f04383435dc1d1802390baa53ec1',1,'fsl_gpc.h']]],
@@ -105,5 +105,5 @@ var searchData=
   ['gpt_5fstoptimer',['GPT_StopTimer',['../a00052.html#ga7d3298caf68180acb777d0bed3585a95',1,'fsl_gpt.h']]],
   ['gpu2d_5fclocks',['GPU2D_CLOCKS',['../a00016.html#gae6cd9b328939cb50aa6067eba42e0dab',1,'fsl_clock.h']]],
   ['grade',['grade',['../a00016.html#af360d48986692fe5d6292015bcb1f294',1,'_clock_root_setpoint_config_t']]],
-  ['gtn',['GTN',['../a00088.html#a6c8dcdf3a4eeb141f7173be50b7983ae',1,'_smartcard_card_params']]]
+  ['gtn',['GTN',['../a00087.html#a6c8dcdf3a4eeb141f7173be50b7983ae',1,'_smartcard_card_params']]]
 ];

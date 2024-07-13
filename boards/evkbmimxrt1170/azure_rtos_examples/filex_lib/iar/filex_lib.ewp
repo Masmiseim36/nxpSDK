@@ -2247,9 +2247,6 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>
           </file>
           <file>
@@ -2299,18 +2296,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_directory_entry_write.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_entry_read.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_entry_write.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_free_search.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_directory_exFAT_unicode_entry_write.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_directory_first_entry_find.c</name>
@@ -2520,9 +2505,6 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_media_close_notify_set.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_media_exFAT_format.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_media_extended_space_available.c</name>
           </file>
           <file>
@@ -2674,63 +2656,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_absolute_path_get.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_allocate_new_cluster.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_cache_prepare.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_cache_update.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_flush.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_free_cluster_find.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_initialize.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_bitmap_start_sector_get.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_free.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_state_get.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_cluster_state_set.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_geometry_check.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_name_hash_get.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_size_calculate.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_checksum_verify.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_checksum_write.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_area_format.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_system_sector_write.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_unicode_name_hash_get.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_exFAT_upcase_table.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fx_utility_logical_sector_cache_entry_read.c</name>
@@ -2911,9 +2836,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fxe_media_close_notify_set.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fxe_media_exFAT_format.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/src/fxe_media_extended_space_available.c</name>

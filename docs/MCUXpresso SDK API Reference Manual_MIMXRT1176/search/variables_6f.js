@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['ocr',['ocr',['../a00065.html#ae64eb8c922a66132a3fe3fee85c02272',1,'_mmc_card::ocr()'],['../a00078.html#ae541aa02691ef02e47e06dc45355315d',1,'_sd_card::ocr()'],['../a00079.html#a9c71a024c630845443b6a5e41ec35930',1,'_sdio_card::ocr()']]],
-  ['ocram1endaddress',['Ocram1EndAddress',['../a00063.html#ad36afb6398861c12567ebf577f08b497',1,'_mecc_config']]],
-  ['ocram1startaddress',['Ocram1StartAddress',['../a00063.html#a86735c44a8c21c653f40ab9c6ab0487a',1,'_mecc_config']]],
-  ['ocram2endaddress',['Ocram2EndAddress',['../a00063.html#a1759740af1354bfaf63d899c99ee8d3c',1,'_mecc_config']]],
-  ['ocram2startaddress',['Ocram2StartAddress',['../a00063.html#a5b440360393f8f778156490632e7050f',1,'_mecc_config']]],
+  ['ocr',['ocr',['../a00064.html#ae64eb8c922a66132a3fe3fee85c02272',1,'_mmc_card::ocr()'],['../a00077.html#ae541aa02691ef02e47e06dc45355315d',1,'_sd_card::ocr()'],['../a00078.html#a9c71a024c630845443b6a5e41ec35930',1,'_sdio_card::ocr()']]],
   ['ocrambanknum',['ocramBankNum',['../a00045.html#a95e8a79967ab8b942dfa6d88deb5879e',1,'_flexram_allocate_ram']]],
   ['ocrammultierroraddr',['OcramMultiErrorAddr',['../a00045.html#a3b35a64024a4457ab1aa116e7fbf1be3',1,'_flexram_ocram_ecc_multi_error_info']]],
   ['ocrammultierrordatalsb',['OcramMultiErrorDataLSB',['../a00045.html#a08507175ffff331af6296379af753d41',1,'_flexram_ocram_ecc_multi_error_info']]],
@@ -15,11 +11,11 @@ var searchData=
   ['ocramsingleerrordatamsb',['OcramSingleErrorDataMSB',['../a00045.html#a8f9c1510a86247a4c1f8d289a850a626',1,'_flexram_ocram_ecc_single_error_info']]],
   ['ocramsingleerrorinfo',['OcramSingleErrorInfo',['../a00045.html#a2f403ab4fb6afe1314b50fc588c4839c',1,'_flexram_ocram_ecc_single_error_info']]],
   ['okindex',['okIndex',['../a00029.html#ab5c40d7d627187573ba8928c2fb8f839',1,'_enet_qos_rxp_config']]],
-  ['operation',['operation',['../a00048.html#a82e1054070d4a7af58af802443d5b9b4',1,'_flexspi_xfer::operation()'],['../a00093.html#a1ffb01ec62f727b953a83d57ea1ac7d3',1,'_ssarc_descriptor_config::operation()']]],
-  ['operationvoltage',['operationVoltage',['../a00078.html#a61ac121789078102cbcf9918ca209964',1,'_sd_card::operationVoltage()'],['../a00079.html#a336e9f61ba8e793290efced614caf5e2',1,'_sdio_card::operationVoltage()']]],
+  ['operation',['operation',['../a00048.html#a82e1054070d4a7af58af802443d5b9b4',1,'_flexspi_xfer::operation()'],['../a00092.html#a1ffb01ec62f727b953a83d57ea1ac7d3',1,'_ssarc_descriptor_config::operation()']]],
+  ['operationvoltage',['operationVoltage',['../a00077.html#a61ac121789078102cbcf9918ca209964',1,'_sd_card::operationVoltage()'],['../a00078.html#a336e9f61ba8e793290efced614caf5e2',1,'_sdio_card::operationVoltage()']]],
   ['oplist',['opList',['../a00029.html#a28fc15719c4f6ba14ac169bde8402243',1,'_enet_qos_est_gcl']]],
   ['option_5fsize',['option_size',['../a00048.html#a6bf9b452320f3c187a528d1944e3b305',1,'_serial_nor_config_option']]],
-  ['oscillatorsize',['oscillatorSize',['../a00071.html#aae3ad99066092541a9be0b21ad55d1f7',1,'_pmu_gpc_body_bias_config']]],
+  ['oscillatorsize',['oscillatorSize',['../a00070.html#aae3ad99066092541a9be0b21ad55d1f7',1,'_pmu_gpc_body_bias_config']]],
   ['out',['out',['../a00011.html#a59888bbb28edda5d863fbdeff1d029e6',1,'_asrc_handle::out()'],['../a00012.html#afbd61a313413b36d8bd4279db860ed89',1,'_asrc_edma_handle::out()']]],
   ['outclocksource',['outClockSource',['../a00011.html#ab216ee354bd86cbcc0e82dafa2d485a2',1,'_asrc_channel_pair_config']]],
   ['outdata',['outData',['../a00011.html#a136f385581e20b51816079cb261acabe',1,'_asrc_transfer']]],
@@ -28,9 +24,9 @@ var searchData=
   ['outdatawidth',['outDataWidth',['../a00011.html#a14f813855d239f44d519767a48a6a6b9',1,'_asrc_channel_pair_config']]],
   ['outdmahandle',['outDmaHandle',['../a00012.html#a413d028900ccbc3a4d1a051eaf2e3a99',1,'_asrc_out_edma_handle']]],
   ['outfifothreshold',['outFifoThreshold',['../a00011.html#a6e46911773e7e8d34f16b18ed290f556',1,'_asrc_channel_pair_config']]],
-  ['outputcurrent',['outputCurrent',['../a00071.html#a86f3964703e7504cf3d718e0c71d5b82',1,'_pmu_static_bandgap_config']]],
+  ['outputcurrent',['outputCurrent',['../a00070.html#a86f3964703e7504cf3d718e0c71d5b82',1,'_pmu_static_bandgap_config']]],
   ['outputlogic',['outputLogic',['../a00050.html#a70ede6dc868ff6dd15987ba62c5d574b',1,'_gpio_pin_config']]],
-  ['outputvoltage',['outputVoltage',['../a00071.html#a9a729b1f4aa7a7700714af978f726310',1,'_pmu_static_bandgap_config']]],
+  ['outputvoltage',['outputVoltage',['../a00070.html#a9a729b1f4aa7a7700714af978f726310',1,'_pmu_static_bandgap_config']]],
   ['outsignextension',['outSignExtension',['../a00011.html#a3bcae903183da93ffe988970a63f29f8',1,'_asrc_channel_pair_config']]],
   ['outsourceclock_5fhz',['outSourceClock_Hz',['../a00011.html#acdde06943e51953dc73df730a513f37f',1,'_asrc_channel_pair_config']]]
 ];

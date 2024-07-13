@@ -72,7 +72,7 @@ void IEE_GetDefaultConfig(iee_config_t *config)
  * brief Sets the IEE module according to the configuration structure.
  *
  * This function configures IEE region according to configuration structure.
- * 
+ *
  * Note: if key is provisioned by ELE, the attributes are set by ELE
  *
  * param base IEE peripheral address.

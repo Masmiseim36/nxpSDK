@@ -72,6 +72,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DUSE_RTOS=1 \
     -DPHY_RTL8211F=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DLWIP_ENET_FLEXIBLE_CONFIGURATION \
     -DMCUXPRESSO_SDK \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -91,7 +93,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -104,6 +105,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DUSE_RTOS=1 \
     -DPHY_RTL8211F=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DLWIP_ENET_FLEXIBLE_CONFIGURATION \
     -DMCUXPRESSO_SDK \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -122,7 +125,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -137,6 +139,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DUSE_RTOS=1 \
     -DPHY_RTL8211F=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DLWIP_ENET_FLEXIBLE_CONFIGURATION \
     -DMCUXPRESSO_SDK \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -156,7 +160,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -171,6 +174,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DUSE_RTOS=1 \
     -DPHY_RTL8211F=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DLWIP_ENET_FLEXIBLE_CONFIGURATION \
     -DMCUXPRESSO_SDK \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -189,7 +194,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -208,6 +212,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DUSE_RTOS=1 \
     -DPHY_RTL8211F=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DLWIP_ENET_FLEXIBLE_CONFIGURATION \
     -DMCUXPRESSO_SDK \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -227,7 +233,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -246,6 +251,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DUSE_RTOS=1 \
     -DPHY_RTL8211F=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DLWIP_ENET_FLEXIBLE_CONFIGURATION \
     -DMCUXPRESSO_SDK \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -264,7 +271,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -287,7 +293,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -310,7 +315,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -334,7 +338,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -357,7 +360,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -381,7 +383,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -404,7 +405,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -420,7 +420,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -450,7 +449,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -481,7 +479,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -513,7 +510,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -546,7 +542,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -578,7 +573,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \

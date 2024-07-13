@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: API layer</title>
+<title>MCUXpresso SDK API Reference Manual: Hardware Port Rx</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,19 +99,10 @@ $(document).ready(function(){initNavTree('a00219.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">API layer<div class="ingroups"><a class="el" href="a00040.html">NETC driver</a></div></div>  </div>
+<div class="title">Hardware Port Rx<div class="ingroups"><a class="el" href="a00043.html">Hardware Port</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The API layer is available for user access and is supposed to be the only interfaces for the user. A module in the API layer is not necessary a direct mapping of a hardware peripheral but provides a higher functional model for the user.</p>
-<p>For example, the Endpoint API module models the endpoint usage which covers the configuration of ENETC peripheral, port peripheral, Station interface peripheral, etc... It abstracts the hardware details to provide a simpler model to interact on the network.</p>
-<p>The modules APIs require a handle (xxx_handle_t pointer) which is used to get the appropriate context.</p>
-<p>NETC is divided into 4 main groups:</p>
-<ul>
-<li>Endpoint: NETC works as endpoint</li>
-<li>Switch: NETC works as switch</li>
-<li>Timer: Timer functionalities</li>
-<li>MDIO: MDIO functionalities </li>
-</ul>
+<p>Group for the Port Rx functionalities </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

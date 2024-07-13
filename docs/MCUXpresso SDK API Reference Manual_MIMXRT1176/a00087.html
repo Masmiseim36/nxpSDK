@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Smart Card</title>
+<title>MCUXpresso SDK API Reference Manual: Secure Non-Volatile Storage High-Power</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,371 +99,368 @@ $(document).ready(function(){initNavTree('a00087.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Smart Card</div>  </div>
+<div class="title">Secure Non-Volatile Storage High-Power<div class="ingroups"><a class="el" href="a00363.html">SNVS: Secure Non-Volatile Storage</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral drivers for the UART-ISO7816 and EMVSIM/USIM modules of MCUXpresso SDK devices.<br/>
+<p>The MCUXpresso SDK provides a Peripheral driver for the Secure Non-Volatile Storage High-Power(SNVS-HP) module.<br/>
  <br/>
-Smart Card driver provides the necessary functions to access and control integrated circuit cards. The driver controls communication modules (UART/EMVSIM/USIM) and handles special ICC sequences, such as the activation/deactivation (using EMVSIM/USIM IP or external interface chip). The Smart Card driver consists of two IPs (SmartCard_Uart and SmartCard_EmvSim drivers) and three PHY drivers (smartcard_phy_emvsim, smartcard_phy_tda8035, and smartcard_phy_gpio drivers). These drivers can be combined, which means that the Smart Card driver wraps one IP (transmission) and one PHY (interface) driver.</p>
-<p>The driver provides asynchronous functions to communicate with the Integrated Circuit Card (ICC). The driver contains RTOS adaptation layers which use semaphores as synchronization objects of synchronous transfers. The RTOS driver support also provides protection for multithreading.</p>
-<h1><a class="anchor" id="SmartCardInit"></a>
-SmartCard Driver Initialization</h1>
-<p>The Smart Card Driver is initialized by calling the SMARTCARD_Init() and <a class="el" href="a00365.html#gad7d80be0c1867711f3673dede0d574e6" title="Initializes a Smart card interface instance. ">SMARTCARD_PHY_Init()</a> functions. The Smart Card Driver initialization configuration structure requires these settings: </p>
-<ul>
-<li>
-Smart Card voltage class </li>
-<li>
-Smart Card Interface options such as the RST, IRQ, CLK pins, and so on. </li>
-</ul>
-<p>The driver also supports user callbacks for assertion/de-assertion Smart Card events and transfer finish event. This feature is useful to detect the card presence or for handling transfer events, for example, in RTOS. The user should initialize the Smart Card driver, which consist of IP and PHY drivers.</p>
-<h1><a class="anchor" id="SmarCardCallDiagram"></a>
-SmartCard Call diagram</h1>
-<p>Because the call diagram is complex, the detailed use of the Smart Card driver is not described in this section. For details about using the Smart Card driver, see the Smart Card driver example which describes a simple use case.</p>
-<h1>PHY driver</h1>
-<p>The Smart Card interface driver is initialized by calling the function <a class="el" href="a00365.html#gad7d80be0c1867711f3673dede0d574e6" title="Initializes a Smart card interface instance. ">SMARTCARD_PHY_Init()</a>. During the initialization phase, Smart Card clock is configured and all hardware pins for IC handling are configured. </p>
+The SNVS_HP is in the chip's power-supply domain and thus receives the power along with the rest of the chip. The SNVS_HP provides an interface between the SNVS_LP and the rest of the system; there is no way to access the SNVS_LP registers except through the SNVS_HP. For access to the SNVS_LP registers, the SNVS_HP must be powered up. It uses a register access permission policy to determine whether the access to the particular registers is permitted. <br/>
+</p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00363"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00363.html">Smart Card EMVSIM Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00365"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html">Smart Card PHY Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00359"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html">Smart Card PHY EMVSIM Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00360.html">Smart Card PHY GPIO Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00358"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html">Smart Card PHY TDA8035 Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00361"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html">Smart Card PHY USIM W</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00362"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00362.html">Smart Card UART Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00364"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00364.html">Smart Card USIM Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00673"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00673">_smartcard_card_params</a></td></tr>
-<tr class="memdesc:a00673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines card-specific parameters for Smart card driver.  <a href="a00087.html#a00673">More...</a><br/></td></tr>
-<tr class="separator:a00673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00676"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00676">_smartcard_timers_state</a></td></tr>
-<tr class="memdesc:a00676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card defines the state of the EMV timers in the Smart card driver.  <a href="a00087.html#a00676">More...</a><br/></td></tr>
+<tr class="memitem:a00676"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00676">_snvs_hp_rtc_datetime</a></td></tr>
+<tr class="memdesc:a00676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time.  <a href="a00087.html#a00676">More...</a><br/></td></tr>
 <tr class="separator:a00676"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00675"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00675">_smartcard_interface_config</a></td></tr>
-<tr class="memdesc:a00675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines user specified configuration of Smart card interface.  <a href="a00087.html#a00675">More...</a><br/></td></tr>
+<tr class="memitem:a00675"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00675">_snvs_hp_rtc_config</a></td></tr>
+<tr class="memdesc:a00675"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS config structure.  <a href="a00087.html#a00675">More...</a><br/></td></tr>
 <tr class="separator:a00675"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00677"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00677">_smartcard_xfer</a></td></tr>
-<tr class="memdesc:a00677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines user transfer structure used to initialize transfer.  <a href="a00087.html#a00677">More...</a><br/></td></tr>
-<tr class="separator:a00677"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00674"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00674">_smartcard_context</a></td></tr>
-<tr class="memdesc:a00674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime state of the Smart card driver.  <a href="a00087.html#a00674">More...</a><br/></td></tr>
-<tr class="separator:a00674"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0c7cc29f5aad96cbd0ced4c679f1de3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c7cc29f5aad96cbd0ced4c679f1de3e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0c7cc29f5aad96cbd0ced4c679f1de3e">SMARTCARD_INIT_DELAY_CLOCK_CYCLES</a>&#160;&#160;&#160;(42000u)</td></tr>
-<tr class="memdesc:ga0c7cc29f5aad96cbd0ced4c679f1de3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card global define which specify number of clock cycles until initial 'TS' character has to be received. <br/></td></tr>
-<tr class="separator:ga0c7cc29f5aad96cbd0ced4c679f1de3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6d2732d28a270ff02adb607b53a8471"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6d2732d28a270ff02adb607b53a8471"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaf6d2732d28a270ff02adb607b53a8471">SMARTCARD_EMV_ATR_DURATION_ETU</a>&#160;&#160;&#160;(20150u)</td></tr>
-<tr class="memdesc:gaf6d2732d28a270ff02adb607b53a8471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card global define which specify number of clock cycles during which ATR string has to be received. <br/></td></tr>
-<tr class="separator:gaf6d2732d28a270ff02adb607b53a8471"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga712bc1afedcb0bc88dbe8850754b7793"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga712bc1afedcb0bc88dbe8850754b7793"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga712bc1afedcb0bc88dbe8850754b7793">SMARTCARD_TS_DIRECT_CONVENTION</a>&#160;&#160;&#160;(0x3Bu)</td></tr>
-<tr class="memdesc:ga712bc1afedcb0bc88dbe8850754b7793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card specification initial TS character definition of direct convention. <br/></td></tr>
-<tr class="separator:ga712bc1afedcb0bc88dbe8850754b7793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc43ce3e95980291116fa2dd191b5797"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc43ce3e95980291116fa2dd191b5797"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gafc43ce3e95980291116fa2dd191b5797">SMARTCARD_TS_INVERSE_CONVENTION</a>&#160;&#160;&#160;(0x3Fu)</td></tr>
-<tr class="memdesc:gafc43ce3e95980291116fa2dd191b5797"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card specification initial TS character definition of inverse convention. <br/></td></tr>
-<tr class="separator:gafc43ce3e95980291116fa2dd191b5797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab7985efdc9188a91c4753aca3e61e26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaab7985efdc9188a91c4753aca3e61e26">SNVS_MAKE_HP_SV_FLAG</a>(x)&#160;&#160;&#160;(1U &lt;&lt; (SNVS_HPSVSR_SV0_SHIFT + (x)))</td></tr>
+<tr class="memdesc:gaab7985efdc9188a91c4753aca3e61e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to make security violation flag.  <a href="#gaab7985efdc9188a91c4753aca3e61e26">More...</a><br/></td></tr>
+<tr class="separator:gaab7985efdc9188a91c4753aca3e61e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gae042338099b6037101c72262a99942b6"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00087.html#ga85570f092a17f66f832d98d750e226ff">_smartcard_control</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gae042338099b6037101c72262a99942b6">smartcard_control_t</a></td></tr>
-<tr class="memdesc:gae042338099b6037101c72262a99942b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control codes for the Smart card protocol timers and misc.  <a href="#gae042338099b6037101c72262a99942b6">More...</a><br/></td></tr>
-<tr class="separator:gae042338099b6037101c72262a99942b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae03f5482e853e05b20820170eb9d6500"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae03f5482e853e05b20820170eb9d6500"></a>
+<tr class="memitem:gaee49d1da41454b8797835662d9cdd0db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaee49d1da41454b8797835662d9cdd0db"></a>
+typedef enum <a class="el" href="a00087.html#ga5c163901f9e11cb0b5005796938b7c78">_snvs_hp_interrupts</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaee49d1da41454b8797835662d9cdd0db">snvs_hp_interrupts_t</a></td></tr>
+<tr class="memdesc:gaee49d1da41454b8797835662d9cdd0db"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS interrupts. <br/></td></tr>
+<tr class="separator:gaee49d1da41454b8797835662d9cdd0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga116ffa0c5592c79a31f12035a5653e50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga116ffa0c5592c79a31f12035a5653e50"></a>
+typedef enum <a class="el" href="a00087.html#gaabae76e8145eb18ea02a3140a9d510f9">_snvs_hp_status_flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga116ffa0c5592c79a31f12035a5653e50">snvs_hp_status_flags_t</a></td></tr>
+<tr class="memdesc:ga116ffa0c5592c79a31f12035a5653e50"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS flags. <br/></td></tr>
+<tr class="separator:ga116ffa0c5592c79a31f12035a5653e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cf3f316554658ca761fb902e85dac63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0cf3f316554658ca761fb902e85dac63"></a>
 typedef enum <br class="typebreak"/>
-<a class="el" href="a00087.html#gaa930238ea1746f4a3353def7467ead12">_smartcard_card_voltage_class</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gae03f5482e853e05b20820170eb9d6500">smartcard_card_voltage_class_t</a></td></tr>
-<tr class="memdesc:gae03f5482e853e05b20820170eb9d6500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card interface voltage class values. <br/></td></tr>
-<tr class="separator:gae03f5482e853e05b20820170eb9d6500"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ae48c2e20f9785b2e316e3b9cd98482"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7ae48c2e20f9785b2e316e3b9cd98482"></a>
-typedef enum <br class="typebreak"/>
-<a class="el" href="a00087.html#ga350848cacb77a8eee78f49f61b1a7beb">_smartcard_transfer_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7ae48c2e20f9785b2e316e3b9cd98482">smartcard_transfer_state_t</a></td></tr>
-<tr class="memdesc:ga7ae48c2e20f9785b2e316e3b9cd98482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card I/O transfer states. <br/></td></tr>
-<tr class="separator:ga7ae48c2e20f9785b2e316e3b9cd98482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e8afe95ea4c09450f13367ac58917dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7e8afe95ea4c09450f13367ac58917dc"></a>
-typedef enum <a class="el" href="a00087.html#ga5092a223b31a7ebb050f4677f74fc7fa">_smartcard_reset_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7e8afe95ea4c09450f13367ac58917dc">smartcard_reset_type_t</a></td></tr>
-<tr class="memdesc:ga7e8afe95ea4c09450f13367ac58917dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card reset types. <br/></td></tr>
-<tr class="separator:ga7e8afe95ea4c09450f13367ac58917dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5bb903cfe709f405d93d046f49d53579"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5bb903cfe709f405d93d046f49d53579"></a>
-typedef enum <br class="typebreak"/>
-<a class="el" href="a00087.html#gad7b26b00f2aab6fe646e8c75f9eb5c06">_smartcard_transport_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga5bb903cfe709f405d93d046f49d53579">smartcard_transport_type_t</a></td></tr>
-<tr class="memdesc:ga5bb903cfe709f405d93d046f49d53579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card transport protocol types. <br/></td></tr>
-<tr class="separator:ga5bb903cfe709f405d93d046f49d53579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab183aef08d7e14e17a95ca2b2c56b235"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab183aef08d7e14e17a95ca2b2c56b235"></a>
-typedef enum <a class="el" href="a00087.html#ga5686c6e2b9d585c9cc5abc76ba2fe138">_smartcard_parity_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gab183aef08d7e14e17a95ca2b2c56b235">smartcard_parity_type_t</a></td></tr>
-<tr class="memdesc:gab183aef08d7e14e17a95ca2b2c56b235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card data parity types. <br/></td></tr>
-<tr class="separator:gab183aef08d7e14e17a95ca2b2c56b235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae869b7249845af481444f826fb4c02a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae869b7249845af481444f826fb4c02a4"></a>
-typedef enum <br class="typebreak"/>
-<a class="el" href="a00087.html#ga96e980ee2b8f58982435fd82d02f75ca">_smartcard_card_convention</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gae869b7249845af481444f826fb4c02a4">smartcard_card_convention_t</a></td></tr>
-<tr class="memdesc:gae869b7249845af481444f826fb4c02a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines data Convention format. <br/></td></tr>
-<tr class="separator:gae869b7249845af481444f826fb4c02a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b8596856da213016623b60a83c3dbe1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b8596856da213016623b60a83c3dbe1"></a>
-typedef enum <br class="typebreak"/>
-<a class="el" href="a00087.html#ga2e16326504eef4c75113077efe76b170">_smartcard_interface_control</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0b8596856da213016623b60a83c3dbe1">smartcard_interface_control_t</a></td></tr>
-<tr class="memdesc:ga0b8596856da213016623b60a83c3dbe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card interface IC control types. <br/></td></tr>
-<tr class="separator:ga0b8596856da213016623b60a83c3dbe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5245dc7d7b6b19594c51edc6da4f9b8a"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00087.html#ga3a6a30bc2bef724fdf0f8b660969e15d">_smartcard_direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga5245dc7d7b6b19594c51edc6da4f9b8a">smartcard_direction_t</a></td></tr>
-<tr class="memdesc:ga5245dc7d7b6b19594c51edc6da4f9b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines transfer direction.  <a href="#ga5245dc7d7b6b19594c51edc6da4f9b8a">More...</a><br/></td></tr>
-<tr class="separator:ga5245dc7d7b6b19594c51edc6da4f9b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee0e1f95525a9305d25c21a7a6b0c6ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaee0e1f95525a9305d25c21a7a6b0c6ea"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaee0e1f95525a9305d25c21a7a6b0c6ea">smartcard_interface_callback_t</a> )(void *smartcardContext, void *param)</td></tr>
-<tr class="memdesc:gaee0e1f95525a9305d25c21a7a6b0c6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card interface interrupt callback function type. <br/></td></tr>
-<tr class="separator:gaee0e1f95525a9305d25c21a7a6b0c6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaedb10efbba55294f2568ca37c0a6772"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaedb10efbba55294f2568ca37c0a6772"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaaedb10efbba55294f2568ca37c0a6772">smartcard_transfer_callback_t</a> )(void *smartcardContext, void *param)</td></tr>
-<tr class="memdesc:gaaedb10efbba55294f2568ca37c0a6772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card transfer interrupt callback function type. <br/></td></tr>
-<tr class="separator:gaaedb10efbba55294f2568ca37c0a6772"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga008f3ec99d03724068bd4dc923df13bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga008f3ec99d03724068bd4dc923df13bc"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga008f3ec99d03724068bd4dc923df13bc">smartcard_time_delay_t</a> )(uint32_t us)</td></tr>
-<tr class="memdesc:ga008f3ec99d03724068bd4dc923df13bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time Delay function used to passive waiting using RTOS [us]. <br/></td></tr>
-<tr class="separator:ga008f3ec99d03724068bd4dc923df13bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf1a45726b0072ad2b8af50b3281744ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf1a45726b0072ad2b8af50b3281744ef"></a>
+<a class="el" href="a00087.html#gade36b8c0d607f8560c18b3fe22fe64e4">_snvs_hp_sv_status_flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0cf3f316554658ca761fb902e85dac63">snvs_hp_sv_status_flags_t</a></td></tr>
+<tr class="memdesc:ga0cf3f316554658ca761fb902e85dac63"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS security violation flags. <br/></td></tr>
+<tr class="separator:ga0cf3f316554658ca761fb902e85dac63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e707a31ab358256a85c2acb2c054f2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0e707a31ab358256a85c2acb2c054f2b"></a>
 typedef struct <br class="typebreak"/>
-<a class="el" href="a00087.html#a00673">_smartcard_card_params</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaf1a45726b0072ad2b8af50b3281744ef">smartcard_card_params_t</a></td></tr>
-<tr class="memdesc:gaf1a45726b0072ad2b8af50b3281744ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines card-specific parameters for Smart card driver. <br/></td></tr>
-<tr class="separator:gaf1a45726b0072ad2b8af50b3281744ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga885a6f27a3d37bd6a88c58d580c1270d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga885a6f27a3d37bd6a88c58d580c1270d"></a>
-typedef struct <br class="typebreak"/>
-<a class="el" href="a00087.html#a00676">_smartcard_timers_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga885a6f27a3d37bd6a88c58d580c1270d">smartcard_timers_state_t</a></td></tr>
-<tr class="memdesc:ga885a6f27a3d37bd6a88c58d580c1270d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card defines the state of the EMV timers in the Smart card driver. <br/></td></tr>
-<tr class="separator:ga885a6f27a3d37bd6a88c58d580c1270d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ff88dd531e961a8424c702f7444a243"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8ff88dd531e961a8424c702f7444a243"></a>
-typedef struct <br class="typebreak"/>
-<a class="el" href="a00087.html#a00675">_smartcard_interface_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga8ff88dd531e961a8424c702f7444a243">smartcard_interface_config_t</a></td></tr>
-<tr class="memdesc:ga8ff88dd531e961a8424c702f7444a243"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines user specified configuration of Smart card interface. <br/></td></tr>
-<tr class="separator:ga8ff88dd531e961a8424c702f7444a243"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga566ae97bdb29bdb8fb1c1161d594cf6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga566ae97bdb29bdb8fb1c1161d594cf6c"></a>
-typedef struct <a class="el" href="a00087.html#a00677">_smartcard_xfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga566ae97bdb29bdb8fb1c1161d594cf6c">smartcard_xfer_t</a></td></tr>
-<tr class="memdesc:ga566ae97bdb29bdb8fb1c1161d594cf6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines user transfer structure used to initialize transfer. <br/></td></tr>
-<tr class="separator:ga566ae97bdb29bdb8fb1c1161d594cf6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c7d10f8191718ebfdfbc5808ffaea95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c7d10f8191718ebfdfbc5808ffaea95"></a>
-typedef struct <a class="el" href="a00087.html#a00674">_smartcard_context</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0c7d10f8191718ebfdfbc5808ffaea95">smartcard_context_t</a></td></tr>
-<tr class="memdesc:ga0c7d10f8191718ebfdfbc5808ffaea95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime state of the Smart card driver. <br/></td></tr>
-<tr class="separator:ga0c7d10f8191718ebfdfbc5808ffaea95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<a class="el" href="a00087.html#a00676">_snvs_hp_rtc_datetime</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a></td></tr>
+<tr class="memdesc:ga0e707a31ab358256a85c2acb2c054f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time. <br/></td></tr>
+<tr class="separator:ga0e707a31ab358256a85c2acb2c054f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9605694d6a038b656b598bea9ca67a24"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00087.html#a00675">_snvs_hp_rtc_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga9605694d6a038b656b598bea9ca67a24">snvs_hp_rtc_config_t</a></td></tr>
+<tr class="memdesc:ga9605694d6a038b656b598bea9ca67a24"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS config structure.  <a href="#ga9605694d6a038b656b598bea9ca67a24">More...</a><br/></td></tr>
+<tr class="separator:ga9605694d6a038b656b598bea9ca67a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cf043a7742a0cf6f4ddb04d3885a4a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1cf043a7742a0cf6f4ddb04d3885a4a8"></a>
+typedef enum <a class="el" href="a00087.html#gacb5b9c2a5667fd3c3e9c5c1abd6bda81">_snvs_hp_ssm_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga1cf043a7742a0cf6f4ddb04d3885a4a8">snvs_hp_ssm_state_t</a></td></tr>
+<tr class="memdesc:ga1cf043a7742a0cf6f4ddb04d3885a4a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS Security State Machine State. <br/></td></tr>
+<tr class="separator:ga1cf043a7742a0cf6f4ddb04d3885a4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga0ae1e3bf78c960c83e2d437efd802058"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058af4a7d15729a632fcff216f4203e45894">kStatus_SMARTCARD_Success</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 0), 
+<tr class="memitem:ga5c163901f9e11cb0b5005796938b7c78"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga5c163901f9e11cb0b5005796938b7c78">_snvs_hp_interrupts</a> { <br/>
+&#160;&#160;<a class="el" href="a00087.html#gga5c163901f9e11cb0b5005796938b7c78a1e479f0d0f6b4d039d2e9bcda6e21396">kSNVS_RTC_AlarmInterrupt</a> = SNVS_HPCR_HPTA_EN_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a1ceaaad06999f92ec00c6d7aa54fff25">kStatus_SMARTCARD_TxBusy</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a6d86716992e29764cd1baadc6de8154d">kStatus_SMARTCARD_RxBusy</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a7a428aea3974d37bf0cc4474b57ec76e">kStatus_SMARTCARD_NoTransferInProgress</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058abc65f3fca631698cf065e4732fb5b49d">kStatus_SMARTCARD_Timeout</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a6e5f1a14530fa1865da32bd536ed50b3">kStatus_SMARTCARD_Initialized</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058aef93b179c5e7db3b41575fa88fa06c30">kStatus_SMARTCARD_PhyInitialized</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a911faf13c8d3a2dbe97f178c9c0ddb90">kStatus_SMARTCARD_CardNotActivated</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 7), 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a42f5e0e08e5edd588dafcdb166bb91a2">kStatus_SMARTCARD_InvalidInput</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00087.html#gga0ae1e3bf78c960c83e2d437efd802058a8d72e9988338127cc3affdc7bcbbef12">kStatus_SMARTCARD_OtherError</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 9)
+&#160;&#160;<a class="el" href="a00087.html#gga5c163901f9e11cb0b5005796938b7c78a58b00c8a408e2f99fa186401a3936176">kSNVS_RTC_PeriodicInterrupt</a> = SNVS_HPCR_PI_EN_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0ae1e3bf78c960c83e2d437efd802058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card Error codes.  <a href="a00087.html#ga0ae1e3bf78c960c83e2d437efd802058">More...</a><br/></td></tr>
-<tr class="separator:ga0ae1e3bf78c960c83e2d437efd802058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85570f092a17f66f832d98d750e226ff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga85570f092a17f66f832d98d750e226ff">_smartcard_control</a> </td></tr>
-<tr class="memdesc:ga85570f092a17f66f832d98d750e226ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control codes for the Smart card protocol timers and misc.  <a href="a00087.html#ga85570f092a17f66f832d98d750e226ff">More...</a><br/></td></tr>
-<tr class="separator:ga85570f092a17f66f832d98d750e226ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa930238ea1746f4a3353def7467ead12"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaa930238ea1746f4a3353def7467ead12">_smartcard_card_voltage_class</a> </td></tr>
-<tr class="memdesc:gaa930238ea1746f4a3353def7467ead12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card interface voltage class values. <br/></td></tr>
-<tr class="separator:gaa930238ea1746f4a3353def7467ead12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga350848cacb77a8eee78f49f61b1a7beb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga350848cacb77a8eee78f49f61b1a7beb">_smartcard_transfer_state</a> </td></tr>
-<tr class="memdesc:ga350848cacb77a8eee78f49f61b1a7beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card I/O transfer states. <br/></td></tr>
-<tr class="separator:ga350848cacb77a8eee78f49f61b1a7beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5092a223b31a7ebb050f4677f74fc7fa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga5092a223b31a7ebb050f4677f74fc7fa">_smartcard_reset_type</a> </td></tr>
-<tr class="memdesc:ga5092a223b31a7ebb050f4677f74fc7fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card reset types. <br/></td></tr>
-<tr class="separator:ga5092a223b31a7ebb050f4677f74fc7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7b26b00f2aab6fe646e8c75f9eb5c06"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gad7b26b00f2aab6fe646e8c75f9eb5c06">_smartcard_transport_type</a> </td></tr>
-<tr class="memdesc:gad7b26b00f2aab6fe646e8c75f9eb5c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card transport protocol types. <br/></td></tr>
-<tr class="separator:gad7b26b00f2aab6fe646e8c75f9eb5c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5686c6e2b9d585c9cc5abc76ba2fe138"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga5686c6e2b9d585c9cc5abc76ba2fe138">_smartcard_parity_type</a> </td></tr>
-<tr class="memdesc:ga5686c6e2b9d585c9cc5abc76ba2fe138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card data parity types. <br/></td></tr>
-<tr class="separator:ga5686c6e2b9d585c9cc5abc76ba2fe138"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96e980ee2b8f58982435fd82d02f75ca"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga96e980ee2b8f58982435fd82d02f75ca">_smartcard_card_convention</a> </td></tr>
-<tr class="memdesc:ga96e980ee2b8f58982435fd82d02f75ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines data Convention format. <br/></td></tr>
-<tr class="separator:ga96e980ee2b8f58982435fd82d02f75ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e16326504eef4c75113077efe76b170"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga2e16326504eef4c75113077efe76b170">_smartcard_interface_control</a> </td></tr>
-<tr class="memdesc:ga2e16326504eef4c75113077efe76b170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card interface IC control types. <br/></td></tr>
-<tr class="separator:ga2e16326504eef4c75113077efe76b170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a6a30bc2bef724fdf0f8b660969e15d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga3a6a30bc2bef724fdf0f8b660969e15d">_smartcard_direction</a> </td></tr>
-<tr class="memdesc:ga3a6a30bc2bef724fdf0f8b660969e15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines transfer direction.  <a href="a00087.html#ga3a6a30bc2bef724fdf0f8b660969e15d">More...</a><br/></td></tr>
-<tr class="separator:ga3a6a30bc2bef724fdf0f8b660969e15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga5c163901f9e11cb0b5005796938b7c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS interrupts.  <a href="a00087.html#ga5c163901f9e11cb0b5005796938b7c78">More...</a><br/></td></tr>
+<tr class="separator:ga5c163901f9e11cb0b5005796938b7c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabae76e8145eb18ea02a3140a9d510f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaabae76e8145eb18ea02a3140a9d510f9">_snvs_hp_status_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00087.html#ggaabae76e8145eb18ea02a3140a9d510f9a19082779de5fd8c7bfaa92039eaf986c">kSNVS_RTC_AlarmInterruptFlag</a> = SNVS_HPSR_HPTA_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggaabae76e8145eb18ea02a3140a9d510f9a17d3484ae7d03f9c858096a685b1a3e3">kSNVS_RTC_PeriodicInterruptFlag</a> = SNVS_HPSR_PI_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggaabae76e8145eb18ea02a3140a9d510f9a279f722517f638849505663da580be1c">kSNVS_ZMK_ZeroFlag</a> = (int)SNVS_HPSR_ZMK_ZERO_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggaabae76e8145eb18ea02a3140a9d510f9a4e7eae7a06f5e55366e49452e420b600">kSNVS_OTPMK_ZeroFlag</a> = SNVS_HPSR_OTPMK_ZERO_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaabae76e8145eb18ea02a3140a9d510f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS flags.  <a href="a00087.html#gaabae76e8145eb18ea02a3140a9d510f9">More...</a><br/></td></tr>
+<tr class="separator:gaabae76e8145eb18ea02a3140a9d510f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade36b8c0d607f8560c18b3fe22fe64e4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gade36b8c0d607f8560c18b3fe22fe64e4">_snvs_hp_sv_status_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4ab386522ef551593be1d1e0a3285a003d">kSNVS_LP_ViolationFlag</a> = SNVS_HPSVSR_SW_LPSV_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a72ba4e4d6a1d251e2d2f7360dec9c05a">kSNVS_ZMK_EccFailFlag</a> = SNVS_HPSVSR_ZMK_ECC_FAIL_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4ad4b177ee0c5f8c3fd5ba9a9f86fcf5ad">kSNVS_LP_SoftwareViolationFlag</a> = SNVS_HPSVSR_SW_LPSV_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4acfd1c986d4df4e3726c737eaa07b22dc">kSNVS_FatalSoftwareViolationFlag</a> = SNVS_HPSVSR_SW_FSV_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a69247198a66b059e1a6827e058031271">kSNVS_SoftwareViolationFlag</a> = SNVS_HPSVSR_SW_SV_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a64006780a5a990440d4dbd1546e15fd4">kSNVS_Violation0Flag</a> = SNVS_HPSVSR_SV0_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a690af4c92ba5760b03ff840b95acaaa3">kSNVS_Violation1Flag</a> = SNVS_HPSVSR_SV1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4af4f88b8dc3de81668fef973ea25712d5">kSNVS_Violation2Flag</a> = SNVS_HPSVSR_SV2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a12a565f3112032d80289d45237d42bb3">kSNVS_Violation4Flag</a> = SNVS_HPSVSR_SV4_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4ae89fe10f0c5b86b00f9f4efdfddd6ce5">kSNVS_Violation5Flag</a> = SNVS_HPSVSR_SV5_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gade36b8c0d607f8560c18b3fe22fe64e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS security violation flags.  <a href="a00087.html#gade36b8c0d607f8560c18b3fe22fe64e4">More...</a><br/></td></tr>
+<tr class="separator:gade36b8c0d607f8560c18b3fe22fe64e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb5b9c2a5667fd3c3e9c5c1abd6bda81"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gacb5b9c2a5667fd3c3e9c5c1abd6bda81">_snvs_hp_ssm_state</a> { <br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ae7830884d8e5020ccd5e20ae293dad15">kSNVS_SSMInit</a> = 0x00, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81af29e28c3c6dfb9f644ce8de542651ac9">kSNVS_SSMHardFail</a> = 0x01, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81a60a24f4c76cb3ddb67f746eac3bedc25">kSNVS_SSMSoftFail</a> = 0x03, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ab91ee8c742d743ff48b1536df21f249e">kSNVS_SSMInitInter</a> = 0x08, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81adec7dce6f5a46ff1f877f170518f1544">kSNVS_SSMCheck</a> = 0x09, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ac673a58e61c466f38a3e8660b0b281f6">kSNVS_SSMNonSecure</a> = 0x0B, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ac76e8c274dc67c9be07a1134f8e92a64">kSNVS_SSMTrusted</a> = 0x0D, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81aab8b6a11c429d8657470496b724f9204">kSNVS_SSMSecure</a> = 0x0F
+<br/>
+ }</td></tr>
+<tr class="memdesc:gacb5b9c2a5667fd3c3e9c5c1abd6bda81"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS Security State Machine State.  <a href="a00087.html#gacb5b9c2a5667fd3c3e9c5c1abd6bda81">More...</a><br/></td></tr>
+<tr class="separator:gacb5b9c2a5667fd3c3e9c5c1abd6bda81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae869c337512ca629a0e601b982970272"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gae869c337512ca629a0e601b982970272">SNVS_HP_EnableMasterKeySelection</a> (SNVS_Type *base, bool enable)</td></tr>
+<tr class="memdesc:gae869c337512ca629a0e601b982970272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable master key selection.  <a href="#gae869c337512ca629a0e601b982970272">More...</a><br/></td></tr>
+<tr class="separator:gae869c337512ca629a0e601b982970272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21a7a39709ab3afa624b8c0f15aefcaa"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga21a7a39709ab3afa624b8c0f15aefcaa">SNVS_HP_ProgramZeroizableMasterKey</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga21a7a39709ab3afa624b8c0f15aefcaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger to program Zeroizable Master Key.  <a href="#ga21a7a39709ab3afa624b8c0f15aefcaa">More...</a><br/></td></tr>
+<tr class="separator:ga21a7a39709ab3afa624b8c0f15aefcaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff088b89f9ffbb75c2a5ed6b5431349b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaff088b89f9ffbb75c2a5ed6b5431349b">SNVS_HP_ChangeSSMState</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gaff088b89f9ffbb75c2a5ed6b5431349b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger SSM State Transition.  <a href="#gaff088b89f9ffbb75c2a5ed6b5431349b">More...</a><br/></td></tr>
+<tr class="separator:gaff088b89f9ffbb75c2a5ed6b5431349b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60171bee768766e8726752083a943dad"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga60171bee768766e8726752083a943dad">SNVS_HP_SetSoftwareFatalSecurityViolation</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga60171bee768766e8726752083a943dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger Software Fatal Security Violation.  <a href="#ga60171bee768766e8726752083a943dad">More...</a><br/></td></tr>
+<tr class="separator:ga60171bee768766e8726752083a943dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22c3f9b30bdd4ef8d0f4c43595b11f0c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga22c3f9b30bdd4ef8d0f4c43595b11f0c">SNVS_HP_SetSoftwareSecurityViolation</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga22c3f9b30bdd4ef8d0f4c43595b11f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger Software Security Violation.  <a href="#ga22c3f9b30bdd4ef8d0f4c43595b11f0c">More...</a><br/></td></tr>
+<tr class="separator:ga22c3f9b30bdd4ef8d0f4c43595b11f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb8b240108f145a3e4cfbebb1f80ccc1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00087.html#ga1cf043a7742a0cf6f4ddb04d3885a4a8">snvs_hp_ssm_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gadb8b240108f145a3e4cfbebb1f80ccc1">SNVS_HP_GetSSMState</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gadb8b240108f145a3e4cfbebb1f80ccc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current SSM State.  <a href="#gadb8b240108f145a3e4cfbebb1f80ccc1">More...</a><br/></td></tr>
+<tr class="separator:gadb8b240108f145a3e4cfbebb1f80ccc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10de6343eb48b6f2e9cbca3288ab77c6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga10de6343eb48b6f2e9cbca3288ab77c6">SNVS_HP_ResetLP</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga10de6343eb48b6f2e9cbca3288ab77c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the SNVS LP section.  <a href="#ga10de6343eb48b6f2e9cbca3288ab77c6">More...</a><br/></td></tr>
+<tr class="separator:ga10de6343eb48b6f2e9cbca3288ab77c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa234622984c7a3657ec79b069636f87a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaa234622984c7a3657ec79b069636f87a">SNVS_HP_GetStatusFlags</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gaa234622984c7a3657ec79b069636f87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the SNVS HP status flags.  <a href="#gaa234622984c7a3657ec79b069636f87a">More...</a><br/></td></tr>
+<tr class="separator:gaa234622984c7a3657ec79b069636f87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7723e8246eb379ee772bb5f6b6c67cf7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7723e8246eb379ee772bb5f6b6c67cf7">SNVS_HP_ClearStatusFlags</a> (SNVS_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga7723e8246eb379ee772bb5f6b6c67cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the SNVS HP status flags.  <a href="#ga7723e8246eb379ee772bb5f6b6c67cf7">More...</a><br/></td></tr>
+<tr class="separator:ga7723e8246eb379ee772bb5f6b6c67cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5a306cceca268d2bfc90274f5673dab"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gab5a306cceca268d2bfc90274f5673dab">SNVS_HP_GetSecurityViolationStatusFlags</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gab5a306cceca268d2bfc90274f5673dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the SNVS HP security violation status flags.  <a href="#gab5a306cceca268d2bfc90274f5673dab">More...</a><br/></td></tr>
+<tr class="separator:gab5a306cceca268d2bfc90274f5673dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4a86a4006295c944a470bb986aaaedf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaf4a86a4006295c944a470bb986aaaedf">SNVS_HP_ClearSecurityViolationStatusFlags</a> (SNVS_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaf4a86a4006295c944a470bb986aaaedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the SNVS HP security violation status flags.  <a href="#gaf4a86a4006295c944a470bb986aaaedf">More...</a><br/></td></tr>
+<tr class="separator:gaf4a86a4006295c944a470bb986aaaedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga7bf31c8c6501017503f021feee4d3bed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7bf31c8c6501017503f021feee4d3bed"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7bf31c8c6501017503f021feee4d3bed">FSL_SMARTCARD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td></tr>
-<tr class="memdesc:ga7bf31c8c6501017503f021feee4d3bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card driver version 2.3.0. <br/></td></tr>
-<tr class="separator:ga7bf31c8c6501017503f021feee4d3bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf7c8c47c4f4124f31c7f48ae5715b75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf7c8c47c4f4124f31c7f48ae5715b75"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaaf7c8c47c4f4124f31c7f48ae5715b75">FSL_SNVS_HP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+<tr class="memdesc:gaaf7c8c47c4f4124f31c7f48ae5715b75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.3.2. <br/></td></tr>
+<tr class="separator:gaaf7c8c47c4f4124f31c7f48ae5715b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:gada84c18b75cc202b407834f56a8e7f80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gada84c18b75cc202b407834f56a8e7f80">SNVS_HP_Init</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gada84c18b75cc202b407834f56a8e7f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SNVS.  <a href="#gada84c18b75cc202b407834f56a8e7f80">More...</a><br/></td></tr>
+<tr class="separator:gada84c18b75cc202b407834f56a8e7f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga805de8a4dd37cd65e384b9fae9d7e4c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga805de8a4dd37cd65e384b9fae9d7e4c7">SNVS_HP_Deinit</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga805de8a4dd37cd65e384b9fae9d7e4c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize the SNVS.  <a href="#ga805de8a4dd37cd65e384b9fae9d7e4c7">More...</a><br/></td></tr>
+<tr class="separator:ga805de8a4dd37cd65e384b9fae9d7e4c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga694fb339332f988476e2d0749cd95bf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga694fb339332f988476e2d0749cd95bf5">SNVS_HP_RTC_Init</a> (SNVS_Type *base, const <a class="el" href="a00087.html#ga9605694d6a038b656b598bea9ca67a24">snvs_hp_rtc_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga694fb339332f988476e2d0749cd95bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SNVS clock and configures the peripheral for basic operation.  <a href="#ga694fb339332f988476e2d0749cd95bf5">More...</a><br/></td></tr>
+<tr class="separator:ga694fb339332f988476e2d0749cd95bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace39a108e8e1e08120f25f020ef7ba20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gace39a108e8e1e08120f25f020ef7ba20">SNVS_HP_RTC_Deinit</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gace39a108e8e1e08120f25f020ef7ba20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the RTC and SRTC timers.  <a href="#gace39a108e8e1e08120f25f020ef7ba20">More...</a><br/></td></tr>
+<tr class="separator:gace39a108e8e1e08120f25f020ef7ba20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5bc52a7456da293cd0286832462e7fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gad5bc52a7456da293cd0286832462e7fd">SNVS_HP_RTC_GetDefaultConfig</a> (<a class="el" href="a00087.html#ga9605694d6a038b656b598bea9ca67a24">snvs_hp_rtc_config_t</a> *config)</td></tr>
+<tr class="memdesc:gad5bc52a7456da293cd0286832462e7fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS config struct with the default settings.  <a href="#gad5bc52a7456da293cd0286832462e7fd">More...</a><br/></td></tr>
+<tr class="separator:gad5bc52a7456da293cd0286832462e7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Non secure RTC current Time &amp; Alarm</h2></td></tr>
+<tr class="memitem:ga25785442a761c5e674f40079c92c839f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga25785442a761c5e674f40079c92c839f">SNVS_HP_RTC_SetDatetime</a> (SNVS_Type *base, const <a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *datetime)</td></tr>
+<tr class="memdesc:ga25785442a761c5e674f40079c92c839f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS RTC date and time according to the given time structure.  <a href="#ga25785442a761c5e674f40079c92c839f">More...</a><br/></td></tr>
+<tr class="separator:ga25785442a761c5e674f40079c92c839f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfb1241d346995a130f3e2e046bb0d54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gadfb1241d346995a130f3e2e046bb0d54">SNVS_HP_RTC_GetDatetime</a> (SNVS_Type *base, <a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *datetime)</td></tr>
+<tr class="memdesc:gadfb1241d346995a130f3e2e046bb0d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS RTC time and stores it in the given time structure.  <a href="#gadfb1241d346995a130f3e2e046bb0d54">More...</a><br/></td></tr>
+<tr class="separator:gadfb1241d346995a130f3e2e046bb0d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10fcc3d2cef1b0bfe722c9a51f4ed7cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga10fcc3d2cef1b0bfe722c9a51f4ed7cb">SNVS_HP_RTC_SetAlarm</a> (SNVS_Type *base, const <a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *alarmTime)</td></tr>
+<tr class="memdesc:ga10fcc3d2cef1b0bfe722c9a51f4ed7cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS RTC alarm time.  <a href="#ga10fcc3d2cef1b0bfe722c9a51f4ed7cb">More...</a><br/></td></tr>
+<tr class="separator:ga10fcc3d2cef1b0bfe722c9a51f4ed7cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e0d74a5e589f7c845e4fe4003622c63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7e0d74a5e589f7c845e4fe4003622c63">SNVS_HP_RTC_GetAlarm</a> (SNVS_Type *base, <a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *datetime)</td></tr>
+<tr class="memdesc:ga7e0d74a5e589f7c845e4fe4003622c63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the SNVS RTC alarm time.  <a href="#ga7e0d74a5e589f7c845e4fe4003622c63">More...</a><br/></td></tr>
+<tr class="separator:ga7e0d74a5e589f7c845e4fe4003622c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdf4a1b2c66ed56d524c803a78a2fcab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gafdf4a1b2c66ed56d524c803a78a2fcab">SNVS_HP_RTC_TimeSynchronize</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gafdf4a1b2c66ed56d524c803a78a2fcab"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function synchronizes RTC counter value with SRTC.  <a href="#gafdf4a1b2c66ed56d524c803a78a2fcab">More...</a><br/></td></tr>
+<tr class="separator:gafdf4a1b2c66ed56d524c803a78a2fcab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupt Interface</h2></td></tr>
+<tr class="memitem:gae719f60ac8585937d91c55ed1b469692"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gae719f60ac8585937d91c55ed1b469692">SNVS_HP_RTC_EnableInterrupts</a> (SNVS_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gae719f60ac8585937d91c55ed1b469692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected SNVS interrupts.  <a href="#gae719f60ac8585937d91c55ed1b469692">More...</a><br/></td></tr>
+<tr class="separator:gae719f60ac8585937d91c55ed1b469692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa41a91bf279a1d7ecd75239468e75ed2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaa41a91bf279a1d7ecd75239468e75ed2">SNVS_HP_RTC_DisableInterrupts</a> (SNVS_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa41a91bf279a1d7ecd75239468e75ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected SNVS interrupts.  <a href="#gaa41a91bf279a1d7ecd75239468e75ed2">More...</a><br/></td></tr>
+<tr class="separator:gaa41a91bf279a1d7ecd75239468e75ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac719942dfcd56e8d34b62e21b34587b6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gac719942dfcd56e8d34b62e21b34587b6">SNVS_HP_RTC_GetEnabledInterrupts</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gac719942dfcd56e8d34b62e21b34587b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled SNVS interrupts.  <a href="#gac719942dfcd56e8d34b62e21b34587b6">More...</a><br/></td></tr>
+<tr class="separator:gac719942dfcd56e8d34b62e21b34587b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status Interface</h2></td></tr>
+<tr class="memitem:gaf2a0b49399456cf266a7a1a8a1a473ff"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaf2a0b49399456cf266a7a1a8a1a473ff">SNVS_HP_RTC_GetStatusFlags</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gaf2a0b49399456cf266a7a1a8a1a473ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS status flags.  <a href="#gaf2a0b49399456cf266a7a1a8a1a473ff">More...</a><br/></td></tr>
+<tr class="separator:gaf2a0b49399456cf266a7a1a8a1a473ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b9b860ebeb5100ec7b6c98f7952b63c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0b9b860ebeb5100ec7b6c98f7952b63c">SNVS_HP_RTC_ClearStatusFlags</a> (SNVS_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga0b9b860ebeb5100ec7b6c98f7952b63c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the SNVS status flags.  <a href="#ga0b9b860ebeb5100ec7b6c98f7952b63c">More...</a><br/></td></tr>
+<tr class="separator:ga0b9b860ebeb5100ec7b6c98f7952b63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Timer Start and Stop</h2></td></tr>
+<tr class="memitem:ga3c5f394b407a9aa9e0ba0a0b90bf7906"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga3c5f394b407a9aa9e0ba0a0b90bf7906">SNVS_HP_RTC_StartTimer</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga3c5f394b407a9aa9e0ba0a0b90bf7906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the SNVS RTC time counter.  <a href="#ga3c5f394b407a9aa9e0ba0a0b90bf7906">More...</a><br/></td></tr>
+<tr class="separator:ga3c5f394b407a9aa9e0ba0a0b90bf7906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0d3010ff1f3db29207b195c198a6947"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gad0d3010ff1f3db29207b195c198a6947">SNVS_HP_RTC_StopTimer</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gad0d3010ff1f3db29207b195c198a6947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the SNVS RTC time counter.  <a href="#gad0d3010ff1f3db29207b195c198a6947">More...</a><br/></td></tr>
+<tr class="separator:gad0d3010ff1f3db29207b195c198a6947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+High Assurance Counter (HAC)</h2></td></tr>
+<tr class="memitem:gaaa1b29ca892f37019e83d84a470a1a76"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaaa1b29ca892f37019e83d84a470a1a76">SNVS_HP_EnableHighAssuranceCounter</a> (SNVS_Type *base, bool enable)</td></tr>
+<tr class="memdesc:gaaa1b29ca892f37019e83d84a470a1a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the High Assurance Counter (HAC)  <a href="#gaaa1b29ca892f37019e83d84a470a1a76">More...</a><br/></td></tr>
+<tr class="separator:gaaa1b29ca892f37019e83d84a470a1a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab35e6350cc3d48196260798917b93f34"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gab35e6350cc3d48196260798917b93f34">SNVS_HP_StartHighAssuranceCounter</a> (SNVS_Type *base, bool start)</td></tr>
+<tr class="memdesc:gab35e6350cc3d48196260798917b93f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start or stop the High Assurance Counter (HAC)  <a href="#gab35e6350cc3d48196260798917b93f34">More...</a><br/></td></tr>
+<tr class="separator:gab35e6350cc3d48196260798917b93f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34a0f9c4dccca6c816d2c77d7f6dfe06"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga34a0f9c4dccca6c816d2c77d7f6dfe06">SNVS_HP_SetHighAssuranceCounterInitialValue</a> (SNVS_Type *base, uint32_t value)</td></tr>
+<tr class="memdesc:ga34a0f9c4dccca6c816d2c77d7f6dfe06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the High Assurance Counter (HAC) initialize value.  <a href="#ga34a0f9c4dccca6c816d2c77d7f6dfe06">More...</a><br/></td></tr>
+<tr class="separator:ga34a0f9c4dccca6c816d2c77d7f6dfe06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78d44b44b57abe52f6fbea79ecb4b3f1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga78d44b44b57abe52f6fbea79ecb4b3f1">SNVS_HP_LoadHighAssuranceCounter</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga78d44b44b57abe52f6fbea79ecb4b3f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the High Assurance Counter (HAC)  <a href="#ga78d44b44b57abe52f6fbea79ecb4b3f1">More...</a><br/></td></tr>
+<tr class="separator:ga78d44b44b57abe52f6fbea79ecb4b3f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52a4800b22c38b167715e18c18e75682"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga52a4800b22c38b167715e18c18e75682">SNVS_HP_GetHighAssuranceCounter</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga52a4800b22c38b167715e18c18e75682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current High Assurance Counter (HAC) value.  <a href="#ga52a4800b22c38b167715e18c18e75682">More...</a><br/></td></tr>
+<tr class="separator:ga52a4800b22c38b167715e18c18e75682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f3b01557d29b8bc99971e262ca329a7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga2f3b01557d29b8bc99971e262ca329a7">SNVS_HP_ClearHighAssuranceCounter</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:ga2f3b01557d29b8bc99971e262ca329a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the High Assurance Counter (HAC)  <a href="#ga2f3b01557d29b8bc99971e262ca329a7">More...</a><br/></td></tr>
+<tr class="separator:ga2f3b01557d29b8bc99971e262ca329a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3122ce2343b9b002443dc8488531bde"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gad3122ce2343b9b002443dc8488531bde">SNVS_HP_LockHighAssuranceCounter</a> (SNVS_Type *base)</td></tr>
+<tr class="memdesc:gad3122ce2343b9b002443dc8488531bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the High Assurance Counter (HAC)  <a href="#gad3122ce2343b9b002443dc8488531bde">More...</a><br/></td></tr>
+<tr class="separator:gad3122ce2343b9b002443dc8488531bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00673" id="a00673"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _smartcard_card_params</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afc19ec1a9b089f866700d8a9884ebff9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc19ec1a9b089f866700d8a9884ebff9"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#afc19ec1a9b089f866700d8a9884ebff9">Fi</a></td></tr>
-<tr class="memdesc:afc19ec1a9b089f866700d8a9884ebff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits Fi - clock rate conversion integer <br/></td></tr>
-<tr class="separator:afc19ec1a9b089f866700d8a9884ebff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a0f87eef72f8e92ad4947b0cce2c8a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a0f87eef72f8e92ad4947b0cce2c8a7"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6a0f87eef72f8e92ad4947b0cce2c8a7">fMax</a></td></tr>
-<tr class="memdesc:a6a0f87eef72f8e92ad4947b0cce2c8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Smart card frequency in MHz. <br/></td></tr>
-<tr class="separator:a6a0f87eef72f8e92ad4947b0cce2c8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a585995d969ba4d8d79cbd31f8f9fafde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a585995d969ba4d8d79cbd31f8f9fafde"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a585995d969ba4d8d79cbd31f8f9fafde">WI</a></td></tr>
-<tr class="memdesc:a585995d969ba4d8d79cbd31f8f9fafde"><td class="mdescLeft">&#160;</td><td class="mdescRight">8 bits WI - work wait time integer <br/></td></tr>
-<tr class="separator:a585995d969ba4d8d79cbd31f8f9fafde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8987cca1059b0f19173f580f46c3858d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8987cca1059b0f19173f580f46c3858d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8987cca1059b0f19173f580f46c3858d">Di</a></td></tr>
-<tr class="memdesc:a8987cca1059b0f19173f580f46c3858d"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits DI - baud rate divisor <br/></td></tr>
-<tr class="separator:a8987cca1059b0f19173f580f46c3858d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86eb79a1763de262cd486982814f5b38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86eb79a1763de262cd486982814f5b38"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a86eb79a1763de262cd486982814f5b38">BWI</a></td></tr>
-<tr class="memdesc:a86eb79a1763de262cd486982814f5b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits BWI - block wait time integer <br/></td></tr>
-<tr class="separator:a86eb79a1763de262cd486982814f5b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a959b1d50a3e962c6af99d755b8199cd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a959b1d50a3e962c6af99d755b8199cd8"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a959b1d50a3e962c6af99d755b8199cd8">CWI</a></td></tr>
-<tr class="memdesc:a959b1d50a3e962c6af99d755b8199cd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits CWI - character wait time integer <br/></td></tr>
-<tr class="separator:a959b1d50a3e962c6af99d755b8199cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaed6a0b7be93605e20228c1fe21a5742"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaed6a0b7be93605e20228c1fe21a5742"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aaed6a0b7be93605e20228c1fe21a5742">BGI</a></td></tr>
-<tr class="memdesc:aaed6a0b7be93605e20228c1fe21a5742"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits BGI - block guard time integer <br/></td></tr>
-<tr class="separator:aaed6a0b7be93605e20228c1fe21a5742"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c8dcdf3a4eeb141f7173be50b7983ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c8dcdf3a4eeb141f7173be50b7983ae"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6c8dcdf3a4eeb141f7173be50b7983ae">GTN</a></td></tr>
-<tr class="memdesc:a6c8dcdf3a4eeb141f7173be50b7983ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">8 bits GTN - extended guard time integer <br/></td></tr>
-<tr class="separator:a6c8dcdf3a4eeb141f7173be50b7983ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e5b27dd160a569116df9449a65d9ba9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e5b27dd160a569116df9449a65d9ba9"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a7e5b27dd160a569116df9449a65d9ba9">IFSC</a></td></tr>
-<tr class="memdesc:a7e5b27dd160a569116df9449a65d9ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates IFSC value of the card. <br/></td></tr>
-<tr class="separator:a7e5b27dd160a569116df9449a65d9ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37defa9ce93cb90faff4f7710fea10de"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a37defa9ce93cb90faff4f7710fea10de">modeNegotiable</a></td></tr>
-<tr class="memdesc:a37defa9ce93cb90faff4f7710fea10de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the card acts in negotiable or a specific mode.  <a href="#a37defa9ce93cb90faff4f7710fea10de">More...</a><br/></td></tr>
-<tr class="separator:a37defa9ce93cb90faff4f7710fea10de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd79975d4feb5370abedb6ab16cf591e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd79975d4feb5370abedb6ab16cf591e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#afd79975d4feb5370abedb6ab16cf591e">currentD</a></td></tr>
-<tr class="memdesc:afd79975d4feb5370abedb6ab16cf591e"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits DI - current baud rate divisor <br/></td></tr>
-<tr class="separator:afd79975d4feb5370abedb6ab16cf591e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6859609a0cc21d587f92ad833ebd3f53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6859609a0cc21d587f92ad833ebd3f53"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6859609a0cc21d587f92ad833ebd3f53">status</a></td></tr>
-<tr class="memdesc:a6859609a0cc21d587f92ad833ebd3f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates smart card status. <br/></td></tr>
-<tr class="separator:a6859609a0cc21d587f92ad833ebd3f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff3aa6df08aadefaeb2f9baeff191a9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff3aa6df08aadefaeb2f9baeff191a9b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aff3aa6df08aadefaeb2f9baeff191a9b">t0Indicated</a></td></tr>
-<tr class="memdesc:aff3aa6df08aadefaeb2f9baeff191a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates ff T=0 indicated in TD1 byte. <br/></td></tr>
-<tr class="separator:aff3aa6df08aadefaeb2f9baeff191a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5972a7bd5f61f823fdcedd6bbed1867c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5972a7bd5f61f823fdcedd6bbed1867c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5972a7bd5f61f823fdcedd6bbed1867c">t1Indicated</a></td></tr>
-<tr class="memdesc:a5972a7bd5f61f823fdcedd6bbed1867c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if T=1 indicated in TD2 byte. <br/></td></tr>
-<tr class="separator:a5972a7bd5f61f823fdcedd6bbed1867c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3a59dbc2413a4fc97e6b4d01e373bd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3a59dbc2413a4fc97e6b4d01e373bd0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af3a59dbc2413a4fc97e6b4d01e373bd0">atrComplete</a></td></tr>
-<tr class="memdesc:af3a59dbc2413a4fc97e6b4d01e373bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the ATR received from the card was complete or not. <br/></td></tr>
-<tr class="separator:af3a59dbc2413a4fc97e6b4d01e373bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af69788ffa38deb3b2fe685e1bbbc99e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af69788ffa38deb3b2fe685e1bbbc99e5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af69788ffa38deb3b2fe685e1bbbc99e5">atrValid</a></td></tr>
-<tr class="memdesc:af69788ffa38deb3b2fe685e1bbbc99e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the ATR received from the card was valid or not. <br/></td></tr>
-<tr class="separator:af69788ffa38deb3b2fe685e1bbbc99e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9976d2118a9d2be597228ffdf272eed6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9976d2118a9d2be597228ffdf272eed6"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a9976d2118a9d2be597228ffdf272eed6">present</a></td></tr>
-<tr class="memdesc:a9976d2118a9d2be597228ffdf272eed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if a smart card is present. <br/></td></tr>
-<tr class="separator:a9976d2118a9d2be597228ffdf272eed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72e4d2348b613a36d1dba0f37bf88a77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72e4d2348b613a36d1dba0f37bf88a77"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a72e4d2348b613a36d1dba0f37bf88a77">active</a></td></tr>
-<tr class="memdesc:a72e4d2348b613a36d1dba0f37bf88a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the smart card is activated. <br/></td></tr>
-<tr class="separator:a72e4d2348b613a36d1dba0f37bf88a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b5790f0cffcb3a88a3d0a07d1b8f908"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b5790f0cffcb3a88a3d0a07d1b8f908"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a1b5790f0cffcb3a88a3d0a07d1b8f908">faulty</a></td></tr>
-<tr class="memdesc:a1b5790f0cffcb3a88a3d0a07d1b8f908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether smart card/interface is faulty. <br/></td></tr>
-<tr class="separator:a1b5790f0cffcb3a88a3d0a07d1b8f908"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20165849282407264c550cc9045bb0ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20165849282407264c550cc9045bb0ed"></a>
-<a class="el" href="a00087.html#gae869b7249845af481444f826fb4c02a4">smartcard_card_convention_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a20165849282407264c550cc9045bb0ed">convention</a></td></tr>
-<tr class="memdesc:a20165849282407264c550cc9045bb0ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card convention, kSMARTCARD_DirectConvention for direct convention, kSMARTCARD_InverseConvention for inverse convention. <br/></td></tr>
-<tr class="separator:a20165849282407264c550cc9045bb0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a37defa9ce93cb90faff4f7710fea10de"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t _smartcard_card_params::modeNegotiable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
 <a name="a00676" id="a00676"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _smartcard_timers_state</td>
+          <td class="memname">struct _snvs_hp_rtc_datetime</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a5ee93ff09fa64f2f16201f2f44cbff13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ee93ff09fa64f2f16201f2f44cbff13"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5ee93ff09fa64f2f16201f2f44cbff13">adtExpired</a></td></tr>
-<tr class="memdesc:a5ee93ff09fa64f2f16201f2f44cbff13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether ADT timer expired. <br/></td></tr>
-<tr class="separator:a5ee93ff09fa64f2f16201f2f44cbff13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a759e7fc25dd5c21a9ffda07cfc470a56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a759e7fc25dd5c21a9ffda07cfc470a56"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a759e7fc25dd5c21a9ffda07cfc470a56">wwtExpired</a></td></tr>
-<tr class="memdesc:a759e7fc25dd5c21a9ffda07cfc470a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether WWT timer expired. <br/></td></tr>
-<tr class="separator:a759e7fc25dd5c21a9ffda07cfc470a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb6a6d51fd1e3f16685f49163a33d44b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb6a6d51fd1e3f16685f49163a33d44b"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#adb6a6d51fd1e3f16685f49163a33d44b">cwtExpired</a></td></tr>
-<tr class="memdesc:adb6a6d51fd1e3f16685f49163a33d44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether CWT timer expired. <br/></td></tr>
-<tr class="separator:adb6a6d51fd1e3f16685f49163a33d44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9163c1dfe67ff1deca0e8f4289a32ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9163c1dfe67ff1deca0e8f4289a32ee"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab9163c1dfe67ff1deca0e8f4289a32ee">bwtExpired</a></td></tr>
-<tr class="memdesc:ab9163c1dfe67ff1deca0e8f4289a32ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether BWT timer expired. <br/></td></tr>
-<tr class="separator:ab9163c1dfe67ff1deca0e8f4289a32ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a001f52ec97a64cee2bf49fc8557e653a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a001f52ec97a64cee2bf49fc8557e653a"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a001f52ec97a64cee2bf49fc8557e653a">initCharTimerExpired</a></td></tr>
-<tr class="memdesc:a001f52ec97a64cee2bf49fc8557e653a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">                         Indicates whether reception timer
-</pre><p> for initialization character (TS) after the RST has expired <br/></td></tr>
-<tr class="separator:a001f52ec97a64cee2bf49fc8557e653a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836ff503da955a0cdda9fa807f80421f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a836ff503da955a0cdda9fa807f80421f">year</a></td></tr>
+<tr class="memdesc:a836ff503da955a0cdda9fa807f80421f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1970 to 2099.  <a href="#a836ff503da955a0cdda9fa807f80421f">More...</a><br/></td></tr>
+<tr class="separator:a836ff503da955a0cdda9fa807f80421f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c13973b2b0b18cc220853b0e9f75858"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6c13973b2b0b18cc220853b0e9f75858">month</a></td></tr>
+<tr class="memdesc:a6c13973b2b0b18cc220853b0e9f75858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 12.  <a href="#a6c13973b2b0b18cc220853b0e9f75858">More...</a><br/></td></tr>
+<tr class="separator:a6c13973b2b0b18cc220853b0e9f75858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ce9de689371f5368b73b0004f1c020f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5ce9de689371f5368b73b0004f1c020f">day</a></td></tr>
+<tr class="memdesc:a5ce9de689371f5368b73b0004f1c020f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 31 (depending on month).  <a href="#a5ce9de689371f5368b73b0004f1c020f">More...</a><br/></td></tr>
+<tr class="separator:a5ce9de689371f5368b73b0004f1c020f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a084847db9741c605783cd756d19714e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a084847db9741c605783cd756d19714e1">hour</a></td></tr>
+<tr class="memdesc:a084847db9741c605783cd756d19714e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 23.  <a href="#a084847db9741c605783cd756d19714e1">More...</a><br/></td></tr>
+<tr class="separator:a084847db9741c605783cd756d19714e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e93bfc01d35a263b8dc5eaa3d30444"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a14e93bfc01d35a263b8dc5eaa3d30444">minute</a></td></tr>
+<tr class="memdesc:a14e93bfc01d35a263b8dc5eaa3d30444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a14e93bfc01d35a263b8dc5eaa3d30444">More...</a><br/></td></tr>
+<tr class="separator:a14e93bfc01d35a263b8dc5eaa3d30444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4dbeeb35d7f416515468aeabbac635b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac4dbeeb35d7f416515468aeabbac635b">second</a></td></tr>
+<tr class="memdesc:ac4dbeeb35d7f416515468aeabbac635b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#ac4dbeeb35d7f416515468aeabbac635b">More...</a><br/></td></tr>
+<tr class="separator:ac4dbeeb35d7f416515468aeabbac635b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a836ff503da955a0cdda9fa807f80421f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t _snvs_hp_rtc_datetime::year</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6c13973b2b0b18cc220853b0e9f75858"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _snvs_hp_rtc_datetime::month</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5ce9de689371f5368b73b0004f1c020f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _snvs_hp_rtc_datetime::day</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a084847db9741c605783cd756d19714e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _snvs_hp_rtc_datetime::hour</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a14e93bfc01d35a263b8dc5eaa3d30444"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _snvs_hp_rtc_datetime::minute</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac4dbeeb35d7f416515468aeabbac635b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _snvs_hp_rtc_datetime::second</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
@@ -472,513 +469,1360 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _smartcard_interface_config</td>
+          <td class="memname">struct _snvs_hp_rtc_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>This structure holds the configuration settings for the SNVS peripheral. To initialize this structure to reasonable defaults, call the SNVS_GetDefaultConfig() function and pass a pointer to your config structure instance.</p>
+<p>The config struct can be made const so it resides in flash </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:adf7edb92fd2b4d6f4cde83443b40ec9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf7edb92fd2b4d6f4cde83443b40ec9c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#adf7edb92fd2b4d6f4cde83443b40ec9c">smartCardClock</a></td></tr>
-<tr class="memdesc:adf7edb92fd2b4d6f4cde83443b40ec9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card interface clock [Hz]. <br/></td></tr>
-<tr class="separator:adf7edb92fd2b4d6f4cde83443b40ec9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6675c61bc591ae3505f637476b373a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6675c61bc591ae3505f637476b373a5"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ae6675c61bc591ae3505f637476b373a5">clockToResetDelay</a></td></tr>
-<tr class="memdesc:ae6675c61bc591ae3505f637476b373a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates clock to RST apply delay [smart card clock cycles]. <br/></td></tr>
-<tr class="separator:ae6675c61bc591ae3505f637476b373a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb0a9cf260519b41065a3ed31746246c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb0a9cf260519b41065a3ed31746246c"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#abb0a9cf260519b41065a3ed31746246c">clockModule</a></td></tr>
-<tr class="memdesc:abb0a9cf260519b41065a3ed31746246c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card clock module number. <br/></td></tr>
-<tr class="separator:abb0a9cf260519b41065a3ed31746246c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaf32b3978ee6aa7ffdbc8263f485d57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaf32b3978ee6aa7ffdbc8263f485d57"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aeaf32b3978ee6aa7ffdbc8263f485d57">clockModuleChannel</a></td></tr>
-<tr class="memdesc:aeaf32b3978ee6aa7ffdbc8263f485d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card clock module channel number. <br/></td></tr>
-<tr class="separator:aeaf32b3978ee6aa7ffdbc8263f485d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab13a2152fdc198ff1c6b1604ed25ad52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab13a2152fdc198ff1c6b1604ed25ad52"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab13a2152fdc198ff1c6b1604ed25ad52">clockModuleSourceClock</a></td></tr>
-<tr class="memdesc:ab13a2152fdc198ff1c6b1604ed25ad52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card clock module source clock [e.g., BusClk]. <br/></td></tr>
-<tr class="separator:ab13a2152fdc198ff1c6b1604ed25ad52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c6d266ce225b4754c442a20edfdf5e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c6d266ce225b4754c442a20edfdf5e5"></a>
-<a class="el" href="a00087.html#gae03f5482e853e05b20820170eb9d6500">smartcard_card_voltage_class_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2c6d266ce225b4754c442a20edfdf5e5">vcc</a></td></tr>
-<tr class="memdesc:a2c6d266ce225b4754c442a20edfdf5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card voltage class. <br/></td></tr>
-<tr class="separator:a2c6d266ce225b4754c442a20edfdf5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d2f3d6d7fa79d461f6acbc2cae7a279"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d2f3d6d7fa79d461f6acbc2cae7a279"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a7d2f3d6d7fa79d461f6acbc2cae7a279">controlPort</a></td></tr>
-<tr class="memdesc:a7d2f3d6d7fa79d461f6acbc2cae7a279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY control port instance. <br/></td></tr>
-<tr class="separator:a7d2f3d6d7fa79d461f6acbc2cae7a279"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91c367db7256a6448c0a2e649f8e4cd4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91c367db7256a6448c0a2e649f8e4cd4"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a91c367db7256a6448c0a2e649f8e4cd4">controlPin</a></td></tr>
-<tr class="memdesc:a91c367db7256a6448c0a2e649f8e4cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY control pin instance. <br/></td></tr>
-<tr class="separator:a91c367db7256a6448c0a2e649f8e4cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc92dbf82447e3cb7c91b3f3c8c8726e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc92dbf82447e3cb7c91b3f3c8c8726e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#afc92dbf82447e3cb7c91b3f3c8c8726e">irqPort</a></td></tr>
-<tr class="memdesc:afc92dbf82447e3cb7c91b3f3c8c8726e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Interrupt port instance. <br/></td></tr>
-<tr class="separator:afc92dbf82447e3cb7c91b3f3c8c8726e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b6bbabf2e2b48914d752866434bca3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b6bbabf2e2b48914d752866434bca3d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a0b6bbabf2e2b48914d752866434bca3d">irqPin</a></td></tr>
-<tr class="memdesc:a0b6bbabf2e2b48914d752866434bca3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Interrupt pin instance. <br/></td></tr>
-<tr class="separator:a0b6bbabf2e2b48914d752866434bca3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37192c293364dde155b76b57c113512e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37192c293364dde155b76b57c113512e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a37192c293364dde155b76b57c113512e">resetPort</a></td></tr>
-<tr class="memdesc:a37192c293364dde155b76b57c113512e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card reset port instance. <br/></td></tr>
-<tr class="separator:a37192c293364dde155b76b57c113512e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36b72d45d58567251504c9f42b142620"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36b72d45d58567251504c9f42b142620"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a36b72d45d58567251504c9f42b142620">resetPin</a></td></tr>
-<tr class="memdesc:a36b72d45d58567251504c9f42b142620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card reset pin instance. <br/></td></tr>
-<tr class="separator:a36b72d45d58567251504c9f42b142620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c511f6eb9711791338e5d816531c8f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c511f6eb9711791338e5d816531c8f0"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2c511f6eb9711791338e5d816531c8f0">vsel0Port</a></td></tr>
-<tr class="memdesc:a2c511f6eb9711791338e5d816531c8f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel0 control port instance. <br/></td></tr>
-<tr class="separator:a2c511f6eb9711791338e5d816531c8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a9a3d59cba3b238b082a4d5aaca3918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a9a3d59cba3b238b082a4d5aaca3918"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a4a9a3d59cba3b238b082a4d5aaca3918">vsel0Pin</a></td></tr>
-<tr class="memdesc:a4a9a3d59cba3b238b082a4d5aaca3918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel0 control pin instance. <br/></td></tr>
-<tr class="separator:a4a9a3d59cba3b238b082a4d5aaca3918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae474494c84a27d807fc3f72d70ab6a66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae474494c84a27d807fc3f72d70ab6a66"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ae474494c84a27d807fc3f72d70ab6a66">vsel1Port</a></td></tr>
-<tr class="memdesc:ae474494c84a27d807fc3f72d70ab6a66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel1 control port instance. <br/></td></tr>
-<tr class="separator:ae474494c84a27d807fc3f72d70ab6a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86233dfd5924bbefa63ee941b518c39c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86233dfd5924bbefa63ee941b518c39c"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a86233dfd5924bbefa63ee941b518c39c">vsel1Pin</a></td></tr>
-<tr class="memdesc:a86233dfd5924bbefa63ee941b518c39c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel1 control pin instance. <br/></td></tr>
-<tr class="separator:a86233dfd5924bbefa63ee941b518c39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ced4687ea17c10cd697123f9d0b9815"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ced4687ea17c10cd697123f9d0b9815"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2ced4687ea17c10cd697123f9d0b9815">dataPort</a></td></tr>
-<tr class="memdesc:a2ced4687ea17c10cd697123f9d0b9815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY data port instance. <br/></td></tr>
-<tr class="separator:a2ced4687ea17c10cd697123f9d0b9815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a495ed30dfd56405ffad84fc64d3861e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a495ed30dfd56405ffad84fc64d3861e1"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a495ed30dfd56405ffad84fc64d3861e1">dataPin</a></td></tr>
-<tr class="memdesc:a495ed30dfd56405ffad84fc64d3861e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY data pin instance. <br/></td></tr>
-<tr class="separator:a495ed30dfd56405ffad84fc64d3861e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cab56c3acf66c10fa7d910872f112d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cab56c3acf66c10fa7d910872f112d9"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a4cab56c3acf66c10fa7d910872f112d9">dataPinMux</a></td></tr>
-<tr class="memdesc:a4cab56c3acf66c10fa7d910872f112d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY data pin mux option. <br/></td></tr>
-<tr class="separator:a4cab56c3acf66c10fa7d910872f112d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75954d87ca4ed91b618d54dcc29576c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75954d87ca4ed91b618d54dcc29576c0"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a75954d87ca4ed91b618d54dcc29576c0">tsTimerId</a></td></tr>
-<tr class="memdesc:a75954d87ca4ed91b618d54dcc29576c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical identifier of the External HW timer for Initial character detection. <br/></td></tr>
-<tr class="separator:a75954d87ca4ed91b618d54dcc29576c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9e6a171d94438bbf84fdcbba15fe534"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9e6a171d94438bbf84fdcbba15fe534"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab9e6a171d94438bbf84fdcbba15fe534">rtcCalEnable</a></td></tr>
+<tr class="memdesc:ab9e6a171d94438bbf84fdcbba15fe534"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: RTC calibration mechanism is enabled; false:No calibration is used <br/></td></tr>
+<tr class="separator:ab9e6a171d94438bbf84fdcbba15fe534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6773212694d43f11ef490f7fdf9c499c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6773212694d43f11ef490f7fdf9c499c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6773212694d43f11ef490f7fdf9c499c">rtcCalValue</a></td></tr>
+<tr class="memdesc:a6773212694d43f11ef490f7fdf9c499c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines signed calibration value for nonsecure RTC; This is a 5-bit 2's complement value, range from -16 to +15. <br/></td></tr>
+<tr class="separator:a6773212694d43f11ef490f7fdf9c499c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af45979d92e9182cd73300a7926fec3fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af45979d92e9182cd73300a7926fec3fe"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af45979d92e9182cd73300a7926fec3fe">periodicInterruptFreq</a></td></tr>
+<tr class="memdesc:af45979d92e9182cd73300a7926fec3fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines frequency of the periodic interrupt; Range from 0 to 15. <br/></td></tr>
+<tr class="separator:af45979d92e9182cd73300a7926fec3fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00677" id="a00677"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaab7985efdc9188a91c4753aca3e61e26"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _smartcard_xfer</td>
+          <td class="memname">#define SNVS_MAKE_HP_SV_FLAG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;(1U &lt;&lt; (SNVS_HPSVSR_SV0_SHIFT + (x)))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a124964793f342a6211d6d9478aa9c4b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga5245dc7d7b6b19594c51edc6da4f9b8a">smartcard_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a124964793f342a6211d6d9478aa9c4b4">direction</a></td></tr>
-<tr class="memdesc:a124964793f342a6211d6d9478aa9c4b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of communication.  <a href="#a124964793f342a6211d6d9478aa9c4b4">More...</a><br/></td></tr>
-<tr class="separator:a124964793f342a6211d6d9478aa9c4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc272446de3c4f6bcd5c173883df4e61"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#afc272446de3c4f6bcd5c173883df4e61">buff</a></td></tr>
-<tr class="memdesc:afc272446de3c4f6bcd5c173883df4e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data.  <a href="#afc272446de3c4f6bcd5c173883df4e61">More...</a><br/></td></tr>
-<tr class="separator:afc272446de3c4f6bcd5c173883df4e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25ec20c48dece7bbda86f19a0b6186ed"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a25ec20c48dece7bbda86f19a0b6186ed">size</a></td></tr>
-<tr class="memdesc:a25ec20c48dece7bbda86f19a0b6186ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of transferred units.  <a href="#a25ec20c48dece7bbda86f19a0b6186ed">More...</a><br/></td></tr>
-<tr class="separator:a25ec20c48dece7bbda86f19a0b6186ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a124964793f342a6211d6d9478aa9c4b4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga5245dc7d7b6b19594c51edc6da4f9b8a">smartcard_direction_t</a> _smartcard_xfer::direction</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>(RX/TX) </p>
-
-</div>
-</div>
-<a class="anchor" id="afc272446de3c4f6bcd5c173883df4e61"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* _smartcard_xfer::buff</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a25ec20c48dece7bbda86f19a0b6186ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t _smartcard_xfer::size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00674" id="a00674"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _smartcard_context</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aadd76416500079fa1e6cef2afd56e415"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadd76416500079fa1e6cef2afd56e415"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aadd76416500079fa1e6cef2afd56e415">base</a></td></tr>
-<tr class="memdesc:aadd76416500079fa1e6cef2afd56e415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card module base address. <br/></td></tr>
-<tr class="separator:aadd76416500079fa1e6cef2afd56e415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6ee7a0a08f2a88cfbe170f415cc795"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga5245dc7d7b6b19594c51edc6da4f9b8a">smartcard_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6a6ee7a0a08f2a88cfbe170f415cc795">direction</a></td></tr>
-<tr class="memdesc:a6a6ee7a0a08f2a88cfbe170f415cc795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of communication.  <a href="#a6a6ee7a0a08f2a88cfbe170f415cc795">More...</a><br/></td></tr>
-<tr class="separator:a6a6ee7a0a08f2a88cfbe170f415cc795"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8778542e3b6abbb329911a5213a47831"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8778542e3b6abbb329911a5213a47831">xBuff</a></td></tr>
-<tr class="memdesc:a8778542e3b6abbb329911a5213a47831"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data being transferred.  <a href="#a8778542e3b6abbb329911a5213a47831">More...</a><br/></td></tr>
-<tr class="separator:a8778542e3b6abbb329911a5213a47831"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac115fd74f20a24a7edc3ea9706a95b4f"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac115fd74f20a24a7edc3ea9706a95b4f">xSize</a></td></tr>
-<tr class="memdesc:ac115fd74f20a24a7edc3ea9706a95b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of bytes to be transferred.  <a href="#ac115fd74f20a24a7edc3ea9706a95b4f">More...</a><br/></td></tr>
-<tr class="separator:ac115fd74f20a24a7edc3ea9706a95b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a970e237a3a1b894553246b26ce80fb14"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a970e237a3a1b894553246b26ce80fb14">xIsBusy</a></td></tr>
-<tr class="memdesc:a970e237a3a1b894553246b26ce80fb14"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if there is an active transfer.  <a href="#a970e237a3a1b894553246b26ce80fb14">More...</a><br/></td></tr>
-<tr class="separator:a970e237a3a1b894553246b26ce80fb14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a388a64b48bd815683e0a720e80ef9b4d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a388a64b48bd815683e0a720e80ef9b4d">txFifoEntryCount</a></td></tr>
-<tr class="memdesc:a388a64b48bd815683e0a720e80ef9b4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data word entries in transmit FIFO.  <a href="#a388a64b48bd815683e0a720e80ef9b4d">More...</a><br/></td></tr>
-<tr class="separator:a388a64b48bd815683e0a720e80ef9b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d0c6c6186360192f30c3760f28c6174"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5d0c6c6186360192f30c3760f28c6174">rxFifoThreshold</a></td></tr>
-<tr class="memdesc:a5d0c6c6186360192f30c3760f28c6174"><td class="mdescLeft">&#160;</td><td class="mdescRight">The max value of the receiver FIFO threshold.  <a href="#a5d0c6c6186360192f30c3760f28c6174">More...</a><br/></td></tr>
-<tr class="separator:a5d0c6c6186360192f30c3760f28c6174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22add7bbea282cdc7bc4d0c1e399030f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gaee0e1f95525a9305d25c21a7a6b0c6ea">smartcard_interface_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a22add7bbea282cdc7bc4d0c1e399030f">interfaceCallback</a></td></tr>
-<tr class="memdesc:a22add7bbea282cdc7bc4d0c1e399030f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback to invoke after interface IC raised interrupt.  <a href="#a22add7bbea282cdc7bc4d0c1e399030f">More...</a><br/></td></tr>
-<tr class="separator:a22add7bbea282cdc7bc4d0c1e399030f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f0946de7566689101dcd2c284cefa7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gaaedb10efbba55294f2568ca37c0a6772">smartcard_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a86f0946de7566689101dcd2c284cefa7">transferCallback</a></td></tr>
-<tr class="memdesc:a86f0946de7566689101dcd2c284cefa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback to invoke after transfer event occur.  <a href="#a86f0946de7566689101dcd2c284cefa7">More...</a><br/></td></tr>
-<tr class="separator:a86f0946de7566689101dcd2c284cefa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14c1f6e5250c52a646e6415c7250505f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a14c1f6e5250c52a646e6415c7250505f">interfaceCallbackParam</a></td></tr>
-<tr class="memdesc:a14c1f6e5250c52a646e6415c7250505f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface callback parameter pointer.  <a href="#a14c1f6e5250c52a646e6415c7250505f">More...</a><br/></td></tr>
-<tr class="separator:a14c1f6e5250c52a646e6415c7250505f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4400b4e4632befbf5ff650c0468dc41e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a4400b4e4632befbf5ff650c0468dc41e">transferCallbackParam</a></td></tr>
-<tr class="memdesc:a4400b4e4632befbf5ff650c0468dc41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer callback parameter pointer.  <a href="#a4400b4e4632befbf5ff650c0468dc41e">More...</a><br/></td></tr>
-<tr class="separator:a4400b4e4632befbf5ff650c0468dc41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54422b1a41af75132a048aa8f9f95203"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga008f3ec99d03724068bd4dc923df13bc">smartcard_time_delay_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a54422b1a41af75132a048aa8f9f95203">timeDelay</a></td></tr>
-<tr class="memdesc:a54422b1a41af75132a048aa8f9f95203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function which handles time delay defined by user or RTOS.  <a href="#a54422b1a41af75132a048aa8f9f95203">More...</a><br/></td></tr>
-<tr class="separator:a54422b1a41af75132a048aa8f9f95203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a694ecb93f461874e505a9dfbbb778337"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga7e8afe95ea4c09450f13367ac58917dc">smartcard_reset_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a694ecb93f461874e505a9dfbbb778337">resetType</a></td></tr>
-<tr class="memdesc:a694ecb93f461874e505a9dfbbb778337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether a Cold reset or Warm reset was requested.  <a href="#a694ecb93f461874e505a9dfbbb778337">More...</a><br/></td></tr>
-<tr class="separator:a694ecb93f461874e505a9dfbbb778337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abedd18a59a085fabad7feddaad78b600"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abedd18a59a085fabad7feddaad78b600"></a>
-<a class="el" href="a00087.html#ga5bb903cfe709f405d93d046f49d53579">smartcard_transport_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#abedd18a59a085fabad7feddaad78b600">tType</a></td></tr>
-<tr class="memdesc:abedd18a59a085fabad7feddaad78b600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates current transfer protocol (T0 or T1) <br/></td></tr>
-<tr class="separator:abedd18a59a085fabad7feddaad78b600"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91ae32abf5de9c90e50fbf8d525d3629"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91ae32abf5de9c90e50fbf8d525d3629"></a>
-volatile <a class="el" href="a00087.html#ga7ae48c2e20f9785b2e316e3b9cd98482">smartcard_transfer_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a91ae32abf5de9c90e50fbf8d525d3629">transferState</a></td></tr>
-<tr class="memdesc:a91ae32abf5de9c90e50fbf8d525d3629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the current transfer state. <br/></td></tr>
-<tr class="separator:a91ae32abf5de9c90e50fbf8d525d3629"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad39c758d94576359b2b22102eacc236d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad39c758d94576359b2b22102eacc236d"></a>
-<a class="el" href="a00087.html#ga885a6f27a3d37bd6a88c58d580c1270d">smartcard_timers_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ad39c758d94576359b2b22102eacc236d">timersState</a></td></tr>
-<tr class="memdesc:ad39c758d94576359b2b22102eacc236d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the state of different protocol timers used in driver. <br/></td></tr>
-<tr class="separator:ad39c758d94576359b2b22102eacc236d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5f04c15950838fcc78bb2a2cc9bd4e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5f04c15950838fcc78bb2a2cc9bd4e3"></a>
-<a class="el" href="a00087.html#gaf1a45726b0072ad2b8af50b3281744ef">smartcard_card_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab5f04c15950838fcc78bb2a2cc9bd4e3">cardParams</a></td></tr>
-<tr class="memdesc:ab5f04c15950838fcc78bb2a2cc9bd4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card parameters(ATR and current) and interface slots states(ATR and current) <br/></td></tr>
-<tr class="separator:ab5f04c15950838fcc78bb2a2cc9bd4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac562a10d152253243d6486c7ff4498c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac562a10d152253243d6486c7ff4498c2"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac562a10d152253243d6486c7ff4498c2">IFSD</a></td></tr>
-<tr class="memdesc:ac562a10d152253243d6486c7ff4498c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the terminal IFSD. <br/></td></tr>
-<tr class="separator:ac562a10d152253243d6486c7ff4498c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c24a3cc880f9b0cf7e7712ce87f88b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c24a3cc880f9b0cf7e7712ce87f88b5"></a>
-<a class="el" href="a00087.html#gab183aef08d7e14e17a95ca2b2c56b235">smartcard_parity_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5c24a3cc880f9b0cf7e7712ce87f88b5">parity</a></td></tr>
-<tr class="memdesc:a5c24a3cc880f9b0cf7e7712ce87f88b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates current parity even/odd. <br/></td></tr>
-<tr class="separator:a5c24a3cc880f9b0cf7e7712ce87f88b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a6d3bfed9855f4db42013816fd44ea8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a6d3bfed9855f4db42013816fd44ea8"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a9a6d3bfed9855f4db42013816fd44ea8">rxtCrossed</a></td></tr>
-<tr class="memdesc:a9a6d3bfed9855f4db42013816fd44ea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether RXT thresholds has been crossed. <br/></td></tr>
-<tr class="separator:a9a6d3bfed9855f4db42013816fd44ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a585042dab6a6848d6438d82a95f599"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a585042dab6a6848d6438d82a95f599"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a7a585042dab6a6848d6438d82a95f599">txtCrossed</a></td></tr>
-<tr class="memdesc:a7a585042dab6a6848d6438d82a95f599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether TXT thresholds has been crossed. <br/></td></tr>
-<tr class="separator:a7a585042dab6a6848d6438d82a95f599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0091c4f6c1f071e8ae138b3489dd804c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0091c4f6c1f071e8ae138b3489dd804c"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a0091c4f6c1f071e8ae138b3489dd804c">wtxRequested</a></td></tr>
-<tr class="memdesc:a0091c4f6c1f071e8ae138b3489dd804c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether WTX has been requested or not. <br/></td></tr>
-<tr class="separator:a0091c4f6c1f071e8ae138b3489dd804c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac11bf5cf1d37d8f3c40c6f15948306b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac11bf5cf1d37d8f3c40c6f15948306b2"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac11bf5cf1d37d8f3c40c6f15948306b2">parityError</a></td></tr>
-<tr class="memdesc:ac11bf5cf1d37d8f3c40c6f15948306b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether a parity error has been detected. <br/></td></tr>
-<tr class="separator:ac11bf5cf1d37d8f3c40c6f15948306b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe4ad55b30e3bf6ba179770be197b453"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe4ad55b30e3bf6ba179770be197b453"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#abe4ad55b30e3bf6ba179770be197b453">statusBytes</a> [2]</td></tr>
-<tr class="memdesc:abe4ad55b30e3bf6ba179770be197b453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to store Status bytes SW1, SW2 of the last executed card command response. <br/></td></tr>
-<tr class="separator:abe4ad55b30e3bf6ba179770be197b453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaaf5bef325c5f1436a21c2ee5ee298b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaaaf5bef325c5f1436a21c2ee5ee298b"></a>
-<a class="el" href="a00087.html#ga8ff88dd531e961a8424c702f7444a243">smartcard_interface_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aaaaf5bef325c5f1436a21c2ee5ee298b">interfaceConfig</a></td></tr>
-<tr class="memdesc:aaaaf5bef325c5f1436a21c2ee5ee298b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card interface configuration structure. <br/></td></tr>
-<tr class="separator:aaaaf5bef325c5f1436a21c2ee5ee298b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4b64150f3811f8ab35c854929a90e3e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ae4b64150f3811f8ab35c854929a90e3e">abortTransfer</a></td></tr>
-<tr class="memdesc:ae4b64150f3811f8ab35c854929a90e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to abort transfer.  <a href="#ae4b64150f3811f8ab35c854929a90e3e">More...</a><br/></td></tr>
-<tr class="separator:ae4b64150f3811f8ab35c854929a90e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a6a6ee7a0a08f2a88cfbe170f415cc795"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga5245dc7d7b6b19594c51edc6da4f9b8a">smartcard_direction_t</a> _smartcard_context::direction</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>(RX/TX) </p>
-
-</div>
-</div>
-<a class="anchor" id="a8778542e3b6abbb329911a5213a47831"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* _smartcard_context::xBuff</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac115fd74f20a24a7edc3ea9706a95b4f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile size_t _smartcard_context::xSize</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a970e237a3a1b894553246b26ce80fb14"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile bool _smartcard_context::xIsBusy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a388a64b48bd815683e0a720e80ef9b4d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t _smartcard_context::txFifoEntryCount</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5d0c6c6186360192f30c3760f28c6174"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t _smartcard_context::rxFifoThreshold</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a22add7bbea282cdc7bc4d0c1e399030f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#gaee0e1f95525a9305d25c21a7a6b0c6ea">smartcard_interface_callback_t</a> _smartcard_context::interfaceCallback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a86f0946de7566689101dcd2c284cefa7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#gaaedb10efbba55294f2568ca37c0a6772">smartcard_transfer_callback_t</a> _smartcard_context::transferCallback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a14c1f6e5250c52a646e6415c7250505f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* _smartcard_context::interfaceCallbackParam</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4400b4e4632befbf5ff650c0468dc41e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* _smartcard_context::transferCallbackParam</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a54422b1a41af75132a048aa8f9f95203"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga008f3ec99d03724068bd4dc923df13bc">smartcard_time_delay_t</a> _smartcard_context::timeDelay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a694ecb93f461874e505a9dfbbb778337"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga7e8afe95ea4c09450f13367ac58917dc">smartcard_reset_type_t</a> _smartcard_context::resetType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae4b64150f3811f8ab35c854929a90e3e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool _smartcard_context::abortTransfer</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<p>Macro help to make security violation flag kSNVS_Violation0Flag to kSNVS_Violation5Flag, For example, <a class="el" href="a00087.html#gaab7985efdc9188a91c4753aca3e61e26" title="Macro to make security violation flag. ">SNVS_MAKE_HP_SV_FLAG(0)</a> is kSNVS_Violation0Flag. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gae042338099b6037101c72262a99942b6"></a>
+<a class="anchor" id="ga9605694d6a038b656b598bea9ca67a24"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="a00087.html#ga85570f092a17f66f832d98d750e226ff">_smartcard_control</a>  <a class="el" href="a00087.html#gae042338099b6037101c72262a99942b6">smartcard_control_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00087.html#a00675">_snvs_hp_rtc_config</a>  <a class="el" href="a00087.html#ga9605694d6a038b656b598bea9ca67a24">snvs_hp_rtc_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga5245dc7d7b6b19594c51edc6da4f9b8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="a00087.html#ga3a6a30bc2bef724fdf0f8b660969e15d">_smartcard_direction</a>  <a class="el" href="a00087.html#ga5245dc7d7b6b19594c51edc6da4f9b8a">smartcard_direction_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>This structure holds the configuration settings for the SNVS peripheral. To initialize this structure to reasonable defaults, call the SNVS_GetDefaultConfig() function and pass a pointer to your config structure instance.</p>
+<p>The config struct can be made const so it resides in flash </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga0ae1e3bf78c960c83e2d437efd802058"></a>
+<a class="anchor" id="ga5c163901f9e11cb0b5005796938b7c78"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00087.html#ga5c163901f9e11cb0b5005796938b7c78">_snvs_hp_interrupts</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058af4a7d15729a632fcff216f4203e45894"></a>kStatus_SMARTCARD_Success</em>&nbsp;</td><td class="fielddoc">
-<p>Transfer ends successfully. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5c163901f9e11cb0b5005796938b7c78a1e479f0d0f6b4d039d2e9bcda6e21396"></a>kSNVS_RTC_AlarmInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>RTC time alarm. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a1ceaaad06999f92ec00c6d7aa54fff25"></a>kStatus_SMARTCARD_TxBusy</em>&nbsp;</td><td class="fielddoc">
-<p>Transmit in progress. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a6d86716992e29764cd1baadc6de8154d"></a>kStatus_SMARTCARD_RxBusy</em>&nbsp;</td><td class="fielddoc">
-<p>Receiving in progress. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a7a428aea3974d37bf0cc4474b57ec76e"></a>kStatus_SMARTCARD_NoTransferInProgress</em>&nbsp;</td><td class="fielddoc">
-<p>No transfer in progress. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058abc65f3fca631698cf065e4732fb5b49d"></a>kStatus_SMARTCARD_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>Transfer ends with time-out. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a6e5f1a14530fa1865da32bd536ed50b3"></a>kStatus_SMARTCARD_Initialized</em>&nbsp;</td><td class="fielddoc">
-<p>Smart card driver is already initialized. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058aef93b179c5e7db3b41575fa88fa06c30"></a>kStatus_SMARTCARD_PhyInitialized</em>&nbsp;</td><td class="fielddoc">
-<p>Smart card PHY drive is already initialized. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a911faf13c8d3a2dbe97f178c9c0ddb90"></a>kStatus_SMARTCARD_CardNotActivated</em>&nbsp;</td><td class="fielddoc">
-<p>Smart card is not activated. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a42f5e0e08e5edd588dafcdb166bb91a2"></a>kStatus_SMARTCARD_InvalidInput</em>&nbsp;</td><td class="fielddoc">
-<p>Function called with invalid input arguments. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ae1e3bf78c960c83e2d437efd802058a8d72e9988338127cc3affdc7bcbbef12"></a>kStatus_SMARTCARD_OtherError</em>&nbsp;</td><td class="fielddoc">
-<p>Some other error occur. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5c163901f9e11cb0b5005796938b7c78a58b00c8a408e2f99fa186401a3936176"></a>kSNVS_RTC_PeriodicInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>RTC periodic interrupt. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga85570f092a17f66f832d98d750e226ff"></a>
+<a class="anchor" id="gaabae76e8145eb18ea02a3140a9d510f9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00087.html#ga85570f092a17f66f832d98d750e226ff">_smartcard_control</a></td>
+          <td class="memname">enum <a class="el" href="a00087.html#gaabae76e8145eb18ea02a3140a9d510f9">_snvs_hp_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaabae76e8145eb18ea02a3140a9d510f9a19082779de5fd8c7bfaa92039eaf986c"></a>kSNVS_RTC_AlarmInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>RTC time alarm flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaabae76e8145eb18ea02a3140a9d510f9a17d3484ae7d03f9c858096a685b1a3e3"></a>kSNVS_RTC_PeriodicInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>RTC periodic interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaabae76e8145eb18ea02a3140a9d510f9a279f722517f638849505663da580be1c"></a>kSNVS_ZMK_ZeroFlag</em>&nbsp;</td><td class="fielddoc">
+<p>The ZMK is zero. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaabae76e8145eb18ea02a3140a9d510f9a4e7eae7a06f5e55366e49452e420b600"></a>kSNVS_OTPMK_ZeroFlag</em>&nbsp;</td><td class="fielddoc">
+<p>The OTPMK is zero. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="ga3a6a30bc2bef724fdf0f8b660969e15d"></a>
+<a class="anchor" id="gade36b8c0d607f8560c18b3fe22fe64e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00087.html#ga3a6a30bc2bef724fdf0f8b660969e15d">_smartcard_direction</a></td>
+          <td class="memname">enum <a class="el" href="a00087.html#gade36b8c0d607f8560c18b3fe22fe64e4">_snvs_hp_sv_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4ab386522ef551593be1d1e0a3285a003d"></a>kSNVS_LP_ViolationFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Low Power section Security Violation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4a72ba4e4d6a1d251e2d2f7360dec9c05a"></a>kSNVS_ZMK_EccFailFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Zeroizable Master Key Error Correcting Code Check Failure. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4ad4b177ee0c5f8c3fd5ba9a9f86fcf5ad"></a>kSNVS_LP_SoftwareViolationFlag</em>&nbsp;</td><td class="fielddoc">
+<p>LP Software Security Violation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4acfd1c986d4df4e3726c737eaa07b22dc"></a>kSNVS_FatalSoftwareViolationFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Software Fatal Security Violation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4a69247198a66b059e1a6827e058031271"></a>kSNVS_SoftwareViolationFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Software Security Violation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4a64006780a5a990440d4dbd1546e15fd4"></a>kSNVS_Violation0Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4a690af4c92ba5760b03ff840b95acaaa3"></a>kSNVS_Violation1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4af4f88b8dc3de81668fef973ea25712d5"></a>kSNVS_Violation2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4a12a565f3112032d80289d45237d42bb3"></a>kSNVS_Violation4Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation 4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggade36b8c0d607f8560c18b3fe22fe64e4ae89fe10f0c5b86b00f9f4efdfddd6ce5"></a>kSNVS_Violation5Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation 5. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gacb5b9c2a5667fd3c3e9c5c1abd6bda81"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00087.html#gacb5b9c2a5667fd3c3e9c5c1abd6bda81">_snvs_hp_ssm_state</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ae7830884d8e5020ccd5e20ae293dad15"></a>kSNVS_SSMInit</em>&nbsp;</td><td class="fielddoc">
+<p>Init. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81af29e28c3c6dfb9f644ce8de542651ac9"></a>kSNVS_SSMHardFail</em>&nbsp;</td><td class="fielddoc">
+<p>Hard Fail. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81a60a24f4c76cb3ddb67f746eac3bedc25"></a>kSNVS_SSMSoftFail</em>&nbsp;</td><td class="fielddoc">
+<p>Soft Fail. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ab91ee8c742d743ff48b1536df21f249e"></a>kSNVS_SSMInitInter</em>&nbsp;</td><td class="fielddoc">
+<p>Init Intermediate (transition state between Init and Check) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81adec7dce6f5a46ff1f877f170518f1544"></a>kSNVS_SSMCheck</em>&nbsp;</td><td class="fielddoc">
+<p>Check. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ac673a58e61c466f38a3e8660b0b281f6"></a>kSNVS_SSMNonSecure</em>&nbsp;</td><td class="fielddoc">
+<p>Non-Secure. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ac76e8c274dc67c9be07a1134f8e92a64"></a>kSNVS_SSMTrusted</em>&nbsp;</td><td class="fielddoc">
+<p>Trusted. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacb5b9c2a5667fd3c3e9c5c1abd6bda81aab8b6a11c429d8657470496b724f9204"></a>kSNVS_SSMSecure</em>&nbsp;</td><td class="fielddoc">
+<p>Secure. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gada84c18b75cc202b407834f56a8e7f80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_Init </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the SNVS driver.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga805de8a4dd37cd65e384b9fae9d7e4c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga694fb339332f988476e2d0749cd95bf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_RTC_Init </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00087.html#ga9605694d6a038b656b598bea9ca67a24">snvs_hp_rtc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the SNVS driver.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gace39a108e8e1e08120f25f020ef7ba20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_RTC_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad5bc52a7456da293cd0286832462e7fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_RTC_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00087.html#ga9605694d6a038b656b598bea9ca67a24">snvs_hp_rtc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The default values are as follows. </p>
+<div class="fragment"><div class="line">*    config-&gt;rtccalenable = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;rtccalvalue = 0U;</div>
+<div class="line">*    config-&gt;PIFreq = 0U;</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga25785442a761c5e674f40079c92c839f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_HP_RTC_SetDatetime </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *&#160;</td>
+          <td class="paramname"><em>datetime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the date and time details are stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success: Success in setting the time and starting the SNVS RTC kStatus_InvalidArgument: Error because the datetime format is incorrect </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadfb1241d346995a130f3e2e046bb0d54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_RTC_GetDatetime </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *&#160;</td>
+          <td class="paramname"><em>datetime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the date and time details are stored. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga10fcc3d2cef1b0bfe722c9a51f4ed7cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_HP_RTC_SetAlarm </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *&#160;</td>
+          <td class="paramname"><em>alarmTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The function sets the RTC alarm. It also checks whether the specified alarm time is greater than the present time. If not, the function does not set the alarm and returns an error.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">alarmTime</td><td>Pointer to the structure where the alarm time is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success: success in setting the SNVS RTC alarm kStatus_InvalidArgument: Error because the alarm datetime format is incorrect kStatus_Fail: Error because the alarm time has already passed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7e0d74a5e589f7c845e4fe4003622c63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_RTC_GetAlarm </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00087.html#ga0e707a31ab358256a85c2acb2c054f2b">snvs_hp_rtc_datetime_t</a> *&#160;</td>
+          <td class="paramname"><em>datetime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the alarm date and time details are stored. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gafdf4a1b2c66ed56d524c803a78a2fcab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SNVS_HP_RTC_TimeSynchronize </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae719f60ac8585937d91c55ed1b469692"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_RTC_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration :: _snvs_hp_interrupts_t </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa41a91bf279a1d7ecd75239468e75ed2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_RTC_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration :: _snvs_hp_interrupts_t </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac719942dfcd56e8d34b62e21b34587b6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SNVS_HP_RTC_GetEnabledInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration :: _snvs_hp_interrupts_t </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf2a0b49399456cf266a7a1a8a1a473ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SNVS_HP_RTC_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration :: _snvs_hp_status_flags_t </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0b9b860ebeb5100ec7b6c98f7952b63c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_RTC_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration :: _snvs_hp_status_flags_t </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3c5f394b407a9aa9e0ba0a0b90bf7906"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_RTC_StartTimer </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad0d3010ff1f3db29207b195c198a6947"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_RTC_StopTimer </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae869c337512ca629a0e601b982970272"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_EnableMasterKeySelection </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">enable</td><td>Pass true to enable, false to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga21a7a39709ab3afa624b8c0f15aefcaa"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_ProgramZeroizableMasterKey </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaff088b89f9ffbb75c2a5ed6b5431349b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_ChangeSSMState </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Trigger state transition of the system security monitor (SSM). It results only the following transitions of the SSM:</p>
+<ul>
+<li>Check State -&gt; Non-Secure (when Non-Secure Boot and not in Fab Configuration)</li>
+<li>Check State &ndash;&gt; Trusted (when Secure Boot or in Fab Configuration )</li>
+<li>Trusted State &ndash;&gt; Secure</li>
+<li>Secure State &ndash;&gt; Trusted</li>
+<li>Soft Fail &ndash;&gt; Non-Secure</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga60171bee768766e8726752083a943dad"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_SetSoftwareFatalSecurityViolation </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The result SSM state transition is:</p>
+<ul>
+<li>Check State -&gt; Soft Fail</li>
+<li>Non-Secure State -&gt; Soft Fail</li>
+<li>Trusted State -&gt; Soft Fail</li>
+<li>Secure State -&gt; Soft Fail</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga22c3f9b30bdd4ef8d0f4c43595b11f0c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_SetSoftwareSecurityViolation </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The result SSM state transition is:</p>
+<ul>
+<li>Check -&gt; Non-Secure</li>
+<li>Trusted -&gt; Soft Fail</li>
+<li>Secure -&gt; Soft Fail</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadb8b240108f145a3e4cfbebb1f80ccc1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00087.html#ga1cf043a7742a0cf6f4ddb04d3885a4a8">snvs_hp_ssm_state_t</a> SNVS_HP_GetSSMState </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current SSM state </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga10de6343eb48b6f2e9cbca3288ab77c6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_ResetLP </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Reset the LP section except SRTC and Time alarm.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaaa1b29ca892f37019e83d84a470a1a76"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_EnableHighAssuranceCounter </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">enable</td><td>Pass true to enable, false to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab35e6350cc3d48196260798917b93f34"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_StartHighAssuranceCounter </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>start</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">start</td><td>Pass true to start, false to stop. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga34a0f9c4dccca6c816d2c77d7f6dfe06"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_SetHighAssuranceCounterInitialValue </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">value</td><td>The initial value to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga78d44b44b57abe52f6fbea79ecb4b3f1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_LoadHighAssuranceCounter </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function loads the HAC initialize value to counter register.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga52a4800b22c38b167715e18c18e75682"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t SNVS_HP_GetHighAssuranceCounter </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>HAC currnet value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2f3b01557d29b8bc99971e262ca329a7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_ClearHighAssuranceCounter </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function can be called in a functional or soft fail state. When the HAC is enabled:</p>
+<ul>
+<li>If the HAC is cleared in the soft fail state, the SSM transitions to the hard fail state immediately;</li>
+<li>If the HAC is cleared in functional state, the SSM will transition to hard fail immediately after transitioning to soft fail.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad3122ce2343b9b002443dc8488531bde"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_LockHighAssuranceCounter </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Once locked, the HAC initialize value could not be changed, the HAC enable status could not be changed. This could only be unlocked by system reset.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa234622984c7a3657ec79b069636f87a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t SNVS_HP_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The flags are returned as the OR'ed value f the enumeration :: _snvs_hp_status_flags_t.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The OR'ed value of status flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7723e8246eb379ee772bb5f6b6c67cf7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The flags to clear are passed in as the OR'ed value of the enumeration :: _snvs_hp_status_flags_t. Only these flags could be cleared using this API.</p>
+<ul>
+<li><a class="el" href="a00087.html#ggaabae76e8145eb18ea02a3140a9d510f9a17d3484ae7d03f9c858096a685b1a3e3">kSNVS_RTC_PeriodicInterruptFlag</a></li>
+<li><a class="el" href="a00087.html#ggaabae76e8145eb18ea02a3140a9d510f9a19082779de5fd8c7bfaa92039eaf986c">kSNVS_RTC_AlarmInterruptFlag</a></li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>OR'ed value of the flags to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab5a306cceca268d2bfc90274f5673dab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t SNVS_HP_GetSecurityViolationStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The flags are returned as the OR'ed value of the enumeration :: _snvs_hp_sv_status_flags_t.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The OR'ed value of security violation status flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf4a86a4006295c944a470bb986aaaedf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SNVS_HP_ClearSecurityViolationStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">SNVS_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The flags to clear are passed in as the OR'ed value of the enumeration :: _snvs_hp_sv_status_flags_t. Only these flags could be cleared using this API.</p>
+<ul>
+<li><a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a72ba4e4d6a1d251e2d2f7360dec9c05a">kSNVS_ZMK_EccFailFlag</a></li>
+<li><a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a64006780a5a990440d4dbd1546e15fd4">kSNVS_Violation0Flag</a></li>
+<li><a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a690af4c92ba5760b03ff840b95acaaa3">kSNVS_Violation1Flag</a></li>
+<li><a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4af4f88b8dc3de81668fef973ea25712d5">kSNVS_Violation2Flag</a></li>
+<li>kSNVS_Violation3Flag</li>
+<li><a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4a12a565f3112032d80289d45237d42bb3">kSNVS_Violation4Flag</a></li>
+<li><a class="el" href="a00087.html#ggade36b8c0d607f8560c18b3fe22fe64e4ae89fe10f0c5b86b00f9f4efdfddd6ce5">kSNVS_Violation5Flag</a></li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>OR'ed value of the flags to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

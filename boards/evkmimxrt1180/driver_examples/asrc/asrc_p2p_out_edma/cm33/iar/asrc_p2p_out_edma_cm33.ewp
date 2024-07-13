@@ -228,7 +228,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -357,9 +356,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -368,6 +365,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1322,7 +1320,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1451,9 +1448,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -1462,6 +1457,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2415,7 +2411,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2544,9 +2539,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -2555,6 +2548,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3507,7 +3501,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3636,9 +3629,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -3647,6 +3638,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4601,7 +4593,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4730,9 +4721,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -4741,6 +4730,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5694,7 +5684,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>CACHE_MODE_WRITE_THROUGH=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5823,9 +5812,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../components/ele_crypto</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -5834,6 +5821,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6625,10 +6613,10 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_clock.h</name>
@@ -6711,6 +6699,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
+    </file>
   </group>
   <group>
     <name>codec</name>
@@ -6760,18 +6754,6 @@
       </file>
     </group>
     <group>
-      <name>ele_crypto</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/ele_crypto/ele_crypto.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/ele_crypto/ele_crypto.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/ele_crypto/ele_crypto_internal.h</name>
-      </file>
-    </group>
-    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -6808,12 +6790,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6821,6 +6797,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
     </file>
   </group>
   <group>

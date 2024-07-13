@@ -181,13 +181,13 @@ extern "C" {
  *
  * This function assign the domain id for cpu slice. If there are multiple domains, use:
  * code
- *    domainID = kGPC_Domain0 | kGPC_kGPC_Domain1 | ... | kGPC_kGPC_Domain15;
+ *    domainMap = kGPC_Domain0 | kGPC_kGPC_Domain1 | ... | kGPC_kGPC_Domain15;
  * encode
  *
  * param slice GPC CPU slice number.
- * param domainID Number of the domain. Refer to "_gpc_domain_map".
+ * param domainMap Number of the domain. Refer to "_gpc_domain_map".
  */
-void GPC_AssignCpuDomain(gpc_cpu_slice_t cpu, uint32_t domainID);
+void GPC_AssignCpuDomain(gpc_cpu_slice_t cpu, uint32_t domainMap);
 
 /*!
  * @}

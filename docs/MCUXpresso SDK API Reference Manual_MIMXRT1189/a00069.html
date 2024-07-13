@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Wm8962</title>
+<title>MCUXpresso SDK API Reference Manual: Xbar</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,323 +100,79 @@ $(document).ready(function(){initNavTree('a00069.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Wm8962<div class="ingroups"><a class="el" href="a00236.html">CODEC Driver</a></div></div>  </div>
+<div class="title">Xbar</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00657"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00657">wm8962_audio_format_t</a></td></tr>
-<tr class="memdesc:a00657"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 audio format  <a href="a00069.html#a00657">More...</a><br/></td></tr>
-<tr class="separator:a00657"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00659"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00659">wm8962_fll_clk_config_t</a></td></tr>
-<tr class="memdesc:a00659"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 master system clock configuration  <a href="a00069.html#a00659">More...</a><br/></td></tr>
-<tr class="separator:a00659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00661"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00661">wm8962_route_config_t</a></td></tr>
-<tr class="memdesc:a00661"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962 data route configurations.  <a href="a00069.html#a00661">More...</a><br/></td></tr>
-<tr class="separator:a00661"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00658"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00658">wm8962_config_t</a></td></tr>
-<tr class="memdesc:a00658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize structure of WM8962.  <a href="a00069.html#a00658">More...</a><br/></td></tr>
-<tr class="separator:a00658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00660"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a></td></tr>
-<tr class="memdesc:a00660"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 codec handler  <a href="a00069.html#a00660">More...</a><br/></td></tr>
+<tr class="memitem:a00660"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00660">xbar_info_t</a></td></tr>
+<tr class="memdesc:a00660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the instance index from base address and register offset mappings.  <a href="a00069.html#a00660">More...</a><br/></td></tr>
 <tr class="separator:a00660"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gab5220f8f73393cfde17c19b2c20aa7d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab5220f8f73393cfde17c19b2c20aa7d9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gab5220f8f73393cfde17c19b2c20aa7d9">WM8962_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00012.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a></td></tr>
-<tr class="memdesc:gab5220f8f73393cfde17c19b2c20aa7d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 handle size <br/></td></tr>
-<tr class="separator:gab5220f8f73393cfde17c19b2c20aa7d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2befad9156d44fba421d931dc006f6ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga2befad9156d44fba421d931dc006f6ba">WM8962_LINVOL</a>&#160;&#160;&#160;0x0U</td></tr>
-<tr class="memdesc:ga2befad9156d44fba421d931dc006f6ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the register address of WM8962.  <a href="#ga2befad9156d44fba421d931dc006f6ba">More...</a><br/></td></tr>
-<tr class="separator:ga2befad9156d44fba421d931dc006f6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41384f5c6527601024785b011cb400b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga41384f5c6527601024785b011cb400b7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga41384f5c6527601024785b011cb400b7">WM8962_CACHEREGNUM</a>&#160;&#160;&#160;56U</td></tr>
-<tr class="memdesc:ga41384f5c6527601024785b011cb400b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache register number. <br/></td></tr>
-<tr class="separator:ga41384f5c6527601024785b011cb400b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga916ed7c1809f354402cde46043fd9d0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga916ed7c1809f354402cde46043fd9d0f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga916ed7c1809f354402cde46043fd9d0f">WM8962_CLOCK2_BCLK_DIV_MASK</a>&#160;&#160;&#160;0xFU</td></tr>
-<tr class="memdesc:ga916ed7c1809f354402cde46043fd9d0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962 CLOCK2 bits. <br/></td></tr>
-<tr class="separator:ga916ed7c1809f354402cde46043fd9d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae922a52e4404709dea9ef7d1930285b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae922a52e4404709dea9ef7d1930285b4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gae922a52e4404709dea9ef7d1930285b4">WM8962_IFACE0_FORMAT_MASK</a>&#160;&#160;&#160;0x13U</td></tr>
-<tr class="memdesc:gae922a52e4404709dea9ef7d1930285b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE0 FORMAT bits. <br/></td></tr>
-<tr class="separator:gae922a52e4404709dea9ef7d1930285b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4208273034a1f833d6032ade9919b7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac4208273034a1f833d6032ade9919b7e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gac4208273034a1f833d6032ade9919b7e">WM8962_IFACE0_WL_MASK</a>&#160;&#160;&#160;0x0CU</td></tr>
-<tr class="memdesc:gac4208273034a1f833d6032ade9919b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE0 WL bits. <br/></td></tr>
-<tr class="separator:gac4208273034a1f833d6032ade9919b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0525747745378bde116a2a8d3a9b3a34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0525747745378bde116a2a8d3a9b3a34"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga0525747745378bde116a2a8d3a9b3a34">WM8962_IFACE1_LRP_MASK</a>&#160;&#160;&#160;0x10U</td></tr>
-<tr class="memdesc:ga0525747745378bde116a2a8d3a9b3a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE1 LRP bit. <br/></td></tr>
-<tr class="separator:ga0525747745378bde116a2a8d3a9b3a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga526a06979c2aa1a5cbb807ef15a78022"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga526a06979c2aa1a5cbb807ef15a78022"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga526a06979c2aa1a5cbb807ef15a78022">WM8962_IFACE1_DLRSWAP_MASK</a>&#160;&#160;&#160;0x20U</td></tr>
-<tr class="memdesc:ga526a06979c2aa1a5cbb807ef15a78022"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE1 DLRSWAP bit. <br/></td></tr>
-<tr class="separator:ga526a06979c2aa1a5cbb807ef15a78022"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa79e0f9ba30a044dce25070c9c4a9cf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa79e0f9ba30a044dce25070c9c4a9cf4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gaa79e0f9ba30a044dce25070c9c4a9cf4">WM8962_IFACE1_MS_MASK</a>&#160;&#160;&#160;0x40U</td></tr>
-<tr class="memdesc:gaa79e0f9ba30a044dce25070c9c4a9cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE1 MS bit. <br/></td></tr>
-<tr class="separator:gaa79e0f9ba30a044dce25070c9c4a9cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae4bc50eb8dff29968a8a314002df00b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae4bc50eb8dff29968a8a314002df00b7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gae4bc50eb8dff29968a8a314002df00b7">WM8962_IFACE1_BCLKINV_MASK</a>&#160;&#160;&#160;0x80U</td></tr>
-<tr class="memdesc:gae4bc50eb8dff29968a8a314002df00b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE1 BCLKINV bit. <br/></td></tr>
-<tr class="separator:gae4bc50eb8dff29968a8a314002df00b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6acef1f758aa977bcb4a303f8eebbb91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6acef1f758aa977bcb4a303f8eebbb91"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga6acef1f758aa977bcb4a303f8eebbb91">WM8962_IFACE1_ALRSWAP_MASK</a>&#160;&#160;&#160;0x100U</td></tr>
-<tr class="memdesc:ga6acef1f758aa977bcb4a303f8eebbb91"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_IFACE1 ALRSWAP bit. <br/></td></tr>
-<tr class="separator:ga6acef1f758aa977bcb4a303f8eebbb91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bf9556d556e14b0e3de57a3a96afbf2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6bf9556d556e14b0e3de57a3a96afbf2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga6bf9556d556e14b0e3de57a3a96afbf2">WM8962_POWER1_VREF_MASK</a>&#160;&#160;&#160;0x40U</td></tr>
-<tr class="memdesc:ga6bf9556d556e14b0e3de57a3a96afbf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_POWER1. <br/></td></tr>
-<tr class="separator:ga6bf9556d556e14b0e3de57a3a96afbf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga312e1bddde199debd6382ff3c4cbfa28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga312e1bddde199debd6382ff3c4cbfa28"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga312e1bddde199debd6382ff3c4cbfa28">WM8962_POWER2_DACL_MASK</a>&#160;&#160;&#160;0x100U</td></tr>
-<tr class="memdesc:ga312e1bddde199debd6382ff3c4cbfa28"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962_POWER2. <br/></td></tr>
-<tr class="separator:ga312e1bddde199debd6382ff3c4cbfa28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5be152cedd2cb70b9e04e58cdacbf93f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga5be152cedd2cb70b9e04e58cdacbf93f">WM8962_I2C_ADDR</a>&#160;&#160;&#160;(0x34 &gt;&gt; 1U)</td></tr>
-<tr class="memdesc:ga5be152cedd2cb70b9e04e58cdacbf93f"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962 I2C address.  <a href="#ga5be152cedd2cb70b9e04e58cdacbf93f">More...</a><br/></td></tr>
-<tr class="separator:ga5be152cedd2cb70b9e04e58cdacbf93f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae4542a367deb1aea0e55040901a973a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae4542a367deb1aea0e55040901a973a2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gae4542a367deb1aea0e55040901a973a2">WM8962_I2C_BAUDRATE</a>&#160;&#160;&#160;(100000U)</td></tr>
-<tr class="memdesc:gae4542a367deb1aea0e55040901a973a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962 I2C baudrate. <br/></td></tr>
-<tr class="separator:gae4542a367deb1aea0e55040901a973a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6803fc64e7dfaf3144d6b145b555bb9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6803fc64e7dfaf3144d6b145b555bb9e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga6803fc64e7dfaf3144d6b145b555bb9e">WM8962_ADC_MAX_VOLUME_vALUE</a>&#160;&#160;&#160;0xFFU</td></tr>
-<tr class="memdesc:ga6803fc64e7dfaf3144d6b145b555bb9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962 maximum volume value. <br/></td></tr>
-<tr class="separator:ga6803fc64e7dfaf3144d6b145b555bb9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00659"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00659">xbar_control_config_t</a></td></tr>
+<tr class="memdesc:a00659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the configuration structure of the XBAR control register.  <a href="a00069.html#a00659">More...</a><br/></td></tr>
+<tr class="separator:a00659"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga5ebea2f4f6d4457d66de7733a8ea7bd3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5ebea2f4f6d4457d66de7733a8ea7bd3a40f6223b855cb8cf3c6f58aba8132093">kWM8962_InputMixerSourceInput2</a> = 4U, 
+<tr class="memitem:ga3b00a90c8ea09b5e9bde4e9569dd6acd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga3b00a90c8ea09b5e9bde4e9569dd6acd">xbar_active_edge_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00069.html#gga3b00a90c8ea09b5e9bde4e9569dd6acda001de2a19209982e62911110501c7c39">kXBAR_EdgeNone</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5ebea2f4f6d4457d66de7733a8ea7bd3a262b41b58bc544b4d49b3d072356806c">kWM8962_InputMixerSourceInput3</a> = 2U, 
+&#160;&#160;<a class="el" href="a00069.html#gga3b00a90c8ea09b5e9bde4e9569dd6acdaae4613950fea4fb1c196c9c52e55183b">kXBAR_EdgeRising</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5ebea2f4f6d4457d66de7733a8ea7bd3acfd2628b7358e1c381119664dff8b79d">kWM8962_InputMixerSourceInputPGA</a> = 1U
+&#160;&#160;<a class="el" href="a00069.html#gga3b00a90c8ea09b5e9bde4e9569dd6acdaf66d5366d5d58c6b07b637899ebff6d4">kXBAR_EdgeFalling</a> = 2U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga5ebea2f4f6d4457d66de7733a8ea7bd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 input mixer source.  <a href="a00069.html#ga5ebea2f4f6d4457d66de7733a8ea7bd3">More...</a><br/></td></tr>
-<tr class="separator:ga5ebea2f4f6d4457d66de7733a8ea7bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab59c1bec446b10af208f977a871d910b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910badfeb43196da71546a77d6bc863144e66">kWM8962_OutputMixerDisabled</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910ba88bcc33d51943104f0a7602ceadf5b78">kWM8962_OutputMixerSourceInput4Right</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910ba6b0fe94180772bccf0cbcb4905894100">kWM8962_OutputMixerSourceInput4Left</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910bac46f2c66733f03613e3baa8d3983d7b4">kWM8962_OutputMixerSourceRightInputMixer</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910baa95298d357852b2a7a5f966d7a648c00">kWM8962_OutputMixerSourceLeftInputMixer</a> = 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910baad1e1c05e00ea79ffdb8abf8b79b24fb">kWM8962_OutputMixerSourceRightDAC</a> = 0x10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#ggab59c1bec446b10af208f977a871d910ba197f58fbd6699f847c3a2ab2bba78b55">kWM8962_OutputMixerSourceLeftDAC</a> = 0x20U
+&#160;&#160;<a class="el" href="a00069.html#gga3b00a90c8ea09b5e9bde4e9569dd6acda40bc235b95d4a0af62dcbf9dbe173993">kXBAR_EdgeRisingAndFalling</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:gab59c1bec446b10af208f977a871d910b"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 output mixer source.  <a href="a00069.html#gab59c1bec446b10af208f977a871d910b">More...</a><br/></td></tr>
-<tr class="separator:gab59c1bec446b10af208f977a871d910b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f6c3c2310bca936c6386bc8b7b22546"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a9be68c96167e64a65e6d22c8023c4648">kWM8962_ModuleADC</a> = 0, 
+<tr class="memdesc:ga3b00a90c8ea09b5e9bde4e9569dd6acd"><td class="mdescLeft">&#160;</td><td class="mdescRight">XBAR active edge for detection.  <a href="a00069.html#ga3b00a90c8ea09b5e9bde4e9569dd6acd">More...</a><br/></td></tr>
+<tr class="separator:ga3b00a90c8ea09b5e9bde4e9569dd6acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga579edfe82d85753cf07d8ee2a886c8b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga579edfe82d85753cf07d8ee2a886c8b3">xbar_request_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00069.html#gga579edfe82d85753cf07d8ee2a886c8b3add9828910fd04b4ed7fdabf9acd17bce">kXBAR_RequestDisable</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a84117d0ae964e97c1df55290cf58af45">kWM8962_ModuleDAC</a> = 1, 
+&#160;&#160;<a class="el" href="a00069.html#gga579edfe82d85753cf07d8ee2a886c8b3ab393bdbdf99104eb65d914a13a1ed9f4">kXBAR_RequestDMAEnable</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a0785ea399a1f7ff741e252fd4133d536">kWM8962_ModuleMICB</a> = 4, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a30da5345b241405d100c1c4e8750f9e4">kWM8962_ModuleMIC</a> = 5, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546ad2d062bd02791de9e00e3f0c1b042796">kWM8962_ModuleLineIn</a> = 6, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a0dd5b1cf9ecb245f090d12492c6ce822">kWM8962_ModuleHeadphone</a> = 7, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a8b3183a60d68ef5c99a3f1c116292145">kWM8962_ModuleSpeaker</a> = 8, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546aba9247942faff5302a2408be9ee0fb4d">kWM8962_ModuleHeaphoneMixer</a> = 9, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga5f6c3c2310bca936c6386bc8b7b22546a798615a7c15c57ea5b4856cbae120234">kWM8962_ModuleSpeakerMixer</a> = 10
+&#160;&#160;<a class="el" href="a00069.html#gga579edfe82d85753cf07d8ee2a886c8b3abc48e2f1738a79491365fca18483f132">kXBAR_RequestInterruptEnable</a> = 2U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga5f6c3c2310bca936c6386bc8b7b22546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modules in WM8962 board.  <a href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">More...</a><br/></td></tr>
-<tr class="separator:ga5f6c3c2310bca936c6386bc8b7b22546"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga456ac33d49271d3e2c371351cd1d6371"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga456ac33d49271d3e2c371351cd1d6371a96d634e8c7078f54aa9362fbf70eb2bb">kWM8962_HeadphoneLeft</a> = 1, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga456ac33d49271d3e2c371351cd1d6371ad4c8167afbafb7068a538cf041c233ae">kWM8962_HeadphoneRight</a> = 2, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga456ac33d49271d3e2c371351cd1d6371a0b2e68b79cebdcca248531d876014e2b">kWM8962_SpeakerLeft</a> = 4, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga456ac33d49271d3e2c371351cd1d6371aaea778836268483fcd28602005b96cae">kWM8962_SpeakerRight</a> = 8
-<br/>
- }</td></tr>
-<tr class="memdesc:ga456ac33d49271d3e2c371351cd1d6371"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 play channel  <a href="a00069.html#ga456ac33d49271d3e2c371351cd1d6371">More...</a><br/></td></tr>
-<tr class="separator:ga456ac33d49271d3e2c371351cd1d6371"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f36e5eb3f1ac008bb199287be07127e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga3f36e5eb3f1ac008bb199287be07127e">wm8962_protocol_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga3f36e5eb3f1ac008bb199287be07127eaf6de6f01659c802cebbf57a19c4bd60b">kWM8962_BusPCMA</a> = 4, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga3f36e5eb3f1ac008bb199287be07127ea4d982d9c843bebe02b737aa545ff1781">kWM8962_BusPCMB</a> = 3, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga3f36e5eb3f1ac008bb199287be07127eac3edec19a4681602210130de19b2a2a8">kWM8962_BusI2S</a> = 2, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga3f36e5eb3f1ac008bb199287be07127eac8bc4e763d04b8f0a1a9a5f4e9807c05">kWM8962_BusLeftJustified</a> = 1, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga3f36e5eb3f1ac008bb199287be07127eabc7a1d5b252ea6f8520e8b68d7747678">kWM8962_BusRightJustified</a> = 0
-<br/>
- }</td></tr>
-<tr class="memdesc:ga3f36e5eb3f1ac008bb199287be07127e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="a00069.html#ga3f36e5eb3f1ac008bb199287be07127e">More...</a><br/></td></tr>
-<tr class="separator:ga3f36e5eb3f1ac008bb199287be07127e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27c7597b0e64cef0972c1ab1ce8978ae"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga27c7597b0e64cef0972c1ab1ce8978ae">wm8962_input_pga_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga27c7597b0e64cef0972c1ab1ce8978aea5b41227c7cf1876743f1e3662e091270">kWM8962_InputPGASourceInput1</a> = 8, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga27c7597b0e64cef0972c1ab1ce8978aea51b3c798dc1f15ed35f46a1a0563f94f">kWM8962_InputPGASourceInput2</a> = 4, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga27c7597b0e64cef0972c1ab1ce8978aeaec53efde35d94c461be316fc1a9a1a26">kWM8962_InputPGASourceInput3</a> = 2, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga27c7597b0e64cef0972c1ab1ce8978aea2cafb50c53b3b7006938c4148f00b106">kWM8962_InputPGASourceInput4</a> = 1
-<br/>
- }</td></tr>
-<tr class="memdesc:ga27c7597b0e64cef0972c1ab1ce8978ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 input source  <a href="a00069.html#ga27c7597b0e64cef0972c1ab1ce8978ae">More...</a><br/></td></tr>
-<tr class="separator:ga27c7597b0e64cef0972c1ab1ce8978ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b84710e0baf4aa250bb46d0966b23f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">wm8962_output_pga_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga4b84710e0baf4aa250bb46d0966b23f6ad5e613f806c91a3542b6a14552606e9b">kWM8962_OutputPGASourceMixer</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga4b84710e0baf4aa250bb46d0966b23f6a82bf7ac267f87a9db2a3cb020bc48404">kWM8962_OutputPGASourceDAC</a> = 1
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4b84710e0baf4aa250bb46d0966b23f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 input source  <a href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">More...</a><br/></td></tr>
-<tr class="separator:ga4b84710e0baf4aa250bb46d0966b23f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07422cff4c3dd5075f91f87bd0e57ee7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7ad856b83bbfe13390787ced4b22c08371">kWM8962_AudioSampleRate8KHz</a> = 8000U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7a00d5ccf3bbe7a85b6958005abb597cee">kWM8962_AudioSampleRate11025Hz</a> = 11025U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7adc00ef5a2aba81b16e402af3a3aa91f3">kWM8962_AudioSampleRate12KHz</a> = 12000U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7af1069dcfebcac0b55838cb681e7899e8">kWM8962_AudioSampleRate16KHz</a> = 16000U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7a5915645a44474d8440fecac66aa1de74">kWM8962_AudioSampleRate22050Hz</a> = 22050U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7ab93b622981db69f167efec549b43b751">kWM8962_AudioSampleRate24KHz</a> = 24000U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7abdeb1b84280ed1bb037e9b8a937ddaa9">kWM8962_AudioSampleRate32KHz</a> = 32000U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7aab999b4c6376b56917bd4ac90c01751f">kWM8962_AudioSampleRate44100Hz</a> = 44100U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7ab7aedff03fd3a311465ce28c8db8012b">kWM8962_AudioSampleRate48KHz</a> = 48000U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7ab4fad5ffe833dfef4807206f1d3e657d">kWM8962_AudioSampleRate88200Hz</a> = 88200U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga07422cff4c3dd5075f91f87bd0e57ee7aa72151a5c04dab9f49567bbf9d99a9f4">kWM8962_AudioSampleRate96KHz</a> = 96000U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga07422cff4c3dd5075f91f87bd0e57ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio sample rate definition  <a href="a00069.html#ga07422cff4c3dd5075f91f87bd0e57ee7">More...</a><br/></td></tr>
-<tr class="separator:ga07422cff4c3dd5075f91f87bd0e57ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga905301dc85f7361d62f56f9dea55cf2c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga905301dc85f7361d62f56f9dea55cf2ca888ec3cfbb8f8a86812965a7380e69ed">kWM8962_AudioBitWidth16bit</a> = 16U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga905301dc85f7361d62f56f9dea55cf2ca6a3f5732343dce98610f00d8d9e470ee">kWM8962_AudioBitWidth20bit</a> = 20U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga905301dc85f7361d62f56f9dea55cf2ca99293188518a93f226923e6113abb0b7">kWM8962_AudioBitWidth24bit</a> = 24U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga905301dc85f7361d62f56f9dea55cf2ca17581d3967336e48046fd32eb375c4fa">kWM8962_AudioBitWidth32bit</a> = 32U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga905301dc85f7361d62f56f9dea55cf2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio bit width  <a href="a00069.html#ga905301dc85f7361d62f56f9dea55cf2c">More...</a><br/></td></tr>
-<tr class="separator:ga905301dc85f7361d62f56f9dea55cf2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga583054843134da8e183e6da09f3f71d9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga583054843134da8e183e6da09f3f71d9">wm8962_fllclk_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga583054843134da8e183e6da09f3f71d9a551c17d3c2ded22372a4de2fd43999c2">kWM8962_FLLClkSourceMCLK</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga583054843134da8e183e6da09f3f71d9aafb4981bd64ad5cb0867e89120ea92ef">kWM8962_FLLClkSourceBCLK</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga583054843134da8e183e6da09f3f71d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 fll clock source  <a href="a00069.html#ga583054843134da8e183e6da09f3f71d9">More...</a><br/></td></tr>
-<tr class="separator:ga583054843134da8e183e6da09f3f71d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bde00130a8911dfe805c30a98c1e918"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga4bde00130a8911dfe805c30a98c1e918">wm8962_sysclk_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00069.html#gga4bde00130a8911dfe805c30a98c1e918a6b33d2dd76ce0a9ab9700f554d0c353b">kWM8962_SysClkSourceMclk</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00069.html#gga4bde00130a8911dfe805c30a98c1e918a31764d43c116f35c0129b6a76ce9cd09">kWM8962_SysClkSourceFLL</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4bde00130a8911dfe805c30a98c1e918"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 sysclk source  <a href="a00069.html#ga4bde00130a8911dfe805c30a98c1e918">More...</a><br/></td></tr>
-<tr class="separator:ga4bde00130a8911dfe805c30a98c1e918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga18288e5956f98b2e3e9adadbe2d838c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga18288e5956f98b2e3e9adadbe2d838c1">WM8962_Init</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, const <a class="el" href="a00069.html#a00658">wm8962_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga18288e5956f98b2e3e9adadbe2d838c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">WM8962 initialize function.  <a href="#ga18288e5956f98b2e3e9adadbe2d838c1">More...</a><br/></td></tr>
-<tr class="separator:ga18288e5956f98b2e3e9adadbe2d838c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga339f674c0437558dc578df8a8880c069"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga339f674c0437558dc578df8a8880c069">WM8962_Deinit</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:ga339f674c0437558dc578df8a8880c069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit the WM8962 codec.  <a href="#ga339f674c0437558dc578df8a8880c069">More...</a><br/></td></tr>
-<tr class="separator:ga339f674c0437558dc578df8a8880c069"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacfe00138361ba1b1ec5a9acbab980ac3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gacfe00138361ba1b1ec5a9acbab980ac3">WM8962_SetDataRoute</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, const <a class="el" href="a00069.html#a00661">wm8962_route_config_t</a> *route)</td></tr>
-<tr class="memdesc:gacfe00138361ba1b1ec5a9acbab980ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set audio data route in WM8962.  <a href="#gacfe00138361ba1b1ec5a9acbab980ac3">More...</a><br/></td></tr>
-<tr class="separator:gacfe00138361ba1b1ec5a9acbab980ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b06239d0a83e6520407fba4be01eac0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga5b06239d0a83e6520407fba4be01eac0">WM8962_SetProtocol</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, <a class="el" href="a00069.html#ga3f36e5eb3f1ac008bb199287be07127e">wm8962_protocol_t</a> protocol)</td></tr>
-<tr class="memdesc:ga5b06239d0a83e6520407fba4be01eac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the audio transfer protocol.  <a href="#ga5b06239d0a83e6520407fba4be01eac0">More...</a><br/></td></tr>
-<tr class="separator:ga5b06239d0a83e6520407fba4be01eac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9db29b821225c30523375dc34f7154ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga9db29b821225c30523375dc34f7154ef">WM8962_SetModuleVolume</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, <a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a> module, uint32_t volume)</td></tr>
-<tr class="memdesc:ga9db29b821225c30523375dc34f7154ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the volume of different modules in WM8962.  <a href="#ga9db29b821225c30523375dc34f7154ef">More...</a><br/></td></tr>
-<tr class="separator:ga9db29b821225c30523375dc34f7154ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa20917be0cf599e902edf1238b7ed474"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gaa20917be0cf599e902edf1238b7ed474">WM8962_GetModuleVolume</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, <a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a> module)</td></tr>
-<tr class="memdesc:gaa20917be0cf599e902edf1238b7ed474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the volume of different modules in WM8962.  <a href="#gaa20917be0cf599e902edf1238b7ed474">More...</a><br/></td></tr>
-<tr class="separator:gaa20917be0cf599e902edf1238b7ed474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad734b4b716eb16c6e6938a9a60e7c91c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gad734b4b716eb16c6e6938a9a60e7c91c">WM8962_SetModuleMute</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, <a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a> module, bool isEnabled)</td></tr>
-<tr class="memdesc:gad734b4b716eb16c6e6938a9a60e7c91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute modules in WM8962.  <a href="#gad734b4b716eb16c6e6938a9a60e7c91c">More...</a><br/></td></tr>
-<tr class="separator:gad734b4b716eb16c6e6938a9a60e7c91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2e3967c18532f80d814d9f78916e3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga0e2e3967c18532f80d814d9f78916e3a">WM8962_SetModulePower</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, <a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a> module, bool isEnabled)</td></tr>
-<tr class="memdesc:ga0e2e3967c18532f80d814d9f78916e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable expected devices.  <a href="#ga0e2e3967c18532f80d814d9f78916e3a">More...</a><br/></td></tr>
-<tr class="separator:ga0e2e3967c18532f80d814d9f78916e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64d0f92a066d236982c84d591f9c2281"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga64d0f92a066d236982c84d591f9c2281">WM8962_ConfigDataFormat</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, uint32_t sysclk, uint32_t sample_rate, uint32_t bits)</td></tr>
-<tr class="memdesc:ga64d0f92a066d236982c84d591f9c2281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the data format of audio data.  <a href="#ga64d0f92a066d236982c84d591f9c2281">More...</a><br/></td></tr>
-<tr class="separator:ga64d0f92a066d236982c84d591f9c2281"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf27b07f908b35ebf1612cf3a808c393a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gaf27b07f908b35ebf1612cf3a808c393a">WM8962_WriteReg</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, uint16_t reg, uint16_t val)</td></tr>
-<tr class="memdesc:gaf27b07f908b35ebf1612cf3a808c393a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register to WM8962 using I2C.  <a href="#gaf27b07f908b35ebf1612cf3a808c393a">More...</a><br/></td></tr>
-<tr class="separator:gaf27b07f908b35ebf1612cf3a808c393a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1cd056dd7e52e61fd6cec7b11c08d3d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga1cd056dd7e52e61fd6cec7b11c08d3d7">WM8962_ReadReg</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, uint16_t reg, uint16_t *val)</td></tr>
-<tr class="memdesc:ga1cd056dd7e52e61fd6cec7b11c08d3d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register from WM8962 using I2C.  <a href="#ga1cd056dd7e52e61fd6cec7b11c08d3d7">More...</a><br/></td></tr>
-<tr class="separator:ga1cd056dd7e52e61fd6cec7b11c08d3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2976beed993461e4f362a2cc95b6abff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga2976beed993461e4f362a2cc95b6abff">WM8962_ModifyReg</a> (<a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *handle, uint16_t reg, uint16_t mask, uint16_t val)</td></tr>
-<tr class="memdesc:ga2976beed993461e4f362a2cc95b6abff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify some bits in the register using I2C.  <a href="#ga2976beed993461e4f362a2cc95b6abff">More...</a><br/></td></tr>
-<tr class="separator:ga2976beed993461e4f362a2cc95b6abff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga579edfe82d85753cf07d8ee2a886c8b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the XBAR DMA and interrupt configurations.  <a href="a00069.html#ga579edfe82d85753cf07d8ee2a886c8b3">More...</a><br/></td></tr>
+<tr class="separator:ga579edfe82d85753cf07d8ee2a886c8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga88e69f5e510078626d40dee8ca73ae7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga88e69f5e510078626d40dee8ca73ae7c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga88e69f5e510078626d40dee8ca73ae7c">FSL_WM8962_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00204.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
-<tr class="memdesc:ga88e69f5e510078626d40dee8ca73ae7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.1.3. <br/></td></tr>
-<tr class="separator:ga88e69f5e510078626d40dee8ca73ae7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+XBAR functional Operation</h2></td></tr>
+<tr class="memitem:gad76eccc1b0191d40635159b8ae600897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gad76eccc1b0191d40635159b8ae600897">XBAR_Init</a> (xbar_instance_t xbarInstance)</td></tr>
+<tr class="memdesc:gad76eccc1b0191d40635159b8ae600897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the XBAR modules.  <a href="#gad76eccc1b0191d40635159b8ae600897">More...</a><br/></td></tr>
+<tr class="separator:gad76eccc1b0191d40635159b8ae600897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3df709461ecc608b16653f153cad8e7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga3df709461ecc608b16653f153cad8e7e">XBAR_Deinit</a> (xbar_instance_t xbarInstance)</td></tr>
+<tr class="memdesc:ga3df709461ecc608b16653f153cad8e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shutdown the XBAR modules.  <a href="#ga3df709461ecc608b16653f153cad8e7e">More...</a><br/></td></tr>
+<tr class="separator:ga3df709461ecc608b16653f153cad8e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf5a6781cb5ebbd7df48f07db8884213"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gadf5a6781cb5ebbd7df48f07db8884213">XBAR_SetSignalsConnection</a> (xbar_input_signal_t input, xbar_output_signal_t output)</td></tr>
+<tr class="memdesc:gadf5a6781cb5ebbd7df48f07db8884213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set connection between the selected XBAR_IN[*] input and the XBAR_OUT[*] output signal.  <a href="#gadf5a6781cb5ebbd7df48f07db8884213">More...</a><br/></td></tr>
+<tr class="separator:gadf5a6781cb5ebbd7df48f07db8884213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10d2b51361374981a1e5946bb5cad6f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga10d2b51361374981a1e5946bb5cad6f1">XBAR_ClearOutputStatusFlag</a> (xbar_output_signal_t output)</td></tr>
+<tr class="memdesc:ga10d2b51361374981a1e5946bb5cad6f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the edge detection status flags.  <a href="#ga10d2b51361374981a1e5946bb5cad6f1">More...</a><br/></td></tr>
+<tr class="separator:ga10d2b51361374981a1e5946bb5cad6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fc224d4c66da7e0c232ee4eb4bfea6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga0fc224d4c66da7e0c232ee4eb4bfea6e">XBAR_GetOutputStatusFlag</a> (xbar_output_signal_t output, bool *flag)</td></tr>
+<tr class="memdesc:ga0fc224d4c66da7e0c232ee4eb4bfea6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the active edge detection status.  <a href="#ga0fc224d4c66da7e0c232ee4eb4bfea6e">More...</a><br/></td></tr>
+<tr class="separator:ga0fc224d4c66da7e0c232ee4eb4bfea6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4f0e02a15e4f8b15e7d957790258d97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gab4f0e02a15e4f8b15e7d957790258d97">XBAR_SetOutputSignalConfig</a> (xbar_output_signal_t output, const <a class="el" href="a00069.html#a00659">xbar_control_config_t</a> *controlConfig)</td></tr>
+<tr class="memdesc:gab4f0e02a15e4f8b15e7d957790258d97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the XBAR control register.  <a href="#gab4f0e02a15e4f8b15e7d957790258d97">More...</a><br/></td></tr>
+<tr class="separator:gab4f0e02a15e4f8b15e7d957790258d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00657" id="a00657"></a>
+<a name="a00660" id="a00660"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct wm8962_audio_format_t</td>
+          <td class="memname">struct xbar_info_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a6f777c61a2b54aea8d7a1151dbecdcc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f777c61a2b54aea8d7a1151dbecdcc5"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a6f777c61a2b54aea8d7a1151dbecdcc5">mclk_HZ</a></td></tr>
-<tr class="memdesc:a6f777c61a2b54aea8d7a1151dbecdcc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">master clock frequency <br/></td></tr>
-<tr class="separator:a6f777c61a2b54aea8d7a1151dbecdcc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e4758859d88e0fbc87565b339dbd97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09e4758859d88e0fbc87565b339dbd97"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a09e4758859d88e0fbc87565b339dbd97">sampleRate</a></td></tr>
-<tr class="memdesc:a09e4758859d88e0fbc87565b339dbd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">sample rate <br/></td></tr>
-<tr class="separator:a09e4758859d88e0fbc87565b339dbd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ff2f79240bc2014291c6cc8f95145e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ff2f79240bc2014291c6cc8f95145e7"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a4ff2f79240bc2014291c6cc8f95145e7">bitWidth</a></td></tr>
-<tr class="memdesc:a4ff2f79240bc2014291c6cc8f95145e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit width <br/></td></tr>
-<tr class="separator:a4ff2f79240bc2014291c6cc8f95145e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
+<div class="textblock"></div>
 </div>
 </div>
 <a name="a00659" id="a00659"></a>
@@ -424,554 +180,160 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct wm8962_fll_clk_config_t</td>
+          <td class="memname">struct xbar_control_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>This structure keeps the configuration of XBAR control register for one output. Control registers are available only for a few outputs. Not every XBAR module has control registers. </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a41f99f4a18cd68ec4725740be19ff4d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41f99f4a18cd68ec4725740be19ff4d5"></a>
-<a class="el" href="a00069.html#ga583054843134da8e183e6da09f3f71d9">wm8962_fllclk_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a41f99f4a18cd68ec4725740be19ff4d5">fllClockSource</a></td></tr>
-<tr class="memdesc:a41f99f4a18cd68ec4725740be19ff4d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">fll clock source <br/></td></tr>
-<tr class="separator:a41f99f4a18cd68ec4725740be19ff4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7fccf4c0895506e88fddcebbcf6ea42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7fccf4c0895506e88fddcebbcf6ea42"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ad7fccf4c0895506e88fddcebbcf6ea42">fllReferenceClockFreq</a></td></tr>
-<tr class="memdesc:ad7fccf4c0895506e88fddcebbcf6ea42"><td class="mdescLeft">&#160;</td><td class="mdescRight">external input frequency <br/></td></tr>
-<tr class="separator:ad7fccf4c0895506e88fddcebbcf6ea42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae83acd6709cb3ede03b678ba16008f59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae83acd6709cb3ede03b678ba16008f59"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ae83acd6709cb3ede03b678ba16008f59">fllOutputFreq</a></td></tr>
-<tr class="memdesc:ae83acd6709cb3ede03b678ba16008f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLL output frequency value. <br/></td></tr>
-<tr class="separator:ae83acd6709cb3ede03b678ba16008f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00661" id="a00661"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct wm8962_route_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac6c43412e519f25737e54c79412fd6f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6c43412e519f25737e54c79412fd6f0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ac6c43412e519f25737e54c79412fd6f0">enableLoopBack</a></td></tr>
-<tr class="memdesc:ac6c43412e519f25737e54c79412fd6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable loopback: ADC-&gt;DAC directly <br/></td></tr>
-<tr class="separator:ac6c43412e519f25737e54c79412fd6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab91c92ea9cf7d03cfe8b6cc64f871fa2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab91c92ea9cf7d03cfe8b6cc64f871fa2"></a>
-<a class="el" href="a00069.html#ga27c7597b0e64cef0972c1ab1ce8978ae">wm8962_input_pga_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ab91c92ea9cf7d03cfe8b6cc64f871fa2">leftInputPGASource</a></td></tr>
-<tr class="memdesc:ab91c92ea9cf7d03cfe8b6cc64f871fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left input source for WM8962. <br/></td></tr>
-<tr class="separator:ab91c92ea9cf7d03cfe8b6cc64f871fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f794be71e8fb72629de00137348af7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f794be71e8fb72629de00137348af7d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a0f794be71e8fb72629de00137348af7d">leftInputMixerSource</a></td></tr>
-<tr class="memdesc:a0f794be71e8fb72629de00137348af7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">left input MIXER source, combination value of wm8962_input_mixer_source_t <br/></td></tr>
-<tr class="separator:a0f794be71e8fb72629de00137348af7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01598ee25ef305a312f263bd2296c1b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01598ee25ef305a312f263bd2296c1b4"></a>
-<a class="el" href="a00069.html#ga27c7597b0e64cef0972c1ab1ce8978ae">wm8962_input_pga_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a01598ee25ef305a312f263bd2296c1b4">rightInputPGASource</a></td></tr>
-<tr class="memdesc:a01598ee25ef305a312f263bd2296c1b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">right input PGA source <br/></td></tr>
-<tr class="separator:a01598ee25ef305a312f263bd2296c1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a565f113cafb0d1ce307d0b23e1e7b357"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a565f113cafb0d1ce307d0b23e1e7b357"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a565f113cafb0d1ce307d0b23e1e7b357">rightInputMixerSource</a></td></tr>
-<tr class="memdesc:a565f113cafb0d1ce307d0b23e1e7b357"><td class="mdescLeft">&#160;</td><td class="mdescRight">right input MIXER source, combination value of wm8962_input_mixer_source_t <br/></td></tr>
-<tr class="separator:a565f113cafb0d1ce307d0b23e1e7b357"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab23a19d43d8909691d5c78a4383b6090"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab23a19d43d8909691d5c78a4383b6090"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ab23a19d43d8909691d5c78a4383b6090">leftSpeakerMixerSource</a></td></tr>
-<tr class="memdesc:ab23a19d43d8909691d5c78a4383b6090"><td class="mdescLeft">&#160;</td><td class="mdescRight">speaker left MIXER source, combination value of wm8962_output_mixer_source_t <br/></td></tr>
-<tr class="separator:ab23a19d43d8909691d5c78a4383b6090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae69f774499faf24bd69ff2da11199dbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae69f774499faf24bd69ff2da11199dbe"></a>
-<a class="el" href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">wm8962_output_pga_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ae69f774499faf24bd69ff2da11199dbe">leftSpeakerPGASource</a></td></tr>
-<tr class="memdesc:ae69f774499faf24bd69ff2da11199dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">speaker left PGA source <br/></td></tr>
-<tr class="separator:ae69f774499faf24bd69ff2da11199dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9096ac81981e9dca424034a32689ab51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9096ac81981e9dca424034a32689ab51"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a9096ac81981e9dca424034a32689ab51">rightSpeakerMixerSource</a></td></tr>
-<tr class="memdesc:a9096ac81981e9dca424034a32689ab51"><td class="mdescLeft">&#160;</td><td class="mdescRight">speaker right MIXER source, combination value of wm8962_output_mixer_source_t <br/></td></tr>
-<tr class="separator:a9096ac81981e9dca424034a32689ab51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ba5dd54428f131dea33e0300d315f96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ba5dd54428f131dea33e0300d315f96"></a>
-<a class="el" href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">wm8962_output_pga_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a5ba5dd54428f131dea33e0300d315f96">rightSpeakerPGASource</a></td></tr>
-<tr class="memdesc:a5ba5dd54428f131dea33e0300d315f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">speaker left PGA source <br/></td></tr>
-<tr class="separator:a5ba5dd54428f131dea33e0300d315f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f61b821e30fb4afdc54fd6e4d704a1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f61b821e30fb4afdc54fd6e4d704a1d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a7f61b821e30fb4afdc54fd6e4d704a1d">leftHeadphoneMixerSource</a></td></tr>
-<tr class="memdesc:a7f61b821e30fb4afdc54fd6e4d704a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">headphone left MIXER source, combination value of wm8962_output_mixer_source_t <br/></td></tr>
-<tr class="separator:a7f61b821e30fb4afdc54fd6e4d704a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ffcda063ab998f2ab8934a916b54c05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ffcda063ab998f2ab8934a916b54c05"></a>
-<a class="el" href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">wm8962_output_pga_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a8ffcda063ab998f2ab8934a916b54c05">leftHeadphonePGASource</a></td></tr>
-<tr class="memdesc:a8ffcda063ab998f2ab8934a916b54c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">speaker left PGA source <br/></td></tr>
-<tr class="separator:a8ffcda063ab998f2ab8934a916b54c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02f2afb046b3a7991d2a85994c8456ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02f2afb046b3a7991d2a85994c8456ff"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a02f2afb046b3a7991d2a85994c8456ff">rightHeadphoneMixerSource</a></td></tr>
-<tr class="memdesc:a02f2afb046b3a7991d2a85994c8456ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">headphone left MIXER source, combination value of wm8962_output_mixer_source_t <br/></td></tr>
-<tr class="separator:a02f2afb046b3a7991d2a85994c8456ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae022c73d36d727140dce80497f84f549"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae022c73d36d727140dce80497f84f549"></a>
-<a class="el" href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">wm8962_output_pga_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ae022c73d36d727140dce80497f84f549">rightHeadphonePGASource</a></td></tr>
-<tr class="memdesc:ae022c73d36d727140dce80497f84f549"><td class="mdescLeft">&#160;</td><td class="mdescRight">speaker left PGA source <br/></td></tr>
-<tr class="separator:ae022c73d36d727140dce80497f84f549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00658" id="a00658"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct wm8962_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8a6817ffe1e86c4ce840e6a4c951c630"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00069.html#a00661">wm8962_route_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a8a6817ffe1e86c4ce840e6a4c951c630">route</a></td></tr>
-<tr class="memdesc:a8a6817ffe1e86c4ce840e6a4c951c630"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio data route.  <a href="#a8a6817ffe1e86c4ce840e6a4c951c630">More...</a><br/></td></tr>
-<tr class="separator:a8a6817ffe1e86c4ce840e6a4c951c630"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76ab6eafc0df0586295b01d2f3798381"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76ab6eafc0df0586295b01d2f3798381"></a>
-<a class="el" href="a00069.html#ga3f36e5eb3f1ac008bb199287be07127e">wm8962_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a76ab6eafc0df0586295b01d2f3798381">bus</a></td></tr>
-<tr class="memdesc:a76ab6eafc0df0586295b01d2f3798381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio transfer protocol. <br/></td></tr>
-<tr class="separator:a76ab6eafc0df0586295b01d2f3798381"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b17c2cd02637b924a9593a38c95ee20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b17c2cd02637b924a9593a38c95ee20"></a>
-<a class="el" href="a00069.html#a00657">wm8962_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a2b17c2cd02637b924a9593a38c95ee20">format</a></td></tr>
-<tr class="memdesc:a2b17c2cd02637b924a9593a38c95ee20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio format. <br/></td></tr>
-<tr class="separator:a2b17c2cd02637b924a9593a38c95ee20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96cef32b9148cb9b757c85ef633af880"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a96cef32b9148cb9b757c85ef633af880">masterSlave</a></td></tr>
-<tr class="memdesc:a96cef32b9148cb9b757c85ef633af880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master or slave.  <a href="#a96cef32b9148cb9b757c85ef633af880">More...</a><br/></td></tr>
-<tr class="separator:a96cef32b9148cb9b757c85ef633af880"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a914eb6680237a64309e1ee3a3d684861"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a914eb6680237a64309e1ee3a3d684861"></a>
-<a class="el" href="a00069.html#ga4bde00130a8911dfe805c30a98c1e918">wm8962_sysclk_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a914eb6680237a64309e1ee3a3d684861">sysclkSource</a></td></tr>
-<tr class="memdesc:a914eb6680237a64309e1ee3a3d684861"><td class="mdescLeft">&#160;</td><td class="mdescRight">sysclk source <br/></td></tr>
-<tr class="separator:a914eb6680237a64309e1ee3a3d684861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a223de19cbe7cf0a16f15102bfa12917a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a223de19cbe7cf0a16f15102bfa12917a"></a>
-<a class="el" href="a00069.html#a00659">wm8962_fll_clk_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a223de19cbe7cf0a16f15102bfa12917a">fllClock</a></td></tr>
-<tr class="memdesc:a223de19cbe7cf0a16f15102bfa12917a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLL clock configurations, shall be configured when masterSlave is true. <br/></td></tr>
-<tr class="separator:a223de19cbe7cf0a16f15102bfa12917a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43fc3ac195556c8856d1b721eb2e6442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43fc3ac195556c8856d1b721eb2e6442"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a43fc3ac195556c8856d1b721eb2e6442">slaveAddress</a></td></tr>
-<tr class="memdesc:a43fc3ac195556c8856d1b721eb2e6442"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8962 device address <br/></td></tr>
-<tr class="separator:a43fc3ac195556c8856d1b721eb2e6442"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60e85a3ce2ec63e22ffa24471439647c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60e85a3ce2ec63e22ffa24471439647c"></a>
-<a class="el" href="a00012.html#a00283">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a60e85a3ce2ec63e22ffa24471439647c">i2cConfig</a></td></tr>
-<tr class="memdesc:a60e85a3ce2ec63e22ffa24471439647c"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c configuration <br/></td></tr>
-<tr class="separator:a60e85a3ce2ec63e22ffa24471439647c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a737f4e6be7802e177107dd9b970078e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00069.html#ga3b00a90c8ea09b5e9bde4e9569dd6acd">xbar_active_edge_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a737f4e6be7802e177107dd9b970078e9">activeEdge</a></td></tr>
+<tr class="memdesc:a737f4e6be7802e177107dd9b970078e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Active edge to be detected.  <a href="#a737f4e6be7802e177107dd9b970078e9">More...</a><br/></td></tr>
+<tr class="separator:a737f4e6be7802e177107dd9b970078e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91b6e383eb2242de8ca3d809fde387ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00069.html#ga579edfe82d85753cf07d8ee2a886c8b3">xbar_request_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a91b6e383eb2242de8ca3d809fde387ba">requestType</a></td></tr>
+<tr class="memdesc:a91b6e383eb2242de8ca3d809fde387ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects DMA/Interrupt request.  <a href="#a91b6e383eb2242de8ca3d809fde387ba">More...</a><br/></td></tr>
+<tr class="separator:a91b6e383eb2242de8ca3d809fde387ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a8a6817ffe1e86c4ce840e6a4c951c630"></a>
+<a class="anchor" id="a737f4e6be7802e177107dd9b970078e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00069.html#a00661">wm8962_route_config_t</a> wm8962_config_t::route</td>
+          <td class="memname"><a class="el" href="a00069.html#ga3b00a90c8ea09b5e9bde4e9569dd6acd">xbar_active_edge_t</a> xbar_control_config_t::activeEdge</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a96cef32b9148cb9b757c85ef633af880"></a>
+<a class="anchor" id="a91b6e383eb2242de8ca3d809fde387ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool wm8962_config_t::masterSlave</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>true: master mode, false: slave mode </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00660" id="a00660"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct wm8962_handle_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7591e2525df535dfb85d2474c7e9e040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7591e2525df535dfb85d2474c7e9e040"></a>
-const <a class="el" href="a00069.html#a00658">wm8962_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a7591e2525df535dfb85d2474c7e9e040">config</a></td></tr>
-<tr class="memdesc:a7591e2525df535dfb85d2474c7e9e040"><td class="mdescLeft">&#160;</td><td class="mdescRight">wm8904 config pointer <br/></td></tr>
-<tr class="separator:a7591e2525df535dfb85d2474c7e9e040"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16607da90c3d0818caad2a9bc97a7442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16607da90c3d0818caad2a9bc97a7442"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a16607da90c3d0818caad2a9bc97a7442">volume</a> [DEBUG_WM8962_MODULE_NUM]</td></tr>
-<tr class="memdesc:a16607da90c3d0818caad2a9bc97a7442"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio volume value. <br/></td></tr>
-<tr class="separator:a16607da90c3d0818caad2a9bc97a7442"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3123948b7ff2b67a5e2736b0619d229"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3123948b7ff2b67a5e2736b0619d229"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#aa3123948b7ff2b67a5e2736b0619d229">i2cHandle</a> [<a class="el" href="a00069.html#gab5220f8f73393cfde17c19b2c20aa7d9">WM8962_I2C_HANDLER_SIZE</a>]</td></tr>
-<tr class="memdesc:aa3123948b7ff2b67a5e2736b0619d229"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle <br/></td></tr>
-<tr class="separator:aa3123948b7ff2b67a5e2736b0619d229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga2befad9156d44fba421d931dc006f6ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WM8962_LINVOL&#160;&#160;&#160;0x0U</td>
+          <td class="memname"><a class="el" href="a00069.html#ga579edfe82d85753cf07d8ee2a886c8b3">xbar_request_t</a> xbar_control_config_t::requestType</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga5be152cedd2cb70b9e04e58cdacbf93f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WM8962_I2C_ADDR&#160;&#160;&#160;(0x34 &gt;&gt; 1U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga5ebea2f4f6d4457d66de7733a8ea7bd3"></a>
+<a class="anchor" id="ga3b00a90c8ea09b5e9bde4e9569dd6acd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00069.html#ga3b00a90c8ea09b5e9bde4e9569dd6acd">xbar_active_edge_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="anchor" id="wm8962_input_mixer_source_t"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ebea2f4f6d4457d66de7733a8ea7bd3a40f6223b855cb8cf3c6f58aba8132093"></a>kWM8962_InputMixerSourceInput2</em>&nbsp;</td><td class="fielddoc">
-<p>input mixer source input 2 </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3b00a90c8ea09b5e9bde4e9569dd6acda001de2a19209982e62911110501c7c39"></a>kXBAR_EdgeNone</em>&nbsp;</td><td class="fielddoc">
+<p>Edge detection status bit never asserts. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ebea2f4f6d4457d66de7733a8ea7bd3a262b41b58bc544b4d49b3d072356806c"></a>kWM8962_InputMixerSourceInput3</em>&nbsp;</td><td class="fielddoc">
-<p>input mixer source input 3 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3b00a90c8ea09b5e9bde4e9569dd6acdaae4613950fea4fb1c196c9c52e55183b"></a>kXBAR_EdgeRising</em>&nbsp;</td><td class="fielddoc">
+<p>Edge detection status bit asserts on rising edges. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ebea2f4f6d4457d66de7733a8ea7bd3acfd2628b7358e1c381119664dff8b79d"></a>kWM8962_InputMixerSourceInputPGA</em>&nbsp;</td><td class="fielddoc">
-<p>input mixer source input PGA </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3b00a90c8ea09b5e9bde4e9569dd6acdaf66d5366d5d58c6b07b637899ebff6d4"></a>kXBAR_EdgeFalling</em>&nbsp;</td><td class="fielddoc">
+<p>Edge detection status bit asserts on falling edges. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3b00a90c8ea09b5e9bde4e9569dd6acda40bc235b95d4a0af62dcbf9dbe173993"></a>kXBAR_EdgeRisingAndFalling</em>&nbsp;</td><td class="fielddoc">
+<p>Edge detection status bit asserts on rising and falling edges. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gab59c1bec446b10af208f977a871d910b"></a>
+<a class="anchor" id="ga579edfe82d85753cf07d8ee2a886c8b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="wm8962_output_mixer_source_t"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910badfeb43196da71546a77d6bc863144e66"></a>kWM8962_OutputMixerDisabled</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer disabled </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910ba88bcc33d51943104f0a7602ceadf5b78"></a>kWM8962_OutputMixerSourceInput4Right</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer source input 4 left </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910ba6b0fe94180772bccf0cbcb4905894100"></a>kWM8962_OutputMixerSourceInput4Left</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer source input 4 right </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910bac46f2c66733f03613e3baa8d3983d7b4"></a>kWM8962_OutputMixerSourceRightInputMixer</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer source left input mixer </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910baa95298d357852b2a7a5f966d7a648c00"></a>kWM8962_OutputMixerSourceLeftInputMixer</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer source right input mixer </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910baad1e1c05e00ea79ffdb8abf8b79b24fb"></a>kWM8962_OutputMixerSourceRightDAC</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer source left DAC </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab59c1bec446b10af208f977a871d910ba197f58fbd6699f847c3a2ab2bba78b55"></a>kWM8962_OutputMixerSourceLeftDAC</em>&nbsp;</td><td class="fielddoc">
-<p>output mixer source Right DAC </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga5f6c3c2310bca936c6386bc8b7b22546"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a></td>
+          <td class="memname">enum <a class="el" href="a00069.html#ga579edfe82d85753cf07d8ee2a886c8b3">xbar_request_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a9be68c96167e64a65e6d22c8023c4648"></a>kWM8962_ModuleADC</em>&nbsp;</td><td class="fielddoc">
-<p>ADC module in WM8962. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga579edfe82d85753cf07d8ee2a886c8b3add9828910fd04b4ed7fdabf9acd17bce"></a>kXBAR_RequestDisable</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt and DMA are disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a84117d0ae964e97c1df55290cf58af45"></a>kWM8962_ModuleDAC</em>&nbsp;</td><td class="fielddoc">
-<p>DAC module in WM8962. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga579edfe82d85753cf07d8ee2a886c8b3ab393bdbdf99104eb65d914a13a1ed9f4"></a>kXBAR_RequestDMAEnable</em>&nbsp;</td><td class="fielddoc">
+<p>DMA enabled, interrupt disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a0785ea399a1f7ff741e252fd4133d536"></a>kWM8962_ModuleMICB</em>&nbsp;</td><td class="fielddoc">
-<p>Mic bias. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a30da5345b241405d100c1c4e8750f9e4"></a>kWM8962_ModuleMIC</em>&nbsp;</td><td class="fielddoc">
-<p>Input Mic. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546ad2d062bd02791de9e00e3f0c1b042796"></a>kWM8962_ModuleLineIn</em>&nbsp;</td><td class="fielddoc">
-<p>Analog in PGA. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a0dd5b1cf9ecb245f090d12492c6ce822"></a>kWM8962_ModuleHeadphone</em>&nbsp;</td><td class="fielddoc">
-<p>Line out module. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a8b3183a60d68ef5c99a3f1c116292145"></a>kWM8962_ModuleSpeaker</em>&nbsp;</td><td class="fielddoc">
-<p>Speaker module. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546aba9247942faff5302a2408be9ee0fb4d"></a>kWM8962_ModuleHeaphoneMixer</em>&nbsp;</td><td class="fielddoc">
-<p>Output mixer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5f6c3c2310bca936c6386bc8b7b22546a798615a7c15c57ea5b4856cbae120234"></a>kWM8962_ModuleSpeakerMixer</em>&nbsp;</td><td class="fielddoc">
-<p>Output mixer. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga456ac33d49271d3e2c371351cd1d6371"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="_wm8962_play_channel"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga456ac33d49271d3e2c371351cd1d6371a96d634e8c7078f54aa9362fbf70eb2bb"></a>kWM8962_HeadphoneLeft</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 headphone left channel </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga456ac33d49271d3e2c371351cd1d6371ad4c8167afbafb7068a538cf041c233ae"></a>kWM8962_HeadphoneRight</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 headphone right channel </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga456ac33d49271d3e2c371351cd1d6371a0b2e68b79cebdcca248531d876014e2b"></a>kWM8962_SpeakerLeft</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 speaker left channel </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga456ac33d49271d3e2c371351cd1d6371aaea778836268483fcd28602005b96cae"></a>kWM8962_SpeakerRight</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 speaker right channel </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga3f36e5eb3f1ac008bb199287be07127e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00069.html#ga3f36e5eb3f1ac008bb199287be07127e">wm8962_protocol_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>WM8962 only supports I2S format and PCM format. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3f36e5eb3f1ac008bb199287be07127eaf6de6f01659c802cebbf57a19c4bd60b"></a>kWM8962_BusPCMA</em>&nbsp;</td><td class="fielddoc">
-<p>PCMA mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3f36e5eb3f1ac008bb199287be07127ea4d982d9c843bebe02b737aa545ff1781"></a>kWM8962_BusPCMB</em>&nbsp;</td><td class="fielddoc">
-<p>PCMB mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3f36e5eb3f1ac008bb199287be07127eac3edec19a4681602210130de19b2a2a8"></a>kWM8962_BusI2S</em>&nbsp;</td><td class="fielddoc">
-<p>I2S type. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3f36e5eb3f1ac008bb199287be07127eac8bc4e763d04b8f0a1a9a5f4e9807c05"></a>kWM8962_BusLeftJustified</em>&nbsp;</td><td class="fielddoc">
-<p>Left justified mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3f36e5eb3f1ac008bb199287be07127eabc7a1d5b252ea6f8520e8b68d7747678"></a>kWM8962_BusRightJustified</em>&nbsp;</td><td class="fielddoc">
-<p>Right justified mode. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga27c7597b0e64cef0972c1ab1ce8978ae"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00069.html#ga27c7597b0e64cef0972c1ab1ce8978ae">wm8962_input_pga_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga27c7597b0e64cef0972c1ab1ce8978aea5b41227c7cf1876743f1e3662e091270"></a>kWM8962_InputPGASourceInput1</em>&nbsp;</td><td class="fielddoc">
-<p>Input PGA source input1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga27c7597b0e64cef0972c1ab1ce8978aea51b3c798dc1f15ed35f46a1a0563f94f"></a>kWM8962_InputPGASourceInput2</em>&nbsp;</td><td class="fielddoc">
-<p>Input PGA source input2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga27c7597b0e64cef0972c1ab1ce8978aeaec53efde35d94c461be316fc1a9a1a26"></a>kWM8962_InputPGASourceInput3</em>&nbsp;</td><td class="fielddoc">
-<p>Input PGA source input3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga27c7597b0e64cef0972c1ab1ce8978aea2cafb50c53b3b7006938c4148f00b106"></a>kWM8962_InputPGASourceInput4</em>&nbsp;</td><td class="fielddoc">
-<p>Input PGA source input4. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga4b84710e0baf4aa250bb46d0966b23f6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00069.html#ga4b84710e0baf4aa250bb46d0966b23f6">wm8962_output_pga_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4b84710e0baf4aa250bb46d0966b23f6ad5e613f806c91a3542b6a14552606e9b"></a>kWM8962_OutputPGASourceMixer</em>&nbsp;</td><td class="fielddoc">
-<p>Output PGA source mixer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4b84710e0baf4aa250bb46d0966b23f6a82bf7ac267f87a9db2a3cb020bc48404"></a>kWM8962_OutputPGASourceDAC</em>&nbsp;</td><td class="fielddoc">
-<p>Output PGA source DAC. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga07422cff4c3dd5075f91f87bd0e57ee7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="_wm8962_sample_rate"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7ad856b83bbfe13390787ced4b22c08371"></a>kWM8962_AudioSampleRate8KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 8000 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7a00d5ccf3bbe7a85b6958005abb597cee"></a>kWM8962_AudioSampleRate11025Hz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 11025 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7adc00ef5a2aba81b16e402af3a3aa91f3"></a>kWM8962_AudioSampleRate12KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 12000 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7af1069dcfebcac0b55838cb681e7899e8"></a>kWM8962_AudioSampleRate16KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 16000 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7a5915645a44474d8440fecac66aa1de74"></a>kWM8962_AudioSampleRate22050Hz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 22050 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7ab93b622981db69f167efec549b43b751"></a>kWM8962_AudioSampleRate24KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 24000 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7abdeb1b84280ed1bb037e9b8a937ddaa9"></a>kWM8962_AudioSampleRate32KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 32000 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7aab999b4c6376b56917bd4ac90c01751f"></a>kWM8962_AudioSampleRate44100Hz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 44100 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7ab7aedff03fd3a311465ce28c8db8012b"></a>kWM8962_AudioSampleRate48KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 48000 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7ab4fad5ffe833dfef4807206f1d3e657d"></a>kWM8962_AudioSampleRate88200Hz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 88200 Hz. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07422cff4c3dd5075f91f87bd0e57ee7aa72151a5c04dab9f49567bbf9d99a9f4"></a>kWM8962_AudioSampleRate96KHz</em>&nbsp;</td><td class="fielddoc">
-<p>Sample rate 96000 Hz. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga905301dc85f7361d62f56f9dea55cf2c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="_wm8962_audio_bit_width"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga905301dc85f7361d62f56f9dea55cf2ca888ec3cfbb8f8a86812965a7380e69ed"></a>kWM8962_AudioBitWidth16bit</em>&nbsp;</td><td class="fielddoc">
-<p>audio bit width 16 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga905301dc85f7361d62f56f9dea55cf2ca6a3f5732343dce98610f00d8d9e470ee"></a>kWM8962_AudioBitWidth20bit</em>&nbsp;</td><td class="fielddoc">
-<p>audio bit width 20 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga905301dc85f7361d62f56f9dea55cf2ca99293188518a93f226923e6113abb0b7"></a>kWM8962_AudioBitWidth24bit</em>&nbsp;</td><td class="fielddoc">
-<p>audio bit width 24 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga905301dc85f7361d62f56f9dea55cf2ca17581d3967336e48046fd32eb375c4fa"></a>kWM8962_AudioBitWidth32bit</em>&nbsp;</td><td class="fielddoc">
-<p>audio bit width 32 </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga583054843134da8e183e6da09f3f71d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00069.html#ga583054843134da8e183e6da09f3f71d9">wm8962_fllclk_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga583054843134da8e183e6da09f3f71d9a551c17d3c2ded22372a4de2fd43999c2"></a>kWM8962_FLLClkSourceMCLK</em>&nbsp;</td><td class="fielddoc">
-<p>FLL clock source from MCLK. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga583054843134da8e183e6da09f3f71d9aafb4981bd64ad5cb0867e89120ea92ef"></a>kWM8962_FLLClkSourceBCLK</em>&nbsp;</td><td class="fielddoc">
-<p>FLL clock source from BCLK. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga4bde00130a8911dfe805c30a98c1e918"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00069.html#ga4bde00130a8911dfe805c30a98c1e918">wm8962_sysclk_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4bde00130a8911dfe805c30a98c1e918a6b33d2dd76ce0a9ab9700f554d0c353b"></a>kWM8962_SysClkSourceMclk</em>&nbsp;</td><td class="fielddoc">
-<p>sysclk source from external MCLK </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4bde00130a8911dfe805c30a98c1e918a31764d43c116f35c0129b6a76ce9cd09"></a>kWM8962_SysClkSourceFLL</em>&nbsp;</td><td class="fielddoc">
-<p>sysclk source from internal FLL </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga579edfe82d85753cf07d8ee2a886c8b3abc48e2f1738a79491365fca18483f132"></a>kXBAR_RequestInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt enabled, DMA disabled. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga18288e5956f98b2e3e9adadbe2d838c1"></a>
+<a class="anchor" id="gad76eccc1b0191d40635159b8ae600897"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_Init </td>
+          <td class="memname">void XBAR_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">xbar_instance_t&#160;</td>
+          <td class="paramname"><em>xbarInstance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function un-gates the XBAR clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xbarInstance</td><td>XBAR peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3df709461ecc608b16653f153cad8e7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XBAR_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">xbar_instance_t&#160;</td>
+          <td class="paramname"><em>xbarInstance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables XBAR clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xbarInstance</td><td>XBAR peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadf5a6781cb5ebbd7df48f07db8884213"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> XBAR_SetSignalsConnection </td>
+          <td>(</td>
+          <td class="paramtype">xbar_input_signal_t&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00069.html#a00658">wm8962_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -980,55 +342,70 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The second parameter is NULL to WM8962 in this version. If users want to change the settings, they have to use wm8962_write_reg() or wm8962_modify_reg() to set the register value of WM8962. Note: If the codec_config is NULL, it would initialize WM8962 using default settings. The default setting: codec_config-&gt;route = kWM8962_RoutePlaybackandRecord codec_config-&gt;bus = kWM8962_BusI2S codec_config-&gt;master = slave</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function connects the XBAR input to the selected XBAR output. If more than one XBAR module is available, only the inputs and outputs from the same module can be connected.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line"><a class="code" href="a00069.html#gadf5a6781cb5ebbd7df48f07db8884213">XBAR_SetSignalsConnection</a>(kXBAR_DSC1_InputLogicLow, kXBAR_DSC1_OutputTriggerSyncIn0);</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">config</td><td>WM8962 configuration structure. </td></tr>
+    <tr><td class="paramname">input</td><td>XBAR input signal. </td></tr>
+    <tr><td class="paramname">output</td><td>XBAR output signal. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Signal connection set successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Failed because of invalid argument. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga339f674c0437558dc578df8a8880c069"></a>
+<a class="anchor" id="ga10d2b51361374981a1e5946bb5cad6f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_Deinit </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> XBAR_ClearOutputStatusFlag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function close all modules in WM8962 to save power.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure pointer. </td></tr>
+    <tr><td class="paramname">output</td><td>XBAR output signal. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Signal connection set successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Failed because of invalid argument. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gacfe00138361ba1b1ec5a9acbab980ac3"></a>
+<a class="anchor" id="ga0fc224d4c66da7e0c232ee4eb4bfea6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_SetDataRoute </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> XBAR_GetOutputStatusFlag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00069.html#a00661">wm8962_route_config_t</a> *&#160;</td>
-          <td class="paramname"><em>route</em>&#160;</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>flag</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1037,32 +414,39 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function would set the data route according to route. The route cannot be combined, as all route would enable different modules. Note: If a new route is set, the previous route would not work.</p>
+<p>This function gets the active edge detect status of all XBAR_OUTs. If the active edge occurs, the return value is asserted. When the interrupt or the DMA functionality is enabled for the XBAR_OUTx, this field is 1 when the interrupt or DMA request is asserted and 0 when the interrupt or DMA request has been cleared.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">route</td><td>Audio data route in WM8962. </td></tr>
+    <tr><td class="paramname">output</td><td>XBAR output signal. </td></tr>
+    <tr><td class="paramname">flag</td><td>get XBAR output status flag. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Signal connection set successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Failed because of invalid argument. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5b06239d0a83e6520407fba4be01eac0"></a>
+<a class="anchor" id="gab4f0e02a15e4f8b15e7d957790258d97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_SetProtocol </td>
+          <td class="memname"><a class="el" href="a00201.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> XBAR_SetOutputSignalConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00069.html#ga3f36e5eb3f1ac008bb199287be07127e">wm8962_protocol_t</a>&#160;</td>
-          <td class="paramname"><em>protocol</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00069.html#a00659">xbar_control_config_t</a> *&#160;</td>
+          <td class="paramname"><em>controlConfig</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1071,343 +455,23 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>WM8960 only supports I2S, left justified, right justified, PCM A, PCM B format.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function configures an XBAR control register. The active edge detection and the DMA/IRQ function on the corresponding XBAR output can be set.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line"><a class="code" href="a00069.html#a00659">xbar_control_config_t</a> userConfig;</div>
+<div class="line">userConfig.<a class="code" href="a00069.html#a737f4e6be7802e177107dd9b970078e9">activeEdge</a> = <a class="code" href="a00069.html#gga3b00a90c8ea09b5e9bde4e9569dd6acdaae4613950fea4fb1c196c9c52e55183b">kXBAR_EdgeRising</a>;</div>
+<div class="line">userConfig.<a class="code" href="a00069.html#a91b6e383eb2242de8ca3d809fde387ba">requestType</a> = <a class="code" href="a00069.html#gga579edfe82d85753cf07d8ee2a886c8b3abc48e2f1738a79491365fca18483f132">kXBAR_RequestInterruptEnable</a>;</div>
+<div class="line"><a class="code" href="a00069.html#gab4f0e02a15e4f8b15e7d957790258d97">XBAR_SetOutputSignalConfig</a>(kXBARA_OutputDMAMUX18, &amp;userConfig);</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8960 handle structure. </td></tr>
-    <tr><td class="paramname">protocol</td><td>Audio data transfer protocol. </td></tr>
+    <tr><td class="paramname">output</td><td>XBAR output signal. </td></tr>
+    <tr><td class="paramname">controlConfig</td><td>Pointer to structure that keeps configuration of control register. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9db29b821225c30523375dc34f7154ef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_SetModuleVolume </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function would set the volume of WM8962 modules. Uses need to appoint the module. The function assume that left channel and right channel has the same volume.</p>
-<p>Module:kWM8962_ModuleADC, volume range value: 0 is mute, 1-255 is -97db to 30db Module:kWM8962_ModuleDAC, volume range value: 0 is mute, 1-255 is -127db to 0db Module:kWM8962_ModuleHP, volume range value: 0 - 2F is mute, 0x30 - 0x7F is -73db to 6db Module:kWM8962_ModuleLineIn, volume range value: 0 - 0x3F is -17.25db to 30db Module:kWM8962_ModuleSpeaker, volume range value: 0 - 2F is mute, 0x30 - 0x7F is -73db to 6db</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Module to set volume, it can be ADC, DAC, Headphone and so on. </td></tr>
-    <tr><td class="paramname">volume</td><td>Volume value need to be set. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa20917be0cf599e902edf1238b7ed474"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t WM8962_GetModuleVolume </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gets the volume of WM8962 modules. Uses need to appoint the module. The function assume that left channel and right channel has the same volume.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Module to set volume, it can be ADC, DAC, Headphone and so on. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Volume value of the module. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad734b4b716eb16c6e6938a9a60e7c91c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_SetModuleMute </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isEnabled</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Modules need to be mute. </td></tr>
-    <tr><td class="paramname">isEnabled</td><td>Mute or unmute, 1 represent mute. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0e2e3967c18532f80d814d9f78916e3a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_SetModulePower </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00069.html#ga5f6c3c2310bca936c6386bc8b7b22546">wm8962_module_t</a>&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isEnabled</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">module</td><td>Module expected to enable. </td></tr>
-    <tr><td class="paramname">isEnabled</td><td>Enable or disable moudles. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga64d0f92a066d236982c84d591f9c2281"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_ConfigDataFormat </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sysclk</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sample_rate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bits</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function would configure the registers about the sample rate, bit depths.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure pointer. </td></tr>
-    <tr><td class="paramname">sysclk</td><td>system clock of the codec which can be generated by MCLK or PLL output. </td></tr>
-    <tr><td class="paramname">sample_rate</td><td>Sample rate of audio file running in WM8962. WM8962 now supports 8k, 11.025k, 12k, 16k, 22.05k, 24k, 32k, 44.1k, 48k and 96k sample rate. </td></tr>
-    <tr><td class="paramname">bits</td><td>Bit depth of audio file (WM8962 only supports 16bit, 20bit, 24bit and 32 bit in HW). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf27b07f908b35ebf1612cf3a808c393a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_WriteReg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">reg</td><td>The register address in WM8962. </td></tr>
-    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1cd056dd7e52e61fd6cec7b11c08d3d7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_ReadReg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">reg</td><td>The register address in WM8962. </td></tr>
-    <tr><td class="paramname">val</td><td>Value written to. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2976beed993461e4f362a2cc95b6abff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> WM8962_ModifyReg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00660">wm8962_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>WM8962 handle structure. </td></tr>
-    <tr><td class="paramname">reg</td><td>The register address in WM8962. </td></tr>
-    <tr><td class="paramname">mask</td><td>The mask code for the bits want to write. The bit you want to write should be 0. </td></tr>
-    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Signal connection set successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Failed because of invalid argument. </td></tr>
   </table>
   </dd>
 </dl>

@@ -26,6 +26,7 @@
 
 #include "fsl_soc_src.h"
 #include "fsl_common.h"
+#include "display_support.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -78,6 +79,10 @@ int main(void)
     /* Init board hardware. */
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
+#if (DEMO_PANEL != DEMO_PANEL_RASPI_7INCH)
+    BOARD_MIPIPanelTouch_I2C_Init();
+    BOARD_InitLpi2cPins();
+#endif
     BOARD_BootClockRUN();
     BOARD_ResetDisplayMix();
     BOARD_InitDebugConsole();

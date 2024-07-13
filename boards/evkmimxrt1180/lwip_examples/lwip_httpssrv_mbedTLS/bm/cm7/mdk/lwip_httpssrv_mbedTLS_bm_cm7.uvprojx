@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1189CVM8B_cm7, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_KEY_EXCHANGE_RSA_ENABLED, FSL_ETH_ENABLE_CACHE_CONTROL, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CHECKSUM_GEN_IP=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, MBEDTLS_MCUX_ELE_S400_API, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/phy;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/phy;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -683,6 +683,16 @@
               <FileName>fsl_s3mu.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2430,6 +2440,11 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -3155,16 +3170,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3183,6 +3188,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3732,10 +3752,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1189CVM8B_cm7, MBEDTLS_CONFIG_FILE='\"ele_s400_mbedtls_config.h\"', MBEDTLS_KEY_EXCHANGE_RSA_ENABLED, FSL_ETH_ENABLE_CACHE_CONTROL, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CHECKSUM_GEN_IP=1, CHECKSUM_GEN_UDP=1, CHECKSUM_GEN_TCP=1, CHECKSUM_GEN_ICMP=1, CHECKSUM_GEN_ICMP6=1, CHECKSUM_CHECK_ICMP=1, CHECKSUM_CHECK_ICMP6=1, MBEDTLS_MCUX_ELE_S400_API, SERIAL_PORT_TYPE_UART=1, CACHE_MODE_WRITE_THROUGH=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/str;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/phy;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1189/drivers;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/phy/device/phyrtl8201;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ele_s400;../../../../../../../devices/MIMXRT1189;../../../../../../../devices/MIMXRT1189/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1189/utilities;../../../../../../../devices/MIMXRT1189/xip;../../../../../xip;../../../../../../../devices/MIMXRT1189/drivers/cm7;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../platform/drivers/netc/socs/imxrt1180;../../../../../../../components/phy;../../../../../../../components/gpio;../../../../../../../components/ele_crypto;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include;../../../../../../../devices/MIMXRT1189/utilities/str</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4083,6 +4103,16 @@
               <FileName>fsl_s3mu.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ele_base_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5830,6 +5860,11 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/base64.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/bignum_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/bignum.c</FilePath>
@@ -6555,16 +6590,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -6583,6 +6608,21 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>

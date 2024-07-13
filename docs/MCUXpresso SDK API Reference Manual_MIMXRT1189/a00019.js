@@ -1,20 +1,20 @@
 var a00019 =
 [
-    [ "i3c_register_ibi_addr_t", "a00019.html#a00323", [
+    [ "i3c_register_ibi_addr_t", "a00019.html#a00321", [
       [ "address", "a00019.html#a0aba1cfc2aea5858f2a660d978448c63", null ],
       [ "ibiHasPayload", "a00019.html#a3f3521acf6aa258181bb482c47d2d0fd", null ]
     ] ],
-    [ "i3c_baudrate_hz_t", "a00019.html#a00316", [
+    [ "i3c_baudrate_hz_t", "a00019.html#a00314", [
       [ "i2cBaud", "a00019.html#af36092c5749c19f9cecdc3c2ed1b2aac", null ],
       [ "i3cPushPullBaud", "a00019.html#ab2a4e7b867c2e2f7f5db172b0fac15ad", null ],
       [ "i3cOpenDrainBaud", "a00019.html#a366afd993b96f79934271321b567048e", null ]
     ] ],
-    [ "i3c_master_daa_baudrate_t", "a00019.html#a00320", [
+    [ "i3c_master_daa_baudrate_t", "a00019.html#a00318", [
       [ "sourceClock_Hz", "a00019.html#a36cc72e0f803e1f4a53a820dd94009f5", null ],
       [ "i3cPushPullBaud", "a00019.html#aa3a9616e5d60d0a755bb8e7d6156c8c2", null ],
       [ "i3cOpenDrainBaud", "a00019.html#aa33f2104d43a930ad948fa9c8b43e441", null ]
     ] ],
-    [ "i3c_master_config_t", "a00019.html#a00319", [
+    [ "i3c_master_config_t", "a00019.html#a00317", [
       [ "enableMaster", "a00019.html#a6a6d2101ea54756fdc8dfb62c1b5c6d7", null ],
       [ "disableTimeout", "a00019.html#a2f44f7ffd96f13965390705b0ccf7857", null ],
       [ "hKeep", "a00019.html#a8063af1c56f6e56568e9ed521264d552", null ],
@@ -22,12 +22,12 @@ var a00019 =
       [ "enableOpenDrainHigh", "a00019.html#aacb29404b3812093a6585d23378493b9", null ],
       [ "baudRate_Hz", "a00019.html#ade8d4a66d41250e92500504891f30914", null ]
     ] ],
-    [ "i3c_master_transfer_callback_t", "a00019.html#a00322", [
+    [ "i3c_master_transfer_callback_t", "a00019.html#a00320", [
       [ "slave2Master", "a00019.html#ad9fee2ce6f680841ff6e9c0d0c887482", null ],
       [ "ibiCallback", "a00019.html#a6d42aad3611beb397bcc8ec4184def61", null ],
       [ "transferComplete", "a00019.html#aa40d4a35313debc5c67134bc953d50e0", null ]
     ] ],
-    [ "i3c_master_transfer_t", "a00019.html#a00250", [
+    [ "i3c_master_transfer_t", "a00019.html#a00248", [
       [ "flags", "a00019.html#aec9a81ea02e19c36c6643dc85ed868d2", null ],
       [ "slaveAddress", "a00019.html#a33ff10d5cd0a6221d5fda6c003dcaf0e", null ],
       [ "direction", "a00019.html#a8382b4f8a4e3f4cac7c0c756d2bb2f98", null ],
@@ -38,7 +38,7 @@ var a00019 =
       [ "busType", "a00019.html#a80a8cf853d5884d1b358cf549996d306", null ],
       [ "ibiResponse", "a00019.html#a20a11a4b7bbd43315ed03c91762f5a53", null ]
     ] ],
-    [ "i3c_master_handle_t", "a00019.html#a00249", [
+    [ "i3c_master_handle_t", "a00019.html#a00247", [
       [ "state", "a00019.html#a9a67e46c098a6617d683a2928728d7bb", null ],
       [ "remainingBytes", "a00019.html#a4f67af21e75862ddda5f0e98f35c15da", null ],
       [ "rxTermOps", "a00019.html#a9134a914b59803ff974a0c78772da550", null ],
@@ -146,6 +146,12 @@ var a00019 =
       [ "kI3C_RxTermDisable", "a00019.html#ggae8da91500ca2122f18ea51562fd141aba5f606a4c84e170e792b58377bb4de45e", null ],
       [ "kI3C_RxAutoTerm", "a00019.html#ggae8da91500ca2122f18ea51562fd141aba7d571487d2f49cda6e86eeacdc90f6a5", null ],
       [ "kI3C_RxTermLastByte", "a00019.html#ggae8da91500ca2122f18ea51562fd141abab077f7524fd10031d4d37a3fd6459753", null ]
+    ] ],
+    [ "i3c_start_scl_delay_t", "a00019.html#ga797755a8dc3d8b09a4878143e5c2d086", [
+      [ "kI3C_NoDelay", "a00019.html#gga797755a8dc3d8b09a4878143e5c2d086a5098dbe19c03a821ab422756074ff38e", null ],
+      [ "kI3C_IncreaseSclHalfPeriod", "a00019.html#gga797755a8dc3d8b09a4878143e5c2d086a941f479e1d308bf28a52a7a2042fa6fa", null ],
+      [ "kI3C_IncreaseSclOnePeriod", "a00019.html#gga797755a8dc3d8b09a4878143e5c2d086a9110a5195fa061c25b6e0069e727cb19", null ],
+      [ "kI3C_IncreaseSclOneAndHalfPeriod", "a00019.html#gga797755a8dc3d8b09a4878143e5c2d086a18d15b8832abf8dc2f99c5ed1c14b2c5", null ]
     ] ],
     [ "_i3c_master_transfer_flags", "a00019.html#gae6afbe5acf604875c68cf03b5d733a94", [
       [ "kI3C_TransferDefaultFlag", "a00019.html#ggae6afbe5acf604875c68cf03b5d733a94a83180edbcbe8754fe9ff03c4acaa8a46", null ],

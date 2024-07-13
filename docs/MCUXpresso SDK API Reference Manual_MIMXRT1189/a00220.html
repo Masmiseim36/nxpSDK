@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Hardware Port Tx</title>
+<title>MCUXpresso SDK API Reference Manual: Hardware Common Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,11 +98,219 @@ $(document).ready(function(){initNavTree('a00220.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Hardware Port Tx<div class="ingroups"><a class="el" href="a00044.html">Hardware Port</a></div></div>  </div>
+<div class="title">Hardware Common Functions<div class="ingroups"><a class="el" href="a00041.html">Hardware layer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>Group for the Port Tx functionalities </p>
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>Group for API/Data structure of common usage. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga86ea44205bdddb589c5960540b3f2dd7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga86ea44205bdddb589c5960540b3f2dd7">NETC_SIGetVsiIndex</a> (<a class="el" href="a00038.html#ga250cbf76861a7bd0418c736b3cecb450">netc_vsi_number_t</a> vsi)</td></tr>
+<tr class="memdesc:ga86ea44205bdddb589c5960540b3f2dd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the VSI index.  <a href="#ga86ea44205bdddb589c5960540b3f2dd7">More...</a><br/></td></tr>
+<tr class="separator:ga86ea44205bdddb589c5960540b3f2dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2fa8c270ae3b018a662e4e118819e143"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga2fa8c270ae3b018a662e4e118819e143">NETC_IPFInit</a> (NETC_SW_ENETC_Type *base, const <a class="el" href="a00041.html#a00366">netc_ipf_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga2fa8c270ae3b018a662e4e118819e143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set layer2/3 Dos configuration.  <a href="#ga2fa8c270ae3b018a662e4e118819e143">More...</a><br/></td></tr>
+<tr class="separator:ga2fa8c270ae3b018a662e4e118819e143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6b7df7f66505d510e3ae2fb8b858a77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#gae6b7df7f66505d510e3ae2fb8b858a77">NETC_PSFPKcProfileInit</a> (NETC_SW_ENETC_Type *base, const <a class="el" href="a00041.html#a00367">netc_isi_kc_rule_t</a> *rule, bool enKcPair1)</td></tr>
+<tr class="memdesc:gae6b7df7f66505d510e3ae2fb8b858a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the Ingress Stream Identification Key construction rule profiles.  <a href="#gae6b7df7f66505d510e3ae2fb8b858a77">More...</a><br/></td></tr>
+<tr class="separator:gae6b7df7f66505d510e3ae2fb8b858a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8dd03ec4e85a050dfb998bdcd697d755"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga8dd03ec4e85a050dfb998bdcd697d755">NETC_RxVlanCInit</a> (NETC_SW_ENETC_Type *base, const <a class="el" href="a00041.html#a00553">netc_vlan_classify_config_t</a> *config, bool enRtag)</td></tr>
+<tr class="memdesc:ga8dd03ec4e85a050dfb998bdcd697d755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the customer vlan type.  <a href="#ga8dd03ec4e85a050dfb998bdcd697d755">More...</a><br/></td></tr>
+<tr class="separator:ga8dd03ec4e85a050dfb998bdcd697d755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b3c7ae75089d820066b0bb30755b641"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ga5b3c7ae75089d820066b0bb30755b641">NETC_RxQosCInit</a> (NETC_SW_ENETC_Type *base, const <a class="el" href="a00041.html#a00388">netc_qos_classify_profile_t</a> *profile, bool enProfile1)</td></tr>
+<tr class="memdesc:ga5b3c7ae75089d820066b0bb30755b641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ingress QoS classification.  <a href="#ga5b3c7ae75089d820066b0bb30755b641">More...</a><br/></td></tr>
+<tr class="separator:ga5b3c7ae75089d820066b0bb30755b641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga86ea44205bdddb589c5960540b3f2dd7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t NETC_SIGetVsiIndex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00038.html#ga250cbf76861a7bd0418c736b3cecb450">netc_vsi_number_t</a>&#160;</td>
+          <td class="paramname"><em>vsi</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vsi</td><td>The VSI number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2fa8c270ae3b018a662e4e118819e143"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void NETC_IPFInit </td>
+          <td>(</td>
+          <td class="paramtype">NETC_SW_ENETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00041.html#a00366">netc_ipf_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td></td></tr>
+    <tr><td class="paramname">config</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae6b7df7f66505d510e3ae2fb8b858a77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NETC_PSFPKcProfileInit </td>
+          <td>(</td>
+          <td class="paramtype">NETC_SW_ENETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00041.html#a00367">netc_isi_kc_rule_t</a> *&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enKcPair1</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td></td></tr>
+    <tr><td class="paramname">rule</td><td></td></tr>
+    <tr><td class="paramname">enKcPair1</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8dd03ec4e85a050dfb998bdcd697d755"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NETC_RxVlanCInit </td>
+          <td>(</td>
+          <td class="paramtype">NETC_SW_ENETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00041.html#a00553">netc_vlan_classify_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enRtag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td></td></tr>
+    <tr><td class="paramname">config</td><td></td></tr>
+    <tr><td class="paramname">enRtag</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5b3c7ae75089d820066b0bb30755b641"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NETC_RxQosCInit </td>
+          <td>(</td>
+          <td class="paramtype">NETC_SW_ENETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00041.html#a00388">netc_qos_classify_profile_t</a> *&#160;</td>
+          <td class="paramname"><em>profile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enProfile1</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td></td></tr>
+    <tr><td class="paramname">profile</td><td></td></tr>
+    <tr><td class="paramname">enProfile1</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

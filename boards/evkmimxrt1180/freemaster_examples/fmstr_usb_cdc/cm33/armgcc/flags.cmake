@@ -125,7 +125,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -150,7 +149,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -176,7 +174,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_TXT_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -201,7 +198,6 @@ SET(CMAKE_C_FLAGS_HYPERRAM_TXT_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -230,7 +226,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -258,7 +253,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -284,7 +278,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -309,7 +302,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
@@ -331,7 +323,6 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -353,7 +344,6 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -376,7 +366,6 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_TXT_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -398,7 +387,6 @@ SET(CMAKE_CXX_FLAGS_HYPERRAM_TXT_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -421,7 +409,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -443,7 +430,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -466,7 +452,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -488,7 +473,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mapcs \
     -fno-rtti \
@@ -504,7 +488,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -519,6 +502,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_hyperram.ld\" -static \
@@ -530,7 +517,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -545,6 +531,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_hyperram.ld\" -static \
@@ -557,7 +547,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_TXT_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -572,6 +561,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_TXT_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_hyperram_txt.ld\" -static \
@@ -583,7 +576,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_TXT_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -598,6 +590,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_HYPERRAM_TXT_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_hyperram_txt.ld\" -static \
@@ -610,7 +606,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_HYPERRAM_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -625,6 +620,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_HYPERRAM_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor_hyperram.ld\" -static \
@@ -636,7 +635,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_HYPERRAM_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -651,6 +649,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_HYPERRAM_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor_hyperram.ld\" -static \
@@ -663,7 +665,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -678,6 +679,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
@@ -689,7 +694,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
-    -ffreestanding \
     -fno-builtin \
     -mthumb \
     -mapcs \
@@ -704,6 +708,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x2000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x2000 \
     ${FPU} \
     ${SPECS} \
     -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \

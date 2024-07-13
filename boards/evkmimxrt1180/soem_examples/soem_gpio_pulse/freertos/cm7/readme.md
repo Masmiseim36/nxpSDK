@@ -16,14 +16,14 @@ This example controls a stepper motor system using two outputs and one input rem
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 2.16.000
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.50.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.3.1
-- MCUXpresso  11.9.0
+- IAR embedded Workbench  9.60.1
+- Keil MDK  5.39.0
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  11.10.0
 
 Hardware requirements
 =====================
@@ -40,7 +40,7 @@ No special settings are required.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Power up the EtherCAT Coupler and connect it to the target board via an Ethernet Cable.
+2.  Power up the EtherCAT Coupler and connect it to the target board(ENET4) via an Ethernet Cable.
 3.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -62,7 +62,7 @@ When the demo is running, the serial port will output:
 
 Start the soem_gpio_pulse FreeRTOS example...
 
-ec_init on enet0 succeeded.
+ec_init on EtherCAT0 succeeded.
 
 ec_config_init 0
 3 slaves found and configured.

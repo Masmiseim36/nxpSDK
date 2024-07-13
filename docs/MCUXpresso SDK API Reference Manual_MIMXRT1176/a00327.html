@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CAAM HASH driver</title>
+<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking RNG driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,183 +99,27 @@ $(document).ready(function(){initNavTree('a00327.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CAAM HASH driver<div class="ingroups"><a class="el" href="a00324.html">CAAM Blocking APIs</a></div></div>  </div>
+<div class="title">CAAM Non-blocking RNG driver<div class="ingroups"><a class="el" href="a00324.html">CAAM Non-blocking APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the CAAM HASH driver. </p>
+<p>This section describes the programming interface of the CAAM Non-blocking RNG driver. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gae69fe1e12dec2eb60e97581fa953256e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#gae69fe1e12dec2eb60e97581fa953256e">CAAM_SHA_BLOCK_SIZE</a>&#160;&#160;&#160;128U</td></tr>
-<tr class="memdesc:gae69fe1e12dec2eb60e97581fa953256e"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM HASH Context size.  <a href="#gae69fe1e12dec2eb60e97581fa953256e">More...</a><br/></td></tr>
-<tr class="separator:gae69fe1e12dec2eb60e97581fa953256e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab364342ccd59f81b41f42c0115f756b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab364342ccd59f81b41f42c0115f756b2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#gab364342ccd59f81b41f42c0115f756b2">CAAM_HASH_BLOCK_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00327.html#gae69fe1e12dec2eb60e97581fa953256e">CAAM_SHA_BLOCK_SIZE</a></td></tr>
-<tr class="memdesc:gab364342ccd59f81b41f42c0115f756b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM hash block size. <br/></td></tr>
-<tr class="separator:gab364342ccd59f81b41f42c0115f756b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37c8441f67d4b99a31ef9ac7cfa472c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#ga37c8441f67d4b99a31ef9ac7cfa472c9">CAAM_HASH_CTX_SIZE</a>&#160;&#160;&#160;83</td></tr>
-<tr class="memdesc:ga37c8441f67d4b99a31ef9ac7cfa472c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM HASH Context size.  <a href="#ga37c8441f67d4b99a31ef9ac7cfa472c9">More...</a><br/></td></tr>
-<tr class="separator:ga37c8441f67d4b99a31ef9ac7cfa472c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gadc67ada09387d090058b94d715974721"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadc67ada09387d090058b94d715974721"></a>
-typedef enum <a class="el" href="a00327.html#ga0f41c8779c30423a767fe5a00f79b73e">_caam_hash_algo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a></td></tr>
-<tr class="memdesc:gadc67ada09387d090058b94d715974721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported cryptographic block cipher functions for HASH creation. <br/></td></tr>
-<tr class="separator:gadc67ada09387d090058b94d715974721"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3d56fc2cb3351cff3d6a05535c72403"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> [<a class="el" href="a00327.html#ga37c8441f67d4b99a31ef9ac7cfa472c9">CAAM_HASH_CTX_SIZE</a>]</td></tr>
-<tr class="memdesc:gab3d56fc2cb3351cff3d6a05535c72403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage type used to save hash context.  <a href="#gab3d56fc2cb3351cff3d6a05535c72403">More...</a><br/></td></tr>
-<tr class="separator:gab3d56fc2cb3351cff3d6a05535c72403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga0f41c8779c30423a767fe5a00f79b73e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#ga0f41c8779c30423a767fe5a00f79b73e">_caam_hash_algo_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73eac222c317f70d745d9bf717e208484fa9">kCAAM_XcbcMac</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73eaf35e335fde66bdaf770c6389c3cca689">kCAAM_Cmac</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73eab8d5a4a79135ef7a4820afd96e76bcf9">kCAAM_Sha1</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ea60f41ab384dff6c0b8e4d6b1bf27326f">kCAAM_Sha224</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73eaaec5a4de97fac0811f3e3c451e5216ed">kCAAM_Sha256</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ea8d077fb9946695a9e1e5234407392277">kCAAM_Sha384</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ea1049f4670c38dc74cbf5ef16f9da6263">kCAAM_Sha512</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ea13f9f69323615600463f31097ed8fae5">kCAAM_HmacSha1</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ea7d6110ec1ded03f8f2ed87f29c6e142f">kCAAM_HmacSha224</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ea2152f63002641980986909892c29925a">kCAAM_HmacSha256</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73ead5be71d3960b9c48c53691d0f8781e2c">kCAAM_HmacSha384</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00327.html#gga0f41c8779c30423a767fe5a00f79b73eacda638f447799de450ae3a0a905c7ddf">kCAAM_HmacSha512</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga0f41c8779c30423a767fe5a00f79b73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported cryptographic block cipher functions for HASH creation.  <a href="a00327.html#ga0f41c8779c30423a767fe5a00f79b73e">More...</a><br/></td></tr>
-<tr class="separator:ga0f41c8779c30423a767fe5a00f79b73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga2e73b6881b1dba02f6d83c898ef9791e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#ga2e73b6881b1dba02f6d83c898ef9791e">CAAM_HASH_Init</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, <a class="el" href="a00327.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a> algo, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:ga2e73b6881b1dba02f6d83c898ef9791e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize HASH context.  <a href="#ga2e73b6881b1dba02f6d83c898ef9791e">More...</a><br/></td></tr>
-<tr class="separator:ga2e73b6881b1dba02f6d83c898ef9791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77c33d59740a2a8cc884f3f8fedf1172"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#ga77c33d59740a2a8cc884f3f8fedf1172">CAAM_HASH_Update</a> (<a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
-<tr class="memdesc:ga77c33d59740a2a8cc884f3f8fedf1172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to current HASH.  <a href="#ga77c33d59740a2a8cc884f3f8fedf1172">More...</a><br/></td></tr>
-<tr class="separator:ga77c33d59740a2a8cc884f3f8fedf1172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4ea7fca91f5a247152070f1e987b69a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#gad4ea7fca91f5a247152070f1e987b69a">CAAM_HASH_Finish</a> (<a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:gad4ea7fca91f5a247152070f1e987b69a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize hashing.  <a href="#gad4ea7fca91f5a247152070f1e987b69a">More...</a><br/></td></tr>
-<tr class="separator:gad4ea7fca91f5a247152070f1e987b69a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1e5fc1252400f2af66d7fec4d87ad97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#gae1e5fc1252400f2af66d7fec4d87ad97">CAAM_HASH</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00327.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a> algo, const uint8_t *input, size_t inputSize, const uint8_t *key, size_t keySize, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:gae1e5fc1252400f2af66d7fec4d87ad97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create HASH on given data.  <a href="#gae1e5fc1252400f2af66d7fec4d87ad97">More...</a><br/></td></tr>
-<tr class="separator:gae1e5fc1252400f2af66d7fec4d87ad97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga904a52e58fe49d7c1efc9f78fb9d04db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html#ga904a52e58fe49d7c1efc9f78fb9d04db">CAAM_RNG_GetRandomDataNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00015.html#gab64d68e9a03496ff8bb6625d854acab6">caam_rng_state_handle_t</a> stateHandle, <a class="el" href="a00013.html#ga6b38feaf2c1aa50ff3f305de0af71dd4">caam_desc_rng_t</a> descriptor, void *data, size_t dataSize, <a class="el" href="a00015.html#ga0033377ef0820fc0091156df81cc4309">caam_rng_random_type_t</a> dataType, <a class="el" href="a00015.html#ga371b4e5ecd7c166a03ed11613007bb12">caam_rng_generic256_t</a> additionalEntropy)</td></tr>
+<tr class="memdesc:ga904a52e58fe49d7c1efc9f78fb9d04db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request random data.  <a href="#ga904a52e58fe49d7c1efc9f78fb9d04db">More...</a><br/></td></tr>
+<tr class="separator:ga904a52e58fe49d7c1efc9f78fb9d04db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae69fe1e12dec2eb60e97581fa953256e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CAAM_SHA_BLOCK_SIZE&#160;&#160;&#160;128U</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>up to SHA-512 block size </p>
-
-</div>
-</div>
-<a class="anchor" id="ga37c8441f67d4b99a31ef9ac7cfa472c9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CAAM_HASH_CTX_SIZE&#160;&#160;&#160;83</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gab3d56fc2cb3351cff3d6a05535c72403"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t caam_hash_ctx_t[<a class="el" href="a00327.html#ga37c8441f67d4b99a31ef9ac7cfa472c9">CAAM_HASH_CTX_SIZE</a>]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga0f41c8779c30423a767fe5a00f79b73e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00327.html#ga0f41c8779c30423a767fe5a00f79b73e">_caam_hash_algo_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73eac222c317f70d745d9bf717e208484fa9"></a>kCAAM_XcbcMac</em>&nbsp;</td><td class="fielddoc">
-<p>XCBC-MAC (AES engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73eaf35e335fde66bdaf770c6389c3cca689"></a>kCAAM_Cmac</em>&nbsp;</td><td class="fielddoc">
-<p>CMAC (AES engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73eab8d5a4a79135ef7a4820afd96e76bcf9"></a>kCAAM_Sha1</em>&nbsp;</td><td class="fielddoc">
-<p>SHA_1 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ea60f41ab384dff6c0b8e4d6b1bf27326f"></a>kCAAM_Sha224</em>&nbsp;</td><td class="fielddoc">
-<p>SHA_224 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73eaaec5a4de97fac0811f3e3c451e5216ed"></a>kCAAM_Sha256</em>&nbsp;</td><td class="fielddoc">
-<p>SHA_256 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ea8d077fb9946695a9e1e5234407392277"></a>kCAAM_Sha384</em>&nbsp;</td><td class="fielddoc">
-<p>SHA_384 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ea1049f4670c38dc74cbf5ef16f9da6263"></a>kCAAM_Sha512</em>&nbsp;</td><td class="fielddoc">
-<p>SHA_512 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ea13f9f69323615600463f31097ed8fae5"></a>kCAAM_HmacSha1</em>&nbsp;</td><td class="fielddoc">
-<p>HMAC_SHA_1 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ea7d6110ec1ded03f8f2ed87f29c6e142f"></a>kCAAM_HmacSha224</em>&nbsp;</td><td class="fielddoc">
-<p>HMAC_SHA_224 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ea2152f63002641980986909892c29925a"></a>kCAAM_HmacSha256</em>&nbsp;</td><td class="fielddoc">
-<p>HMAC_SHA_256 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73ead5be71d3960b9c48c53691d0f8781e2c"></a>kCAAM_HmacSha384</em>&nbsp;</td><td class="fielddoc">
-<p>HMAC_SHA_384 (MDHA engine) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0f41c8779c30423a767fe5a00f79b73eacda638f447799de450ae3a0a905c7ddf"></a>kCAAM_HmacSha512</em>&nbsp;</td><td class="fielddoc">
-<p>HMAC_SHA_512 (MDHA engine) </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga2e73b6881b1dba02f6d83c898ef9791e"></a>
+<a class="anchor" id="ga904a52e58fe49d7c1efc9f78fb9d04db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_Init </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_RNG_GetRandomDataNonBlocking </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -289,26 +133,38 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="a00015.html#gab64d68e9a03496ff8bb6625d854acab6">caam_rng_state_handle_t</a>&#160;</td>
+          <td class="paramname"><em>stateHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00327.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a>&#160;</td>
-          <td class="paramname"><em>algo</em>, </td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6b38feaf2c1aa50ff3f305de0af71dd4">caam_desc_rng_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
+          <td class="paramname"><em>dataSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga0033377ef0820fc0091156df81cc4309">caam_rng_random_type_t</a>&#160;</td>
+          <td class="paramname"><em>dataType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga371b4e5ecd7c166a03ed11613007bb12">caam_rng_generic256_t</a>&#160;</td>
+          <td class="paramname"><em>additionalEntropy</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -317,192 +173,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the HASH. Key shall be supplied if the underlaying algoritm is AES XCBC-MAC or CMAC. Key shall be NULL if the underlaying algoritm is SHA.</p>
-<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For MDHA the key length argument is ignored.</p>
-<p>This functions is used to initialize the context for both blocking and non-blocking CAAM_HASH API. For blocking CAAM HASH API, the HASH context contains all information required for context switch, such as running hash or MAC. For non-blocking CAAM HASH API, the HASH context is used to hold SGT. Therefore, the HASH context cannot be shared between blocking and non-blocking HASH API. With one HASH context, either use only blocking HASH API or only non-blocking HASH API.</p>
+<p>This function schedules the request for random data from CAAM RNG. Memory at memory pointers will be accessed by CAAM shortly after this function returns, according to actual CAAM schedule.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ctx</td><td>Output hash context </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key (NULL if underlaying algorithm is SHA) </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>RNG handle used for this request </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">stateHandle</td><td>RNG state handle used to generate random data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Pointer address used to store random data </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter, in bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataType</td><td>Type of random data to be generated. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">additionalEntropy</td><td>NULL or Pointer to optional 256-bit additional entropy. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of initialization </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga77c33d59740a2a8cc884f3f8fedf1172"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_Update </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Add data to current HASH. This can be called repeatedly with an arbitrary amount of data to be hashed. The functions blocks. If it returns kStatus_Success, the running hash or mac has been updated (CAAM has processed the input data), so the memory at input pointer can be released back to system. The context is updated with the running hash or mac and with all necessary information to support possible context switch.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>HASH context </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad4ea7fca91f5a247152070f1e987b69a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_Finish </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00327.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Outputs the final hash (computed by <a class="el" href="a00327.html#ga77c33d59740a2a8cc884f3f8fedf1172" title="Add data to current HASH. ">CAAM_HASH_Update()</a>) and erases the context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Input hash context </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash finish operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gae1e5fc1252400f2af66d7fec4d87ad97"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH </td>
-          <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00327.html#gadc67ada09387d090058b94d715974721">caam_hash_algo_t</a>&#160;</td>
-          <td class="paramname"><em>algo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Perform the full keyed XCBC-MAC/CMAC or SHA in one function call.</p>
-<p>Key shall be supplied if the underlaying algoritm is AES XCBC-MAC or CMAC. Key shall be NULL if the underlaying algoritm is SHA.</p>
-<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For MDHA the key length argument is ignored.</p>
-<p>The function is blocking.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key (NULL if underlaying algorithm is SHA) </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>status of the request </dd></dl>
 
 </div>
 </div>

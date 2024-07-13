@@ -17,6 +17,8 @@
 /* Application info */
 typedef struct _app_ver
 {
+    char cUserPath1[80];
+    char cUserPath2[80];
     char cBoardID[20];
     char cExampleID[30];
     char cAppVer[5];

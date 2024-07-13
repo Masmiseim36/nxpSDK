@@ -1,31 +1,115 @@
 var a00043 =
 [
-    [ "netc_enetc_vlan_tag_t", "a00043.html#a00364", [
-      [ "pcp", "a00043.html#a1228066a0e49c7628cb7019f34896017", null ],
-      [ "dei", "a00043.html#aa06f213a8e67e7043edbf36e5fe3870f", null ],
-      [ "vid", "a00043.html#a7dc79b2707cbf8e2714c63e53f97f756", null ],
-      [ "tpid", "a00043.html#a257a01e6f68ce2884bc478a027a8ec39", null ]
+    [ "Hardware Port Rx", "a00219.html", null ],
+    [ "Hardware Port Tx", "a00218.html", null ],
+    [ "netc_port_qos_mode_t", "a00043.html#a00382", [
+      [ "qosVlanMap", "a00043.html#acb6797923dd73071bd33856b3f04bb38", null ],
+      [ "vlanQosMap", "a00043.html#aad16d7ebcf6447adda49955bc64d67fe", null ],
+      [ "defaultIpv", "a00043.html#a32cfc439b87b05dab01916efd2b3329d", null ],
+      [ "defaultDr", "a00043.html#a2dc31540707a2ea43014cc27a584696b", null ],
+      [ "enVlanInfo", "a00043.html#a965f12993732deca170f0655b5266e27", null ],
+      [ "vlanTagSelect", "a00043.html#a1b28e2493d89852c4bb99141c0348e1f", null ]
     ] ],
-    [ "netc_enetc_port_discard_statistic_t", "a00043.html#a00363", [
-      [ "ingressDR", "a00043.html#ae41f8e94a78aab94866db39351261c5c", null ],
-      [ "broadcastReject", "a00043.html#ac540e4849860f82d2119206431265087", null ],
-      [ "smacPruning", "a00043.html#a1e5bdbf9a523c43d72095f657d3ec28e", null ],
-      [ "unicastMacFilt", "a00043.html#a5425ac56e7ae9db3021b35dc09018c78", null ],
-      [ "multicastMacFilt", "a00043.html#a6c2edb73df3ab4f92247681e2563228b", null ],
-      [ "unicastVlanFilt", "a00043.html#aa0e09d24acf564119e2f02654e4ef9cd", null ],
-      [ "multicastVlanFilt", "a00043.html#ac884b780c7ae728dcc94903279dfd4c6", null ],
-      [ "boradcastVlanFilt", "a00043.html#a364051960971a7e45775cac660c009c7", null ]
+    [ "netc_port_parser_config_t", "a00043.html#a00374", [
+      [ "l2PloadCount", "a00043.html#ad97d77ed91f49724a07fcda52644ccd1", null ],
+      [ "enableL3Parser", "a00043.html#a3e1b1b3d902ec01c4bfcd174d00f4543", null ],
+      [ "l3PayloadCount", "a00043.html#a755f17338f1530d0d542bb40e80d7f6b", null ],
+      [ "enableL4Parser", "a00043.html#a98eaa6071615be1d309b0368200310c8", null ],
+      [ "l4PayloadCount", "a00043.html#a484bab8407d30ad26f307cbe91b7c6ea", null ]
     ] ],
-    [ "netc_enetc_native_vlan_config_t", "a00043.html#a00361", [
-      [ "enUnderZeroVid", "a00043.html#ab654ce122894375ad222cae4de84b193", null ],
-      [ "enUnderNoVlan", "a00043.html#a2c082c647b2ab7c77769259aa55510a4", null ],
-      [ "vlanTag", "a00043.html#accd15320420cbb44dcda45772ef26d8c", null ]
+    [ "netc_port_tg_config_t", "a00043.html#a00384", [
+      [ "advOffset", "a00043.html#ace7455a357d5928b433ea7662cc116f8", null ],
+      [ "holdSkew", "a00043.html#a197d80b0b46221affc03c0f8d0d329b7", null ]
     ] ],
-    [ "netc_enetc_parser_config_t", "a00043.html#a00362", [
-      [ "disL3Checksum", "a00043.html#a6c3fa885e122c9e88ec072ad098223d5", null ],
-      [ "disL4Checksum", "a00043.html#a57395907def1d4cd85a879d27abc2204", null ],
-      [ "etype", "a00043.html#a1fbff8c7545515b725fee4dac0728d1f", null ],
-      [ "en", "a00043.html#a0382b7b15f6e570aee7c604d9f828162", null ],
-      [ "cp", "a00043.html#ab8cf1466cbfcca8e768b2edd47de0819", null ]
+    [ "netc_port_tc_cbs_config_t", "a00043.html#a00383", [
+      [ "bwWeight", "a00043.html#a6802f8c9550866bfcbead663be0c262c", null ],
+      [ "hiCredit", "a00043.html#a82d73bb483324c53bc6c27bed8d00877", null ]
+    ] ],
+    [ "netc_port_tx_tc_config_t", "a00043.html#a00385", [
+      [ "enPreemption", "a00043.html#aa8b1784beea48a063c7c3873f364457a", null ],
+      [ "enTcGate", "a00043.html#aea8f62ba3d6f8623b324c011f3c069e1", null ],
+      [ "enableTsd", "a00043.html#a1502f4329060e3d1fcf3a0a7fc44a2a1", null ],
+      [ "enableCbs", "a00043.html#a7902aacfa4e663cd946f4129f3ac16a4", null ],
+      [ "cbsCfg", "a00043.html#a8cb3c3ac58313f55e393be65ea92dc23", null ]
+    ] ],
+    [ "netc_port_discard_statistic_t", "a00043.html#a00371", [
+      [ "count", "a00043.html#a8ab9d898ac2e80945e655a4bf68fad5f", null ],
+      [ "reason0", "a00043.html#a004bf02cf61145b2533da3dafc0c4217", null ],
+      [ "reason1", "a00043.html#a93e6b5bd7f00ffbdeae97ad800fc4445", null ]
+    ] ],
+    [ "netc_port_vlan_classify_config_t", "a00043.html#a00386", [
+      [ "innerMask", "a00043.html#afefdbb2747a4bd769227506a9e4bf708", null ],
+      [ "outerMask", "a00043.html#a840e010a08a32c6f6655f08f87685cbc", null ]
+    ] ],
+    [ "netc_port_qos_classify_config_t", "a00043.html#a00381", [
+      [ "vlanQosMap", "a00043.html#a28edda8002cc5c96d97f47e98172bb4f", null ],
+      [ "defaultIpv", "a00043.html#af36f51f98cfc30c9de1de6debea3f317", null ],
+      [ "defaultDr", "a00043.html#aa818b5353cd1de2d45e5a753e1f3d327", null ],
+      [ "enVlanInfo", "a00043.html#a83c63cb0dabd38f2d0bcea3b5fbe5826", null ],
+      [ "vlanTagSelect", "a00043.html#a746c237c915a56d294e9697a52a6c0f0", null ]
+    ] ],
+    [ "netc_port_ipf_config_t", "a00043.html#a00373", [
+      [ "enL2Dos", "a00043.html#a9a11118d1e86e4968294d70c652499e7", null ],
+      [ "enL3Dos", "a00043.html#a7b945fd1eee8304bb4637033333edc43", null ],
+      [ "enIPFTable", "a00043.html#a5dc8a8bde76add89e96b0c901952bb06", null ]
+    ] ],
+    [ "netc_port_psfp_isi_config", "a00043.html#a00380", [
+      [ "defaultISEID", "a00043.html#aeffdae3b7ebf36d46d995dd1f27b2c2f", null ],
+      [ "enKC1", "a00043.html#a47c4c6a0cbae45d6e542e821d51dbc57", null ],
+      [ "enKC0", "a00043.html#a9e0fc195c97261e68cc0dd389f05bda9", null ],
+      [ "kcPair", "a00043.html#a4895e6c7df157c8396590f6536cacb4c", null ]
+    ] ],
+    [ "netc_port_common_t", "a00043.html#a00370", [
+      [ "acceptTpid", "a00043.html#a9a427b5862f1a724fa00440fe48b3366", null ],
+      [ "rxTsSelect", "a00043.html#ae67b332b0a66785ad7419905ae213b82", null ],
+      [ "pSpeed", "a00043.html#aa6d53f325ecc39df23283e470a2698e1", null ],
+      [ "rxMacsecBco", "a00043.html#afe2d5da575ebd7c4d1d5ce28e5d5251b", null ],
+      [ "rxPpduBco", "a00043.html#afc1894832cf968fa7a3bc34505f9b589", null ],
+      [ "txMacsecBco", "a00043.html#a021bb902003cecbe79ec1f0fb112e3ba", null ],
+      [ "txPpduBco", "a00043.html#a1b992e9c14b13469c19e17a28407bc42", null ],
+      [ "ogcMode", "a00043.html#ad31483c07800c128bf4f49d7578212d6", null ],
+      [ "pDelay", "a00043.html#ac20d6a7a495fba148134f726db95e02f", null ],
+      [ "macAddr", "a00043.html#abc68b3481d8361e2074d6a0f6663f161", null ],
+      [ "qosMode", "a00043.html#ab743a8b1bc8c35a982f7e2a7561b7b85", null ],
+      [ "ipfCfg", "a00043.html#a55172eea15adb9ca33c7e96bec02e6f4", null ],
+      [ "timeGate", "a00043.html#a6124460226dcf6a5f7861b8bbe30423b", null ],
+      [ "parser", "a00043.html#ab3916daf38fd2ffe858a9442f26a6c02", null ]
+    ] ],
+    [ "netc_port_tgsl_status_t", "a00043.html#gaa6549b5ba575c9c05afb4b952a585437", [
+      [ "kNETC_OperListActive", "a00043.html#ggaa6549b5ba575c9c05afb4b952a585437ac47b59bd8095f142fd622b8747deb45c", null ],
+      [ "kNETC_AdminListPending", "a00043.html#ggaa6549b5ba575c9c05afb4b952a585437a37b2059280331880e520517f5c1bd635", null ]
+    ] ],
+    [ "netc_port_discard_tpye_t", "a00043.html#ga3b30ee3a9e95bcfcdbb099dc6ab51b07", [
+      [ "kNETC_RxDiscard", "a00043.html#gga3b30ee3a9e95bcfcdbb099dc6ab51b07a2e277e1c5e4a261ee81386e261b3e3a6", null ],
+      [ "kNETC_TxDiscard", "a00043.html#gga3b30ee3a9e95bcfcdbb099dc6ab51b07a8eb99f6f1822a91313bc396a52dcaeab", null ],
+      [ "kNETC_BridgeDiscard", "a00043.html#gga3b30ee3a9e95bcfcdbb099dc6ab51b07a29f749e6259266f766b729281bc92687", null ]
+    ] ],
+    [ "netc_port_tpidlist_t", "a00043.html#ga1a8be6dc081dc9754bf72be4426f7a33", [
+      [ "kNETC_OuterStanCvlan", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33a06d8860ad4b5b1f088e28828a5c12ffe", null ],
+      [ "kNETC_OuterStanSvlan", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33aaed7f9461542cba35bc2f4a611070b9e", null ],
+      [ "kNETC_OuterCustomVlan1", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33af4e10f077c5ac98176bc65fd6dfb623b", null ],
+      [ "kNETC_OuterCustomVlan2", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33a8ed50326bf122fd645146a4692c24019", null ],
+      [ "kNETC_InnerStanCvlan", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33a0f7a311e4e6a6d5521143ec78f5e907d", null ],
+      [ "kNETC_InnerStanSvlan", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33a0ef1c907af96292ccf58d9f040408ccc", null ],
+      [ "kNETC_InnerCustomVlan1", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33a7b928744bea4a7b56c346fc6297d2ef5", null ],
+      [ "kNETC_InnerCustomVlan2", "a00043.html#gga1a8be6dc081dc9754bf72be4426f7a33ac7c2d4779ccdd2884497215846e9bb72", null ]
+    ] ],
+    [ "netc_port_ts_select_t", "a00043.html#ga97c86cb8ad9aa82e56e010749553ca41", [
+      [ "kNETC_SyncTime", "a00043.html#gga97c86cb8ad9aa82e56e010749553ca41a96c61aa88ac380f224bdd597f7a22465", null ],
+      [ "kNETC_FreeRunningTime", "a00043.html#gga97c86cb8ad9aa82e56e010749553ca41ab6b40ca2c77eab7d99b9da228f9fb6af", null ]
+    ] ],
+    [ "netc_hw_preemption_mode_t", "a00043.html#gaf1e89dfc46f3068d042b18cf420802f3", [
+      [ "kNETC_PreemptDisable", "a00043.html#ggaf1e89dfc46f3068d042b18cf420802f3aa8d53392b595c70c7ec9ea1bc588f306", null ],
+      [ "kNETC_PreemptOn64B", "a00043.html#ggaf1e89dfc46f3068d042b18cf420802f3a961945864903dcd0fa763bed73383663", null ],
+      [ "kNETC_PreemptOn4B", "a00043.html#ggaf1e89dfc46f3068d042b18cf420802f3a98ea23382cf22d139298535ca786a6c0", null ]
+    ] ],
+    [ "netc_tc_sdu_type_t", "a00043.html#ga183da778d7ed937169225193c2b66bec", [
+      [ "kNETC_PDU", "a00043.html#gga183da778d7ed937169225193c2b66beca222335589b788125403de0c6e92e167f", null ],
+      [ "kNETC_MPDU", "a00043.html#gga183da778d7ed937169225193c2b66becadf7eb294b5f0f6cad8a43dc66807ee01", null ],
+      [ "kNETC_MSDU", "a00043.html#gga183da778d7ed937169225193c2b66beca80c28736df9f39302821bd39216b2e30", null ]
+    ] ],
+    [ "netc_port_sg_ogc_mode_t", "a00043.html#gad7ae0bf1e34bc22eac066232156843d3", [
+      [ "kNETC_SGCheckSFD", "a00043.html#ggad7ae0bf1e34bc22eac066232156843d3a1fc3ea4bc5968e3285c8b10c633dfcbd", null ],
+      [ "kNETC_SGCheckEntire", "a00043.html#ggad7ae0bf1e34bc22eac066232156843d3aa43861c62ebf05b531d7135a7551c03b", null ]
     ] ]
 ];

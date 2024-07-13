@@ -16,8 +16,11 @@
 #include "fsl_gpio.h"
 #include "fsl_cache.h"
 #include "fsl_debug_console.h"
-
+#if (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+#include "fsl_ft5406_rt.h"
+#else
 #include "fsl_gt911.h"
+#endif
 
 #if LV_USE_GPU_NXP_VG_LITE
 #include "vg_lite.h"
@@ -83,12 +86,6 @@
 #define LVGL_BUFFER_HEIGHT DEMO_BUFFER_HEIGHT
 #endif
 
-#if __CORTEX_M == 4
-#define DEMO_FLUSH_DCACHE() L1CACHE_CleanInvalidateSystemCache()
-#else
-#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache()
-#endif
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -104,10 +101,11 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
 
 static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 
+#if (DEMO_PANEL_RASPI_7INCH != DEMO_PANEL)
 static void BOARD_PullMIPIPanelTouchResetPin(bool pullUp);
 
 static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode);
-
+#endif
 static void DEMO_WaitBufferSwitchOff(void);
 
 #if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
@@ -126,6 +124,16 @@ SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 SDK_ALIGN(static uint8_t s_lvglBuffer[1][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 #endif
 
+#if __CORTEX_M == 4
+#define DEMO_FLUSH_DCACHE() L1CACHE_CleanInvalidateSystemCache()
+#else
+#if DEMO_USE_ROTATE
+#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache_by_Addr(s_lvglBuffer[0], DEMO_FB_SIZE)
+#else
+#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache()
+#endif
+#endif
+
 #if defined(SDK_OS_FREE_RTOS)
 static SemaphoreHandle_t s_transferDone;
 #else
@@ -140,7 +148,11 @@ static volatile bool s_transferDone;
 static void *volatile s_inactiveFrameBuffer;
 #endif
 
+#if (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+static ft5406_rt_handle_t s_touchHandle;
+#else
 static gt911_handle_t s_touchHandle;
+
 static const gt911_config_t s_touchConfig = {
     .I2C_SendFunc     = BOARD_MIPIPanelTouch_I2C_Send,
     .I2C_ReceiveFunc  = BOARD_MIPIPanelTouch_I2C_Receive,
@@ -151,8 +163,10 @@ static const gt911_config_t s_touchConfig = {
     .i2cAddrMode      = kGT911_I2cAddrMode0,
     .intTrigMode      = kGT911_IntRisingEdge,
 };
+
 static int s_touchResolutionX;
 static int s_touchResolutionY;
+#endif
 
 /*******************************************************************************
  * Code
@@ -395,10 +409,14 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
         DEMO_WaitBufferSwitchOff();
     }
 
-    DEMO_FLUSH_DCACHE();
-
     /* Copy buffer. */
     void *inactiveFrameBuffer = s_inactiveFrameBuffer;
+
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)s_inactiveFrameBuffer, DEMO_FB_SIZE);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(inactiveFrameBuffer, DEMO_FB_SIZE);
+#endif
 
 #if LV_USE_GPU_NXP_PXP /* Use PXP to rotate the panel. */
     lv_area_t dest_area = {
@@ -423,7 +441,11 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
     }
 #endif
 
-    DEMO_FLUSH_DCACHE();
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)s_inactiveFrameBuffer, DEMO_FB_SIZE);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(inactiveFrameBuffer, DEMO_FB_SIZE);
+#endif
 
     g_dc.ops->setFrameBuffer(&g_dc, 0, inactiveFrameBuffer);
 
@@ -432,7 +454,12 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
     lv_disp_flush_ready(disp_drv);
 
 #else  /* DEMO_USE_ROTATE */
-    DEMO_FLUSH_DCACHE();
+
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)color_p, DEMO_FB_SIZE);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(color_p, DEMO_FB_SIZE);
+#endif
 
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)color_p);
 
@@ -461,7 +488,7 @@ void lv_port_indev_init(void)
     indev_drv.read_cb = DEMO_ReadTouch;
     lv_indev_drv_register(&indev_drv);
 }
-
+#if (DEMO_PANEL_RASPI_7INCH != DEMO_PANEL)
 static void BOARD_PullMIPIPanelTouchResetPin(bool pullUp)
 {
     if (pullUp)
@@ -494,8 +521,21 @@ static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode)
         BOARD_MIPI_PANEL_TOUCH_INT_GPIO->GDIR |= (1UL << BOARD_MIPI_PANEL_TOUCH_INT_PIN);
     }
 }
-
+#endif
 /*Initialize your touchpad*/
+#if (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+static void DEMO_InitTouch(void)
+{
+    status_t status;
+
+    /* Initialize touch panel controller */
+    status = FT5406_RT_Init(&s_touchHandle, BOARD_MIPI_PANEL_TOUCH_I2C_BASEADDR);
+    if (status != kStatus_Success)
+    {
+        PRINTF("Touch IC initialization failed\r\n");
+    }
+}
+#else
 static void DEMO_InitTouch(void)
 {
     status_t status;
@@ -515,6 +555,7 @@ static void DEMO_InitTouch(void)
 
     GT911_GetResolution(&s_touchHandle, &s_touchResolutionX, &s_touchResolutionY);
 }
+#endif
 
 /* Will be called by the library to read the touchpad */
 static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
@@ -522,6 +563,16 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     static int touch_x = 0;
     static int touch_y = 0;
 
+#if (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+    touch_event_t touch_event;
+    if (kStatus_Success == FT5406_RT_GetSingleTouch(&s_touchHandle, &touch_event, &touch_x, &touch_y))
+    {
+        if ((touch_event == kTouch_Down) || (touch_event == kTouch_Contact))
+        {
+            data->state = LV_INDEV_STATE_PR;
+        }
+    }
+#else
     if (kStatus_Success == GT911_GetSingleTouch(&s_touchHandle, &touch_x, &touch_y))
     {
         data->state = LV_INDEV_STATE_PR;
@@ -530,7 +581,17 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     {
         data->state = LV_INDEV_STATE_REL;
     }
+#endif
 
+#if (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+#if DEMO_USE_ROTATE
+    data->point.x = DEMO_PANEL_HEIGHT - touch_y;
+    data->point.y = touch_x;
+#else
+    data->point.x = touch_x;
+    data->point.y = touch_y; 
+#endif
+#else
     /*Set the last pressed coordinates*/
 #if DEMO_USE_ROTATE
     data->point.x = DEMO_PANEL_HEIGHT - (touch_y * DEMO_PANEL_HEIGHT / s_touchResolutionY);
@@ -538,5 +599,6 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
 #else
     data->point.x = touch_x * DEMO_PANEL_WIDTH / s_touchResolutionX;
     data->point.y = touch_y * DEMO_PANEL_HEIGHT / s_touchResolutionY;
+#endif
 #endif
 }

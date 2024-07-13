@@ -12,7 +12,7 @@
 #include "fsl_common.h"
 
 #include "fsl_cache.h"
-#include "ele_crypto.h"
+#include "fsl_ele_base_api.h"
 #include "fsl_trdc.h"
 /*******************************************************************************
  * Definitions
@@ -545,25 +545,25 @@ int main(void)
     do
     {
         uint32_t ele_fw_sts;
-        sts = ELE_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
+        sts = ELE_BaseAPI_GetFwStatus(MU_RT_S3MUA, &ele_fw_sts);
     } while (sts != kStatus_Success);
 
     /* Enble CM7 */
     do
     {
-        sts = ELE_EnableAPC(MU_RT_S3MUA);
+        sts = ELE_BaseAPI_EnableAPC(MU_RT_S3MUA);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC A to CM33 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_AON_ID, ELE_CORE_CM33_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Release TRDC W to CM33 core */
     do
     {
-        sts = ELE_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
+        sts = ELE_BaseAPI_ReleaseRDC(MU_RT_S3MUA, ELE_TRDC_WAKEUP_ID, ELE_CORE_CM33_ID);
     } while (ELE_IS_FAILED(sts));
 
     /* Print the initial banner. */

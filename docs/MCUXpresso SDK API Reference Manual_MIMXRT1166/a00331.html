@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking AES driver</title>
+<title>MCUXpresso SDK API Reference Manual: CACHE: ARMV7-M7 CACHE Memory Controller</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.15.000</span>
+   &#160;<span id="projectnumber">Rev 2.16.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,97 +98,125 @@ $(document).ready(function(){initNavTree('a00331.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CAAM Non-blocking AES driver<div class="ingroups"><a class="el" href="a00327.html">CAAM Non-blocking APIs</a></div></div>  </div>
+<div class="title">CACHE: ARMV7-M7 CACHE Memory Controller</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the CAAM Non-blocking AES driver. </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the CACHE Controller of MCUXpresso SDK devices.</p>
+<p>The CACHE driver is created to help the user more easily operate the cache memory. The APIs for basic operations are including the following three levels:</p>
+<p>1L. The L1 cache driver API. This level provides the level 1 caches controller drivers. The L1 caches are mainly integrated in the Core memory system, Cortex-M7 L1 caches, etc. For our Cortex-M4 series platforms, the L1 cache is the local memory controller (LMEM) which is not integrated in the Cortex-M4 processer memory system.</p>
+<p>2L. The L2 cache driver API. This level provides the level 2 cache controller drivers. The L2 cache could be integrated in the CORE memory system or an external L2 cache memory, PL310, etc.</p>
+<p>3L. The combined cache driver API. This level provides many APIs for combined L1 and L2 cache maintain operations. This is provided for MCUXpresso SDK drivers (DMA, ENET, USDHC, etc) which should do the cache maintenance in their transactional APIs.</p>
+<h1><a class="anchor" id="CACHEFuncGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="L1CACHEMaintainOperation"></a>
+L1 CACHE Operation</h2>
+<p>The L1 CACHE has both code cache and data cache. This function group provides independent two groups API for both code cache and data cache. There are Enable/Disable APIs for code cache and data cache control and cache maintenance operations as Invalidate/Clean/CleanInvalidate by all and by address range.</p>
+<h2><a class="anchor" id="L2CACHEMaintainOperation"></a>
+L2 CACHE Operation</h2>
+<p>The L2 CACHE does not divide the cache to data and code. Instead, this function group provides one group cache maintenance operations as Enable/Disable/Invalidate/Clean/CleanInvalidate by all and by address range. Except the maintenance operation APIs, the L2 CACHE has it's initialization/configure API. The user can use the default configure parameter by calling L2CACHE_GetDefaultConfig() or changing the parameters as they wish. Then, call L2CACHE_Init to do the L2 CACHE initialization. After initialization, the L2 cache can then be enabled.</p>
+<p>Note: For the core external l2 Cache, the SoC usually has the control bit to select the SRAM to use as L2 Cache or normal SRAM. Make sure this selection is right when you use the L2 CACHE feature. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaf17615d04159c190c4b5dbe849cd60fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gaf17615d04159c190c4b5dbe849cd60fb">CAAM_AES_EncryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga6c4256baf97fc96357446b8c4c9e6ef9">caam_desc_aes_ecb_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:gaf17615d04159c190c4b5dbe849cd60fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using the ECB block mode.  <a href="#gaf17615d04159c190c4b5dbe849cd60fb">More...</a><br/></td></tr>
-<tr class="separator:gaf17615d04159c190c4b5dbe849cd60fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95932998da1e1e6f8acf8b07425920c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga95932998da1e1e6f8acf8b07425920c5">CAAM_AES_DecryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga6c4256baf97fc96357446b8c4c9e6ef9">caam_desc_aes_ecb_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:ga95932998da1e1e6f8acf8b07425920c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using ECB block mode.  <a href="#ga95932998da1e1e6f8acf8b07425920c5">More...</a><br/></td></tr>
-<tr class="separator:ga95932998da1e1e6f8acf8b07425920c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb70bd768fda571c83dae0f19ae47960"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gabb70bd768fda571c83dae0f19ae47960">CAAM_AES_EncryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga95cf0e539ba6ca65af5c78c423d079db">caam_desc_aes_cbc_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t *iv, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:gabb70bd768fda571c83dae0f19ae47960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CBC block mode.  <a href="#gabb70bd768fda571c83dae0f19ae47960">More...</a><br/></td></tr>
-<tr class="separator:gabb70bd768fda571c83dae0f19ae47960"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8af780abeaba467ebeae110822bac7f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga8af780abeaba467ebeae110822bac7f4">CAAM_AES_DecryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga95cf0e539ba6ca65af5c78c423d079db">caam_desc_aes_cbc_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t *iv, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:ga8af780abeaba467ebeae110822bac7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CBC block mode.  <a href="#ga8af780abeaba467ebeae110822bac7f4">More...</a><br/></td></tr>
-<tr class="separator:ga8af780abeaba467ebeae110822bac7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8111bdbb0f0477dce2ee307ecea487c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gaf8111bdbb0f0477dce2ee307ecea487c">CAAM_AES_CryptCtrNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gadfec607e7165470bb301c90f9dc6d7d2">caam_desc_aes_ctr_t</a> descriptor, const uint8_t *input, uint8_t *output, size_t size, uint8_t *counter, const uint8_t *key, size_t keySize, uint8_t *counterlast, size_t *szLeft)</td></tr>
-<tr class="memdesc:gaf8111bdbb0f0477dce2ee307ecea487c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts or decrypts AES using CTR block mode.  <a href="#gaf8111bdbb0f0477dce2ee307ecea487c">More...</a><br/></td></tr>
-<tr class="separator:gaf8111bdbb0f0477dce2ee307ecea487c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ba9f0a2d82d4a5e9219d221fb8452b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga8ba9f0a2d82d4a5e9219d221fb8452b3">CAAM_AES_EncryptTagCcmNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga351707a9b1c752a7a97eb670cc8c2296">caam_desc_aes_ccm_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t *iv, size_t ivSize, const uint8_t *aad, size_t aadSize, const uint8_t *key, size_t keySize, uint8_t *tag, size_t tagSize)</td></tr>
-<tr class="memdesc:ga8ba9f0a2d82d4a5e9219d221fb8452b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES and tags using CCM block mode.  <a href="#ga8ba9f0a2d82d4a5e9219d221fb8452b3">More...</a><br/></td></tr>
-<tr class="separator:ga8ba9f0a2d82d4a5e9219d221fb8452b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33528456ae5c03460e6f6e2e404a29d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga33528456ae5c03460e6f6e2e404a29d6">CAAM_AES_DecryptTagCcmNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga351707a9b1c752a7a97eb670cc8c2296">caam_desc_aes_ccm_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t *iv, size_t ivSize, const uint8_t *aad, size_t aadSize, const uint8_t *key, size_t keySize, const uint8_t *tag, size_t tagSize)</td></tr>
-<tr class="memdesc:ga33528456ae5c03460e6f6e2e404a29d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES and authenticates using CCM block mode.  <a href="#ga33528456ae5c03460e6f6e2e404a29d6">More...</a><br/></td></tr>
-<tr class="separator:ga33528456ae5c03460e6f6e2e404a29d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f256cafc754c9884fbfb6016a87ad5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga1f256cafc754c9884fbfb6016a87ad5e">CAAM_AES_EncryptTagGcmNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga930fb398f7486d41991a3e3a6d4d6bac">caam_desc_aes_gcm_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t *iv, size_t ivSize, const uint8_t *aad, size_t aadSize, const uint8_t *key, size_t keySize, uint8_t *tag, size_t tagSize)</td></tr>
-<tr class="memdesc:ga1f256cafc754c9884fbfb6016a87ad5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES and tags using GCM block mode.  <a href="#ga1f256cafc754c9884fbfb6016a87ad5e">More...</a><br/></td></tr>
-<tr class="separator:ga1f256cafc754c9884fbfb6016a87ad5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1080871a66e816b659c333449423f34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gac1080871a66e816b659c333449423f34">CAAM_AES_DecryptTagGcmNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga930fb398f7486d41991a3e3a6d4d6bac">caam_desc_aes_gcm_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t *iv, size_t ivSize, const uint8_t *aad, size_t aadSize, const uint8_t *key, size_t keySize, const uint8_t *tag, size_t tagSize)</td></tr>
-<tr class="memdesc:gac1080871a66e816b659c333449423f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES and authenticates using GCM block mode.  <a href="#gac1080871a66e816b659c333449423f34">More...</a><br/></td></tr>
-<tr class="separator:gac1080871a66e816b659c333449423f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gac954b8be2bb59a983a9594c59e4b4fa5">FSL_CACHE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memdesc:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache driver version 2.0.4.  <a href="#gac954b8be2bb59a983a9594c59e4b4fa5">More...</a><br/></td></tr>
+<tr class="separator:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Control for cortex-m7 L1 cache</h2></td></tr>
+<tr class="memitem:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaea07bb3879fa96b03f1ecaa6bf821c74"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gaea07bb3879fa96b03f1ecaa6bf821c74">L1CACHE_EnableICache</a> (void)</td></tr>
+<tr class="memdesc:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa6d1a14a0499342890eee0e104c8d96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafa6d1a14a0499342890eee0e104c8d96"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gafa6d1a14a0499342890eee0e104c8d96">L1CACHE_DisableICache</a> (void)</td></tr>
+<tr class="memdesc:gafa6d1a14a0499342890eee0e104c8d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gafa6d1a14a0499342890eee0e104c8d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabce0ccbe1684fef7eff231f3704025b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabce0ccbe1684fef7eff231f3704025b6"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gabce0ccbe1684fef7eff231f3704025b6">L1CACHE_InvalidateICache</a> (void)</td></tr>
+<tr class="memdesc:gabce0ccbe1684fef7eff231f3704025b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gabce0ccbe1684fef7eff231f3704025b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf66ed6d9a7b881ef98707861484d7530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gaf66ed6d9a7b881ef98707861484d7530">L1CACHE_InvalidateICacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gaf66ed6d9a7b881ef98707861484d7530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate cortex-m7 L1 instruction cache by range.  <a href="#gaf66ed6d9a7b881ef98707861484d7530">More...</a><br/></td></tr>
+<tr class="separator:gaf66ed6d9a7b881ef98707861484d7530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52d071c691c4ce9ead828e086f07f457"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga52d071c691c4ce9ead828e086f07f457"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga52d071c691c4ce9ead828e086f07f457">L1CACHE_EnableDCache</a> (void)</td></tr>
+<tr class="memdesc:ga52d071c691c4ce9ead828e086f07f457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:ga52d071c691c4ce9ead828e086f07f457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6eb154e5afc3a877aad4155cb90bca9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae6eb154e5afc3a877aad4155cb90bca9"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gae6eb154e5afc3a877aad4155cb90bca9">L1CACHE_DisableDCache</a> (void)</td></tr>
+<tr class="memdesc:gae6eb154e5afc3a877aad4155cb90bca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gae6eb154e5afc3a877aad4155cb90bca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad6bb45d3f9feb8ed2a63b174d204f277"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gad6bb45d3f9feb8ed2a63b174d204f277">L1CACHE_InvalidateDCache</a> (void)</td></tr>
+<tr class="memdesc:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1dcfc930ee90724a807f69428a1f269"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1dcfc930ee90724a807f69428a1f269"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gab1dcfc930ee90724a807f69428a1f269">L1CACHE_CleanDCache</a> (void)</td></tr>
+<tr class="memdesc:gab1dcfc930ee90724a807f69428a1f269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gab1dcfc930ee90724a807f69428a1f269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49c6ba08328943022264442f6ce2c090"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga49c6ba08328943022264442f6ce2c090"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga49c6ba08328943022264442f6ce2c090">L1CACHE_CleanInvalidateDCache</a> (void)</td></tr>
+<tr class="memdesc:ga49c6ba08328943022264442f6ce2c090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:ga49c6ba08328943022264442f6ce2c090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9baff800f4d60a09efc4e4ce309dd583"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga9baff800f4d60a09efc4e4ce309dd583">L1CACHE_InvalidateDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga9baff800f4d60a09efc4e4ce309dd583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cortex-m7 L1 data cache by range.  <a href="#ga9baff800f4d60a09efc4e4ce309dd583">More...</a><br/></td></tr>
+<tr class="separator:ga9baff800f4d60a09efc4e4ce309dd583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad120776b1a7f2f3f21b2bf017dbab095"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gad120776b1a7f2f3f21b2bf017dbab095">L1CACHE_CleanDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gad120776b1a7f2f3f21b2bf017dbab095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cortex-m7 L1 data cache by range.  <a href="#gad120776b1a7f2f3f21b2bf017dbab095">More...</a><br/></td></tr>
+<tr class="separator:gad120776b1a7f2f3f21b2bf017dbab095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4837708efaec2927416b268d75412361"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga4837708efaec2927416b268d75412361">L1CACHE_CleanInvalidateDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga4837708efaec2927416b268d75412361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates cortex-m7 L1 data cache by range.  <a href="#ga4837708efaec2927416b268d75412361">More...</a><br/></td></tr>
+<tr class="separator:ga4837708efaec2927416b268d75412361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Unified Cache Control for all caches (cortex-m7 L1 cache + l2 pl310)</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp15e7a9b463a20c013988f37a2d8c9ee1"></a>Mainly used for many drivers for easy cache operation. </p>
+</td></tr>
+<tr class="memitem:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga00cdccb5c53201a747f2a3e2009f43cc">ICACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates all instruction caches by range.  <a href="#ga00cdccb5c53201a747f2a3e2009f43cc">More...</a><br/></td></tr>
+<tr class="separator:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gab5c47d7193562d7a763b1bc1bd91b28c">DCACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates all data caches by range.  <a href="#gab5c47d7193562d7a763b1bc1bd91b28c">More...</a><br/></td></tr>
+<tr class="separator:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga893959336987f85910fe98ab9f7f8648"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ga893959336987f85910fe98ab9f7f8648">DCACHE_CleanByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga893959336987f85910fe98ab9f7f8648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans all data caches by range.  <a href="#ga893959336987f85910fe98ab9f7f8648">More...</a><br/></td></tr>
+<tr class="separator:ga893959336987f85910fe98ab9f7f8648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac20095b525889cf55c105658877c2c84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#gac20095b525889cf55c105658877c2c84">DCACHE_CleanInvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gac20095b525889cf55c105658877c2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates all data caches by range.  <a href="#gac20095b525889cf55c105658877c2c84">More...</a><br/></td></tr>
+<tr class="separator:gac20095b525889cf55c105658877c2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gac954b8be2bb59a983a9594c59e4b4fa5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_CACHE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf17615d04159c190c4b5dbe849cd60fb"></a>
+<a class="anchor" id="gaf66ed6d9a7b881ef98707861484d7530"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_EncryptEcbNonBlocking </td>
+          <td class="memname">void L1CACHE_InvalidateICacheByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6c4256baf97fc96357446b8c4c9e6ef9">caam_desc_aes_ecb_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -197,75 +225,35 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Puts AES ECB encrypt descriptor to CAAM input job ring.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 I-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga95932998da1e1e6f8acf8b07425920c5"></a>
+<a class="anchor" id="ga9baff800f4d60a09efc4e4ce309dd583"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_DecryptEcbNonBlocking </td>
+          <td class="memname">static void L1CACHE_InvalidateDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6c4256baf97fc96357446b8c4c9e6ef9">caam_desc_aes_ecb_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -273,82 +261,41 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Puts AES ECB decrypt descriptor to CAAM input job ring.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gabb70bd768fda571c83dae0f19ae47960"></a>
+<a class="anchor" id="gad120776b1a7f2f3f21b2bf017dbab095"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_EncryptCbcNonBlocking </td>
+          <td class="memname">static void L1CACHE_CleanDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga95cf0e539ba6ca65af5c78c423d079db">caam_desc_aes_cbc_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>iv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -356,83 +303,41 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Puts AES CBC encrypt descriptor to CAAM input job ring.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be cleaned. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8af780abeaba467ebeae110822bac7f4"></a>
+<a class="anchor" id="ga4837708efaec2927416b268d75412361"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_DecryptCbcNonBlocking </td>
+          <td class="memname">static void L1CACHE_CleanInvalidateDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga95cf0e539ba6ca65af5c78c423d079db">caam_desc_aes_cbc_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>iv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -440,95 +345,38 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Puts AES CBC decrypt descriptor to CAAM input job ring.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for decryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be clean and invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf8111bdbb0f0477dce2ee307ecea487c"></a>
+<a class="anchor" id="ga00cdccb5c53201a747f2a3e2009f43cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_CryptCtrNonBlocking </td>
+          <td class="memname">void ICACHE_InvalidateByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#gadfec607e7165470bb301c90f9dc6d7d2">caam_desc_aes_ctr_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>counter</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>counterlast</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>szLeft</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -537,115 +385,33 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encrypts or decrypts AES using CTR block mode. AES CTR mode uses only forward AES cipher and same algorithm for encryption and decryption. The only difference between encryption and decryption is that, for encryption, the input argument is plain text and the output argument is cipher text. For decryption, the input argument is cipher text and the output argument is plain text.</p>
-<p>Puts AES CTR crypt descriptor to CAAM input job ring.</p>
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data for CTR block mode </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output data for CTR block mode </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">counter</td><td>Input counter (updates on return) </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for forward AES cipher </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">counterlast</td><td>Output cipher of last counter, for chained CTR calls. NULL can be passed if chained calls are not used. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">szLeft</td><td>Output number of bytes in left unused in counterlast block. NULL can be passed if chained calls are not used. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8ba9f0a2d82d4a5e9219d221fb8452b3"></a>
+<a class="anchor" id="gab5c47d7193562d7a763b1bc1bd91b28c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_EncryptTagCcmNonBlocking </td>
+          <td class="memname">void DCACHE_InvalidateByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga351707a9b1c752a7a97eb670cc8c2296">caam_desc_aes_ccm_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>iv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>ivSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>aad</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>aadSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>tag</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>tagSize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -654,117 +420,33 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Puts AES CCM encrypt and tag descriptor to CAAM input job ring.</p>
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Zero means authentication only. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Nonce </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ivSize</td><td>Length of the Nonce in bytes. Must be 7, 8, 9, 10, 11, 12, or 13. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aad</td><td>Input additional authentication data. Can be NULL if aadSize is zero. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aadSize</td><td>Input size in bytes of AAD. Zero means data mode only (authentication skipped). </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">tag</td><td>Generated output tag. Set to NULL to skip tag processing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tagSize</td><td>Input size of the tag to generate, in bytes. Must be 4, 6, 8, 10, 12, 14, or 16. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga33528456ae5c03460e6f6e2e404a29d6"></a>
+<a class="anchor" id="ga893959336987f85910fe98ab9f7f8648"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_DecryptTagCcmNonBlocking </td>
+          <td class="memname">void DCACHE_CleanByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga351707a9b1c752a7a97eb670cc8c2296">caam_desc_aes_ccm_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>iv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>ivSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>aad</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>aadSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>tag</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>tagSize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -773,117 +455,33 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Puts AES CCM decrypt and check tag descriptor to CAAM input job ring.</p>
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Zero means authentication data only. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Nonce </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ivSize</td><td>Length of the Nonce in bytes. Must be 7, 8, 9, 10, 11, 12, or 13. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aad</td><td>Input additional authentication data. Can be NULL if aadSize is zero. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aadSize</td><td>Input size in bytes of AAD. Zero means data mode only (authentication data skipped). </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for decryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tag</td><td>Received tag. Set to NULL to skip tag processing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tagSize</td><td>Input size of the received tag to compare with the computed tag, in bytes. Must be 4, 6, 8, 10, 12, 14, or 16. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1f256cafc754c9884fbfb6016a87ad5e"></a>
+<a class="anchor" id="gac20095b525889cf55c105658877c2c84"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_EncryptTagGcmNonBlocking </td>
+          <td class="memname">void DCACHE_CleanInvalidateByRange </td>
           <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga930fb398f7486d41991a3e3a6d4d6bac">caam_desc_aes_gcm_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>iv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>ivSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>aad</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>aadSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>tag</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>tagSize</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -892,146 +490,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encrypts AES and optionally tags using GCM block mode. If plaintext is NULL, only the GHASH is calculated and output in the 'tag' field. Puts AES GCM encrypt and tag descriptor to CAAM input job ring.</p>
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ivSize</td><td>Size of the IV </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aad</td><td>Input additional authentication data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aadSize</td><td>Input size in bytes of AAD </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">tag</td><td>Output hash tag. Set to NULL to skip tag processing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tagSize</td><td>Input size of the tag to generate, in bytes. Must be 4,8,12,13,14,15 or 16. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned and invalidated. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac1080871a66e816b659c333449423f34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_AES_DecryptTagGcmNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga930fb398f7486d41991a3e3a6d4d6bac">caam_desc_aes_gcm_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>ciphertext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>plaintext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>iv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>ivSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>aad</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>aadSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>tag</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>tagSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Decrypts AES and optionally authenticates using GCM block mode. If ciphertext is NULL, only the GHASH is calculated and compared with the received GHASH in 'tag' field. Puts AES GCM decrypt and check tag descriptor to CAAM input job ring.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">ivSize</td><td>Size of the IV </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aad</td><td>Input additional authentication data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">aadSize</td><td>Input size in bytes of AAD </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of the input key, in bytes. Must be 16, 24, or 32. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tag</td><td>Input hash tag to compare. Set to NULL to skip tag processing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tagSize</td><td>Input size of the tag, in bytes. Must be 4, 8, 12, 13, 14, 15, or 16. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status from job descriptor push </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>

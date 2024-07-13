@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -60,12 +60,17 @@
 #include "ethernetif.h"
 #include "ethernetif_priv.h"
 
+#if defined(NETC_PORT_USE_INCLUDES) && (NETC_PORT_USE_INCLUDES != 0)
+#include "lwip_netc_port.h"
+#endif
+
 // #include "fsl_netc.h"
 #include "fsl_phy.h"
 #include "fsl_netc_endpoint.h"
-#include "fsl_netc_switch.h"
 #include "fsl_netc_mdio.h"
-
+#if defined(NETC_VSI_NUM_USED) && (NETC_VSI_NUM_USED > 0)
+#include "fsl_netc_msg.h"
+#endif
 #include "fsl_msgintr.h"
 
 /*******************************************************************************
@@ -74,8 +79,10 @@
 
 #define NETC_TIMEOUT (0xFFFU)
 
+#ifndef NETC_FRAME_MAX_FRAMELEN
 #define NETC_FRAME_MAX_FRAMELEN (1518U)
-#define NETC_FCS_LEN            (4U)
+#endif
+#define NETC_FCS_LEN (4U)
 
 /* The length of RX buffer. */
 #ifndef NETC_RXBUFF_SIZE
@@ -155,19 +162,63 @@
 #define FSL_NETC_BUFF_ALIGNMENT NETC_BUFF_ALIGNMENT
 #endif
 
-#define TX_MSIX_ENTRY_IDX 0U
-#define RX_MSIX_ENTRY_IDX 1U
-#define TX_INTR_MSG_DATA  1U
-#define RX_INTR_MSG_DATA  2U
+#define TX_MSIX_ENTRY_IDX     0U
+#define RX_MSIX_ENTRY_IDX     1U
+#define SI_COM_MSIX_ENTRY_IDX 2U
+#define TX_INTR_MSG_DATA      1U
+#define RX_INTR_MSG_DATA      2U
+#define SI_COM_INTR_MSG_DATA  3U
 
 #define TX_RINGS 1U
 #define RX_RINGS 1U
+
+#ifndef NETC_MSGINTR
+#define NETC_MSGINTR MSGINTR1
+#endif
+
+#ifndef NETC_MSGINTR_IRQ
+#define NETC_MSGINTR_IRQ MSGINTR1_IRQn
+#endif
+
+#ifndef NETC_PSI
+#define NETC_PSI kNETC_ENETC0PSI0
+#endif
+
+#ifndef NETC_VSI_NUM_USED
+#define NETC_VSI_NUM_USED 0
+#endif
+
+#if (NETC_VSI_NUM_USED > 0) && (NO_SYS != 0)
+#error "NETC VSI requires RTOS support"
+#endif
+
+#ifndef NETC_MII_MODE
+#define NETC_MII_MODE kNETC_RmiiMode
+#endif
+
+#ifndef NETC_MII_SPEED
+#define NETC_MII_SPEED kNETC_MiiSpeed100M
+#endif
+
+#ifndef SI_MSG_THREAD_STACKSIZE
+#define SI_MSG_THREAD_STACKSIZE 1500
+#endif
+
+#ifndef SI_MSG_THREAD_PRIO
+#define SI_MSG_THREAD_PRIO 3
+#endif
 
 #include "netc_configchecks.h"
 
 typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(NETC_RXBUFF_SIZE, FSL_NETC_BUFF_ALIGNMENT)];
 typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(NETC_TXBUFF_SIZE, FSL_NETC_BUFF_ALIGNMENT)];
 
+#if (NETC_VSI_NUM_USED > 0)
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t psiMsgBuff1[1024], 32);
+#endif
+#if (NETC_VSI_NUM_USED > 1)
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t psiMsgBuff2[1024], 32);
+#endif
 /*!
  * @brief Used to wrap received data in a pbuf to be passed into lwIP
  *        without copying.
@@ -189,7 +240,11 @@ struct ethernetif
 {
     ep_handle_t *ep_handle;
     ep_config_t *ep_config;
+#if (NETC_VSI_NUM_USED > 0)
+    netc_msix_entry_t msixEntry[3];
+#else
     netc_msix_entry_t msixEntry[2];
+#endif
 #if USE_RTOS && defined(SDK_OS_FREE_RTOS)
     EventGroupHandle_t transmitAccessEvent;
     EventBits_t txFlag;
@@ -254,7 +309,7 @@ static void *rx_buff_alloc(ep_handle_t *handle, uint8_t ring, uint32_t length, v
         }
     }
 
-#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     if (buffer == NULL)
     {
         /* Mask (disable) RX interrupt */
@@ -296,7 +351,7 @@ static void rx_buf_free(ep_handle_t *handle, uint8_t ring, void *address, void *
 
     LWIP_ASSERT("Requested free of unknown rx buffer.", found);
 
-#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#if ETH_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
     /* Unmask (enable) RX interrupt */
     EP_MsixSetEntryMask(handle, RX_MSIX_ENTRY_IDX, false);
 #else
@@ -316,6 +371,14 @@ static void rx_pbuf_free_from_lwip(struct pbuf *p)
 void msgintrCallback(MSGINTR_Type *base, uint8_t channel, uint32_t pendingIntr)
 {
     struct ethernetif *ethernetif = s_ethernetif;
+#if (NETC_VSI_NUM_USED > 0)
+    uint32_t msg_recv_flags = kNETC_PsiRxMsgFromVsi1Flag;
+#endif
+
+#if (NETC_VSI_NUM_USED > 1)
+    msg_recv_flags |= kNETC_PsiRxMsgFromVsi2Flag;
+#endif
+
     if (NULL == ethernetif)
     {
         return;
@@ -335,14 +398,17 @@ void msgintrCallback(MSGINTR_Type *base, uint8_t channel, uint32_t pendingIntr)
 
             BaseType_t xResult =
                 xEventGroupSetBitsFromISR(ethernetif->transmitAccessEvent, ethernetif->txFlag, &taskToWake);
-            if ((pdPASS == xResult) && (pdTRUE == taskToWake))
+            LWIP_ASSERT(
+                "xEventGroupSetBitsFromISR failed, increase configTIMER_QUEUE_LENGTH or configTIMER_TASK_PRIORITY",
+                pdPASS == xResult);
+            if (pdPASS == xResult)
             {
                 portYIELD_FROM_ISR(taskToWake);
             }
-            else
-            {
-                xEventGroupSetBits(ethernetif->transmitAccessEvent, ethernetif->txFlag);
-            }
+        }
+        else
+        {
+            xEventGroupSetBits(ethernetif->transmitAccessEvent, ethernetif->txFlag);
         }
 #endif
 
@@ -356,6 +422,13 @@ void msgintrCallback(MSGINTR_Type *base, uint8_t channel, uint32_t pendingIntr)
         ethernetif_input(ethernetif->netif);
 #endif
     }
+#if (NETC_VSI_NUM_USED > 0)
+    /* PSI Rx interrupt */
+    if ((pendingIntr & (1U << SI_COM_INTR_MSG_DATA)) != 0U)
+    {
+        EP_PsiClearStatus(ethernetif->ep_handle, msg_recv_flags);
+    }
+#endif
 }
 
 static status_t ethernetif_tx_reclaim_callback(ep_handle_t *handle,
@@ -371,6 +444,52 @@ static status_t ethernetif_tx_reclaim_callback(ep_handle_t *handle,
     return kStatus_Success;
 }
 
+#if (NETC_VSI_NUM_USED > 0)
+static void netc_si_msg_thread(void *arg)
+{
+    struct ethernetif *ethernetif = s_ethernetif;
+    status_t result               = kStatus_Success;
+    netc_psi_rx_msg_t msgInfo;
+
+    while (1)
+    {
+        result = EP_PsiRxMsg(ethernetif->ep_handle, kNETC_Vsi1, &msgInfo);
+        if (result == kStatus_Success)
+        {
+            EP_PsiHandleRxMsg(ethernetif->ep_handle, 1, &msgInfo);
+        }
+
+#if (NETC_VSI_NUM_USED > 1)
+        result = EP_PsiRxMsg(ethernetif->ep_handle, kNETC_Vsi2, &msgInfo);
+        if (result == kStatus_Success)
+        {
+            EP_PsiHandleRxMsg(ethernetif->ep_handle, 2, &msgInfo);
+        }
+#endif
+        sys_msleep(1U);
+    }
+}
+#endif
+
+static status_t ethernetif_getlinkstatus(ep_handle_t *handle, uint8_t *link)
+{
+    struct ethernetif *eif = s_ethernetif;
+
+    *link = (eif->last_link_up ? 1U : 0U);
+
+    return kStatus_Success;
+}
+
+static status_t ethernetif_getlinkspeed(ep_handle_t *handle, netc_hw_mii_speed_t *speed, netc_hw_mii_duplex_t *duplex)
+{
+    struct ethernetif *eif = s_ethernetif;
+
+    *speed  = (netc_hw_mii_speed_t)eif->last_speed;
+    *duplex = (netc_hw_mii_duplex_t)eif->last_duplex;
+
+    return kStatus_Success;
+}
+
 /**
  * Initializes NETC driver.
  */
@@ -379,7 +498,14 @@ void ethernetif_plat_init(struct netif *netif,
                           const ethernetif_config_t *ethernetifConfig)
 {
     status_t result = kStatus_Success;
+#if (NETC_VSI_NUM_USED > 0)
+    uint32_t msg_recv_flags = kNETC_PsiRxMsgFromVsi1Flag;
+#endif
     int i;
+
+#if (NETC_VSI_NUM_USED > 1)
+    msg_recv_flags |= kNETC_PsiRxMsgFromVsi2Flag;
+#endif
 
     ethernetif->netif = netif;
 
@@ -393,15 +519,19 @@ void ethernetif_plat_init(struct netif *netif,
     ethernetif->bdrConfig.txBdrConfig = &ethernetif->txBdrConfig[0];
 
     /* MSIX and interrupt configuration. */
-    MSGINTR_Init(MSGINTR1, &msgintrCallback);
-    uint32_t msgAddr                 = MSGINTR_GetIntrSelectAddr(MSGINTR1, 0);
+    MSGINTR_Init(NETC_MSGINTR, &msgintrCallback);
+    uint32_t msgAddr                 = MSGINTR_GetIntrSelectAddr(NETC_MSGINTR, 0);
     ethernetif->msixEntry[0].control = kNETC_MsixIntrMaskBit;
     ethernetif->msixEntry[0].msgAddr = msgAddr;
     ethernetif->msixEntry[0].msgData = TX_INTR_MSG_DATA;
     ethernetif->msixEntry[1].control = kNETC_MsixIntrMaskBit;
     ethernetif->msixEntry[1].msgAddr = msgAddr;
     ethernetif->msixEntry[1].msgData = RX_INTR_MSG_DATA;
-
+#if (NETC_VSI_NUM_USED > 0)
+    ethernetif->msixEntry[2].control = kNETC_MsixIntrMaskBit;
+    ethernetif->msixEntry[2].msgAddr = msgAddr;
+    ethernetif->msixEntry[2].msgData = SI_COM_INTR_MSG_DATA;
+#endif
     /* BD ring configuration. */
     ethernetif->bdrConfig.rxBdrConfig[0].msixEntryIdx  = RX_MSIX_ENTRY_IDX;
     ethernetif->bdrConfig.rxBdrConfig[0].extendDescEn  = false;
@@ -426,12 +556,19 @@ void ethernetif_plat_init(struct netif *netif,
 
     /* Endpoint configuration. */
     (void)EP_GetDefaultConfig(ethernetif->ep_config);
-    ethernetif->ep_config->si                 = kNETC_ENETC0PSI0;
+    ethernetif->ep_config->si                 = NETC_PSI;
     ethernetif->ep_config->siConfig.txRingUse = TX_RINGS;
     ethernetif->ep_config->siConfig.rxRingUse = RX_RINGS;
     ethernetif->ep_config->reclaimCallback    = ethernetif_tx_reclaim_callback;
-    ethernetif->ep_config->msixEntry          = &ethernetif->msixEntry[0];
-    ethernetif->ep_config->entryNum           = 2;
+#if (NETC_VSI_NUM_USED > 0)
+    ethernetif->ep_config->siComEntryIdx = SI_COM_MSIX_ENTRY_IDX;
+#endif
+    ethernetif->ep_config->msixEntry = &ethernetif->msixEntry[0];
+#if (NETC_VSI_NUM_USED > 0)
+    ethernetif->ep_config->entryNum = 3;
+#else
+    ethernetif->ep_config->entryNum = 2;
+#endif
 
     for (i = 0; i < NETC_RXBUFF_NUM; i++)
     {
@@ -449,34 +586,10 @@ void ethernetif_plat_init(struct netif *netif,
     ethernetif->ep_config->rxBuffFree      = rx_buf_free;
     ethernetif->ep_config->userData        = &ethernetif->rxPbufs[0];
 
-    /* Set phy connection to EP according register set in BOARD_InitHardware():
-     * Initial values of speed and duplex will be later overridden with
-     * real ones from auto negotioation.
-     */
-    switch(BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[4])
-    /*! MII_PROT - MII protocol selection
-     *  0b0000..MII
-     *  0b0001..RMII
-     *  0b0010..RGMII
-     *  0b0100-0b1111..Reserved
-     */
-    {
-    case BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(0):
-		ethernetif->ep_config->port.ethMac.miiMode   = kNETC_MiiMode;
-		ethernetif->ep_config->port.ethMac.miiSpeed  = kNETC_MiiSpeed100M;
-		break;
-    case BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(1):
-		ethernetif->ep_config->port.ethMac.miiMode   = kNETC_RmiiMode;
-		ethernetif->ep_config->port.ethMac.miiSpeed  = kNETC_MiiSpeed100M;
-		break;
-    case BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(2):
-		ethernetif->ep_config->port.ethMac.miiMode   = kNETC_RgmiiMode;
-		ethernetif->ep_config->port.ethMac.miiSpeed  = kNETC_MiiSpeed1000M;
-		break;
-    default:
-    	LWIP_PLATFORM_ASSERT("Reserved value of WAKEUPMIX_NETC_LINK_CFG_MII_PROT");
-    }
-    ethernetif->ep_config->port.ethMac.miiDuplex = kNETC_MiiFullDuplex;
+    ethernetif->ep_config->port.ethMac.miiMode        = NETC_MII_MODE;
+    ethernetif->ep_config->port.ethMac.miiSpeed       = NETC_MII_SPEED;
+    ethernetif->ep_config->port.ethMac.miiDuplex      = kNETC_MiiFullDuplex;
+    ethernetif->ep_config->port.ethMac.rxMaxFrameSize = NETC_FRAME_MAX_FRAMELEN;
 
 #if (CHECKSUM_CHECK_IP == 1)
     ethernetif->ep_config->parserCfg.disL3Checksum = true;
@@ -497,7 +610,7 @@ void ethernetif_plat_init(struct netif *netif,
     ethernetif->transmitAccessEvent = xEventGroupCreate();
     xEventGroupSetBits(ethernetif->transmitAccessEvent, ethernetif->txFlag);
 
-    NVIC_SetPriority(MSGINTR1_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+    NVIC_SetPriority(NETC_MSGINTR_IRQ, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
 #endif
 
     ethernetif->ep_config->cmdBdrConfig.bdBase   = ethernetif->cmdBuffDescrip;
@@ -506,6 +619,9 @@ void ethernetif_plat_init(struct netif *netif,
     // Allow receive of packets.
     result = EP_Init(ethernetif->ep_handle, mac_addr, ethernetif->ep_config, &ethernetif->bdrConfig);
     LWIP_ASSERT("Netc ep init failed", (result == kStatus_Success));
+
+    ethernetif->ep_handle->getLinkStatus = ethernetif_getlinkstatus;
+    ethernetif->ep_handle->getLinkSpeed  = ethernetif_getlinkspeed;
 
     ethernetif_phy_init(ethernetif, ethernetifConfig);
 
@@ -526,6 +642,22 @@ void ethernetif_plat_init(struct netif *netif,
     /* Unmask MSIX message interrupt. */
     EP_MsixSetEntryMask(ethernetif->ep_handle, TX_MSIX_ENTRY_IDX, false);
     EP_MsixSetEntryMask(ethernetif->ep_handle, RX_MSIX_ENTRY_IDX, false);
+#if (NETC_VSI_NUM_USED > 0)
+    EP_MsixSetEntryMask(ethernetif->ep_handle, SI_COM_MSIX_ENTRY_IDX, false);
+
+    EP_PsiClearStatus(ethernetif->ep_handle, msg_recv_flags);
+    EP_PsiEnableInterrupt(ethernetif->ep_handle, msg_recv_flags, true);
+
+    EP_PsiSetRxBuffer(ethernetif->ep_handle, kNETC_Vsi1, (uintptr_t)&psiMsgBuff1[0]);
+#endif
+#if (NETC_VSI_NUM_USED > 1)
+    EP_PsiSetRxBuffer(ethernetif->ep_handle, kNETC_Vsi2, (uintptr_t)&psiMsgBuff2[0]);
+#endif
+
+#if (NETC_VSI_NUM_USED > 0)
+    /* Create VSI-PSI messaging thread */
+    sys_thread_new("netc_si_msg_thread", netc_si_msg_thread, NULL, SI_MSG_THREAD_STACKSIZE, SI_MSG_THREAD_PRIO);
+#endif
 }
 
 /** Wraps received buffer(s) into a pbuf or a pbuf chain and returns it. */
@@ -793,19 +925,30 @@ void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t
         eif->last_speed   = speed;
         eif->last_duplex  = duplex;
         eif->last_link_up = true;
+#if (NETC_VSI_NUM_USED > 0)
+        EP_PsiNotifyLink(eif->ep_handle);
+#endif
     }
 }
 
 void ethernetif_on_link_down(struct netif *netif_)
 {
     struct ethernetif *eif = netif_->state;
+#if (NETC_VSI_NUM_USED == 0)
     status_t status;
+#endif
 
     if (eif->last_link_up)
     {
+#if (NETC_VSI_NUM_USED == 0)
         status = EP_Down(eif->ep_handle);
         LWIP_ASSERT("EP_Down failed", status == kStatus_Success);
+#endif
         eif->last_link_up = false;
+
+#if (NETC_VSI_NUM_USED > 0)
+        EP_PsiNotifyLink(eif->ep_handle);
+#endif
     }
 }
 

@@ -62,16 +62,16 @@
 /* Init SDK HW */
 static void BOARD_Init(void);
 /* ADC COCO interrupt */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void ADC1_IRQHandler(void);
 /* TMR1 reload ISR called with 1ms period */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void TMR1_IRQHandler(void);
 /* SW8 Button interrupt handler */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void GPIO1_0_IRQHandler(void);
 /* Demo Speed Stimulator */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void DemoSpeedStimulator(void);
 /* Demo Position Stimulator */
 RAM_FUNC_LIB
@@ -111,6 +111,8 @@ static uint32_t ui32ButtonFilter = 0U;
 
 /* Structure used in FM to get required ID's */
 app_ver_t g_sAppIdFM = {
+    "../boards/evkmimxrt1180/mc_pmsm/pmsm_enc",                       /* User Path 1- the highest priority */
+    "../../../boards/evkmimxrt1180/demo_apps/mc_pmsm/pmsm_enc/cm7",       /* User Path 2 */
     "evkmimxrt1180", /* board id */
     "pmsm_enc", /* example id */
     MCRSP_VER,      /* sw version */
@@ -164,19 +166,19 @@ int main(void)
     M1_SetAppSwitch(FALSE);
 
     /* Init MID state machine - call before the spin state machine */
-    g_sSpinMidSwitch.eAppState = kAppStateMID;         
-    
+    g_sSpinMidSwitch.eAppState = kAppStateMID;
+
     if(g_sSpinMidSwitch.eAppState == kAppStateMID)
     {
       MID_Init_AR();
     }
-    
+
     /* Spin state machine is default */
-    g_sSpinMidSwitch.eAppState = kAppStateSpin; 
+    g_sSpinMidSwitch.eAppState = kAppStateSpin;
 
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
-     
+
     /* Enable PWM clock */
     g_sM1Pwm3ph.pui32PwmBaseAddress->MCTRL |= PWM_MCTRL_RUN(0xF);
 
@@ -184,7 +186,7 @@ int main(void)
     while (1)
     {
         Application_Control_BL();
-        
+
         /* FreeMASTER Polling function */
         FMSTR_Poll();
     }
@@ -203,7 +205,7 @@ void ADC1_IRQHandler(void)
 {
     /* Start CPU tick number couting */
     SYSTICK_START_COUNT();
-    
+
     TP0_ON();
 
     switch(g_sSpinMidSwitch.eAppState)
@@ -225,18 +227,18 @@ void ADC1_IRQHandler(void)
 
     /* Call FreeMASTER recorder */
     FMSTR_Recorder(0);
-    
+
 #ifdef DAPENG_TEST
     /* Increment ISR counter */
     ui32FastIsrCount++;
-    
+
     if(ui32FastIsrCount > 16000U)
     {
        ui32FastIsrCount = 0;
     }
-	
-#endif	
-    
+
+#endif
+
     TP0_OFF();
 
     /* Add empty instructions for correct interrupt flag clearing */
@@ -253,11 +255,11 @@ void ADC1_IRQHandler(void)
  */
 RAM_FUNC_LIB
 void TMR1_IRQHandler(void)
-{   
+{
     static int16_t ui16i = 0;
-  
+
     TP2_ON();
-      
+
     /* M1 Slow StateMachine call */
     SM_StateMachineSlow(&g_sM1Ctrl);
 
@@ -291,18 +293,18 @@ void TMR1_IRQHandler(void)
 
     /* Demo position stimulator */
     DemoPositionStimulator();
-   
-#ifdef DAPENG_TEST    
+
+#ifdef DAPENG_TEST
     /* Increment ISR counter */
     ui32SlowIsrCount++;
-    
+
     if(ui32SlowIsrCount > 1000U)
     {
        ui32SlowIsrCount = 0;
     }
-	
+
 #endif
-    
+
     TP2_OFF();
 
     /* Clear the CSCTRL0[TCF1] flag */
@@ -347,7 +349,7 @@ void GPIO1_0_IRQHandler(void)
             ui32SpeedStimulatorCnt = 0;
         }
     }
- 
+
     /* Clear external interrupt flag. */
     RGPIO_ClearPinsInterruptFlags(BOARD_USER_BUTTON_GPIO, kRGPIO_InterruptOutput0, 1U << BOARD_USER_BUTTON_GPIO_PIN);
 
@@ -487,14 +489,14 @@ static void Application_Control_BL(void)
             MID_Init_AR();
             g_sSpinMidSwitch.sFaultCtrlM1_Mid &= ~(FAULT_APP_SPIN);
             g_eMidCmd = kMID_Cmd_Stop;                          /* Reset MID control command */
-            g_sSpinMidSwitch.eAppState = kAppStateMID;          /* MID routines will be processed */ 
+            g_sSpinMidSwitch.eAppState = kAppStateMID;          /* MID routines will be processed */
           }
           else
             g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_SPIN;
-                           
+
           g_sSpinMidSwitch.bCmdRunMid = FALSE;                  /* Always clear request */
         }
-        
+
         g_sSpinMidSwitch.bCmdRunM1 = FALSE;
         break;
     default:
@@ -509,13 +511,13 @@ static void Application_Control_BL(void)
           }
           else
             g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_MID;
-          
-           /* Always clear request */ 
-          g_sSpinMidSwitch.bCmdRunM1 = FALSE;   
+
+           /* Always clear request */
+          g_sSpinMidSwitch.bCmdRunM1 = FALSE;
           g_sSpinMidSwitch.bCmdRunMid = FALSE;
           break;
         }
-        
+
         g_sSpinMidSwitch.bCmdRunMid = FALSE;
         MID_Process_BL(&g_eMidCmd);
         break;
@@ -553,17 +555,17 @@ static void BOARD_Init(void)
  */
 static void BOARD_InitGPIO(void)
 {
-  
+
     /* Define the init structure for the input switch pin */
     rgpio_pin_config_t sw_config = {
         kRGPIO_DigitalInput,
         0,
     };
-    
+
     /* Workaround: Disable interrupt which might be enabled by ROM. */
     RGPIO_SetPinInterruptConfig(RGPIO1, 9U, kRGPIO_InterruptOutput0, kRGPIO_InterruptOrDMADisabled);
     NVIC_ClearPendingIRQ(GPIO1_0_IRQn);
-    
+
     /* Init input switch GPIO. */
     RGPIO_SetPinInterruptConfig(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, kRGPIO_InterruptOutput0, kRGPIO_InterruptFallingEdge);
     RGPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &sw_config);

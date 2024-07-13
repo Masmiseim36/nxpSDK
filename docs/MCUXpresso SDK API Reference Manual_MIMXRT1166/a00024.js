@@ -1,11 +1,11 @@
 var a00024 =
 [
-    [ "_dcic_config", "a00024.html#a00439", [
+    [ "_dcic_config", "a00024.html#a00436", [
       [ "enableExternalSignal", "a00024.html#ab2564f56ade9142dba4255088710fbe5", null ],
       [ "polarityFlags", "a00024.html#aa384ac7bd45e35a9370288b9b3cbb27a", null ],
       [ "enableInterrupts", "a00024.html#a35477fe7b9ad6a2ae68dc9e9013a7b75", null ]
     ] ],
-    [ "_dcic_region_config", "a00024.html#a00440", [
+    [ "_dcic_region_config", "a00024.html#a00437", [
       [ "lock", "a00024.html#a7f99c705820757c379df562a2a2dc9b6", null ],
       [ "upperLeftX", "a00024.html#aea3b38a75d682c72837d0c6c8d3732cf", null ],
       [ "upperLeftY", "a00024.html#ae50eb0d963ec87e9dbaefb595e4d11c7", null ],

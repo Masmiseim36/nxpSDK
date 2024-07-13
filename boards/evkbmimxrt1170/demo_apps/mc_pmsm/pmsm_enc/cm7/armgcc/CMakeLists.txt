@@ -71,6 +71,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set_source_files_properties("${ProjDirPath}/../m1_pmsm_appconfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
 set_source_files_properties("${ProjDirPath}/../m2_pmsm_appconfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
 set_source_files_properties("${ProjDirPath}/../mc_periph_init.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
+set_source_files_properties("${ProjDirPath}/../freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_platform_gen32le")
 set_source_files_properties("${ProjDirPath}/../mc_periph_init.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
 
 include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)

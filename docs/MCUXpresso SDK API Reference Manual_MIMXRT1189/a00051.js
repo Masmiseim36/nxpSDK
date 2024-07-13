@@ -1,36 +1,64 @@
 var a00051 =
 [
-    [ "FGPIO Driver", "a00227.html", null ],
-    [ "RGPIO Driver", "a00226.html", "a00226" ],
-    [ "rgpio_pin_config_t", "a00051.html#a00576", [
-      [ "pinDirection", "a00051.html#a03ca848432e3f249e535756bfe0908b4", null ],
-      [ "outputLogic", "a00051.html#a0ce24e404fd7f867304a7deb933b0f53", null ]
+    [ "rtwdog_work_mode_t", "a00051.html#a00575", [
+      [ "enableWait", "a00051.html#ab54bf4ab423e60be41368acdb2602439", null ],
+      [ "enableStop", "a00051.html#ae8caa5a6c04d0f3dcafba6ac6adb9905", null ],
+      [ "enableDebug", "a00051.html#ab26c42c1815cfdc9b8b5f759db9be94d", null ]
     ] ],
-    [ "FSL_RGPIO_DRIVER_VERSION", "a00051.html#ga2cc2471a059bdb382f2fa31b3099d79a", null ],
-    [ "rgpio_pin_direction_t", "a00051.html#ga02f3ca39e7a877e718438b1a743d8bde", [
-      [ "kRGPIO_DigitalInput", "a00051.html#gga02f3ca39e7a877e718438b1a743d8bdea698c01a3ec2afd6e0abf7d4a4814c7f3", null ],
-      [ "kRGPIO_DigitalOutput", "a00051.html#gga02f3ca39e7a877e718438b1a743d8bdeac42e16c9a935100b8e019c2a34ba99d1", null ]
+    [ "rtwdog_config_t", "a00051.html#a00574", [
+      [ "enableRtwdog", "a00051.html#a4d385e66b0c28b471ad83fe2e6fc6a1b", null ],
+      [ "clockSource", "a00051.html#aff561a937f074058a0565d2ffded113b", null ],
+      [ "prescaler", "a00051.html#adf6d7a1cdf7d57cc6f2893d3eef8f0e2", null ],
+      [ "workMode", "a00051.html#af6a2f68b62b07a7021f877944a685c44", null ],
+      [ "testMode", "a00051.html#a82219c16b8f8486929b76b2378ea61aa", null ],
+      [ "enableUpdate", "a00051.html#a99c63818532637f61d00993753da6511", null ],
+      [ "enableInterrupt", "a00051.html#af397bc8e047c5572cfe977a1a094b04d", null ],
+      [ "enableWindowMode", "a00051.html#a005c4d1da33cdaa57cc868658969b963", null ],
+      [ "windowValue", "a00051.html#a9869a43ba272014de8f4b2f91ec45e10", null ],
+      [ "timeoutValue", "a00051.html#ab4192d93defc5943013d8376f708325d", null ]
     ] ],
-    [ "rgpio_interrupt_sel_t", "a00051.html#ga368baf1363f73e397c9b32df542108df", [
-      [ "kRGPIO_InterruptOutput0", "a00051.html#gga368baf1363f73e397c9b32df542108dfa57d2eefe1d8008accaa186077fb67c06", null ],
-      [ "kRGPIO_InterruptOutput1", "a00051.html#gga368baf1363f73e397c9b32df542108dfa47c1043b1184ab5499c647dcf4206e8a", null ],
-      [ "kRGPIO_InterruptOutput2", "a00051.html#gga368baf1363f73e397c9b32df542108dfa34bc3f9b199a6a9830c2953392d82959", null ],
-      [ "kRGPIO_InterruptOutput3", "a00051.html#gga368baf1363f73e397c9b32df542108dfadf79ea3dd7bba8061a232fac64627a43", null ]
+    [ "WDOG_FIRST_WORD_OF_UNLOCK", "a00051.html#ga8825b35bd62726165737f5dc0f5f61e4", null ],
+    [ "WDOG_SECOND_WORD_OF_UNLOCK", "a00051.html#gae2018a4151df654f86822786500cf2d3", null ],
+    [ "WDOG_FIRST_WORD_OF_REFRESH", "a00051.html#ga10f1df824e5965d6413b2e892fd04659", null ],
+    [ "WDOG_SECOND_WORD_OF_REFRESH", "a00051.html#ga2a375c7e4d71e7f52e899bce0a9106ee", null ],
+    [ "FSL_RTWDOG_DRIVER_VERSION", "a00051.html#ga036d8fa82f101485bb1bef62fbe0efec", null ],
+    [ "rtwdog_clock_source_t", "a00051.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b", [
+      [ "kRTWDOG_ClockSource0", "a00051.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba89fe3caec9c47ea18afbea78fa7b75db", null ],
+      [ "kRTWDOG_ClockSource1", "a00051.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5", null ],
+      [ "kRTWDOG_ClockSource2", "a00051.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba596c695b96b5287f927f74d78577fe84", null ],
+      [ "kRTWDOG_ClockSource3", "a00051.html#gga106ba79a9a7b0863ca8555c5d8ad9b3bad51ba4630b31474e7d497d1defc3075a", null ]
     ] ],
-    [ "rgpio_interrupt_config_t", "a00051.html#gafbe27e5e3f0a4fe62b775457979bce99", [
-      [ "kRGPIO_InterruptOrDMADisabled", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a533de2467074bb25b1a6d717cfc4f808", null ],
-      [ "kRGPIO_DMARisingEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99aca614cf78ec763243ad8259769910c5d", null ],
-      [ "kRGPIO_DMAFallingEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a708e74baf5f9b7a8b8ab7cb28efca485", null ],
-      [ "kRGPIO_DMAEitherEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a839b96ecaacaa2690ef3bb161f7b6a93", null ],
-      [ "kRGPIO_FlagRisingEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99ae0068c891a68fdf576261332843d9702", null ],
-      [ "kRGPIO_FlagFallingEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99aab357851fce0c3b1e0816b70f0388f89", null ],
-      [ "kRGPIO_FlagEitherEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a96f9355acf6593e3ba1cd15fddd187cb", null ],
-      [ "kRGPIO_InterruptLogicZero", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a63dea95c5816193f92cb281691df2531", null ],
-      [ "kRGPIO_InterruptRisingEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99ac15dce1f321e520f8d69c484ff900a26", null ],
-      [ "kRGPIO_InterruptFallingEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a4fc6ae1e5bcb71f022eeec5c7ad66eb5", null ],
-      [ "kRGPIO_InterruptEitherEdge", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a1a1ae2168e6cfc18ce560fa66e7c25af", null ],
-      [ "kRGPIO_InterruptLogicOne", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a8d8a3e9d0b5db2e53f8b498e5347ff9e", null ],
-      [ "kRGPIO_ActiveHighTriggerOutputEnable", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a95823b488fc77f1042012ec6fe18b4c4", null ],
-      [ "kRGPIO_ActiveLowTriggerOutputEnable", "a00051.html#ggafbe27e5e3f0a4fe62b775457979bce99a0899d2a809a00969ab05543741a8a248", null ]
-    ] ]
+    [ "rtwdog_clock_prescaler_t", "a00051.html#ga2a46bb420b0a97fc9d440ee7ef329ffa", [
+      [ "kRTWDOG_ClockPrescalerDivide1", "a00051.html#gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78", null ],
+      [ "kRTWDOG_ClockPrescalerDivide256", "a00051.html#gga2a46bb420b0a97fc9d440ee7ef329ffaa1b8252427d181ff4de3e4ea7eb1aac52", null ]
+    ] ],
+    [ "rtwdog_test_mode_t", "a00051.html#gae84238ba96d9319d820c3319c5f7e526", [
+      [ "kRTWDOG_TestModeDisabled", "a00051.html#ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124", null ],
+      [ "kRTWDOG_UserModeEnabled", "a00051.html#ggae84238ba96d9319d820c3319c5f7e526ae12fd7134b26ac7e621f2117f3312598", null ],
+      [ "kRTWDOG_LowByteTest", "a00051.html#ggae84238ba96d9319d820c3319c5f7e526ab885cb05aaad282ee54fe47b8ad270cc", null ],
+      [ "kRTWDOG_HighByteTest", "a00051.html#ggae84238ba96d9319d820c3319c5f7e526aaf013b692ea93f0de8a9c47a814ac09d", null ]
+    ] ],
+    [ "_rtwdog_interrupt_enable_t", "a00051.html#ga4225d9230a4625186e9b65be501bbc24", [
+      [ "kRTWDOG_InterruptEnable", "a00051.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a", null ]
+    ] ],
+    [ "_rtwdog_status_flags_t", "a00051.html#gab1ef76bc31ec6ca52a50e1aba88a08d8", [
+      [ "kRTWDOG_RunningFlag", "a00051.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38", null ],
+      [ "kRTWDOG_InterruptFlag", "a00051.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3", null ]
+    ] ],
+    [ "RTWDOG_GetDefaultConfig", "a00051.html#ga9b0f93e60a4ad521b60ea546e2b7cde5", null ],
+    [ "RTWDOG_Init", "a00051.html#gaf45b60f55a83c5f3632b4136a3ad2b52", null ],
+    [ "RTWDOG_Deinit", "a00051.html#ga470b1d21c8013531100e7c3c605046a7", null ],
+    [ "RTWDOG_Enable", "a00051.html#gab07abcef0c2d984783ab36df5b08ffa4", null ],
+    [ "RTWDOG_Disable", "a00051.html#ga7526eb9df0830431e942fcbca32ca6cd", null ],
+    [ "RTWDOG_EnableInterrupts", "a00051.html#ga69c0e214f7424205a23a902b688cb00d", null ],
+    [ "RTWDOG_DisableInterrupts", "a00051.html#ga58a299966ea5b0d72eab1e3a95916459", null ],
+    [ "RTWDOG_GetStatusFlags", "a00051.html#gabcee9521ed7f9e2106cbc8844c915910", null ],
+    [ "RTWDOG_EnableWindowMode", "a00051.html#ga6467fc58dc00affb0daf4df8c2edec9d", null ],
+    [ "RTWDOG_CountToMesec", "a00051.html#gafc86c177da23e2aea8980c9722f2d2af", null ],
+    [ "RTWDOG_ClearStatusFlags", "a00051.html#ga49c1f47ae1f5eacc9d33035a96919bd6", null ],
+    [ "RTWDOG_SetTimeoutValue", "a00051.html#ga1ef5c238172a1384ca3add569094505d", null ],
+    [ "RTWDOG_SetWindowValue", "a00051.html#ga8c32aa54a50e5ef0fc68945cb74549ad", null ],
+    [ "RTWDOG_Unlock", "a00051.html#gacac03752d33b0b906a9bc09c7b83d1d1", null ],
+    [ "RTWDOG_Refresh", "a00051.html#ga0d8b4744fc5ad161c8e5fbc47255328e", null ],
+    [ "RTWDOG_GetCounterValue", "a00051.html#ga8c3760e127cbcf22983a65d13c8a4bcd", null ]
 ];

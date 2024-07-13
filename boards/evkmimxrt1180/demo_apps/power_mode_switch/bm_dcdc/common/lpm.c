@@ -7,8 +7,10 @@
 
 #include "lpm.h"
 #include "fsl_clock.h"
+#include "clock_config.h"
 #include "fsl_pmu.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 #if (defined(BOARD_USE_EXT_PMIC) && BOARD_USE_EXT_PMIC)
 #include "fsl_pf5020.h"
@@ -115,16 +117,22 @@ void GPC_ConfigROSC(void)
     GPC_GLOBAL->GPC_ROSC_CTRL |= GPC_GLOBAL_GPC_ROSC_CTRL_ROSC_OFF_EN_MASK;
 }
 
+void GPC_ConfigBandgap(void)
+{
+    ANADIG_PMU->PMU_REF_CTRL |= ANADIG_PMU_PMU_REF_CTRL_REF_STBY_EN_MASK | ANADIG_PMU_PMU_REF_CTRL_REF_CONTROL_MODE_MASK;
+}
+
 void GPC_InitConfig()
 {
-    GPC_AssignCpuDomain(kGPC_CPU0, CM33_DOMAIN_ID);
+    GPC_AssignCpuDomain(kGPC_CPU0, CM33_DOMAIN_MASK);
     GPC_ConfigCore0CpuModeTransitionFlow();
 #ifndef SINGLE_CORE_M33
-    GPC_AssignCpuDomain(kGPC_CPU1, CM7_DOMAIN_ID);
+    GPC_AssignCpuDomain(kGPC_CPU1, CM7_DOMAIN_MASK);
     GPC_ConfigCore1CpuModeTransitionFlow();
 #endif
     GPC_ConfigSystemSleepTransitionFlow();
     GPC_ConfigROSC();
+    GPC_ConfigBandgap();
 }
 
 #if !(defined(BOARD_USE_EXT_PMIC) && BOARD_USE_EXT_PMIC)
@@ -132,8 +140,8 @@ void DCDC_InitConfig(void)
 {
     dcdc_config_t config;
 
-    DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_CORE0, kDCDC_1P0Target1P1V);
-    DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_CORE1, kDCDC_1P0Target1P1V);
+    DCDC_SetVoltage(kDCDC_CORE0, kDCDC_1P0Target1P1V);
+    DCDC_SetVoltage(kDCDC_CORE1, kDCDC_1P0Target1P1V);
     DCDC_GPC_SetVDD1P0LowPowerModeTargetVoltage(DCDC, kDCDC_CORE0, kDCDC_1P0Target0P8V);
     DCDC_GPC_SetVDD1P0LowPowerModeTargetVoltage(DCDC, kDCDC_CORE1, kDCDC_1P0Target0P8V);
     DCDC_GPC_EnableVDD1P0LowPowerMode(DCDC, kDCDC_CORE0, true);
@@ -146,7 +154,7 @@ void DCDC_InitConfig(void)
 #endif
 
 #ifndef SINGLE_CORE_M33
-void M7_TCM_Retentaion(bool enable)
+void M7_TCM_Retention(bool enable)
 {
     uint32_t tmp32 = CM7PLATFORM_MIX_SLICE->MLPL_CFG;
     tmp32 &= ~SRC_MIX_SLICE_MLPL_CFG_MLPL_HW_PDN_LMEM_MASK;
@@ -162,230 +170,6 @@ void M7_TCM_Retentaion(bool enable)
 }
 #endif
 
-void CCM_OSCPLL_LPM_Setting(clock_name_t clock_name, clock_level_t clock_level, uint32_t domainID)
-{
-    if(domainID < 8)
-    {
-        uint32_t tmp32 = CCM->OSCPLL[clock_name].LPM0;
-        tmp32 &= ~(7 << (4 * domainID));
-        tmp32 |= clock_level << (4 * domainID);
-        CCM->OSCPLL[clock_name].LPM0 = tmp32;
-   }
-    else
-    {
-        uint32_t tmp32 = CCM->OSCPLL[clock_name].LPM1;
-        tmp32 &= ~(7 << (4 * domainID));
-        tmp32 |= clock_level << (4 * domainID);
-        CCM->OSCPLL[clock_name].LPM1 = tmp32;
-    }
-}
-
-void OSCPLL_Config()
-{
-    clock_name_t i;
-
-    static const oscpll_config_t oscpllcfg[CLOCK_OSCPLL_NUM] = CLK_OSCPLL_CONFIGURATION_TABLE;
-    for(i = kCLOCK_OscRc24M; i < CLOCK_OSCPLL_NUM; i++)
-    {
-        if(oscpllcfg[i].ctrlMode == CM33_DOMAIN)
-        {
-          CCM_OSCPLL_LPM_Setting(i, oscpllcfg[i].level, CM33_DOMAIN_ID);
-        }
-        else if(oscpllcfg[i].ctrlMode == CM7_DOMAIN)
-        {
-          CCM_OSCPLL_LPM_Setting(i, oscpllcfg[i].level, CM7_DOMAIN_ID);
-        }
-        else if(oscpllcfg[i].ctrlMode == CM33_CM7_DOMAIN)
-        {
-          CCM_OSCPLL_LPM_Setting(i, oscpllcfg[i].level, CM33_DOMAIN_ID);
-          CCM_OSCPLL_LPM_Setting(i, oscpllcfg[i].level, CM7_DOMAIN_ID);
-        }
-        if(i !=0)
-        CCM->OSCPLL[i].AUTHEN |= CCM_OSCPLL_AUTHEN_CPULPM_MODE_MASK;
-    }
-}
-
-void OSCPLL_GPC_Mode(bool enable)
-{
-    if (enable)
-    {
-        ANADIG_PLL->ARM_PLL_CTRL       |= ANADIG_PLL_ARM_PLL_CTRL_ARM_PLL_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_CTRL      |= ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_CTRL      |= ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_DIV2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    |= ANADIG_PLL_SYS_PLL3_UPDATE_PFD0_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    |= ANADIG_PLL_SYS_PLL3_UPDATE_PFD1_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    |= ANADIG_PLL_SYS_PLL3_UPDATE_PFD2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    |= ANADIG_PLL_SYS_PLL3_UPDATE_PFD3_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      |= ANADIG_PLL_SYS_PLL2_CTRL_SYS_PLL2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      |= ANADIG_PLL_SYS_PLL2_UPDATE_PFD0_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      |= ANADIG_PLL_SYS_PLL2_UPDATE_PFD1_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      |= ANADIG_PLL_SYS_PLL2_UPDATE_PFD2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      |= ANADIG_PLL_SYS_PLL2_UPDATE_PFD3_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL1_CTRL      |= ANADIG_PLL_SYS_PLL1_CTRL_SYS_PLL1_DIV5_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL1_CTRL      |= ANADIG_PLL_SYS_PLL1_CTRL_SYS_PLL1_DIV2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL1_CTRL      |= ANADIG_PLL_SYS_PLL1_CTRL_SYS_PLL1_CONTROL_MODE_MASK;
-        ANADIG_PLL->PLL_AUDIO_CTRL     |= ANADIG_PLL_PLL_AUDIO_CTRL_PLL_AUDIO_CONTROL_MODE_MASK;
-        ANADIG_OSC->OSC_RC24M_CTRL     |= ANADIG_OSC_OSC_RC24M_CTRL_RC_24M_CONTROL_MODE_MASK;
-        ANADIG_OSC->OSC_24M_CTRL       |= ANADIG_OSC_OSC_24M_CTRL_OSC_24M_CONTROL_MODE_MASK;
-        ANADIG_OSC->OSC_400M_CTRL1     |= ANADIG_OSC_OSC_400M_CTRL1_RC_400M_CONTROL_MODE_MASK;
-    }
-    else
-    {
-        ANADIG_PLL->ARM_PLL_CTRL       &= ~ANADIG_PLL_ARM_PLL_CTRL_ARM_PLL_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_CTRL      &= ~ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_CTRL      &= ~ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_DIV2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    &= ~ANADIG_PLL_SYS_PLL3_UPDATE_PFD0_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    &= ~ANADIG_PLL_SYS_PLL3_UPDATE_PFD1_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    &= ~ANADIG_PLL_SYS_PLL3_UPDATE_PFD2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL3_UPDATE    &= ~ANADIG_PLL_SYS_PLL3_UPDATE_PFD3_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      &= ~ANADIG_PLL_SYS_PLL2_CTRL_SYS_PLL2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      &= ~ANADIG_PLL_SYS_PLL2_UPDATE_PFD0_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      &= ~ANADIG_PLL_SYS_PLL2_UPDATE_PFD1_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      &= ~ANADIG_PLL_SYS_PLL2_UPDATE_PFD2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL2_CTRL      &= ~ANADIG_PLL_SYS_PLL2_UPDATE_PFD3_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL1_CTRL      &= ~ANADIG_PLL_SYS_PLL1_CTRL_SYS_PLL1_DIV5_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL1_CTRL      &= ~ANADIG_PLL_SYS_PLL1_CTRL_SYS_PLL1_DIV2_CONTROL_MODE_MASK;
-        ANADIG_PLL->SYS_PLL1_CTRL      &= ~ANADIG_PLL_SYS_PLL1_CTRL_SYS_PLL1_CONTROL_MODE_MASK;
-        ANADIG_PLL->PLL_AUDIO_CTRL     &= ~ANADIG_PLL_PLL_AUDIO_CTRL_PLL_AUDIO_CONTROL_MODE_MASK;
-        ANADIG_OSC->OSC_RC24M_CTRL     &= ~ANADIG_OSC_OSC_RC24M_CTRL_RC_24M_CONTROL_MODE_MASK;
-        ANADIG_OSC->OSC_24M_CTRL       &= ~ANADIG_OSC_OSC_24M_CTRL_OSC_24M_CONTROL_MODE_MASK;
-        ANADIG_OSC->OSC_400M_CTRL1     &= ~ANADIG_OSC_OSC_400M_CTRL1_RC_400M_CONTROL_MODE_MASK;
-    }
-}
-
-void CCM_LPCG_LPM_Setting(clock_lpcg_t lpcg_name, clock_level_t clock_level, uint32_t domainID)
-{
-    if(domainID < 8)
-    {
-        uint32_t tmp32 = CCM->LPCG[lpcg_name].LPM0;
-        tmp32 &= ~(7 << (4 * domainID));
-        tmp32 |= clock_level << (4 * domainID);
-        CCM->LPCG[lpcg_name].LPM0 = tmp32;
-    }
-    else
-    {
-        uint32_t tmp32 = CCM->LPCG[lpcg_name].LPM1;
-        tmp32 &= ~(7 << (4 * domainID));
-        tmp32 |= clock_level << (4 * domainID);
-        CCM->LPCG[lpcg_name].LPM1 = tmp32;
-    }
-}
-
-void LPCG_GPC_Mode(bool enable)
-{
-  for(uint8_t i = 0; i < CLOCK_LPCG_NUM; i++)
-  {
-    if(enable)
-      CCM->LPCG[i].AUTHEN |= CCM_LPCG_AUTHEN_CPULPM_MODE_MASK;
-    else
-      CCM->LPCG[i].AUTHEN &= ~CCM_LPCG_AUTHEN_CPULPM_MODE_MASK;
-  }
-}
-
-void LPCG_Config()
-{
-    clock_lpcg_t i;
-    static const lpcg_config_t lpcgcfg[CLOCK_LPCG_NUM] = CLK_LPCG_CONFIGURATION_TABLE;
-    for(i = kCLOCK_M7; i < CLOCK_LPCG_NUM; i++)
-    {
-        if(lpcgcfg[i].ctrlMode == CM33_DOMAIN)
-        {
-          CCM_LPCG_LPM_Setting(i, lpcgcfg[i].level, CM33_DOMAIN_ID);
-        }
-        else if(lpcgcfg[i].ctrlMode == CM7_DOMAIN)
-        {
-          CCM_LPCG_LPM_Setting(i, lpcgcfg[i].level, CM7_DOMAIN_ID);
-        }
-        else if(lpcgcfg[i].ctrlMode == CM33_CM7_DOMAIN)
-        {
-          CCM_LPCG_LPM_Setting(i, lpcgcfg[i].level, CM33_DOMAIN_ID);
-          CCM_LPCG_LPM_Setting(i, lpcgcfg[i].level, CM7_DOMAIN_ID);
-        }
-    }
-}
-
-
-void MIX_LPM_Setting(SRC_MIX_SLICE_Type *mix, src_power_level_t powerLevel, uint32_t domainID)
-{
-    if(domainID < 8)
-    {
-        uint32_t tmp32 = mix->LPM_SETTING_1;
-        tmp32 &= ~(7 << (4 * domainID));
-        tmp32 |= powerLevel << (4 * domainID);
-        mix->LPM_SETTING_1 = tmp32;
-    }
-    else
-    {
-        uint32_t tmp32 = mix->LPM_SETTING_2;;
-        tmp32 &= ~(7 << (4 * domainID));
-        tmp32 |= powerLevel << (4 * domainID);
-        mix->LPM_SETTING_2 = tmp32;
-    }
-}
-
-void MIX_Whitelist_Setting(SRC_MIX_SLICE_Type *mix, uint32_t domainID, gpc_enable_t enable)
-{
-    uint32_t tmp32 = mix->AUTHEN_CTRL;
-    uint16_t curWhiteList = (uint16_t)((tmp32 & SRC_MIX_SLICE_AUTHEN_CTRL_WHITE_LIST_MASK) >> SRC_MIX_SLICE_AUTHEN_CTRL_WHITE_LIST_SHIFT);
-    if(curWhiteList == 0xFFFF)
-    {	
-		tmp32 &= ~SRC_MIX_SLICE_AUTHEN_CTRL_WHITE_LIST_MASK;
-	}
-    tmp32 |= SRC_MIX_SLICE_AUTHEN_CTRL_WHITE_LIST(enable<<domainID);
-    
-    curWhiteList = (uint16_t)((tmp32 & SRC_MIX_SLICE_AUTHEN_CTRL_WHITE_LIST_MASK) >> SRC_MIX_SLICE_AUTHEN_CTRL_WHITE_LIST_SHIFT);
-    assert(curWhiteList != 0);
-    mix->AUTHEN_CTRL = tmp32;
-}
-
-void MIX_Config()
-{
-    uint32_t i;
-    static const mix_config_t mixcfg[POWER_DOMAIN_NUM] = MIX_CONFIGURATION_TABLE;
-    for(i = 0; i < POWER_DOMAIN_NUM; i++)
-    {
-        if(mixcfg[i].ctrlMode == CM33_DOMAIN)
-        {
-          MIX_LPM_Setting(mixcfg[i].mix, mixcfg[i].level, CM33_DOMAIN_ID);
-          MIX_Whitelist_Setting(mixcfg[i].mix, CM33_DOMAIN_ID, kGPC_Enable);
-        }
-        else if(mixcfg[i].ctrlMode == CM7_DOMAIN)
-        {
-          MIX_LPM_Setting(mixcfg[i].mix, mixcfg[i].level, CM7_DOMAIN_ID);
-          MIX_Whitelist_Setting(mixcfg[i].mix, CM7_DOMAIN_ID, kGPC_Enable);
-        }
-        else if(mixcfg[i].ctrlMode == CM33_CM7_DOMAIN)
-        {
-          MIX_LPM_Setting(mixcfg[i].mix, mixcfg[i].level, CM33_DOMAIN_ID);
-          MIX_LPM_Setting(mixcfg[i].mix, mixcfg[i].level, CM7_DOMAIN_ID);
-          MIX_Whitelist_Setting(mixcfg[i].mix, CM33_DOMAIN_ID, kGPC_Enable);
-          MIX_Whitelist_Setting(mixcfg[i].mix, CM7_DOMAIN_ID, kGPC_Enable);
-        }
-    }
-}
-
-void SRC_MIX_GPC_Mode(bool enable)
-{
-    if (enable)
-    {
-        AON_MIX_SLICE           ->AUTHEN_CTRL |= SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        WAKEUP_MIX_SLICE        ->AUTHEN_CTRL |= SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        CM33PLATFORM_MIX_SLICE  ->AUTHEN_CTRL |= SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        CM7PLATFORM_MIX_SLICE   ->AUTHEN_CTRL |= SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        MEGA_MIX_SLICE          ->AUTHEN_CTRL |= SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        NETC_MIX_SLICE          ->AUTHEN_CTRL |= SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-    }
-    else
-    {
-        AON_MIX_SLICE           ->AUTHEN_CTRL &= ~SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        WAKEUP_MIX_SLICE        ->AUTHEN_CTRL &= ~SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        CM33PLATFORM_MIX_SLICE  ->AUTHEN_CTRL &= ~SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        CM7PLATFORM_MIX_SLICE   ->AUTHEN_CTRL &= ~SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        MEGA_MIX_SLICE          ->AUTHEN_CTRL &= ~SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-        NETC_MIX_SLICE          ->AUTHEN_CTRL &= ~SRC_MIX_SLICE_AUTHEN_CTRL_LPM_MODE_MASK;
-    }
-}
-
 void SRC_InitConfig()
 {
     uint8_t i;
@@ -395,12 +179,14 @@ void SRC_InitConfig()
     {
         if (srcCfg[i].ctrlMode == CM33_DOMAIN)
         {
-            SRC_SLICE_ControlByCpuLowPowerMode(srcCfg[i].sliceName, CM33_DOMAIN_ID, srcCfg[i].powerLevel);
+            SRC_SLICE_ControlByCpuLowPowerMode(srcCfg[i].sliceName, CM33_DOMAIN_MASK, srcCfg[i].powerLevel);
+            SRC_SLICE_SetWhiteList(srcCfg[i].sliceName, CM33_DOMAIN_MASK);
         }
 #ifndef SINGLE_CORE_M33
         else if (srcCfg[i].ctrlMode == CM7_DOMAIN)
         {
-            SRC_SLICE_ControlByCpuLowPowerMode(srcCfg[i].sliceName, CM7_DOMAIN_ID, srcCfg[i].powerLevel);
+            SRC_SLICE_ControlByCpuLowPowerMode(srcCfg[i].sliceName, CM7_DOMAIN_MASK, srcCfg[i].powerLevel);
+            SRC_SLICE_SetWhiteList(srcCfg[i].sliceName, CM7_DOMAIN_MASK);
         }
 #endif
     }
@@ -416,12 +202,12 @@ void CCM_InitConfig(void)
     {
         if (oscpllCfg[index].ctrlMode == CM33_DOMAIN)
         {
-            CLOCK_OSCPLL_ControlByCpuLowPowerMode((clock_name_t)index, CM33_DOMAIN_ID, oscpllCfg[index].level);
+            CLOCK_OSCPLL_ControlByCpuLowPowerMode((clock_name_t)index, CM33_DOMAIN_MASK, oscpllCfg[index].level);
         }
 #ifndef SINGLE_CORE_M33
         else if (oscpllCfg[index].ctrlMode == CM7_DOMAIN)
         {
-            CLOCK_OSCPLL_ControlByCpuLowPowerMode((clock_name_t)index, CM7_DOMAIN_ID, oscpllCfg[index].level);
+            CLOCK_OSCPLL_ControlByCpuLowPowerMode((clock_name_t)index, CM7_DOMAIN_MASK, oscpllCfg[index].level);
         }
 #endif
     }
@@ -430,12 +216,12 @@ void CCM_InitConfig(void)
     {
         if (lpcgCfg[index].ctrlMode == CM33_DOMAIN)
         {
-            CLOCK_LPCG_ControlByCpuLowPowerMode((clock_lpcg_t)index, CM33_DOMAIN_ID, lpcgCfg[index].level);
+            CLOCK_LPCG_ControlByCpuLowPowerMode((clock_lpcg_t)index, CM33_DOMAIN_MASK, lpcgCfg[index].level);
         }
 #ifndef SINGLE_CORE_M33
         else if (lpcgCfg[index].ctrlMode == CM7_DOMAIN)
         {
-            CLOCK_LPCG_ControlByCpuLowPowerMode((clock_lpcg_t)index, CM7_DOMAIN_ID, lpcgCfg[index].level);
+            CLOCK_LPCG_ControlByCpuLowPowerMode((clock_lpcg_t)index, CM7_DOMAIN_MASK, lpcgCfg[index].level);
         }
 #endif
     }
@@ -529,29 +315,18 @@ void ChipInitConfig(void)
 #ifndef SINGLE_CORE_M33
     PMU_EnableFBB(ANADIG_PMU, true);
     CLOCK_InitArmPllWithFreq(800);
-    M7_TCM_Retentaion(true);
+    M7_TCM_Retention(true);
 
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxArmPllOut;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
 #endif
 
-    LPCG_Config();
-    LPCG_GPC_Mode(true);
-    OSCPLL_Config();
-    OSCPLL_GPC_Mode(true);
-    
-    SRC_MIX_GPC_Mode(true);
-    /* Must configure the GPC hardware mode and rentention mode before configure the white list. Otherwides, it cannot configure CM7 */
-    MIX_Config();
-    
     rootCfg.mux = kCLOCK_M33_ClockRoot_MuxSysPll3Out;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_M33, &rootCfg);
 
-    rootCfg.mux = kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M;
-    rootCfg.div = 2;
-    CLOCK_SetRootClock(kCLOCK_Root_Edgelock, &rootCfg);
+    EdgeLock_SetClock(kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M, 2);
 
     rootCfg.mux = kCLOCK_BUS_AON_ClockRoot_MuxSysPll2Out;
     rootCfg.div = 4;
@@ -574,8 +349,6 @@ void ChipInitConfig(void)
     NVIC_DisableIRQ(DAP_IRQn);
     /* Request system sleep when STOP and SUSPEND */
     BLK_CTRL_S_AONMIX->LP_HANDSHAKE = 0x1FFFFF;
-    /* To avoid edgelock reset the chip under high temperature */
-    BLK_CTRL_S_AONMIX->EDGELOCK_RESET_REQ_MASK = 0x1FF;
 }
 
 void PrintSystemStatus(void)
@@ -630,6 +403,7 @@ void SystemEnterSleepMode(gpc_cpu_mode_t cpuMode)
         /* Set the SLEEPDEEP bit to enable deep sleep mode (STOP) */
         SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
     }
+
     /* WFI instruction will start entry into WAIT/STOP mode */
     __WFI();
 
@@ -713,8 +487,8 @@ void RunModeTransition(run_mode_t targetRunMode)
                 ;
         }
 #else
-        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_CORE0, runMode[targetRunMode].targetVoltage);
-        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_CORE1, runMode[targetRunMode].targetVoltage);
+        DCDC_SetVoltage(kDCDC_CORE0, runMode[targetRunMode].targetVoltage);
+        DCDC_SetVoltage(kDCDC_CORE1, runMode[targetRunMode].targetVoltage);
 #endif
 
 #ifndef SINGLE_CORE_M33
@@ -745,9 +519,7 @@ void RunModeTransition(run_mode_t targetRunMode)
         rootCfg.div = runMode[targetRunMode].cm33Divider;
         CLOCK_SetRootClock(kCLOCK_Root_M33, &rootCfg);
 
-        rootCfg.mux = runMode[targetRunMode].edgelockSource;
-        rootCfg.div = runMode[targetRunMode].edgelockDivider;
-        CLOCK_SetRootClock(kCLOCK_Root_Edgelock, &rootCfg);
+        EdgeLock_SetClock(runMode[targetRunMode].edgelockSource, runMode[targetRunMode].edgelockDivider);
 
         rootCfg.mux = runMode[targetRunMode].busAonSource;
         rootCfg.div = runMode[targetRunMode].busAonDivider;
@@ -767,9 +539,7 @@ void RunModeTransition(run_mode_t targetRunMode)
         rootCfg.div = runMode[targetRunMode].cm33Divider;
         CLOCK_SetRootClock(kCLOCK_Root_M33, &rootCfg);
 
-        rootCfg.mux = runMode[targetRunMode].edgelockSource;
-        rootCfg.div = runMode[targetRunMode].edgelockDivider;
-        CLOCK_SetRootClock(kCLOCK_Root_Edgelock, &rootCfg);
+        EdgeLock_SetClock(runMode[targetRunMode].edgelockSource, runMode[targetRunMode].edgelockDivider);
 
         rootCfg.mux = runMode[targetRunMode].busAonSource;
         rootCfg.div = runMode[targetRunMode].busAonDivider;
@@ -817,8 +587,8 @@ void RunModeTransition(run_mode_t targetRunMode)
                 ;
         }
 #else
-        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_CORE0, runMode[targetRunMode].targetVoltage);
-        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_CORE1, runMode[targetRunMode].targetVoltage);
+        DCDC_SetVoltage(kDCDC_CORE0, runMode[targetRunMode].targetVoltage);
+        DCDC_SetVoltage(kDCDC_CORE1, runMode[targetRunMode].targetVoltage);
 #endif
     }
     else

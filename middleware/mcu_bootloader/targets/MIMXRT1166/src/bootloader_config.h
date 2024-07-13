@@ -191,7 +191,9 @@
 #endif
 #define BL_FEATURE_SPINAND_MODULE_ERASE_VERIFY (1)
 #define BL_FEATURE_SPINAND_MODULE_PERIPHERAL_FLEXSPI (1)
+#define BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL (1)
 #define BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE (1)
+#define BL_FEATURE_SPINAND_MODULE_MAX_PERIPHERAL_INSTANCE (2)
 #endif // BL_FEATURE_SPINAND_MODULE
 
 #define BL_FEATURE_MMC_MODULE (1)
@@ -241,6 +243,11 @@
 // Un-Categoried Configurations
 ////////////////////////////////////////////////////////////////////////////////
 #define BL_FETAURE_USE_STD_EXCEPTION_HANDLER (0)
+
+////////////////////////////////////////////////////////////////////////////////
+// Not Support Commands
+////////////////////////////////////////////////////////////////////////////////
+#define BL_FETAURE_RECV_SB (0)
 
 #endif // __BOOTLOADER_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////

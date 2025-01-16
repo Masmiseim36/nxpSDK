@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -57,16 +57,16 @@ static void XRDC2_MakeDXACP(const xrdc2_access_policy_t policy[FSL_FEATURE_XRDC2
     while (domain > 8U)
     {
         domain--;
-        *w0 <<= XRDC2_DXACP_WIDTH;
-        *w0 |= (uint32_t)policy[domain - 8U];
+        *w1 <<= XRDC2_DXACP_WIDTH;
+        *w1 |= (uint32_t)policy[domain];
     }
 #endif
 
     while (domain > 0U)
     {
         domain--;
-        *w1 <<= XRDC2_DXACP_WIDTH;
-        *w1 |= (uint32_t)policy[domain];
+        *w0 <<= XRDC2_DXACP_WIDTH;
+        *w0 |= (uint32_t)policy[domain];
     }
 }
 

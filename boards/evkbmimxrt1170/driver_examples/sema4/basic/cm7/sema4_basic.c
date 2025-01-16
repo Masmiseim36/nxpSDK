@@ -7,17 +7,13 @@
 
 #include "fsl_common.h"
 #include "fsl_sema4.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SEMA4    SEMA4
-#define DEMO_PROC_NUM 0 /* Fixed value by system integration. */
-
 #define DEMO_CHECK(x)                                    \
     if (!(x))                                            \
     {                                                    \
@@ -44,10 +40,7 @@ static void DEMO_SEMA4_ResetAllGate(void);
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("SEMA4 basic example start\r\n");
     PRINTF("Proc number is %d\r\n", DEMO_PROC_NUM);

@@ -8,22 +8,17 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_dac12.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC12_BASE        DAC
-#define DEMO_DAC12_VREF_SOURCE kDAC12_ReferenceVoltageSourceAlt2
-
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitDebugConsole(void);
 
 /*******************************************************************************
  * Variables
@@ -32,7 +27,6 @@ void BOARD_InitDebugConsole(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 /*!
  * @brief Main function
  */
@@ -41,10 +35,7 @@ int main(void)
     dac12_config_t dacConfigStruct;
     uint32_t dacValue;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nDAC basic Example.\r\n");
 

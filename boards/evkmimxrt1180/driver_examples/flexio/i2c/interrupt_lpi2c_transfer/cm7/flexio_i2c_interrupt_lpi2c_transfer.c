@@ -9,29 +9,15 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 #include "fsl_flexio_i2c_master.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LPI2C_SLAVE_BASE LPI2C2
-#define BOARD_LPI2C_SLAVE_IRQn LPI2C2_IRQn
-#define BOARD_FLEXIO_BASE      FLEXIO2
-
-/* Get frequency of lpi2c clock */
-#define LPI2C_CLOCK_FREQUENCY  CLOCK_GetRootClockFreq(kCLOCK_Root_Lpi2c0102)
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetRootClockFreq(kCLOCK_Root_Flexio2)
-
-#define FLEXIO_I2C_SDA_PIN 3U
-#define FLEXIO_I2C_SCL_PIN 2U
-
-/* I2C Baudrate 100K */
-#define I2C_BAUDRATE (100000)
 /* I2C Slave Address */
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 /* The length of data */
@@ -78,10 +64,7 @@ int main(void)
     flexio_i2c_master_transfer_t masterXfer;
     uint32_t timeout = UINT32_MAX;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nFlexIO I2C interrupt - LPI2C interrupt\r\n");
 

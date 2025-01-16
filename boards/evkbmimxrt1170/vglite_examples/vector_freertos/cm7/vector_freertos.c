@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, 2021 NXP
+ * Copyright 2019, 2021, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,15 +10,14 @@
 #include "task.h"
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
 #include "vglite_support.h"
 #include "vglite_window.h"
 /*-----------------------------------------------------------*/
 #include "vg_lite.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -76,29 +75,11 @@ static vg_lite_matrix_t matrix;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     if (xTaskCreate(vglite_task, "vglite_task", configMINIMAL_STACK_SIZE + 200, NULL, configMAX_PRIORITIES - 1, NULL) !=
         pdPASS)
@@ -136,19 +117,19 @@ static vg_lite_error_t init_vg_lite(void)
         PRINTF("VGLITE_CreateWindow failed: VGLITE_CreateWindow() returned error %d\n", error);
         return error;
     }
-    // Initialize the draw.
-    error = vg_lite_init(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT);
-    if (error)
-    {
-        PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\n", error);
-        cleanup();
-        return error;
-    }
     // Set GPU command buffer size for this drawing task.
     error = vg_lite_set_command_buffer_size(VG_LITE_COMMAND_BUFFER_SIZE);
     if (error)
     {
         PRINTF("vg_lite_set_command_buffer_size() returned error %d\n", error);
+        cleanup();
+        return error;
+    }
+    // Initialize the draw.
+    error = vg_lite_init(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT);
+    if (error)
+    {
+        PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\n", error);
         cleanup();
         return error;
     }

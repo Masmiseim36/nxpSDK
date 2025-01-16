@@ -4,6 +4,7 @@
  * -------------------------------------------------
  *
  * Copyright (c) 2007 The Khronos Group Inc.
+ * Copyright 2024 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and /or associated documentation files

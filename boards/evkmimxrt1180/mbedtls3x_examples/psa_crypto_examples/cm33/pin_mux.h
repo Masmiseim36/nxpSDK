@@ -31,6 +31,39 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/* GPIO_AD_15 (coord N16), SD1_CD_B */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD1_CD_B_PERIPHERAL                                RGPIO4   /*!< Peripheral name */
+#define BOARD_INITPINS_SD1_CD_B_SIGNAL                                   gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_SD1_CD_B_CHANNEL                                      15U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SD1_CD_B_GPIO                                      RGPIO4   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_SD1_CD_B_GPIO_PIN                                     15U   /*!< GPIO pin number */
+#define BOARD_INITPINS_SD1_CD_B_GPIO_PIN_MASK                        (1U << 15U)   /*!< GPIO pin mask */
+
+/* GPIO_AD_14 (coord N14), SD_PWREN_B */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_PWREN_B_PERIPHERAL                              RGPIO4   /*!< Peripheral name */
+#define BOARD_INITPINS_SD_PWREN_B_SIGNAL                                 gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_SD_PWREN_B_CHANNEL                                    14U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SD_PWREN_B_GPIO                                    RGPIO4   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_SD_PWREN_B_GPIO_PIN                                   14U   /*!< GPIO pin number */
+#define BOARD_INITPINS_SD_PWREN_B_GPIO_PIN_MASK                      (1U << 14U)   /*!< GPIO pin mask */
+
+/* GPIO_AD_29 (coord L15), SD_VSELECT */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_VSELECT_PERIPHERAL                              RGPIO4   /*!< Peripheral name */
+#define BOARD_INITPINS_SD_VSELECT_SIGNAL                                 gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_SD_VSELECT_CHANNEL                                    29U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SD_VSELECT_GPIO                                    RGPIO4   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_SD_VSELECT_GPIO_PIN                                   29U   /*!< GPIO pin number */
+#define BOARD_INITPINS_SD_VSELECT_GPIO_PIN_MASK                      (1U << 29U)   /*!< GPIO pin mask */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *

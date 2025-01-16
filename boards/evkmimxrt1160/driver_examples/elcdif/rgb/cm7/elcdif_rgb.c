@@ -7,15 +7,10 @@
  */
 
 #include "fsl_common.h"
+#include "app.h"
 #include "fsl_elcdif.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_soc_src.h"
-#include "fsl_gpio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "elcdif_support.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -37,21 +32,6 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_frameBuffer[2][APP_IMG_HEIGHT][A
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
-
 void APP_LCDIF_IRQHandler(void)
 {
     uint32_t intStatus;
@@ -180,13 +160,7 @@ int main(void)
 {
     uint32_t frameBufferIndex = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitDebugConsole();
-    BOARD_InitLcdifClock();
+    BOARD_InitHardware();
 
     PRINTF("LCDIF RGB example start...\r\n");
 

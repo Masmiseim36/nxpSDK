@@ -6,27 +6,19 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpit.h"
 
-#include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPIT_BASE    LPIT3
-#define DEMO_LPIT_Channel kLPIT_Chnl_0
-
-/* Get source clock for LPIT driver */
-#define LPIT_SOURCECLOCK CLOCK_GetRootClockFreq(kCLOCK_Root_Lpit3)
 #define LPIT_PWM_MIN_FREQUENCY (LPIT_SOURCECLOCK / 65535U)
 #define LPIT_PWM_MAX_FREQUENCY (LPIT_SOURCECLOCK / 2U)
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_ConfigTriggerSource(void);
 static void lpit_pwm_set(const uint32_t freq_Hz, uint32_t duty, const uint32_t polarity);
 
 /*******************************************************************************
@@ -36,15 +28,6 @@ static void lpit_pwm_set(const uint32_t freq_Hz, uint32_t duty, const uint32_t p
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void BOARD_ConfigTriggerSource()
-{
-    /* Init xbara module. */
-    XBAR_Init(kXBAR_DSC1);
-
-    /* Configure the XBARA signal connections. */
-    XBAR_SetSignalsConnection(kXBAR1_InputPit3Trigger0, kXBAR1_OutputIomuxXbarInout20);
-}
 static void lpit_pwm_init(void)
 {
     uint32_t pwm_freq = 0U;
@@ -128,10 +111,7 @@ int main(void)
     lpit_config_t lpitConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\n lpit pwm demo start.\r\n");
 

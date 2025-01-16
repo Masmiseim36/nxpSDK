@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021, 2023 NXP
+ * Copyright 2019-2021, 2023-2024 NXP
  * All rights reserved.
  *
  *
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief GPC driver version 2.3.1. */
-#define FSL_GPC_RIVER_VERSION (MAKE_VERSION(2, 3, 1))
+/*! @brief GPC driver version 2.5.0. */
+#define FSL_GPC_RIVER_VERSION (MAKE_VERSION(2, 5, 0))
 /*! @}*/
 
 #define GPC_RESERVED_USE_MACRO 0xFFFFFFFFU
@@ -201,19 +201,6 @@ typedef enum _gpc_cm_tran_step
     kGPC_CM_WakeupSsar  = 15UL, /*!< SSAR wakeup step. */
 } gpc_cm_tran_step_t;
 
-/*! @brief Step counter work mode. */
-typedef enum _gpc_tran_step_counter_mode
-{
-    kGPC_StepCounterDisableMode =
-        0UL, /*!< Counter disable mode: not use step counter, step completes once receiving step_done. */
-    kGPC_StepCounterDelayMode =
-        1UL, /*!< Counter delay mode: delay after receiving step_done, delay cycle number is STEP_CNT */
-    kGPC_StepCounterIgnoreResponseMode = 2UL, /*!< Ignore step_done response, the counter starts to count once step
-                                                    begins, when counter reaches STEP_CNT value, the step completes. */
-    kGPC_StepCounterTimeOutMode = 3UL,        /*!< Time out mode, the counter starts to count once step begins, the step
-                                                    completes when either step_done received or counting to STEP_CNT value. */
-} gpc_tran_step_counter_mode_t;
-
 /*! @brief GPC set point transition steps. */
 typedef enum _gpc_sp_tran_step
 {
@@ -252,11 +239,12 @@ typedef enum _gpc_cpu_mode
     kGPC_SuspendMode = 0x3UL, /*!< Transit to SUSPEND mode. */
 } gpc_cpu_mode_t;
 
-/*! @brief Configuration for GPC transition step. */
+/*!
+ * @brief Configuration for GPC transition step.
+ * @deprecated Related functions are deprecated.
+ */
 typedef struct _gpc_tran_step_config
 {
-    uint32_t stepCount;                   /*!< Step count, which is depended on the value of cntMode. */
-    gpc_tran_step_counter_mode_t cntMode; /*!< Step counter working mode. */
     bool enableStep;                      /*!< Enable the step. */
 } gpc_tran_step_config_t;
 
@@ -297,6 +285,19 @@ typedef enum _gpc_cpu_domain_name
     kGPC_CM7Core = 0U, /*!< CM7 core. */
     kGPC_CM4Core = 1U, /*!< CM4 core. */
 } gpc_cpu_domain_name_t;
+
+/*! @brief Step counter work mode. */
+typedef enum _gpc_tran_step_counter_mode
+{
+    kGPC_StepCounterDisableMode =
+        0UL, /*!< Counter disable mode: not use step counter, step completes once receiving step_done. */
+    kGPC_StepCounterDelayMode =
+        1UL, /*!< Counter delay mode: delay after receiving step_done, delay cycle number is STEP_CNT */
+    kGPC_StepCounterIgnoreResponseMode = 2UL, /*!< Ignore step_done response, the counter starts to count once step
+                                                    begins, when counter reaches STEP_CNT value, the step completes. */
+    kGPC_StepCounterTimeOutMode = 3UL,        /*!< Time out mode, the counter starts to count once step begins, the step
+                                                    completes when either step_done received or counting to STEP_CNT value. */
+} gpc_tran_step_counter_mode_t;
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -430,6 +431,8 @@ static inline bool GPC_CM_GetNonIrqWakeupStatus(GPC_CPU_MODE_CTRL_Type *base, ui
  * operation is controlled by setpoint control. This funcion can not config the standby
  * sleep/wakeup too, because those operation is controlled by standby controlled.
  *
+ * @deprecated Please use GPC_CM_EnableCpuModeTransitionStep() and GPC_CM_DisableCpuModeTransitionStep() as instead.
+ *
  * @param base GPC CPU module base address.
  * @param step step type, refer to "gpc_cm_tran_step_t".
  * @param config transition step configuration, refer to "gpc_tran_step_config_t".
@@ -437,6 +440,22 @@ static inline bool GPC_CM_GetNonIrqWakeupStatus(GPC_CPU_MODE_CTRL_Type *base, ui
 void GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_Type *base,
                                         gpc_cm_tran_step_t step,
                                         const gpc_tran_step_config_t *config);
+
+/*!
+ * @brief Enable the specific cpu mode transition step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_Type *base, gpc_cm_tran_step_t step);
+
+/*!
+ * @brief Disable the specific cpu mode transition step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_CM_DisableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_Type *base, gpc_cm_tran_step_t step);
 
 /*!
  * @brief Request a set point transition before the CPU transfers into a sleep mode.
@@ -582,6 +601,8 @@ static inline void GPC_SP_SetSetpointPriority(GPC_SET_POINT_CTRL_Type *base, uin
 /*!
  * @brief Config the set point transition step.
  *
+ * @deprecated Please use GPC_SP_EnableSetPointTransitionStep() and GPC_SP_DisableSetPointTransitionStep() as instead.
+ *
  * @param base GPC Setpoint controller base address.
  * @param step step type, refer to "gpc_sp_tran_step_t".
  * @param config transition step configuration, refer to "gpc_tran_step_config_t".
@@ -589,6 +610,22 @@ static inline void GPC_SP_SetSetpointPriority(GPC_SET_POINT_CTRL_Type *base, uin
 void GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL_Type *base,
                                          gpc_sp_tran_step_t step,
                                          const gpc_tran_step_config_t *config);
+
+/*!
+ * @brief Enable the specific setpoint transition step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL_Type *base, gpc_sp_tran_step_t step);
+
+/*!
+ * @brief Disable the specific setpoint transition step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_SP_DisableSetPointTransitionStep(GPC_SET_POINT_CTRL_Type *base, gpc_sp_tran_step_t step);
 
 /*!
  * @brief Get system current setpoint, only valid when setpoint trans not busy.
@@ -637,6 +674,8 @@ static inline uint8_t GPC_SP_GetTargetSetPoint(GPC_SET_POINT_CTRL_Type *base)
 /*!
  * @brief Config the standby transition step.
  *
+ * @deprecated Please use GPC_STBY_EnableStandbyTransitionStep() and GPC_STBY_DisableStandbyTransitionStep() as instead.
+ *
  * @param base GPC standby controller base address.
  * @param step step type, refer to "gpc_stby_tran_step_t".
  * @param config transition step configuration, refer to "gpc_tran_step_config_t".
@@ -644,6 +683,33 @@ static inline uint8_t GPC_SP_GetTargetSetPoint(GPC_SET_POINT_CTRL_Type *base)
 void GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL_Type *base,
                                           gpc_stby_tran_step_t step,
                                           const gpc_tran_step_config_t *config);
+
+/*!
+ * @brief Enable the specific standby transition step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL_Type *base, gpc_stby_tran_step_t step);
+
+/*!
+ * @brief Disable the specific standby transition step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_STBY_DisableStandbyTransitionStep(GPC_STBY_CTRL_Type *base, gpc_stby_tran_step_t step);
+
+/*!
+ * @brief Set count mode for PMIC_OUT Step.
+ * 
+ * @param base GPC CPU module base address.
+ * @param cntMode Step counter working mode.
+ * @param stepCount Step count, which is depended on the value of cntMode
+ */
+void GPC_STBY_SetPmicOutStepCountMode(GPC_STBY_CTRL_Type *base,
+                                    gpc_tran_step_counter_mode_t cntMode,
+                                    uint32_t stepCount);
 
 /*!
  * @brief Force selected CPU requesting standby mode.

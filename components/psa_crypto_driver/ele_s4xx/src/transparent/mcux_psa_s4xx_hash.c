@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023-2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -231,7 +230,7 @@ psa_status_t ele_s4xx_transparent_hash_compute(psa_algorithm_t alg, const uint8_
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     status_t ele_status = kStatus_Fail;
     size_t actual_hash_length = PSA_HASH_LENGTH(alg);
-    hash_algo_t mode = 0;
+    hash_algo_t mode = (hash_algo_t) 0;
 
     if ((status = ele_psa_hash_alg_to_ele_hash_alg(alg, &mode)) != PSA_SUCCESS) {
         return status;

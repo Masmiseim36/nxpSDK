@@ -6,15 +6,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART Driver_USART1
 #define ECHO_BUFFER_LENGTH 8
 /*******************************************************************************
  * Prototypes
@@ -36,11 +33,6 @@ volatile bool rxOnGoing                = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t LPUART1_GetFreq(void)
-{
-    return BOARD_DebugConsoleSrcFreq();
-}
 void USART_SignalEvent_t(uint32_t event)
 {
     if (ARM_USART_EVENT_SEND_COMPLETE == event)
@@ -63,8 +55,7 @@ int main(void)
 {
     uint32_t i;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootClocks();
+    BOARD_InitHardware();
 
     DEMO_USART.Initialize(USART_SignalEvent_t);
     DEMO_USART.PowerControl(ARM_POWER_FULL);

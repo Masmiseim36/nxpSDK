@@ -13,19 +13,19 @@
       </member>
       <member>
         <project>host_hid_mouse_bm_cm33</project>
-        <configuration>hyperram_debug</configuration>
-      </member>
-      <member>
-        <project>host_hid_mouse_bm_cm33</project>
-        <configuration>hyperram_release</configuration>
-      </member>
-      <member>
-        <project>host_hid_mouse_bm_cm33</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>host_hid_mouse_bm_cm33</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>host_hid_mouse_bm_cm33</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+      <member>
+        <project>host_hid_mouse_bm_cm33</project>
+        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -43,20 +43,6 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>hyperram_debug</name>
-      <member>
-        <project>host_hid_mouse_bm_cm33</project>
-        <configuration>hyperram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>hyperram_release</name>
-      <member>
-        <project>host_hid_mouse_bm_cm33</project>
-        <configuration>hyperram_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>flexspi_nor_debug</name>
       <member>
         <project>host_hid_mouse_bm_cm33</project>
@@ -68,6 +54,20 @@
       <member>
         <project>host_hid_mouse_bm_cm33</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_debug</name>
+      <member>
+        <project>host_hid_mouse_bm_cm33</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_release</name>
+      <member>
+        <project>host_hid_mouse_bm_cm33</project>
+        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

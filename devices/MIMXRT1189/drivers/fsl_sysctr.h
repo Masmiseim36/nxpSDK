@@ -21,7 +21,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief System Counter driver version. */
-#define FSL_SYSCTR_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+#define FSL_SYSCTR_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*! @{ */
 
 /*! @brief System Counter clock source selection. */
@@ -245,7 +245,7 @@ static inline void SYSCTR_StopCounter(SYS_CTR_CONTROL_Type *base)
  */
 static inline void SYSCTR_SetCounterlValue(SYS_CTR_CONTROL_Type *base, uint64_t value)
 {
-    assert((base->CNTSR & SYS_CTR_CONTROL_CNTSR_FCA1_MASK) == 0);
+    assert((base->CNTSR & SYS_CTR_CONTROL_CNTSR_FCA1_MASK) == 0U);
 
     base->CNTCV0 = (uint32_t)(value & SYS_CTR_CONTROL_CNTCV0_CNTCV0_MASK); 
     base->CNTCV1 = (uint32_t)((value >> 32U) & SYS_CTR_CONTROL_CNTCV1_CNTCV1_MASK);

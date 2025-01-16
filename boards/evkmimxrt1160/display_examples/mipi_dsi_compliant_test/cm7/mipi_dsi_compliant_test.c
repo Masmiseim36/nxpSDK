@@ -6,11 +6,10 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "display_support.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -48,19 +47,6 @@ static pixel_t (*s_frameBuffer)[DEMO_BUFFER_WIDTH] = (void *)DEMO_BUFFER0_ADDR;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 
 static void DEMO_InitFrameBuffer(void)
 {
@@ -116,12 +102,7 @@ int main(void)
 {
     status_t status;
 
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     BOARD_PrepareDisplayController();
 

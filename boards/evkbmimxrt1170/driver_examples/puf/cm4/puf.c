@@ -13,19 +13,14 @@
 #include <stdlib.h>
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_puf.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-/* Worst-case time in ms to fully discharge PUF SRAM */
-#define PUF_DISCHARGE_TIME 400
-#define PUF                KEY_MANAGER__PUF
 #define PUF_INTRINSIC_KEY_SIZE 16
 
 /*******************************************************************************
@@ -44,28 +39,6 @@ static const uint8_t s_userKey256[] __attribute__((aligned)) = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_PUF_Enable(void)
-{
-    /* Enable PUF in shadow registers */
-    uint32_t fuse    = 0;
-    uint32_t enabled = 0;
-
-    /* Load walues from OCOTP */
-    fuse = OCOTP->FUSEN[6].FUSE;
-
-    enabled = (fuse & 0x00000040) >> 6U;
-
-    /* Check whether PUF is disabled and FUSE word locked */
-    if (enabled == 0)
-    {
-        PRINTF("Error: PUF is not enabled in FUSE (0x860[6])!/r/n");
-        while (1)
-            ;
-    }
-
-    /* Enable PUF in FUSE 6 shadow register (no FUSE itself) */
-}
-
 
 /*!
  * @brief Main function.
@@ -79,11 +52,7 @@ int main(void)
     uint8_t intrinsicKey[PUF_INTRINSIC_KEY_SIZE] = {0};
 
     /* Init hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_PUF_Enable();
+    BOARD_InitHardware();
 
     /* Initialize random number generator used to generate key mask for HW key */
     /* In real application, the seed shall be obtained from a hardware random number generator. */

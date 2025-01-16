@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -41,7 +40,7 @@ psa_status_t psa_algo_to_generic_rsa_encrypt_algo(psa_algorithm_t alg,
 {
     psa_status_t status = PSA_ERROR_INVALID_ARGUMENT;
     /* ELE encrypt schemes are compatible with PSA alg. So just assign for now. */
-    *encrypt_algo = alg;
+    *encrypt_algo = (generic_rsa_algo_t) alg;
 
     switch (*encrypt_algo) {
         case RSA_PKCS1_V1_5_CRYPT:

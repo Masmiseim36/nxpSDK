@@ -8,23 +8,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN3
-
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-#define DLC                   (8)
-
-/* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Can3)
-/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
-#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 #if (defined(USE_CANFD) && USE_CANFD)
@@ -208,10 +197,7 @@ int main(void)
     uint8_t node_type;
 
     /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware(); 
 
     LOG_INFO("********* FLEXCAN Interrupt EXAMPLE *********\r\n");
     LOG_INFO("    Message format: Standard (11 bit id)\r\n");
@@ -246,8 +232,8 @@ int main(void)
     /* Get FlexCAN module default Configuration. */
     /*
      * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
-     * flexcanConfig.bitRate               = 1000000U;
-     * flexcanConfig.bitRateFD             = 2000000U;
+     * flexcanConfig.bitRate                = 1000000U;
+     * flexcanConfig.bitRateFD              = 2000000U;
      * flexcanConfig.maxMbNum               = 16;
      * flexcanConfig.enableLoopBack         = false;
      * flexcanConfig.enableSelfWakeup       = false;
@@ -268,7 +254,7 @@ int main(void)
     flexcanConfig.bitRate = EXAMPLE_CAN_BIT_RATE;
 #endif
 
-/* If special quantum setting is needed, set the timing parameters. */
+    /* If special quantum setting is needed, set the timing parameters. */
 #if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
     flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
     flexcanConfig.timingConfig.phaseSeg2 = PSEG2;
@@ -329,7 +315,7 @@ int main(void)
     FLEXCAN_SetRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
 #endif
 
-/* Setup Tx Message Buffer. */
+    /* Setup Tx Message Buffer. */
 #if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_SetFDTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
 #else

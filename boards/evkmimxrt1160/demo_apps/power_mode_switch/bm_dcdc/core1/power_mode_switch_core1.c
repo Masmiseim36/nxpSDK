@@ -12,17 +12,11 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_mu.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CPU_NAME "iMXRT1166"
-
-#define APP_WAKEUP_BUTTON_GPIO        BOARD_USER_BUTTON_GPIO
-#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ         BOARD_USER_BUTTON_IRQ
-#define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
 
@@ -292,16 +286,7 @@ int main(void)
     uint8_t ch;
 
     /* Init board hardware.*/
-    clock_root_config_t rootCfg = {0};
-
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-
-    rootCfg.mux = kCLOCK_LPUART12_ClockRoot_MuxOscRc16M;
-    rootCfg.div = 1;
-    CLOCK_SetRootClock(kCLOCK_Root_Lpuart12, &rootCfg);
-
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     EnableIRQ(MU_IRQ);
 
     preCpuMode = GPC_CM_GetPreviousCpuMode(GPC_CPU_MODE_CTRL);

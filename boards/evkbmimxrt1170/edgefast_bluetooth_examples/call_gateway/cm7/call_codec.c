@@ -70,6 +70,7 @@ volatile uint32_t codecTxBufferPrimeCount = 0;
 static OSA_SEMAPHORE_HANDLE_DEFINE(s_audioTaskSync);
 
 static volatile uint8_t s_audioInitialized = 0u;
+static volatile bool stop_codec;
 
 static void APP_CodecTxCallback(hal_audio_handle_t handle, hal_audio_status_t completionStatus, void *callbackParam);
 static void APP_CodecRxCallback(hal_audio_handle_t handle, hal_audio_status_t completionStatus, void *callbackParam);
@@ -219,6 +220,13 @@ static void BOARD_CodecTask(void* param)
             continue;
         }
         OSA_EXIT_CRITICAL();
+
+        if (stop_codec == true)
+        {
+            stop_codec = false;
+            BOARD_AudioDeinit();
+            continue;
+        }
 
         OSA_ENTER_CRITICAL();
         if (codecTxBufferPrimeCount < CODEC_TX_BUFFER_COUNT)
@@ -448,8 +456,8 @@ int BOARD_StartCodec(codec_tx_callback_t tx_cb, codec_rx_callback_t rx_cb, uint3
 
 int BOARD_StopCodec(void)
 {
-    BOARD_AudioDeinit();
-
+    stop_codec = true;
+    OSA_SemaphorePost(s_audioTaskSync);
     return 0;
 }
 

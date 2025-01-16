@@ -44,6 +44,8 @@
 /* NXP change */
 /* KSDK */
 #include "app.h"
+#include "fsl_common.h"
+extern status_t CRYPTO_InitHardware(void);
 
 #if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
@@ -401,6 +403,14 @@ int main(int argc, char *argv[])
 #if defined(MCUX_MBEDTLS)
     argc = 0;					// Some debuggers pass junk in argc. Force 0 to avoid that
     BOARD_InitHardware();                       // NXP
+
+    /* HW init , that initializes the els, pkc and trng. 
+    If els_pkc is not being used, then only trng is initialized*/
+    if( CRYPTO_InitHardware() != kStatus_Success )
+    {
+        mbedtls_printf( "Initialization of crypto HW failed\n" );
+        mbedtls_exit( MBEDTLS_EXIT_FAILURE );
+    }
 #endif
     
     /*

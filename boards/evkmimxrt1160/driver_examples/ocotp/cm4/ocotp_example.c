@@ -8,17 +8,14 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_ocotp.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_OCOTP_FUSE_MAP_ADDRESS 3 /* Tester */
-#define EXAMPLE_OCOTP_FUSE_WRITE_VALUE 0x00000001
 /* NOTE: enable this feature will write data to the fuse map, and this operation is
  * irreversible. Please refer to the referance manual before using the read/write
  * function, and calling the write API cautiously.
@@ -59,10 +56,7 @@ int main(void)
     uint32_t version;
 
     /* Init hardware*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("OCOTP Peripheral Driver Example\r\n\r\n");
 

@@ -49,10 +49,10 @@
 
 
 
-static const struct bt_audio_codec_cap lc3_codec_cap = BT_AUDIO_CODEC_CAP_LC3(
+static const struct bt_audio_codec_cap lc3_codec_cap[] = {BT_AUDIO_CODEC_CAP_LC3(
 	BT_AUDIO_CODEC_CAP_FREQ_ANY, BT_AUDIO_CODEC_CAP_DURATION_10,
 	BT_AUDIO_CODEC_CAP_CHAN_COUNT_SUPPORT(1), 40u, 120u, 1u,
-	(BT_AUDIO_CONTEXT_TYPE_CONVERSATIONAL | BT_AUDIO_CONTEXT_TYPE_MEDIA));
+	(BT_AUDIO_CONTEXT_TYPE_CONVERSATIONAL | BT_AUDIO_CONTEXT_TYPE_MEDIA)),};
 
 static struct bt_conn *default_conn;
 static struct bt_bap_stream sink_streams[CONFIG_BT_ASCS_ASE_SNK_COUNT];
@@ -65,7 +65,7 @@ static const struct bt_audio_codec_qos_pref qos_pref =
 /* CSIP set member parameter */
 struct bt_csip_set_member_register_param csip_set_memeber_param = {
 	.set_size = 2,
-	.set_sirk = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 },
+	.sirk = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 },
 	.lockable = true,
 	.rank = 0, /* Need overwrite befor used, shoud be 1, 2. */
 	.cb = NULL,
@@ -89,6 +89,8 @@ static const struct bt_data ad[] = {
 	BT_DATA(BT_DATA_CSIS_RSI, csip_rsi_data, BT_CSIP_RSI_SIZE),
 	BT_DATA_BYTES(BT_DATA_UUID16_ALL, BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL), BT_UUID_16_ENCODE(BT_UUID_PACS_VAL), BT_UUID_16_ENCODE(BT_UUID_VCS_VAL)),
 	BT_DATA(BT_DATA_SVC_DATA16, unicast_server_addata, ARRAY_SIZE(unicast_server_addata)),
+	BT_DATA(BT_DATA_NAME_COMPLETE, CONFIG_BT_DEVICE_NAME,
+		sizeof(CONFIG_BT_DEVICE_NAME) - 1),
 };
 
 /* Audio Sink parameters. */
@@ -122,7 +124,7 @@ static OSA_MSGQ_HANDLE_DEFINE(sdu_fifo, PCM_BUFF_COUNT, sizeof(void *));
 NET_BUF_POOL_FIXED_DEFINE(sdu_pool,
 			  PCM_BUFF_COUNT,
 			  sizeof(sdu_packet_t),
-			  NULL);
+			  CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 #if defined(LE_AUDIO_SYNC_ENABLE) && (LE_AUDIO_SYNC_ENABLE > 0)
 #include "le_audio_sync.h"
@@ -312,7 +314,7 @@ static void print_codec_cfg(const struct bt_audio_codec_cfg *codec_cfg)
                 ret = bt_audio_codec_cfg_get_frame_dur(codec_cfg);
 		PRINTF("  Frame Duration: %d us\n",
 		       bt_audio_codec_cfg_frame_dur_to_frame_dur_us((enum bt_audio_codec_cfg_frame_dur)ret));
-		if (bt_audio_codec_cfg_get_chan_allocation(codec_cfg, &chan_allocation) == 0) {
+		if (bt_audio_codec_cfg_get_chan_allocation(codec_cfg, &chan_allocation, false) == 0) {
 			PRINTF("  Channel allocation: 0x%x\n", chan_allocation);
 		}
 
@@ -418,7 +420,7 @@ static int lc3_enable(struct bt_bap_stream *stream, const uint8_t meta[], size_t
 	lc3_codec_info.frame_duration_us = bt_audio_codec_cfg_frame_dur_to_frame_dur_us((enum bt_audio_codec_cfg_frame_dur)bt_audio_codec_cfg_get_frame_dur(stream->codec_cfg));
 	lc3_codec_info.octets_per_frame = bt_audio_codec_cfg_get_octets_per_frame(stream->codec_cfg);
 	lc3_codec_info.blocks_per_sdu = bt_audio_codec_cfg_get_frame_blocks_per_sdu(stream->codec_cfg, true);
-	bt_audio_codec_cfg_get_chan_allocation(stream->codec_cfg, (enum bt_audio_location *)&lc3_codec_info.chan_allocation);
+	bt_audio_codec_cfg_get_chan_allocation(stream->codec_cfg, (enum bt_audio_location *)&lc3_codec_info.chan_allocation, false);
 	lc3_codec_info.channels = get_channel_count_from_allocation(lc3_codec_info.chan_allocation);
 	if(lc3_codec_info.sample_rate == 44100)
 	{
@@ -440,7 +442,7 @@ static int lc3_enable(struct bt_bap_stream *stream, const uint8_t meta[], size_t
 
 	/* Limit channels to MAX_AUDIO_CHANNEL_COUNT */
 	lc3_codec_info.channels = (lc3_codec_info.channels <= MAX_AUDIO_CHANNEL_COUNT) ? lc3_codec_info.channels : MAX_AUDIO_CHANNEL_COUNT;
-	
+
 	if(lc3_codec_info.channels != 1)
 	{
 		PRINTF("There should be only one channel, rather than %d channels.\n", lc3_codec_info.channels);
@@ -721,7 +723,7 @@ static struct bt_conn_auth_cb auth_cb_display = {
 #endif
 
 static struct bt_pacs_cap cap_sink = {
-	.codec_cap = &lc3_codec_cap,
+	.codec_cap = lc3_codec_cap,
 };
 
 static int set_location(void)
@@ -865,9 +867,9 @@ void unicast_media_receiver_task(void *param)
 	}
 	PRINTF("Set info:\n");
 	PRINTF("\tsirk: ");
-	for(int i = 0; i < BT_CSIP_SET_SIRK_SIZE; i++)
+	for(int i = 0; i < BT_CSIP_SIRK_SIZE; i++)
 	{
-		PRINTF("%02x ", csip_set_memeber_param.set_sirk[i]);
+		PRINTF("%02x ", csip_set_memeber_param.sirk[i]);
 	}
 	PRINTF("\n");
 	PRINTF("\tset_size: %d\n", csip_set_memeber_param.set_size);
@@ -902,7 +904,7 @@ void unicast_media_receiver_task(void *param)
 	}
 
 	/* Create a non-connectable non-scannable advertising set */
-	err = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN_NAME, NULL, &adv);
+	err = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN, NULL, &adv);
 	if (err) {
 		PRINTF("Failed to create advertising set (err %d)\n", err);
 		while(1);
@@ -963,6 +965,6 @@ void unicast_media_receiver_task(void *param)
 			break;
 		}
 	}
-	
+
 	while(1);
 }

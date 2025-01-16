@@ -5,17 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA_BASEADDR DMA4
-#define DEMO_DMA_CHANNEL_0   0U
 #define BUFFER_LENGTH 4U
 
 /*******************************************************************************
@@ -52,10 +49,7 @@ int main(void)
     edma_transfer_config_t transferConfig;
     edma_config_t userConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Print destination buffer */
     PRINTF("EDMA memory to memory transfer example begin.\r\n\r\n");
     PRINTF("Destination Buffer:\r\n");

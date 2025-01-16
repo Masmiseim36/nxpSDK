@@ -1,0 +1,28 @@
+/*
+ * Copyright 2021 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+execUserSetup()
+{
+  __var tmp;
+
+  tmp = __readMemory32(0x40c04000,"Memory");
+
+  /*judge whether cm7 core is halted*/
+  if((tmp & 0x2) == 0)
+  {
+     /*run CM7 in loop code at ROM*/
+  
+     /*prepare CM7 stack and reset vector*/
+     __writeMemory32(0x20200020,0x2021ff00,"Memory");
+     /*Set PC to 0x0023f041 will make cm7 core in loop code*/
+     __writeMemory32(0x0023f041,0x2021ff04,"Memory");
+     /*set CM7 VTOR*/
+     __writeMemory32(0x2021ff00>>7,0x40C0C068,"Memory");
+     /*reset CM7 */
+     __writeMemory32(0x00000001,0x40c042a4,"Memory");
+  }
+}

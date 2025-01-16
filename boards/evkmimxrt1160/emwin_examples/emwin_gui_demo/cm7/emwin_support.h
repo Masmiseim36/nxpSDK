@@ -8,10 +8,12 @@
 #ifndef _EMWIN_SUPPORT_H_
 #define _EMWIN_SUPPORT_H_
 
+#define DEMO_FB_ALIGN 8
+
 #include "display_support.h"
 
-#define LCD_WIDTH           DEMO_BUFFER_WIDTH
-#define LCD_HEIGHT          DEMO_BUFFER_HEIGHT
+#define LCD_WIDTH           DEMO_FB_WIDTH
+#define LCD_HEIGHT          DEMO_FB_HEIGHT
 #define LCD_BITS_PER_PIXEL  (DEMO_BUFFER_BYTE_PER_PIXEL * 8)
 #define LCD_BYTES_PER_PIXEL (DEMO_BUFFER_BYTE_PER_PIXEL)
 

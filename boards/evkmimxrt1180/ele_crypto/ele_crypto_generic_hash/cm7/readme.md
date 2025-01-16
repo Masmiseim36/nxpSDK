@@ -1,45 +1,11 @@
-Overview
-========
+# ele_crypto_generic_hash
+
+## Overview
 The ELE Crypto Example project is a demonstration program that uses the MCUX SDK
 software to perform crypto operations with EdgeLock Enclave (ELE) and usage of
 its services with direct use of Messaging Unit driver.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 Example output on terminal:
 
 EdgeLock Enclave Sub-System crypto example:
@@ -47,39 +13,31 @@ EdgeLock Enclave Sub-System crypto example:
 ****************** Load EdgeLock FW ***********************
 EdgeLock FW loaded and authenticated successfully.
 
+****************** Open EdgeLock session ******************
+Open session successfully. Session ID: 0x610a1d9
+
+****************** Open Hash service **********************
+Open HASH service successfully. Handle ID: 0x610a109
+
 ****************** Compute Hash (SHA256) of massage *******
 *SUCCESS* Computed HASH matches the expected value.
 
-*SUCCESS* HASH Init done.
+****************** Open RNG service ***********************
+Open RNG service successfully. Handle ID: 0x610a109
 
-*SUCCESS* HASH Update done.
+****************** Get RNG Random *************************
+Get RNG random data successfully. First word: 0x98b5ef45
 
-*SUCCESS* Computed HASH (Finish) matches the expected value.
+****************** Close RNG service *********************
+Close RNG service successfully.
 
-****************** Compute HMAC (SHA256) of message *******
-*SUCCESS* Computed HMAC (#1) matches the expected value.
+****************** Close Hash service *********************
+Close HASH service successfully.
 
-*SUCCESS* Computed HMAC (#2) matches the expected value.
-
-****************** Compute ONESHOT Fast HMAC **************
-*SUCCESS* Fast HMAC Start done.
-
-*SUCCESS* Computed OneShot Fast HMAC matches the expected value.
-
-*SUCCESS* Internally verified OneShot Fast HMAC matches expected value.
-
-****************** Compute PRELOADED Fast HMAC ************
-
-*SUCCESS* Buffer 0 preload completed.
-
-*SUCCESS* Buffer 0 HMAC matches expected value AND buffer 1 preload completed.
-
-*SUCCESS* Buffer 1 HMAC matches expected value.
-
-*SUCCESS* Buffer 1 preload for internal verification completed.
-
-*SUCCESS* Buffer 1 internally verified HMAC matches expected value.
-
-*SUCCESS* Fast HMAC End done.
+****************** Close EdgeLock session *****************
+Close session successfully.
 
 End of Example with SUCCESS!!
+
+## Supported Boards
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/ele_crypto/ele_crypto_generic_hash/example_board_readme.md)

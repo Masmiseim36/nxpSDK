@@ -20,16 +20,12 @@
 #include "display.h"
 #include "h264_dec.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_soc_src.h"
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define DEMO_FILE_BUF_SIZE  (32U * 1024U)
 #define DEMO_FILE_BUF_COUNT (3U)
 
@@ -59,38 +55,11 @@ static QueueHandle_t s_emptyFileDataBlockQueue;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitDebugConsole();
-
-    /* ERR050396
-     * Errata description:
-     * AXI to AHB conversion for CM7 AHBS port (port to access CM7 to TCM) is by a NIC301 block, instead of XHB400
-     * block. NIC301 doesn't support sparse write conversion. Any AXI to AHB conversion need XHB400, not by NIC. This
-     * will result in data corruption in case of AXI sparse write reaches the NIC301 ahead of AHBS. Errata workaround:
-     * For uSDHC, don't set the bit#1 of IOMUXC_GPR28 (AXI transaction is cacheable), if write data to TCM aligned in 4
-     * bytes; No such write access limitation for OCRAM or external RAM
-     */
-    IOMUXC_GPR->GPR28 &= (~IOMUXC_GPR_GPR28_AWCACHE_USDHC_MASK);
+    BOARD_InitHardware();
 
     s_fullFileDataBlockQueue = xQueueCreate(DEMO_FILE_BUF_COUNT, sizeof(file_data_block_t));
     if (NULL == s_fullFileDataBlockQueue)

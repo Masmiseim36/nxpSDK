@@ -1,5 +1,6 @@
-Overview
-========
+# flexcan_loopback
+
+## Overview
 The flexcan_loopback_functional example shows how to use the loopback test mode to debug your CAN Bus design:
 
 To demonstrates this example, only one board is needed. The example will config one FlexCAN Message
@@ -7,55 +8,30 @@ Buffer to Rx Message Buffer and the other FlexCAN Message Buffer to Tx Message B
 After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Buffer
 throuth internal loopback interconnect and print out the Message payload to terminal.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1160-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1. Connect a USB cable between the PC host and the OpenSDA USB on the board.
-2. Open a serial terminal on PC for OpenSDA serial device with these settings:
-   - 115200 baud rate
-   - 8 data bits
-   - No parity
-   - One stop bit
-   - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running
-   the example.
-
-Running the demo
-================
-When the example runs successfully, following information can be seen on the OpenSDA terminal:
-
-~~~~~~~~~~~~~~~~~~~~~~
-
-==FlexCAN loopback functional example -- Start.==
-
-Send message from MB8 to MB9
-tx word0 = 0x11223344
-tx word1 = 0x55667788
-
-Received message from MB9
-rx word0 = 0x11223344
-rx word1 = 0x55667788
-
-==FlexCAN loopback functional example -- Finish.==
-~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../_boards/evk9mimx8ulp/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMX8MP](../../../_boards/evkmimx8mp/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../_boards/evkmimx8ulp/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/flexcan/loopback/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA156](../../../_boards/frdmmcxa156/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA166](../../../_boards/frdmmcxa166/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXA276](../../../_boards/frdmmcxa276/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/flexcan/loopback/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/flexcan/loopback/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/driver_examples/flexcan/loopback/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/driver_examples/flexcan/loopback/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/driver_examples/flexcan/loopback/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/flexcan/loopback/example_board_readme.md)

@@ -7,9 +7,8 @@
 #include "fsl_debug_console.h"
 #include "fsl_common.h"
 #include "fsl_lpadc.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #if ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0))
 #include "fsl_lpit.h"
 #endif /* ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0)) */
@@ -20,24 +19,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE        LPADC1
-#define DEMO_LPADC_CHANNEL_NUM 0U
-#define DEMO_LPADC_IRQn        ADC1_IRQn
-#define DEMO_LPADC_IRQ_HANDLER ADC1_IRQHandler
-
-#define DEMO_PIT_BASE                       PIT1
-#define DEMO_PIT_CHANNEL_NUM                kPIT_Chnl_0
-#define DEMO_PIT_IRQn                       PIT1_IRQn
-#define DEMO_PIT_IRQ_HANDLER                PIT1_IRQHandler
-#define DEMO_PIT_CLOCK_FREQ                 CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#define DEMO_CLOCK_FUNCTION_PARAMETER_COUNT (1U)
-
 #define DEMO_ADC_FIFO_DEPTH 0xFU
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitADCClock(void);
 static lpadc_sample_time_mode_t DEMO_SelectSampleTime(void);
 static void DEMO_ADCStartSample(lpadc_sample_time_mode_t sampleTimeMode);
 static void DEMO_TimerInit(void);
@@ -52,16 +38,6 @@ volatile uint32_t g_conversionCount = 0UL;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void BOARD_InitADCClock(void)
-{
-    clock_root_config_t adc1ClkRoot;
-    /* Set ADC1 CLK as 88MHz */
-    adc1ClkRoot.mux      = 6U; /* Set clock source as SYS PLL2 CLK. */
-    adc1ClkRoot.div      = 6U;
-    adc1ClkRoot.clockOff = false;
-    CLOCK_SetRootClock(kCLOCK_Root_Adc1, &adc1ClkRoot);
-}
 #if ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0))
 void DEMO_LPIT_IRQ_HANDLER(void)
 #endif /* ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0)) */
@@ -116,16 +92,7 @@ int main(void)
 {
     lpadc_sample_time_mode_t sampleTimeMode;
 
-    clock_root_config_t busRootCfg = {0};
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Set bus clock root mux to system PLL3. */
-    busRootCfg.mux = kCLOCK_BUS_ClockRoot_MuxSysPll3Out;
-    busRootCfg.div = 2;
-    CLOCK_SetRootClock(kCLOCK_Root_Bus, &busRootCfg);
+    BOARD_InitHardware();
     BOARD_InitADCClock();
 
     PRINTF("ADC High Sample Rate Demo!\r\n");

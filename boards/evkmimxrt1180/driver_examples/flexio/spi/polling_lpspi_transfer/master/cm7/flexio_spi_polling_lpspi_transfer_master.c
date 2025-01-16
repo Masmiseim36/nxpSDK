@@ -8,32 +8,12 @@
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
 #include "fsl_flexio_spi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*Master related*/
-#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
-#define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
-
-#define MASTER_FLEXIO_SPI_BASEADDR (FLEXIO2)
-#define FLEXIO_SPI_PCS_PIN         5U
-#define FLEXIO_SPI_SOUT_PIN        4U
-#define FLEXIO_SPI_SIN_PIN         3U
-#define FLEXIO_SPI_CLK_PIN         2U
-
-#define MASTER_FLEXIO_SPI_CLOCK_FREQUENCY CLOCK_GetRootClockFreq(kCLOCK_Root_Flexio2)
-
-/*Slave related*/
-#define SLAVE_LPSPI_BASEADDR (LPSPI3)
-#define SLAVE_LPSPI_IRQN     (LPSPI3_IRQn)
-
-#define SLAVE_LPSPI_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define SLAVE_LPSPI_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
-
 
 /*******************************************************************************
  * Prototypes
@@ -76,10 +56,7 @@ void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, sta
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("FLEXIO Master - LPSPI Slave polling example start.\r\n");
     PRINTF("This example use one flexio spi as master and one lpspi instance as slave on one board.\r\n");

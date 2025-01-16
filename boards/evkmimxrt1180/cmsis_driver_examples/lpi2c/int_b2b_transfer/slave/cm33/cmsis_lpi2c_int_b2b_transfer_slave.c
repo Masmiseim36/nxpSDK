@@ -8,20 +8,15 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
+#include "app.h"
 #include "fsl_lpi2c_cmsis.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_SLAVE Driver_I2C2
-
-/* Get frequency of lpi2c clock */
-#define LPI2C_CLOCK_FREQUENCY (CLOCK_GetRootClockFreq(kCLOCK_Root_Lpi2c0102))
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 #define I2C_DATA_LENGTH            (32) /* MAX is 256 */
 
@@ -39,11 +34,6 @@ volatile bool g_SlaveCompletionFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t LPI2C2_GetFreq(void)
-{
-    return LPI2C_CLOCK_FREQUENCY;
-}
 
 static void lpi2c_slave_callback(uint32_t event)
 {
@@ -65,10 +55,7 @@ static void lpi2c_slave_callback(uint32_t event)
 int main(void)
 {
     /*Init BOARD*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nCMSIS LPI2C board2board interrupt example -- Slave transfer.\r\n\r\n");
 

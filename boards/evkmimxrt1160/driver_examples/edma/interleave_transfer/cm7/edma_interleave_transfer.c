@@ -5,9 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
@@ -16,9 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA                 DMA0
-#define EXAMPLE_DMAMUX              DMAMUX0
-#define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 #define DEMO_EDMA_CHANNEL_0 0
 
 #define BUFFER_LENGTH      8 * 2
@@ -179,10 +175,7 @@ void edma_minor_loop_interleave(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Print source buffer */
     PRINTF("EDMA interleave transfer example.\r\n");
 

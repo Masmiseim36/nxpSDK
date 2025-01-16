@@ -9,21 +9,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE (2000000U)
-#define DEMO_FLEXIO_BASEADDR                  FLEXIO2
-#define DEMO_FLEXIO_OUTPUTPIN                 (10U) /* Select FLEXIO2_D10 as PWM output */
-#define DEMO_FLEXIO_TIMER_CH                  (0U)  /* Flexio timer0 used */
-
-#define DEMO_FLEXIO_CLOCK_FREQUENCY (CLOCK_GetRootClockFreq(kCLOCK_Root_Flexio2))
-/* FLEXIO output PWM frequency */
-#define DEMO_FLEXIO_FREQUENCY (48000U)
 #define FLEXIO_MAX_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 2U)
 #define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 512U)
 
@@ -219,16 +210,7 @@ int main(void)
     flexio_config_t fxioUserConfig;
 
     /* Init board hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    clock_root_config_t rootCfg = {0};
-    /* Configure flexio using Osc48MDiv2 */
-    rootCfg.mux = 0;
-    rootCfg.div = 4;
-    CLOCK_SetRootClock(kCLOCK_Root_Flexio2, &rootCfg);
+    BOARD_InitHardware();
 
     /* Init flexio, use default configure
      * Disable doze and fast access mode

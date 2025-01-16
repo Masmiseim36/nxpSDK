@@ -10,12 +10,11 @@
 #include "task.h"
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "display_support.h"
 #include "fsl_fbdev.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -67,34 +66,11 @@ fbdev_fb_info_t g_fbInfo;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_ConfigMPU();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-#if (DEMO_PANEL != DEMO_PANEL_RASPI_7INCH)
-    BOARD_MIPIPanelTouch_I2C_Init();
-    BOARD_InitLpi2cPins();
-#endif
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     if (xTaskCreate(fbdev_task, "fbdev_task", configMINIMAL_STACK_SIZE + 200, NULL, configMAX_PRIORITIES - 1, NULL) !=
         pdPASS)

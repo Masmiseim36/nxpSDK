@@ -1,8 +1,6 @@
 /*
  * Copyright 2014-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
- * All rights reserved.
- *
+ * Copyright 2016-2024 NXP
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
@@ -16,16 +14,9 @@
  * The CPU macro should be declared in the project or makefile.
  */
 #if (defined(CPU_MIMXRT1172AVM8A) || defined(CPU_MIMXRT1172CVM8A) || defined(CPU_MIMXRT1172DVMAA))
-
-#define MIMXRT1172_SERIES
-
-/* CMSIS-style register definitions */
 #include "MIMXRT1172.h"
-/* CPU specific feature definitions */
-#include "MIMXRT1172_features.h"
-
 #else
-    #error "No valid CPU defined!"
+  #error "No valid CPU defined!"
 #endif
 
 #endif /* __FSL_DEVICE_REGISTERS_H__ */

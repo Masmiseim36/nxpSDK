@@ -24,9 +24,8 @@
 #include <stdio.h>
 #include "fsl_debug_console.h"
 #include "fsl_clock.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #if defined(MBEDTLS_NXP_SSSAPI)
 #include "sssapi_mbedtls.h"
 #elif defined(MBEDTLS_MCUX_CSS_API)
@@ -126,8 +125,6 @@ int main(void)
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_ArmPll)
 
 /*
  * For heap usage estimates, we need an estimate of the overhead per allocated
@@ -336,9 +333,9 @@ void ecp_clear_precomputed(mbedtls_ecp_group *grp)
 
 /* NXP: Move buffer to NON-CACHED memory because of HW accel */
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    AT_NONCACHEABLE_SECTION_INIT(static unsigned char buf[BUFSIZE]);
+    SDK_ALIGN(AT_NONCACHEABLE_SECTION_INIT(static unsigned char buf[BUFSIZE]), 32u);
 #else
-    unsigned char buf[BUFSIZE];
+    SDK_ALIGN(unsigned char buf[BUFSIZE], 32u);
 #endif /* DCACHE */
 
 #if defined(MBEDTLS_ECP_C)
@@ -550,10 +547,7 @@ int main(int argc, char *argv[])
 
 #if defined(FREESCALE_KSDK_BM)
     /* HW init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     if( CRYPTO_InitHardware() != kStatus_Success )
     {
         mbedtls_printf( "Initialization of crypto HW failed\n" );

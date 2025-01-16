@@ -58,6 +58,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+ 
 #ifndef NDEBUG
 #if (defined(DEBUG_CONSOLE_ASSERT_DISABLE) && (DEBUG_CONSOLE_ASSERT_DISABLE > 0U))
 #undef assert
@@ -461,7 +462,7 @@ status_t DbgConsole_ReadOneCharacter(uint8_t *ch)
 #endif /*(defined(DEBUG_CONSOLE_RX_ENABLE) && (DEBUG_CONSOLE_RX_ENABLE > 0U))*/
 }
 
-#if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
+#if (defined(DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION) && (DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION > 0U))
 static status_t DbgConsole_EchoCharacter(uint8_t *ch, bool isGetChar, int *index)
 {
     /* Due to scanf take \n and \r as end of string,should not echo */
@@ -655,7 +656,7 @@ int DbgConsole_ReadLine(uint8_t *buf, size_t size)
             i = -1;
             break;
         }
-#if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
+#if (defined(DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION) && (DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION > 0U))
         (void)DbgConsole_EchoCharacter(&buf[i], false, &i);
 #endif
         /* analysis data */
@@ -712,7 +713,7 @@ int DbgConsole_ReadCharacter(uint8_t *ch)
     if ((status_t)kStatus_Success == DbgConsole_ReadOneCharacter(ch))
     {
         ret = 1;
-#if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
+#if (defined(DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION) && (DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION > 0U))
         (void)DbgConsole_EchoCharacter(ch, true, NULL);
 #endif
     }
@@ -1164,7 +1165,7 @@ status_t DbgConsole_TryGetchar(char *ch)
     {
         if (length != 0U)
         {
-#if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
+#if (defined(DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION) && (DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION > 0U))
             (void)DbgConsole_EchoCharacter((uint8_t *)ch, true, NULL);
 #endif
             dbgConsoleStatus = (status_t)kStatus_Success;

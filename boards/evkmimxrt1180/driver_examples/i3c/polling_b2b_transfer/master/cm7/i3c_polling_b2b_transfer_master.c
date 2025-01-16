@@ -7,20 +7,23 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER             I3C2
-#define EXAMPLE_I2C_BAUDRATE       400000
-#define EXAMPLE_I3C_OD_BAUDRATE    1500000
-#define EXAMPLE_I3C_PP_BAUDRATE    4000000
-#define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetRootClockFreq(kCLOCK_Root_I3c2)
+#ifndef EXAMPLE_I2C_BAUDRATE
+#define EXAMPLE_I2C_BAUDRATE 400000
+#endif
+#ifndef EXAMPLE_I3C_OD_BAUDRATE
+#define EXAMPLE_I3C_OD_BAUDRATE 2000000
+#endif
+#ifndef EXAMPLE_I3C_PP_BAUDRATE
+#define EXAMPLE_I3C_PP_BAUDRATE 4000000
+#endif
 #ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
 #endif
@@ -28,10 +31,10 @@
 #define I3C_DATA_LENGTH 33U
 #endif
 #ifndef EXAMPLE_I3C_HDR_SUPPORT
-#define EXAMPLE_I3C_HDR_SUPPORT 0
+#define EXAMPLE_I3C_HDR_SUPPORT 1
 #endif
-#ifndef WAIT_TIME
-#define WAIT_TIME 1000
+#ifndef WAIT_TIME_US
+#define WAIT_TIME_US 10000
 #endif
 
 #define CCC_RSTDAA  0x06U
@@ -63,10 +66,7 @@ int main(void)
     i3c_master_transfer_t masterXfer;
     uint8_t slaveAddr = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C board2board polling example -- Master transfer.\r\n");
 
@@ -120,10 +120,7 @@ int main(void)
     /* Wait until the slave is ready for transmit, wait time depend on user's case.
        Slave devices that need some time to process received byte or are not ready yet to
        send the next byte, can pull the clock low to signal to the master that it should wait.*/
-    for (volatile uint32_t i = 0U; i < WAIT_TIME; i++)
-    {
-        __NOP();
-    }
+    SDK_DelayAtLeastUs(WAIT_TIME_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
       start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
@@ -257,10 +254,7 @@ int main(void)
     }
 
     /* Wait until the slave is ready for transmit, wait time depend on user's case.*/
-    for (volatile uint32_t i = 0U; i < WAIT_TIME; i++)
-    {
-        __NOP();
-    }
+    SDK_DelayAtLeastUs(WAIT_TIME_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     memset(g_master_rxBuff, 0, I3C_DATA_LENGTH);
     masterXfer.slaveAddress = slaveAddr;
@@ -288,10 +282,7 @@ int main(void)
 
 #if defined(EXAMPLE_I3C_HDR_SUPPORT) && (EXAMPLE_I3C_HDR_SUPPORT)
     /* Wait until the slave is ready for transmit, wait time depend on user's case.*/
-    for (volatile uint32_t i = 0U; i < 2U * WAIT_TIME; i++)
-    {
-        __NOP();
-    }
+    SDK_DelayAtLeastUs(WAIT_TIME_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     PRINTF("\r\nStart to do I3C master transfer in I3C HDR mode.\r\n");
     memset(&masterXfer, 0, sizeof(masterXfer));
@@ -311,10 +302,7 @@ int main(void)
     }
 
     /* Wait until the slave is ready for transmit, wait time depend on user's case.*/
-    for (volatile uint32_t i = 0U; i < WAIT_TIME; i++)
-    {
-        __NOP();
-    }
+    SDK_DelayAtLeastUs(WAIT_TIME_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     memset(g_master_rxBuff, 0, I3C_DATA_LENGTH);
     masterXfer.slaveAddress = slaveAddr;

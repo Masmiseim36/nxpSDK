@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -521,7 +521,18 @@ void NETC_PortGetPhyMacPreemptionStatistic(NETC_ETH_LINK_Type *base,
 void NETC_PortGetPseudoMacTrafficStatistic(NETC_PSEUDO_LINK_Type *base,
                                            bool getTx,
                                            netc_port_pseudo_mac_traffic_statistic_t *statistic);
+
 #endif
+
+/*!
+ * @brief Configure the port MAC flexible preamble and IPG length
+ *
+ * @param base  PORT MAC peripheral base address.
+ * @param preambleCnt  Flexible Preamble Count. Valid values are 1 to 7(default).
+ * @param ipgLen  Transmit inter-packet gap value. Valid values are 4 to 24(default) with 12 being default.
+ * @return status_t
+ */
+status_t NETC_PortConfigTxIpgPreamble(NETC_ETH_LINK_Type *base, uint8_t preambleCnt, uint8_t ipgLen);
 
 /*! @} */ // end of netc_hw_port_mac
 #if !(defined(__GNUC__) || defined(__ICCARM__))

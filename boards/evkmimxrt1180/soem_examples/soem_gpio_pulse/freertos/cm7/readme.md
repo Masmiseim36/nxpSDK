@@ -1,5 +1,6 @@
-Overview
-========
+# soem_gpio_pulse_netc_freertos
+
+## Overview
 This example demonstrates how to use the Simple Open EtherCAT Master (SOEM) Library to communicate with EhterCAT devices.
 
 In this example there are three EhterCAT devices, one EtherCAT Coupler EK1100, one EtherCAT Terminal EL2008 (slave0),
@@ -13,45 +14,7 @@ This example controls a stepper motor system using two outputs and one input rem
     -Limit signal: This signal comes from the Limit Switchs on the stepper motor system.
      The Dir signal changes once when one of the Limit Switchs has been touched.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- MIMXRT1180-EVK board
-- One BECKHOFF EK1100 EtherCAT Coupler
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Power up the EtherCAT Coupler and connect it to the target board(ENET4) via an Ethernet Cable.
-3.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-4.  Write the program to the flash of the target board.
-5.  Press the reset button on your board to start the demo.
-
-Running the demo
-================
+## Running the demo
 If the test passes, the led2 of slave0 lights up at 50% brightness.
 
 If the stepper motor system is not setup properly, you can get information from
@@ -62,7 +25,7 @@ When the demo is running, the serial port will output:
 
 Start the soem_gpio_pulse FreeRTOS example...
 
-ec_init on EtherCAT0 succeeded.
+ec_init on enet0 succeeded.
 
 ec_config_init 0
 3 slaves found and configured.
@@ -108,3 +71,5 @@ Calculated workcounter 3
 
 Operational state reached for all slaves.
 
+## Supported Boards
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/soem_examples/soem_gpio_pulse/freertos/example_board_readme.md)

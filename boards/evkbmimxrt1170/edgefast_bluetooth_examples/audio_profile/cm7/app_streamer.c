@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -49,7 +49,7 @@ static void STREAMER_MessageTask(void *arg)
     {
         OSA_TimeDelay(1);
     }
-    if (handle->streamer->mq_out == NULL)
+    if (handle->streamer->message_channel_out.is_mq_created == false)
     {
         PRINTF("[EAP STREAMER] osa_mq_open failed: %d\r\n");
         OSA_TaskDestroy(msg_thread);
@@ -58,7 +58,7 @@ static void STREAMER_MessageTask(void *arg)
 
     do
     {
-        ret = OSA_MsgQGet(&handle->streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        ret = OSA_MsgQGet(handle->streamer->message_channel_out.mq, (void *)&msg, osaWaitForever_c);
         if (ret != KOSA_StatusSuccess)
         {
             PRINTF("[EAP STREAMER] OSA_MsgQGet error: %d\r\n", ret);
@@ -94,10 +94,17 @@ static void STREAMER_MessageTask(void *arg)
         }
 
     } while (!exit_thread);
-
-    OSA_MsgQDestroy(&handle->streamer->mq_out);
-    handle->streamer->mq_out = NULL;
-
+    
+    if (handle->streamer->message_channel_out.is_mq_created == true)
+    {
+        if (OSA_MsgQDestroy(handle->streamer->message_channel_out.mq) != KOSA_StatusSuccess)
+        {
+            PRINTF("Could not destroy out message queue\r\n");
+            OSA_TaskDestroy(msg_thread);
+            return ;
+        }
+        handle->streamer->message_channel_out.is_mq_created = false;
+    }
     OSA_TaskDestroy(msg_thread);
 }
 #endif

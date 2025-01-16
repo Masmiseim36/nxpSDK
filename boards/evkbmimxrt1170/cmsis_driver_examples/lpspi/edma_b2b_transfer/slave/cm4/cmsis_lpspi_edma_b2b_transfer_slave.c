@@ -8,23 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Master related */
-#define DRIVER_SLAVE_SPI                     Driver_SPI1
-#define EXAMPLE_LPSPI_SLAVE_IRQN             (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASEADDR DMAMUX1
-#define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR     DMA1
-
-#define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetRootClockFreq(kCLOCK_Root_Lpspi1))
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************
@@ -44,11 +33,6 @@ volatile bool isSlaveOnReceive    = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t LPSPI1_GetFreq(void)
-{
-    return EXAMPLE_LPSPI_CLOCK_FREQ;
-}
 void LPSPI_SlaveSignalEvent_t(uint32_t event)
 {
     /* user code */
@@ -72,10 +56,7 @@ void LPSPI_SlaveSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPSPI CMSIS driver board to board edma example.\r\n");
 

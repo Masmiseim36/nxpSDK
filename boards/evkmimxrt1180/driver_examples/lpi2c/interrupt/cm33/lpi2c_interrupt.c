@@ -6,29 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPI2C_MASTER_BASEADDR LPI2C2
-#define EXAMPLE_LPI2C_SLAVE_BASEADDR  LPI2C3
-
-/* Get frequency of lpi2c clock */
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetRootClockFreq(kCLOCK_Root_Lpi2c0102)
-
-#define LPI2C_MASTER_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
-#define LPI2C_SLAVE_CLOCK_FREQUENCY  LPI2C_CLOCK_FREQUENCY
-
-#define LPI2C_MASTER_IRQ LPI2C2_IRQn
-#define LPI2C_SLAVE_IRQ  LPI2C3_IRQn
-
-#define LPI2C_MASTER_IRQHandler LPI2C2_IRQHandler
-#define LPI2C_SLAVE_IRQHandler  LPI2C3_IRQHandler
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 #define LPI2C_BAUDRATE               100000U
 #define LPI2C_DATA_LENGTH            32U
@@ -168,10 +153,7 @@ int main(void)
     lpi2c_master_config_t masterConfig = {0};
     status_t reVal                     = kStatus_Fail;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nLPI2C example -- MasterFunctionalInterrupt_SlaveFunctionalInterrupt.\r\n");
 

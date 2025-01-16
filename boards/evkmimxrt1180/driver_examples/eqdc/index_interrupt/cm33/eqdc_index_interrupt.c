@@ -7,19 +7,14 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_eqdc.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_EQDC              EQDC1
-#define DEMO_EQDC_INDEX_IRQ_ID EQDC1_IRQn
-#define ENC_INDEX_IRQHandler   EQDC1_IRQHandler
 #define DEMO_ENCODER_DISK_LINE 0xFFFFFFFFU
 
 /*******************************************************************************
@@ -51,15 +46,7 @@ int main(void)
     eqdc_config_t sEqdcConfig;
     uint32_t mCurPosValue;
     
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    XBAR_Init(kXBAR_DSC1);
-    XBAR_SetSignalsConnection(kXBAR1_InputIomuxXbarInout22, kXBAR1_OutputEqdc1Phasea);
-    XBAR_SetSignalsConnection(kXBAR1_InputIomuxXbarInout20, kXBAR1_OutputEqdc1Phaseb);
-    XBAR_SetSignalsConnection(kXBAR1_InputIomuxXbarInout18, kXBAR1_OutputEqdc1Index);
+    BOARD_InitHardware();
 
     PRINTF("\r\nEQDC INDEX Interrupt Example.\r\n");
 

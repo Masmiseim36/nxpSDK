@@ -6,23 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_pdm.h"
 #include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM                      PDM
-#define DEMO_PDM_CLK_FREQ             24576000U
-#define DEMO_PDM_FIFO_WATERMARK       (4U)
-#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeMedium
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_HWVAD_SIGNAL_GAIN    (0U)
-#define DEMO_AUDIO_SAMPLE_RATE        (48000)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -45,10 +35,21 @@ static const pdm_config_t pdmConfig    = {
 
 static const pdm_channel_config_t channelConfig = {
 #if (defined(FSL_FEATURE_PDM_HAS_DC_OUT_CTRL) && (FSL_FEATURE_PDM_HAS_DC_OUT_CTRL))
+#ifdef DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY
+    .outputCutOffFreq = DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY,
+#else
     .outputCutOffFreq = kPDM_DcRemoverCutOff40Hz,
+#endif
+#endif
+
+#if !(defined(FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED) && (FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED))
+#ifdef DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY
+    .cutOffFreq = DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY,
 #else
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
 #endif
+#endif
+
 #ifdef DEMO_PDM_CHANNEL_GAIN
     .gain = DEMO_PDM_CHANNEL_GAIN,
 #else
@@ -79,18 +80,6 @@ static const pdm_hwvad_noise_filter_t noiseFilterConfig = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
-
 void PDM_HWVAD_EVENT_IRQHandler(void)
 {
     if (PDM_GetHwvadInterruptStatusFlags(DEMO_PDM) & kPDM_HwvadStatusVoiceDetectFlag)
@@ -118,17 +107,7 @@ void PDM_HWVAD_ERROR_IRQHandler(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_SetRootClockMux(kCLOCK_Root_Bus_Lpsr, 0);
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    /* 24.576m mic root clock */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
+    BOARD_InitHardware();
 
     PRINTF("PDM hwvad example started!\n\r");
 

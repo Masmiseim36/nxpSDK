@@ -7,25 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_mecc.h"
 #include "fsl_cache.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MECC                      MECC1
-#define APP_MECC_IRQ                  MECC1_FATAL_INT_IRQn
-#define APP_MECC_IRQ_HANDLER          MECC1_FATAL_INT_IRQHandler
-#define APP_MECC_OCRAM_SIZE           512 * 1024                    /* 512KB */
-#define APP_MECC_OCRAM_START_ADDR     0x20240000                    /* OCRAM1 512KB */
-#define APP_MECC_OCRAM_END_ADDR       0x202BFFFF
-#define APP_MECC_OCRAM_ADDR_OFFSET    0x20                          /* Offset 0x20 from Ocram start address */
-#define APP_MECC_OCRAM_ECC_START_ADDR (0x20240000 + 512 * 1024 + 8) /* OCRAM1 ECC 64KB */
-#define APP_MECC_OCRAM_SELECTED_BANK  0U                            /* Ocram bank 0 */
-#define APP_MECC_MULTI_BIT_POSTION    2U                            /* 0-base */
 #if (APP_MECC_OCRAM_SELECTED_BANK == 0)
 #define APP_INTERRUPT_SOURCES     (kMECC_MultiError0InterruptEnable)
 #define APP_INTERRUPT_STATUS_FLAGS  (kMECC_MultiError0InterruptFlag)
@@ -100,10 +89,7 @@ int main(void)
     mecc_config_t config;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nMECC multiple error example.\r\n");
 

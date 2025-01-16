@@ -65,7 +65,7 @@ static OSA_MSGQ_HANDLE_DEFINE(sdu_fifo, PCM_BUFF_COUNT, sizeof(void *));
 NET_BUF_POOL_FIXED_DEFINE(sdu_pool,
 			  PCM_BUFF_COUNT,
 			  sizeof(sdu_packet_t),
-			  NULL);
+			  CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 #if defined(LE_AUDIO_SYNC_ENABLE) && (LE_AUDIO_SYNC_ENABLE > 0)
 #include "le_audio_sync.h"
@@ -102,15 +102,15 @@ static struct bt_bap_stream streams[CONFIG_BT_BAP_BROADCAST_SNK_STREAM_COUNT];
 /* Mandatory support preset by both source and sink */
 static struct bt_bap_lc3_preset lc3_preset;
 
-static const struct bt_audio_codec_cap codec_cap_10 = BT_AUDIO_CODEC_CAP_LC3(
+static const struct bt_audio_codec_cap codec_cap_10[] = {BT_AUDIO_CODEC_CAP_LC3(
 	BT_AUDIO_CODEC_CAP_FREQ_8KHZ | BT_AUDIO_CODEC_CAP_FREQ_16KHZ | BT_AUDIO_CODEC_CAP_FREQ_24KHZ | BT_AUDIO_CODEC_CAP_FREQ_32KHZ | BT_AUDIO_CODEC_CAP_FREQ_48KHZ,
 	BT_AUDIO_CODEC_CAP_DURATION_10, BT_AUDIO_CODEC_CAP_CHAN_COUNT_SUPPORT(1), 30u, 130u, 1u,
-	BT_AUDIO_CONTEXT_TYPE_MEDIA);
+	BT_AUDIO_CONTEXT_TYPE_MEDIA),};
 
-static const struct bt_audio_codec_cap codec_cap_7_5 = BT_AUDIO_CODEC_CAP_LC3(
+static const struct bt_audio_codec_cap codec_cap_7_5[] = {BT_AUDIO_CODEC_CAP_LC3(
 	BT_AUDIO_CODEC_CAP_FREQ_8KHZ | BT_AUDIO_CODEC_CAP_FREQ_16KHZ | BT_AUDIO_CODEC_CAP_FREQ_24KHZ | BT_AUDIO_CODEC_CAP_FREQ_32KHZ | BT_AUDIO_CODEC_CAP_FREQ_48KHZ,
 	BT_AUDIO_CODEC_CAP_DURATION_7_5, BT_AUDIO_CODEC_CAP_CHAN_COUNT_SUPPORT(1), 26u, 97u, 1u,
-	BT_AUDIO_CONTEXT_TYPE_MEDIA);
+	BT_AUDIO_CONTEXT_TYPE_MEDIA),};
 
 static uint32_t requested_bis_sync;
 static uint32_t bis_index_bitfield;
@@ -150,7 +150,7 @@ static uint32_t get_big_sync_delay(void)
 	uint32_t IRC;
 	uint32_t NSE;
 
-	bt_iso_chan_get_info(broadcast_sink->bis[0], &iso_info);
+	bt_iso_chan_get_info(broadcast_sink->bis[0].chan, &iso_info);
 
 	SDU_Interval_us = lc3_codec_info.frame_duration_us;
 	ISO_Interval_us = iso_info.iso_interval * 1250;
@@ -179,7 +179,7 @@ static uint32_t get_iso_interval(void)
 	struct bt_iso_info iso_info;
 	uint32_t ISO_Interval_us;
 
-	bt_iso_chan_get_info(broadcast_sink->bis[0], &iso_info);
+	bt_iso_chan_get_info(broadcast_sink->bis[0].chan, &iso_info);
 
 	ISO_Interval_us = iso_info.iso_interval * 1250;
 
@@ -374,15 +374,15 @@ static bool bis_cb(const struct bt_bap_base_subgroup_bis *bis, void *user_data)
         PRINTF("get bis %d codec config fail!\n", bis->index);
         return true;
     }
-    
+
     /* get channel allocation. */
-    ret = bt_audio_codec_cfg_get_chan_allocation(&bis_codec_cfg, &chan_allocation);
+    ret = bt_audio_codec_cfg_get_chan_allocation(&bis_codec_cfg, &chan_allocation, false);
     if(ret < 0)
     {
         PRINTF("get channel allocation fail!\n");
         return true;
     }
-    
+
     if(chan_allocation == BT_AUDIO_LOCATION_FRONT_LEFT)
     {
             if(AUDIO_SINK_ROLE_LEFT == le_audio_sink_role_get())
@@ -390,7 +390,7 @@ static bool bis_cb(const struct bt_bap_base_subgroup_bis *bis, void *user_data)
                     bt_audio_codec_cfg_set_chan_allocation(codec_cfg, chan_allocation);
 
                     requested_bis_sync = BIT(bis->index);
-                    
+
                     return false;
             }
     }
@@ -401,7 +401,7 @@ static bool bis_cb(const struct bt_bap_base_subgroup_bis *bis, void *user_data)
                     bt_audio_codec_cfg_set_chan_allocation(codec_cfg, chan_allocation);
 
                     requested_bis_sync = BIT(bis->index);
-                    
+
                     return false;
             }
     }
@@ -409,7 +409,7 @@ static bool bis_cb(const struct bt_bap_base_subgroup_bis *bis, void *user_data)
     {
         PRINTF("\nchannel allocation 0x%08x not support.\n", chan_allocation);
     }
-    
+
     return true;
 }
 
@@ -468,9 +468,9 @@ static void base_recv_cb(struct bt_bap_broadcast_sink *sink, const struct bt_bap
 	OSA_SemaphorePost(sem_base_received);
 }
 
-static void syncable_cb(struct bt_bap_broadcast_sink *sink, bool encrypted)
+static void syncable_cb(struct bt_bap_broadcast_sink *sink, const struct bt_iso_biginfo *biginfo)
 {
-	if (encrypted) {
+	if (biginfo->encryption) {
 		PRINTF("Broadcast encryped!\n");
 		broadcast_encryped = true;
 	}
@@ -512,11 +512,11 @@ static uint16_t interval_to_sync_timeout(uint16_t interval)
 }
 
 static struct bt_pacs_cap cap_10 = {
-	.codec_cap = &codec_cap_10,
+	.codec_cap = codec_cap_10,
 };
 
 static struct bt_pacs_cap cap_7_5 = {
-	.codec_cap = &codec_cap_7_5,
+	.codec_cap = codec_cap_7_5,
 };
 
 static void audio_codec_config(void)
@@ -526,7 +526,7 @@ static void audio_codec_config(void)
 	lc3_codec_info.frame_duration_us = bt_audio_codec_cfg_frame_dur_to_frame_dur_us((enum bt_audio_codec_cfg_frame_dur)bt_audio_codec_cfg_get_frame_dur(&lc3_preset.codec_cfg));
 	lc3_codec_info.octets_per_frame = bt_audio_codec_cfg_get_octets_per_frame(&lc3_preset.codec_cfg);
 	lc3_codec_info.blocks_per_sdu = bt_audio_codec_cfg_get_frame_blocks_per_sdu(&lc3_preset.codec_cfg, true);
-	bt_audio_codec_cfg_get_chan_allocation(&lc3_preset.codec_cfg, (enum bt_audio_location *)&lc3_codec_info.chan_allocation);
+	bt_audio_codec_cfg_get_chan_allocation(&lc3_preset.codec_cfg, (enum bt_audio_location *)&lc3_codec_info.chan_allocation, false);
 	lc3_codec_info.channels = get_channel_count_from_allocation(lc3_codec_info.chan_allocation);
 	if(lc3_codec_info.sample_rate == 44100)
 	{
@@ -545,7 +545,7 @@ static void audio_codec_config(void)
 	}
 	PRINTF("\tCodec: freq %d, channel count %d, duration %d, channel alloc 0x%08x, frame len %d, frame blocks per sdu %d\n",
 		lc3_codec_info.sample_rate, lc3_codec_info.channels, lc3_codec_info.frame_duration_us, lc3_codec_info.chan_allocation, lc3_codec_info.octets_per_frame, lc3_codec_info.blocks_per_sdu);
-	
+
 	/* Limit channels to MAX_AUDIO_CHANNEL_COUNT */
 	lc3_codec_info.channels = (lc3_codec_info.channels <= MAX_AUDIO_CHANNEL_COUNT) ? lc3_codec_info.channels : MAX_AUDIO_CHANNEL_COUNT;
 
@@ -616,7 +616,7 @@ static bool scan_check_broadcast_id(struct bt_data *data, void *user_data)
 	}
 
 	broadcaster_broadcast_id = sys_get_le24(data->data + BT_UUID_SIZE_16);
-        
+
 	return false;
 }
 
@@ -657,7 +657,7 @@ static void broadcast_scan_recv(const struct bt_le_scan_recv_info *info, struct 
 		/* Store info for PA sync parameters */
 		memcpy(&broadcaster_info, info, sizeof(broadcaster_info));
 		bt_addr_le_copy(&broadcaster_addr, info->addr);
-		
+
 		bt_data_parse(buf, scan_check_broadcast_id, NULL);
 
 		OSA_SemaphorePost(sem_broadcaster_found);
@@ -817,7 +817,7 @@ static int reset(void)
 #endif
 
 	OSA_TimeDelay(1000);
-        
+
         return 0;
 }
 
@@ -916,7 +916,7 @@ void broadcast_media_receiver_task(void *param)
 		if (err != 0) {
 			printk("bt_le_scan_stop failed with %d, resetting\n", err);
 			continue;
-		}                
+		}
 
 		printk("Attempting to PA sync to the broadcaster with id 0x%06X\n",
 		       broadcaster_broadcast_id);
@@ -1025,7 +1025,7 @@ void broadcast_media_receiver_task(void *param)
 				if(bis_stream_play_update)
 				{
 					bis_stream_play_update = false;
-					
+
 					/* Disable stream. */
 					err = bt_bap_broadcast_sink_stop(broadcast_sink);
 					if (err != 0) {

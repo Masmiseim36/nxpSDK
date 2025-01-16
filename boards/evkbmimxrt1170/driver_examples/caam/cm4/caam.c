@@ -12,18 +12,15 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_caam.h"
 
 #include <string.h>
 
-#include "fsl_cache.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /* Define PRINT_BLOBS_CONTENT to print blobs content*/
 //#define PRINT_BLOBS_CONTENT
 
@@ -840,10 +837,7 @@ int main(void)
     caam_config_t caamConfig;
 
     /* Init hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Get default configuration. */
     CAAM_GetDefaultConfig(&caamConfig);

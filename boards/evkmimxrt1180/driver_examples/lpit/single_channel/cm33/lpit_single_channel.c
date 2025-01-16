@@ -7,23 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_lpit.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPIT_BASE       LPIT1
-#define DEMO_LPIT_IRQn       LPIT1_IRQn
-#define DEMO_LPIT_IRQHandler LPIT1_IRQHandler
-/* Get source clock for LPIT driver */
-#define LPIT_SOURCECLOCK CLOCK_GetRootClockFreq(kCLOCK_Root_Bus_Aon)
-
-#define LED_INIT()   USER_LED_INIT(LOGIC_LED_OFF)
-#define LED_TOGGLE() USER_LED_TOGGLE()
 
 /*******************************************************************************
  * Prototypes
@@ -56,10 +47,7 @@ int main(void)
     lpit_chnl_params_t lpitChannelConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize and enable LED */
     LED_INIT();

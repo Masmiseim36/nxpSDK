@@ -5,7 +5,7 @@
       <name>all</name>
       <member>
         <project>ecat_servo_motor_cm7</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>debug</configuration>
       </member>
       <member>
         <project>ecat_servo_motor_cm7</project>
@@ -13,7 +13,7 @@
       </member>
       <member>
         <project>ecat_servo_motor_cm7</project>
-        <configuration>debug</configuration>
+        <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>ecat_servo_motor_cm7</project>
@@ -21,10 +21,10 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_debug</name>
+      <name>debug</name>
       <member>
         <project>ecat_servo_motor_cm7</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -35,10 +35,10 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>debug</name>
+      <name>flexspi_nor_debug</name>
       <member>
         <project>ecat_servo_motor_cm7</project>
-        <configuration>debug</configuration>
+        <configuration>flexspi_nor_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

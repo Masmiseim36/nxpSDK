@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023-2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,7 +37,7 @@ psa_status_t ele_s4xx_transparent_cipher_encrypt(
     status_t ele_status = kStatus_Fail;
     psa_key_type_t key_type = psa_get_key_type(attributes);
     size_t key_bits = psa_get_key_bits(attributes);
-    generic_cipher_algo_t ele_algo = 0;
+    generic_cipher_algo_t ele_algo = (generic_cipher_algo_t)0x0;
     ele_generic_cipher_t ctx = { 0 };
     uint32_t iv_addr = (uint32_t) iv;
 
@@ -162,7 +161,7 @@ psa_status_t ele_s4xx_transparent_cipher_decrypt(
     status_t ele_status = kStatus_Fail;
     psa_key_type_t key_type = psa_get_key_type(attributes);
     size_t key_bits = psa_get_key_bits(attributes);
-    generic_cipher_algo_t ele_algo = 0;
+    generic_cipher_algo_t ele_algo = (generic_cipher_algo_t) 0;
     ele_generic_cipher_t ctx = { 0 };
     uint32_t iv_length = 0;
     uint32_t expected_op_length = 0;

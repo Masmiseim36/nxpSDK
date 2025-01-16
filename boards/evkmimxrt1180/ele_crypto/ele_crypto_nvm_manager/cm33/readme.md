@@ -1,52 +1,12 @@
-Overview
-========
+# ele_crypto_nvm_manager
+
+## Overview
 The ELE Crypto NVM Example project is a demonstration program that uses the MCUX SDK
 software to perform non volatile memory (flash) operations with EdgeLock Enclave (ELE)
 and usage of its services with direct use of Messaging Unit driver.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
-- SD card
-
-Board settings
-==============
-1.Please make sure R257/R140 is weld for GPIO card detect.
-2.Please make sure J76 1-2 and J57 2-3 are installed for sdcard socket.
-Note:
-As the EVK board limitaion, there is eletronic mux added for switch between M.2 and sdcard which will affect the sdcard SDR104 timing.
-So the maximum sd card timing frequency been decreased to 100MHZ to improve the stability.
-User can remove the limitation by change the macro BOARD_SDMMC_SD_HOST_SUPPORT_SDR104_FREQ in sdmmc_config.h from (200000000U / 2U) to (200000000U).
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the demo in the terminal window:
+## Running the demo
+Example output on terminal:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Card inserted.
 
@@ -168,3 +128,6 @@ Close session successfully.
 NVM manager unregistered successfully.
 
 End of Example with SUCCESS!!
+
+## Supported Boards
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/ele_crypto/ele_crypto_nvm_manager/example_board_readme.md)

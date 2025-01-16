@@ -1,5 +1,6 @@
-Overview
-========
+# lwip_httpssrv_mbedTLS_bm
+
+## Overview
 
 The lwip_httpsrv_mbedTSL_bm demo application demonstrates an HTTPS Server
 set up on lwIP TCP/IP and the mbedTLS stack with bare metal. The user
@@ -22,30 +23,7 @@ so the board will print "IPv6 address update" messages followed by all valid IPv
 The assigned unique local or global unique addresses could be typed into the web browser's address bar in a form like
 "https://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8]" to access the web server over IPv6.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-This example uses Ethernet RJ45 port J32.
-Prepare the Demo
-================
+## Prepare the Demo
 1.  Connect a mini USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the board.
 2.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
@@ -60,8 +38,7 @@ Prepare the Demo
 7.  Download the program to the target board.
 8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 1.  When the demo runs successfully, the terminal will display the following:
 		Initializing PHY...
 
@@ -108,3 +85,13 @@ Running the demo
     in the list of valid addresses in the console output. Then the server could be reached over IPv6.
     For the example console output above, https://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8] could be typed into the browser's address bar to make it
     show the web page and communicate with the board over IPv6.
+
+## Supported Boards
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_httpssrv_mbedTLS/bm/example_board_readme.md)

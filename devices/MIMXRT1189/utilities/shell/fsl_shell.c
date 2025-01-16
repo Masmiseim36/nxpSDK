@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2024 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -543,7 +542,7 @@ void SHELL_Task(shell_handle_t shellHandle)
                 else if ((ch == KET_DEL) || ((char)ch == '\b'))
                 {
                     /* There must be at last one char */
-                    if (shellContextHandle->c_pos == 0U)
+                    if ((shellContextHandle->c_pos == 0U) || (shellContextHandle->l_pos == 0U))
                     {
                         continue;
                     }

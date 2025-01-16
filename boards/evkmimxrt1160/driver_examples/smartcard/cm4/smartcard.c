@@ -8,9 +8,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_smartcard.h"
 #if defined(FSL_FEATURE_SOC_EMVSIM_COUNT) && FSL_FEATURE_SOC_EMVSIM_COUNT
 #include "fsl_smartcard_emvsim.h"
@@ -25,14 +24,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SMARTCARD_Control(base, handle, control, param)   SMARTCARD_EMVSIM_Control(base, handle, control, 0)
-#define SMARTCARD_TransferNonBlocking(base, handle, xfer) SMARTCARD_EMVSIM_TransferNonBlocking(base, handle, xfer)
-#define SMARTCARD_Init(base, handle, sourceClockHz)       SMARTCARD_EMVSIM_Init(base, handle, sourceClockHz)
-#define SMARTCARD_Deinit(base)                            SMARTCARD_EMVSIM_Deinit(base)
-#define SMARTCARD_GetTransferRemainingBytes(base, handle) SMARTCARD_EMVSIM_GetTransferRemainingBytes(base, handle)
-#define SMARTCARD_AbortTransfer(base, handle)             SMARTCARD_EMVSIM_AbortTransfer(base, handle)
-
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 #define MAX_TRANSFER_SIZE   (258u)
 #define EMVL1_ATR_BUFF_SIZE (100u)
 /*! @brief Smartcard instruction codes */
@@ -75,17 +66,6 @@ smartcard_context_t *g_smartcardContext;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/*! @brief IRQ handler for emvsim */
-void EMVSIM1_IRQHandler(void)
-{
-    SMARTCARD_EMVSIM_IRQHandler(BOARD_SMARTCARD_MODULE, g_smartcardContext);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
-}
 /*
  * This example will example the efficiency of the transmit/receive drivers with
  * using non-blocking/async methods. Transfer data between board and GSM(SIM) cards.
@@ -943,10 +923,7 @@ static int smartcard_test(void)
 int main(void)
 {
     /* Initialize board hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Call smartcard driver demonstration example */
     if (0u != smartcard_test())
     {

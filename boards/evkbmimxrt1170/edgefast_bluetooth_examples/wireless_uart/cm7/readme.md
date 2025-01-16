@@ -1,50 +1,10 @@
-Overview
-========
+# wireless_uart
+
+## Overview
 The application implements a custom GATT based Wireless UART Profile that emulates UART over BLE.the application can work as central and peripheral at the same time. central and peripheral role can be switched by user button.
 To test the service/profile the "IoT Toolbox" application can be used which is available for both Android and iOS.IoT Toolbox can be found on iTunes or Google playstore.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Micro USB cable
-- evkbmimxrt1170 board
-- Personal Computer
-- Embedded Artists 1XK M.2 Module (EAR00385) - direct M2 connection.
-- Embedded Artists 1ZM M.2 Module (EAR00364) - direct M2 connection.
-- Embedded Artists 2EL M.2 Module (Rev-A1) - direct M2 connection.
-
-Jumper settings for RT1170-EVKB (enables external 5V supply):
-remove  J38 5-6
-connect J38 1-2
-connect J43 with external power(controlled by SW5)
-
-Murata Solution Board settings
-Embedded Artists M.2 module resource page: https://www.embeddedartists.com/m2
-Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
-Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
-Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
-
-The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1170-EVKB and Murata 1XK M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1170-EVKB and Murata 1ZM M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The hardware rework for MIMXRT1170-EVKB and Murata 2EL M.2 Adapter is same as MIMXRT1170-EVKB and Murata 1XK M.2 Adapter.
-Note:
-To ensure that the LITTLEFS flash region has been cleaned,
-all flash sectors need to be erased before downloading example code.
-After downloaded binary into qspiflash and boot from qspiflash directly,
-please reset the board by pressing SW4 or power off and on the board to run the application.
-Prepare the Demo
-================
+## Prepare the Demo
 
 1.  Open example's project and build it.
 
@@ -61,8 +21,7 @@ Prepare the Demo
 
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
+## Running the demo
 The demo require user interaction. The application will automatically start advertising the wirless uart Service afte reset, the The application can accepte at most 8 connection when work as peripheral.
 The application will start scan and connect to the wirless uart Service automatically,after short prees the user button, the The application can connect at most 8 connection when work as cnentral.
 
@@ -111,3 +70,18 @@ send data 123 in current device's Serial port terminal, then B device will print
 Data received (length 5): 123
 
 long press the user button, the example will work as peripheral again.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/wireless_uart/example_board_readme.md)

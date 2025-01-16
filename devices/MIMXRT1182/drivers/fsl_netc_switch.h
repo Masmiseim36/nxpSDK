@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -979,6 +979,16 @@ status_t SWT_RxPSFPQueryRPTableEntry(swt_handle_t *handle, uint32_t entryID, net
 status_t SWT_RxPSFPGetRPStatistic(swt_handle_t *handle, uint32_t entryID, netc_tb_rp_stse_t *statis);
 
 /*!
+ * @brief Reset mark red parameter of specified Rate Policer entry
+ *
+ * @param handle
+ * @param entryID
+ * @return status_t
+ * @return See @ref netc_cmd_error_t
+ */
+status_t SWT_RxPSFPResetMRRPTableEntry(swt_handle_t *handle, uint32_t entryID);
+
+/*!
  * @brief Get remaining available entry number of ingress stream count table
  * @note This is a dynamic bounded index table, the remaining entry can't be zero before add entry into it
  *
@@ -1596,6 +1606,15 @@ status_t SWT_FRERAddISEQGTableEntry(swt_handle_t *handle, netc_tb_iseqg_config_t
  * @return See @ref netc_cmd_error_t
  */
 status_t SWT_FRERUpdateISEQGTableEntry(swt_handle_t *handle, netc_tb_iseqg_config_t *config);
+
+/*!
+ * @brief Reset sequence number generation in FRER sequence generation entry
+ *
+ * @param handle
+ * @return status_t
+ * @return See @ref netc_cmd_error_t
+ */
+status_t SWT_FRERResetSEQGTableEntry(swt_handle_t *handle, uint32_t entryID);
 
 /*!
  * @brief Delete entry in FRER sequence number generation table

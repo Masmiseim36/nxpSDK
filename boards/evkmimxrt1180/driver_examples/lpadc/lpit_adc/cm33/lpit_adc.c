@@ -6,30 +6,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpadc.h"
 #include "fsl_lpit.h"
 
-#include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LPIT_CLK_FREQ        CLOCK_GetRootClockFreq(kCLOCK_Root_Bus_Aon)
-#define DEMO_LPIT_BASE       LPIT1
-#define LPIT_CHANNEL         kLPIT_Chnl_0
-#define DEMO_LPIT_IRQn       LPIT1_IRQn
-#define DEMO_LPIT_IRQHandler LPIT1_IRQHandler
-#define LPIT_PERIOD          1000000U
-
-#define DEMO_LPADC_BASE             ADC1
-#define DEMO_LPADC_IRQn             ADC1_IRQn
-#define DEMO_LPADC_IRQ_HANDLER_FUNC ADC1_IRQHandler
-#define DEMO_LPADC_USER_CHANNEL     7U
-#define DEMO_LPADC_USER_CMDID       1U /* CMD1 */
-/* ERRATA051385: ADC INL/DNL degrade under high ADC clock frequency when VREFH selected as reference. */
-#define DEMO_LPADC_VREF_SOURCE kLPADC_ReferenceVoltageAlt2
 void DEMO_InitLPIT(void);
 void DEMO_InitLPADC(void);
 /*******************************************************************************
@@ -66,20 +50,7 @@ void DEMO_LPADC_IRQ_HANDLER_FUNC(void)
  */
 int main(void)
 {
-    /* Init xbara module. */
-    XBAR_Init(kXBAR_DSC1);
-
-    /* Configure the XBARA signal connections. */
-    XBAR_SetSignalsConnection(kXBAR1_InputPit1Trigger0, kXBAR1_OutputAdc12HwTrig0);
-
-    if (NVIC_GetEnableIRQ(GPIO1_0_IRQn))
-    {
-        NVIC_DisableIRQ(GPIO1_0_IRQn);
-    }
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPADC Interrupt Example\r\n");
 

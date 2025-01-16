@@ -1,5 +1,6 @@
-Overview
-========
+# flexcan_loopback_edma_transfer
+
+## Overview
 The flexcan_loopback_edma example shows how to use the EDMA version transactional driver to receive
 CAN Message from Rx FIFO:
 
@@ -9,57 +10,20 @@ from Tx Message Buffer to Rx FIFO through internal loopback interconnect and rea
 EDMA version FlexCAN transactional driver. The Sent and received message will be print out to terminal
 at last.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1. Connect a USB cable between the PC host and the OpenSDA USB on the board.
-2. Open a serial terminal on PC for OpenSDA serial device with these settings:
-   - 115200 baud rate
-   - 8 data bits
-   - No parity
-   - One stop bit
-   - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running
-   the example.
-
-Running the demo
-================
-When the example runs successfully, following information can be seen on the OpenSDA terminal:
-
-~~~~~~~~~~~~~~~~~~~~~
-
-==FlexCAN loopback edma example -- Start.==
-
-Send Msg1 to Rx FIFO: word0 = 0x11111111, word1 = 0x11111111.
-Send Msg2 to Rx FIFO: word0 = 0x22222222, word1 = 0x22222222.
-Send Msg3 to Rx FIFO: word0 = 0x33333333, word1 = 0x33333333.
-Send Msg4 to Rx FIFO: word0 = 0x44444444, word1 = 0x44444444.
-
-Receive Msg1 from FIFO: word0 = 0x11111111, word1 = 0x11111111, ID Filter Hit2.
-Receive Msg2 from FIFO: word0 = 0x22222222, word1 = 0x22222222, ID Filter Hit2.
-Receive Msg3 from FIFO: word0 = 0x33333333, word1 = 0x33333333, ID Filter Hit2.
-Receive Msg4 from FIFO: word0 = 0x44444444, word1 = 0x44444444, ID Filter Hit2.
-
-==FlexCAN loopback EDMA example -- Finish.==
-~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../_boards/evk9mimx8ulp/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../_boards/evkmimx8ulp/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [FRDM-MCXW71](../../../_boards/frdmmcxw71/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [KW45B41Z-EVK](../../../_boards/kw45b41zevk/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [KW47-EVK](../../../_boards/kw47evk/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)
+- [MCX-W72-EVK](../../../_boards/mcxw72evk/driver_examples/flexcan/loopback_edma_transfer/example_board_readme.md)

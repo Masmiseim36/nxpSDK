@@ -5,60 +5,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_sai.h"
 #include "music.h"
 #include "fsl_codec_common.h"
 #include "fsl_asrc.h"
-#include "fsl_wm8962.h"
-#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* SAI instance and clock */
-#define DEMO_CODEC_WM8962
-#define DEMO_SAI         SAI1
-#define DEMO_SAI_IRQ     SAI1_IRQn
-#define SAI_TxIRQHandler SAI1_IRQHandler
-
-/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
-/* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (1U)
-/* Clock divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ                                                        \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
-     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
-
-#define DEMO_AUDIO_MASTER_CLOCK          24576000U
-#define DEMO_ASRC_OUTPUT_SOURCE_CLOCK_HZ (16 * 48000 * 2)
-#define DEMO_ASRC_PERIPHERAL_CLOCK       200000000U
-#define DEMO_ASRC                        ASRC
-#define DEMO_ASRC_CHANNEL_PAIR           kASRC_ChannelPairA
-
-#define DEMO_AUDIO_SAMPLE_RATE_IN  (kSAI_SampleRate48KHz)
-#define DEMO_AUDIO_SAMPLE_RATE_OUT (kSAI_SampleRate32KHz)
-
-/* I2C instance and clock */
-#define DEMO_I2C LPI2C1
-
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-/* DMA */
-#define EXAMPLE_DMA           DMA0
-#define EXAMPLE_CHANNEL       (0U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
-
 #define OVER_SAMPLE_RATE (384U)
 
 /* demo audio data channel */
@@ -117,52 +73,6 @@ asrc_channel_pair_config_t s_asrcChannelPairConfig       = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-wm8962_config_t wm8962Config = {
-    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .route =
-        {
-            .enableLoopBack            = false,
-            .leftInputPGASource        = kWM8962_InputPGASourceInput1,
-            .leftInputMixerSource      = kWM8962_InputMixerSourceInputPGA,
-            .rightInputPGASource       = kWM8962_InputPGASourceInput3,
-            .rightInputMixerSource     = kWM8962_InputMixerSourceInputPGA,
-            .leftHeadphoneMixerSource  = kWM8962_OutputMixerDisabled,
-            .leftHeadphonePGASource    = kWM8962_OutputPGASourceDAC,
-            .rightHeadphoneMixerSource = kWM8962_OutputMixerDisabled,
-            .rightHeadphonePGASource   = kWM8962_OutputPGASourceDAC,
-        },
-    .slaveAddress = WM8962_I2C_ADDR,
-    .bus          = kWM8962_BusI2S,
-    .format       = {.mclk_HZ    = 24576000U,
-                     .sampleRate = kWM8962_AudioSampleRate16KHz,
-                     .bitWidth   = kWM8962_AudioBitWidth16bit},
-    .masterSlave  = false,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
-
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR0 |= 1 << 8U;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR0 &= ~(1 << 8U);
-    }
-}
-
 static void sai_callback(I2S_Type *base, sai_handle_t *handle, status_t status, void *userData)
 {
     if (status == kStatus_SAI_TxIdle)
@@ -180,28 +90,7 @@ int main(void)
     asrc_transfer_t asrcConvert;
     sai_transceiver_t config;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    CLOCK_InitAudioPll(&audioPllConfig);
-    BOARD_InitDebugConsole();
-
-    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, 1);
-    /* audio pll  */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
-    /* 0SC400M */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Asrc, 2);
-    /* divider 2 */
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Asrc, 2);
-    /* audio pll */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
-
-    BOARD_EnableSaiMclkOutput(true);
-
-    /* ASRC baremental driver need non-4byte align access */
-    SCB->CCR &= ~SCB_CCR_UNALIGN_TRP_Msk;
+    BOARD_InitHardware();
 
     PRINTF("ASRC m2m polling example\n\r");
 

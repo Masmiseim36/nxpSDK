@@ -7,19 +7,16 @@
  */
 
 #include "fsl_common.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 #include "lfs.h"
 #include "lfs_mflash.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #define SHELL_Printf PRINTF
 
@@ -72,7 +69,6 @@ extern serial_handle_t g_serialHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 static shell_status_t lfs_format_handler(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
@@ -153,7 +149,7 @@ static shell_status_t lfs_ls_handler(shell_handle_t shellHandle, int32_t argc, c
 {
     int res;
     char *path;
-    lfs_dir_t dir;
+    lfs_dir_t dir = {0};
     struct lfs_info info;
     int files;
     int dirs;
@@ -348,10 +344,7 @@ int main(void)
 {
     status_t status;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     lfs_get_default_config(&cfg);
 

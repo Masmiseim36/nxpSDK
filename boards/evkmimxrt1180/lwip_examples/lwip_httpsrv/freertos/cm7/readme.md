@@ -1,5 +1,6 @@
-Overview
-========
+# lwip_httpsrv_freertos
+
+## Overview
 
 The lwip_httpsrv_freertos demo application demonstrates an HTTP server on the lwIP TCP/IP stack with FreeRTOS.
 The user uses an internet browser to send a request for connection. The board acts as an HTTP server and sends a web
@@ -21,29 +22,7 @@ so the board will print "IPv6 address update" messages followed by all valid IPv
 The assigned unique local or global unique addresses could be typed into the web browser's address bar in a form like
 "http://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8]" to access the web server over IPv6.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- GCC ARM Embedded  13.2.1
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-This example uses Ethernet RJ45 port J32.
-Prepare the Demo
-================
+## Prepare the Demo
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
 2.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
@@ -58,8 +37,7 @@ Prepare the Demo
 7.  Download the program to the target board.
 8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 1.  When the demo runs successfully, the terminal will display the following:
         Initializing PHY...
 
@@ -99,7 +77,7 @@ Running the demo
     enabled. But some web browsers seem to send mDNS queries for IPv4 address only, so it might not be possible to access the board using
     http://lwip-http.local URL. Still, some utilities (like avahi-resolve on Linux) could be used to resolve the name to IPv6 address using mDNS.
 
-Modifying content of static web pages
+## Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
   1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpsrv_freertos\webpage".
   2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
@@ -119,3 +97,23 @@ To modify content available through the web server you must complete following s
 		Done.
   3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
   4. Re-compile the HTTP server application example and download it to your board.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [LPCXpresso54S018](../../../_boards/lpcxpresso54s018/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [LPCXpresso54S018M](../../../_boards/lpcxpresso54s018m/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/lwip_examples/lwip_httpsrv/freertos/example_board_readme.md)

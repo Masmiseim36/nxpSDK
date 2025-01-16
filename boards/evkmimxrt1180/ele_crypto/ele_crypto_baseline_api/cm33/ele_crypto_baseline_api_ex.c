@@ -10,9 +10,8 @@
  ******************************************************************************/
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "ele_crypto.h"      /* ELE Crypto SW */
 #include "fsl_s3mu.h"        /* Messaging unit driver */
@@ -21,7 +20,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define S3MU MU_RT_S3MUA
 
 /*******************************************************************************
  * Prototypes
@@ -71,10 +69,7 @@ int main(void)
     do
     {
         /* HW init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+        BOARD_InitHardware();
 
         PRINTF("EdgeLock Enclave Sub-System crypto base API example:\r\n\r\n");
 

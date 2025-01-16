@@ -128,9 +128,9 @@ typedef struct _boot_data_
 } BOOT_DATA_T;
 
 #if __CORTEX_M == 7
-#define FLASH_BASE FlexSPI1_AMBA_BASE
+#define FLASH_BASE (0x30000000u)
 #elif __CORTEX_M == 4
-#define FLASH_BASE FlexSPI1_ALIAS_BASE
+#define FLASH_BASE (0x8000000u)
 #endif
 
 #if defined(BOARD_FLASH_SIZE)

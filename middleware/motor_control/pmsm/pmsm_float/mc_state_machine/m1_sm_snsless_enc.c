@@ -1,8 +1,15 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
- *
- * SPDX-License-Identifier: BSD-3-Clause
+* Copyright 2016, Freescale Semiconductor, Inc.
+* Copyright 2016-2021, 2024 NXP
+*
+* NXP Proprietary. This software is owned or controlled by NXP and may
+* only be used strictly in accordance with the applicable license terms. 
+* By expressly accepting such terms or by downloading, installing,
+* activating and/or otherwise using the software, you are agreeing that
+* you have read, and that you agree to comply with and are bound by,
+* such license terms.  If you do not agree to be bound by the applicable
+* license terms, then you may not retain, install, activate or otherwise
+* use the software.
  */
 
 #include "m1_sm_snsless_enc.h"
@@ -397,6 +404,10 @@ static void M1_StateInitFast(void)
     FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_LOAD_OVER);
     FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_SPEED_OVER);
     FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_ROTOR_BLOCKED);
+    
+#if ENABLE_FLASH_PARAM_UPDATE
+      M1_MCDRV_FLASH_CFG_INIT();
+#endif
 }
 
 /*!
@@ -549,6 +560,10 @@ static void M1_StateFaultSlow(void)
     {
         g_sM1Drive.ui16CounterState = g_sM1Drive.ui16TimeFaultRelease;
     }
+
+#if ENABLE_FLASH_PARAM_UPDATE
+    M1_MCDRV_FLASH_CFG_BACKGROUND();
+#endif
 }
 
 /*!
@@ -573,6 +588,9 @@ static void M1_StateInitSlow(void)
 RAM_FUNC_LIB
 static void M1_StateStopSlow(void)
 {
+#if ENABLE_FLASH_PARAM_UPDATE
+  M1_MCDRV_FLASH_CFG_BACKGROUND();
+#endif
 }
 
 /*!

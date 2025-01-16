@@ -2,17 +2,14 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  *
- * All rights reserved.
- *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
@@ -27,7 +24,6 @@ LOG_MODULE_DEFINE(log_main, kLOG_LevelTrace);
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #define APP_LOG_RINGBUFFER_SIZE 512
 
@@ -215,10 +211,7 @@ void log_backend_ringbuffer_update(uint8_t *buffer, size_t head, size_t tail)
 /*! @brief Main function */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Init LOG */
     LOG_Init();

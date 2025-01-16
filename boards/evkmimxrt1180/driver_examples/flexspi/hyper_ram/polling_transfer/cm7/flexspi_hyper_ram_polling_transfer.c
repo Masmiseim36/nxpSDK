@@ -7,31 +7,12 @@
  */
 
 #include "fsl_flexspi.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_common.h"
-#include "fsl_cache.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_FLEXSPI                 FLEXSPI2
-#define EXAMPLE_FLEXSPI_AMBA_BASE       FlexSPI2_AMBA_BASE
-#define EXAMPLE_FLEXSPI_PORT            kFLEXSPI_PortA1
-#define EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK kFLEXSPI_ReadSampleClkExternalInputFromDqsPad
-
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READDATA  0
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA 1
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READREG   2
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG  3
-
-#define CUSTOM_LUT_LENGTH               20
-#define EXAMPLE_COMBINATION_MODE_ENABLE 1
-
-#define HYRAM_SIZE 0x10000 /* 64Mb/KByte. */
-#define TEST_SIZE  0x80000U /* hyperram test size range in demo. */
 
 /*******************************************************************************
  * Prototypes
@@ -48,62 +29,6 @@ static uint8_t s_hyper_ram_read_buffer[1024];
 /*******************************************************************************
  * Code
  ******************************************************************************/
-flexspi_device_config_t deviceconfig = {
-    .flexspiRootClk       = 100000000, /* 100MHZ SPI serial clock */
-    .isSck2Enabled        = false,
-    .flashSize            = HYRAM_SIZE,
-    .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
-    .CSInterval           = 2,
-    .CSHoldTime           = 0,
-    .CSSetupTime          = 1,
-    .dataValidTime        = 1,
-    .columnspace          = 3,
-    .enableWordAddress    = true,
-    .AWRSeqIndex          = HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA,
-    .AWRSeqNumber         = 1,
-    .ARDSeqIndex          = HYPERRAM_CMD_LUT_SEQ_IDX_READDATA,
-    .ARDSeqNumber         = 1,
-    .AHBWriteWaitUnit     = kFLEXSPI_AhbWriteWaitUnit2AhbCycle,
-    .AHBWriteWaitInterval = 0,
-    .enableWriteMask      = true,
-};
-
-const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
-    /* Read Data */
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_READDATA] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xA0, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_READDATA + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_DUMMY_RWDS_DDR, kFLEXSPI_8PAD, 0x07),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_READDATA + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_READ_DDR, kFLEXSPI_8PAD, 0x04, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00),
-
-    /* Write Data */
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x20, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_DUMMY_RWDS_DDR, kFLEXSPI_8PAD, 0x07),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_WRITE_DDR, kFLEXSPI_8PAD, 0x04, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00),
-
-    /* Read Register */
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_READREG] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xE0, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_READREG + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_DUMMY_RWDS_DDR, kFLEXSPI_8PAD, 0x07),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_READREG + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_READ_DDR, kFLEXSPI_8PAD, 0x04, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00),
-
-    /* Write Register */
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x60, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_DUMMY_RWDS_DDR, kFLEXSPI_8PAD, 0x07),
-    [4 * HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_WRITE_DDR, kFLEXSPI_8PAD, 0x04, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00),
-};
-
-
-
 
 status_t flexspi_hyper_ram_ipcommand_write_data(FLEXSPI_Type *base, uint32_t address, uint32_t *buffer, uint32_t length)
 {
@@ -193,12 +118,7 @@ int main(void)
     /* To store custom's LUT table in local. */
     uint32_t tempLUT[CUSTOM_LUT_LENGTH] = {0x00U};
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi2, 5);
+    BOARD_InitHardware();
 
     PRINTF("FLEXSPI HyperRAM example started!\r\n");
 
@@ -211,9 +131,11 @@ int main(void)
 
     /* Init FLEXSPI. */
     config.rxSampleClock               = EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK;
+#if defined(EXAMPLE_FLEXSPI_SCKBDIFFOPT_ENABLE) && EXAMPLE_FLEXSPI_SCKBDIFFOPT_ENABLE
     config.enableSckBDiffOpt           = true;
+#endif
     config.ahbConfig.enableAHBPrefetch = true;
-#if defined(EXAMPLE_COMBINATION_MODE_ENABLE) && EXAMPLE_COMBINATION_MODE_ENABLE
+#if defined(EXAMPLE_FLEXSPI_COMBINATION_MODE_ENABLE) && EXAMPLE_FLEXSPI_COMBINATION_MODE_ENABLE
     config.enableCombination           = true;
 #endif
     FLEXSPI_Init(EXAMPLE_FLEXSPI, &config);

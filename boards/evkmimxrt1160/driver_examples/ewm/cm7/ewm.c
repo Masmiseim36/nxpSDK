@@ -11,30 +11,17 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_ewm.h"
 
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_EWM EWM
-#define SW_GPIO     BOARD_USER_BUTTON_GPIO
-#define SW_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define SW_NAME     BOARD_USER_BUTTON_NAME
-/* GPIO port input low-logic level when SW is pressed */
-#define SW_GPIO_PRESSED_VALUE 0U
-
-#define WDOG_EWM_IRQn       EWM_IRQn
-#define WDOG_EWM_IRQHandler EWM_IRQHandler
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void gpio_configure(void);
-uint32_t is_key_pressed(void);
 
 /*******************************************************************************
  * Variables
@@ -44,31 +31,6 @@ volatile bool ewmIsrFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*!
- * @brief Configure gpio as input for button
- *
- */
-void gpio_configure(void)
-{
-    gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput,
-        0,
-    };
-    GPIO_PinInit(SW_GPIO, SW_GPIO_PIN, &sw_config);
-}
-
-/*!
- * @brief Check if button is pressed.
- *
- * This function gets the state of button.
- *
- * @return 0 if button is not pressed.
- *         1 if button is pressed
- */
-uint32_t is_key_pressed(void)
-{
-    return (GPIO_PinRead(SW_GPIO, SW_GPIO_PIN) == SW_GPIO_PRESSED_VALUE);
-}
 
 /*!
  * @brief EWM interrupt handler
@@ -89,10 +51,7 @@ int main(void)
     ewm_config_t config;
 
     /* Init hardware*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nPress anykey to start the example...\r\n");
     GETCHAR();

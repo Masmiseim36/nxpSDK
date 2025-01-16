@@ -397,21 +397,27 @@ void BOARD_BootClockRUN(void)
     CLOCK_OSC_GateOscRc400M(false);
 
     /* Switch both core to OscRC400M first */
+#if (__CORTEX_M == 7)
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc400M;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+#endif
 
+#if (__CORTEX_M == 33)
     /* When FlexSPI2 is used, CM33 root clock must be higher than 1/4
        of FlexSPI2 root clock, so set it to OSC RC 400M(but not OSC RC 24M)
        firstly as common setting */
     rootCfg.mux = kCLOCK_M33_ClockRoot_MuxOscRc400M;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_M33, &rootCfg);
+#endif
 
+#if (__CORTEX_M == 7)
     DCDC_SetVoltage(kDCDC_CORE0, kDCDC_1P0Target1P1V);
     DCDC_SetVoltage(kDCDC_CORE1, kDCDC_1P0Target1P1V);
     /* FBB need to be enabled in OverDrive(OD) mode */
     PMU_EnableFBB(ANADIG_PMU, true);
+#endif
 
     /* Config CLK_1M */
     CLOCK_OSC_Set1MHzOutputBehavior(kCLOCK_1MHzOutEnableFreeRunning1Mhz);
@@ -472,14 +478,18 @@ void BOARD_BootClockRUN(void)
 
     /* Module clock root configurations. */
     /* Configure M7 using ARM_PLL_CLK */
+#if (__CORTEX_M == 7)
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxArmPllOut;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+#endif
 
     /* Configure M33 using SYS_PLL3_CLK */
+#if (__CORTEX_M == 33)
     rootCfg.mux = kCLOCK_M33_ClockRoot_MuxSysPll3Out;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_M33, &rootCfg);
+#endif
 
     /* Configure EDGELOCK using OSC_RC_400M */
     EdgeLock_SetClock(kCLOCK_EDGELOCK_ClockRoot_MuxOscRc400M, 2);
@@ -505,14 +515,18 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetRootClock(kCLOCK_Root_Swo_Trace, &rootCfg);
 
     /* Configure M33_SYSTICK using OSC_24M */
+#if (__CORTEX_M == 33)
     rootCfg.mux = kCLOCK_M33_SYSTICK_ClockRoot_MuxOsc24MOut;
     rootCfg.div = 240;
     CLOCK_SetRootClock(kCLOCK_Root_M33_Systick, &rootCfg);
+#endif
 
     /* Configure M7_SYSTICK using OSC_24M */
+#if (__CORTEX_M == 7)
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOsc24MOut;
     rootCfg.div = 240;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
+#endif
 
     /* Configure FLEXIO1 using SYS_PLL3_DIV2_CLK */
     rootCfg.mux = kCLOCK_FLEXIO1_ClockRoot_MuxSysPll3Div2;

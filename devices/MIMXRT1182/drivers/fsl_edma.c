@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -76,7 +76,7 @@ static uint32_t EDMA_GetInstance(EDMA_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_edmaBases); instance++)
     {
-        if (s_edmaBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_edmaBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -118,11 +118,13 @@ void EDMA_InstallTCD(EDMA_Type *base, uint32_t channel, edma_tcd_t *tcd)
     assert(tcd != NULL);
 
     edma_tcd_t *tcdRegs = EDMA_TCD_BASE(base, channel);
+    /* Avoiding misra_c_2012_rule_13_5_violation event */
+    status_t errataStatus = EDMA_CheckErrata(base, tcd);
+    uint32_t esgStatus = EDMA_TCD_CSR(tcd, EDMA_TCD_TYPE(base)) & (uint16_t)DMA_CSR_ESG_MASK;
 
 #if defined FSL_FEATURE_EDMA_HAS_ERRATA_51327
-    if ((EDMA_TCD_DLAST_SGA(tcd, EDMA_TCD_TYPE(base)) != 0U) &&
-        ((EDMA_TCD_CSR(tcd, EDMA_TCD_TYPE(base)) & (uint16_t)DMA_CSR_ESG_MASK) != 0U) &&
-        (EDMA_CheckErrata(base, tcd) != kStatus_Success))
+    if ((EDMA_TCD_DLAST_SGA(tcd, EDMA_TCD_TYPE(base)) != 0U) && ((esgStatus) != 0U) &&
+        (errataStatus != kStatus_Success))
     {
         assert(false);
     }
@@ -1292,28 +1294,21 @@ uint32_t EDMA_GetRemainingMajorLoopCount(EDMA_Type *base, uint32_t channel)
 
     uint32_t remainingCount = 0;
 
-    if (0U != DMA_GET_DONE_STATUS(base, channel))
+    /* Calculate the unfinished bytes */
+    if (0U != (EDMA_TCD_CITER(EDMA_TCD_BASE(base, channel), EDMA_TCD_TYPE(base)) & DMA_CITER_ELINKNO_ELINK_MASK))
     {
-        remainingCount = 0;
+        remainingCount = (((uint32_t)EDMA_TCD_CITER(EDMA_TCD_BASE(base, channel), EDMA_TCD_TYPE(base)) &
+                           DMA_CITER_ELINKYES_CITER_MASK) >>
+                          DMA_CITER_ELINKYES_CITER_SHIFT);
     }
     else
     {
-        /* Calculate the unfinished bytes */
-        if (0U != (EDMA_TCD_CITER(EDMA_TCD_BASE(base, channel), EDMA_TCD_TYPE(base)) & DMA_CITER_ELINKNO_ELINK_MASK))
-        {
-            remainingCount = (((uint32_t)EDMA_TCD_CITER(EDMA_TCD_BASE(base, channel), EDMA_TCD_TYPE(base)) &
-                               DMA_CITER_ELINKYES_CITER_MASK) >>
-                              DMA_CITER_ELINKYES_CITER_SHIFT);
-        }
-        else
-        {
-            remainingCount = (((uint32_t)EDMA_TCD_CITER(EDMA_TCD_BASE(base, channel), EDMA_TCD_TYPE(base)) &
-                               DMA_CITER_ELINKNO_CITER_MASK) >>
-                              DMA_CITER_ELINKNO_CITER_SHIFT);
-        }
+        remainingCount = (((uint32_t)EDMA_TCD_CITER(EDMA_TCD_BASE(base, channel), EDMA_TCD_TYPE(base)) &
+                           DMA_CITER_ELINKNO_CITER_MASK) >>
+                          DMA_CITER_ELINKNO_CITER_SHIFT);
     }
 
-    return remainingCount;
+    return ((0U != DMA_GET_DONE_STATUS(base, channel)) ? 0U : remainingCount);
 }
 
 /*!
@@ -1903,6 +1898,11 @@ status_t EDMA_SubmitTransferTCD(edma_handle_t *handle, edma_tcd_t *tcd)
 
     if (handle->tcdPool == NULL)
     {
+
+        /* Avoiding misra_c_2012_rule_13_5_violation event */
+        uint16_t citerStatus = EDMA_TCD_CITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_CITER_ELINKNO_CITER_MASK;
+        uint16_t biterStatus = EDMA_TCD_BITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_BITER_ELINKNO_BITER_MASK;
+
         /*
          *    Check if EDMA channel is busy:
          *    1. if channel active bit is set, it implies that minor loop is executing, then channel is busy
@@ -1920,8 +1920,7 @@ status_t EDMA_SubmitTransferTCD(edma_handle_t *handle, edma_tcd_t *tcd)
 #else
         if (((handle->channelBase->CH_CSR & DMA_CH_CSR_ACTIVE_MASK) != 0U) ||
 #endif
-            (((EDMA_TCD_CITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_CITER_ELINKNO_CITER_MASK) !=
-              (EDMA_TCD_BITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_BITER_ELINKNO_BITER_MASK))))
+            (((citerStatus) != (biterStatus))))
         {
             return kStatus_EDMA_Busy;
         }
@@ -1977,8 +1976,10 @@ status_t EDMA_SubmitTransferTCD(edma_handle_t *handle, edma_tcd_t *tcd)
         /* Enable major interrupt */
         EDMA_TCD_CSR((&handle->tcdPool[currentTcd]), EDMA_TCD_TYPE(handle->base)) |= DMA_CSR_INTMAJOR_MASK;
 
-        if ((EDMA_TCD_DLAST_SGA(tcd, EDMA_TCD_TYPE(handle->base)) == 0U) ||
-            ((EDMA_TCD_CSR(tcd, EDMA_TCD_TYPE(handle->base)) & DMA_CSR_ESG_MASK) == 0U))
+        /* Avoiding misra_c_2012_rule_13_5_violation event */
+        uint16_t esgStatus = EDMA_TCD_CSR(tcd, EDMA_TCD_TYPE(handle->base)) & DMA_CSR_ESG_MASK;
+
+        if ((EDMA_TCD_DLAST_SGA(tcd, EDMA_TCD_TYPE(handle->base)) == 0U) || ((esgStatus) == 0U))
         {
             /* Link current TCD with next TCD for identification of current TCD */
             EDMA_TCD_DLAST_SGA((&handle->tcdPool[currentTcd]), EDMA_TCD_TYPE(handle->base)) =
@@ -2091,6 +2092,9 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
 
     if (handle->tcdPool == NULL)
     {
+        /* Avoiding misra_c_2012_rule_13_5_violation event */
+        uint16_t citerStatus = EDMA_TCD_CITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_CITER_ELINKNO_CITER_MASK;
+        uint16_t biterStatus = EDMA_TCD_BITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_BITER_ELINKNO_BITER_MASK;
         /*
          *    Check if EDMA channel is busy:
          *    1. if channel active bit is set, it implies that minor loop is executing, then channel is busy
@@ -2108,8 +2112,7 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
 #else
         if (((handle->channelBase->CH_CSR & DMA_CH_CSR_ACTIVE_MASK) != 0U) ||
 #endif
-            (((EDMA_TCD_CITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_CITER_ELINKNO_CITER_MASK) !=
-              (EDMA_TCD_BITER(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_BITER_ELINKNO_BITER_MASK))))
+            (((citerStatus) != (biterStatus))))
         {
             return kStatus_EDMA_Busy;
         }
@@ -2277,6 +2280,9 @@ status_t EDMA_SubmitLoopTransfer(edma_handle_t *handle, edma_transfer_config_t *
     assert(handle->tcdPool != NULL);
 
     uint32_t i = 0U;
+    /* Avoiding misra_c_2012_rule_13_5_violation event */
+    uint16_t citerStatus = EDMA_TCD_CITER(handle->tcdBase, EDMA_TCD_TYPE(handle->base)) & DMA_CITER_ELINKNO_CITER_MASK;
+    uint16_t biterStatus = EDMA_TCD_BITER(handle->tcdBase, EDMA_TCD_TYPE(handle->base)) & DMA_BITER_ELINKNO_BITER_MASK;
 
     if (handle->tcdSize < (int8_t)transferLoopCount)
     {
@@ -2300,8 +2306,7 @@ status_t EDMA_SubmitLoopTransfer(edma_handle_t *handle, edma_transfer_config_t *
 #else
     if (((handle->channelBase->CH_CSR & DMA_CH_CSR_ACTIVE_MASK) != 0U) ||
 #endif
-        (((EDMA_TCD_CITER(handle->tcdBase, EDMA_TCD_TYPE(handle->base)) & DMA_CITER_ELINKNO_CITER_MASK) !=
-          (EDMA_TCD_BITER(handle->tcdBase, EDMA_TCD_TYPE(handle->base)) & DMA_BITER_ELINKNO_BITER_MASK))))
+        (((citerStatus) != (biterStatus))))
     {
         return kStatus_EDMA_Busy;
     }
@@ -2388,13 +2393,13 @@ void EDMA_StartTransfer(edma_handle_t *handle)
 #if defined FSL_FEATURE_EDMA_HAS_MP_CHANNEL_MUX && FSL_FEATURE_EDMA_HAS_MP_CHANNEL_MUX
     if (((uint32_t)FSL_FEATURE_EDMA_INSTANCE_HAS_CHANNEL_MUXn(handle->base) == 1U) &&
         (EDMA_MP_BASE(handle->base)->MP_REGS.EDMA5_REG.CH_MUX[handle->channel] == 0U) &&
-        (FSL_FEATURE_EDMA_INSTANCE_HAS_MP_CHANNEL_MUXn(handle->base) == 1U))
+        ((uint32_t)FSL_FEATURE_EDMA_INSTANCE_HAS_MP_CHANNEL_MUXn(handle->base) == 1U))
     {
         EDMA_TCD_CSR(tcdRegs, EDMA_TCD_TYPE(handle->base)) |= DMA_CSR_START_MASK;
     }
     else if (((uint32_t)FSL_FEATURE_EDMA_INSTANCE_HAS_CHANNEL_MUXn(handle->base) == 1U) &&
              handle->channelBase->CH_REGS.EDMA4_REG.CH_MUX == 0U &&
-             !(FSL_FEATURE_EDMA_INSTANCE_HAS_MP_CHANNEL_MUXn(handle->base) == 1U))
+             !((uint32_t)FSL_FEATURE_EDMA_INSTANCE_HAS_MP_CHANNEL_MUXn(handle->base) == 1U))
     {
         EDMA_TCD_CSR(tcdRegs, EDMA_TCD_TYPE(handle->base)) |= DMA_CSR_START_MASK;
     }
@@ -2417,9 +2422,10 @@ void EDMA_StartTransfer(edma_handle_t *handle)
         /* Check if channel request is actually disable. */
         if ((handle->channelBase->CH_CSR & DMA_CH_CSR_ERQ_MASK) == 0U)
         {
+            /* Avoiding misra_c_2012_rule_13_5_violation event */
+            uint16_t esgStatus = EDMA_TCD_CSR(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_CSR_ESG_MASK;
             /* Check if transfer is paused. */
-            if ((!((handle->channelBase->CH_CSR & DMA_CH_CSR_DONE_MASK) != 0U)) ||
-                ((EDMA_TCD_CSR(tcdRegs, EDMA_TCD_TYPE(handle->base)) & DMA_CSR_ESG_MASK) != 0U))
+            if ((!((handle->channelBase->CH_CSR & DMA_CH_CSR_DONE_MASK) != 0U)) || (esgStatus != 0U))
             {
                 /*
                     Re-enable channel request must be as soon as possible, so must put it into

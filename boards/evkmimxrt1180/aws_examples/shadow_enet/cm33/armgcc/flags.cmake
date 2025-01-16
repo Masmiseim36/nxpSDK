@@ -12,70 +12,71 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
-    -D__STARTUP_INITIALIZE_RAMFUNCTION=1 \
-    -DDEBUG \
-    -D__STARTUP_CLEAR_BSS=1 \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA=1 \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
     -g \
-    -mcpu=cortex-m33 \
-    -Wall \
     -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -D__STARTUP_INITIALIZE_RAMFUNCTION=1 \
-    -DNDEBUG \
-    -D__STARTUP_CLEAR_BSS=1 \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA=1 \
-    -mcpu=cortex-m33 \
-    -Wall \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
     -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
-    -DDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
-    -DFSL_ETH_ENABLE_CACHE_CONTROL \
-    -DETH_RX_TASK_PRIO=6 \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DSERIAL_MANAGER_NON_BLOCKING_MODE \
     -DDISABLE_LOGGING \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL \
+    -DETH_RX_TASK_PRIO=6 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
+    -DMBEDTLS_MCUX_ELE_S400_API \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
     -DCHECKSUM_GEN_IP=1 \
     -DCHECKSUM_GEN_UDP=1 \
     -DCHECKSUM_GEN_TCP=1 \
     -DCHECKSUM_GEN_ICMP=1 \
     -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_UDP=1 \
+    -DCHECKSUM_CHECK_TCP=1 \
     -DCHECKSUM_CHECK_ICMP=1 \
     -DCHECKSUM_CHECK_ICMP6=1 \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DMBEDTLS_MCUX_ELE_S400_API \
-    -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DSDK_OS_FREE_RTOS \
-    -DSERIAL_PORT_TYPE_UART=1 \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
-    -DLWIP_DNS=1 \
-    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DMBEDTLS_THREADING_ALT \
     -DMBEDTLS_THREADING_C \
     -O1 \
     -g \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     -fomit-frame-pointer \
     -Wno-unused-function \
     ${FPU} \
@@ -83,46 +84,47 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
-    -DNDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
-    -DFSL_ETH_ENABLE_CACHE_CONTROL \
-    -DETH_RX_TASK_PRIO=6 \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DSERIAL_MANAGER_NON_BLOCKING_MODE \
     -DDISABLE_LOGGING \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL \
+    -DETH_RX_TASK_PRIO=6 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
+    -DMBEDTLS_MCUX_ELE_S400_API \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
     -DCHECKSUM_GEN_IP=1 \
     -DCHECKSUM_GEN_UDP=1 \
     -DCHECKSUM_GEN_TCP=1 \
     -DCHECKSUM_GEN_ICMP=1 \
     -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_UDP=1 \
+    -DCHECKSUM_CHECK_TCP=1 \
     -DCHECKSUM_CHECK_ICMP=1 \
     -DCHECKSUM_CHECK_ICMP6=1 \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DMBEDTLS_MCUX_ELE_S400_API \
-    -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DSDK_OS_FREE_RTOS \
-    -DSERIAL_PORT_TYPE_UART=1 \
-    -DCACHE_MODE_WRITE_THROUGH=1 \
-    -DLWIP_DNS=1 \
-    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DMBEDTLS_THREADING_ALT \
     -DMBEDTLS_THREADING_C \
     -Os \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     -fomit-frame-pointer \
     -Wno-unused-function \
     ${FPU} \
@@ -131,52 +133,79 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DXIP_EXTERNAL_FLASH=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DMBEDTLS_MCUX_ELE_S400_API \
+    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
+    -DCHECKSUM_GEN_IP=1 \
+    -DCHECKSUM_GEN_UDP=1 \
+    -DCHECKSUM_GEN_TCP=1 \
+    -DCHECKSUM_GEN_ICMP=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_UDP=1 \
+    -DCHECKSUM_CHECK_TCP=1 \
+    -DCHECKSUM_CHECK_ICMP=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
+    -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DXIP_EXTERNAL_FLASH=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DMBEDTLS_MCUX_ELE_S400_API \
+    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DLWIP_SUPPORT_CUSTOM_PBUF=1 \
+    -DCHECKSUM_GEN_IP=1 \
+    -DCHECKSUM_GEN_UDP=1 \
+    -DCHECKSUM_GEN_TCP=1 \
+    -DCHECKSUM_GEN_ICMP=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_UDP=1 \
+    -DCHECKSUM_CHECK_TCP=1 \
+    -DCHECKSUM_CHECK_ICMP=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
+    -DSDK_OS_FREE_RTOS \
     -Os \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
     -g \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -184,28 +213,21 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__stack_size__=0x200 \
-    -Xlinker \
-    --defsym=__heap_size__=0x200 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
-    -T\"${ProjDirPath}/linker/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
+    -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -213,22 +235,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__stack_size__=0x200 \
-    -Xlinker \
-    --defsym=__heap_size__=0x200 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
-    -T\"${ProjDirPath}/linker/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
+    -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
 ")

@@ -9,8 +9,7 @@
 #include "camera_support.h"
 #include "fsl_pxp.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
@@ -23,11 +22,9 @@
  * to fit the display output.
  */
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PXP PXP
 
 /* CSI output frame buffer is XYUV8888. */
 #define DEMO_CAMERA_BUFFER_BPP 4
@@ -80,34 +77,12 @@ static volatile uint8_t s_lcdActiveFbIdx;
  * Code
  ******************************************************************************/
 
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
-
-
 /*!
  * @brief Main function
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_EarlyInitCamera();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitMipiCameraPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("CSI MIPI YUV example start...\r\n");
 

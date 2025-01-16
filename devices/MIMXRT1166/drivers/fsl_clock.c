@@ -247,7 +247,7 @@ void CLOCK_InitArmPll(const clock_arm_pll_config_t *config)
     __ISB();
     SDK_DelayAtLeastUs(30, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
-    reg &= ~ANADIG_PLL_SYS_PLL2_CTRL_HOLD_RING_OFF_MASK;
+    reg &= ~ANADIG_PLL_ARM_PLL_CTRL_HOLD_RING_OFF_MASK;
     ANADIG_PLL->ARM_PLL_CTRL = reg;
     /* Wait for the PLL stable, */
     while (0U == (ANADIG_PLL->ARM_PLL_CTRL & ANADIG_PLL_ARM_PLL_CTRL_ARM_PLL_STABLE_MASK))

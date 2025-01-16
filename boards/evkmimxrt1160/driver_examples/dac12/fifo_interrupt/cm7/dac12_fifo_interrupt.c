@@ -8,25 +8,18 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_dac12.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC12_BASE         DAC
-#define DEMO_DAC12_IRQ_ID       DAC_IRQn
-#define DEMO_DAC12_HANDLER_FUNC DAC_IRQHandler
-#define DEMO_DAC12_VREF_SOURCE  kDAC12_ReferenceVoltageSourceAlt2
-
 #define DEMO_DAC_VALUE_ARRAY_SIZE 32U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitDebugConsole(void);
 
 /*******************************************************************************
  * Variables
@@ -41,7 +34,6 @@ const uint32_t g_DacValues[DEMO_DAC_VALUE_ARRAY_SIZE] = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 /*!
  * @brief Main function
  */
@@ -50,10 +42,7 @@ int main(void)
     uint32_t mDacIndex = 0;
     dac12_config_t dacConfigStruct;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     EnableIRQ(DEMO_DAC12_IRQ_ID); /* Enable interrupt in NVIC. */
 

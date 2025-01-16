@@ -12,8 +12,7 @@
 #include <stdlib.h>
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 
 #include "fsl_mmcau.h"
@@ -21,8 +20,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define CORE_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_M4)
 /* Number of cycles for througput measurement. One data buffer of certain size if processed this times. */
 #define CYCLES_FOR_THROUGHPUT 128
 #define CYCLES_FOR_PASSRATE   1024
@@ -1352,10 +1349,7 @@ static void mmcau_example_task(void)
 int main(void)
 {
     /* Init hardware*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
 #if defined(DEMO_MMCAU_PASS_RATE)
     RNGA_Init(RNG);

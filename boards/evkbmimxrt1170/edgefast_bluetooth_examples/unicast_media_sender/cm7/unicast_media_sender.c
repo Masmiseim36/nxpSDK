@@ -84,7 +84,7 @@ BUILD_ASSERT_MSG(CONFIG_BT_ISO_TX_BUF_COUNT >= TOTAL_BUF_NEEDED,
 static bt_addr_le_t devices_list[16];
 static bt_addr_le_t target_devices[2];
 static int devices_list_count = 0;
-static uint8_t set_sirk[BT_CSIP_SET_SIRK_SIZE];
+static uint8_t sirk[BT_CSIP_SIRK_SIZE];
 static bool set_sirk_set = false;
 
 static struct bt_bap_unicast_client_cb unicast_client_cbs;
@@ -96,9 +96,9 @@ static struct audio_sink {
 	uint16_t seq_num;
 } sinks[CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT];
 NET_BUF_POOL_FIXED_DEFINE(tx_pool1, TOTAL_BUF_NEEDED/2,
-			  CONFIG_BT_ISO_TX_MTU + BT_ISO_CHAN_SEND_RESERVE, NULL);
+			  CONFIG_BT_ISO_TX_MTU + BT_ISO_CHAN_SEND_RESERVE, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 NET_BUF_POOL_FIXED_DEFINE(tx_pool2, TOTAL_BUF_NEEDED/2,
-			  CONFIG_BT_ISO_TX_MTU + BT_ISO_CHAN_SEND_RESERVE, NULL);
+			  CONFIG_BT_ISO_TX_MTU + BT_ISO_CHAN_SEND_RESERVE, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 static struct net_buf_pool *tx_pool[] = { &tx_pool1, &tx_pool2 };
 
 static struct bt_bap_stream streams[CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT];
@@ -159,11 +159,17 @@ static const struct named_lc3_preset lc3_unicast_presets[] = {
 	{"48_6_2", BT_BAP_LC3_UNICAST_PRESET_48_6_2(LOCATION, CONTEXT)},
 };
 
-/* This parameter should be used for fix "connection timeout" issue. */
-#define CONNECTION_PARAMETERS BT_LE_CONN_PARAM(80, 80, 0, 400)
+/* set conn interval to 30ms and timeout to 300ms. */
+static struct bt_le_conn_param conn_param = {
+	.interval_min = 24,
+	.interval_max = 24,
+	.latency = 0,
+	.timeout = 30,
+};
 
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_wav_opened);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_lc3_preset);
+OSA_SEMAPHORE_HANDLE_DEFINE(sem_scan);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_device_selected);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_connected);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_csip_discovered);
@@ -179,6 +185,7 @@ static OSA_SEMAPHORE_HANDLE_DEFINE(sem_stream_qos);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_stream_enabled);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_stream_disabled);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_stream_started);
+static OSA_SEMAPHORE_HANDLE_DEFINE(sem_stream_connected);
 
 static bool cis_stream_play = true;
 static bool cis_stream_play_update = false;
@@ -230,56 +237,69 @@ static uint16_t get_and_incr_seq_num(const struct bt_bap_stream *stream)
 	return 0;
 }
 
-static int audio_stream_encode(void)
+static int audio_stream_encode(bool mute)
 {
-	int res;
 	uint32_t sdu_time_stamp;
 	int bits;
 
 	/* read one frame samples. */
 #if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
-	int ret = ring_buf_get(&a2dp_to_ums_audio_buf, wav_file_buff, lc3_codec_info.samples_per_frame * 4);
-
-	if (ret != lc3_codec_info.samples_per_frame * 4)
+	if(!mute)
 	{
-		int clear_bytes = lc3_codec_info.samples_per_frame * 4 - ret;
-		memset(wav_file_buff + ret, 0, clear_bytes);
-	}
-	
-	ring_buff_read_out_bytes += ret;
+		int ret = ring_buf_get(&a2dp_to_ums_audio_buf, wav_file_buff, lc3_codec_info.samples_per_frame * 4);
 
-	if(a2dp_sink_audio_frame_size > 0)
-	{
-		for (; ring_buff_read_out_bytes >= a2dp_sink_audio_frame_size; ring_buff_read_out_bytes -= a2dp_sink_audio_frame_size)
+		if (ret != lc3_codec_info.samples_per_frame * 4)
 		{
-			app_audio_streamer_task_signal();
+			int clear_bytes = lc3_codec_info.samples_per_frame * 4 - ret;
+			memset(wav_file_buff + ret, 0, clear_bytes);
+		}
+
+		ring_buff_read_out_bytes += ret;
+
+		if(a2dp_sink_audio_frame_size > 0)
+		{
+			for (; ring_buff_read_out_bytes >= a2dp_sink_audio_frame_size; ring_buff_read_out_bytes -= a2dp_sink_audio_frame_size)
+			{
+				app_audio_streamer_task_signal();
+			}
 		}
 	}
 
 	bits = 16;
 #else
-	do
+	if(!mute)
 	{
-		res = wav_file_read_samples(&wav_file, wav_file_buff, lc3_codec_info.samples_per_frame);
-		if(res == WAV_FILE_END)
+		int res;
+
+		do
 		{
-			if(wav_file_rewind(&wav_file))
+			res = wav_file_read_samples(&wav_file, wav_file_buff, lc3_codec_info.samples_per_frame);
+			if(res == WAV_FILE_END)
+			{
+				if(wav_file_rewind(&wav_file))
+				{
+					PRINTF("\nwav_file_rewind fail!\n");
+					return -1;
+				}
+
+				continue;
+			}
+			if(res == WAV_FILE_ERR)
 			{
 				PRINTF("\nwav_file_rewind fail!\n");
 				return -1;
 			}
-			
-			continue;
-		}
-		if(res == WAV_FILE_ERR)
-		{
-			PRINTF("\nwav_file_rewind fail!\n");
-			return -1;
-		}
-	} while (res != 0);
+		} while (res != 0);
+	}
 
 	bits = wav_file.bits;
 #endif
+
+	if(mute)
+	{
+		memset(wav_file_buff, 0, lc3_codec_info.samples_per_frame * 2 * (bits / 8));
+	}
+
 	/* copy data from pcm form to channel format */
 	if(2 == lc3_codec_info.channels)
 	{
@@ -305,7 +325,16 @@ static int audio_stream_encode(void)
 	for(int i = 0; i < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; i++)
 	{
 		do {
-			buf[i] = net_buf_alloc(tx_pool[i], 10);
+			int timeout;
+			if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
+			{
+				timeout = (lc3_codec_info.frame_duration_us * 2 + 5000) / 1000;
+			}
+			else
+			{
+				timeout = (lc3_codec_info.frame_duration_us + 5000) / 1000;
+			}
+			buf[i] = net_buf_alloc(tx_pool[i], timeout);
 			if(buf[i] == NULL)
 			{
 				PRINTF("iso net buff alloc timeout!\n");
@@ -319,23 +348,16 @@ static int audio_stream_encode(void)
 		net_buf_add_mem(buf[i], sdu_buff[i], lc3_codec_info.octets_per_frame);
 	}
 
-	if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
+	if(seq_num == 0)
 	{
-		if(seq_num == 0)
-		{
-			tx_samples = 0;
-			tx_time_stamp_start = get_sync_signal_timestamp() + get_iso_interval();
-			sdu_time_stamp = tx_time_stamp_start;
-		}
-		else
-		{
-			tx_samples += lc3_codec_info.samples_per_frame;
-			sdu_time_stamp = (uint32_t)((double)tx_time_stamp_start + (double)tx_samples * 1000000.0 / (double)lc3_codec_info.sample_rate);
-		}
+		tx_samples = 0;
+		tx_time_stamp_start = get_sync_signal_timestamp() + get_iso_interval();
+		sdu_time_stamp = tx_time_stamp_start;
 	}
 	else
 	{
-		sdu_time_stamp = BT_ISO_TIMESTAMP_NONE;
+		tx_samples += lc3_codec_info.samples_per_frame;
+		sdu_time_stamp = (uint32_t)((double)tx_time_stamp_start + (double)tx_samples * 1000000.0 / (double)lc3_codec_info.sample_rate);
 	}
 
 	for(int i = 0; i < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; i++)
@@ -380,10 +402,7 @@ static int audio_stream_encode(void)
 		}
 	}
 
-	if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
-	{
-		seq_num += 1;
-	}
+	seq_num += 1;
 
 	return 0;
 }
@@ -517,7 +536,7 @@ int select_lc3_preset(char *preset_name)
 	for(int i = 0; i < ARRAY_SIZE(lc3_unicast_presets); i++)
 	{
 		const struct bt_audio_codec_cfg *codec_cfg = &lc3_unicast_presets[i].preset.codec_cfg;
-		
+
 		if(0 == strcmp(lc3_unicast_presets[i].name, preset_name))
 		{
 			int sample_rate = bt_audio_codec_cfg_freq_to_freq_hz((enum bt_audio_codec_cfg_freq)bt_audio_codec_cfg_get_freq(codec_cfg));
@@ -531,7 +550,7 @@ int select_lc3_preset(char *preset_name)
 				return -1;
 			}
 			find = true;
-			memcpy(&lc3_preset, codec_cfg, sizeof(lc3_preset));
+			memcpy(&lc3_preset, &lc3_unicast_presets[i].preset, sizeof(lc3_preset));
 		}
 	}
 
@@ -610,6 +629,36 @@ void print_sync_info(void)
 	uint32_t sync_delay = get_cig_sync_delay();
 
 	PRINTF("sync info - iso_interval: %u, sync_delay: %u\n", iso_interval, sync_delay);
+}
+
+int modify_conn_param(int interval_min, int interval_max, int latency, int timeout)
+{
+	if(!IN_RANGE(interval_min, 0x0006, 0x0C80))
+	{
+		return -1;
+	}
+
+	if(!IN_RANGE(interval_max, 0x0006, 0x0C80))
+	{
+		return -1;
+	}
+
+	if(!IN_RANGE(latency, 0x0000, 0x01F3))
+	{
+		return -1;
+	}
+
+	if(!IN_RANGE(timeout, 0x000A, 0x0C80))
+	{
+		return -1;
+	}
+
+	conn_param.interval_min = interval_min;
+	conn_param.interval_max = interval_max;
+	conn_param.latency = latency;
+	conn_param.timeout = timeout;
+
+	return 0;
 }
 
 void config_audio_parameters(int sample_rate, int channels, int bits)
@@ -710,14 +759,18 @@ static void stream_enabled(struct bt_bap_stream *stream)
 
 	if(stream == &streams[0])
 	{
-		if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
-		{
-			seq_num = 0;
-			BOARD_SyncSignal_Start(0);
-		}
+		seq_num = 0;
+		BOARD_SyncSignal_Start(0);
 	}
 
 	OSA_SemaphorePost(sem_stream_enabled);
+}
+
+static void stream_connected(struct bt_bap_stream *stream)
+{
+	PRINTF("Audio Stream %p started\n", stream);
+
+	OSA_SemaphorePost(sem_stream_connected);
 }
 
 static void stream_started(struct bt_bap_stream *stream)
@@ -749,10 +802,7 @@ static void stream_disabled(struct bt_bap_stream *stream)
 
 static void stream_stopped(struct bt_bap_stream *stream, uint8_t reason)
 {
-	if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
-	{
-		BOARD_SyncSignal_Stop();
-	}
+	BOARD_SyncSignal_Stop();
 	PRINTF("Audio Stream %p stopped with reason 0x%02X\n", stream, reason);
 }
 
@@ -770,6 +820,7 @@ static struct bt_bap_stream_ops stream_ops = {
 	.disabled = stream_disabled,
 	.stopped = stream_stopped,
 	.released = stream_released,
+	.connected = stream_connected,
 };
 
 static void add_remote_sink(struct bt_bap_ep *ep, uint8_t index)
@@ -918,19 +969,16 @@ static void unicast_client_location_cb(struct bt_conn *conn,
 				      enum bt_audio_dir dir,
 				      enum bt_audio_location loc)
 {
-	int index;
-	
 	PRINTF("dir %u loc %X\n", dir, loc);
 
-	for(index = 0; index < CONFIG_BT_MAX_CONN; index++)
+	for(int index = 0; index < CONFIG_BT_MAX_CONN; index++)
 	{
 		if(conn == default_conn[index])
 		{
+			audio_receiver_loc[index] = loc;
 			break;
 		}
 	}
-
-	audio_receiver_loc[index] = loc;
 }
 
 static void available_contexts_cb(struct bt_conn *conn,
@@ -972,10 +1020,9 @@ static struct bt_bap_unicast_client_cb unicast_client_cbs = {
 
 static int init(void)
 {
-	int err;
-
 	(void)OSA_SemaphoreCreate(sem_wav_opened, 0);
 	(void)OSA_SemaphoreCreate(sem_lc3_preset, 0);
+	(void)OSA_SemaphoreCreate(sem_scan, 0);
 	(void)OSA_SemaphoreCreate(sem_device_selected, 0);
 	(void)OSA_SemaphoreCreate(sem_connected, 0);
 	(void)OSA_SemaphoreCreate(sem_csip_discovered, 0);
@@ -991,10 +1038,11 @@ static int init(void)
 	(void)OSA_SemaphoreCreate(sem_stream_enabled, 0);
 	(void)OSA_SemaphoreCreate(sem_stream_disabled, 0);
 	(void)OSA_SemaphoreCreate(sem_stream_started, 0);
+	(void)OSA_SemaphoreCreate(sem_stream_connected, 0);
 
 #if defined(CONFIG_BT_A2DP_SINK) && (CONFIG_BT_A2DP_SINK > 0)
 #else
-	err = bt_enable(NULL);
+	int err = bt_enable(NULL);
 	if (err != 0) {
 		PRINTF("Bluetooth enable failed (err %d)\n", err);
 		return err;
@@ -1070,7 +1118,7 @@ static void scan_cb(const bt_addr_le_t *addr, int8_t rssi, uint8_t adv_type, str
 		return;
 	}
 
-	/* skip the addr in the list. */	
+	/* skip the addr in the list. */
 	for(int i = 0; i < devices_list_count; i++)
 	{
 		if(0 == memcmp(addr, &devices_list[i], sizeof(bt_addr_le_t)))
@@ -1156,7 +1204,7 @@ static void member_scan_cb(const bt_addr_le_t *addr, int8_t rssi, uint8_t adv_ty
 		return;
 	}
 
-	if(!bt_csip_set_coordinator_is_set_member(set_sirk, &ad_data))
+	if(!bt_csip_set_coordinator_is_set_member(sirk, &ad_data))
 	{
 		return;
 	}
@@ -1219,7 +1267,7 @@ static int device_connect(int index)
 	}
 
 	err = bt_conn_le_create(&target_devices[default_conn_index], BT_CONN_LE_CREATE_CONN,
-		CONNECTION_PARAMETERS,
+		&conn_param,
 		&default_conn[default_conn_index]);
 	if (err != 0) {
 		PRINTF("Create conn to failed (%u)\n", err);
@@ -1241,7 +1289,6 @@ static int device_connect(int index)
 	err = bt_conn_set_security(default_conn[index], BT_SECURITY_L2);
 	if (err != 0) {
 		PRINTF("failed to set security (err %d)\n", err);
-		return err;
 	}
 
 	err = OSA_SemaphoreWait(sem_security_updated, osaWaitForever_c);
@@ -1268,14 +1315,14 @@ static int discover_vcs(int index)
 {
 	int ret;
 	ret = le_audio_vcs_discover(default_conn[index], index);
-	if(ret) 
+	if(ret)
 	{
 		PRINTF("vcs discover fail %d\n", ret);
 		return -1;
 	}
 
 	(void)OSA_SemaphoreWait(sem_vcs_discovered, osaWaitForever_c);
-        
+
         return 0;
 }
 
@@ -1372,7 +1419,7 @@ static int create_group(void)
 	for (size_t i = 0U; i < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; i++) {
 		stream_params[i].stream = &streams[i];
 		stream_params[i].qos = &lc3_preset.qos;
-		
+
 		pair_params[i].tx_param = &stream_params[i];
 		pair_params[i].rx_param = NULL;
 	}
@@ -1459,15 +1506,28 @@ static int disable_streams(int index)
 	return 0;
 }
 
-static int start_streams(int index)
+static int connect_streams(int index)
 {
 	int err;
 
-	err = bt_bap_stream_start(&streams[index]);
+	err = bt_bap_stream_connect(&streams[index]);
 	if (err != 0) {
 		PRINTF("Unable to start stream: %d\n", err);
 		return err;
 	}
+
+	err = OSA_SemaphoreWait(sem_stream_connected, osaWaitForever_c);
+	if (err != 0) {
+		PRINTF("failed to take sem_stream_connected (err %d)\n", err);
+		return err;
+	}
+
+	return 0;
+}
+
+static int start_streams(int index)
+{
+	int err;
 
 	err = OSA_SemaphoreWait(sem_stream_started, osaWaitForever_c);
 	if (err != 0) {
@@ -1482,6 +1542,7 @@ static void reset_data(void)
 {
 	(void)OSA_SemaphoreDestroy(sem_wav_opened);
 	(void)OSA_SemaphoreDestroy(sem_lc3_preset);
+	(void)OSA_SemaphoreDestroy(sem_scan);
 	(void)OSA_SemaphoreDestroy(sem_device_selected);
 	(void)OSA_SemaphoreDestroy(sem_connected);
 	(void)OSA_SemaphoreDestroy(sem_csip_discovered);
@@ -1497,9 +1558,11 @@ static void reset_data(void)
 	(void)OSA_SemaphoreDestroy(sem_stream_enabled);
 	(void)OSA_SemaphoreDestroy(sem_stream_disabled);
 	(void)OSA_SemaphoreDestroy(sem_stream_started);
+	(void)OSA_SemaphoreDestroy(sem_stream_connected);
 
 	(void)OSA_SemaphoreCreate(sem_wav_opened, 0);
 	(void)OSA_SemaphoreCreate(sem_lc3_preset, 0);
+	(void)OSA_SemaphoreCreate(sem_scan, 0);
 	(void)OSA_SemaphoreCreate(sem_device_selected, 0);
 	(void)OSA_SemaphoreCreate(sem_connected, 0);
 	(void)OSA_SemaphoreCreate(sem_csip_discovered, 0);
@@ -1515,6 +1578,7 @@ static void reset_data(void)
 	(void)OSA_SemaphoreCreate(sem_stream_enabled, 0);
 	(void)OSA_SemaphoreCreate(sem_stream_disabled, 0);
 	(void)OSA_SemaphoreCreate(sem_stream_started, 0);
+	(void)OSA_SemaphoreCreate(sem_stream_connected, 0);
 
 	memset(sinks, 0, sizeof(sinks));
 }
@@ -1561,9 +1625,9 @@ static void csip_set_coordinator_discover_cb(
 			const struct bt_csip_set_coordinator_set_info *info = &member->insts[i].info;
 			PRINTF("set %d/%d info:\n", i+1, set_count);
 			PRINTF("\tsirk: ");
-			for(int j = 0; j < BT_CSIP_SET_SIRK_SIZE; j++)
+			for(int j = 0; j < BT_CSIP_SIRK_SIZE; j++)
 			{
-				PRINTF("%02x ", info->set_sirk[j]);
+				PRINTF("%02x ", info->sirk[j]);
 			}
 			PRINTF("\n");
 
@@ -1576,7 +1640,7 @@ static void csip_set_coordinator_discover_cb(
 			if(!set_sirk_set)
 			{
 				set_sirk_set = true;
-				memcpy(&set_sirk, &info->set_sirk[i], BT_CSIP_SET_SIRK_SIZE);
+				memcpy(&sirk, &info->sirk[i], BT_CSIP_SIRK_SIZE);
 			}
 		}
 	}
@@ -1677,6 +1741,19 @@ void unicast_media_sender_task(void *param)
 		PRINTF("Unicast group created\n");
 
 		PRINTF("Please scan and connect the devices you want!\n");
+		err = OSA_SemaphoreWait(sem_scan, osaWaitForever_c);
+		if (err != 0) {
+			PRINTF("failed to take sem_scan (err %d)\n", err);
+			break;
+		}
+
+		err = device_scan();
+		if (err != 0) {
+			PRINTF("device scan err %d\n", err);
+			break;
+		}
+		PRINTF("Scanning successfully started\n");
+
 		err = OSA_SemaphoreWait(sem_device_selected, osaWaitForever_c);
 		if (err != 0) {
 			PRINTF("failed to take sem_device_selected (err %d)\n", err);
@@ -1751,6 +1828,13 @@ void unicast_media_sender_task(void *param)
 			}
 			PRINTF("Streams enabled\n");
 
+			PRINTF("Connecting streams\n");
+			err = connect_streams(i);
+			if (err != 0) {
+				break;
+			}
+			PRINTF("Streams connected\n");
+
 			PRINTF("Starting streams\n");
 			err = start_streams(i);
 			if (err != 0) {
@@ -1774,6 +1858,11 @@ void unicast_media_sender_task(void *param)
 							PRINTF("\nEnable stream %d err %d\n", i, err);
 						}
 
+						err = connect_streams(i);
+						if (err) {
+							PRINTF("\nConnect stream %d err %d\n", i, err);
+						}
+
 						err = start_streams(i);
 						if(err)
 						{
@@ -1781,13 +1870,18 @@ void unicast_media_sender_task(void *param)
 						}
 					}
 				}
-				res = audio_stream_encode();
+				res = audio_stream_encode(false);
 			}
 			else
 			{
 				if(cis_stream_play_update)
 				{
 					cis_stream_play_update = false;
+
+					/* send 2 mute frames to sink to avoid LC3 PLC noise. */
+					(void)audio_stream_encode(true);
+					(void)audio_stream_encode(true);
+
 #if 1				/* MCUX-62728: walkaround to disconnect 2rd CIS first for controller fw limitation. */
 					for(int i = 1; i >= 0; i--)
 #else

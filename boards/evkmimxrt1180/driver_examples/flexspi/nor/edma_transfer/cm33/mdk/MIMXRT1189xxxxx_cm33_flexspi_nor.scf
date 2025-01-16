@@ -128,6 +128,14 @@ LR_m_text   m_text_start   m_text_size
     fsl_flexspi_edma.o (+RO)
     fsl_edma.o (+RO)
     fsl_edma_soc.o (+RO)
+    fsl_memcpy.o (+RO +RW +ZI)
+    uldiv.o (+RO +RW +ZI)
+    llshl.o (+RO +RW +ZI)
+    llushr.o (+RO +RW +ZI)
+    lludivv7m.o (+RO +RW +ZI)
+    memset.o (+RO +RW +ZI)
+    rt_memclr_w.o (+RO +RW +ZI)
+    rt_memclr.o (+RO +RW +ZI)
   }
   
   ER_m_QuickAccessData    m_qadata_start                     EMPTY         m_qadata_size

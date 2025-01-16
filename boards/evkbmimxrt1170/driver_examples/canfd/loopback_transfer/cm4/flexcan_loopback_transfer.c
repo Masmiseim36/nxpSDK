@@ -8,26 +8,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN           CAN3
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-#define USE_CANFD             (1)
-
-/* Select OSC24Mhz as master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_DIVIDER (1U)
-/* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetRootClockFreq(kCLOCK_Root_Can3) / 100000U) * 100000U)
-/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
-#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 
@@ -105,16 +91,7 @@ int main(void)
     flexcan_rx_mb_config_t mbConfig;
 
     /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for FLEXCAN*/
-    clock_root_config_t rootCfg = {0};
-    rootCfg.mux                 = FLEXCAN_CLOCK_SOURCE_SELECT;
-    rootCfg.div                 = FLEXCAN_CLOCK_SOURCE_DIVIDER;
-    CLOCK_SetRootClock(kCLOCK_Root_Can3, &rootCfg);
+    BOARD_InitHardware();
 
     LOG_INFO("\r\n==FlexCAN loopback example -- Start.==\r\n\r\n");
 

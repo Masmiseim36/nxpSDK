@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -47,7 +47,7 @@ uint32_t MU_GetInstance(MU_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0U; instance < (sizeof(s_muBases) / sizeof(s_muBases[0])); instance++)
     {
-        if (s_muBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_muBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -273,7 +273,7 @@ status_t MU_TriggerGeneralPurposeInterrupts(MU_Type *base, uint32_t interrupts)
     }
     else
     {
-        base->GCR = (gcr | interrupts);
+        base->GCR = interrupts;
         status    = kStatus_Success;
     }
 

@@ -4,9 +4,9 @@
 **                          MIMXRT1189XVM8B_cm7
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    IMXRT1180RM, Rev 2, 12/2022
-**     Version:             rev. 0.1, 2021-03-09
-**     Build:               b240109
+**     Reference manual:    IMXRT1180RM, Rev 5, 01/2024
+**     Version:             rev. 2.0, 2024-01-18
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -47,7 +47,7 @@ define symbol vector_table_size        = 0x00000400;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x800;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
@@ -125,6 +125,10 @@ define block QACCESS_DATA  { section DataQuickAccess };
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
 
+/* cache line size = 32 bytes */
+define block CACHE_LINE_DATA_ZI with alignment = 32, end alignment = 32 { section CacheLineData };
+define block CACHE_LINE_DATA_RW with alignment = 32, end alignment = 32 { section CacheLineData.init };
+
 initialize by copy { readwrite, section .textrw, section DataQuickAccess };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
@@ -135,8 +139,8 @@ place at address mem: m_interrupts_start    { readonly section .intvec };
 
 place in TEXT_region                        { readonly };
 place in TEXT_region                        { block QACCESS_CODE };
-place in DATA_region                        { block RW };
-place in DATA_region                        { block ZI };
+place in DATA_region                        { block RW, block CACHE_LINE_DATA_RW };
+place in DATA_region                        { block ZI, block CACHE_LINE_DATA_ZI };
 place in QADATA_region                      { block QACCESS_DATA };
 place in NCACHE_region                      { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };

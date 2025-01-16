@@ -11,9 +11,6 @@
 /* streamer library includes. */
 #include "streamer_api.h"
 #include "streamer_element_properties.h"
-#include "ringbuffer.h"
-#include "cei.h"
-#include "cei_enctypes.h"
 
 #ifdef VIT_PROC
 #include "vit_proc.h"
@@ -101,32 +98,6 @@ void STREAMER_Stop(streamer_handle_t *handle);
  * @return true if playing, false if not
  */
 bool STREAMER_IsPlaying(streamer_handle_t *handle);
-
-/*!
- * @brief Write audio data to the streamer interface
- *
- * This function pushes data onto the internal audio ring buffer for processing
- * by the audio streamer.
- *
- * @param data Pointer to audio data
- * @param size Size in bytes of the audio data
- * @return Number of bytes successfully written.  If this is less than the
- *         'size' parameter, an overflow has occured.
- */
-int STREAMER_Write(uint8_t *data, uint32_t size);
-
-/*!
- * @brief Read audio data from the internal audio ring buffer
- *
- * This function is called internally by the streamer (passed as a callback
- * function) to consume and process data from the ring buffer.
- *
- * @param data Pointer to buffer to copy audio data into
- * @param size Size in bytes of the buffer to fill
- * @return Number of bytes successfully read.  If this is less than the
- *         'size' parameter, an underflow has occured.
- */
-int STREAMER_Read(uint8_t *data, uint32_t size);
 
 #if defined(__cplusplus)
 }

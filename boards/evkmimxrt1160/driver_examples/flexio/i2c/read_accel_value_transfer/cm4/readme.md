@@ -1,5 +1,6 @@
-Overview
-========
+# flexio_i2c_read_accel_value_transfer
+
+## Overview
 The flexio_i2c_read_accel_value example shows how to use FLEXIO I2C  Master driver to communicate with an i2c device:
 
  1. How to use the flexio i2c master driver to read a i2c device who_am_I register.
@@ -8,73 +9,21 @@ The flexio_i2c_read_accel_value example shows how to use FLEXIO I2C  Master driv
 In this example, the values of three-axis accelerometer print to the serial terminal on PC through
 the virtual serial port on board.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1160-EVK board
-- Personal Computer
-
-Board settings
-==============
-To make this example work, connections needed to be as follows:
-
-    FLEXIO_I2C        connected to  LPI2C5
-SCL     J26-2           -->        J10-20
-SDA     J26-4           -->        J10-18
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
-
-~~~~~~~~~~~~~~~~~~~~~
-FlexIO I2C example read accelerometer value
-
-Found a FXOS8700 on board , the device address is 0x1D.
-
-The accel values:
-
-status_reg = 0xff , x =   -50 , y =    11 , z =  2045
-status_reg = 0xff , x =   -50 , y =     9 , z =  2031
-status_reg = 0xff , x =   -49 , y =    12 , z =  2032
-status_reg = 0xff , x =   -50 , y =     6 , z =  2046
-status_reg = 0xff , x =   -51 , y =     8 , z =  2040
-status_reg = 0xff , x =   -45 , y =     4 , z =  2032
-status_reg = 0xff , x =   -52 , y =    13 , z =  2042
-status_reg = 0xff , x =   -53 , y =    12 , z =  2041
-status_reg = 0xff , x =   -51 , y =     8 , z =  2048
-status_reg = 0xff , x =   -52 , y =     9 , z =  2036
-
-End of I2C example .
-~~~~~~~~~~~~~~~~~~~~~
-
-Note:
-if sensor chip(U32) is not welded on the board, the log would be seen on the OpenSDA terminal like:
-
-FlexIO I2C example read accelerometer value
-
-Not a successful i2c communication
-
-End of I2C example .
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../../_boards/evk9mimx8ulp/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../../_boards/evkbimxrt1050/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../../_boards/evkmcimx7ulp/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../../_boards/evkmimx8ulp/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../../_boards/evkmimxrt1010/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../_boards/evkmimxrt1015/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../_boards/evkmimxrt1020/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../_boards/evkmimxrt1024/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../../_boards/evkmimxrt1160/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../../_boards/evkmimxrt1180/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-K32L3A6](../../../../_boards/frdmk32l3a6/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-KE15Z](../../../../_boards/frdmke15z/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-KE17Z](../../../../_boards/frdmke17z/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [FRDM-MCXC242](../../../../_boards/frdmmcxc242/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../../_boards/mcimx93autoevk/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [MCIMX93-EVK](../../../../_boards/mcimx93evk/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)
+- [MCIMX93-QSB](../../../../_boards/mcimx93qsb/driver_examples/flexio/i2c/read_accel_value_transfer/example_board_readme.md)

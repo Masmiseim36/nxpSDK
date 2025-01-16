@@ -23,10 +23,12 @@
 #define DEMO_DISPLAY_CONTROLLER_ELCDIF  0
 #define DEMO_DISPLAY_CONTROLLER_LCDIFV2 1
 
+/* Configure this macro in Kconfig or directly in the generated mcux_config.h. */
 #ifndef DEMO_PANEL
 #define DEMO_PANEL DEMO_PANEL_RK055MHD091
 #endif
 
+/* Configure this macro in Kconfig or directly in the generated mcux_config.h. */
 #ifndef DEMO_DISPLAY_CONTROLLER
 /* Use LCDIFV2 by default, could use ELCDIF by changing this macro. */
 #define DEMO_DISPLAY_CONTROLLER DEMO_DISPLAY_CONTROLLER_LCDIFV2
@@ -46,11 +48,13 @@
 /* Definitions for the frame buffer. */
 #define DEMO_BUFFER_COUNT 2 /* 2 is enough for DPI interface display. */
 
+/* Don't change here, change in mcux_config.h */
 #ifndef DEMO_USE_XRGB8888
 #define DEMO_USE_XRGB8888 0
 #endif
 
 /* Use LCDIF LUT (or named color palette) which is 8-bit per-pixel */
+/* Don't change here, change in mcux_config.h */
 #ifndef DEMO_USE_LUT8
 #define DEMO_USE_LUT8 0
 #endif
@@ -78,14 +82,17 @@
 
 #endif
 
-#define DEMO_BUFFER_WIDTH  DEMO_PANEL_WIDTH
-#define DEMO_BUFFER_HEIGHT DEMO_PANEL_HEIGHT
+#define DEMO_FB_WIDTH  DEMO_PANEL_WIDTH
+#define DEMO_FB_HEIGHT DEMO_PANEL_HEIGHT
+#define DEMO_BUFFER_WIDTH  DEMO_FB_WIDTH
+#define DEMO_BUFFER_HEIGHT DEMO_FB_HEIGHT
 
 /* Where the frame buffer is shown in the screen. */
 #define DEMO_BUFFER_START_X 0U
 #define DEMO_BUFFER_START_Y 0U
 
-#define DEMO_BUFFER_STRIDE_BYTE (DEMO_BUFFER_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL)
+#define DEMO_FB_STRIDE(x) ((x * DEMO_BUFFER_BYTE_PER_PIXEL + FRAME_BUFFER_ALIGN - 1) & ~(FRAME_BUFFER_ALIGN - 1))
+#define DEMO_BUFFER_STRIDE_BYTE DEMO_FB_STRIDE(DEMO_FB_WIDTH)
 /* There is not frame buffer aligned requirement, consider the 64-bit AXI data
  * bus width and 32-byte cache line size, the frame buffer alignment is set to
  * 32 byte.

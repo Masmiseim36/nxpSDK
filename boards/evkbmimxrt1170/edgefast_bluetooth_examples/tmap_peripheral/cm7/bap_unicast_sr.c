@@ -26,12 +26,12 @@
 #define printk PRINTF
 #endif
 
-static const struct bt_audio_codec_cap lc3_codec_cap =
-	BT_AUDIO_CODEC_CAP_LC3(BT_AUDIO_CODEC_CAP_FREQ_16KHZ | BT_AUDIO_CODEC_CAP_FREQ_32KHZ |
+static const struct bt_audio_codec_cap lc3_codec_cap[] =
+	{BT_AUDIO_CODEC_CAP_LC3(BT_AUDIO_CODEC_CAP_FREQ_16KHZ | BT_AUDIO_CODEC_CAP_FREQ_32KHZ |
 				       BT_AUDIO_CODEC_CAP_FREQ_48KHZ,
 			       BT_AUDIO_CODEC_CAP_DURATION_7_5 | BT_AUDIO_CODEC_CAP_DURATION_10,
 			       BT_AUDIO_CODEC_CAP_CHAN_COUNT_SUPPORT(2), 30, 155u, 1u,
-			       (AVAILABLE_SINK_CONTEXT | AVAILABLE_SOURCE_CONTEXT));
+			       (AVAILABLE_SINK_CONTEXT | AVAILABLE_SOURCE_CONTEXT)),};
 
 static struct bt_conn *default_conn;
 static struct bt_bap_stream streams[CONFIG_BT_ASCS_ASE_SNK_COUNT + CONFIG_BT_ASCS_ASE_SRC_COUNT];
@@ -86,7 +86,7 @@ static void print_codec_cfg(const struct bt_audio_codec_cfg *codec_cfg)
 			       bt_audio_codec_cfg_frame_dur_to_frame_dur_us((enum bt_audio_codec_cfg_frame_dur)ret));
 		}
 
-		if (bt_audio_codec_cfg_get_chan_allocation(codec_cfg, &chan_allocation) == 0) {
+		if (bt_audio_codec_cfg_get_chan_allocation(codec_cfg, &chan_allocation, false) == 0) {
 			printk("  Channel allocation: 0x%x\n", chan_allocation);
 		}
 
@@ -105,8 +105,8 @@ static void print_qos(const struct bt_audio_codec_qos *qos)
 {
 	printk("QoS: interval %u framing 0x%02x phy 0x%02x sdu %u "
 	       "rtn %u latency %u pd %u\n",
-	       qos->interval, qos->framing, qos->phy, qos->sdu,
-	       qos->rtn, qos->latency, qos->pd);
+	       (unsigned int)qos->interval, qos->framing, qos->phy, qos->sdu,
+	       qos->rtn, qos->latency, (unsigned int)qos->pd);
 }
 
 static struct bt_bap_stream *stream_alloc(void)
@@ -343,7 +343,7 @@ static struct bt_conn_cb conn_callbacks = {
 #endif
 
 static struct bt_pacs_cap cap = {
-	.codec_cap = &lc3_codec_cap,
+	.codec_cap = lc3_codec_cap,
 };
 
 int bap_unicast_sr_init(void)

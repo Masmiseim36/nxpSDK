@@ -7,23 +7,13 @@
 
 #include "fsl_ssarc.h"
 #include "fsl_gpio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define EXAMPLE_LED_GPIO     BOARD_USER_LED_GPIO
-#define EXAMPLE_LED_GPIO_PIN BOARD_USER_LED_GPIO_PIN
-
-#define EXAMPLE_SSARC_GROUP_ID         0U
-#define EXAMPLE_SSARC_DESCRIPTOR_ID    0U
-#define EXAMPLE_SSARC_GROUP_CPU_DOMAIN kSSARC_CM4Core
-
 
 /*******************************************************************************
  * Prototypes
@@ -37,16 +27,12 @@
  * Code
  ******************************************************************************/
 
-
 int main(void)
 {
     ssarc_descriptor_config_t descriptorConfig;
     ssarc_group_config_t groupConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("SSARC Software Trigger Example Start.\r\n");
 
     PRINTF("Open the LED.\r\n");

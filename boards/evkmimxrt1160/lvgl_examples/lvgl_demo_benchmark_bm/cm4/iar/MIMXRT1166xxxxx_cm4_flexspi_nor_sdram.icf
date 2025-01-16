@@ -7,15 +7,13 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.2, 2023-02-27
-**     Build:               b230302
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2023 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -64,7 +62,7 @@ define symbol m_boot_hdr_xmcd_data_start      = 0x08001040;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x1000;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
@@ -86,13 +84,17 @@ define region DATA2_region = mem:[from m_data2_start to m_data2_end];
 define region DATA3_region  = mem:[from m_data3_start to m_data3_end-__size_cstack__];
 define region CSTACK_region = mem:[from m_data3_end-__size_cstack__+1 to m_data3_end];
 define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
-define block RW        { first readwrite, section m_usb_dma_init_data };
-define block ZI         with alignment = 32  { first zi, section m_usb_dma_noninit_data };
-define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RW            { readwrite };
+define block ZI            { zi };
+define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
 define block QACCESS_DATA  { section DataQuickAccess };
+
+/* cache line size = 32 bytes */
+define block CACHE_LINE_DATA_ZI with alignment = 32, end alignment = 32 { section CacheLineData };
+define block CACHE_LINE_DATA_RW with alignment = 32, end alignment = 32 { section CacheLineData.init };
 
 initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 do not initialize  { section .noinit };
@@ -107,8 +109,8 @@ place at address mem: m_boot_hdr_xmcd_data_start { readonly section .boot_hdr.xm
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data, section .boot_hdr.xmcd_data};
 
 place in TEXT_region                        { readonly };
-place in DATA3_region                       { block RW };
-place in DATA3_region                       { block ZI };
+place in DATA3_region                       { block RW, block CACHE_LINE_DATA_RW };
+place in DATA3_region                       { block ZI, block CACHE_LINE_DATA_ZI };
 if (isdefinedsymbol(__heap_noncacheable__)) {
   place in NCACHE_region                    { last block HEAP };
 } else {

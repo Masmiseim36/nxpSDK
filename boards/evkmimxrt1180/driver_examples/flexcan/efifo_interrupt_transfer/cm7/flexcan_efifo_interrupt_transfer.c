@@ -7,17 +7,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN                CAN3
-#define TX_MESSAGE_BUFFER_NUM      (0)
-#define EXAMPLE_CAN_CLK_FREQ       CLOCK_GetRootClockFreq(kCLOCK_Root_Can3)
-#define USE_IMPROVED_TIMING_CONFIG (1)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 #ifndef RX_MESSAGE_COUNT
@@ -172,10 +167,7 @@ int main(void)
     uint32_t i;
 
     /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     LOG_INFO("FlexCAN Enhanced Rx FIFO interrupt example.\r\n");
 #if (defined(ENABLE_LOOPBACK) && ENABLE_LOOPBACK)

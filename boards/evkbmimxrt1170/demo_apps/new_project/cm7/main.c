@@ -9,18 +9,16 @@
 
 #include "fsl_device_registers.h"
 
-
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "peripherals.h"
+
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LED_GPIO     BOARD_USER_LED_GPIO
-#define EXAMPLE_LED_GPIO_PIN BOARD_USER_LED_GPIO_PIN
-
 
 /*******************************************************************************
  * Prototypes
@@ -37,12 +35,7 @@ int main(void)
 {
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    /* Update the core clock */
-    SystemCoreClockUpdate();
+    BOARD_InitHardware();
 
     /* Add user custom codes below */
     while (1)

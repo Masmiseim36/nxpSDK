@@ -16,16 +16,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Version info */
-#define MCRSP_VER "2.0.0" /* motor control package version */
-
-/* Application info */
-typedef struct _app_ver
-{
-    char cBoardID[20];
-    char cExampleID[30];
-    char cAppVer[5];
-} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup

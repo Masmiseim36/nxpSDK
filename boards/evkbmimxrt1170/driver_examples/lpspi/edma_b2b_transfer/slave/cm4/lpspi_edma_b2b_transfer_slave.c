@@ -8,28 +8,16 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpspi_edma.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR              (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASE          (DMAMUX1)
-#define EXAMPLE_LPSPI_SLAVE_DMA_RX_REQUEST_SOURCE kDmaRequestMuxLPSPI1Rx
-#define EXAMPLE_LPSPI_SLAVE_DMA_TX_REQUEST_SOURCE kDmaRequestMuxLPSPI1Tx
-#define EXAMPLE_LPSPI_SLAVE_DMA_BASE              (DMA1)
-#define EXAMPLE_LPSPI_SLAVE_DMA_RX_CHANNEL        0U
-#define EXAMPLE_LPSPI_SLAVE_DMA_TX_CHANNEL        1U
-
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************
@@ -74,10 +62,7 @@ int main(void)
     lpspi_slave_config_t slaveConfig;
     lpspi_transfer_t slaveXfer;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPSPI board to board edma example.\r\n");
 

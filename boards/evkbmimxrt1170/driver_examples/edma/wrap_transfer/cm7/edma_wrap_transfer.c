@@ -5,9 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
@@ -16,9 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA                 DMA0
-#define EXAMPLE_DMAMUX              DMAMUX0
-#define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 #define BUFFER_LENGTH       8
 #define TCD_QUEUE_SIZE      2U
 #define DEMO_EDMA_CHANNEL_0 0
@@ -171,10 +167,7 @@ void edma_modulo_wrap(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Print source buffer */
     PRINTF("EDMA wrap transfer example.\r\n");
 

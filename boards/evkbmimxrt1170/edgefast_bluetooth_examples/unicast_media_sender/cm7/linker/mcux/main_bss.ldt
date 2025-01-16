@@ -1,4 +1,4 @@
         . = ALIGN(32);
-        *(m_usb_dma_noninit_data)
+        *(CacheLineData)
         . = ALIGN(32);
         *(.bss*)

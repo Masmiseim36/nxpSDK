@@ -10,9 +10,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
@@ -20,15 +19,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_NUMBERS  1U
-#define LED_1_INIT() USER_LED_INIT(LOGIC_LED_OFF)
-#define LED_1_ON()   USER_LED_ON()
-#define LED_1_OFF()  USER_LED_OFF()
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void Led_Init(void);
 
 static shell_status_t LedControl(shell_handle_t shellHandle, int32_t argc, char **argv);
 
@@ -48,11 +42,6 @@ extern serial_handle_t g_serialHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void Led_Init(void)
-{
-    LED_1_INIT();
-}
 
 static shell_status_t LedControl(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
@@ -136,10 +125,7 @@ static shell_status_t LedControl(shell_handle_t shellHandle, int32_t argc, char 
 /*! @brief Main function */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Init led */
     Led_Init();

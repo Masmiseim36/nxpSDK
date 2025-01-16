@@ -1,63 +1,42 @@
-Overview
-========
+# lvgl_guider_bm
+
+## Overview
 
 This project is used to work with LVGL GUI Guider. The GUI Guider generated
 code is placed in the folder "generated". The example generated code shows a
 button in the panel.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-- RK055MHD091 panel or RK055AHD091 panel or RK055IQH091 panel or RaspberryPi panel
-
-Board settings
-==============
-Connect the panel to J48. For RaspberryPi panel, connect the panel to J84,
-then connect the panel's 5V pin to J85-1, GND pin to J85-2.
-Connect 5V power to J43, set J38 to 1-2
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Build the project, the project uses RK055MHD091 by default, to use other panels,
-    change
-    #define DEMO_PANEL DEMO_PANEL_RK055MHD091
-    to
-    #define DEMO_PANEL DEMO_PANEL_RK055IQH091
-    or
-    #define DEMO_PANEL DEMO_PANEL_RK055AHD091
-    or
-    #define USE_MIPI_PANEL DEMO_PANEL_RASPI_7INCH
-    in display_support.h.
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-If this example runs correctly, the sample GUI is displayed.
-
-This board also supports LVGL 1-bit and 8-bit color depth, to use this feature, modify
-DEMO_USE_XRGB8888 as 0, modify DEMO_USE_LUT8 as 1 in display_support.h. Modify
-LV_COLOR_DEPTH as 1 or 8 in lv_conf.h.
-
-Currently GPU is not supported for 1-bit and 8-bit color depth, change LV_USE_GPU_NXP_PXP
-and LV_USE_GPU_NXP_VG_LITE to 0 in lv_conf.h.
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-K22F](../../_boards/frdmk22f/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXA276](../../_boards/frdmmcxa276/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso51U68](../../_boards/lpcxpresso51u68/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/lvgl_examples/lvgl_examples_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/lvgl_examples/lvgl_examples_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/lvgl_examples/lvgl_examples_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/lvgl_examples/lvgl_examples_readme.md)

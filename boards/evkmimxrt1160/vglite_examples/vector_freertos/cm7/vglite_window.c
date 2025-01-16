@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,6 +11,9 @@
 #include "vg_lite_platform.h"
 #include "vglite_window.h"
 
+#if defined(CPU_MIMXRT798SGFOA_cm33_core0)
+#include "fsl_lcdif.h"
+#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -123,6 +126,13 @@ vg_lite_error_t VGLITE_CreateWindow(vg_lite_display_t *display, vg_lite_window_t
         vg_buffer->format    = video_format_to_vglite(DEMO_BUFFER_PIXEL_FORMAT);
     }
 
+#if defined(CPU_MIMXRT798SGFOA_cm33_core0)
+	lcdif_panel_config_t config;
+    LCDIF_PanelGetDefaultConfig(&config);
+    config.enable = true;
+    LCDIF_SetPanelConfig(LCDIF, 0, &config);
+#endif
+
     status = FBDEV_SetFrameBufferInfo(g_fbdev, g_fbInfo);
     if (status != kStatus_Success)
     {
@@ -178,6 +188,7 @@ void VGLITE_SwapBuffers(vg_lite_window_t *window)
         return;
 
     vg_lite_finish();
+
 
     FBDEV_SetFrameBuffer(&window->display->g_fbdev, rt->memory, 0);
 }

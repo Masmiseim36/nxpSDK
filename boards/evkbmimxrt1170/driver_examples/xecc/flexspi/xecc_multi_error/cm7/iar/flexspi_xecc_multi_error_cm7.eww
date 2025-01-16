@@ -13,15 +13,15 @@
       </member>
       <member>
         <project>flexspi_xecc_multi_error_cm7</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>flexspi_xecc_multi_error_cm7</project>
         <configuration>debug</configuration>
       </member>
       <member>
         <project>flexspi_xecc_multi_error_cm7</project>
         <configuration>sdram_debug</configuration>
+      </member>
+      <member>
+        <project>flexspi_xecc_multi_error_cm7</project>
+        <configuration>release</configuration>
       </member>
       <member>
         <project>flexspi_xecc_multi_error_cm7</project>
@@ -43,13 +43,6 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>flexspi_xecc_multi_error_cm7</project>
-        <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>debug</name>
       <member>
         <project>flexspi_xecc_multi_error_cm7</project>
@@ -61,6 +54,13 @@
       <member>
         <project>flexspi_xecc_multi_error_cm7</project>
         <configuration>sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>flexspi_xecc_multi_error_cm7</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

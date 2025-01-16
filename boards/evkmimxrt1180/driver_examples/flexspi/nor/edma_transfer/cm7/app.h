@@ -78,7 +78,7 @@ static inline void flexspi_clock_init(void)
 {
     /*Clock setting for flexspi1*/
     CLOCK_SetRootClockDiv(kCLOCK_Root_Flexspi1, 2);
-    CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, 0);
+    CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, kCLOCK_FLEXSPI1_ClockRoot_MuxOscRc24M);
 }
 /*${prototype:end}*/
 

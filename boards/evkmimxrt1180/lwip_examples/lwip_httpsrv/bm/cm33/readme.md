@@ -1,5 +1,6 @@
-Overview
-========
+# lwip_httpsrv_bm
+
+## Overview
 
 The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP stack with bare metal SDK.
 The user uses an internet browser to send a request for connection. The board acts as an HTTP server and sends a web
@@ -21,30 +22,7 @@ so the board will print "IPv6 address update" messages followed by all valid IPv
 The assigned unique local or global unique addresses could be typed into the web browser's address bar in a form like
 "http://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8]" to access the web server over IPv6.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- GCC ARM Embedded  13.2.1
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-This example uses Ethernet RJ45 port J32.
-Prepare the Demo
-================
+## Prepare the Demo
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
 2.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
@@ -59,8 +37,7 @@ Prepare the Demo
 7.  Download the program to the target board.
 8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 1.  When the demo runs successfully, the terminal will display the following:
         Initializing PHY...
 
@@ -107,3 +84,28 @@ Running the demo
     in the list of valid addresses in the console output. Then the server could be reached over IPv6.
     For the example console output above, http://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8] could be typed into the browser's address bar to make it
     show the web page and communicate with the board over IPv6.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [LPCXpresso54S018](../../../_boards/lpcxpresso54s018/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [LPCXpresso54S018M](../../../_boards/lpcxpresso54s018m/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/lwip_examples/lwip_httpsrv/bm/example_board_readme.md)

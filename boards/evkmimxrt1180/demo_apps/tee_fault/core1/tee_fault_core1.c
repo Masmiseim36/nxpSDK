@@ -10,15 +10,11 @@
 #include "tee_fault_common.h"
 #include "board.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_MU           MU1_MUB
-#define APP_MU_IRQn       MU1_IRQn
-
-#define DEMO_INVALID_DATA_ADDR  (0x20480000U)   /* OCRAM1 */
 
 /*******************************************************************************
  * Variables
@@ -28,16 +24,10 @@ volatile uint8_t userOption = 0U;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void DEMO_SwitchToUntrustedDomain(void);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void DEMO_SwitchToUntrustedDomain(void)
-{
-
-}
-
 static void Fault_Handler(void)
 {
     switch (userOption)
@@ -96,8 +86,7 @@ static void DEMO_InvalidParameters(void)
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    NVIC_EnableIRQ(APP_MU_IRQn);
+    BOARD_InitHardware();
 
     MU_Init(DEMO_MU);
 

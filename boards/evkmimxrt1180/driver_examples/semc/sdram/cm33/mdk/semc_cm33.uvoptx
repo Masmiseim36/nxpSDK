@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1180_ram_cm33.ini</tIfile>
+        <tIfile>../evkmimxrt1180_ram_cm33.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -287,7 +287,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1180_flexspi_nor_cm33.ini</tIfile>
+        <tIfile>../evkmimxrt1180_flexspi_nor_cm33.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -466,7 +466,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1180_ram_cm33.ini</tIfile>
+        <tIfile>../evkmimxrt1180_ram_cm33.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -640,7 +640,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1180_flexspi_nor_cm33.ini</tIfile>
+        <tIfile>../evkmimxrt1180_flexspi_nor_cm33.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

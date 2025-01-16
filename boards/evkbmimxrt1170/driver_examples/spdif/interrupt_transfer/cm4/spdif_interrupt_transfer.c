@@ -1,21 +1,17 @@
 /*
- * Copyright 2017, NXP
+ * Copyright 2017 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_spdif.h"
 #include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPDIF          SPDIF
-#define DEMO_SPDIF_CLOCK_FREQ  CLOCK_GetPllFreq(kCLOCK_Pll_AudioPll)
-#define DEMO_SPDIF_SAMPLE_RATE 48000
 #define BUFFER_SIZE 768
 #define BUFFER_NUM  4
 #define PLAY_COUNT  5000
@@ -27,17 +23,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 spdif_handle_t txHandle           = {0};
 spdif_handle_t rxHandle           = {0};
 static volatile bool isTxFinished = false;
@@ -99,16 +84,7 @@ int main(void)
     uint32_t sourceClock = 0;
     uint8_t txIndex = 0, rxIndex = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    /*Clock setting for SPDIF*/
-    CLOCK_SetRootClockMux(kCLOCK_Root_Spdif, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Spdif, 1);
+    BOARD_InitHardware();
 
     PRINTF("SPDIF example started!\n\r");
 

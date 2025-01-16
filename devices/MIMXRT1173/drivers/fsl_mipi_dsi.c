@@ -231,7 +231,7 @@ static uint32_t DSI_GetInstance(const MIPI_DSI_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_dsiBases); instance++)
     {
-        if (s_dsiBases[instance] == base->host)
+        if (MSDK_REG_SECURE_ADDR(s_dsiBases[instance]) == MSDK_REG_SECURE_ADDR(base->host))
         {
             break;
         }
@@ -538,7 +538,7 @@ void DSI_SetDpiConfig(const MIPI_DSI_Type *base,
     assert(NULL != config);
 
     /* coefficient DPI event size to number of DSI bytes. */
-    float coff = ((float)numLanes * (float)dsiHsBitClkFreq_Hz) / ((float)dpiPixelClkFreq_Hz * 8.0);
+    float coff = ((float)numLanes * (float)dsiHsBitClkFreq_Hz) / ((float)dpiPixelClkFreq_Hz * 8.0f);
 
     DSI_HOST_DPI_INTFC_Type *dpi = base->dpi;
 
@@ -594,7 +594,7 @@ void DSI_SetDpiConfig(const MIPI_DSI_Type *base,
     dpi->VBP = config->vbp;
     dpi->VFP = config->vfp;
 
-    dpi->VACTIVE = config->panelHeight - 1UL;
+    dpi->VACTIVE = config->panelHeight;
 
     /* TODO: Configure VC if it is available. */
 }
@@ -620,9 +620,9 @@ uint32_t DSI_InitDphy(const MIPI_DSI_Type *base, const dsi_dphy_config_t *config
     DSI_HOST_Type *host                        = base->host;
 
 #if !((defined(FSL_FEATURE_MIPI_NO_DPHY_PLL)) && (0 != FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL))
-    uint32_t cn;
-    uint32_t cm;
-    uint32_t co;
+    uint32_t cn = 0x0U;
+    uint32_t cm = 0x0U;
+    uint32_t co = 0x0U;
     uint32_t outputPllFreq;
 
     outputPllFreq = DSI_DphyGetPllDivider(&cn, &cm, &co, refClkFreq_Hz, config->txHsBitClk_Hz);

@@ -113,17 +113,17 @@ LR_m_text   m_text_start   m_text_size
 {
   ; load address = execution address
   VECTOR_ROM              m_interrupts_start                 FIXED         vector_table_size
-  { 
+  {
     * (.isr_vector,+FIRST)
   }
-  
-  VECTOR_RAM              m_ram_vector_table_start           EMPTY         m_ram_vector_table_size 
+
+  VECTOR_RAM              m_ram_vector_table_start           EMPTY         m_ram_vector_table_size
   {
   }
-  
+
   ; load address = execution address
   ER_m_text               m_text_start + vector_table_size   FIXED         m_text_size - vector_table_size
-  { 
+  {
     * (InRoot$$Sections)
     .ANY (+RO)
   }
@@ -141,6 +141,11 @@ LR_m_text   m_text_start   m_text_size
   ER_bt_conn_cb                     +0
   {
     .ANY (._bt_conn_cb*)
+  }
+
+  ER_bt_ias_cb                     +0
+  {
+    .ANY (._bt_ias_cb*)
   }
 
   ER_bt_l2cap_fixed_chan            +0
@@ -201,7 +206,7 @@ LR_m_text   m_text_start   m_text_size
     .ANY (NonCacheable.init)
     .ANY (.bss.NonCacheable)
   }
-  
+
 #if defined(__heap_noncacheable__)
   ; Heap region growing up
   ARM_LIB_HEAP            +0             ALIGN 0x100         EMPTY         heap_size
@@ -211,7 +216,7 @@ LR_m_text   m_text_start   m_text_size
 
   ; Empty region added for MPU configuration
   RW_m_ncache_aux         m_ncache_start + m_ncache_size     EMPTY         0
-  { 
+  {
   }
 
 #if defined(__use_shmem__)
@@ -220,10 +225,10 @@ LR_m_text   m_text_start   m_text_size
   {
     .ANY (rpmsg_sh_mem_section)
   }
-  
+
   ; Empty region added for MPU configuration
   RPMSG_SH_MEM_aux        m_shmem_start + m_shmem_size       EMPTY         0
-  { 
+  {
   }
 #endif
 
@@ -241,6 +246,6 @@ LR_m_text   m_text_start   m_text_size
 
   ; Stack region growing down
   ARM_LIB_STACK           m_data_start+m_data_size           EMPTY         -stack_size
-  { 
+  {
   }
 }

@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -107,7 +106,7 @@ ele_s4xx_transparent_aead_encrypt(const psa_key_attributes_t *attributes,
     status_t ele_status = kStatus_Fail;
     psa_key_type_t key_type = psa_get_key_type(attributes);
     size_t key_bits = psa_get_key_bits(attributes);
-    generic_aead_algo_t ele_alg = 0;
+    generic_aead_algo_t ele_alg = (generic_aead_algo_t) 0;
     ele_generic_aead_t ctx = { 0 };
     size_t tag_length = 0;
 
@@ -207,7 +206,7 @@ psa_status_t ele_s4xx_transparent_aead_decrypt(
     status_t ele_status = kStatus_Fail;
     psa_key_type_t key_type = psa_get_key_type(attributes);
     size_t key_bits = psa_get_key_bits(attributes);
-    generic_aead_algo_t ele_alg = 0;
+    generic_aead_algo_t ele_alg = (generic_aead_algo_t) 0;
     ele_generic_aead_t ctx = { 0 };
     size_t tag_length = 0;
     uint8_t *tag = NULL;

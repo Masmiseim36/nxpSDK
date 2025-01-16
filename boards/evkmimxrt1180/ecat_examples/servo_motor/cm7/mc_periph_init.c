@@ -375,6 +375,11 @@ void M1_InitQD(void)
     XBAR_SetSignalsConnection(kXBAR3_InputQtimer3Timer1, kXBAR1_OutputEqdc1Phasea);
     XBAR_SetSignalsConnection(kXBAR3_InputQtimer3Timer2, kXBAR1_OutputEqdc1Phaseb);
 
+    EQDC1->CTRL2 &= ~EQDC_CTRL2_LDMOD_MASK;
+    EQDC1->CTRL &= ~EQDC_CTRL_LDOK_MASK;
+    EQDC1->CTRL |= EQDC_CTRL_LDOK_MASK;
+    while (EQDC1->CTRL & EQDC_CTRL_LDOK_MASK);
+
     /* Pass initialization data into encoder driver structure */
     /* encoder position and speed measurement */
     g_sM1Enc.pui32QdBase   = (EQDC_Type *)EQDC1;
@@ -386,14 +391,31 @@ void M1_InitQD(void)
     g_sM1Enc.bDirection    = M1_POSPE_ENC_DIRECTION;
     g_sM1Enc.fltSpdEncMin  = M1_POSPE_ENC_N_MIN;
     g_sM1Enc.ui16PulseNumber = M1_POSPE_ENC_PULSES;
-    MCDRV_QdEncSetDirection(&g_sM1Enc);
-
-    /* Initialization modulo counter*/
-    MCDRV_QdEncSetPulses(&g_sM1Enc);
 
     /* Enable modulo counting and revolution counter increment on roll-over */
     EQDC1->CTRL2 = EQDC_CTRL2_REVMOD_MASK;
 
+    /* Prescaler for the timer within QDC, the prescaling value is 2^Mx_QDC_TIMER_PRESCALER */
+    EQDC1->FILT = EQDC_FILT_FILT_CNT(2) | EQDC_FILT_FILT_PER(1) | EQDC_FILT_PRSC(6);
+    EQDC1->CTRL2 = EQDC_CTRL2_REVMOD_MASK | EQDC_CTRL2_PMEN_MASK;
+
+    /* Speed calculation (based on QDC HW) init */
+    g_sM1Enc.sSpeedEncFilter.sFltCoeff.f32B0 = M1_QDC_SPEED_FILTER_IIR_B0_FRAC;
+    g_sM1Enc.sSpeedEncFilter.sFltCoeff.f32B1 = M1_QDC_SPEED_FILTER_IIR_B1_FRAC;
+    g_sM1Enc.sSpeedEncFilter.sFltCoeff.f32A1 = M1_QDC_SPEED_FILTER_IIR_A1_FRAC;
+    GDFLIB_FilterIIR1Init_F16(&g_sM1Enc.sSpeedEncFilter); 
+
+    g_sM1Enc.ui32QDTimerFrequency = (CLOCK_GetRootClockFreq(kCLOCK_Root_Bus_Wakeup)) >> ((EQDC1->FILT & EQDC_FILT_PRSC_MASK) >> EQDC_FILT_PRSC_SHIFT);
+    g_sM1Enc.i32Q10Cnt2PosGain = ((0xffffffffU/(4*(1*g_sM1Enc.ui16PulseNumber)))*1024); // #define M1_QDC_LINE_RECIPROCAL_4_POS_GEN
+    g_sM1Enc.f32SpeedCalConst = (frac32_t)((60.0*g_sM1Enc.ui32QDTimerFrequency/(g_sM1Enc.ui16Pp*(4*g_sM1Enc.ui16PulseNumber)*M1_N_MAX)) * 134217728); // #define M1_SPEED_CAL_CONST
+    g_sM1Enc.fltSpeedFrac16ToAngularCoeff = (float_t)(2*PI*M1_N_MAX*g_sM1Enc.ui16Pp/60.0); // #define M1_SPEED_FRAC_TO_ANGULAR_COEFF
+    g_sM1Enc.f32PosMechInit = FRAC32(0.0);
+    g_sM1Enc.f32PosMechOffset = FRAC32(0.0);
+
+    M1_MCDRV_QD_SET_DIRECTION(&g_sM1Enc);
+
+    /* Initialization modulo counter*/
+    M1_MCDRV_QD_SET_PULSES(&g_sM1Enc);
 }
 
 /*!

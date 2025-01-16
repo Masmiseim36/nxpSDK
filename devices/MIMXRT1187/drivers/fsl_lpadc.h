@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
- * All rights reserved.
+ * Copyright 2016-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -23,8 +22,8 @@
 
 /*! @name Driver version */
 /*! @{ */
-/*! @brief LPADC driver version 2.8.4. */
-#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 8, 4))
+/*! @brief LPADC driver version 2.9.1. */
+#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 9, 1))
 /*! @} */
 
 #if (defined(FSL_FEATURE_LPADC_OFSTRIM_COUNT) && (FSL_FEATURE_LPADC_OFSTRIM_COUNT == 1))
@@ -282,19 +281,19 @@ typedef enum _lpadc_sample_scale_mode
  */
 typedef enum _lpadc_sample_channel_mode
 {
-    kLPADC_SampleChannelSingleEndSideA = 0x0U, /*!< Single-end mode, only A-side channel is converted. */
-#if !(defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 0U))
-    kLPADC_SampleChannelSingleEndSideB = 0x1U, /*!< Single-end mode, only B-side channel is converted. */
+    kLPADC_SampleChannelSingleEndSideA = 0x0U,         /*!< Single-end mode, only A-side channel is converted. */
+#if (defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 1U))
+    kLPADC_SampleChannelSingleEndSideB = 0x1U,         /*!< Single-end mode, only B-side channel is converted. */
 #if defined(FSL_FEATURE_LPADC_HAS_CMDL_DIFF) && FSL_FEATURE_LPADC_HAS_CMDL_DIFF
-    kLPADC_SampleChannelDiffBothSideAB = 0x2U, /*!< Differential mode, the ADC result is (CHnA-CHnB). */
-    kLPADC_SampleChannelDiffBothSideBA = 0x3U, /*!< Differential mode, the ADC result is (CHnB-CHnA). */
-#endif /* defined(FSL_FEATURE_LPADC_HAS_CMDL_DIFF) && FSL_FEATURE_LPADC_HAS_CMDL_DIFF */
+    kLPADC_SampleChannelDiffBothSideAB = 0x2U,         /*!< Differential mode, the ADC result is (CHnA-CHnB). */
+    kLPADC_SampleChannelDiffBothSideBA = 0x3U,         /*!< Differential mode, the ADC result is (CHnB-CHnA). */
+#endif                                                 /* FSL_FEATURE_LPADC_HAS_CMDL_DIFF */
 #if defined(FSL_FEATURE_LPADC_HAS_CMDL_CTYPE) && FSL_FEATURE_LPADC_HAS_CMDL_CTYPE
     kLPADC_SampleChannelDiffBothSide          = 0x02U, /*!< Differential mode, the ADC result is (CHnA-CHnB). */
     kLPADC_SampleChannelDualSingleEndBothSide = 0x03U, /*!< Dual-Single-Ended Mode. Both A side and B side
                                                             channels are converted independently. */
-#endif /* defined(FSL_FEATURE_LPADC_HAS_CMDL_CTYPE) && FSL_FEATURE_LPADC_HAS_CMDL_CTYPE */
-#endif /* !(defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 0U)) */
+#endif                                                 /* FSL_FEATURE_LPADC_HAS_CMDL_CTYPE */
+#endif                                                 /* FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS */
 } lpadc_sample_channel_mode_t;
 
 /*!
@@ -690,15 +689,15 @@ typedef struct _lpadc_calibration_value
 {
     /* gain calibration result. */
     uint16_t gainCalibrationResultA;
-#if !(defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 0U))
+#if (defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 1U))
     uint16_t gainCalibrationResultB;
-#endif /* !(defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 0U)) */
+#endif /* FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS */
 #if (defined(FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ) && FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ)
     /* general calibration value. */
     uint16_t generalCalibrationValueA[33U];
-#if !(defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 0U))
+#if (defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 1U))
     uint16_t generalCalibrationValueB[33U];
-#endif /* !(defined(FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS) && (FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS == 0U)) */
+#endif /* FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS */
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
 } lpadc_calibration_value_t;
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CALOFS */
@@ -1188,8 +1187,8 @@ static inline void LPADC_SetOffsetValue(ADC_Type *base, uint32_t value)
  * @param base  LPADC peripheral base address.
  */
 void LPADC_DoAutoCalibration(ADC_Type *base);
-#endif /* defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM */
-#endif /* defined(FSL_FEATURE_LPADC_HAS_CFG_CALOFS) && FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
+#endif /* FSL_FEATURE_LPADC_HAS_OFSTRIM */
+#endif /* FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
 
 #if defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFS) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFS
 #if defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM
@@ -1274,8 +1273,8 @@ static inline void LPADC_GetOffsetValue(ADC_Type *base, int32_t *pValueA, int32_
     *pValueA = (int32_t)ofstrimA;
     *pValueB = (int32_t)ofstrimB;
 }
-#endif /* defined(FSL_FEATURE_LPADC_OFSTRIM_COUNT) */
-#else  /* !(defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM) */
+#endif /* FSL_FEATURE_LPADC_OFSTRIM_COUNT */
+#else
 /*!
  * @brief Set proper offset value to trim 12 bit ADC conversion.
  *
@@ -1324,6 +1323,7 @@ static inline void LPADC_EnableOffsetCalibration(ADC_Type *base, bool enable)
         base->CTRL &= ~ADC_CTRL_CALOFS_MASK;
     }
 }
+
 #if defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE
 /*!
  * @brief Set offset calibration mode.
@@ -1336,7 +1336,7 @@ static inline void LPADC_SetOffsetCalibrationMode(ADC_Type *base, lpadc_offset_c
     base->CTRL = (base->CTRL & ~ADC_CTRL_CALOFSMODE_MASK) | ADC_CTRL_CALOFSMODE(mode);
 }
 
-#endif /* defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE */
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE */
 
 /*!
  * @brief Do offset calibration.
@@ -1361,14 +1361,24 @@ void LPADC_DoAutoCalibration(ADC_Type *base);
  */
 void LPADC_PrepareAutoCalibration(ADC_Type *base);
 
+#if defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE
 /*!
  * @brief Finish auto calibration start with LPADC_PrepareAutoCalibration.
+ * @note This feature is used for LPADC with CTRL[CALOFSMODE].
  *
  * @param base  LPADC peripheral base address.
  */
 void LPADC_FinishAutoCalibration(ADC_Type *base);
-
-#endif /* defined(FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ) && FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
+#else
+/*!
+ * @brief Finish auto calibration start with LPADC_PrepareAutoCalibration.
+ * @note This feature is used for LPADC without CTRL[CALOFSMODE].
+ *
+ * @param base  LPADC peripheral base address.
+ */
+void LPADC_FinishAutoCalibration(ADC_Type *base);
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE */
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
 
 /*!
  * @brief Get calibration value into the memory which is defined by invoker.
@@ -1393,7 +1403,7 @@ void LPADC_GetCalibrationValue(ADC_Type *base, lpadc_calibration_value_t *ptrCal
  */
 void LPADC_SetCalibrationValue(ADC_Type *base, const lpadc_calibration_value_t *ptrCalibrationValue);
 
-#endif /* defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFS) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFS */
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CALOFS */
 
 #if ((defined(FSL_FEATURE_LPADC_HAS_CTRL_CALHS)) && FSL_FEATURE_LPADC_HAS_CTRL_CALHS)
 /*!

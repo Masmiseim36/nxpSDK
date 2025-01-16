@@ -176,6 +176,10 @@
 #define NETC_MSGINTR MSGINTR1
 #endif
 
+#ifndef NETC_MSGINTR_PRIORITY
+#define NETC_MSGINTR_PRIORITY 6U
+#endif
+
 #ifndef NETC_MSGINTR_IRQ
 #define NETC_MSGINTR_IRQ MSGINTR1_IRQn
 #endif
@@ -610,7 +614,7 @@ void ethernetif_plat_init(struct netif *netif,
     ethernetif->transmitAccessEvent = xEventGroupCreate();
     xEventGroupSetBits(ethernetif->transmitAccessEvent, ethernetif->txFlag);
 
-    NVIC_SetPriority(NETC_MSGINTR_IRQ, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+    NVIC_SetPriority(NETC_MSGINTR_IRQ, NETC_MSGINTR_PRIORITY);
 #endif
 
     ethernetif->ep_config->cmdBdrConfig.bdBase   = ethernetif->cmdBuffDescrip;

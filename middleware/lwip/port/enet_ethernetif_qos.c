@@ -140,8 +140,6 @@
 
 #include "enet_configchecks.h"
 
-#define ENET_HW_CHKSUM (CHECKSUM_GEN_IP == 0)
-
 typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 
@@ -486,7 +484,8 @@ void ethernetif_plat_init(struct netif *netif,
     config.rxBuffAlloc    = ethernetif_rx_alloc;
     config.rxBuffFree     = ethernetif_rx_free;
 
-#if ENET_HW_CHKSUM == 1
+#if (CHECKSUM_CHECK_IP == 0) || (CHECKSUM_CHECK_TCP == 0) || (CHECKSUM_CHECK_UDP == 0) || \
+    (CHECKSUM_CHECK_ICMP == 0) || (CHECKSUM_CHECK_ICMP6 == 0)
     config.specialControl |= kENET_QOS_RxChecksumOffloadEnable;
 #endif
 
@@ -630,8 +629,11 @@ static err_t ethernetif_send_frame(struct ethernetif *ethernetif, unsigned char 
     DCACHE_CleanByRange((uint32_t)data, sizeof(tx_buffer_t));
 #endif
 
-#if ENET_HW_CHKSUM == 1
+#if (CHECKSUM_GEN_IP == 0) && (CHECKSUM_GEN_TCP == 0) && (CHECKSUM_GEN_UDP == 0) && (CHECKSUM_GEN_ICMP == 0) && \
+    (CHECKSUM_GEN_ICMP6 == 0)
     enet_qos_tx_offload_t offloadConfig = kENET_QOS_TxOffloadAll;
+#elif (CHECKSUM_GEN_IP == 0)
+    enet_qos_tx_offload_t offloadConfig = kENET_QOS_TxOffloadIPHeader;
 #else
     enet_qos_tx_offload_t offloadConfig = kENET_QOS_TxOffloadDisable;
 #endif

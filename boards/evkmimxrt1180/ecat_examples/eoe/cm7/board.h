@@ -22,11 +22,6 @@
 #define DEBUG_CONSOLE_UART_INDEX 1
 #endif
 
-/* EOE mailbox queue size */
-#define MAX_MBX_QUEUE_SIZE 100
-
-#define EOE_RECEIVE_TASK_PRIORITY 3
-
 /* The UART to use for debug messages. */
 #define BOARD_DEBUG_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 #define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart

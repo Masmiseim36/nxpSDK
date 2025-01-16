@@ -1,6 +1,5 @@
 /*
- * Copyright 2023 NXP
- * All rights reserved.
+ * Copyright 2023-2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -58,7 +57,7 @@ psa_status_t psa_algo_to_generic_rsa_sign_algo(psa_algorithm_t alg, generic_rsa_
 {
     psa_status_t status = PSA_ERROR_INVALID_ARGUMENT;
     /* ELE sig schemes are compatible with PSA alg. So just assign for now. */
-    *sig_scheme = alg;
+    *sig_scheme = (generic_rsa_algo_t)alg;
 
     switch (*sig_scheme) {
         case RSA_PKCS1_V1_5_SHA224_SIGN:

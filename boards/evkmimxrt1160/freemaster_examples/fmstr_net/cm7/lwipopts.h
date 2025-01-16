@@ -350,6 +350,13 @@ u32_t lwip_rand(void);
 #define IP_REASS_MAX_PBUFS 4
 #endif
 
+/**
+ * Use the LWIP private timeval struct
+ */
+#ifndef LWIP_TIMEVAL_PRIVATE
+#define LWIP_TIMEVAL_PRIVATE 1
+#endif
+
 #endif /* __LWIPOPTS_H__ */
 
 /*****END OF FILE****/

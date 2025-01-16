@@ -4,13 +4,11 @@
 ;            MIMXRT1166_cm7
 ;  @version: 0.1
 ;  @date:    2020-12-29
-;  @build:   b220909
+;  @build:   b240823
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2022 NXP
-; All rights reserved.
-;
+; Copyright 2016-2024 NXP
 ; SPDX-License-Identifier: BSD-3-Clause
 ;
 ; The modules in this file are included in the libraries, and may be replaced
@@ -118,9 +116,9 @@ __vector_table_0x1c
         DCD     CAN2_IRQHandler                               ;CAN2 interrupt
         DCD     CAN2_ERROR_IRQHandler                         ;CAN2 error interrupt
         DCD     CAN3_IRQHandler                               ;CAN3 interrupt
-        DCD     CAN3_ERROR_IRQHandler                         ;CAN3 erro interrupt
+        DCD     CAN3_ERROR_IRQHandler                         ;CAN3 error interrupt
         DCD     FLEXRAM_IRQHandler                            ;FlexRAM address out of range Or access hit IRQ
-        DCD     KPP_IRQHandler                                ;Keypad nterrupt
+        DCD     KPP_IRQHandler                                ;Keypad interrupt
         DCD     Reserved68_IRQHandler                         ;Reserved interrupt
         DCD     GPR_IRQ_IRQHandler                            ;GPR interrupt
         DCD     eLCDIF_IRQHandler                             ;eLCDIF interrupt

@@ -1,38 +1,15 @@
-Overview
-========
+# aws_shadow_wifi_nxp
+
+## Overview
 Demo for showing how to use the Device Shadow library's API.
 
 Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
 For more information about Wi-Fi module connection see:
-    readme_modules.txt
-    Getting started guide on supported modules configuration:
-    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+- readme_modules.txt
+- Getting started guide on supported modules configuration: https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
 
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-
-
-Board settings
-==============
-
-Prepare the Demo
-================
+## Prepare the Demo
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
@@ -40,16 +17,20 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 2.  Configure device in the AWS IoT Console base on this guide: https://docs.aws.amazon.com/iot/latest/developerguide/create-iot-resources.html
 
     Make note of example's "Thing name" and "REST API endpoint". These strings need to be set in the "aws_clientcredential.h".
+
     Example:
+
         #define clientcredentialMQTT_BROKER_ENDPOINT "abcdefgh123456.iot.us-west-2.amazonaws.com"
         #define clientcredentialIOT_THING_NAME "MyExample"
 
     Device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
     Note: be sure to add " at the beginning of a line and \n"\ on every line break.
+
     Example:
+
         #define keyCLIENT_CERTIFICATE_PEM NULL
 
-        Needs to be changed to:
+      Needs to be changed to:
 
         #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
         "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
@@ -65,6 +46,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 
 3.  This demo needs Wi-Fi network with internet access.
     Update these macros in "aws_clientcredential.h" based on your Wi-Fi network configuration:
+
         #define clientcredentialWIFI_SSID       "Paste Wi-Fi SSID here."
         #define clientcredentialWIFI_PASSWORD   "Paste Wi-Fi password here."
 
@@ -83,8 +65,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
     - One stop bit
     - No flow control
 
-Running the demo
-================
+## Running the demo
 The log below shows the output of the demo in the terminal window. The log can be different based on your Wi-Fi network configuration.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,3 +177,19 @@ The log below shows the output of the demo in the terminal window. The log can b
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/aws_examples/shadow_wifi_nxp/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/aws_examples/shadow_wifi_nxp/example_board_readme.md)

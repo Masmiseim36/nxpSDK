@@ -17,16 +17,17 @@ uint32_t tx_pdo_entry[1][4] = {
 	{ // axis 0
 	0x60410010, // statusword
 	0x60640020, // actual_position
-	0x60610008, // op_mode_display
-	0x606C0020	// actual_velocity
+	0x606C0020, // actual_velocity
+	0x60610008  // op_mode_display
 	}
 };
 
-uint32_t rx_pdo_entry[1][3] = {
+uint32_t rx_pdo_entry[1][4] = {
 	{ // axis 0
 	0x60400010, // controlword
-	0x60600008, // op_mode
-	0x607A0020 // Target position
+	0x607A0020, // Target position
+	0x60FF0020, // Target velocity
+	0x60600010  // op_mode
 	}
 };
 

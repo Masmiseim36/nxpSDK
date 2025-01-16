@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,9 +41,14 @@
  * @{
  */
 /*! @brief MU driver version. */
-#define FSL_MU_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
+#define FSL_MU_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*! @} */
 
+#define MU_GET_CORE_FLAG(flags) (((uint32_t)(flags) >> 0U) & 0xFFUL)
+#define MU_GET_STAT_FLAG(flags) (((uint32_t)(flags) >> 8U) & 0xFFUL)
+#define MU_GET_TX_FLAG(flags)   (((uint32_t)(flags) >> 20U) & 0xFUL)
+#define MU_GET_RX_FLAG(flags)   (((uint32_t)(flags) >> 24U) & 0xFUL)
+#define MU_GET_GI_FLAG(flags)   (((uint32_t)(flags) >> 28U) & 0xFUL)
 /*!
  * @brief MU status flags.
  */
@@ -374,9 +379,49 @@ static inline uint32_t MU_GetStatusFlags(MU_Type *base)
 }
 
 /*!
- * @brief Gets the MU IRQ pending status.
+ * @brief Return the RX status flags.
  *
- * This function returns the bit mask of the pending MU IRQs.
+ * This function return the RX status flags.
+ * Note: RFn bits of SR[27-24](mu status register) are
+ * mapped in reverse numerical order:
+ *      RF0 -> SR[27]
+ *      RF1 -> SR[26]
+ *      RF2 -> SR[25]
+ *      RF3 -> SR[24]
+ *
+ * @code
+ * status_reg = MU_GetRxStatusFlags(base);
+ * @endcode
+ *
+ * @param base MU peripheral base address.
+ * @return MU RX status
+ */
+
+static inline uint32_t MU_GetRxStatusFlags(MU_Type *base)
+{
+    uint32_t flags = 0U;
+    flags = MU_GET_RX_FLAG(MU_GetStatusFlags(base));
+
+    return flags;
+}
+
+/*!
+ * @brief Gets the MU IRQ pending status of enabled interrupts.
+ *
+ * This function returns the bit mask of the pending MU IRQs of enabled interrupts.
+ * Only these flags are checked.
+ *  kMU_Tx0EmptyFlag
+ *  kMU_Tx1EmptyFlag
+ *  kMU_Tx2EmptyFlag
+ *  kMU_Tx3EmptyFlag
+ *  kMU_Rx0FullFlag
+ *  kMU_Rx1FullFlag
+ *  kMU_Rx2FullFlag
+ *  kMU_Rx3FullFlag
+ *  kMU_GenInt0Flag
+ *  kMU_GenInt1Flag
+ *  kMU_GenInt2Flag
+ *  kMU_GenInt3Flag
  *
  * @param base MU peripheral base address.
  * @return      Bit mask of the MU IRQs pending.

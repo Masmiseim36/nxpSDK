@@ -1,6 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
- * All rights reserved.
+ * Copyright 2018-2021, 2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -77,6 +76,15 @@ void LPTMR1_IRQHandler(void);
 void LPTMR1_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(1);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#if (FSL_FEATURE_SOC_LPTMR_COUNT >2)
+void LPTMR2_IRQHandler(void);
+void LPTMR2_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(2);
     SDK_ISR_EXIT_BARRIER;
 }
 #endif

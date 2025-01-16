@@ -1,5 +1,6 @@
-Overview
-========
+# enet_txrx_ptp1588_transfer
+
+## Overview
 
 The enet_rxtx_ptp1588 example shows the way to use ENET driver to  
  receive and transmit frame in the 1588 feature required cases.
@@ -18,81 +19,17 @@ Note, The RMII mode is used for default setting to initialize the ENET interface
 can change it to MII mode as you wish. Please make sure the MII Mode setting in the MAC is synchronize to the setting
 in TWR-SERIAL board for the external PHY.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Loopback network cable RJ45 standard
-- MIMXRT1160-EVK board
-- Personal Computer
-
-Board settings
-==============
-On MIMXRT1160-EVK REVC board, GPIO_AD_32 uses as ENET_MDC in this example which is muxed with the SD1_CD_B,
-please check the R1926 and R136 connected to SD1_CD_B. If they are populated with resistor and SD card is
-inserted, this time enet can't access PHY.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Insert loopback network cable to Ethernet RJ45 port(J3).
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Make loopback cable:
-    568B standard 	Unknowed standard
-J1	orange+white    green+white
-J2	orange          green
-J3	green+white     orange+white
-J4	blue            brown+white
-J5	blue+white      brown
-J6	green           orange
-J7	brown+white     blue
-J8	brown           blue+white
-
-Connect J1 => J3, J2 => J6, J4 => J7, J5 => J8. 10/100M transfer only requires J1, J2, J3, J6, and 1G transfer requires all 8 pins.
-Check your net cable color order and refer to 568B standard or the other standard. If your cable's color order is not showed in the list,
-please connect J1~J8 based on your situation.
-
-Running the demo
-================
-When the demo runs, the log would be seen on the terminal like:
-
-ENET PTP 1588 example start.
-
-Get the 1-th time xx second xx nanosecond
-........
-Get the 10-th time xx second xx nanosecond
-
-The 1 frame transmitted success! the timestamp is xx second, xx nanosecond
-The 2 frame transmitted success! the timestamp is xx second, xx nanosecond
-The 3 frame transmitted success! the timestamp is xx second, xx nanosecond
-The 4 frame transmitted success! the timestamp is xx second, xx nanosecond
-......
-The 20 frame transmitted success! the timestamp is xx second, xx nanosecond
-
-Note: the xx second and xx nanosecond should not be zero and should be number with solid increment.
-
-The transmitted frame is a 1000 length broadcast frame.
-
-When a 1000 length ptp event message frame is received, the log would be added to the terminal like:
-A frame received. the length 1000 the timestamp is xx second, xx nanosecond
-Dest Address xx:xx:xx:xx:xx:xx Src Address xx:xx:xx:xx:xx:xx
-
-A frame received. the length 1000 Dest Address xx:xx:xx:xx:xx:xx Src Address xx:xx:xx:xx:xx:xx
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [EVK-MIMX8MM](../../../_boards/evkmimx8mm/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [EVK-MIMX8MP](../../../_boards/evkmimx8mp/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/enet/txrx_ptp1588_transfer/example_board_readme.md)

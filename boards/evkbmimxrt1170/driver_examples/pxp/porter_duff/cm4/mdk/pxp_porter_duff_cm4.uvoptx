@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_cm4_sdram_init.ini</tIfile>
+        <tIfile>../evkbmimxrt1170_cm4_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -277,7 +277,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_flexspi_nor_sdram.ini</tIfile>
+        <tIfile>../evkbmimxrt1170_cm4_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -446,7 +446,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_cm4_sdram_init.ini</tIfile>
+        <tIfile>../evkbmimxrt1170_cm4_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -610,7 +610,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_flexspi_nor_sdram.ini</tIfile>
+        <tIfile>../evkbmimxrt1170_cm4_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

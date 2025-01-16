@@ -5,17 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_FLEXIO     FLEXIO2
-#define BOARD_LED_FLEXIO_PIN 27U
 
 /*******************************************************************************
  * Prototypes
@@ -42,10 +39,7 @@ int main(void)
     };
     flexio_config_t fxioUserConfig;
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print a note to terminal. */
     PRINTF("\r\n FLEXIO PIN Driver example\r\n");

@@ -5,19 +5,7 @@
       <name>all</name>
       <member>
         <project>lpuart_9bit_interrupt_transfer_cm7</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>lpuart_9bit_interrupt_transfer_cm7</project>
         <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>lpuart_9bit_interrupt_transfer_cm7</project>
-        <configuration>hyperram_debug</configuration>
-      </member>
-      <member>
-        <project>lpuart_9bit_interrupt_transfer_cm7</project>
-        <configuration>hyperram_release</configuration>
       </member>
       <member>
         <project>lpuart_9bit_interrupt_transfer_cm7</project>
@@ -25,14 +13,19 @@
       </member>
       <member>
         <project>lpuart_9bit_interrupt_transfer_cm7</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>hyperram_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
       <member>
         <project>lpuart_9bit_interrupt_transfer_cm7</project>
         <configuration>release</configuration>
+      </member>
+      <member>
+        <project>lpuart_9bit_interrupt_transfer_cm7</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>lpuart_9bit_interrupt_transfer_cm7</project>
+        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -43,20 +36,6 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>hyperram_debug</name>
-      <member>
-        <project>lpuart_9bit_interrupt_transfer_cm7</project>
-        <configuration>hyperram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>hyperram_release</name>
-      <member>
-        <project>lpuart_9bit_interrupt_transfer_cm7</project>
-        <configuration>hyperram_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>flexspi_nor_debug</name>
       <member>
         <project>lpuart_9bit_interrupt_transfer_cm7</project>
@@ -64,10 +43,31 @@
       </member>
     </batchDefinition>
     <batchDefinition>
+      <name>hyperram_debug</name>
+      <member>
+        <project>lpuart_9bit_interrupt_transfer_cm7</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>lpuart_9bit_interrupt_transfer_cm7</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
       <name>flexspi_nor_release</name>
       <member>
         <project>lpuart_9bit_interrupt_transfer_cm7</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_release</name>
+      <member>
+        <project>lpuart_9bit_interrupt_transfer_cm7</project>
+        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

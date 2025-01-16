@@ -5,11 +5,11 @@
       <name>all</name>
       <member>
         <project>dev_mtp_lite_bm_cm33</project>
-        <configuration>release</configuration>
+        <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>dev_mtp_lite_bm_cm33</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>release</configuration>
       </member>
       <member>
         <project>dev_mtp_lite_bm_cm33</project>
@@ -17,17 +17,17 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>dev_mtp_lite_bm_cm33</project>
-        <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>flexspi_nor_debug</name>
       <member>
         <project>dev_mtp_lite_bm_cm33</project>
         <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>dev_mtp_lite_bm_cm33</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

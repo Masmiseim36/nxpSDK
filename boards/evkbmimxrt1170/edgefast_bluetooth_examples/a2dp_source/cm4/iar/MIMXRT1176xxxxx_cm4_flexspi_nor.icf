@@ -123,13 +123,14 @@ keep { section .flash_area_list, section ._net_buf_pool*, section ._k_mem_slab*,
 define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};
 define block ._bt_settings_static with fixed order { readonly section ._bt_settings*};
 define block ._bt_conn_cb with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_ias_cb with fixed order { readonly section ._bt_ias_cb*};
 define block ._bt_l2cap_fixed_chan with fixed order { readonly section ._bt_l2cap_fixed_chan*};
 define block ._bt_l2cap_br_fixed_chan with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
 define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
 define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
 define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
 
-place in TEXT_region                        { readonly,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
+place in TEXT_region                        { readonly,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_ias_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
 place in DATA2_region                        { block RW, block ._net_buf_pool, block ._k_mem_slab };
 place in DATA2_region                        { block ZI };
 if (isdefinedsymbol(__heap_noncacheable__)) {

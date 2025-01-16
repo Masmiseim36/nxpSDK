@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "FreeRTOS.h"
+
 #ifndef MBEDTLS_USER_CONFIG_H
 #define MBEDTLS_USER_CONFIG_H
 

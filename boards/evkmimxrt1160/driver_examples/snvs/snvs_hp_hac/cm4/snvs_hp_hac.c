@@ -6,9 +6,8 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_snvs_hp.h"
 #include "fsl_snvs_lp.h"
 
@@ -39,10 +38,7 @@ int main(void)
     snvs_hp_ssm_state_t ssmState;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Init SNVS */
     SNVS_LP_Init(SNVS);

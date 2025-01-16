@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -9,44 +9,13 @@
 #include "fsl_netc_switch.h"
 #include "fsl_netc_mdio.h"
 #include "fsl_msgintr.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app_core1.h"
 #include "mcmgr.h"
 
-#include "fsl_rgpio.h"
-#include "fsl_phyrtl8211f.h"
-volatile bool g_pinSet = false;
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT()                    \
-    rgpio_pin_config_t led_config = { \
-        kRGPIO_DigitalOutput,         \
-        0,                            \
-    };                                \
-    RGPIO_PinInit(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, &led_config);
-
-// #define LED_TOGGLE() GPIO_PortToggle(BOARD_USER_LED_GPIO, 1u << BOARD_USER_LED_GPIO_PIN);
-#define LED_TOGGLE()                                                      \
-    if (g_pinSet)                                                         \
-    {                                                                     \
-        RGPIO_PinWrite(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, 0U); \
-        g_pinSet = false;                                                 \
-    }                                                                     \
-    else                                                                  \
-    {                                                                     \
-        RGPIO_PinWrite(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, 1U); \
-        g_pinSet = true;                                                  \
-    }
-
-#define EXAMPLE_EP_RXBD_NUM          8U
-#define EXAMPLE_EP_TXBD_NUM          8U
-#define EXAMPLE_EP_BD_ALIGN          128U
-#define EXAMPLE_EP_BUFF_SIZE_ALIGN   64U
-#define EXAMPLE_EP_RXBUFF_SIZE       1518U
-#define EXAMPLE_EP_RXBUFF_SIZE_ALIGN SDK_SIZEALIGN(EXAMPLE_EP_RXBUFF_SIZE, EXAMPLE_EP_BUFF_SIZE_ALIGN)
-#define EXAMPLE_EP_TEST_FRAME_SIZE   1000U
 #define EXAMPLE_TX_INTR_MSG_DATA      0U
 #define EXAMPLE_RX_INTR_MSG_DATA      1U
 #define EXAMPLE_SI_COM_INTR_MSG_DATA  2U
@@ -174,17 +143,13 @@ int main(void)
     uint16_t msg;
 
     /* Init board hardware.*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
+    BOARD_InitHardware();
 
     /* Initialize MCMGR, install generic event handlers */
     (void)MCMGR_Init();
 
     /* Configure LED */
     LED_INIT();
-
-    /* FIXME: Wait for MCMGR fixing that MCMGR_GetStartupData may return success when master doesn't start core. */
-    SDK_DelayAtLeastUs(4000000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
     /* Get the startup data */
     do
@@ -196,7 +161,7 @@ int main(void)
     /* Use startup parameter from the master core... */
     for (i = 0; i < startupData; i++)
     {
-        SDK_DelayAtLeastUs(1000000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+        SDK_DelayAtLeastUs(1000000U, CLOCK_GetFreq(kCLOCK_CpuClk));
     }
 
     for (uint8_t index = 0U; index < EXAMPLE_EP_RXBD_NUM; index++)

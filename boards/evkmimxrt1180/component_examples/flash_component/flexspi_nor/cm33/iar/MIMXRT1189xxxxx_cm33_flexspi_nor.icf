@@ -45,7 +45,7 @@ define symbol vector_table_size        = 0x00000400;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x2000;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
@@ -133,8 +133,16 @@ define block APP_QACCESS_CODE with maximum size = m_code_tcm_size {
   section .rodata object fsl_clock.o,
   section .text   object ABImemcpy.o,
   section .rodata object ABImemcpy.o,
+  section .text   object ABImemset.o,
+  section .rodata object ABImemset.o,
   section .text   object ABImemset48.o,
-  section .rodata object ABImemset48.o
+  section .rodata object ABImemset48.o,
+  section .text   object I64DivZer.o,
+  section .rodata object I64DivZer.o,
+  section .text   object I64DivMod.o,
+  section .rodata object I64DivMod.o,
+  section .text   object ABImemclr4.o,
+  section .rodata object ABImemclr4.o
 };
 
 initialize by copy { readwrite, section .textrw, section DataQuickAccess, section CodeQuickAccess,
@@ -148,8 +156,16 @@ initialize by copy { readwrite, section .textrw, section DataQuickAccess, sectio
   section .rodata object fsl_clock.o,
   section .text   object ABImemcpy.o,
   section .rodata object ABImemcpy.o,
+  section .text   object ABImemset.o,
+  section .rodata object ABImemset.o,
   section .text   object ABImemset48.o,
   section .rodata object ABImemset48.o,
+  section .text   object I64DivZer.o,
+  section .rodata object I64DivZer.o,
+  section .text   object ABImemclr4.o,
+  section .rodata object ABImemclr4.o,
+  section .text   object I64DivMod.o,
+  section .rodata object I64DivMod.o,
 };
 
 do not initialize  { section .noinit };

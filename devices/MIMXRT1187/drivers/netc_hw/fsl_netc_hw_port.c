@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -210,6 +210,26 @@ status_t NETC_PortConfigEthMac(NETC_ETH_LINK_Type *base, const netc_port_ethmac_
         base->PM0_HD_FLOW_CTRL = reg;
         base->PM1_HD_FLOW_CTRL = reg;
     }
+
+#if defined(FSL_FEATURE_NETC_HAS_ERRATA_051994) && FSL_FEATURE_NETC_HAS_ERRATA_051994
+    /* ERRATA051994: The NETC does not always obey the wakeup time in PMn_LPWAKETIMER. and as a result may transmit frames before the PHY
+       has woken up from low power state. Such frames would be lost. Disable autonomous low power idle on Tx in case this issue. */
+    if (config->txSleepTimeCycleEEE != 0U)
+    {
+        return kStatus_NETC_Unsupported;
+    }
+#else
+    assert((config->txSleepTimeCycleEEE <= 0xFFFFFFU) && (config->txWakeupTimeCycleEEE <= 0xFFFFFFU));
+
+    base->PM0_SLEEP_TIMER = config->txSleepTimeCycleEEE;
+    base->PM1_SLEEP_TIMER = config->txSleepTimeCycleEEE;
+
+    if (config->txSleepTimeCycleEEE != 0U)
+    {
+        base->PM0_LPWAKE_TIMER = config->txWakeupTimeCycleEEE;
+        base->PM0_LPWAKE_TIMER = config->txWakeupTimeCycleEEE;
+    }
+#endif
 
     return kStatus_Success;
 }
@@ -586,6 +606,31 @@ void NETC_PortGetPseudoMacTrafficStatistic(NETC_PSEUDO_LINK_Type *base,
 #endif
 }
 #endif
+
+status_t NETC_PortConfigTxIpgPreamble(NETC_ETH_LINK_Type *base, uint8_t preambleCnt, uint8_t ipgLen)
+{
+    assert((preambleCnt >= 1U) && (preambleCnt <= 7U));
+    assert((ipgLen >= 4U) && (ipgLen <= 24U));
+#if (defined(FSL_FEATURE_NETC_HAS_ERRATA_052129) && FSL_FEATURE_NETC_HAS_ERRATA_052129)
+    /* ERR052129: The receiving NETC MAC cannot reliably detect the frame when IPG length and flexiable preamble are set to the minimum value.
+       As a result, frames may be lost, or partially received with a CRC error (e.g. if there is a data octet later in the frame that matches SFD).
+       When connecting NETC MAC to NETC MAC, for IPG_LEN=4, the minimum supported preamble is 2 bytes. When connecting NETC MAC to another device
+       that supports shorter-than standard IPG and preamble, ensure that the minimum IPG + preamble is 6 octets. */
+    assert((ipgLen + preambleCnt) >= 6U);
+#endif
+
+#if defined(NETC_ETH_LINK_PM0_TX_IPG_PREAMBLE_FLEX_PREAMBLE_EN_MASK) && defined(NETC_ETH_LINK_PM1_TX_IPG_PREAMBLE_FLEX_PREAMBLE_EN_MASK)
+    bool enable = (preambleCnt < 7U) ? true : false;
+
+    base->PM0_TX_IPG_PREAMBLE = NETC_ETH_LINK_PM0_TX_IPG_PREAMBLE_FLEX_PREAMBLE_EN(enable) |
+                                NETC_ETH_LINK_PM0_TX_IPG_PREAMBLE_FLEX_PREAMBLE_CNT(preambleCnt) |
+                                NETC_ETH_LINK_PM0_TX_IPG_PREAMBLE_IPG_LEN(ipgLen);
+    base->PM1_TX_IPG_PREAMBLE = NETC_ETH_LINK_PM1_TX_IPG_PREAMBLE_FLEX_PREAMBLE_EN(enable) |
+                                NETC_ETH_LINK_PM1_TX_IPG_PREAMBLE_FLEX_PREAMBLE_CNT(preambleCnt) |
+                                NETC_ETH_LINK_PM1_TX_IPG_PREAMBLE_IPG_LEN(ipgLen);
+#endif
+    return kStatus_Success;
+}
 
 status_t NETC_PortConfigTcCBS(NETC_PORT_Type *base, netc_hw_tc_idx_t tcIdx, const netc_port_tc_cbs_config_t *config)
 {

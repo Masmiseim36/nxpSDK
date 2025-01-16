@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
@@ -14,23 +14,22 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
 
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
-
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
 project(h264_freertos_cm7)
+
+enable_language(ASM)
 
 set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
 
@@ -46,7 +45,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../h264_freertos.c"
-"${ProjDirPath}/../ffconf.h"
 "${ProjDirPath}/../FreeRTOS_POSIX_portable.h"
 "${ProjDirPath}/../display.c"
 "${ProjDirPath}/../display.h"
@@ -54,60 +52,68 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../h264_dec.cpp"
 "${ProjDirPath}/../sdcard.c"
 "${ProjDirPath}/../sdcard.h"
-"${ProjDirPath}/../display_support.h"
-"${ProjDirPath}/../display_support.c"
+"${ProjDirPath}/../FreeRTOSConfig.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/errno.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/fcntl.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/mqueue.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/pthread.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sched.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/semaphore.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/signal.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/time.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/unistd.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/utils.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys/types.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX_internal.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX_portable_default.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX_types.h"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_clock.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_mqueue.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread_barrier.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread_cond.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread_mutex.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_sched.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_semaphore.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_timer.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_unistd.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_utils.c"
+"${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../FreeRTOSConfigBoard.h"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/errno.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/fcntl.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/mqueue.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/pthread.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sched.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/semaphore.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/signal.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys/types.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/time.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/unistd.h"
-"${ProjDirPath}/../freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/utils.h"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX.h"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX_internal.h"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX_portable_default.h"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX_types.h"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_clock.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_mqueue.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread_barrier.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread_cond.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_pthread_mutex.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_sched.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_semaphore.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_timer.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_unistd.c"
-"${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/source/FreeRTOS_POSIX_utils.c"
-"${ProjDirPath}/../freertos_libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
-"${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
+"${ProjDirPath}/../display_support.h"
+"${ProjDirPath}/../display_support.c"
+"${ProjDirPath}/../FreeRTOSConfig_Gen.h"
+"${ProjDirPath}/../ffconf_gen.h"
+"${ProjDirPath}/../fsl_os_abstraction_config.h"
+"${ProjDirPath}/../mcux_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../freertos_libraries/abstractions/posix/include
-    ${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/include
-    ${ProjDirPath}/../freertos_libraries/c_sdk/standard/common/include/private
+    ${SdkRootDirPath}/middleware/openh264/example/h264_freertos
+    ${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include
+    ${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/abstractions/posix/include/FreeRTOS_POSIX/sys
+    ${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/freertos_plus/standard/freertos_plus_posix/include
+    ${SdkRootDirPath}/middleware/openh264/example/h264_freertos/freertos_libraries/c_sdk/standard/common/include/private
 )
 
-set_source_files_properties("${ProjDirPath}/../ffconf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_sd")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
 set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
-set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../ffconf_gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_sd")
+set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
 
 include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 
@@ -121,5 +127,11 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
-set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/h264_freertos.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/h264_freertos.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

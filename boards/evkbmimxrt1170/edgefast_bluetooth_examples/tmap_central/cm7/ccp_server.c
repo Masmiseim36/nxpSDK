@@ -50,7 +50,7 @@ int ccp_server_init(void)
 {
 	int err;
 
-    bt_tbs_init();
+	bt_tbs_init();
 
 	bt_tbs_register_cb(&tbs_cbs);
 

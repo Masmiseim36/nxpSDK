@@ -5,25 +5,35 @@ The example demonstrates graphical widgets of the emWin library.
 
 SDK version
 ===========
-- Version: 2.16.000
+- Version: 24.12.00
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
+- Keil MDK  5.41
+- IAR embedded Workbench  9.60.3
 - GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+- MCUXpresso  24.12.00
 
 Hardware requirements
 =====================
 - Micro USB cable
 - MIMXRT1160-EVK board
-- RK055MHD091-CTG LCD board
 - Personal Computer
+- RK055MHD091 panel or RK055AHD091 panel or RK055IQH091 panel
 
 Board settings
 ==============
-1. Connect the RK055MHD091-CTG board to J48.
+1. Connect the LCD panel to J48.
+
+Select the panel
+The project uses RK055MHD091A0-CTG panel by default, to use other panels:
+
+If Kconfig is used, select the panel in Kconfig "Panel Selection".
+
+If package is used, modify the mcux_config.h:
+change DEMO_PANEL to 0 to use RK055AHD091-CTG.
+change DEMO_PANEL to 1 to use RK055IQH091-CTG.
+change DEMO_PANEL to 2 to use RK055MHD091A0-CTG(default).
 
 Prepare the Demo
 ================
@@ -34,12 +44,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Build the project, the project uses RK043FN66HS-CT6 by default, to use other panels,
-    change
-    #define DEMO_PANEL DEMO_PANEL_RK043FN66HS
-    to
-    #define DEMO_PANEL DEMO_PANEL_RK043FN02H
-    in emwin_support.h
+3.  Build the project.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 

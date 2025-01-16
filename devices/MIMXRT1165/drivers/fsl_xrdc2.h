@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,7 +19,7 @@
  * Definitions
  *****************************************************************************/
 /*! @brief Driver version. */
-#define FSL_XRDC2_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+#define FSL_XRDC2_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 
 /* Definitions for XRDC2 Exclusive access lock. */
 #define XRDC2_EAL_FORCE_RELEASE_MAGIC_0 0x02000046UL

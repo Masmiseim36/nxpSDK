@@ -1,5 +1,6 @@
-Overview
-========
+# smartcard
+
+## Overview
 This example demonstrates the SDK Peripheral drivers working with different methods.
 
 This example demonstrates use of smartcard driver API to read GSM sim card ICC-ID (Integrated circuit card identifier,
@@ -7,33 +8,7 @@ which should be placed on the card).
 Please be aware, that this example is just simple demonstration of smartcard driver API. It may not work with all types
 of GSM sim cards.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-- GSM sim card
-
-Board settings
-==============
-No special settings are required.
-
-Note:
-Card insert detection is not supported since there is no card insert detection circuit on this board.
-Prepare the Demo
-================
+## Prepare the Demo
 Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
 (http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
 
@@ -50,19 +25,25 @@ Connect a serial cable from the debug UART port of the board to the PC. Start Te
         Flow control: one
 5.  Confirm selected parameters by OK button.
 
-Running the demo
-================
+## Running the demo
 
 ***** SMARTCARD Driver Send Receive functionality example *****
 
 Card inserted.
 Deactivating card...Done!
-Resetting/Activating card...Done!
+## Resetting/Activating card...Done!
 Selecting Master root file.
 Getting response of selection command.
 Selecting ICC-ID file.
 Reading binary ICC-ID.
-Received smartcard ICC-IC: 000000000000000000
+## Received smartcard ICC-IC: 000000000000000000
 
 Send receive functionality example finished!
 ~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/smartcard/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/smartcard/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/driver_examples/smartcard/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/driver_examples/smartcard/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/driver_examples/smartcard/example_board_readme.md)

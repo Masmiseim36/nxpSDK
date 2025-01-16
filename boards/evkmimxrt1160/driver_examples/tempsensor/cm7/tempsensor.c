@@ -6,21 +6,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_tempsensor.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TEMP_SENSOR              TMPSNS
-#define DEMO_TEMP_LOW_HIGH_IRQn       TMPSNS_LOW_HIGH_IRQn
-#define DEMO_TEMP_PANIC_IRQn          TMPSNS_PANIC_IRQn
-#define DEMO_TEMP_LOW_HIGH_IRQHandler TMPSNS_LOW_HIGH_IRQHandler
-#define DEMO_TEMP_PANIC_IRQHandler    TMPSNS_PANIC_IRQHandler
-#define DEMO_HIGH_ALARM_TEMP          27U
-
 
 /*******************************************************************************
  * Prototypes
@@ -62,10 +54,7 @@ int main(void)
     tmpsns_config_t config;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("TMPSNS driver example. \r\n");
 

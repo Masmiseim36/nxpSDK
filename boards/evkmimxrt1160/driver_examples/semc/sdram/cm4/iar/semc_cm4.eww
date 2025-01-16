@@ -5,10 +5,6 @@
       <name>all</name>
       <member>
         <project>semc_cm4</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>semc_cm4</project>
         <configuration>debug</configuration>
       </member>
       <member>
@@ -17,14 +13,11 @@
       </member>
       <member>
         <project>semc_cm4</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
       <member>
         <project>semc_cm4</project>
-        <configuration>release</configuration>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -39,6 +32,13 @@
       <member>
         <project>semc_cm4</project>
         <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>semc_cm4</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

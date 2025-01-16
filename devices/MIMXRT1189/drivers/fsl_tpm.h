@@ -16,6 +16,8 @@
  * $Justification tpm_h_ref_1$
  * Hardware limitations make this code impossible to implement.
  *
+ * $Justification tpm_h_ref_2$
+ * Hardware limitations make this code impossible to implement.
  */
 
 /*!
@@ -29,8 +31,8 @@
 
 /*! @name Driver version */
 /*! @{ */
-/*! @brief TPM driver version 2.3.1. */
-#define FSL_TPM_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
+/*! @brief TPM driver version 2.3.2. */
+#define FSL_TPM_DRIVER_VERSION (MAKE_VERSION(2, 3, 2))
 /*! @} */
 
 /*! @brief Help macro to get the max counter value */
@@ -851,7 +853,23 @@ static inline void TPM_SetTimerPeriod(TPM_Type *base, uint32_t ticks)
     {
         assert(ticks <= 0xFFFFU);
     }
-    base->MOD = ticks;
+
+    /* 
+     * According to ERR008068, if writing the modulo register (TPMx_MOD) more than once when the timer counter is
+     * disabled, and writes occur at a frequency faster than the TPM asynchronous clock, the registers may not 
+     * update correctly.
+     * This issue occurs when the register is written an even number of times but does not appear when the register
+     * is written an odd number of times.
+     * Use do...while loop to ensure modulo register is updated.
+     */
+    do
+    {
+        base->MOD = ticks;
+        /*
+         * $Branch Coverage Justification$
+         * (ticks != base->MOD) not covered. $ref tpm_h_ref_2$.
+         */
+    } while (ticks != base->MOD);
 }
 
 /*!

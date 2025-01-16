@@ -1,0 +1,23 @@
+Release notes
+=============
+
+These release notes are for the motor-control middleware group of applications released together with the
+MCUXpresso SDK. The latest documentation for the motor control SDK is available on [MCUXpresso SDK for Motor Control](https://www.nxp.com/sdkmotorcontrol) web.
+
+MCUXpresso SDK 24.12.00, Motor control middleware v3.0.0
+========================================================
+
+	Leading platforms:
+	- mc_pmsm_snsless: LPCXpresso860-MAX, LPCXpresso55S69-EVK, MC56F80000-EVK, TWR-MC55F8200
+	- mc_pmsm_enc: MIMXRT1170-EVKB, MIMXRT1180-EVK, FRDM-MCXA153, FRDM-MCXA156, FRDM-MCXN236, FRDM-MCXN947, 
+	  LPCXpresso55S36-EVK, MC56F81000-EVK, MC56F83000-EVK, TWR-MC56F8400
+	- mc_pmsm_enc_iopamp: LPCXpresso55S36-EVK
+	- mc_pmsm_enc_dual: LPCXpresso55S36-EVK
+	- mc_bldc: MIMXRT1170-EVKB, LPCXpresso55S36-EVK
+
+	What is new:
+	- Examples are available on github.com
+
+	Known issues:
+	- FRDM-MCXA153 - Due to CPU load issues is FCTRL[RWSC] configuration out of specification
+	- FRDM-MCXA156 - Due to CPU load issues is FCTRL[RWSC] configuration out of specification

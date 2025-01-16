@@ -8,22 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Master related */
-#define EXAMPLE_LPSPI_MASTER_BASEADDR   LPSPI3
-#define EXAMPLE_LPSPI_MASTER_IRQN       LPSPI3_IRQn
-#define EXAMPLE_LPSPI_MASTER_IRQHandler LPSPI3_IRQHandler
-
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
-
-#define LPSPI_MASTER_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Lpspi0304)
 #define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
@@ -50,10 +40,7 @@ void SysTick_Handler(void)
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPSPI board to board polling example.\r\n");
     PRINTF("This example use one board as master and another as slave.\r\n");

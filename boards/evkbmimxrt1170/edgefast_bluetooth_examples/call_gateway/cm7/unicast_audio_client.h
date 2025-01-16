@@ -32,6 +32,10 @@ int unicast_client_disable_stream_unidirectional(uint8_t is_tx);
 
 int unicast_client_disable_streams(void);
 
+int unicast_client_connect_stream_unidirectional(uint8_t is_tx);
+
+int unicast_client_connect_streams(void);
+
 int unicast_client_start_stream_unidirectional(uint8_t is_tx);
 
 int unicast_client_start_streams(void);

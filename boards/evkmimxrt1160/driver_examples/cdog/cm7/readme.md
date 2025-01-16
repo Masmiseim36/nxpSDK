@@ -1,54 +1,11 @@
-Overview
-========
+# cdog
+
+## Overview
 The CWT Example project is a demonstration program that uses the KSDK software to set up secure counter and instruction timer.
 Then tests several times the expected value with value in secure counter. After that miscompare fault is intentionally generated
 by comparing secure counter with wrong value. At the end application let the instruction timer reach zero and generate another timeout fault.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1160-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-
-Note:
-To download binary of cm7 core into qspiflash and boot from qspiflash directly, following steps are needed:
-1. Compile flash target of the project, and get the binaray file "hello_world.bin".
-3. Set the SW1: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J11.
-4. Drop the binaray into disk "RT1160-EVK" on PC.
-5. Wait for the disk disappear and appear again which will take couple of seconds.
-7. Reset the board by pressing SW3 or power off and on the board. 
-(If default boot core is cm4, binary of cm4 could be downloaded and boot according to steps above.)
-Running the demo
-================
+## Running the demo
 When the demo runs successfully, the terminal displays similar information like the following:
 ~~~~~~~~~~~~~~~~~~
 
@@ -68,5 +25,23 @@ CDOG IRQ Reached
 End of example
 
 Note:
-To keep the program running correctly, it is recommended to perform a power on reset (POR; SW2) after loading the application.
+To keep the program running correctly, it is recommended to perform a power on reset (POR) after loading the application.
 SW reset does not clear pending fault flags.
+
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/cdog/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/cdog/example_board_readme.md)
+- [FRDM-MCXA153](../../_boards/frdmmcxa153/driver_examples/cdog/example_board_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/driver_examples/cdog/example_board_readme.md)
+- [FRDM-MCXA166](../../_boards/frdmmcxa166/driver_examples/cdog/example_board_readme.md)
+- [FRDM-MCXA276](../../_boards/frdmmcxa276/driver_examples/cdog/example_board_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/driver_examples/cdog/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/driver_examples/cdog/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/driver_examples/cdog/example_board_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/driver_examples/cdog/example_board_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/driver_examples/cdog/example_board_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/driver_examples/cdog/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/driver_examples/cdog/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/driver_examples/cdog/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/driver_examples/cdog/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/driver_examples/cdog/example_board_readme.md)

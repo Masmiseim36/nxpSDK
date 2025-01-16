@@ -5,7 +5,7 @@
 	</main>
 	<objects>
 		<object name="ObjId0000" type="CPrjDoc">
-			<member name="version" type="string">3.2.2.2</member>
+			<member name="version" type="string">3.2.3.2</member>
 			<member name="enum_db_man" type="CEnumList">ObjId0001</member>
 			<member name="variables" type="CObListEx">ObjId0029</member>
 			<member name="stimulators" type="CObListEx">ObjId0126</member>
@@ -19,11 +19,11 @@
 			<member name="mapfile_pre_select" type="sint32">0</member>
 			<member name="comm_params_saved" type="sint32">1</member>
 			<member name="comm_state_saved" type="sint32">0</member>
-			<member name="comm_state_enabled" type="sint32">1</member>
-			<member name="comm_port" type="sint32">4</member>
+			<member name="comm_state_enabled" type="sint32">0</member>
+			<member name="comm_port" type="sint32">-1</member>
 			<member name="comm_port_hint" type="string">COM_ALL</member>
 			<member name="comm_speed" type="sint32">115200</member>
-			<member name="comm_rs232_conn" type="string">RS232; port=COM5;speed=115200;</member>
+			<member name="comm_rs232_conn" type="string">RS232; port=COM0;speed=115200;</member>
 			<member name="comm_plugin_use" type="sint32">0</member>
 			<member name="comm_plugin_id" type="string"/>
 			<member name="comm_plugin_conn" type="string"/>
@@ -359,13 +359,15 @@
 			<member name="item76" type="CObject_ptr">ObjId0123</member>
 			<member name="item77" type="CObject_ptr">ObjId0124</member>
 			<member name="item78" type="CObject_ptr">ObjId0125</member>
+			<member name="item79" type="CObject_ptr">ObjId0705</member>
+			<member name="item80" type="CObject_ptr">ObjId0706</member>
 		</object>
 		<object name="ObjId0030" type="CVariable">
 			<member name="name" type="string">Application Switch</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">500</member>
 			<member name="address" type="string">g_bM1SwitchAppOnOff</member>
-			<member name="last_addr" type="uint32">0x200015D8</member>
+			<member name="last_addr" type="uint32">0x20002630</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -414,7 +416,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">300</member>
 			<member name="address" type="string">g_sM1Ctrl.eState</member>
-			<member name="last_addr" type="uint32">0x20000012</member>
+			<member name="last_addr" type="uint32">0x20000016</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -463,7 +465,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16SpeedMinimal</member>
-			<member name="last_addr" type="uint32">0x20000440</member>
+			<member name="last_addr" type="uint32">0x20000518</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -522,7 +524,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">s_fltM1speedScale</member>
-			<member name="last_addr" type="uint32">0x200004D4</member>
+			<member name="last_addr" type="uint32">0x200005AC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -571,7 +573,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16SpeedCmd</member>
-			<member name="last_addr" type="uint32">0x2000043E</member>
+			<member name="last_addr" type="uint32">0x20000516</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -630,7 +632,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16SpeedPiErr</member>
-			<member name="last_addr" type="uint32">0x20000446</member>
+			<member name="last_addr" type="uint32">0x2000051E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -689,7 +691,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedPiParams.a32IGain</member>
-			<member name="last_addr" type="uint32">0x200003D8</member>
+			<member name="last_addr" type="uint32">0x200004B0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -738,7 +740,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedPiParams.a32PGain</member>
-			<member name="last_addr" type="uint32">0x200003D4</member>
+			<member name="last_addr" type="uint32">0x200004AC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -787,7 +789,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.a32IGain</member>
-			<member name="last_addr" type="uint32">0x200003EC</member>
+			<member name="last_addr" type="uint32">0x200004C4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -836,7 +838,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.a32PGain</member>
-			<member name="last_addr" type="uint32">0x200003E8</member>
+			<member name="last_addr" type="uint32">0x200004C0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -885,7 +887,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16SpeedMeasured</member>
-			<member name="last_addr" type="uint32">0x2000043C</member>
+			<member name="last_addr" type="uint32">0x20000514</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -944,7 +946,7 @@
 			<member name="unit" type="string">rpm/s</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedRampParams.f32RampUp</member>
-			<member name="last_addr" type="uint32">0x20000404</member>
+			<member name="last_addr" type="uint32">0x200004DC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -993,7 +995,7 @@
 			<member name="unit" type="string">rpm/s</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedRampParams.f32RampDown</member>
-			<member name="last_addr" type="uint32">0x20000408</member>
+			<member name="last_addr" type="uint32">0x200004E0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1042,7 +1044,7 @@
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16IDcBus</member>
-			<member name="last_addr" type="uint32">0x2000044E</member>
+			<member name="last_addr" type="uint32">0x20000526</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1101,7 +1103,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">s_fltM1currentScale</member>
-			<member name="last_addr" type="uint32">0x200004D0</member>
+			<member name="last_addr" type="uint32">0x200005A8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1150,7 +1152,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16IDcBusLim</member>
-			<member name="last_addr" type="uint32">0x20000454</member>
+			<member name="last_addr" type="uint32">0x2000052C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1209,7 +1211,7 @@
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16IDcBusAlign</member>
-			<member name="last_addr" type="uint32">0x20000452</member>
+			<member name="last_addr" type="uint32">0x2000052A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1268,7 +1270,7 @@
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16UDcBus</member>
-			<member name="last_addr" type="uint32">0x20000464</member>
+			<member name="last_addr" type="uint32">0x2000053C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1327,7 +1329,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">s_fltM1DCBvoltageScale</member>
-			<member name="last_addr" type="uint32">0x200004CC</member>
+			<member name="last_addr" type="uint32">0x200005A4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1376,7 +1378,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.f32UBemfIntegThreshold</member>
-			<member name="last_addr" type="uint32">0x200004A0</member>
+			<member name="last_addr" type="uint32">0x20000578</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1425,7 +1427,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16UPhaseBemf</member>
-			<member name="last_addr" type="uint32">0x20000462</member>
+			<member name="last_addr" type="uint32">0x2000053A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1484,7 +1486,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16IDcBusNoFilt</member>
-			<member name="last_addr" type="uint32">0x2000044C</member>
+			<member name="last_addr" type="uint32">0x20000524</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1543,7 +1545,7 @@
 			<member name="unit" type="string">ms</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeAlignment</member>
-			<member name="last_addr" type="uint32">0x200004AA</member>
+			<member name="last_addr" type="uint32">0x20000582</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1592,7 +1594,7 @@
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16LowerLim</member>
-			<member name="last_addr" type="uint32">0x200003F8</member>
+			<member name="last_addr" type="uint32">0x200004D0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1651,7 +1653,7 @@
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16UpperLim</member>
-			<member name="last_addr" type="uint32">0x200003F6</member>
+			<member name="last_addr" type="uint32">0x200004CE</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1710,7 +1712,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusMaFilter.u16Sh</member>
-			<member name="last_addr" type="uint32">0x20000400</member>
+			<member name="last_addr" type="uint32">0x200004D8</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1759,7 +1761,7 @@
 			<member name="unit" type="string">ms</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.ui16PeriodFreewheelLong</member>
-			<member name="last_addr" type="uint32">0x200004A6</member>
+			<member name="last_addr" type="uint32">0x2000057E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1808,7 +1810,7 @@
 			<member name="unit" type="string">ms</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.ui16PeriodFreewheelShort</member>
-			<member name="last_addr" type="uint32">0x200004A8</member>
+			<member name="last_addr" type="uint32">0x20000580</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1857,7 +1859,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.f16StartCmtAcceleration</member>
-			<member name="last_addr" type="uint32">0x200004B4</member>
+			<member name="last_addr" type="uint32">0x2000058C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1906,7 +1908,7 @@
 			<member name="unit" type="string">cnt</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.ui16PeriodCmtNextInit</member>
-			<member name="last_addr" type="uint32">0x200004B8</member>
+			<member name="last_addr" type="uint32">0x20000590</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1955,7 +1957,7 @@
 			<member name="unit" type="string">cnt</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.ui16CounterStartCmt</member>
-			<member name="last_addr" type="uint32">0x20000498</member>
+			<member name="last_addr" type="uint32">0x20000570</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2004,7 +2006,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.ui16PeriodToffInit</member>
-			<member name="last_addr" type="uint32">0x200004BA</member>
+			<member name="last_addr" type="uint32">0x20000592</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2053,7 +2055,7 @@
 			<member name="unit" type="string">-</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16DutyCycle</member>
-			<member name="last_addr" type="uint32">0x20000468</member>
+			<member name="last_addr" type="uint32">0x20000540</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2102,7 +2104,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16SpeedRamp</member>
-			<member name="last_addr" type="uint32">0x20000444</member>
+			<member name="last_addr" type="uint32">0x2000051C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2161,7 +2163,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.ui16CounterCmtError</member>
-			<member name="last_addr" type="uint32">0x2000049A</member>
+			<member name="last_addr" type="uint32">0x20000572</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2210,7 +2212,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16IDcBusPiErr</member>
-			<member name="last_addr" type="uint32">0x2000045A</member>
+			<member name="last_addr" type="uint32">0x20000532</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2259,7 +2261,7 @@
 			<member name="unit" type="string">-</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.bLimFlag</member>
-			<member name="last_addr" type="uint32">0x200003FA</member>
+			<member name="last_addr" type="uint32">0x200004D2</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2308,7 +2310,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedPiParams.bLimFlag</member>
-			<member name="last_addr" type="uint32">0x200003E6</member>
+			<member name="last_addr" type="uint32">0x200004BE</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2357,7 +2359,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeCalibration</member>
-			<member name="last_addr" type="uint32">0x200004AC</member>
+			<member name="last_addr" type="uint32">0x20000584</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2406,7 +2408,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.ui32PeriodSixCmtSum</member>
-			<member name="last_addr" type="uint32">0x20000438</member>
+			<member name="last_addr" type="uint32">0x20000510</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2455,7 +2457,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">bDemoMode</member>
-			<member name="last_addr" type="uint32">0x200015DA</member>
+			<member name="last_addr" type="uint32">0x20002632</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2504,7 +2506,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">0</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.i16SectorCmt</member>
-			<member name="last_addr" type="uint32">0x2000046A</member>
+			<member name="last_addr" type="uint32">0x20000542</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2553,7 +2555,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_ui32MaxNumberOfCycles</member>
-			<member name="last_addr" type="uint32">0x200004DC</member>
+			<member name="last_addr" type="uint32">0x200005B4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2602,7 +2604,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_ui32NumberOfCycles</member>
-			<member name="last_addr" type="uint32">0x200004D8</member>
+			<member name="last_addr" type="uint32">0x200005B0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2651,7 +2653,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.f16SpeedNominal</member>
-			<member name="last_addr" type="uint32">0x20000442</member>
+			<member name="last_addr" type="uint32">0x2000051A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2710,7 +2712,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.cBoardID</member>
-			<member name="last_addr" type="uint32">0x200004E8</member>
+			<member name="last_addr" type="uint32">0x200000B8</member>
 			<member name="byte_size" type="sint32">15</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2759,7 +2761,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.cAppVer</member>
-			<member name="last_addr" type="uint32">0x2000051A</member>
+			<member name="last_addr" type="uint32">0x200000EA</member>
 			<member name="byte_size" type="sint32">5</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2808,7 +2810,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.ui32FreqCmtTimer</member>
-			<member name="last_addr" type="uint32">0x200004C4</member>
+			<member name="last_addr" type="uint32">0x2000059C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2857,7 +2859,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16FreqPwm</member>
-			<member name="last_addr" type="uint32">0x200004C8</member>
+			<member name="last_addr" type="uint32">0x200005A0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2906,7 +2908,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.f16UDcBusOver</member>
-			<member name="last_addr" type="uint32">0x2000047A</member>
+			<member name="last_addr" type="uint32">0x20000552</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2965,7 +2967,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.f16UDcBusUnder</member>
-			<member name="last_addr" type="uint32">0x2000047C</member>
+			<member name="last_addr" type="uint32">0x20000554</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3024,7 +3026,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000474</member>
+			<member name="last_addr" type="uint32">0x2000054C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3073,7 +3075,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdPending</member>
-			<member name="last_addr" type="uint32">0x20000476</member>
+			<member name="last_addr" type="uint32">0x2000054E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3122,7 +3124,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_bM1SwitchAppOnOff</member>
-			<member name="last_addr" type="uint32">0x200015D8</member>
+			<member name="last_addr" type="uint32">0x20002630</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3171,7 +3173,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_ui32NumberOfCycles</member>
-			<member name="last_addr" type="uint32">0x200004D8</member>
+			<member name="last_addr" type="uint32">0x200005B0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3220,7 +3222,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_ui32MaxNumberOfCycles</member>
-			<member name="last_addr" type="uint32">0x200004DC</member>
+			<member name="last_addr" type="uint32">0x200005B4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3269,7 +3271,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16FastCtrlLoopFreq</member>
-			<member name="last_addr" type="uint32">0x200004BC</member>
+			<member name="last_addr" type="uint32">0x20000594</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3318,7 +3320,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16SlowCtrlLoopFreq</member>
-			<member name="last_addr" type="uint32">0x200004BE</member>
+			<member name="last_addr" type="uint32">0x20000596</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3367,7 +3369,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.cExampleID</member>
-			<member name="last_addr" type="uint32">0x200004FC</member>
+			<member name="last_addr" type="uint32">0x200000CC</member>
 			<member name="byte_size" type="sint32">30</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3416,7 +3418,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000474</member>
+			<member name="last_addr" type="uint32">0x2000054C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3465,7 +3467,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000474</member>
+			<member name="last_addr" type="uint32">0x2000054C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3514,7 +3516,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000474</member>
+			<member name="last_addr" type="uint32">0x2000054C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3563,7 +3565,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.bFaultClearMan</member>
-			<member name="last_addr" type="uint32">0x200004B2</member>
+			<member name="last_addr" type="uint32">0x2000058A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3612,7 +3614,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000478</member>
+			<member name="last_addr" type="uint32">0x20000550</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3661,7 +3663,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000478</member>
+			<member name="last_addr" type="uint32">0x20000550</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3710,7 +3712,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">s_eM1StateRun</member>
-			<member name="last_addr" type="uint32">0x200015E4</member>
+			<member name="last_addr" type="uint32">0x2000263E</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3759,7 +3761,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeCalibration</member>
-			<member name="last_addr" type="uint32">0x200004AC</member>
+			<member name="last_addr" type="uint32">0x20000584</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3808,7 +3810,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeFaultRelease</member>
-			<member name="last_addr" type="uint32">0x200004AE</member>
+			<member name="last_addr" type="uint32">0x20000586</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3857,7 +3859,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f16UpperLim</member>
-			<member name="last_addr" type="uint32">0x200003E2</member>
+			<member name="last_addr" type="uint32">0x200004BA</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3906,7 +3908,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f16LowerLim</member>
-			<member name="last_addr" type="uint32">0x200003E4</member>
+			<member name="last_addr" type="uint32">0x200004BC</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3955,7 +3957,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B0</member>
-			<member name="last_addr" type="uint32">0x20000424</member>
+			<member name="last_addr" type="uint32">0x200004FC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4004,7 +4006,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B1</member>
-			<member name="last_addr" type="uint32">0x20000428</member>
+			<member name="last_addr" type="uint32">0x20000500</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4053,7 +4055,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32A1</member>
-			<member name="last_addr" type="uint32">0x2000042C</member>
+			<member name="last_addr" type="uint32">0x20000504</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4102,7 +4104,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32B0</member>
-			<member name="last_addr" type="uint32">0x20000410</member>
+			<member name="last_addr" type="uint32">0x200004E8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4151,7 +4153,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32B1</member>
-			<member name="last_addr" type="uint32">0x20000414</member>
+			<member name="last_addr" type="uint32">0x200004EC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4200,7 +4202,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32A1</member>
-			<member name="last_addr" type="uint32">0x20000418</member>
+			<member name="last_addr" type="uint32">0x200004F0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4249,7 +4251,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16StartCmtNumber</member>
-			<member name="last_addr" type="uint32">0x200004B6</member>
+			<member name="last_addr" type="uint32">0x2000058E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4298,7 +4300,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sCtrlBLDC.i16SpeedScaleConst</member>
-			<member name="last_addr" type="uint32">0x2000044A</member>
+			<member name="last_addr" type="uint32">0x20000522</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4347,7 +4349,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16FreqCtrlLoop</member>
-			<member name="last_addr" type="uint32">0x200004C2</member>
+			<member name="last_addr" type="uint32">0x2000059A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4379,6 +4381,104 @@
 			<member name="filt_reset_onmod" type="sint32">1</member>
 			<member name="filt_time" type="uint32">0x1388</member>
 			<member name="modif_mode" type="sint32">0</member>
+			<member name="modif_edit_mode" type="sint32">2</member>
+			<member name="modif_set_mode" type="sint32">0</member>
+			<member name="modif_auto_fin" type="sint32">1</member>
+			<member name="modif_auto_hide" type="sint32">1</member>
+			<member name="modif_predefs_modes" type="uint32">0x1</member>
+			<member name="modif_predefs_other" type="string"/>
+			<member name="modif_set_min" type="string"/>
+			<member name="modif_set_max" type="string"/>
+			<member name="modif_set_step" type="string"/>
+			<member name="modif_address" type="string"/>
+			<member name="modif_last_addr" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0705" type="CVariable">
+			<member name="name" type="string">User Path 1</member>
+			<member name="unit" type="string">unit</member>
+			<member name="period" type="sint32">1000</member>
+			<member name="address" type="string">g_sAppIdFM.cUserPath1</member>
+			<member name="last_addr" type="uint32">0x20000018</member>
+			<member name="byte_size" type="sint32">80</member>
+			<member name="description" type="string"/>
+			<member name="comment" type="string"/>
+			<member name="virtual" type="sint32">0</member>
+			<member name="virtual_default" type="string">0</member>
+			<member name="treat_as" type="sint32">5</member>
+			<member name="type_fmt" type="string">Fixed-length string</member>
+			<member name="bit_shift" type="sint32">0</member>
+			<member name="bit_mask" type="string">no mask (-1)</member>
+			<member name="value_trf" type="CObject_ptr">NULL</member>
+			<member name="enum_enabled" type="sint32">0</member>
+			<member name="enum_num_always" type="sint32">0</member>
+			<member name="enum_default_val" type="string">unknown</member>
+			<member name="enum_num_with_default" type="sint32">1</member>
+			<member name="enum" type="string"/>
+			<member name="show_as" type="sint32">3</member>
+			<member name="show_val" type="sint32">1</member>
+			<member name="show_max" type="sint32">0</member>
+			<member name="show_min" type="sint32">0</member>
+			<member name="show_num_fixed_digs" type="sint32">2147483647</member>
+			<member name="show_num_lzero_fill" type="sint32">0</member>
+			<member name="show_num_afp_digs" type="sint32">2147483647</member>
+			<member name="show_num_exp" type="sint32">0</member>
+			<member name="show_ascii_zterm" type="sint32">1</member>
+			<member name="show_ascii_rev" type="sint32">0</member>
+			<member name="show_ascii_hex" type="sint32">1</member>
+			<member name="show_ascii_chwdt" type="sint32">1</member>
+			<member name="filt_enabled" type="sint32">0</member>
+			<member name="filt_reset_onmod" type="sint32">1</member>
+			<member name="filt_time" type="uint32">0x1388</member>
+			<member name="modif_mode" type="sint32">1</member>
+			<member name="modif_edit_mode" type="sint32">2</member>
+			<member name="modif_set_mode" type="sint32">0</member>
+			<member name="modif_auto_fin" type="sint32">1</member>
+			<member name="modif_auto_hide" type="sint32">1</member>
+			<member name="modif_predefs_modes" type="uint32">0x1</member>
+			<member name="modif_predefs_other" type="string"/>
+			<member name="modif_set_min" type="string"/>
+			<member name="modif_set_max" type="string"/>
+			<member name="modif_set_step" type="string"/>
+			<member name="modif_address" type="string"/>
+			<member name="modif_last_addr" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0706" type="CVariable">
+			<member name="name" type="string">User Path 2</member>
+			<member name="unit" type="string">unit</member>
+			<member name="period" type="sint32">1000</member>
+			<member name="address" type="string">g_sAppIdFM.cUserPath2</member>
+			<member name="last_addr" type="uint32">0x20000068</member>
+			<member name="byte_size" type="sint32">80</member>
+			<member name="description" type="string"/>
+			<member name="comment" type="string"/>
+			<member name="virtual" type="sint32">0</member>
+			<member name="virtual_default" type="string">0</member>
+			<member name="treat_as" type="sint32">5</member>
+			<member name="type_fmt" type="string">Fixed-length string</member>
+			<member name="bit_shift" type="sint32">0</member>
+			<member name="bit_mask" type="string">no mask (-1)</member>
+			<member name="value_trf" type="CObject_ptr">NULL</member>
+			<member name="enum_enabled" type="sint32">0</member>
+			<member name="enum_num_always" type="sint32">0</member>
+			<member name="enum_default_val" type="string">unknown</member>
+			<member name="enum_num_with_default" type="sint32">1</member>
+			<member name="enum" type="string"/>
+			<member name="show_as" type="sint32">3</member>
+			<member name="show_val" type="sint32">1</member>
+			<member name="show_max" type="sint32">0</member>
+			<member name="show_min" type="sint32">0</member>
+			<member name="show_num_fixed_digs" type="sint32">2147483647</member>
+			<member name="show_num_lzero_fill" type="sint32">0</member>
+			<member name="show_num_afp_digs" type="sint32">2147483647</member>
+			<member name="show_num_exp" type="sint32">0</member>
+			<member name="show_ascii_zterm" type="sint32">1</member>
+			<member name="show_ascii_rev" type="sint32">0</member>
+			<member name="show_ascii_hex" type="sint32">1</member>
+			<member name="show_ascii_chwdt" type="sint32">1</member>
+			<member name="filt_enabled" type="sint32">0</member>
+			<member name="filt_reset_onmod" type="sint32">1</member>
+			<member name="filt_time" type="uint32">0x1388</member>
+			<member name="modif_mode" type="sint32">1</member>
 			<member name="modif_edit_mode" type="sint32">2</member>
 			<member name="modif_set_mode" type="sint32">0</member>
 			<member name="modif_auto_fin" type="sint32">1</member>
@@ -4460,6 +4560,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0139" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">aaa</member>
@@ -4473,6 +4574,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0140" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">HawkV1 xMap parser</member>
@@ -4486,6 +4588,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0141" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">TI map file</member>
@@ -4499,6 +4602,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0142" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">TI map file</member>
@@ -4512,6 +4616,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0143" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">Cosmic_HCS08</member>
@@ -4525,6 +4630,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0144" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">CodeWarrior ColdFire xMAP</member>
@@ -4538,6 +4644,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0145" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">CodeWarrior ColdFire xMAP gyro</member>
@@ -4551,6 +4658,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0146" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">ColdFire xMAP - gyro</member>
@@ -4564,6 +4672,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0147" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">syc</member>
@@ -4577,6 +4686,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0148" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">microchip</member>
@@ -4590,6 +4700,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0149" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">MicroChip</member>
@@ -4603,6 +4714,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0150" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">TI map file</member>
@@ -4616,6 +4728,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0151" type="CPrjDoc_RxpFileType">
 			<member name="type_name" type="string">ELF</member>
@@ -4629,6 +4742,7 @@
 			<member name="size_as_hex" type="sint32">1</member>
 			<member name="size_shift" type="sint32">0</member>
 			<member name="size_shift_right" type="sint32">0</member>
+			<member name="type_index" type="sint32">-1</member>
 		</object>
 		<object name="ObjId0152" type="CObList"/>
 		<object name="ObjId0154" type="CStringList"/>
@@ -4704,14 +4818,16 @@
 			<member name="item9" type="CObject_ptr">ObjId0103</member>
 			<member name="item10" type="CObject_ptr">ObjId0089</member>
 			<member name="item11" type="CObject_ptr">ObjId0104</member>
-			<member name="item12" type="CObject_ptr">ObjId0098</member>
-			<member name="item13" type="CObject_ptr">ObjId0097</member>
-			<member name="item14" type="CObject_ptr">ObjId0105</member>
-			<member name="item15" type="CObject_ptr">ObjId0106</member>
-			<member name="item16" type="CObject_ptr">ObjId0107</member>
-			<member name="item17" type="CObject_ptr">ObjId0108</member>
-			<member name="item18" type="CObject_ptr">ObjId0109</member>
-			<member name="item19" type="CObject_ptr">ObjId0110</member>
+			<member name="item12" type="CObject_ptr">ObjId0705</member>
+			<member name="item13" type="CObject_ptr">ObjId0706</member>
+			<member name="item14" type="CObject_ptr">ObjId0098</member>
+			<member name="item15" type="CObject_ptr">ObjId0097</member>
+			<member name="item16" type="CObject_ptr">ObjId0105</member>
+			<member name="item17" type="CObject_ptr">ObjId0106</member>
+			<member name="item18" type="CObject_ptr">ObjId0107</member>
+			<member name="item19" type="CObject_ptr">ObjId0108</member>
+			<member name="item20" type="CObject_ptr">ObjId0109</member>
+			<member name="item21" type="CObject_ptr">ObjId0110</member>
 		</object>
 		<object name="ObjId0161" type="CObList"/>
 		<object name="ObjId0162" type="CObList">
@@ -6742,6 +6858,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">1</member>
 			<member name="var_count" type="sint32">1</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0387</member>
@@ -6882,6 +6999,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">1</member>
 			<member name="var_count" type="sint32">1</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0395</member>
@@ -7022,6 +7140,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">4</member>
 			<member name="var_count" type="sint32">4</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0403</member>
@@ -7183,6 +7302,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">1</member>
 			<member name="var_count" type="sint32">1</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0414</member>
@@ -7330,6 +7450,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">1</member>
 			<member name="var_count" type="sint32">1</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0422</member>
@@ -7477,6 +7598,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">2</member>
 			<member name="var_count" type="sint32">2</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0430</member>
@@ -7631,6 +7753,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">5</member>
 			<member name="var_count" type="sint32">5</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0439</member>
@@ -7799,6 +7922,7 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
+			<member name="graph_break_line" type="sint32">0</member>
 			<member name="graph_var_count" type="sint32">1</member>
 			<member name="var_count" type="sint32">1</member>
 			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0451</member>
@@ -7946,8 +8070,10 @@
 			<member name="graph_x_max" type="real64">1.00000000000000000000e+02</member>
 			<member name="graph_x_min_auto" type="sint32">1</member>
 			<member name="graph_x_max_auto" type="sint32">1</member>
-			<member name="graph_var_count" type="sint32">0</member>
-			<member name="var_count" type="sint32">0</member>
+			<member name="graph_break_line" type="sint32">0</member>
+			<member name="graph_var_count" type="sint32">1</member>
+			<member name="var_count" type="sint32">1</member>
+			<member name="var0_info" type="CPrjItemRS_VarInfo">ObjId0704</member>
 			<member name="yblock0_info" type="CPrjItemRS_YBlockInfo">ObjId0459</member>
 			<member name="yblock1_info" type="CPrjItemRS_YBlockInfo">ObjId0460</member>
 			<member name="yblock2_info" type="CPrjItemRS_YBlockInfo">ObjId0461</member>
@@ -7957,7 +8083,7 @@
 			<member name="rec_time_base" type="sint32">99</member>
 			<member name="rec_total_samples" type="sint32">500</member>
 			<member name="trig_pretrigger" type="sint32">20</member>
-			<member name="trig_arun" type="sint32">0</member>
+			<member name="trig_arun" type="sint32">1</member>
 			<member name="trig_aload" type="sint32">1</member>
 			<member name="trig_astop_ena" type="sint32">1</member>
 			<member name="trig_astop_delay" type="real64">1.00000000000000000000e+01</member>
@@ -7970,6 +8096,12 @@
 			<member name="data_capture_file_type" type="sint32">0</member>
 			<member name="data_capture_dir" type="string">C:\Data</member>
 			<member name="data_capture_dir" type="sint32">0</member>
+		</object>
+		<object name="ObjId0704" type="CPrjItemRS_VarInfo">
+			<member name="variable" type="CObject_ptr">ObjId0111</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
+			<member name="color" type="uint32">0x2E2DED</member>
 		</object>
 		<object name="ObjId0459" type="CPrjItemRS_YBlockInfo">
 			<member name="join_class" type="sint32">0</member>
@@ -8079,39 +8211,39 @@
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
 		<object name="ObjId0466" type="CObArray" length="6">
-			<member name="index0" type="CObject_ptr">ObjId0467</member>
-			<member name="index1" type="CObject_ptr">ObjId0468</member>
-			<member name="index2" type="CObject_ptr">ObjId0469</member>
-			<member name="index3" type="CObject_ptr">ObjId0470</member>
-			<member name="index4" type="CObject_ptr">ObjId0471</member>
-			<member name="index5" type="CObject_ptr">ObjId0690</member>
+			<member name="index0" type="CObject_ptr">ObjId0722</member>
+			<member name="index1" type="CObject_ptr">ObjId0723</member>
+			<member name="index2" type="CObject_ptr">ObjId0724</member>
+			<member name="index3" type="CObject_ptr">ObjId0725</member>
+			<member name="index4" type="CObject_ptr">ObjId0726</member>
+			<member name="index5" type="CObject_ptr">ObjId0727</member>
 		</object>
-		<object name="ObjId0467" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId0722" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">367</member>
 			<member name="column_ix" type="sint32">0</member>
 		</object>
-		<object name="ObjId0468" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId0723" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
-			<member name="column_width" type="sint32">152</member>
+			<member name="column_width" type="sint32">362</member>
 			<member name="column_ix" type="sint32">1</member>
 		</object>
-		<object name="ObjId0469" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId0724" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">120</member>
 			<member name="column_ix" type="sint32">2</member>
 		</object>
-		<object name="ObjId0470" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId0725" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">70</member>
 			<member name="column_ix" type="sint32">3</member>
 		</object>
-		<object name="ObjId0471" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId0726" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
 		</object>
-		<object name="ObjId0690" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId0727" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">120</member>
 			<member name="column_ix" type="sint32">5</member>
@@ -8157,6 +8289,10 @@
 			<member name="value18" type="CObject_ptr">ObjId0576</member>
 			<member name="key19" type="CObject_ptr">ObjId0110</member>
 			<member name="value19" type="CObject_ptr">ObjId0583</member>
+			<member name="key20" type="CObject_ptr">ObjId0705</member>
+			<member name="value20" type="CObject_ptr">ObjId0708</member>
+			<member name="key21" type="CObject_ptr">ObjId0706</member>
+			<member name="value21" type="CObject_ptr">ObjId0715</member>
 		</object>
 		<object name="ObjId0473" type="CPrjItemBlock_VarInfo">
 			<member name="row_height" type="sint32">24</member>
@@ -9196,6 +9332,138 @@
 			<member name="font_underline" type="sint32">0</member>
 			<member name="alignment" type="sint32">33</member>
 			<member name="backcolor" type="uint32">0xD7FF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0708" type="CPrjItemBlock_VarInfo">
+			<member name="row_height" type="sint32">15</member>
+			<member name="row_cell_formats" type="CObArrayEx">ObjId0709</member>
+		</object>
+		<object name="ObjId0709" type="CObArray" length="5">
+			<member name="index0" type="CObject_ptr">ObjId0710</member>
+			<member name="index1" type="CObject_ptr">ObjId0711</member>
+			<member name="index2" type="CObject_ptr">ObjId0712</member>
+			<member name="index3" type="CObject_ptr">ObjId0713</member>
+			<member name="index4" type="CObject_ptr">ObjId0714</member>
+		</object>
+		<object name="ObjId0710" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0711" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0712" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0713" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0714" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0715" type="CPrjItemBlock_VarInfo">
+			<member name="row_height" type="sint32">15</member>
+			<member name="row_cell_formats" type="CObArrayEx">ObjId0716</member>
+		</object>
+		<object name="ObjId0716" type="CObArray" length="5">
+			<member name="index0" type="CObject_ptr">ObjId0717</member>
+			<member name="index1" type="CObject_ptr">ObjId0718</member>
+			<member name="index2" type="CObject_ptr">ObjId0719</member>
+			<member name="index3" type="CObject_ptr">ObjId0720</member>
+			<member name="index4" type="CObject_ptr">ObjId0721</member>
+		</object>
+		<object name="ObjId0717" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0718" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0719" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0720" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
+			<member name="forecolor" type="uint32">0x0</member>
+		</object>
+		<object name="ObjId0721" type="CPrjItemBlock_CellFormat">
+			<member name="font_name" type="string">Tahoma</member>
+			<member name="font_set" type="uint8">0x0</member>
+			<member name="font_size" type="real32">8.00000000e+00</member>
+			<member name="font_bold" type="sint32">0</member>
+			<member name="font_italic" type="sint32">0</member>
+			<member name="font_underline" type="sint32">0</member>
+			<member name="alignment" type="sint32">33</member>
+			<member name="backcolor" type="uint32">0xEEEEAF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
 		<object name="ObjId0590" type="CPrjItemBlock_CellFormat">

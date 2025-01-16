@@ -13,8 +13,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "wlan_bt_fw.h"
@@ -22,10 +20,13 @@
 #include "wifi.h"
 #include "wm_net.h"
 #include <osa.h>
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include "dhcp-server.h"
+#endif
 #include "cli.h"
 #include "wifi_ping.h"
 #include "iperf.h"
+#include "app.h"
 #ifndef RW610
 #include "wifi_bt_config.h"
 #else
@@ -37,156 +38,21 @@
 #include "host_sleep.h"
 #endif
 
-#include "fsl_adapter_uart.h"
-#include "controller_hci_uart.h"
-#include "usb_host_config.h"
-#include "usb_host.h"
-#include "fsl_lpuart_edma.h"
-#include "fsl_dmamux.h"
-#include "usb_phy.h"
-#if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
-#include "fsl_component_button.h"
-#endif
-#include "fsl_component_timer_manager.h"
-#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
-#include "ksdk_mbedtls.h"
-#endif /* CONFIG_BT_SMP */
-#if CONFIG_WIFI_SMOKE_TESTS
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-#include "fsl_phyrtl8201.h"
-#else
-#include "fsl_phyrtl8211f.h"
-#endif
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#if defined(__GIC_PRIO_BITS)
-#define USB_HOST_INTERRUPT_PRIORITY (25U)
-#elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
-#define USB_HOST_INTERRUPT_PRIORITY (6U)
-#else
-#define USB_HOST_INTERRUPT_PRIORITY (3U)
-#endif
-
-#if CONFIG_WIFI_SMOKE_TESTS
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-extern phy_rtl8201_resource_t g_phy_resource;
-#define EXAMPLE_ENET ENET
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS &phyrtl8201_ops
-/* ENET instance select. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
-#else
-extern phy_rtl8211f_resource_t g_phy_resource;
-#define EXAMPLE_ENET          ENET_1G
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS   BOARD_ENET1_PHY_ADDRESS
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS       &phyrtl8211f_ops
-/* ENET instance select. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif1_init
-#endif
-
-/* PHY resource. */
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-
-/* ENET clock frequency. */
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#endif
-
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 int wlan_driver_init(void);
-int wlan_driver_deinit(void);
-int wlan_driver_reset(void);
-int wlan_reset_cli_init(void);
+#if CONFIG_HOST_SLEEP
+int wlan_hs_cli_init(void);
+#endif
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-#if (defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_IW612_BOARD_MURATA_2EL_M2))
-int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
-{
-    if (NULL == config)
-    {
-        return -1;
-    }
-    config->clockSrc        = CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
-    config->defaultBaudrate = 115200u;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance        = 2;
-#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
-    config->dma_instance     = 0U;
-    config->rx_channel       = 0U;
-    config->tx_channel       = 1U;
-    config->dma_mux_instance = 0U;
-    config->rx_request       = kDmaRequestMuxLPUART2Rx;
-    config->tx_request       = kDmaRequestMuxLPUART2Tx;
-#endif
-    config->enableRxRTS = 1u;
-    config->enableTxCTS = 1u;
-    return 0;
-}
-#endif
-
-void USB_HostClockInit(void)
-{
-    uint32_t usbClockFreq;
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-    usbClockFreq = 24000000;
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, usbClockFreq);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, usbClockFreq);
-    }
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-}
-
-void USB_HostIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
-#else
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
-#endif
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-#if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
-button_config_t g_buttonConfig[] = {{
-    .gpio =
-        {
-            .direction       = kHAL_GpioDirectionIn,
-            .port            = 13,
-            .pin             = 0,
-            .pinStateDefault = 1,
-        },
-}};
-
-extern BUTTON_HANDLE_ARRAY_DEFINE(s_buttonHandle, BUTTON_COUNT);
-
-#endif
 
 #if CONFIG_WPS2
 #define MAIN_TASK_STACK_SIZE 6000
@@ -196,7 +62,7 @@ extern BUTTON_HANDLE_ARRAY_DEFINE(s_buttonHandle, BUTTON_COUNT);
 
 static void main_task(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, OSA_PRIORITY_BELOW_NORMAL, 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(main_task, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(main_task_Handle);
 
@@ -216,7 +82,9 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
     char ssid[IEEEtypes_SSID_SIZE + 1] = {0};
     char ip[16];
     static int auth_fail                      = 0;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
     wlan_uap_client_disassoc_t *disassoc_resp = data;
+#endif
 
     switch (reason)
     {
@@ -274,12 +142,14 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
                 return 0;
             }
 
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
             ret = dhcpd_cli_init();
             if (ret != WM_SUCCESS)
             {
                 PRINTF("Failed to initialize DHCP Server CLI\r\n");
                 return 0;
             }
+#endif
 
             PRINTF("CLIs Available:\r\n");
             printSeparator();
@@ -363,6 +233,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_CHAN_SWITCH:
             PRINTF("app_cb: WLAN: channel switch\r\n");
             break;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
         case WLAN_REASON_UAP_SUCCESS:
             PRINTF("app_cb: WLAN: UAP Started\r\n");
             ret = wlan_get_current_uap_network_ssid(ssid);
@@ -418,6 +289,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
             break;
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */
         case WLAN_REASON_PS_ENTER:
             break;
         case WLAN_REASON_PS_EXIT:
@@ -436,11 +308,10 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_PRE_BEACON_LOST:
             break;
 #endif
-#if CONFIG_WIFI_IND_DNLD
         case WLAN_REASON_FW_HANG:
         case WLAN_REASON_FW_RESET:
+            PRINTF("app_cb: WLAN: FW hang Event: %d\r\n", reason);
             break;
-#endif
         default:
             PRINTF("app_cb: WLAN: Unknown Event: %d\r\n", reason);
     }
@@ -451,6 +322,9 @@ int wlan_driver_init(void)
 {
     int result = 0;
 
+#if CONFIG_FW_DNLD_ASYNC
+    result = wlan_init_nb(wlan_fw_bin, wlan_fw_bin_len, wlan_event_callback);
+#else
     /* Initialize WIFI Driver */
     result = wlan_init(wlan_fw_bin, wlan_fw_bin_len);
 
@@ -459,70 +333,28 @@ int wlan_driver_init(void)
     result = wlan_start(wlan_event_callback);
 
     assert(0 == result);
-
+#endif
     return result;
 }
 
 #ifndef RW610
-int wlan_driver_deinit(void)
-{
-    int result = 0;
-
-    result = wlan_stop();
-    assert(0 == result);
-    wlan_deinit(0);
-
-    return result;
-}
-
-static void wlan_hw_reset(void)
-{
-    BOARD_WIFI_BT_Enable(false);
-    OSA_TimeDelay(10);
-    BOARD_WIFI_BT_Enable(true);
-}
-
-int wlan_driver_reset(void)
-{
-    int result = 0;
-
-    result = wlan_driver_deinit();
-    assert(0 == result);
-
-    wlan_hw_reset();
-
-    result = wlan_driver_init();
-    assert(0 == result);
-
-    return result;
-}
-
-static void test_wlan_reset(int argc, char **argv)
-{
-    (void)wlan_driver_reset();
-}
-
 #if CONFIG_HOST_SLEEP
 static void test_mcu_suspend(int argc, char **argv)
 {
     (void)mcu_suspend();
 }
-#endif
 
-static struct cli_command reset_commands[] = {
-    {"wlan-reset", NULL, test_wlan_reset},
-#if CONFIG_HOST_SLEEP
+static struct cli_command hs_commands[] = {
     {"mcu-suspend", NULL, test_mcu_suspend},
-#endif
 };
 
-int wlan_reset_cli_init(void)
+int wlan_hs_cli_init(void)
 {
     unsigned int i;
 
-    for (i = 0; i < sizeof(reset_commands) / sizeof(struct cli_command); i++)
+    for (i = 0; i < sizeof(hs_commands) / sizeof(struct cli_command); i++)
     {
-        if (cli_register_command(&reset_commands[i]) != 0)
+        if (cli_register_command(&hs_commands[i]) != 0)
         {
             return -1;
         }
@@ -530,6 +362,7 @@ int wlan_reset_cli_init(void)
 
     return 0;
 }
+#endif
 #endif
 
 static void main_task(osa_task_param_t arg)
@@ -543,12 +376,6 @@ static void main_task(osa_task_param_t arg)
     result = cli_init();
 
     assert(WM_SUCCESS == result);
-
-#ifndef RW610
-    result = wlan_reset_cli_init();
-
-    assert(WM_SUCCESS == result);
-#endif
 
 #if CONFIG_HOST_SLEEP
 #ifndef RW610
@@ -567,9 +394,11 @@ static void main_task(osa_task_param_t arg)
     assert(WM_SUCCESS == result);
 
 #ifndef RW610
-    result = wlan_reset_cli_init();
+#if CONFIG_HOST_SLEEP
+    result = wlan_hs_cli_init();
 
     assert(WM_SUCCESS == result);
+#endif
 #endif
 
     while (1)
@@ -586,31 +415,7 @@ int main(void)
 {
     OSA_Init();
 
-    timer_config_t timerConfig;
-    osa_status_t status;
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    DbgConsole_Init(0, 0, kSerialPort_BleWu, 0);
-
-#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
-    DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
-    edma_config_t config;
-    DMA_Type *dmaBases[] = DMA_BASE_PTRS;
-    DMAMUX_Init(dmaMuxBases[0]);
-    EDMA_GetDefaultConfig(&config);
-    EDMA_Init(dmaBases[0], &config);
-#endif
-
-#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
-    CRYPTO_InitHardware();
-#endif /* CONFIG_BT_SMP */
-    (void)memset(&timerConfig, 0, sizeof(timer_config_t));
-    timerConfig.instance    = 1;
-    timerConfig.srcClock_Hz = CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
-    status                  = (osa_status_t)TM_Init(&timerConfig);
-    assert(status == (osa_status_t)kStatus_TimerSuccess);
-    (void)status;
+    BOARD_InitHardware();
 #ifdef RW610
     POWER_PowerOffBle();
 #endif

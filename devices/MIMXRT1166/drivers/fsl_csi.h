@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 NXP
+ * Copyright 2017-2021,2024 NXP
  * All rights reserved.
  *
  *
@@ -22,7 +22,7 @@
 
 /*! @name Driver version */
 /*! @{ */
-#define FSL_CSI_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
+#define FSL_CSI_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*! @} */
 
 #define CSI_REG_CR1(base)       (base)->CR1
@@ -43,20 +43,6 @@
 /*! @brief Enable fragment capture function or not. */
 #ifndef CSI_DRIVER_FRAG_MODE
 #define CSI_DRIVER_FRAG_MODE 0U
-#endif
-
-/*
- * There is one empty room in queue, used to distinguish whether the queue
- * is full or empty. When header equals tail, the queue is empty; when header
- * equals tail + 1, the queue is full.
- */
-#define CSI_DRIVER_ACTUAL_QUEUE_SIZE (CSI_DRIVER_QUEUE_SIZE + 1U)
-
-/*
- * The queue max size is 254, so that the queue element index could use `uint8_t`.
- */
-#if (CSI_DRIVER_ACTUAL_QUEUE_SIZE > 254)
-#error Required queue size is too large
 #endif
 
 /*
@@ -228,6 +214,13 @@ typedef struct _csi_handle csi_handle_t;
  */
 typedef void (*csi_transfer_callback_t)(CSI_Type *base, csi_handle_t *handle, status_t status, void *userData);
 
+typedef struct
+{
+    uint32_t addr[CSI_DRIVER_QUEUE_SIZE];
+    int head;
+    int tail;
+} buf_queue_t;
+
 /*!
  * @brief CSI handle structure.
  *
@@ -235,14 +228,11 @@ typedef void (*csi_transfer_callback_t)(CSI_Type *base, csi_handle_t *handle, st
  */
 struct _csi_handle
 {
-    uint32_t frameBufferQueue[CSI_DRIVER_ACTUAL_QUEUE_SIZE]; /*!< Frame buffer queue. */
+    buf_queue_t emptyBufferQueue;
+    buf_queue_t fullBufferQueue;
 
-    volatile uint8_t queueWriteIdx;  /*!< Pointer to save incoming item. */
-    volatile uint8_t queueReadIdx;   /*!< Pointer to read out the item. */
-    void *volatile emptyBuffer;      /*!< Pointer to maintain the empty frame buffers. */
-    volatile uint8_t emptyBufferCnt; /*!< Empty frame buffers count. */
-
-    volatile uint8_t activeBufferNum; /*!< How many frame buffers are in progres currently. */
+    volatile uint8_t activeBufferNum; /*!< How many frame buffers are in progress currently. */
+    volatile uint8_t dmaDoneBufferIdx; /*!< Index of the current full-filled framebuffer. */
 
     volatile bool transferStarted; /*!< User has called @ref CSI_TransferStart to start frame receiving. */
 

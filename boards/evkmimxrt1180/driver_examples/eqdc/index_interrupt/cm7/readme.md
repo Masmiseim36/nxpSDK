@@ -1,5 +1,6 @@
-Overview
-========
+# eqdc_index_interrupt
+
+## Overview
 
 The eqdc_index_interrupt example shows how to use the interrupt of EQDC module with EQDC driver.
 
@@ -13,48 +14,7 @@ TRIGGER: This input can be used to clear the position counters or to take a snap
 
 This example uses INDEX to response the external event. When running the project, user can turn the encoder so that EQDC module can monitor the position change. Also, a variable counter would count the time of INDEX interrupt for rising edge on INDEX signal line.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1180 board
-- Personal Computer
-- An encoder with PHASE A/B signals.
-
-Board settings
-==============
-1. For pin connection between board and encoder,
-      J44.6 -> kXBAR1_InputRESERVED22 -> kXBAR1_OutputEnc1Phasea -> EQDC_PHA
-      J44.8 -> kXBAR1_InputRESERVED20 -> kXBAR1_OutputEnc1Phaseb -> EQDC_PHB
-      J39.10 -> kXBAR1_InputRESERVED18 -> kXBAR1_OutputEnc1Index -> EQDC_INDEX
-
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Connect the wires between encoder and the MCU board. See to the code for pin mux setting in function "BOARD_InitPins()".
-3.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 Turn the encoder feed the negative pulse into INDEX and type in any key into terminal.
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 
@@ -77,3 +37,10 @@ Current position revolution value: 2
 g_EqdcIndexCounter: 2
 
 ...
+
+## Supported Boards
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/eqdc/index_interrupt/example_board_readme.md)
+- [FRDM-MCXA153](../../../_boards/frdmmcxa153/driver_examples/eqdc/index_interrupt/example_board_readme.md)
+- [FRDM-MCXA156](../../../_boards/frdmmcxa156/driver_examples/eqdc/index_interrupt/example_board_readme.md)
+- [FRDM-MCXA166](../../../_boards/frdmmcxa166/driver_examples/eqdc/index_interrupt/example_board_readme.md)
+- [FRDM-MCXA276](../../../_boards/frdmmcxa276/driver_examples/eqdc/index_interrupt/example_board_readme.md)

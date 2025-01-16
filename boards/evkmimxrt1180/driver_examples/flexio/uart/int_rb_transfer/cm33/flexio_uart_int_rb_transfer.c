@@ -6,19 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_flexio_uart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE  FLEXIO2
-#define FLEXIO_UART_TX_PIN 2U
-#define FLEXIO_UART_RX_PIN 3U
-
-#define FLEXIO_CLOCK_FREQUENCY (CLOCK_GetRootClockFreq(kCLOCK_Root_Flexio2))
 
 #define RX_RING_BUFFER_SIZE 20U
 #define ECHO_BUFFER_SIZE    8U
@@ -79,9 +73,7 @@ int main(void)
     uint32_t i;
     status_t result = kStatus_Success;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitHardware();
 
     /*
      * config.enableUart = true;

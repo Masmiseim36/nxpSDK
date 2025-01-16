@@ -5,52 +5,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_rdc.h"
 #include "fsl_rdc_sema42.h"
 
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_RDC            RDC
-#define APP_CUR_MASTER_DID 1 /* Current master domain ID. */
-#define APP_RDC_PERIPH     kRDC_Periph_GPIO_1_6
-/* Peripheral 0~63 use semaphore1, 64~127 use semaphore2. */
-#define APP_RDC_SEMA42      RDC_SEMAPHORE1
-#define APP_RDC_SEMA42_GATE (((uint8_t)APP_RDC_PERIPH) & 0x3F)
-
-/*
- * OCRAM(M7) is used for demonstration here.
- * In this demo, the content of this region might be changed,
- * so the region must not be used to for other purpose, such as
- * used as data section, bss section, and so on.
- */
-#define APP_RDC_MEM           kRDC_Mem_MRC5_0
-#define APP_RDC_MEM_BASE_ADDR 0x20360000
-#define APP_RDC_MEM_END_ADDR  0x20400000
-
-/* The RDC domain ID for ARM core is fixed value. */
-#define APP_ASSIGN_DOMAIN_ID_BY_RDC 0
-
-/*
- * Master index:
- * ARM core: 0
- * eDMA: 1
- * DCP: 2
- * Others: 3
- */
-#define APP_MASTER_INDEX 0
-
-/*
- * If cache is enabled, this example should maintain the cache to make sure
- * CPU core accesses the memory, not cache only.
- */
-#define APP_USING_CACHE 1
-
 typedef enum
 {
     kRDC_DEMO_None         = 0,
@@ -81,9 +44,6 @@ typedef enum
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void APP_TouchPeriph(void);
-void APP_TouchMem(void);
-void APP_AssignCoreDomain(void);
 /*
  * In this function, sema42 is not required. The peripheral is set inaccessible
  * by current domain. When touch the peripheral, hardfault is triggered. In
@@ -124,22 +84,6 @@ rdc_mem_access_config_t memConfig;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void APP_TouchPeriph(void)
-{
-    GPIO_PinRead(GPIO1, 0);
-}
-
-void APP_TouchMem(void)
-{
-    /* Touch the memory. */
-    (*(volatile uint32_t *)APP_RDC_MEM_BASE_ADDR)++;
-}
-
-void APP_AssignCoreDomain(void)
-{
-    /* The domain ID is fixed. */
-}
 #if APP_USING_CACHE
 #include "fsl_cache.h"
 #endif
@@ -205,9 +149,7 @@ void BusFault_Handler(void)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nRDC Example:\r\n");
 

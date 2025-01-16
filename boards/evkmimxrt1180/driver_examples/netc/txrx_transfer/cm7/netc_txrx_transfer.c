@@ -5,57 +5,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "app.h"
 
-#include "fsl_netc_endpoint.h"
-#include "fsl_netc_switch.h"
-#include "fsl_netc_mdio.h"
-#include "fsl_phyrtl8211f.h"
-#include "fsl_phyrtl8201.h"
-#include "fsl_msgintr.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_NETC_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Netc)
-
-/* Ethernet port identifier. */
-#define EXAMPLE_EP_NUM   1U
-#define EXAMPLE_EP0_PORT 0x00U
-#define EXAMPLE_EP_SI    \
-    {                    \
-        kNETC_ENETC0PSI0 \
-    }
-#define EXAMPLE_MSGINTR   MSGINTR1
-#define EXAMPLE_SWT_PORT0 0x01U
-#define EXAMPLE_SWT_PORT1 0x02U
-#define EXAMPLE_SWT_PORT2 0x03U
-#define EXAMPLE_SWT_PORT3 0x04U
-
-/* Buffer desciptor configuration. */
-#define EXAMPLE_EP_RING_NUM          3U
-#define EXAMPLE_EP_RXBD_NUM          8U
-#define EXAMPLE_EP_TXBD_NUM          8U
-#define EXAMPLE_EP_BUFF_SIZE_ALIGN   64U
-#define EXAMPLE_EP_RXBUFF_SIZE       1518U
-#define EXAMPLE_EP_RXBUFF_SIZE_ALIGN SDK_SIZEALIGN(EXAMPLE_EP_RXBUFF_SIZE, EXAMPLE_EP_BUFF_SIZE_ALIGN)
-
-#define EXAMPLE_EP_TEST_FRAME_SIZE 1000U
-#define EXAMPLE_EP_TXFRAME_NUM     20U
-#define EXAMPLE_SWT_MAX_PORT_NUM   4U
-/*! Note: Be careful that some ports are multiplexed with SEMC. */
-#if !defined(EXAMPLE_SWT_USED_PORT_BITMAP)
-#define EXAMPLE_SWT_USED_PORT_BITMAP 0xFU /*! Enabled Switch port bit map, bit n represents port n. */
-#endif
-/*!< PHY reset pins. */
-#define EXAMPLE_EP0_PORT_PHY_RESET_PIN  RGPIO4, 13
-#define EXAMPLE_SWT_PORT0_PHY_RESET_PIN RGPIO4, 25
-#define EXAMPLE_SWT_PORT1_PHY_RESET_PIN RGPIO6, 13
-#define EXAMPLE_SWT_PORT2_PHY_RESET_PIN RGPIO4, 28
-#define EXAMPLE_SWT_PORT3_PHY_RESET_PIN RGPIO6, 15
-
-#define PHY_PAGE_SELECT_REG 0x1FU /*!< The PHY page select register. */
 #define EXAMPLE_EP_BD_ALIGN       128U
 #define EXAMPLE_TX_INTR_MSG_DATA  1U
 #define EXAMPLE_RX_INTR_MSG_DATA  2U
@@ -66,30 +20,21 @@
 #ifndef PHY_STABILITY_DELAY_US
 #define PHY_STABILITY_DELAY_US (500000U)
 #endif
+
+#if !(defined(FSL_FEATURE_NETC_HAS_NO_SWITCH) && FSL_FEATURE_NETC_HAS_NO_SWITCH)
+#ifndef EXAMPLE_SWT_SI
+#define EXAMPLE_SWT_SI kNETC_ENETC1PSI0
+#endif
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-status_t APP_MDIO_Init(void);
-status_t APP_PHY_Init(void);
-status_t APP_PHY_GetLinkStatus(uint32_t port, bool *link);
-status_t APP_PHY_GetLinkModeSpeedDuplex(uint32_t port,
-                                        netc_hw_mii_mode_t *mode,
-                                        netc_hw_mii_speed_t *speed,
-                                        netc_hw_mii_duplex_t *duplex);
 /* Rx buffer memeory type. */
 typedef uint8_t rx_buffer_t[EXAMPLE_EP_RXBUFF_SIZE_ALIGN];
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/* PHY operation. */
-#ifdef EXAMPLE_PHY_USE_PORT_MDIO
-static netc_mdio_handle_t s_mdio_handle[5];
-#else
-static netc_mdio_handle_t s_emdio_handle;
-#endif
-static phy_rtl8211f_resource_t s_phy_resource[5];
-static phy_handle_t s_phy_handle[5];
 /* EP resource. */
 static ep_handle_t g_ep_handle;
 static netc_hw_si_idx_t g_siIndex[EXAMPLE_EP_NUM] = EXAMPLE_EP_SI;
@@ -130,320 +75,6 @@ static uint8_t g_macAddr[6] = {0x54, 0x27, 0x8d, 0x00, 0x00, 0x00};
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-status_t APP_MDIO_Init(void)
-{
-    status_t result = kStatus_Success;
-
-    netc_mdio_config_t mdioConfig = {
-        .isPreambleDisable = false,
-        .isNegativeDriven  = false,
-        .srcClockHz        = EXAMPLE_NETC_FREQ,
-    };
-
-#ifdef EXAMPLE_PHY_USE_PORT_MDIO
-    /* Usually should call EP_Init/SWT_Init then init port MDIO, here just an quick enablement example. */
-    NETC_F2_PCI_HDR_TYPE0->PCI_CFH_CMD |=
-        (ENETC_PCI_TYPE0_PCI_CFH_CMD_MEM_ACCESS_MASK | ENETC_PCI_TYPE0_PCI_CFH_CMD_BUS_MASTER_EN_MASK);
-    NETC_F3_PCI_HDR_TYPE0->PCI_CFH_CMD |=
-        (ENETC_PCI_TYPE0_PCI_CFH_CMD_MEM_ACCESS_MASK | ENETC_PCI_TYPE0_PCI_CFH_CMD_BUS_MASTER_EN_MASK);
-
-    for (int i = 0U; i < 5U; i++)
-    {
-        mdioConfig.mdio.port = (netc_hw_eth_port_idx_t)((uint32_t)kNETC_ENETC0EthPort + i);
-        result               = NETC_MDIOInit(&s_mdio_handle[i], &mdioConfig);
-        if (result != kStatus_Success)
-        {
-            return result;
-        }
-    }
-#else
-    mdioConfig.mdio.type = kNETC_EMdio;
-    result               = NETC_MDIOInit(&s_emdio_handle, &mdioConfig);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-#endif
-
-    return result;
-}
-
-#ifdef EXAMPLE_PHY_USE_PORT_MDIO
-static status_t APP_PMDIOWrite(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    status_t result = kStatus_Success;
-    netc_mdio_handle_t *mdioHandle;
-
-    switch (phyAddr)
-    {
-        case BOARD_EP0_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[0];
-            break;
-        case BOARD_SWT_PORT0_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[1];
-            break;
-        case BOARD_SWT_PORT1_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[2];
-            break;
-        case BOARD_SWT_PORT2_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[3];
-            break;
-        case BOARD_SWT_PORT3_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[4];
-            break;
-        default:
-            result = kStatus_InvalidArgument;
-            break;
-    }
-
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    return NETC_MDIOWrite(mdioHandle, phyAddr, regAddr, data);
-}
-
-static status_t APP_PMDIORead(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    status_t result = kStatus_Success;
-    netc_mdio_handle_t *mdioHandle;
-
-    switch (phyAddr)
-    {
-        case BOARD_EP0_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[0];
-            break;
-        case BOARD_SWT_PORT0_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[1];
-            break;
-        case BOARD_SWT_PORT1_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[2];
-            break;
-        case BOARD_SWT_PORT2_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[3];
-            break;
-        case BOARD_SWT_PORT3_PHY_ADDR:
-            mdioHandle = &s_mdio_handle[4];
-            break;
-        default:
-            result = kStatus_InvalidArgument;
-            break;
-    }
-
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    return NETC_MDIORead(mdioHandle, phyAddr, regAddr, pData);
-}
-#else
-static status_t APP_EMDIOWrite(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return NETC_MDIOWrite(&s_emdio_handle, phyAddr, regAddr, data);
-}
-
-static status_t APP_EMDIORead(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return NETC_MDIORead(&s_emdio_handle, phyAddr, regAddr, pData);
-}
-#endif
-
-static status_t APP_Phy8201SetUp(phy_handle_t *handle)
-{
-    status_t result;
-    uint16_t data;
-
-    result = PHY_Write(handle, PHY_PAGE_SELECT_REG, 7);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-    result = PHY_Read(handle, 16, &data);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    /* CRS/DV pin is RXDV signal. */
-    data |= (1U << 2);
-    result = PHY_Write(handle, 16, data);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-    result = PHY_Write(handle, PHY_PAGE_SELECT_REG, 0);
-
-    return result;
-}
-
-static status_t APP_PHY_SetPort(uint32_t port, phy_config_t *phyConfig)
-{
-    status_t result = kStatus_Success;
-
-#ifdef EXAMPLE_PHY_USE_PORT_MDIO
-    s_phy_resource[port].write = APP_PMDIOWrite;
-    s_phy_resource[port].read  = APP_PMDIORead;
-#else
-    s_phy_resource[port].write = APP_EMDIOWrite;
-    s_phy_resource[port].read  = APP_EMDIORead;
-#endif
-    result = PHY_Init(&s_phy_handle[port], phyConfig);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    return PHY_EnableLoopback(&s_phy_handle[port], kPHY_LocalLoop, phyConfig->speed, true);
-}
-
-status_t APP_PHY_Init(void)
-{
-    status_t result            = kStatus_Success;
-    phy_config_t phy8211Config = {
-        .autoNeg   = false,
-        .speed     = kPHY_Speed1000M,
-        .duplex    = kPHY_FullDuplex,
-        .enableEEE = false,
-        .ops       = &phyrtl8211f_ops,
-    };
-    phy_config_t phy8201Config = {
-        .autoNeg   = false,
-        .speed     = kPHY_Speed100M,
-        .duplex    = kPHY_FullDuplex,
-        .enableEEE = false,
-        .ops       = &phyrtl8201_ops,
-    };
-
-    /* Reset all PHYs even some are not used in case unstable status has effect on other PHYs. */
-    /* Reset PHY8201 for ETH4(EP), ETH0(Switch port0). Power on 150ms, reset 10ms, wait 150ms. */
-    /* Reset PHY8211 for ETH1(Switch port1), ETH2(Switch port2), ETH3(Switch port3). Reset 10ms, wait 30ms. */
-    RGPIO_PinWrite(EXAMPLE_EP0_PORT_PHY_RESET_PIN, 0);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT0_PHY_RESET_PIN, 0);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT1_PHY_RESET_PIN, 0);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT2_PHY_RESET_PIN, 0);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT3_PHY_RESET_PIN, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    RGPIO_PinWrite(EXAMPLE_EP0_PORT_PHY_RESET_PIN, 1);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT0_PHY_RESET_PIN, 1);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT1_PHY_RESET_PIN, 1);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT2_PHY_RESET_PIN, 1);
-    RGPIO_PinWrite(EXAMPLE_SWT_PORT3_PHY_RESET_PIN, 1);
-    SDK_DelayAtLeastUs(150000, CLOCK_GetFreq(kCLOCK_CpuClk));
-
-    /* Initialize PHY for EP. */
-    phy8201Config.resource = &s_phy_resource[EXAMPLE_EP0_PORT];
-    phy8201Config.phyAddr  = BOARD_EP0_PHY_ADDR;
-    result                 = APP_PHY_SetPort(EXAMPLE_EP0_PORT, &phy8201Config);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-    result = APP_Phy8201SetUp(&s_phy_handle[EXAMPLE_EP0_PORT]);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-#if defined(EXAMPLE_PORT_USE_100M_HALF_DUPLEX_MODE)
-    uint16_t phyRegValue;
-    (void)PHY_Write(&s_phy_handle[EXAMPLE_EP0_PORT], 0x1F, 7);
-    (void)PHY_Read(&s_phy_handle[EXAMPLE_EP0_PORT], 20, &phyRegValue);
-    (void)PHY_Write(&s_phy_handle[EXAMPLE_EP0_PORT], 20, (phyRegValue | 0x900U));
-    (void)PHY_Write(&s_phy_handle[EXAMPLE_EP0_PORT], 0x1F, 0);
-#endif
-
-    /* Initialize PHY for switch port0. */
-    phy8201Config.resource = &s_phy_resource[EXAMPLE_SWT_PORT0];
-    phy8201Config.phyAddr  = BOARD_SWT_PORT0_PHY_ADDR;
-    result                 = APP_PHY_SetPort(EXAMPLE_SWT_PORT0, &phy8201Config);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-    result = APP_Phy8201SetUp(&s_phy_handle[EXAMPLE_SWT_PORT0]);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-#if defined(EXAMPLE_PORT_USE_100M_HALF_DUPLEX_MODE)
-    (void)PHY_Write(&s_phy_handle[EXAMPLE_SWT_PORT0], 0x1F, 7);
-    (void)PHY_Read(&s_phy_handle[EXAMPLE_SWT_PORT0], 20, &phyRegValue);
-    (void)PHY_Write(&s_phy_handle[EXAMPLE_SWT_PORT0], 20, (phyRegValue | 0x900U));
-    (void)PHY_Write(&s_phy_handle[EXAMPLE_SWT_PORT0], 0x1F, 0);
-#endif
-
-    /* Initialize PHY for switch port1. */
-    phy8211Config.resource = &s_phy_resource[EXAMPLE_SWT_PORT1];
-    phy8211Config.phyAddr  = BOARD_SWT_PORT1_PHY_ADDR;
-    result                 = APP_PHY_SetPort(EXAMPLE_SWT_PORT1, &phy8211Config);
-    if (result != kStatus_Success)
-    {
-        return result;
-    }
-
-    if (((1U << 2) & EXAMPLE_SWT_USED_PORT_BITMAP) != 0U)
-    {
-        /* Initialize PHY for switch port2. */
-        phy8211Config.resource = &s_phy_resource[EXAMPLE_SWT_PORT2];
-        phy8211Config.phyAddr  = BOARD_SWT_PORT2_PHY_ADDR;
-        result                 = APP_PHY_SetPort(EXAMPLE_SWT_PORT2, &phy8211Config);
-        if (result != kStatus_Success)
-        {
-            return result;
-        }
-    }
-
-    if (((1U << 3) & EXAMPLE_SWT_USED_PORT_BITMAP) != 0U)
-    {
-        /* Initialize PHY for switch port3. */
-        phy8211Config.resource = &s_phy_resource[EXAMPLE_SWT_PORT3];
-        phy8211Config.phyAddr  = BOARD_SWT_PORT3_PHY_ADDR;
-        result                 = APP_PHY_SetPort(EXAMPLE_SWT_PORT3, &phy8211Config);
-        if (result != kStatus_Success)
-        {
-            return result;
-        }
-    }
-
-    return result;
-}
-
-status_t APP_PHY_GetLinkStatus(uint32_t port, bool *link)
-{
-    return PHY_GetLinkStatus(&s_phy_handle[port], link);
-}
-
-status_t APP_PHY_GetLinkModeSpeedDuplex(uint32_t port,
-                                        netc_hw_mii_mode_t *mode,
-                                        netc_hw_mii_speed_t *speed,
-                                        netc_hw_mii_duplex_t *duplex)
-{
-    switch (port)
-    {
-        case EXAMPLE_EP0_PORT:
-            *mode = kNETC_RmiiMode;
-            break;
-        case EXAMPLE_SWT_PORT0:
-            *mode = kNETC_RmiiMode;
-            break;
-        case EXAMPLE_SWT_PORT1:
-            *mode = kNETC_RgmiiMode;
-            break;
-        case EXAMPLE_SWT_PORT2:
-            *mode = kNETC_RgmiiMode;
-            break;
-        case EXAMPLE_SWT_PORT3:
-            *mode = kNETC_RgmiiMode;
-            break;
-        default:
-            assert(false);
-            break;
-    }
-
-    return PHY_GetLinkSpeedDuplex(&s_phy_handle[port], (phy_speed_t *)speed, (phy_duplex_t *)duplex);
-}
 
 /*! @brief Build Frame for single ring transmit. */
 static void APP_BuildBroadCastFrame(void)
@@ -681,7 +312,7 @@ status_t APP_SWT_XferLoopBack(void)
     bdrConfig.rxBdrConfig[0].intrThreshold = 1;
 
     (void)EP_GetDefaultConfig(&g_ep_config);
-    g_ep_config.si                 = kNETC_ENETC1PSI0;
+    g_ep_config.si                 = EXAMPLE_SWT_SI;
     g_ep_config.siConfig.txRingUse = 1;
     g_ep_config.siConfig.rxRingUse = 1;
     g_ep_config.reclaimCallback    = APP_ReclaimCallback;
@@ -716,6 +347,7 @@ status_t APP_SWT_XferLoopBack(void)
         result = APP_PHY_GetLinkModeSpeedDuplex(EXAMPLE_SWT_PORT0 + i, &phyMode, &phySpeed, &phyDuplex);
         if (result != kStatus_Success)
         {
+            PRINTF("\r\n%s: %d, Failed to get link status(mode, speed, dumplex)!\r\n", __func__, __LINE__);
             return result;
         }
         g_swt_config.ports[i].ethMac.miiMode   = phyMode;
@@ -736,6 +368,7 @@ status_t APP_SWT_XferLoopBack(void)
     result = SWT_Init(&g_swt_handle, &g_swt_config);
     if (result != kStatus_Success)
     {
+        PRINTF("\r\n%s: %d, Failed to initialize switch!\r\n", __func__, __LINE__);
         return result;
     }
 
@@ -755,6 +388,7 @@ status_t APP_SWT_XferLoopBack(void)
     result = SWT_ManagementTxRxConfig(&g_swt_handle, &g_ep_handle, &swtTxRxConfig);
     if (kStatus_Success != result)
     {
+        PRINTF("\r\n%s: %d, Failed to config TxRx!\r\n", __func__, __LINE__);
         return result;
     }
 
@@ -770,8 +404,9 @@ status_t APP_SWT_XferLoopBack(void)
     netc_tb_fdb_config_t fdbEntryCfg = {.keye.fid = EXAMPLE_FRAME_FID, .cfge.portBitmap = 0x10U, .cfge.dynamic = 1};
     memset(&fdbEntryCfg.keye.macAddr[0], 0xFF, 6U);
     result = SWT_BridgeAddFDBTableEntry(&g_swt_handle, &fdbEntryCfg, &entryID);
-    if ((kStatus_Success != result) || (0U == entryID))
+    if ((kStatus_Success != result) || (0xFFFFFFFFU == entryID))
     {
+        PRINTF("\r\n%s: %d, Failed to add FDB table!, result = %d, entryID = %d\r\n", __func__, __LINE__, result, entryID);
         return kStatus_Fail;
     }
 
@@ -845,19 +480,7 @@ int main(void)
     status_t result = kStatus_Success;
     uint32_t index;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    if (((1U << 2) & EXAMPLE_SWT_USED_PORT_BITMAP) != 0U)
-    {
-        BOARD_InitSwtPort2Pins();
-    }
-    if (((1U << 3) & EXAMPLE_SWT_USED_PORT_BITMAP) != 0U)
-    {
-        BOARD_InitSwtPort3Pins();
-    }
-    BOARD_NETC_Init();
+    BOARD_InitHardware();
 
     result = APP_MDIO_Init();
     if (result != kStatus_Success)

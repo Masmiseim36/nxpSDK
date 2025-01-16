@@ -1,44 +1,10 @@
-Overview
-========
+# ele_crypto_generic_rsa
+
+## Overview
 The ELE Crypto Generic Example project is a demonstration program that uses the MCUX SDK
 software to perform generic crypto operations usign plaintext key with EdgeLock Enclave (ELE).
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 Example output on terminal:
 
 EdgeLock Enclave secure Sub-System Driver Example:
@@ -80,3 +46,6 @@ RSA encryption success.
 RSA decryption success, plaintext match original one.
 
 End of Example with SUCCESS!!
+
+## Supported Boards
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/ele_crypto/ele_crypto_generic_rsa/example_board_readme.md)

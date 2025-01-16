@@ -9,15 +9,15 @@
       </member>
       <member>
         <project>host_audio_speaker_bm_cm33</project>
-        <configuration>hyperram_release</configuration>
-      </member>
-      <member>
-        <project>host_audio_speaker_bm_cm33</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>host_audio_speaker_bm_cm33</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>host_audio_speaker_bm_cm33</project>
+        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -25,13 +25,6 @@
       <member>
         <project>host_audio_speaker_bm_cm33</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>hyperram_release</name>
-      <member>
-        <project>host_audio_speaker_bm_cm33</project>
-        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -46,6 +39,13 @@
       <member>
         <project>host_audio_speaker_bm_cm33</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_release</name>
+      <member>
+        <project>host_audio_speaker_bm_cm33</project>
+        <configuration>hyperram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

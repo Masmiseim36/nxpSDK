@@ -1,7 +1,6 @@
 /*
  * Copyright 2022-2024 NXP
  *
- * All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -21,14 +20,13 @@
 
 /*! @name Driver version */
 /*! @{ */
-/*! @brief lower_component_name driver version 2.1.4. */
-#define FSL_SINC_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
+/*! @brief lower_component_name driver version 2.1.5. */
+#define FSL_SINC_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
 /*! @} */
-#if defined(FSL_FEATURE_SINC_CHANNEL_COUNT)
+#ifndef SINC_CHANNEL_COUNT
 #define SINC_CHANNEL_COUNT (FSL_FEATURE_SINC_CHANNEL_COUNT)
-#else
-#error "The definition of FSL_FEATURE_SINC_CHANNEL_COUNT is missing!"
 #endif
+
 #define SINC_NORMAL_INT_REG_ID     (0ULL)
 #define SINC_NORMAL_INT_NAME_COCIE (0ULL)
 #define SINC_NORMAL_INT_NAME_CHFIE (1ULL)

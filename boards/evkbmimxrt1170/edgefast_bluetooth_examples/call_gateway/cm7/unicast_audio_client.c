@@ -14,7 +14,11 @@
 #include "bluetooth/audio/media_proxy.h"
 #include "bluetooth/audio/bap_lc3_preset.h"
 
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+#include "LC3_ndsp_api.h"
+#else
 #include "LC3_api.h"
+#endif
 
 #include "fsl_os_abstraction.h"
 
@@ -58,6 +62,7 @@ enum {
     BT_STREAM_STATE_CONFIGURED,
     BT_STREAM_STATE_QOS,
     BT_STREAM_STATE_ENABLED,
+    BT_STREAM_STATE_CONNECTED,
     BT_STREAM_STATE_STARTED,
     BT_STREAM_STATE_RELEASED,
 
@@ -76,7 +81,12 @@ struct stream_state
 
 struct lc3_encoder
 {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+    LC3_ENCODER_CONFIG encoder_cfg[MAX_AUDIO_CHANNEL_COUNT];
+    LC3_ENCODER_CHANNEL_CNTX encoder[MAX_AUDIO_CHANNEL_COUNT];
+#else
     LC3_ENCODER_CNTX encoder[MAX_AUDIO_CHANNEL_COUNT];
+#endif
     bool init[MAX_AUDIO_CHANNEL_COUNT];
     INT32* pcm_buf_list_in[MAX_AUDIO_CHANNEL_COUNT];
     UINT8* enc_buf_list_out[MAX_AUDIO_CHANNEL_COUNT];
@@ -90,7 +100,12 @@ struct lc3_encoder
 
 struct lc3_decoder
 {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+    LC3_DECODER_CONFIG decoder_cfg[MAX_AUDIO_CHANNEL_COUNT];
+    LC3_DECODER_CHANNEL_CNTX decoder[MAX_AUDIO_CHANNEL_COUNT];
+#else
     LC3_DECODER_CNTX decoder[MAX_AUDIO_CHANNEL_COUNT];
+#endif
     bool init[MAX_AUDIO_CHANNEL_COUNT];
     UINT8* enc_buf_list_in[MAX_AUDIO_CHANNEL_COUNT];
     INT32* dec_buf_list_out[MAX_AUDIO_CHANNEL_COUNT];
@@ -196,6 +211,13 @@ struct sink_info
     uint16_t seq_num;
 };
 
+enum {
+    BT_ACL_CONN_STATE_DISCONNECTING,
+
+    /* Total number of flags - must be at the end of the enum */
+    BT_ACL_CONN_STATE_NUM_FLAGS,
+};
+
 struct conn_state
 {
     struct bt_conn *conn;
@@ -214,6 +236,7 @@ struct conn_state
     struct bt_bap_lc3_preset snk_codec_configuration;
     uint32_t cis_tx;
     uint32_t cis_rx;
+    ATOMIC_DEFINE(flags, BT_ACL_CONN_STATE_NUM_FLAGS);
 };
 
 struct ringtone_prime_work
@@ -262,6 +285,7 @@ static void unicast_client_stream_configured(struct bt_bap_stream *stream, const
 static void unicast_client_stream_qos_set(struct bt_bap_stream *stream);
 static void unicast_client_stream_enabled(struct bt_bap_stream *stream);
 static void unicast_client_stream_started(struct bt_bap_stream *stream);
+static void unicast_client_stream_connected(struct bt_bap_stream *stream);
 static void unicast_client_stream_metadata_updated(struct bt_bap_stream *stream);
 static void unicast_client_stream_disabled(struct bt_bap_stream *stream);
 static void unicast_client_stream_stopped(struct bt_bap_stream *stream, uint8_t reason);
@@ -360,7 +384,8 @@ static struct bt_bap_stream_ops unicast_audio_stream_ops = {
     .disabled = unicast_client_stream_disabled,
     .stopped = unicast_client_stream_stopped,
     .released = unicast_client_stream_released,
-    .recv = unicast_client_stream_recv
+    .recv = unicast_client_stream_recv,
+    .connected = unicast_client_stream_connected
 };
 
 /* Select a codec configuration to apply that is mandatory to support by both client and server.
@@ -375,14 +400,16 @@ static unicast_client_discover_done_callback_t discover_done;
 struct ringtone_prime_work ringtone_work;
 
 NET_BUF_POOL_FIXED_DEFINE(tx_pool, STREAM_TX_BUF_COUNT,
-			  LC3_INPUT_FRAME_SIZE_MAX * MAX_AUDIO_CHANNEL_COUNT * BITS_RATES_OF_SAMPLE / 8, NULL);
+			  LC3_INPUT_FRAME_SIZE_MAX * MAX_AUDIO_CHANNEL_COUNT * BITS_RATES_OF_SAMPLE / 8,
+			  CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 osa_msgq_handle_t tx_stream_queue;
 OSA_MSGQ_HANDLE_DEFINE(tx_stream_queue_handle, STREAM_TX_BUF_COUNT, sizeof(void *));
 
 
 NET_BUF_POOL_FIXED_DEFINE(rx_pool, STREAM_RX_BUF_COUNT,
-			  LC3_INPUT_FRAME_SIZE_MAX * MAX_AUDIO_CHANNEL_COUNT * BITS_RATES_OF_SAMPLE / 8, NULL);
+			  LC3_INPUT_FRAME_SIZE_MAX * MAX_AUDIO_CHANNEL_COUNT * BITS_RATES_OF_SAMPLE / 8,
+			  CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 osa_msgq_handle_t rx_stream_queue;
 OSA_MSGQ_HANDLE_DEFINE(rx_stream_queue_handle, STREAM_RX_BUF_COUNT, sizeof(void *));
@@ -605,7 +632,7 @@ int unicast_client_delete_group(void)
     return 0;
 }
 
-int unicast_client_release_streams(void)
+int unicast_client_release_streams_of_conn(struct bt_conn *conn)
 {
     struct conn_state *state = NULL;
     int err = -ENOTCONN;
@@ -613,7 +640,7 @@ int unicast_client_release_streams(void)
 
     for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
     {
-        if (NULL != server_state[index].conn)
+        if (((NULL == conn) && (NULL != server_state[index].conn)) || ((NULL != conn) && (conn == server_state[index].conn)))
         {
             if ((0U == server_state[index].src_cap_support) && (0U == server_state[index].snk_cap_support))
             {
@@ -697,6 +724,7 @@ int unicast_client_release_streams(void)
                 atomic_clear_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_CONFIGURED);
                 atomic_clear_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_QOS);
                 atomic_clear_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_ENABLED);
+                atomic_clear_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_CONNECTED);
                 atomic_clear_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_STARTED);
                 atomic_clear_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_RELEASED);
             }
@@ -709,6 +737,7 @@ int unicast_client_release_streams(void)
                 atomic_clear_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_CONFIGURED);
                 atomic_clear_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_QOS);
                 atomic_clear_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_ENABLED);
+                atomic_clear_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_CONNECTED);
                 atomic_clear_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_STARTED);
                 atomic_clear_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_RELEASED);
             }
@@ -716,6 +745,11 @@ int unicast_client_release_streams(void)
     }
 
     return err;
+}
+
+int unicast_client_release_streams(void)
+{
+    return unicast_client_release_streams_of_conn(NULL);
 }
 
 int unicast_client_configure_streams(void)
@@ -1032,6 +1066,100 @@ int unicast_client_enable_streams(uint16_t tx_context, uint16_t rx_context)
     return err;
 }
 
+int unicast_client_connect_stream_unidirectional(uint8_t is_tx)
+{
+    struct conn_state *state = NULL;
+    int err = 0;
+    osa_status_t osa_ret;
+
+    for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+    {
+        if (NULL != server_state[index].conn)
+        {
+            if ((0U == server_state[index].src_cap_support) && (0U == server_state[index].snk_cap_support))
+            {
+                continue;
+            }
+
+            state = &server_state[index];
+
+            if (is_tx == 0)
+            {
+                for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
+                {
+                    if ((NULL == state->src[ep_index].stream) || (NULL == state->src[ep_index].ep))
+                    {
+                        continue;
+                    }
+                    if (!atomic_test_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_CONNECTED))
+                    {
+                        err = bt_bap_stream_connect(&state->src[ep_index].stream->stream);
+                        if (0 != err)
+                        {
+                            PRINTF("Fail to connect stream (err %d)\n", err);
+                            return err;
+                        }
+
+                        do
+                        {
+                            osa_ret = OSA_SemaphoreWait(state->src[ep_index].stream->sem, osaWaitForever_c);
+                            if (KOSA_StatusSuccess != osa_ret)
+                            {
+                                PRINTF("Fail to wait stream connected sem!\n");
+                                return -EIO;
+                            }
+                        } while (!atomic_test_bit(state->src[ep_index].stream->flags, BT_STREAM_STATE_CONNECTED));
+                    }
+                }
+            }
+            else
+            {
+                for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
+                {
+                    if ((NULL == state->snk[ep_index].stream) || (NULL == state->snk[ep_index].ep))
+                    {
+                        continue;
+                    }
+                    if (!atomic_test_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_CONNECTED))
+                    {
+                        err = bt_bap_stream_connect(&state->snk[ep_index].stream->stream);
+                        if (0 != err)
+                        {
+                            PRINTF("Fail to connect stream (err %d)\n", err);
+                            return err;
+                        }
+
+                        do
+                        {
+                            osa_ret = OSA_SemaphoreWait(state->snk[ep_index].stream->sem, osaWaitForever_c);
+                            if (KOSA_StatusSuccess != osa_ret)
+                            {
+                                PRINTF("Fail to wait stream connected sem!\n");
+                                return -EIO;
+                            }
+                        } while (!atomic_test_bit(state->snk[ep_index].stream->flags, BT_STREAM_STATE_CONNECTED));
+                    }
+                }
+            }
+        }
+    }
+
+    return err;
+}
+
+int unicast_client_connect_streams(void)
+{
+    int err;
+
+    err = unicast_client_connect_stream_unidirectional(0);
+    if (err >= 0)
+    {
+        err = unicast_client_connect_stream_unidirectional(1);
+    }
+
+    return err;
+}
+
 int unicast_client_metadata_unidirectional(uint8_t is_tx, uint16_t context)
 {
     struct conn_state *state = NULL;
@@ -1103,7 +1231,7 @@ int unicast_client_metadata(uint16_t tx_context, uint16_t rx_context)
     return err;
 }
 
-int unicast_client_disable_stream_unidirectional(uint8_t is_tx)
+int unicast_client_disable_stream_unidirectional_of_conn(struct bt_conn *conn, uint8_t is_tx)
 {
     struct conn_state *state = NULL;
     int err;
@@ -1111,7 +1239,7 @@ int unicast_client_disable_stream_unidirectional(uint8_t is_tx)
 
     for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
     {
-        if (NULL != server_state[index].conn)
+        if (((NULL == conn) && (NULL != server_state[index].conn)) || ((NULL != conn) && (conn == server_state[index].conn)))
         {
             state = &server_state[index];
 
@@ -1178,6 +1306,23 @@ int unicast_client_disable_stream_unidirectional(uint8_t is_tx)
     return 0;
 }
 
+int unicast_client_disable_stream_unidirectional(uint8_t is_tx)
+{
+    return unicast_client_disable_stream_unidirectional_of_conn(NULL, is_tx);
+}
+
+int unicast_client_disable_streams_of_conn(struct bt_conn *conn)
+{
+    int err;
+
+    err = unicast_client_disable_stream_unidirectional_of_conn(conn, 0);
+    if (err >= 0)
+    {
+        err = unicast_client_disable_stream_unidirectional_of_conn(conn, 1);
+    }
+    return err;
+}
+
 int unicast_client_disable_streams(void)
 {
     int err;
@@ -1200,6 +1345,10 @@ static int unicast_client_lc3_decoder_init(struct conn_state *state, struct lc3_
 
     for (uint32_t i = 0U; i < state->src_cap_required.channel_count; i++)
     {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+        ret = lc3_ndsp_dec_set_config_params(&decoder->decoder_cfg[i], state->src_cap_required.frequency, 1, 0, state->src_cap_required.duration / 100, BITS_RATES_OF_SAMPLE);
+        ret = lc3_dec_init_ch_cntx(&decoder->decoder[i], &decoder->decoder_cfg[i], state->src_cap_required.frame_bytes);
+#else
         decoder->enc_buf_list_in[i] = decoder->enc_buf_in[i];
         decoder->dec_buf_list_out[i] = decoder->dec_buf_out[i];
         ret = LC3_decoder_create
@@ -1215,6 +1364,7 @@ static int unicast_client_lc3_decoder_init(struct conn_state *state, struct lc3_
                 &decoder->enc_buf_list_in[i],
                 &decoder->dec_buf_list_out[i]
             );
+#endif
         if(ret != LC3_ENCODER_SUCCESS)
         {
             PRINTF("Failed to create lc3 decoder %d\n", ret);
@@ -1239,6 +1389,10 @@ static int unicast_client_lc3_encoder_init(struct conn_state *state, struct lc3_
 
     for (uint32_t i = 0U; i < state->snk_cap_required.channel_count; i++)
     {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+        ret = lc3_ndsp_enc_set_config_params(&encoder->encoder_cfg[i], state->snk_cap_required.frequency, 1, state->snk_cap_required.duration / 100, BITS_RATES_OF_SAMPLE);
+        ret = lc3_enc_init_ch_cntx(&encoder->encoder[i], &encoder->encoder_cfg[i], state->snk_cap_required.frame_bytes);
+#else
         encoder->pcm_buf_list_in[i] = encoder->pcm_buf_in[i];
         encoder->enc_buf_list_out[i] = encoder->enc_buf_out[i];
         encoder->target_enc_bytes[i] = state->snk_cap_required.frame_bytes;
@@ -1256,6 +1410,7 @@ static int unicast_client_lc3_encoder_init(struct conn_state *state, struct lc3_
                 &encoder->pcm_buf_list_in[i],
                 &encoder->enc_buf_list_out[i]
             );
+#endif
         if(ret != LC3_ENCODER_SUCCESS)
         {
             PRINTF("Failed to create lc3 encoder %d\n", ret);
@@ -1687,8 +1842,12 @@ static void sink_recv_stream_task(void *param)
 
                     if (0 != buf->len)
                     {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+                        lc3_ret = LC3_decode_a_frame(&state->src[0].decoder->decoder[i], &in[i * dec_byte_count[i]], (void *)state->src[0].in_buffer, flg_bfi[i], state->src[0].decoder->dec_work_buffer[i]);
+#else
                         memcpy(state->src[0].decoder->enc_buf_in[i], &in[i * state->src_cap_required.frame_bytes], state->src_cap_required.frame_bytes);
                         lc3_ret = LC3_decoder_process(&state->src[0].decoder->decoder[i], &flg_bfi[i], &dec_byte_count[i]);
+#endif
                         if(lc3_ret != LC3_DECODER_SUCCESS)
                         {
                             memset(state->src[0].decoder->dec_buf_out[i], 0, sizeof(INT32) * LC3_INPUT_FRAME_SIZE_MAX);
@@ -1736,10 +1895,13 @@ static void sink_recv_stream_task(void *param)
 
                     srCvtUpdateFreqOffset(&state->src[0].resampler[i].upSrc, update_delta);
 
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+#else
                     for (int j = 0; j < (state->src_cap_required.frequency * state->src_cap_required.duration / 1000000); j++)
                     {
                         state->src[0].in_buffer[j] = (int16_t)state->src[0].decoder->dec_buf_out[i][j];
                     }
+#endif
                     /* resampler */
                     state->src[0].resampler[i].out_length = upCvtFrm(&state->src[0].resampler[i].upSrc, state->src[0].in_buffer, state->src[0].resampler[i].out_buffer);
 
@@ -2277,7 +2439,11 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
     uint8_t * out2;
     uint32_t channel_count;
     int lc3_ret;
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+    LC3_ENCODER_CHANNEL_CNTX *encoder_cntx[UNICAST_AUDIO_SERVER_COUNT];
+#else
     LC3_ENCODER_CNTX *encoder_cntx[UNICAST_AUDIO_SERVER_COUNT];
+#endif
     struct lc3_encoder *encoder[UNICAST_AUDIO_SERVER_COUNT];
     int err;
 
@@ -2367,11 +2533,21 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
                 }
                 if (state->snk_cap_required.channel_count < channel_count)
                 {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+                    int16_t *pcm_buf = (int16_t *)encoder[i]->pcm_buf_in[0];
+                    pcm_buf[j] = p[j*channel_count + i];
+#else
                     encoder[i]->pcm_buf_in[0][j] = (int32_t)p[j*channel_count + i];
+#endif
                 }
                 else
                 {
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+                    int16_t *pcm_buf = (int16_t *)encoder[i]->pcm_buf_in[i];
+                    pcm_buf[j] = p[j*channel_count + i];
+#else
                     encoder[i]->pcm_buf_in[i][j] = (int32_t)p[j*channel_count + i];
+#endif
                 }
             }
         }
@@ -2382,8 +2558,11 @@ static int lc3_encode_stream(struct bt_conn * conn, uint8_t *pcm, uint32_t pcm_l
             {
                 continue;
             }
-
+#if defined(LC3_DSP) && (LC3_DSP == 0)
+            lc3_ret = LC3_encode_a_frame(encoder_cntx[i], encoder[i]->pcm_buf_in[i], encoder[i]->enc_buf_out[i], encoder[i]->enc_work_buffer[i]);
+#else
             lc3_ret = LC3_encoder_process(encoder_cntx[i]);
+#endif
             if(lc3_ret != state->snk_cap_required.frame_bytes)
             {
                 PRINTF("Channel %d lc3 encode fail! %d\n", i, lc3_ret);
@@ -2484,7 +2663,7 @@ static void get_capability_from_codec(const struct bt_audio_codec_cfg *codec_cfg
         cap->frame_blocks_per_sdu = (uint32_t)ret;
     }
     PRINTF("    Frame blocks per SDU %d\n", cap->frame_blocks_per_sdu);
-    ret = bt_audio_codec_cfg_get_chan_allocation(codec_cfg, &location);
+    ret = bt_audio_codec_cfg_get_chan_allocation(codec_cfg, &location, false);
 
     if (ret >= 0)
     {
@@ -2533,7 +2712,7 @@ static void parse_pacs_capability(const struct bt_audio_codec_cap *codec_cap, st
     }
     PRINTF("\n");
 
-    cap->channel_count = bt_audio_codec_cap_get_supported_audio_chan_counts(codec_cap);
+    cap->channel_count = bt_audio_codec_cap_get_supported_audio_chan_counts(codec_cap, false);
     PRINTF("    Channel count %d.\n", cap->channel_count);
 
     if(0 == bt_audio_codec_cap_get_octets_per_frame(codec_cap, &codec_frame))
@@ -2543,7 +2722,7 @@ static void parse_pacs_capability(const struct bt_audio_codec_cap *codec_cap, st
         PRINTF("    Frame length min %d, max %d\n", cap->frame_bytes_min, cap->frame_bytes_max);
     }
 
-    cap->frame_blocks_per_sdu = bt_audio_codec_cap_get_max_codec_frames_per_sdu(codec_cap);
+    cap->frame_blocks_per_sdu = bt_audio_codec_cap_get_max_codec_frames_per_sdu(codec_cap, false);
     PRINTF("    Frame blocks per SDU %d\n", cap->frame_blocks_per_sdu);
 
     cap->pref_context = bt_audio_codec_cap_meta_get_pref_context(codec_cap);
@@ -2634,7 +2813,9 @@ static void unicast_client_stream_configured(struct bt_bap_stream *stream,
     stream_base = (struct stream_state *)stream;
 
     atomic_set_bit(stream_base->flags, BT_STREAM_STATE_CONFIGURED);
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
 }
 
 static void unicast_client_stream_qos_set(struct bt_bap_stream *stream)
@@ -2646,7 +2827,9 @@ static void unicast_client_stream_qos_set(struct bt_bap_stream *stream)
     stream_base = (struct stream_state *)stream;
 
     atomic_set_bit(stream_base->flags, BT_STREAM_STATE_QOS);
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
 }
 
 static void unicast_client_stream_enabled(struct bt_bap_stream *stream)
@@ -2686,7 +2869,23 @@ static void unicast_client_stream_enabled(struct bt_bap_stream *stream)
     }
 
     atomic_set_bit(stream_base->flags, BT_STREAM_STATE_ENABLED);
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
+}
+
+static void unicast_client_stream_connected(struct bt_bap_stream *stream)
+{
+    struct stream_state * stream_base;
+
+    PRINTF("Audio Stream %p connected\n", stream);
+
+    stream_base = (struct stream_state *)stream;
+
+    atomic_set_bit(stream_base->flags, BT_STREAM_STATE_CONNECTED);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
 }
 
 static void unicast_client_stream_started(struct bt_bap_stream *stream)
@@ -2808,7 +3007,9 @@ static void unicast_client_stream_started(struct bt_bap_stream *stream)
 #endif /* UNICAST_AUDIO_SYNC_MODE */
 
     atomic_set_bit(stream_base->flags, BT_STREAM_STATE_STARTED);
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
 
     (void)snk;
 }
@@ -2847,7 +3048,9 @@ static void unicast_client_stream_disabled(struct bt_bap_stream *stream)
     }
 
     atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_ENABLED);
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
 }
 
 static void unicast_client_stream_stopped(struct bt_bap_stream *stream, uint8_t reason)
@@ -2872,7 +3075,113 @@ static void unicast_client_stream_stopped(struct bt_bap_stream *stream, uint8_t 
     }
 
     atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_STARTED);
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
+}
+
+static void release_stream(struct bt_bap_stream *stream)
+{
+	struct stream_state * stream_base;
+	struct lc3_decoder * decoder;
+	struct lc3_encoder * encoder;
+	bool done = false;
+
+	stream_base = (struct stream_state *)stream;
+
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		if(!atomic_test_bit(server_state[index].flags, BT_ACL_CONN_STATE_DISCONNECTING))
+		{
+			continue;
+		}
+
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
+		{
+			if (server_state[index].src[ep_index].stream == stream_base)
+			{
+				if (NULL != stream_base->sem)
+				{
+					(void)OSA_SemaphoreDestroy(stream_base->sem);
+					stream_base->sem = NULL;
+				}
+				bt_fifo_put(&free_streams, stream_base);
+				server_state[index].src[ep_index].stream = NULL;
+				if (server_state[index].src[ep_index].decoder != NULL)
+				{
+					decoder = server_state[index].src[ep_index].decoder;
+					bt_fifo_put(&free_decoders, decoder);
+					server_state[index].src[ep_index].decoder = NULL;
+				}
+				done = true;
+				break;
+			}
+		}
+
+		if (done) {
+			break;
+		}
+
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
+		{
+			if (server_state[index].snk[ep_index].stream == stream_base)
+			{
+				if (NULL != stream_base->sem)
+				{
+					(void)OSA_SemaphoreDestroy(stream_base->sem);
+					stream_base->sem = NULL;
+				}
+				bt_fifo_put(&free_streams, stream_base);
+				server_state[index].snk[ep_index].stream = NULL;
+				if (server_state[index].snk[ep_index].encoder != NULL)
+				{
+					encoder = server_state[index].snk[ep_index].encoder;
+					bt_fifo_put(&free_encoders, encoder);
+					server_state[index].snk[ep_index].encoder = NULL;
+				}
+				done = true;
+				break;
+			}
+		}
+
+		if (done) {
+			break;
+		}
+	}
+
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
+		{
+			if (server_state[index].src[ep_index].stream != NULL)
+			{
+				return;
+			}
+		}
+
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
+		{
+			if (server_state[index].snk[ep_index].stream != NULL)
+			{
+				return;
+			}
+		}
+
+		if (atomic_test_bit(server_state[index].flags, BT_ACL_CONN_STATE_DISCONNECTING))
+		{
+			server_state[index].conn = NULL;
+			memset(&server_state[index], 0, sizeof(server_state[index]));
+		}
+	}
+
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		if (server_state[index].conn != NULL) {
+			return;
+		}
+	}
+
+	unicast_client_delete_group();
 }
 
 static void unicast_client_stream_released(struct bt_bap_stream *stream)
@@ -2901,10 +3210,14 @@ static void unicast_client_stream_released(struct bt_bap_stream *stream)
     atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_CONFIGURED);
     atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_QOS);
     atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_ENABLED);
+    atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_CONNECTED);
     atomic_clear_bit(stream_base->flags, BT_STREAM_STATE_STARTED);
 
-    (void)OSA_SemaphorePost(stream_base->sem);
+    if (stream_base->sem != NULL) {
+        (void)OSA_SemaphorePost(stream_base->sem);
+    }
 
+    release_stream(stream);
     (void)stream_base;
 }
 
@@ -3124,75 +3437,144 @@ static void connected(struct bt_conn *conn, uint8_t err)
 
 static void disconnected(struct bt_conn *conn, uint8_t reason)
 {
-    struct stream_state * stream_base;
-    struct lc3_decoder * decoder;
-    struct lc3_encoder * encoder;
+	struct stream_state * stream_base;
+	struct lc3_decoder * decoder;
+	struct lc3_encoder * encoder;
+	bool no_stream;
 
 #if (defined(UNICAST_AUDIO_SYNC_MODE) && (UNICAST_AUDIO_SYNC_MODE > 0))
-    if (sync_timer_started > 0)
-    {
-        sync_timer_started = 0;
-        BORAD_SyncTimer_Stop();
-    }
+	if (sync_timer_started > 0)
+	{
+		sync_timer_started = 0;
+		BORAD_SyncTimer_Stop();
+	}
 #endif /* UNICAST_AUDIO_SYNC_MODE */
 
-    unicast_client_disable_streams();
-    unicast_client_release_streams();
-    unicast_client_delete_group();
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		if (conn == server_state[index].conn)
+		{
+			atomic_set_bit(server_state[index].flags, BT_ACL_CONN_STATE_DISCONNECTING);
+			break;
+		}
+	}
 
-    for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
-    {
-        if (conn == server_state[index].conn)
-        {
-            for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
-            {
-                if (server_state[index].src[ep_index].stream != NULL)
-                {
-                    stream_base = (struct stream_state *)server_state[index].src[ep_index].stream;
-                    if (NULL != stream_base->sem)
-                    {
-                        (void)OSA_SemaphoreDestroy(stream_base->sem);
-                        stream_base->sem = NULL;
-                    }
-                    bt_fifo_put(&free_streams, stream_base);
-                    server_state[index].src[ep_index].stream = NULL;
-                }
 
-                if (server_state[index].src[ep_index].decoder != NULL)
-                {
-                    decoder = server_state[index].src[ep_index].decoder;
-                    bt_fifo_put(&free_decoders, decoder);
-                    server_state[index].src[ep_index].decoder = NULL;
-                }
-            }
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
+		{
+			stream_base = server_state[index].src[ep_index].stream;
+			if (stream_base != NULL)
+			{
+				if ((atomic_get(stream_base->flags) != 0) && !atomic_test_bit(stream_base->flags, BT_STREAM_STATE_RELEASED)) {
+					continue;
+				}
+				if (NULL != stream_base->sem)
+				{
+					(void)OSA_SemaphoreDestroy(stream_base->sem);
+					stream_base->sem = NULL;
+				}
+				bt_fifo_put(&free_streams, stream_base);
+				server_state[index].src[ep_index].stream = NULL;
+				if (server_state[index].src[ep_index].decoder != NULL)
+				{
+					decoder = server_state[index].src[ep_index].decoder;
+					bt_fifo_put(&free_decoders, decoder);
+					server_state[index].src[ep_index].decoder = NULL;
+				}
+			}
+		}
 
-            for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
-            {
-                if (server_state[index].snk[ep_index].stream != NULL)
-                {
-                    stream_base = (struct stream_state *)server_state[index].snk[ep_index].stream;
-                    if (NULL != stream_base->sem)
-                    {
-                        (void)OSA_SemaphoreDestroy(stream_base->sem);
-                        stream_base->sem = NULL;
-                    }
-                    bt_fifo_put(&free_streams, stream_base);
-                    server_state[index].snk[ep_index].stream = NULL;
-                }
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
+		{
+			stream_base = server_state[index].snk[ep_index].stream;
+			if (stream_base != NULL)
+			{
+				if ((atomic_get(stream_base->flags) != 0) && !atomic_test_bit(stream_base->flags, BT_STREAM_STATE_RELEASED)) {
+					continue;
+				}
+				if (NULL != stream_base->sem)
+				{
+					(void)OSA_SemaphoreDestroy(stream_base->sem);
+					stream_base->sem = NULL;
+				}
+				bt_fifo_put(&free_streams, stream_base);
+				server_state[index].snk[ep_index].stream = NULL;
+				if (server_state[index].snk[ep_index].encoder != NULL)
+				{
+					encoder = server_state[index].snk[ep_index].encoder;
+					bt_fifo_put(&free_encoders, encoder);
+					server_state[index].snk[ep_index].encoder = NULL;
+				}
+			}
+		}
+	}
 
-                if (server_state[index].snk[ep_index].encoder != NULL)
-                {
-                    encoder = server_state[index].snk[ep_index].encoder;
-                    bt_fifo_put(&free_encoders, encoder);
-                    server_state[index].snk[ep_index].encoder = NULL;
-                }
-            }
-            server_state[index].conn = NULL;
-            memset(&server_state[index], 0, sizeof(server_state[index]));
-            break;
-        }
-    }
-    /* TODO: Disconnected event */
+	no_stream = true;
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		if (server_state[index].conn != conn) {
+			continue;
+		}
+
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
+		{
+			if (server_state[index].src[ep_index].stream != NULL)
+			{
+				no_stream = false;
+				break;
+			}
+		}
+
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
+		{
+			if (server_state[index].snk[ep_index].stream != NULL)
+			{
+				no_stream = false;
+				break;
+			}
+		}
+
+		if (no_stream) {
+			server_state[index].conn = NULL;
+			memset(&server_state[index], 0, sizeof(server_state[index]));
+		}
+	}
+
+	no_stream = true;
+	for (uint32_t index = 0; index < ARRAY_SIZE(server_state); index++)
+	{
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT; ep_index++)
+		{
+			if (server_state[index].src[ep_index].stream != NULL)
+			{
+				no_stream = false;
+				break;
+			}
+		}
+
+		if (no_stream) {
+			break;
+		}
+
+		for (uint32_t ep_index = 0U; ep_index < CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT; ep_index++)
+		{
+			if (server_state[index].snk[ep_index].stream != NULL)
+			{
+				no_stream = false;
+				break;
+			}
+		}
+
+		if (no_stream) {
+			break;
+		}
+	}
+
+	if (no_stream) {
+		unicast_client_delete_group();
+	}
 }
 
 static void att_mtu_updated(struct bt_conn *conn, uint16_t tx, uint16_t rx)
@@ -3441,6 +3823,7 @@ static void unicast_client_endpoint(struct bt_conn *conn, enum bt_audio_dir dir,
         atomic_clear_bit(stream->flags, BT_STREAM_STATE_CONFIGURED);
         atomic_clear_bit(stream->flags, BT_STREAM_STATE_QOS);
         atomic_clear_bit(stream->flags, BT_STREAM_STATE_ENABLED);
+        atomic_clear_bit(stream->flags, BT_STREAM_STATE_CONNECTED);
         atomic_clear_bit(stream->flags, BT_STREAM_STATE_STARTED);
         atomic_clear_bit(stream->flags, BT_STREAM_STATE_RELEASED);
 

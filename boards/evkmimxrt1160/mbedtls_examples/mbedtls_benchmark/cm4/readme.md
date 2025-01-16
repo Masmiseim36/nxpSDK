@@ -1,101 +1,47 @@
-Overview
-========
-The mbedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
-terminal.
+# mbedtls_benchmark
 
+## Overview
 
-SDK version
-===========
-- Version: 2.16.000
+The mbedTLS Benchmark demo application performs cryptographic algorithm
+benchmarking and prints results to the terminal.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1160-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-Prepare the Demo
-================
-Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm (http://ttssh2.osdn.jp)
-and make a connection to the virtual serial port.
-
-1. Start TeraTerm.
-
-2. New connection -> Serial.
-
-3. Set the appropriate COMx port (where x is port number) in the port context menu. The number is provided by the operating
-   system, and could be different from computer to computer. Select the COM number related to the virtual
-   serial port. Confirm the selected port by clicking the "OK" button.
-
-4. Set following connection parameters in menu Setup -> Serial port.
-        Baud rate:    115200
-        Data:         8
-        Parity:       none
-        Stop:         1
-        Flow control: none
-
-5.  Confirm selected parameters by clicking the "OK" button.
-
-Running the demo
-================
-When the demo runs successfully, which takes a couple of minutes, the terminal displays similar information like the following:
-
-mbedTLS version 2.26.0
-fsys=250105263
-Using following implementations:
-  SHA: HASHCRYPT HW accelerated
-  AES: HASHCRYPT HW accelerated
-  AES GCM: Software implementation
-  DES: Software implementation
-  Asymmetric cryptography: CASPER HW accelerated ECC256/384/521 and RSA verify
-
-  MD5                      :  13871.43 KB/s,   17.33 cycles/byte
-  SHA-1                    :  95852.80 KB/s,    2.27 cycles/byte
-  SHA-256                  :  104942.33 KB/s,    2.05 cycles/byte
-  SHA-512                  :  2016.78 KB/s,  120.89 cycles/byte
-  3DES                     :  871.28 KB/s,  280.37 cycles/byte
-  DES                      :  2118.32 KB/s,  115.08 cycles/byte
-  AES-CBC-128              :  77563.50 KB/s,    2.87 cycles/byte
-  AES-CBC-192              :  66632.58 KB/s,    3.39 cycles/byte
-  AES-CBC-256              :  58500.90 KB/s,    3.90 cycles/byte
-  AES-GCM-128              :  2096.09 KB/s,  116.30 cycles/byte
-  AES-GCM-192              :  2066.84 KB/s,  117.95 cycles/byte
-  AES-GCM-256              :  2042.72 KB/s,  119.35 cycles/byte
-  AES-CCM-128              :  3942.24 KB/s,   61.69 cycles/byte
-  AES-CCM-192              :  3742.94 KB/s,   64.99 cycles/byte
-  AES-CCM-256              :  3589.41 KB/s,   67.79 cycles/byte
-  Poly1305                 :  23583.22 KB/s,   10.08 cycles/byte
-  CTR_DRBG (NOPR)          :  10029.10 KB/s,   24.08 cycles/byte
-  CTR_DRBG (PR)            :  6888.67 KB/s,   35.18 cycles/byte
-  HMAC_DRBG SHA-1 (NOPR)   :  2396.60 KB/s,  101.67 cycles/byte
-  HMAC_DRBG SHA-1 (PR)     :  2191.93 KB/s,  111.20 cycles/byte
-  HMAC_DRBG SHA-256 (NOPR) :  3152.89 KB/s,   77.21 cycles/byte
-  HMAC_DRBG SHA-256 (PR)   :  3152.90 KB/s,   77.21 cycles/byte
-  RSA-1024                 :  1636.33  public/s
-  RSA-1024                 :   13.00 private/s
-  DHE-2048                 :    0.60 handshake/s
-  DH-2048                  :    1.00 handshake/s
-  ECDSA-secp521r1          :   11.33 sign/s
-  ECDSA-secp384r1          :   17.67 sign/s
-  ECDSA-secp256r1          :   37.67 sign/s
-  ECDSA-secp521r1          :    8.33 verify/s
-  ECDSA-secp384r1          :   16.67 verify/s
-  ECDSA-secp256r1          :   35.67 verify/s
-  ECDHE-secp521r1          :    6.67 handshake/s
-  ECDHE-secp384r1          :   10.33 handshake/s
-  ECDHE-secp256r1          :   22.00 handshake/s
-  ECDH-secp521r1           :   12.67 handshake/s
-  ECDH-secp384r1           :   20.00 handshake/s
-  ECDH-secp256r1           :   43.33 handshake/s
-  ECDHE-secp521r1          :    3.67 full handshake/s
-  ECDHE-secp384r1          :    5.33 full handshake/s
-  ECDHE-secp256r1          :   11.33 full handshake/s
+## Supported Boards
+- [EVK9-MIMX8ULP](../../_boards/evk9mimx8ulp/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../_boards/evkmcimx7ulp/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MIMX8ULP](../../_boards/evkmimx8ulp/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [FRDM-K32L2A4S](../../_boards/frdmk32l2a4s/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [FRDM-K32L3A6](../../_boards/frdmk32l3a6/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [FRDM-MCXW71](../../_boards/frdmmcxw71/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [K32W148-EVK](../../_boards/k32w148evk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [KW45B41Z-EVK](../../_boards/kw45b41zevk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [KW47-EVK](../../_boards/kw47evk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MCX-W72-EVK](../../_boards/mcxw72evk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)
+- [TWR-KM35Z75M](../../_boards/twrkm35z75m/mbedtls_examples/mbedtls_benchmark/example_board_readme.md)

@@ -2,19 +2,18 @@
 ** ###################################################################
 **     Processors:          MIMXRT1166CVM5A_cm4
 **                          MIMXRT1166DVM6A_cm4
+**                          MIMXRT1166XVM5A_cm4
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
-**     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210402
+**     Version:             rev. 0.2, 2023-02-27
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -29,8 +28,9 @@ ENTRY(Reset_Handler)
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
-NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x20250000 - HEAP_SIZE : 0x20240000 - HEAP_SIZE;
+NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x20250000 - HEAP_SIZE : 0x20020000 - HEAP_SIZE;
 NCACHE_HEAP_SIZE  = DEFINED(__heap_noncacheable__) ? HEAP_SIZE : 0x0000;
+TEXT_SIZE = 0x00FFDC00;
 
 /* Specify the memory areas */
 MEMORY
@@ -38,11 +38,11 @@ MEMORY
   m_flash_config        (RX)  : ORIGIN = 0x08000400, LENGTH = 0x00000C00
   m_ivt                 (RX)  : ORIGIN = 0x08001000, LENGTH = 0x00001000
   m_interrupts          (RX)  : ORIGIN = 0x08002000, LENGTH = 0x00000400
-  m_text                (RX)  : ORIGIN = 0x08002400, LENGTH = 0x00FFDC00
+  m_text                (RX)  : ORIGIN = 0x08002400, LENGTH = TEXT_SIZE
   m_qacode              (RX)  : ORIGIN = 0x1FFE0000, LENGTH = 0x00020000
-  m_data                (RW)  : ORIGIN = 0x20220000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00020000 : 0x00020000 - HEAP_SIZE
-  m_ncache              (RW)  : ORIGIN = 0x20248000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00008000 - HEAP_SIZE : 0x00008000
+  m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00020000 : 0x00020000 - HEAP_SIZE
   m_data2               (RW)  : ORIGIN = 0x20240000, LENGTH = 0x00008000
+  m_ncache              (RW)  : ORIGIN = 0x20248000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00008000 - HEAP_SIZE : 0x00008000
   m_heap                (RW)  : ORIGIN = NCACHE_HEAP_START, LENGTH = HEAP_SIZE
 }
 
@@ -189,9 +189,9 @@ SECTIONS
     . = ALIGN(4);
     __DATA_RAM = .;
     __data_start__ = .;      /* create a global symbol at data start */
-    *(m_usb_dma_init_data)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
+    *(DataQuickAccess)       /* quick access data section */
     KEEP(*(.jcr*))
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
@@ -235,7 +235,6 @@ SECTIONS
     . = ALIGN(4);
     __START_BSS = .;
     __bss_start__ = .;
-    *(m_usb_dma_noninit_data)
     *(.bss)
     *(.bss*)
     *(COMMON)
@@ -271,4 +270,3 @@ SECTIONS
 
   ASSERT(__StackLimit >= __StackEnd, "region m_data overflowed with stack and heap")
 }
-

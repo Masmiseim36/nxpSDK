@@ -7,24 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_tpm.h"
 
-#include "fsl_cache.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* define instance */
-#define BOARD_TPM TPM1
-/* Interrupt number and interrupt handler for the TPM instance used */
-#define BOARD_TPM_IRQ_NUM TPM1_IRQn
-#define BOARD_TPM_HANDLER TPM1_IRQHandler
-/* Get source clock for TPM driver */
-#define TPM_SOURCE_CLOCK CLOCK_GetRootClockFreq(kCLOCK_Root_Bus_Aon)
-
 #ifndef DEMO_TIMER_PERIOD_US
 /* Set counter period to 1ms */
 #define DEMO_TIMER_PERIOD_US (1000U)
@@ -58,10 +47,7 @@ int main(void)
     tpm_config_t tpmInfo;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print a note to terminal */
     PRINTF("\r\nTPM example to simulate a timer\r\n");

@@ -9,7 +9,7 @@
 #include <string.h>
 /*  SDK Included Files */
 #include "Driver_ETH_MAC.h"
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -19,13 +19,9 @@
 #include "stdlib.h"
 #include "fsl_silicon_id.h"
 
-#include "fsl_phyrtl8211f.h"
-#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_ENET     Driver_ETH_MAC0
-#define EXAMPLE_ENET_PHY Driver_ETH_PHY0
 #define ENET_DATA_LENGTH        (1000)
 #define ENET_EXAMPLE_LOOP_COUNT (20U)
 
@@ -47,9 +43,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-cmsis_enet_mac_resource_t ENET0_Resource;
-cmsis_enet_phy_resource_t ENETPHY0_Resource;
-static phy_rtl8211f_resource_t g_phy_resource;
 uint8_t g_frame[ENET_DATA_LENGTH + 14];
 volatile uint32_t g_testTxNum  = 0;
 uint8_t g_macAddr[6]           = MAC_ADDRESS;
@@ -60,37 +53,6 @@ phy_handle_t phyHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-uint32_t ENET_GetFreq(void)
-{
-    return CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
-}
-
-void BOARD_InitModuleClock(void)
-{
-    const clock_sys_pll1_config_t sysPll1Config = {
-        .pllDiv2En = true,
-    };
-    CLOCK_InitSysPll1(&sysPll1Config);
-    clock_root_config_t rootCfg = {.mux = 4, .div = 4}; /* Generate 125M root clock. */
-    CLOCK_SetRootClock(kCLOCK_Root_Enet2, &rootCfg);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET_1G)]);
-    ENET_SetSMI(ENET_1G, ENET_GetFreq(), false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(ENET_1G, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(ENET_1G, phyAddr, regAddr, pData);
-}
-
 void ENET_SignalEvent_t(uint32_t event)
 {
     if (event == ARM_ETH_MAC_EVENT_RX_FRAME)
@@ -155,37 +117,7 @@ int main(void)
     ARM_ETH_LINK_INFO linkInfo;
 
     /* Hardware Initialization. */
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    /* Hardware Initialization. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_GPR->GPR5 |= IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK; /* bit1:iomuxc_gpr_enet_clk_dir
-                                                                 bit0:GPR_ENET_TX_CLK_SEL(internal or OSC) */
-    GPIO_PinInit(GPIO11, 14, &gpio_config);
-    /* For a complete PHY reset of RTL8211FDI-CG, this pin must be asserted low for at least 10ms. And
-     * wait for a further 30ms(for internal circuits settling time) before accessing the PHY register */
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO11, 14, 1);
-    SDK_DelayAtLeastUs(30000, CLOCK_GetFreq(kCLOCK_CpuClk));
-
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
-
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
-
-    ENET0_Resource.base           = ENET_1G;
-    ENET0_Resource.GetFreq        = ENET_GetFreq;
-    ENETPHY0_Resource.phyAddr     = RTE_ENET_PHY_ADDRESS;
-    ENETPHY0_Resource.ops         = &phyrtl8211f_ops;
-    ENETPHY0_Resource.opsResource = &g_phy_resource;
-
-    MDIO_Init();
+    BOARD_InitHardware();
 
     PRINTF("\r\nENET example start.\r\n");
 

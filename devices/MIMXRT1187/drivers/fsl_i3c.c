@@ -139,8 +139,8 @@ static clock_ip_name_t const kI3cClocks[] = I3C_CLOCKS;
 static const reset_ip_name_t kI3cResets[] = I3C_RSTS;
 #endif
 
-static i3c_device_info_t devList[I3C_MAX_DEVCNT]; /*!< I3C slave record list */
-static uint8_t usedDevCount = 0;
+static i3c_device_info_t devList[ARRAY_SIZE(kI3cBases)][I3C_MAX_DEVCNT]; /*!< I3C slave record list */
+static uint8_t usedDevCount[ARRAY_SIZE(kI3cBases)] = {0};
 
 /*! @brief Pointer to master IRQ handler for each instance. */
 i3c_master_isr_t s_i3cMasterIsr;
@@ -330,7 +330,7 @@ uint32_t I3C_GetInstance(I3C_Type *base)
     uint32_t instance;
     for (instance = 0; instance < ARRAY_SIZE(kI3cBases); ++instance)
     {
-        if (kI3cBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(kI3cBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -849,6 +849,13 @@ void I3C_Init(I3C_Type *base, const i3c_config_t *config, uint32_t sourceClock_H
     }
 #endif
 
+#if !(defined(FSL_FEATURE_I3C_HAS_NO_SLAVE_IBI_MR_HJ) && FSL_FEATURE_I3C_HAS_NO_SLAVE_IBI_MR_HJ)
+    if (config->enableSlave && config->isHotJoin)
+    {
+        I3C_SlaveRequestEvent(base, kI3C_SlaveEventHotJoinReq);
+    }
+#endif
+
     configValue = base->SCONFIG;
 
     configValue &=
@@ -1318,7 +1325,7 @@ void I3C_MasterEmitRequest(I3C_Type *base, i3c_bus_request_t masterReq)
 
     mctrlReg &= ~I3C_MCTRL_REQUEST_MASK;
 
-    if (masterReq == kI3C_RequestProcessDAA)
+    if ((masterReq == kI3C_RequestProcessDAA) || (masterReq == kI3C_RequestForceExit))
     {
         mctrlReg &= ~I3C_MCTRL_TYPE_MASK;
     }
@@ -1595,6 +1602,7 @@ status_t I3C_MasterProcessDAASpecifiedBaudrate(I3C_Type *base,
 
     status_t result       = kStatus_Success;
     uint8_t rxBuffer[8]   = {0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU};
+    uint32_t instance     = I3C_GetInstance(base);
     uint32_t masterConfig = 0;
     uint32_t devCount     = 0;
     uint8_t rxSize        = 0;
@@ -1670,19 +1678,19 @@ status_t I3C_MasterProcessDAASpecifiedBaudrate(I3C_Type *base,
             }
 
             /* Assign the dynamic address from address list. */
-            devList[devCount].dynamicAddr = *addressList++;
-            base->MWDATAB                 = devList[devCount].dynamicAddr;
+            devList[instance][devCount].dynamicAddr = *addressList++;
+            base->MWDATAB                 = devList[instance][devCount].dynamicAddr;
 
             /* Emit process DAA again. */
             I3C_MasterEmitRequest(base, kI3C_RequestProcessDAA);
 
-            devList[devCount].vendorID   = (((uint16_t)rxBuffer[0] << 8U | (uint16_t)rxBuffer[1]) & 0xFFFEU) >> 1U;
-            devList[devCount].partNumber = ((uint32_t)rxBuffer[2] << 24U | (uint32_t)rxBuffer[3] << 16U |
+            devList[instance][devCount].vendorID   = (((uint16_t)rxBuffer[0] << 8U | (uint16_t)rxBuffer[1]) & 0xFFFEU) >> 1U;
+            devList[instance][devCount].partNumber = ((uint32_t)rxBuffer[2] << 24U | (uint32_t)rxBuffer[3] << 16U |
                                             (uint32_t)rxBuffer[4] << 8U | (uint32_t)rxBuffer[5]);
-            devList[devCount].bcr        = rxBuffer[6];
-            devList[devCount].dcr        = rxBuffer[7];
+            devList[instance][devCount].bcr        = rxBuffer[6];
+            devList[instance][devCount].dcr        = rxBuffer[7];
             devCount++;
-            usedDevCount++;
+            usedDevCount[instance]++;
 
             /* Ready to handle next device. */
             mctrlDone = false;
@@ -1728,10 +1736,23 @@ status_t I3C_MasterProcessDAASpecifiedBaudrate(I3C_Type *base,
 i3c_device_info_t *I3C_MasterGetDeviceListAfterDAA(I3C_Type *base, uint8_t *count)
 {
     assert(NULL != count);
+    
+    uint32_t instance = I3C_GetInstance(base);
 
-    *count = usedDevCount;
+    *count = usedDevCount[instance];
 
-    return devList;
+    return devList[instance];
+}
+
+/*!
+ * brief Clear the global device count which represents current devices number on the bus.
+ * When user resets all dynamic addresses on the bus, should call this API.
+ *
+ * param base The I3C peripheral base address.
+ */
+void I3C_MasterClearDeviceCount(I3C_Type *base)
+{
+    usedDevCount[I3C_GetInstance(base)] = 0;
 }
 
 /*!
@@ -2071,7 +2092,7 @@ static void I3C_TransferStateMachineIBIWonState(I3C_Type *base,
         }
     }
 
-    /* Make sure there is data in the rx fifo. */
+    /* Make sure there is data in the Rx FIFO. */
     if (0UL != stateParams->rxCount)
     {
         if ((handle->ibiBuff == NULL) && (handle->callback.ibiCallback != NULL))
@@ -2449,11 +2470,25 @@ static status_t I3C_InitTransferStateMachine(I3C_Type *base, i3c_master_handle_t
     /* If repeated start is requested, send repeated start. */
     else if (0U != (xfer->flags & (uint32_t)kI3C_TransferRepeatedStartFlag))
     {
-        result = I3C_MasterRepeatedStart(base, xfer->busType, xfer->slaveAddress, direction);
+        if ((handle->remainingBytes < 256U) && (direction == kI3C_Read))
+        {
+            result = I3C_MasterRepeatedStartWithRxSize(base, xfer->busType, xfer->slaveAddress, direction, (uint8_t)handle->remainingBytes);
+        }
+        else
+        {
+            result = I3C_MasterRepeatedStart(base, xfer->busType, xfer->slaveAddress, direction);
+        }
     }
     else /* For normal transfer, send start. */
     {
-        result = I3C_MasterStart(base, xfer->busType, xfer->slaveAddress, direction);
+        if ((handle->remainingBytes < 256U) && (direction == kI3C_Read))
+        {
+            result = I3C_MasterStartWithRxSize(base, xfer->busType, xfer->slaveAddress, direction, (uint8_t)handle->remainingBytes);
+        }
+        else
+        {
+            result = I3C_MasterStart(base, xfer->busType, xfer->slaveAddress, direction);
+        }
     }
 
     if (xfer->subaddressSize > 0U)
@@ -2467,12 +2502,6 @@ static status_t I3C_InitTransferStateMachine(I3C_Type *base, i3c_master_handle_t
     else
     {
         handle->state = (uint8_t)kStopState;
-    }
-
-    if ((handle->remainingBytes < 256U) && (direction == kI3C_Read))
-    {
-        handle->rxTermOps = (handle->rxTermOps == kI3C_RxTermDisable) ? handle->rxTermOps : kI3C_RxAutoTerm;
-        base->MCTRL |= I3C_MCTRL_RDTERM(handle->remainingBytes);
     }
 
     return result;

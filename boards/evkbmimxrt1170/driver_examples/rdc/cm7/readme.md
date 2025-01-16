@@ -1,45 +1,15 @@
-Overview
-========
+# rdc
+
+## Overview
 
 The RDC example shows how to control the peripheral and memory region
 asscess policy using RDC and RDC_SEMA42
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-
-Board settings
-==============
-This example project does not call for any special hardware configurations.
-Although not required, the recommendation is to leave the development board's jumper settings
-and configurations in default state when running this example.
-
-Prepare the demo
-1.  Connect a USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Build core1 project first, then build core0 project.
-4.  Download the core0 program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the success log "RDC Example Success" is
-shown in the terminal.
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/rdc/example_board_readme.md)
+- [EVK-MIMX8MM](../../_boards/evkmimx8mm/driver_examples/rdc/example_board_readme.md)
+- [EVK-MIMX8MN](../../_boards/evkmimx8mn/driver_examples/rdc/example_board_readme.md)
+- [EVK-MIMX8MNDDR3L](../../_boards/evkmimx8mnddr3l/driver_examples/rdc/example_board_readme.md)
+- [EVK-MIMX8MP](../../_boards/evkmimx8mp/driver_examples/rdc/example_board_readme.md)
+- [EVK-MIMX8MQ](../../_boards/evkmimx8mq/driver_examples/rdc/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/rdc/example_board_readme.md)

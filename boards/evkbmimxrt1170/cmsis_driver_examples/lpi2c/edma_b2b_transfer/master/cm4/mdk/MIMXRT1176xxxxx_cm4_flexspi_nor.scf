@@ -7,16 +7,14 @@
 **
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
-**     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210402
+**     Version:             rev. 1.1, 2022-04-02
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -50,7 +48,7 @@
 #define m_qacode_start                 0x1FFE0000
 #define m_qacode_size                  0x00020000
 
-#define m_interrupts_ram_start         0x20220000
+#define m_interrupts_ram_start         0x20000000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
 #define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size)
@@ -110,6 +108,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 #endif
     .ANY (+RW +ZI)
     * (RamFunction)
+    * (DataQuickAccess)
   }
 #if (!defined(__heap_noncacheable__))
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up

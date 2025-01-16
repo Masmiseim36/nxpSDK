@@ -10,21 +10,14 @@
 #include <stdio.h>
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio_i2c_master.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO2
-
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetRootClockFreq(kCLOCK_Root_Flexio2)
-
-#define FLEXIO_I2C_SDA_PIN 3U
-#define FLEXIO_I2C_SCL_PIN 2U
 
 #define I2C_BAUDRATE       (100000) /* 100K */
 #define FXOS8700_WHOAMI    (0xC7U)
@@ -460,10 +453,7 @@ int main(void)
     i2cDev.timerIndex[1]   = 1U;
     i2cDev.timerIndex[2]   = 2U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nFlexIO I2C example read accelerometer value\r\n");
 

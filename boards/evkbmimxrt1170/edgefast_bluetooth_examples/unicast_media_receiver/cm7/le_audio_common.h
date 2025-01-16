@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 
+#include <porting.h>
 #include <bluetooth/audio/audio.h>
 #include <bluetooth/iso.h>
 

@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_ram.ini</tIfile>
+        <tIfile>../evkmimxrt1160_ram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -186,7 +186,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>fmstr_example_pdbdm_cm7 flexspi_nor_sdram_debug</TargetName>
+    <TargetName>fmstr_example_pdbdm_cm7 sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -277,7 +277,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_flexspi_nor_sdram.ini</tIfile>
+        <tIfile>../evkmimxrt1160_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -446,7 +446,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_flexspi_nor.ini</tIfile>
+        <tIfile>../evkmimxrt1160_flexspi_nor.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -615,7 +615,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_ram.ini</tIfile>
+        <tIfile>../evkmimxrt1160_ram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -688,7 +688,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>fmstr_example_pdbdm_cm7 flexspi_nor_sdram_release</TargetName>
+    <TargetName>fmstr_example_pdbdm_cm7 sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -779,7 +779,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_flexspi_nor_sdram.ini</tIfile>
+        <tIfile>../evkmimxrt1160_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -943,7 +943,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_flexspi_nor.ini</tIfile>
+        <tIfile>../evkmimxrt1160_flexspi_nor.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

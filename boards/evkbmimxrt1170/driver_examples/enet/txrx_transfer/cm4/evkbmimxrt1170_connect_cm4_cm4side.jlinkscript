@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -109,13 +109,9 @@ void ResetCM4()
 void ResetTarget()
 {
     CORESIGHT_IndexAHBAPToUse = 0;
+    JLINK_TARGET_Halt();
     ResetCM4();
     JLINK_CORESIGHT_WriteAP(JLINK_CORESIGHT_AP_REG_ADDR, 0x40C04000);
     JLINK_CORESIGHT_WriteAP(JLINK_CORESIGHT_AP_REG_DATA, 1);
     CORESIGHT_IndexAHBAPToUse = 1;
-}
-
-int HandleBeforeFlashProg(void) {
- JLINK_ExecCommand("SetFlashDLNoRMWThreshold = 0xffffffff"); 
- return 0;
 }

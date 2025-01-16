@@ -370,16 +370,12 @@ void NETC_TimerGetCurrentTime(netc_timer_handle_t *handle, uint64_t *nanosecond)
 
 void NETC_TimerGetFreeRunningTime(netc_timer_handle_t *handle, uint64_t *nanosecond)
 {
-    uint32_t timeLow, timeHigh[2];
+    uint32_t timeLow, timeHigh;
 
-    timeHigh[0] = handle->hw.base->TMR_FRT_H;
-    do {
-        timeHigh[1] = timeHigh[0];
-        timeLow     = handle->hw.base->TMR_FRT_L;
-        timeHigh[0] = handle->hw.base->TMR_FRT_H;
-    } while (timeHigh[0] != timeHigh[1]);
+    timeLow  = handle->hw.base->TMR_FRT_L;
+    timeHigh = handle->hw.base->TMR_FRT_H;
 
-    *nanosecond = ((uint64_t)timeHigh[0] << 32U) + timeLow;
+    *nanosecond = ((uint64_t)timeHigh << 32U) + timeLow;
 }
 
 void NETC_TimerAddOffset(netc_timer_handle_t *handle, int64_t nanosecond)

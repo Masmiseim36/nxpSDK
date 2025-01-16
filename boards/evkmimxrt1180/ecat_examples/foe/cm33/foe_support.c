@@ -15,8 +15,8 @@
 
 #include "fsl_debug_console.h"
 #include "mflash_drv.h"
-#include "sysflash/sysflash.h"
 #include "flash_map.h"
+#include "sysflash/sysflash.h"
 #include "mcuboot_app_support.h"
 
 static uint32_t image;

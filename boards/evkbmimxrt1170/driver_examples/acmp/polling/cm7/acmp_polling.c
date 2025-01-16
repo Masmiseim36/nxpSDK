@@ -1,26 +1,18 @@
 /*
  * Copyright (c) 2015,2020, Freescale Semiconductor, Inc.
  * Copyright 2024 NXP
- * All rights reserved.
- *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_acmp.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR    CMP1
-#define DEMO_ACMP_MINUS_INPUT 2U
-#define DEMO_ACMP_PLUS_INPUT  7U    /*  Internal 8bit DAC output. */
-#define DEMO_CMP_USE_VIN1     false /* The Vin1 is connect to GND, so use VIN2 in this example. */
 
 /*******************************************************************************
  * Prototypes
@@ -33,7 +25,6 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 /*!
  * @brief Main function
  */
@@ -45,10 +36,7 @@ int main(void)
     acmp_discrete_mode_config_t acmpDiscreteconfig;
     uint32_t statusFlags;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Configure ACMP. */
     /*
@@ -65,7 +53,9 @@ int main(void)
     /* Configure negative inputs are coming from 3v domain. */
     ACMP_GetDefaultDiscreteModeConfig(&acmpDiscreteconfig);
 #if defined(FSL_FEATURE_ACMP_HAS_C3_REG) && (FSL_FEATURE_ACMP_HAS_C3_REG == 1U)
+#if !(defined(FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN) && (FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN == 1U))
     acmpDiscreteconfig.enableNegativeChannelDiscreteMode = true;
+#endif /* FSL_FEATURE_ACMP_HAS_NO_3V_DOMAIN */
 #endif /* FSL_FEATURE_ACMP_HAS_C3_REG */
     ACMP_SetDiscreteModeConfig(DEMO_ACMP_BASEADDR, &acmpDiscreteconfig);
 

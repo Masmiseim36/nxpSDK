@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020, 2024 NXP
  * All rights reserved.
  *
  *
@@ -376,8 +376,10 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     /* Configure flash settings according to serial flash feature. */
     FLEXSPI_SetFlashConfig(base, &deviceconfig, kFLEXSPI_PortA1);
 
+    uint32_t tmpLUT[CUSTOM_LUT_LENGTH] = {0x00U};
+    memcpy(tmpLUT, customLUT, sizeof(tmpLUT));
     /* Update LUT table. */
-    FLEXSPI_UpdateLUT(base, 0, customLUT, CUSTOM_LUT_LENGTH);
+    FLEXSPI_UpdateLUT(base, 0, tmpLUT, CUSTOM_LUT_LENGTH);
 
     /* Do software reset. */
     FLEXSPI_SoftwareReset(base);

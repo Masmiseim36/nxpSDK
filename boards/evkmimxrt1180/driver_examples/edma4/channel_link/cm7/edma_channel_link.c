@@ -5,21 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA_BASEADDR DMA4
-#define DEMO_DMA_CHANNEL_0   0
-#define DEMO_DMA_CHANNEL_1   1
-#define DEMO_DMA_CHANNEL_2   2
-#define APP_DMA_IRQ          DMA4_CH2_CH3_CH34_CH35_IRQn
-#define APP_DMA_IRQ_HANDLER  DMA4_CH2_CH3_CH34_CH35_IRQHandler
 #define BUFFER_LENGTH 4U
 
 /*******************************************************************************
@@ -61,10 +54,7 @@ int main(void)
     edma_transfer_config_t transferConfig2;
     edma_config_t userConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print destination buffer */
     PRINTF("EDMA channel link example begin.\r\n\r\n");

@@ -21,9 +21,9 @@ define symbol m_interrupts_end         = 0x800003FF;
 define symbol m_text_start             = 0x80000400;
 define symbol m_text_end               = 0x801FFFFF;
 
-// length: 0x0002_0000
-define symbol m_ram1_start             = 0x202B0000;
-define symbol m_ram1_end               = 0x202CFFFF;
+// length: 0x0004_0000
+define symbol m_ram1_start             = 0x20200000;
+define symbol m_ram1_end               = 0x2003FFFF;
 
 // length: 0x02E0_0000
 define symbol m_ram3_start             = 0x80200000;
@@ -35,8 +35,8 @@ define symbol m_ncache_end             = 0x83FFFFFF;
 
 
 // this is for malloc()
-define symbol __size_heap__            = 0x120000;
-define symbol __size_cstack__          = 0x0F00;
+define symbol __size_heap__            = 0x900000;
+define symbol __size_cstack__          = 0xFA00;
 
 define exported symbol __NCACHE_REGION_START   = m_ncache_start;
 define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
@@ -45,6 +45,9 @@ define exported symbol __VECTOR_TABLE          = m_interrupts_start;
 define exported symbol __VECTOR_RAM            = m_interrupts_start;
 
 define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
+
+define exported symbol __exidx_start     = m_ram1_start;
+define exported symbol __exidx_end       = m_ram1_end - __size_cstack__;
 
 define memory mem with size = 4G;
 
@@ -63,6 +66,8 @@ define block  HEAP       with alignment = 8, size = __size_heap__     { };
 define block  RW         { readwrite, section m_usb_dma_init_data };
 define block  ZI         with alignment = 0x20  { zeroinit, section m_usb_dma_noninit_data };
 define block  NCACHE_VAR { section NonCacheable , section NonCacheable.init };
+keep { section .ARM.exidx };
+define block EXIDX { section .ARM.exidx };
 
 do not initialize  { section .noinit };
 initialize by copy { readwrite, section .textrw };
@@ -79,3 +84,5 @@ place in region_RAM3                        { block ZI };
 place in region_RAM3                        { block RW };
 place in region_RAM3                        { last block HEAP };
 place in region_NCACHE                      { block NCACHE_VAR };
+place in region_RAM1                        { first block EXIDX };
+

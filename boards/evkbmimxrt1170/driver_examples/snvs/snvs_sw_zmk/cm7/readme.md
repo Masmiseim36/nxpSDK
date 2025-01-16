@@ -1,53 +1,16 @@
-Overview
-========
+# snvs_sw_zmk
+
+## Overview
 The SNVS SW ZMK project shows how to provision the zeroizable master key (ZMK)
 by software based on SDK SNVS driver. In this example, ZMK key value is set and
 ECC is enabled. When change the ZMK key value, violation detected and ZMK key
 is zeroized.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of snvs example in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-SNVS software Zeroizable Master Key example:
-Set the ZMK key value
-Enable the ZMK
-Enable the ZMK ECC
-Set new ZMK key to generate ZMK violation
-ZMK violation detected, ZMK key is zeroized
-
-SNVS software ZMK example finished successfully
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/snvs/snvs_sw_zmk/example_board_readme.md)

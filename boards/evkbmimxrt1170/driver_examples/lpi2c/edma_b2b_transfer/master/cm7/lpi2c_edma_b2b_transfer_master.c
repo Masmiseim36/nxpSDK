@@ -8,8 +8,6 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
@@ -18,25 +16,11 @@
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE (LPI2C1_BASE)
-
-/* Get frequency of lpi2c clock */
-#define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
-
-#define LPI2C_MASTER_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
-
-#define EXAMPLE_LPI2C_MASTER_DMA_MUX (DMAMUX0)
-#define EXAMPLE_LPI2C_MASTER_DMA     (DMA0)
-
-#define LPI2CMASTER_TRANSMIT_EDMA_REQUEST_SOURCE kDmaRequestMuxLPI2C1
-#define LPI2CMASTER_RECEIVE_EDMA_REQUEST_SOURCE  kDmaRequestMuxLPI2C1
-
-#define LPI2C_TRANSMIT_DMA_CHANNEL 0U
-#define LPI2C_RECEIVE_DMA_CHANNEL  1U
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
@@ -82,10 +66,7 @@ int main(void)
     edma_config_t userConfig;
     status_t reVal = kStatus_Fail;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nLPI2C board2board EDMA example -- Master transfer.\r\n");
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT

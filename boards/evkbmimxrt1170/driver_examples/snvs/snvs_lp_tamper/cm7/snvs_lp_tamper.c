@@ -7,19 +7,16 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_snvs_hp.h"
 #include "fsl_snvs_lp.h"
+#include "pin_mux.h"
 #include "fsl_iomuxc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define kCLOCK_SnvsHp0          kCLOCK_SnvsHp
-#define EXAMPLE_SNVS_IRQn       SNVS_HP_NON_TZ_IRQn
-#define EXAMPLE_SNVS_IRQHandler SNVS_HP_NON_TZ_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -34,17 +31,6 @@ volatile bool busyWait;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_SNVS_TamperFuse()
-{
-    /* check tamper function setting */
-    uint32_t fuse006;
-    fuse006 = OCOTP->FUSEN[6].FUSE;
-    if ((fuse006 & 0xc000) != 0)
-    {
-        PRINTF("Error: SNVS Tamper FUSE not enabled! /r/n");
-    }
-}
-
 /*!
  * @brief Main function
  */
@@ -189,11 +175,7 @@ int main(void)
     };
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_SNVS_TamperFuse();
+    BOARD_InitHardware();
 
     /* Init SNVS_HP */
     /*

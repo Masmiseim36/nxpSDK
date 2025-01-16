@@ -13,23 +13,15 @@
 #include "board.h"
 #include "fsl_mu.h"
 #include "mcmgr.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CPU_NAME "iMXRT1189"
-
-#define APP_WAKEUP_BUTTON_GPIO        BOARD_USER_BUTTON_GPIO
-#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ         BOARD_USER_BUTTON_IRQ
-#define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void GPIO_ClearStopRequest(void);
-void GPIO_SetStopRequest(void);
 
 /*******************************************************************************
  * Variables
@@ -40,18 +32,6 @@ static volatile bool isMsgReceived = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void GPIO_ClearStopRequest(void)
-{
-    CCM->GPR_SHARED8 &= ~CCM_GPR_SHARED8_m33_gpio1_ipg_stop_MASK;
-    CCM->GPR_SHARED12 &= ~CCM_GPR_SHARED12_m7_gpio1_ipg_stop_MASK;
-}
-
-void GPIO_SetStopRequest(void)
-{
-    CCM->GPR_SHARED8 |= CCM_GPR_SHARED8_m33_gpio1_ipg_stop_MASK;
-    CCM->GPR_SHARED12 |= CCM_GPR_SHARED12_m7_gpio1_ipg_stop_MASK;
-}
-
 static void RemoteApplicationEventHandler(uint16_t eventData, void *context)
 {
     g_msgRecv     = eventData;
@@ -244,9 +224,7 @@ int main(void)
     uint8_t ch;
 
     /* Init board hardware.*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     // EnableIRQ(MU_IRQ);
 
     /* Initialize MCMGR, install generic event handlers */

@@ -8,26 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR   (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN       (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_IRQHandler LPSPI1_IRQHandler
-
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
-
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetRootClockFreq(kCLOCK_Root_Lpspi1))
-
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -112,10 +98,7 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPSPI interrupt board to board (b2b) slave example.\r\n");
     PRINTF("  Slave start to receive data...\r\n");

@@ -1,49 +1,18 @@
-Overview
-========
+# rgpio_led_output
+
+## Overview
 The RGPIO Example project is a demonstration program that uses the SDK software to manipulate the general-purpose
 outputs.
 The example is supported by the set, clear, and toggle write-only registers for each port output data register. The 
 example take turns to shine the LED.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-These instructions are displayed/shown on the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-GPIO Driver example
-The LED is blinking.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-And you will find 1 LED is taking turns to shine.
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../_boards/evk9mimx8ulp/driver_examples/rgpio/led_output/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../_boards/evkmimx8ulp/driver_examples/rgpio/led_output/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/rgpio/led_output/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/driver_examples/rgpio/led_output/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/driver_examples/rgpio/led_output/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/driver_examples/rgpio/led_output/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/driver_examples/rgpio/led_output/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/driver_examples/rgpio/led_output/example_board_readme.md)
+- [MCIMX93-QSB](../../../_boards/mcimx93qsb/driver_examples/rgpio/led_output/example_board_readme.md)

@@ -4,6 +4,7 @@
  * -------------------------------------------------
  *
  * Copyright (c) 2007 The Khronos Group Inc.
+ * Copyright 2024 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and /or associated documentation files
@@ -48,9 +49,12 @@
 #include <assert.h>
 #include <string.h>
 
+#include "vglite_support.h"
+#include "fsl_debug_console.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "tiger_path.h"
 /*-------------------------------------------------------------------*/
 
@@ -64,15 +68,20 @@
 #include "EGL/egl.h"
 #endif
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define UNREF(X)           ((void)(X))
-#define DEMO_WINDOW_WIDTH  600
-#define DEMO_WINDOW_HEIGHT 600
-#define DEMO_RENDER_WIDTH  600
-#define DEMO_RENDER_HEIGHT 600
+#define DEMO_WINDOW_WIDTH  512 //was 600
+#define DEMO_WINDOW_HEIGHT 512
+#define DEMO_RENDER_WIDTH  512
+#define DEMO_RENDER_HEIGHT 512
+
+#if defined(CPU_MIMXRT798SGFOA_cm33_core0) && defined(__ICCARM__)
+#define MAIN_TASK_STACK_SIZE 12800
+#else
+#define MAIN_TASK_STACK_SIZE 700
+#endif
 
 typedef struct
 {
@@ -111,20 +120,6 @@ PS *PS_tiger = NULL;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
-
 static PS *PS_construct(const char *commands, int commandCount, const float *points, int pointCount)
 {
     PS *ps          = (PS *)malloc(sizeof(PS));
@@ -136,7 +131,7 @@ static PS *PS_construct(const char *commands, int commandCount, const float *poi
     unsigned char *cmd;
     UNREF(pointCount);
 
-    assert(ps && "malloc failed");
+    assert(ps);
 
     while (c < commandCount)
     {
@@ -172,10 +167,10 @@ static PS *PS_construct(const char *commands, int commandCount, const float *poi
 
     ps->m_numPaths = paths;
     ps->m_paths    = (PathData *)malloc(paths * sizeof(PathData));
-    assert(ps->m_paths && "malloc failed");
+    assert(ps->m_paths);
 
     cmd = (unsigned char *)malloc(maxElements);
-    assert(cmd && "malloc failed");
+    assert(cmd);
 
     i = 0;
     p = 0;
@@ -330,16 +325,6 @@ static void PS_destruct(PS *ps)
     free(ps);
 }
 
-static void PS_clear()
-{
-    float clearColor[4] = {0.0, 1.0, 0.0, 1.0};
-    vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
-    assert(vgGetError() == VG_NO_ERROR);
-
-    vgClear(0, 0, renderWidth, renderHeight);
-    assert(vgGetError() == VG_NO_ERROR);
-}
-
 static void PS_render(PS *ps)
 {
     int i;
@@ -383,6 +368,8 @@ static int init(NativeWindowType window, EGLDisplay *eglDpy, EGLSurface *eglSurf
                                              EGL_OPENVG_BIT,
                                              EGL_SAMPLES,
                                              1,
+                                             EGL_CONFIG_ID,
+                                             4, // BGR565
                                              EGL_NONE};
     EGLBoolean rv;
     EGLint numconfigs;
@@ -392,97 +379,101 @@ static int init(NativeWindowType window, EGLDisplay *eglDpy, EGLSurface *eglSurf
     eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     if (eglDisplay == EGL_NO_DISPLAY)
     {
-        assert(!"eglGetDisplay failed");
+        PRINTF("eglGetDisplay failed\r\n");
         return -1;
     }
     else
     {
-        printf("eglGetDisplay successful\n");
+        PRINTF("eglGetDisplay successful\r\n");
     }
 
     rv = eglInitialize(eglDisplay, NULL, NULL);
     if (rv == EGL_FALSE)
     {
-        assert(!"eglInitialize failed");
+        PRINTF("eglInitialize failed\r\n");
         return -1;
     }
     else
     {
-        printf("eglInitialize successful\n");
+        PRINTF("eglInitialize successful\r\n");
     }
 
     if (eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglInitialize has errors");
+        PRINTF("eglInitialize has errors\r\n");
         return -1;
     }
     else
     {
-        printf("eglGetError successful\n");
+        PRINTF("eglGetError successful\r\n");
     }
     *eglDpy = eglDisplay;
 
     rv = eglBindAPI(EGL_OPENVG_API);
     if (rv == EGL_FALSE)
     {
-        assert(!"eglBindAPI failed");
+        PRINTF("eglBindAPI failed\r\n");
         return -1;
     }
     else
     {
-        printf("eglBindAPI successful\n");
+        PRINTF("eglBindAPI successful\r\n");
     }
 
     rv = eglChooseConfig(eglDisplay, s_configAttribs, &eglConfig, 1, &numconfigs);
     if (rv == EGL_FALSE)
     {
-        assert(!"eglChooseConfig failed");
+        PRINTF("eglChooseConfig failed\r\n");
         return -1;
     }
     else
     {
-        printf("eglChooseConfig successful\n");
+        PRINTF("eglChooseConfig successful\r\n");
     }
 
     if (eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglChooseConfig has errors");
+        PRINTF("eglChooseConfig has errors\r\n");
+        return -1;
     }
     if (numconfigs != 1)
     {
-        assert(!"eglChooseConfig hasn't found any configs\n");
+        PRINTF("eglChooseConfig hasn't found any configs\r\n");
         return -1;
     }
 
     eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, window, NULL);
-    if (EGL_NO_SURFACE || eglGetError() != EGL_SUCCESS)
+    if (eglSurface == EGL_NO_SURFACE || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglCreateWindowSurface has errors");
+        PRINTF("eglCreateWindowSurface has errors\r\n");
+        return -1;
     }
     else
     {
-        printf("eglCreateWindowSurface successful\n");
+        PRINTF("eglCreateWindowSurface successful\r\n");
     }
     *eglSurf = eglSurface;
 
     eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
     if (eglContext == EGL_NO_CONTEXT || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglCreateContext has errors");
+        PRINTF("eglCreateContext has errors\r\n");
+        return -1;
     }
     else
     {
-        printf("eglCreateContext successful\n");
+        PRINTF("eglCreateContext successful\r\n");
     }
 
     eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
     if (eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglMakeCurrent has errors");
+        PRINTF("eglMakeCurrent has errors\r\n");
+        return -1;
     }
     else
     {
-        printf("eglMakeCurrent successful\n");
+        PRINTF("eglMakeCurrent successful\r\n");
     }
 
     return 0;
@@ -491,54 +482,61 @@ static int init(NativeWindowType window, EGLDisplay *eglDpy, EGLSurface *eglSurf
 static int deinit(EGLDisplay eglDisplay, EGLSurface eglSurface)
 {
     EGLBoolean rv;
+    EGLint ret;
+
     rv = eglDestroyContext(eglDisplay, eglContext);
     if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglDestroyContext failed.");
+        PRINTF("eglDestroyContext failed.\r\n");
+        return -1;
     }
     else
     {
-        printf("eglDestroyContext successful\n");
+        PRINTF("eglDestroyContext successful\r\n");
     }
 
     rv = eglDestroySurface(eglDisplay, eglSurface);
     if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglDestroySurface failed.");
+        PRINTF("eglDestroySurface failed.\r\n");
+        return -1;
     }
     else
     {
-        printf("eglDestroySurface successful\n");
+        PRINTF("eglDestroySurface successful\r\n");
     }
 
     rv = eglMakeCurrent(eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglMakeCurrent failed.");
+        PRINTF("eglMakeCurrent failed.\r\n");
+        return -1;
     }
     else
     {
-        printf("eglMakeCurrent successful\n");
+        PRINTF("eglMakeCurrent successful\r\n");
     }
 
     rv = eglTerminate(eglDisplay);
     if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglTerminate failed.");
+        PRINTF("eglTerminate failed.\r\n");
+        return -1;
     }
     else
     {
-        printf("eglTerminate successful\n");
+        PRINTF("eglTerminate successful\r\n");
     }
 
-    rv = eglReleaseThread();
-    if (rv != EGL_TRUE) // || eglGetError() != EGL_SUCCESS)
+    ret = eglReleaseThread();
+    if (ret != EGL_SUCCESS)
     {
-        assert(!"eglReleaseThread failed.");
+        PRINTF("eglReleaseThread failed.\r\n");
+        return -1;
     }
     else
     {
-        printf("eglReleaseThread successful\n");
+        PRINTF("eglReleaseThread successful\r\n");
     }
 
     return 0;
@@ -559,11 +557,12 @@ static void render_tiger(EGLDisplay eglDisplay, EGLSurface eglSurface, int w, in
         rv = eglSwapBuffers(eglDisplay, eglSurface); // force EGL to recognize resize
         if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
         {
-            assert(!"eglSwapBuffers has errors");
+            PRINTF("eglSwapBuffers has errors\r\n");
+            return;
         }
         else
         {
-            printf("eglSwapBuffers-resize successful\n");
+            PRINTF("eglSwapBuffers-resize successful\r\n");
         }
 
         vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
@@ -580,67 +579,31 @@ static void render_tiger(EGLDisplay eglDisplay, EGLSurface eglSurface, int w, in
     rv = eglSwapBuffers(eglDisplay, eglSurface);
     if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
     {
-        assert(!"eglSwapBuffers has errors");
+        PRINTF("eglSwapBuffers has errors\r\n");
     }
     else
     {
-        printf("eglSwapBuffers successful\n");
-    }
-}
-
-static void render_clear(EGLDisplay eglDisplay, EGLSurface eglSurface, int w, int h)
-{
-    EGLBoolean rv;
-
-    if (renderWidth != w || renderHeight != h)
-    {
-        float clearColor[4] = {1, 1, 1, 1};
-        float scale         = w / (tigerMaxX - tigerMinX);
-
-        renderWidth  = w;
-        renderHeight = h;
-
-        rv = eglSwapBuffers(eglDisplay, eglSurface); // force EGL to recognize resize
-        if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
-        {
-            assert(!"eglSwapBuffers has errors");
-        }
-        else
-        {
-            printf("eglSwapBuffers-resize successful\n");
-        }
-
-        vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
-        vgClear(0, 0, w, h);
-
-        vgLoadIdentity();
-        vgScale(scale, scale);
-        vgTranslate(-tigerMinX, -tigerMinY + 0.5f * (h / scale - (tigerMaxY - tigerMinY)));
-
-        PS_clear();
-        assert(vgGetError() == VG_NO_ERROR);
-    }
-
-    rv = eglSwapBuffers(eglDisplay, eglSurface);
-    if (rv != EGL_TRUE || eglGetError() != EGL_SUCCESS)
-    {
-        assert(!"eglSwapBuffers has errors");
-    }
-    else
-    {
-        printf("eglSwapBuffers successful\n");
+        PRINTF("eglSwapBuffers successful\r\n");
     }
 }
 
 static void tiger_task(void)
 {
-    int rv;
+    int rv __attribute__((unused));
     NativeDisplayType fbDpy;
     NativeWindowType fbWin;
-    EGLDisplay eglDisplay;
-    EGLSurface eglSurface;
+    EGLDisplay eglDisplay = NULL;
+    EGLSurface eglSurface = NULL;
+    status_t status;
 
-    printf("construct\n");
+    status = BOARD_PrepareVGLiteController();
+    if (status != kStatus_Success)
+    {
+        PRINTF("Prepare VGlite controller error\r\n");
+        return;
+    }
+
+    PRINTF("construct\r\n");
     fbDpy = fbGetDisplay(NULL);
     assert(fbDpy != 0);
 
@@ -656,20 +619,20 @@ static void tiger_task(void)
     for (int i = 0; i < 100; ++i)
         render_tiger(eglDisplay, eglSurface, DEMO_RENDER_WIDTH, DEMO_RENDER_HEIGHT);
 
-    printf("destroy-openvg\n");
+    PRINTF("destroy-openvg\r\n");
     PS_destruct(PS_tiger);
 
-    printf("destroy-egl\n");
+    PRINTF("destroy-egl\r\n");
     rv = deinit(eglDisplay, eglSurface);
     assert(rv == 0);
 
-    printf("destroy-native-window\n");
+    PRINTF("destroy-native-window\r\n");
     fbDestroyWindow(fbWin);
 
-    printf("destroy-native-display\n");
+    PRINTF("destroy-native-display\r\n");
     fbDestroyDisplay(fbDpy);
 
-    printf("tiger_task done\n");
+    PRINTF("tiger_task done\r\n");
 }
 
 void __attribute__((noinline)) all_done(void)
@@ -682,7 +645,7 @@ static void main_task(void *pvParameters)
 {
     tiger_task();
 
-    printf("main_task done\n");
+    PRINTF("main_task done\r\n");
 
     all_done();
     vTaskDelete(NULL);
@@ -694,16 +657,13 @@ static void main_task(void *pvParameters)
 int main(void)
 {
     /* Hardware Initialization. */
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
-    if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE + 700, NULL, tskIDLE_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(main_task, "main_task",
+                    configMINIMAL_STACK_SIZE + MAIN_TASK_STACK_SIZE,
+                    NULL, tskIDLE_PRIORITY, NULL) != pdPASS)
     {
-        assert(!"Task creation failed!.\n");
+        PRINTF("Task creation failed!\r\n");
         while (1)
             ;
     }

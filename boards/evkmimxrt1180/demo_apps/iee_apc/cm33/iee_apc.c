@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,8 +7,6 @@
 
 #include <stdlib.h>
 #include "fsl_device_registers.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_iee.h"
@@ -113,14 +111,7 @@ int main(void)
     (void)key2;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    
-    /* Disable code & system cache */
-    XCACHE_DisableCache(XCACHE_PC);
-    XCACHE_DisableCache(XCACHE_PS);
+    BOARD_InitHardware();
 
     PRINTF("IEE APC Demo started\r\n\r\n");
 

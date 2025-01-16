@@ -6,14 +6,14 @@
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
-**     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210709
+**     Version:             rev. 0.2, 2023-02-27
+**     Build:               b230302
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
+**     Copyright 2016-2023 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -27,10 +27,12 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x400;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x400;
+HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 RPMSG_SHMEM_SIZE = DEFINED(__use_shmem__) ? 0x2000 : 0;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
+TEXT_SIZE = 0x00FBDC00;
+CORE1IMAGE_START = 0x30FC0000;
 
 /* Specify the memory areas */
 MEMORY
@@ -38,12 +40,12 @@ MEMORY
   m_flash_config        (RX)  : ORIGIN = 0x30000400, LENGTH = 0x00000C00
   m_ivt                 (RX)  : ORIGIN = 0x30001000, LENGTH = 0x00001000
   m_interrupts          (RX)  : ORIGIN = 0x30002000, LENGTH = 0x00000400
-  m_text                (RX)  : ORIGIN = 0x30002400, LENGTH = 0x00FBDC00
+  m_text                (RX)  : ORIGIN = 0x30002400, LENGTH = TEXT_SIZE
   m_qacode              (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00040000
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00040000
   m_data2               (RW)  : ORIGIN = 0x202C0000 + RPMSG_SHMEM_SIZE, LENGTH = 0x00010000 - RPMSG_SHMEM_SIZE
   rpmsg_sh_mem          (RW)  : ORIGIN = 0x202C0000, LENGTH = RPMSG_SHMEM_SIZE
-  m_core1_image         (RX)  : ORIGIN = 0x30FC0000, LENGTH = 0x00040000
+  m_core1_image         (RX)  : ORIGIN = CORE1IMAGE_START, LENGTH = 0x00040000
 }
 
 /* Define output sections */
@@ -103,8 +105,36 @@ SECTIONS
   .text :
   {
     . = ALIGN(4);
-    *(.text)                 /* .text sections (code) */
-    *(.text*)                /* .text* sections (code) */
+    *(EXCLUDE_FILE(
+        *fsl_memcpy.S.obj
+    ) .text)                 /* .text sections (code) */
+    *(EXCLUDE_FILE(
+        *queue.c.obj
+        *tcp_out.c.obj
+        *mlan_sdio.c.obj
+        *mlan_11n.c.obj
+        *mlan_11n_aggr.c.obj
+        *mlan_11n_rxreorder.c.obj
+        *tcp_in.c.obj
+        *inet_chksum.c.obj
+        *timers.c.obj
+        *fsl_usdhc.c.obj
+        *port.c.obj
+        *wifi-sdio.c.obj
+        *fsl_sdio.c.obj
+        *pbuf.c.obj
+        *tcp.c.obj
+        *udp.c.obj
+        *tcpip.c.obj
+        *sockets.c.obj
+        *tasks.c.obj
+        *lib_a-memset.o
+        *fsl_cache.c.obj
+        *wifi.c.obj
+        *wifi_netif.c.obj
+        *fsl_os_abstraction_free_rtos.c.obj
+        *fsl_memcpy.S.obj
+      ) .text*)              /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
     *(.glue_7)               /* glue arm to thumb code */
@@ -223,6 +253,31 @@ SECTIONS
     . = ALIGN(32);
     __ram_function_start__ = .;
     *(CodeQuickAccess)
+    *queue.c.obj(.text*)
+    *tcp_out.c.obj(.text*)
+    *mlan_sdio.c.obj(.text*)
+    *mlan_11n.c.obj(.text*)
+    *mlan_11n_aggr.c.obj(.text*)
+    *mlan_11n_rxreorder.c.obj(.text*)
+    *tcp_in.c.obj(.text*)
+    *inet_chksum.c.obj(.text*)
+    *timers.c.obj(.text*)
+    *fsl_usdhc.c.obj(.text*)
+    *port.c.obj(.text*)
+    *wifi-sdio.c.obj(.text*)
+    *fsl_sdio.c.obj(.text*)
+    *pbuf.c.obj(.text*)
+    *tcp.c.obj(.text*)
+    *udp.c.obj(.text*)
+    *tcpip.c.obj(.text*)
+    *sockets.c.obj(.text*)
+    *tasks.c.obj(.text*)  
+    *lib_a-memset.o(.text*)
+    *fsl_cache.c.obj(.text*)
+    *wifi.c.obj(.text*)
+    *wifi_netif.c.obj(.text*)
+    *fsl_os_abstraction_free_rtos.c.obj(.text*)
+    *fsl_memcpy.S.obj(.text)
     . = ALIGN(128);
     __ram_function_end__ = .;
   } > m_qacode
@@ -262,6 +317,12 @@ SECTIONS
     __bss_end__ = .;
     __END_BSS = .;
   } > m_data
+
+  .wlan_data :
+  {
+    . = ALIGN(4);
+    *(.wlan_data .wlan_data.*)
+  } > m_data2
 
   .heap :
   {

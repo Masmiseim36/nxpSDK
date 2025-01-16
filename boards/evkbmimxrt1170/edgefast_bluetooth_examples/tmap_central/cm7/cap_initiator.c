@@ -30,7 +30,7 @@ static struct bt_bap_ep *unicast_sink_eps[CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_C
 static struct bt_bap_ep *unicast_source_eps[CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SRC_COUNT];
 
 NET_BUF_POOL_FIXED_DEFINE(tx_pool, CONFIG_BT_BAP_UNICAST_CLIENT_ASE_SNK_COUNT,
-			  CONFIG_BT_ISO_TX_MTU + BT_ISO_CHAN_SEND_RESERVE, NULL);
+			  CONFIG_BT_ISO_TX_MTU + BT_ISO_CHAN_SEND_RESERVE, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_cas_discovery);
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_discover_sink);
@@ -103,6 +103,7 @@ static struct bt_bap_lc3_preset unicast_preset_48_2_1 =
 					 BT_AUDIO_CONTEXT_TYPE_MEDIA);
 
 static void cap_discovery_complete_cb(struct bt_conn *conn, int err,
+				      const struct bt_csip_set_coordinator_set_member *member,
 				      const struct bt_csip_set_coordinator_csis_inst *csis_inst)
 {
 	if (err != 0) {

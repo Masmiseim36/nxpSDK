@@ -1,3 +1,9 @@
+/*
+ * Copyright 2024 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #ifndef __OPUSMEM2MEM_FILE__H_
 #define __OPUSMEM2MEM_FILE__H_
 

@@ -173,6 +173,11 @@ static int start_ringtone(void)
 
     if (err >= 0)
     {
+        err = unicast_client_connect_streams();
+    }
+
+    if (err >= 0)
+    {
         err = unicast_client_start_streams();
     }
 #endif
@@ -559,6 +564,7 @@ static shell_status_t call_outgoing(shell_handle_t shellHandle, int32_t argc, ch
 
         if (0 > ret)
         {
+            s_callIndex = 0;
             SHELL_Printf(s_shellHandle, "Cannot start tingtone stream, will term the call %d\r\n", call_index);
             bt_tbs_terminate(call_index);
         }

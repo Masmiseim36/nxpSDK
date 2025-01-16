@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 0.1, 2021-03-09
-**     Build:               b240417
+**     Build:               b241212
 **
 **     Abstract:
 **         Chip specific module features.
@@ -313,6 +313,8 @@
 #define FSL_FEATURE_ACMP_HAS_NO_WINDOW_MODE (0)
 /* @brief If support filter mode */
 #define FSL_FEATURE_ACMP_HAS_NO_FILTER_MODE (0)
+/* @brief Has No C0 SE Bit */
+#define FSL_FEATURE_ACMP_HAS_NO_C0_SE_BIT (0)
 
 /* DAC12 module features */
 
@@ -365,7 +367,7 @@
 /* @brief Has register access permission. */
 #define FSL_FEATURE_HAVE_DMA_CONTROL_REGISTER_ACCESS_PERMISSION (0)
 /* @brief NBYTES must be multiple of 8 when using scatter gather. */
-#define FSL_FEATURE_EDMA_HAS_ERRATA_51327 (1)
+#define FSL_FEATURE_EDMA_HAS_ERRATA_51327 (0)
 /* @brief If 128 bytes transfer supported. */
 #define FSL_FEATURE_EDMA_INSTANCE_SUPPORT_128_BYTES_TRANSFERn(x) \
     (((x) == DMA4) ? (1) : \
@@ -373,9 +375,7 @@
 /* @brief If channel clock controlled independently */
 #define FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE (1)
 /* @brief NBYTES must be multiple of 8 when using scatter gather. */
-#define FSL_FEATURE_EDMA_INSTANCE_HAS_ERRATA_51327n(x) \
-    (((x) == DMA4) ? (1) : \
-    (((x) == DMA3) ? (0) : (-1)))
+#define FSL_FEATURE_EDMA_INSTANCE_HAS_ERRATA_51327n(x) (0)
 /* @brief Has register CH_CSR. */
 #define FSL_FEATURE_EDMA_HAS_CHANNEL_CONFIG (1)
 /* @brief Has channel mux */
@@ -410,6 +410,8 @@
 #define FSL_FEATURE_EDMA_INSTANCE_HAS_MP_CHANNEL_MUXn(x) (0)
 /* @brief Has register bit fields CH_MATTR[WCACHE], CH_MATTR[RCACHE]. */
 #define FSL_FEATURE_EDMA_HAS_CHANNEL_MEMORY_ATTRIBUTE (1)
+/* @brief Whether has SOC level request enable control. */
+#define FSL_FEATURE_EDMA_HAS_SOC_REQUEST_ENABLE (0)
 /* @brief Instance has register CH_MATTR. */
 #define FSL_FEATURE_EDMA_INSTANCE_HAS_CHANNEL_MEMORY_ATTRIBUTEn(x) \
     (((x) == DMA4) ? (1) : \
@@ -436,6 +438,13 @@
 #define FSL_FEATURE_EDMA_TCD_TYPEn(x) (0)
 /* @brief Has no register bit fields CH_SBR[SEC]. */
 #define FSL_FEATURE_EDMA_HAS_NO_CH_SBR_SEC (0)
+/* @brief Number of DMA channels with asynchronous request capability. */
+#define FSL_FEATURE_EDMA_ASYNCHRO_REQUEST_CHANNEL_COUNT (64)
+
+/* EDGELOCK module features */
+
+/* @brief SOC support ele S400. */
+#define FSL_FEATURE_ELE_S4XX (1)
 
 /* EQDC module features */
 
@@ -514,6 +523,13 @@
 #define FSL_FEATURE_FLEXSPI_HAS_NO_MCR2_SCKBDIFFOPT (0)
 /* @brief FlexSPI AHB RX buffer size (byte) */
 #define FSL_FEATURE_FLEXSPI_AHB_RX_BUFFER_SIZEn(x) (4096)
+/* @brief FlexSPI Array Length */
+#define FSL_FEATURE_FLEXSPI_ARRAY_LEN (3)
+
+/* GPT module features */
+
+/* @brief Is affected by errata with ID 3777. */
+#define FSL_FEATURE_GPT_HAS_ERRATA_3777 (1)
 
 /* I3C module features */
 
@@ -664,12 +680,14 @@
 
 /* SYSPM module features */
 
-/* @brief Temperature sensor parameter A (slope). */
+/* @brief SYSPM support disable counters if stopped or halted. */
 #define FSL_FEATURE_SYSPM_HAS_PMCR_DCIFSH (1)
-/* @brief Temperature sensor parameter B (offset). */
+/* @brief SYSPM has reset instruction counter. */
 #define FSL_FEATURE_SYSPM_HAS_PMCR_RICTR (1)
 /* @brief Number of PMCR registers signals number of performance monitors available in single SYSPM instance. */
 #define FSL_FEATURE_SYSPM_PMCR_COUNT (1)
+/* @brief SYSPM has instruction counter. */
+#define FSL_FEATURE_SYSPM_HAS_PMICTR (1)
 
 /* MEMORY module features */
 
@@ -726,21 +744,21 @@
 /* NETC module features */
 
 /* @brief Accesses to 64b stats registers must be performed atomically. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_050679 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_050679 (0)
 /* @brief Egress time gate scheduling can get corrupted when functional level reset is applied or when time gating is disabled. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051130 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051130 (0)
 /* @brief Possible transmit MAC underrun at low 10M/100M speeds when the NETC switch is operating in cut-through forwarding mode. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051202 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051202 (0)
 /* @brief Tx/Rx disable (POR[RXDIS] and POR[TXDIS]) are enabled out of reset. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051246 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051246 (0)
 /* @brief Administrative gate control list can get configured inadvertently when an exception is detected and notified. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051254 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051254 (0)
 /* @brief One-step timestamp support for PTP/IEEE1588 does not function properly. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051255 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051255 (0)
 /* @brief During initial Initialization of NETC, all ENETCs and Switch PCI functions must be enabled for NETC to accept table management commands for any function. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051260 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051260 (0)
 /* @brief FLR or transmit disable may cause frame transfers to underrun in MAC resulting in bad frame transmission. */
-#define FSL_FEATURE_NETC_HAS_ERRATA_051398 (1)
+#define FSL_FEATURE_NETC_HAS_ERRATA_051398 (0)
 /* @brief The Ingress Stream Identification key construction check of payload may evaluate incorrectly. */
 #define FSL_FEATURE_NETC_HAS_ERRATA_051524 (1)
 /* @brief Time gate scheduling update command can erroneously respond with an error when AdminBaseTime specified is near the current time. */
@@ -765,6 +783,10 @@
 #define FSL_FEATURE_NETC_MSIX_TABLE_BASE (0x60BC0000)
 /* @brief No switch support. */
 #define FSL_FEATURE_NETC_HAS_NO_SWITCH (0)
+/* @brief No XGMII support. */
+#define FSL_FEATURE_NETC_HAS_NO_XGMII (0)
+/* @brief NXP Switch Tag support. */
+#define FSL_FEATURE_NETC_HAS_SWITCH_TAG (0)
 
 /* NVIC module features */
 
@@ -1084,6 +1106,22 @@
 #define FSL_FEATURE_USDHC_HAS_NO_VOLTAGE_SELECT (0)
 /* @brief Has no VS18 bit in HOST_CTRL_CAP register */
 #define FSL_FEATURE_USDHC_HAS_NO_VS18 (0)
+
+/* VREF module features */
+
+/* @brief whether has CSR[LPBG_BUF_EN] bitfield */
+#define FSL_FEATURE_VREF_HAS_LOWPOWER_BUFFER (0)
+/* @brief whether has UTRIM[TRIM2V1] bitfield */
+#define FSL_FEATURE_VREF_HAS_TRIM2V1 (0)
+/* @brief whether has TEST_UNLOCK register */
+#define FSL_FEATURE_VREF_HAS_TEST_UNLOCK_REG (1)
+/* @brief whether has TRIM0 register */
+#define FSL_FEATURE_VREF_HAS_TRIM0_REG (1)
+
+/* XBAR_DSC module features */
+
+/* @brief The width of registers of XBAR */
+#define FSL_FEATURE_XBAR_DSC_REG_WIDTH (16)
 
 #endif /* _MIMXRT1189_cm7_FEATURES_H_ */
 

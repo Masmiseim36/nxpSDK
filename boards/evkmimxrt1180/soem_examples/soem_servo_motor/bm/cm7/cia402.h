@@ -16,8 +16,7 @@
 #define op_mode_display_offset 10
 
 #define control_word_offset 0
-#define target_position_offset 3
-#define nxp_target_position_offset 2 
+#define target_position_offset 2
 #define target_velocity_offset 6
 #define op_mode_offset 10
 

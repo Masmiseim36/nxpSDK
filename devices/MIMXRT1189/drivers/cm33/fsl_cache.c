@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 - 2023 NXP
+ * Copyright 2022 - 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -145,7 +145,7 @@ void XCACHE_InvalidateCacheByRange(uint32_t address, uint32_t size_byte)
         pccReg     = (base->CLCR & ~XCACHE_CLCR_LCMD_MASK) | XCACHE_CLCR_LCMD(1) | XCACHE_CLCR_LADSEL_MASK;
         base->CLCR = pccReg;
 
-        while (startAddr < endAddr)
+        while (startAddr <= endAddr)
         {
             /* Set the address and initiate the command. */
             base->CSAR = (startAddr & XCACHE_CSAR_PHYADDR_MASK) | XCACHE_CSAR_LGO_MASK;
@@ -212,7 +212,7 @@ void XCACHE_CleanCacheByRange(uint32_t address, uint32_t size_byte)
         pccReg     = (base->CLCR & ~XCACHE_CLCR_LCMD_MASK) | XCACHE_CLCR_LCMD(2) | XCACHE_CLCR_LADSEL_MASK;
         base->CLCR = pccReg;
 
-        while (startAddr < endAddr)
+        while (startAddr <= endAddr)
         {
             /* Set the address and initiate the command. */
             base->CSAR = (startAddr & XCACHE_CSAR_PHYADDR_MASK) | XCACHE_CSAR_LGO_MASK;
@@ -280,7 +280,7 @@ void XCACHE_CleanInvalidateCacheByRange(uint32_t address, uint32_t size_byte)
         pccReg     = (base->CLCR & ~XCACHE_CLCR_LCMD_MASK) | XCACHE_CLCR_LCMD(3) | XCACHE_CLCR_LADSEL_MASK;
         base->CLCR = pccReg;
 
-        while (startAddr < endAddr)
+        while (startAddr <= endAddr)
         {
             /* Set the address and initiate the command. */
             base->CSAR = (startAddr & XCACHE_CSAR_PHYADDR_MASK) | XCACHE_CSAR_LGO_MASK;

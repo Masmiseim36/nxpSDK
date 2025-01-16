@@ -9,16 +9,16 @@
 
 #include "fsl_device_registers.h"
 
-
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "peripherals.h"
+
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
@@ -35,10 +35,7 @@ int main(void)
 {
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Add user custom codes below */
     while (1)

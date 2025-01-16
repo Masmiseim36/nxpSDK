@@ -4,13 +4,11 @@
 ;            MIMXRT1171
 ;  @version: 1.0
 ;  @date:    2020-12-29
-;  @build:   b220909
+;  @build:   b240823
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2022 NXP
-; All rights reserved.
-;
+; Copyright 2016-2024 NXP
 ; SPDX-License-Identifier: BSD-3-Clause
 ;
 ; The modules in this file are included in the libraries, and may be replaced
@@ -118,9 +116,9 @@ __vector_table_0x1c
         DCD     CAN2_IRQHandler                               ;CAN2 interrupt
         DCD     CAN2_ERROR_IRQHandler                         ;CAN2 error interrupt
         DCD     CAN3_IRQHandler                               ;CAN3 interrupt
-        DCD     CAN3_ERROR_IRQHandler                         ;CAN3 erro interrupt
+        DCD     CAN3_ERROR_IRQHandler                         ;CAN3 error interrupt
         DCD     FLEXRAM_IRQHandler                            ;FlexRAM address out of range Or access hit IRQ
-        DCD     KPP_IRQHandler                                ;Keypad nterrupt
+        DCD     KPP_IRQHandler                                ;Keypad interrupt
         DCD     Reserved68_IRQHandler                         ;Reserved interrupt
         DCD     GPR_IRQ_IRQHandler                            ;GPR interrupt
         DCD     Reserved70_IRQHandler                         ;Reserved interrupt
@@ -285,8 +283,8 @@ __vector_table_0x1c
         DCD     XECC_FLEXSPI2_FATAL_INT_IRQHandler            ;XECC fatal int
         DCD     XECC_SEMC_INT_IRQHandler                      ;XECC int
         DCD     XECC_SEMC_FATAL_INT_IRQHandler                ;XECC fatal int
-        DCD     ENET_QOS_IRQHandler                           ;ENET_QOS interrupt
-        DCD     ENET_QOS_PMT_IRQHandler                       ;ENET_QOS_PMT interrupt
+        DCD     Reserved232_IRQHandler                        ;Reserved interrupt
+        DCD     Reserved233_IRQHandler                        ;Reserved interrupt
         DCD     DefaultISR                                    ;234
         DCD     DefaultISR                                    ;235
         DCD     DefaultISR                                    ;236
@@ -1107,20 +1105,8 @@ XECC_FLEXSPI2_FATAL_INT_IRQHandler
 
         PUBWEAK XECC_SEMC_INT_IRQHandler
         PUBWEAK XECC_SEMC_FATAL_INT_IRQHandler
-        PUBWEAK ENET_QOS_IRQHandler
-        PUBWEAK ENET_QOS_DriverIRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(2)
-ENET_QOS_IRQHandler
-        LDR     R0, =ENET_QOS_DriverIRQHandler
-        BX      R0
-
-        PUBWEAK ENET_QOS_PMT_IRQHandler
-        PUBWEAK ENET_QOS_PMT_DriverIRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(2)
-ENET_QOS_PMT_IRQHandler
-        LDR     R0, =ENET_QOS_PMT_DriverIRQHandler
-        BX      R0
-
+        PUBWEAK Reserved232_IRQHandler
+        PUBWEAK Reserved233_IRQHandler
         PUBWEAK DefaultISR
         SECTION .text:CODE:REORDER:NOROOT(1)
 DMA0_DMA16_DriverIRQHandler
@@ -1339,8 +1325,8 @@ XECC_FLEXSPI2_INT_DriverIRQHandler
 XECC_FLEXSPI2_FATAL_INT_DriverIRQHandler
 XECC_SEMC_INT_IRQHandler
 XECC_SEMC_FATAL_INT_IRQHandler
-ENET_QOS_DriverIRQHandler
-ENET_QOS_PMT_DriverIRQHandler
+Reserved232_IRQHandler
+Reserved233_IRQHandler
 DefaultISR
         B DefaultISR
 

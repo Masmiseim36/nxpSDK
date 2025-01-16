@@ -1,6 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
- * All rights reserved.
+ * Copyright 2019-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,10 +14,6 @@
  * Definitions
  ******************************************************************************/
 
-#define LCD_WIDTH             DEMO_BUFFER_WIDTH
-#define LCD_HEIGHT            DEMO_BUFFER_HEIGHT
-#define LCD_FB_BYTE_PER_PIXEL DEMO_BUFFER_BYTE_PER_PIXEL
-
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -27,9 +22,9 @@
 extern "C" {
 #endif
 
-void lv_port_pre_init(void);
 void lv_port_disp_init(void);
 void lv_port_indev_init(void);
+void DEMO_CleanInvalidateCacheByAddr(void * addr, int32_t dsize);
 
 #if defined(__cplusplus)
 }

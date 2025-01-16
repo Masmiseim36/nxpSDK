@@ -6,20 +6,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sysctr.h"
 #include "fsl_str.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SYSCTR_IRQ_ID                   SYS_CTR1_IRQn
-#define EXAMPLE_SYSCTR_COMPARE          SYS_CTR_COMPARE
-#define EXAMPLE_SYSCTR_CONTROL          SYS_CTR_CONTROL
-#define EXAMPLE_SYSCTR_READ             SYS_CTR_READ
-#define EXAMPLE_SYSCTR_IRQHandler       SYS_CTR1_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -73,10 +67,7 @@ int main(void)
     SYSCTR_GetDefaultConfig(&sysctrConfig);
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize SYSCTR module */
     SYSCTR_Init(EXAMPLE_SYSCTR_CONTROL, EXAMPLE_SYSCTR_COMPARE, &sysctrConfig);

@@ -6,16 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpuart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART          LPUART7
-#define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -72,9 +69,7 @@ int main(void)
     lpuart_transfer_t sendXfer;
     lpuart_transfer_t receiveXfer;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitHardware();
 
     /*
      * config.baudRate_Bps = 115200U;

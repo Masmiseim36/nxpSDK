@@ -1,13 +1,12 @@
 /*
- * Copyright 2017, NXP
+ * Copyright 2017 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_spdif_edma.h"
 #include "fsl_debug_console.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
@@ -16,19 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPDIF          SPDIF
-#define EXAMPLE_DMA            DMA0
-#define EXAMPLE_DMAMUX         DMAMUX0
-#define SPDIF_IRQ              SPDIF_IRQn
-#define SPDIF_ErrorHandle      SPDIF_IRQHandler
-#define SPDIF_RX_LEFT_CHANNEL  (0)
-#define SPDIF_RX_RIGHT_CHANNEL (1)
-#define SPDIF_TX_LEFT_CHANNEL  (2)
-#define SPDIF_TX_RIGHT_CHANNEL (3)
-#define SPDIF_RX_SOURCE        (62)
-#define SPDIF_TX_SOURCE        (63)
-#define DEMO_SPDIF_CLOCK_FREQ  CLOCK_GetPllFreq(kCLOCK_Pll_AudioPll)
-#define DEMO_SPDIF_SAMPLE_RATE 48000
 #define BUFFER_SIZE 1024
 #define BUFFER_NUM  4
 #define PLAY_COUNT  5000
@@ -40,17 +26,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 AT_NONCACHEABLE_SECTION_INIT(spdif_edma_handle_t txHandle) = {0};
 AT_NONCACHEABLE_SECTION_INIT(spdif_edma_handle_t rxHandle) = {0};
 edma_handle_t dmaTxLeftHandle                              = {0};
@@ -113,16 +88,7 @@ int main(void)
     uint8_t txIndex = 0, rxIndex = 0;
     edma_config_t dmaConfig = {0};
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    /*Clock setting for SPDIF*/
-    CLOCK_SetRootClockMux(kCLOCK_Root_Spdif, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Spdif, 1);
+    BOARD_InitHardware();
 
     PRINTF("SPDIF EDMA example started!\n\r");
 

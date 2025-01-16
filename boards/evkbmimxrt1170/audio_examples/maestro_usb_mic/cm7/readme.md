@@ -1,5 +1,6 @@
-Overview
-========
+# maestro_usb_mic
+
+## Overview
 The maestro_usb_mic application demonstrates audio processing on the ARM cortex core
 utilizing the Maestro Audio Solutions library.
 
@@ -29,50 +30,13 @@ After running the "usb_mic" command, the USB device will be enumerated on your h
 User will see the volume levels obtained from the USB host as in the example below.
 This is just an example application. To leverage the values, the demo has to be modified.
 
-### Notes
+**Notes**
 1. When device functionality is changed, please uninstall the previous PC driver to make
    sure the device with changed functionality can run normally.
 2. If you're having audio problems on Windows 10 for recorder, please disable signal
    enhancement as the following if it is enabled and have a try again.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- 2x Micro USB cable
-- JTAG/SWD debugger
-- EVKB-MIMXRT1170 board
-- Personal Computer
-
-Board settings
-==============
-1. Set the hardware jumpers (Tower system/base module) to default settings.
-
-Prepare the Demo
-================
-1. Connect the first micro USB cable between the PC host and the debug USB port on the board.
-2. Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Connect the second micro USB cable between the PC host and the USB port on the board.
-5. Either press the reset button on your board or launch the debugger in your IDE to begin
-   running the demo.
-
-Running the demo
-================
+## Running the demo
 When the example runs successfully, you should see similar output on the serial terminal as below:
 ```
     *************************************************
@@ -92,3 +56,8 @@ When the example runs successfully, you should see similar output on the serial 
     Set Cur Volume : 1f00
 ```
 
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/audio_examples/maestro_usb_mic/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/audio_examples/maestro_usb_mic/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/audio_examples/maestro_usb_mic/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/audio_examples/maestro_usb_mic/example_board_readme.md)

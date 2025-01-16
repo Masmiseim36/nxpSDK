@@ -7,9 +7,8 @@
 #include "fsl_debug_console.h"
 #include "fsl_common.h"
 #include "fsl_lpadc.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #if ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0))
 #include "fsl_lpit.h"
 #endif /* ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0)) */
@@ -20,26 +19,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE        ADC1
-#define DEMO_LPADC_CHANNEL_NUM 1U
-#define DEMO_LPADC_IRQn        ADC1_IRQn
-#define DEMO_LPADC_IRQ_HANDLER ADC1_IRQHandler
-
-#define DEMO_LPIT_BASE        LPIT3
-#define DEMO_LPIT_CHANNEL_NUM kLPIT_Chnl_0
-#define DEMO_LPIT_IRQn        LPIT3_IRQn
-#define DEMO_LPIT_IRQ_HANDLER LPIT3_IRQHandler
-#define DEMO_LPIT_CLOCK_FREQ  CLOCK_GetRootClockFreq(kCLOCK_Root_Lpit3)
-
-#define DEMO_CLOCK_FUNCTION_PARAMETER_COUNT 2U
-#define DEMO_LPADC_DO_OFFSET_CALIBRATION    true
-#define DEMO_LPADC_OFFSET_CALIBRATION_MODE  kLPADC_OffsetCalibration12bitMode
 #define DEMO_ADC_FIFO_DEPTH 0xFU
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitADCClock(void);
 static lpadc_sample_time_mode_t DEMO_SelectSampleTime(void);
 static void DEMO_ADCStartSample(lpadc_sample_time_mode_t sampleTimeMode);
 static void DEMO_TimerInit(void);
@@ -54,21 +38,6 @@ volatile uint32_t g_conversionCount = 0UL;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void BOARD_InitADCClock(void)
-{
-    clock_root_config_t adc1ClkRoot;
-
-    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 19U);
-
-    /* The ADC1 module of the RT1180 maximum operating clock frequency is 84MHz, in order to achieve the
-       highest conversion rate, set the ADC1 operating clock to the configurable highest frequency 83.375MHz.
-     */
-    adc1ClkRoot.mux      = kCLOCK_ADC1_ClockRoot_MuxSysPll2Pfd3; /* Set clock source as SYS PLL2 pfd3 CLK. */
-    adc1ClkRoot.div      = 6U;
-    adc1ClkRoot.clockOff = false;
-    CLOCK_SetRootClock(kCLOCK_Root_Adc1, &adc1ClkRoot);
-}
 #if ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0))
 void DEMO_LPIT_IRQ_HANDLER(void)
 #endif /* ((defined FSL_FEATURE_SOC_LPIT_COUNT) && (FSL_FEATURE_SOC_LPIT_COUNT != 0)) */
@@ -123,10 +92,7 @@ int main(void)
 {
     lpadc_sample_time_mode_t sampleTimeMode;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_InitADCClock();
 
     PRINTF("ADC High Sample Rate Demo!\r\n");

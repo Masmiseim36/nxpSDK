@@ -82,7 +82,7 @@ static uint32_t PWM_GetInstance(PWM_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_pwmBases); instance++)
     {
-        if (s_pwmBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_pwmBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -451,8 +451,10 @@ void PWM_GetDefaultConfig(pwm_config_t *config)
  *
  * The function initializes the submodule according to the parameters passed in by the user. The function
  * also sets up the value compare registers to match the PWM signal requirements.
- * If the dead time insertion logic is enabled, the pulse period is reduced by the
- * dead time period specified by the user.
+ * If the dead time insertion logic is enabled, the pulse period is reduced by the dead time period specified
+ * by the user.
+ * Recommend to invoke this API after PWM and fault configuration. But invoke this API before configure MCTRL
+ * register is okay, such as set LDOK or start timer.
  *
  * param base        PWM peripheral base address
  * param subModule   PWM submodule to configure

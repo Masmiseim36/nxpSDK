@@ -1,15 +1,8 @@
 /*
  * Copyright 2023 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#if defined(__GNUC__)
-#include <stdint.h>
-#include <errno.h>
-#include <sys/stat.h>
-#endif
 
 /*
  * This file defines the libnosys.a syscall functions.
@@ -37,6 +30,10 @@
 #if defined(__GNUC__)
 
 #if SDK_USE_SYSCALL_STUB
+
+#include <stdint.h>
+#include <errno.h>
+#include <sys/stat.h>
 
 /*
  * When SDK_DEBUGCONSOLE_UART defined, the _write and _read will be defined in

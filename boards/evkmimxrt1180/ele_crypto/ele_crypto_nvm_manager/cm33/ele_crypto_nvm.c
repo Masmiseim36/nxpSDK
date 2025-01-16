@@ -10,9 +10,8 @@
  ******************************************************************************/
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "ele_crypto.h" /* ELE Crypto SW */
 #include "ele_nvm_manager.h"
@@ -20,11 +19,9 @@
 #include "ele_fw.h"     /* ELE FW, to be placed in bootable container in real world app */
 #include "fsl_cache.h"  /* Disable cache in this example */
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define S3MU MU_RT_S3MUA
 
 /*******************************************************************************
  * Prototypes
@@ -211,10 +208,7 @@ int main(void)
     do
     {
         /* HW init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+        BOARD_InitHardware();
         XCACHE_DisableCache(XCACHE_PC);
         XCACHE_DisableCache(XCACHE_PS);
 

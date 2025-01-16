@@ -6,22 +6,13 @@
  */
 
 #include "fsl_romapi.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_cache.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define FlexSpiInstance           1U
-#define EXAMPLE_FLEXSPI_AMBA_BASE FlexSPI1_AMBA_BASE
-#define FLASH_SIZE                0x1000000UL /* 16MBytes */
-#define FLASH_PAGE_SIZE           256UL       /* 256Bytes */
-#define FLASH_SECTOR_SIZE         0x1000UL    /* 4KBytes */
-#define FLASH_BLOCK_SIZE          0x10000UL   /* 64KBytes */
 #define BUFFER_LEN FLASH_PAGE_SIZE
 
 /*******************************************************************************
@@ -116,10 +107,7 @@ int main(void)
     uint32_t serialNorSectorSize;
     uint32_t serialNorPageSize;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\n FLEXSPI NOR example started!\r\n");
     /* Clean up FLEXSPI NOR flash driver Structure */

@@ -1,9 +1,15 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
+* Copyright 2016, Freescale Semiconductor, Inc.
+* Copyright 2016-2021, 2024 NXP
+*
+* NXP Proprietary. This software is owned or controlled by NXP and may
+* only be used strictly in accordance with the applicable license terms. 
+* By expressly accepting such terms or by downloading, installing,
+* activating and/or otherwise using the software, you are agreeing that
+* you have read, and that you agree to comply with and are bound by,
+* such license terms.  If you do not agree to be bound by the applicable
+* license terms, then you may not retain, install, activate or otherwise
+* use the software.
  */
 
 #include "freemaster.h"
@@ -23,6 +29,10 @@
 
 #ifdef MID_EN
 #include "mid_sm_states.h"
+#endif
+
+#if ENABLE_FLASH_PARAM_UPDATE
+#include "mcdrv_flash_lpc55s36.h"
 #endif
 
 /*******************************************************************************
@@ -825,6 +835,29 @@ FMSTR_TSA_TABLE_END()
 #endif
 
 
+#if ENABLE_FLASH_PARAM_UPDATE
+/*!
+ * @brief Table for control updating parameters in the flash
+ *
+ * @param None
+ *
+ * @return None
+ */
+FMSTR_TSA_TABLE_BEGIN(gsM1FlashCfgUpdate)
+
+FMSTR_TSA_RW_VAR(g_sM1FlashCtrl.ui32CfgIndex, FMSTR_TSA_UINT32)         /* Flash configuration index */
+FMSTR_TSA_RW_VAR(g_sM1FlashCtrl.bStart, FMSTR_TSA_UINT16)               /* Flash operation start */
+FMSTR_TSA_RW_VAR(g_sM1FlashCtrl.eOperation, FMSTR_TSA_UINT16)           /* Flash operation select */
+FMSTR_TSA_RW_VAR(g_sM1FlashCtrl.eStatus, FMSTR_TSA_UINT16)              /* Flash operation status */
+
+FMSTR_TSA_RW_VAR(g_sFlashDrv.ui32FlashErr, FMSTR_TSA_UINT32)            /* Flash Error Captured */
+FMSTR_TSA_RW_VAR(g_sFlashDrv.ui32ConfigAvailable, FMSTR_TSA_UINT32)     /* Flash configuration available */
+FMSTR_TSA_RW_MEM(g_sFlashDrv.cDescription, FMSTR_TSA_UINT8, &g_sFlashDrv.cDescription[0], CFG_USER_DESCRIPTION_LENGTH)         /* Flash configuration description */
+
+FMSTR_TSA_TABLE_END()
+#endif
+
+
 /*!
  * @brief TSA Table list required if TSA macro is enabled
  *
@@ -860,6 +893,10 @@ FMSTR_TSA_TABLE(gsM2Enc_table)
 FMSTR_TSA_TABLE(gsMid_table)
 FMSTR_TSA_TABLE(estimRL_table)
 FMSTR_TSA_TABLE(gsMidDrive_table)
+#endif
+
+#if ENABLE_FLASH_PARAM_UPDATE
+FMSTR_TSA_TABLE(gsM1FlashCfgUpdate)
 #endif
 
 FMSTR_TSA_TABLE_LIST_END()

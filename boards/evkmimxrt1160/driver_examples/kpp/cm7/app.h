@@ -1,0 +1,44 @@
+/*
+ * Copyright 2021 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+#ifndef _APP_H_
+#define _APP_H_
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+/*${macro:start}*/
+#define EXAMPLE_KPP_ACTIVE_COLUMROWS  (0xC)
+#define EXAMPLE_KPP_MATRX_NUM         (2)
+#define EXAMPLE_KPP_COLROW_START_INDX (2)
+#define EXAMPLE_KPP                   KPP
+/*${macro:end}*/
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+/*${prototype:start}*/
+void BOARD_InitHardware(void);
+/*${prototype:end}*/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*${variable:start}*/
+char *keyMap[EXAMPLE_KPP_MATRX_NUM][EXAMPLE_KPP_MATRX_NUM] = {
+    {
+        "SW1",
+        "SW2",
+    },
+    {
+        "SW3",
+        "SW4",
+    },
+};
+/*${variable:end}*/
+
+#endif /* _APP_H_ */

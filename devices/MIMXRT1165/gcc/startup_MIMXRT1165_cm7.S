@@ -4,11 +4,11 @@
 /*            MIMXRT1165_cm7                                                 */
 /*  @version: 0.1                                                            */
 /*  @date:    2020-12-29                                                     */
-/*  @build:   b231019                                                        */
+/*  @build:   b240823                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2023 NXP                                                   */
+/* Copyright 2016-2024 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
@@ -87,9 +87,9 @@ __isr_vector:
     .long   CAN2_IRQHandler                                 /* CAN2 interrupt*/
     .long   CAN2_ERROR_IRQHandler                           /* CAN2 error interrupt*/
     .long   CAN3_IRQHandler                                 /* CAN3 interrupt*/
-    .long   CAN3_ERROR_IRQHandler                           /* CAN3 erro interrupt*/
+    .long   CAN3_ERROR_IRQHandler                           /* CAN3 error interrupt*/
     .long   FLEXRAM_IRQHandler                              /* FlexRAM address out of range Or access hit IRQ*/
-    .long   KPP_IRQHandler                                  /* Keypad nterrupt*/
+    .long   KPP_IRQHandler                                  /* Keypad interrupt*/
     .long   Reserved68_IRQHandler                           /* Reserved interrupt*/
     .long   GPR_IRQ_IRQHandler                              /* GPR interrupt*/
     .long   Reserved70_IRQHandler                           /* Reserved interrupt*/

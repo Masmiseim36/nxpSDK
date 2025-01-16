@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2023 NXP
+ * Copyright 2020, 2023-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -92,9 +92,9 @@
 #define DCDC_1P0_BUCK_MODE_CONFIGURATION_TABLE \
 {                                              \
     kDCDC_1P0BuckTarget1P0V,                   \
-    kDCDC_1P0BuckTarget1P1V,                   \
-    kDCDC_1P0BuckTarget1P1V,                   \
-    kDCDC_1P0BuckTarget1P1V,                   \
+    kDCDC_1P0BuckTarget1P125V,                 \
+    kDCDC_1P0BuckTarget1P125V,                 \
+    kDCDC_1P0BuckTarget1P125V,                 \
     kDCDC_1P0BuckTarget1P0V,                   \
     kDCDC_1P0BuckTarget0P9V,                   \
     kDCDC_1P0BuckTarget0P9V,                   \
@@ -112,9 +112,9 @@
 #define DCDC_1P0_STANDBY_MODE_CONFIGURATION_TABLE \
 {                                                 \
     kDCDC_1P0StbyTarget1P0V,                      \
-    kDCDC_1P0StbyTarget1P1V,                      \
-    kDCDC_1P0StbyTarget1P1V,                      \
-    kDCDC_1P0StbyTarget1P1V,                      \
+    kDCDC_1P0StbyTarget1P125V,                    \
+    kDCDC_1P0StbyTarget1P125V,                    \
+    kDCDC_1P0StbyTarget1P125V,                    \
     kDCDC_1P0StbyTarget1P0V,                      \
     kDCDC_1P0StbyTarget0P9V,                      \
     kDCDC_1P0StbyTarget0P9V,                      \
@@ -327,7 +327,7 @@
 #define PF5020_SW1_OUTPUT_VOLT                                                             \
     {                                                                                      \
       /* 1.0V,1.1V,1.1V, 1.1V, 1.0V,0.9V,0.9V,0.9V,0.9V,0.9V,0.8V,0.9V,0.9V,0.9V,0.9V,0.9V */ \
-        96U, 112U, 112U, 112U, 96U, 80U, 80U, 80U, 80U, 80U, 64U, 80U, 80U, 80U, 80U, 80U, \
+        96U, 116U, 116U, 116U, 96U, 80U, 80U, 80U, 80U, 80U, 64U, 80U, 80U, 80U, 80U, 80U, \
     }
 #endif /* (defined(BOARD_USE_EXT_PMIC) && BOARD_USE_EXT_PMIC) */
 

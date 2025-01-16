@@ -24,6 +24,20 @@
         __ISB();      \
     }
 
+/* Version info */
+#define MCRSP_VER "2.0.0" /* motor control package version */
+
+/* Example's feature set in form of bits inside ui16featureSet.
+   This feature set is expected to be growing over time.
+   ... | FEATURE_S_RAMP | FEATURE_FIELD_WEAKENING | FEATURE_ENC
+*/
+#define FEATURE_ENC (0)               /* Encoder feature flag */
+#define FEATURE_FIELD_WEAKENING (0)   /* Field weakening feature flag */
+#define FEATURE_S_RAMP (0)            /* S-ramp feature flag */
+
+#define FEATURE_SET (FEATURE_FIELD_WEAKENING << (1) | \
+                     FEATURE_S_RAMP << (2))
+
 #define BOARD_USER_BUTTON_PRIORITY 4
 
    /* CPU load measurement SysTick START / STOP macros */
@@ -49,15 +63,15 @@ static uint32_t ui32SpeedStimulatorCnt = 0U;
 /* Counter for button pressing */
 static uint32_t ui32ButtonFilter = 0U;
 
-/* Application and board ID  */
-app_ver_t g_sAppId = {
-    "evkbmimxrt1170", /* board id */
-    "bldc",       /* example id */
-    MCRSP_VER,    /* sw version */
-};
-
 /* Structure used in FM to get required ID's */
-app_ver_t g_sAppIdFM;
+app_ver_t g_sAppIdFM = {
+    "../../../examples/evkbmimxrt1170/demo_apps/mc_bldc/cm7",     /* User Path 1- the highest priority */
+    "",       /* User Path 2 */
+    "evkbmimxrt1170",  /* board id */
+    "bldc",             /* example id */
+    MCRSP_VER,          /* sw version */
+    FEATURE_SET,        /* example's feature-set */
+};
 
 /*******************************************************************************
  * Prototypes
@@ -67,23 +81,23 @@ static void BOARD_Init(void);
 void BOARD_InitSysTick(void);
 
 /* ADC COCO interrupt */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void ADC_ETC_IRQ0_IRQHandler(void);
 
 /* TMR1 reload ISR called with 1ms period */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void TMR1_IRQHandler(void);
 
 /* Commutation Timer ISR */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void PWM1_3_IRQHandler(void);
 
 /* Button interupt handler */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void GPIO13_Combined_0_31_IRQHandler(void);
 
 /* Demo Speed Stimulator */
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 void DemoSpeedStimulator(void);
 /*******************************************************************************
  * Code
@@ -100,6 +114,9 @@ void DemoSpeedStimulator(void);
 int main(void)
 {
     uint32_t ui32PrimaskReg;
+    
+    /*Accessing ID structure to prevent optimization*/
+    g_sAppIdFM.ui16FeatureSet = FEATURE_SET;
 
     /* Disable all interrupts before peripherals are initialized */
     ui32PrimaskReg = DisableGlobalIRQ();
@@ -107,9 +124,6 @@ int main(void)
     /* Disable demo mode after reset */
     bDemoMode              = FALSE;
 
-    /* Pass actual demo id and board info to FM */
-    g_sAppIdFM = g_sAppId;
-      
     /* Init board hardware. */
     BOARD_Init();
 
@@ -142,13 +156,13 @@ int main(void)
  */
 RAM_FUNC_LIB
 void ADC_ETC_IRQ0_IRQHandler(void)
-{    
+{
      /* Start CPU tick number couting */
      SYSTICK_START_COUNT();
 
      /* State machine */
      SM_StateMachineFast(&g_sM1Ctrl);
-     
+
      /* stop CPU tick number couting and store actual and maximum ticks */
      SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
      g_ui32MaxNumberOfCycles =
@@ -179,13 +193,13 @@ void PWM1_3_IRQHandler(void)
 {
   /* Asynchronous time event processing */
   M1_TimeEvent();
-  
+
   /* Clear flag */
   PWM1->SM[3].STS = PWM_STS_CMPF(0x4);
-  
+
   /* Update register values */
   PWM1->MCTRL = (PWM1->MCTRL & ~PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0x8);
-  
+
   /* Add empty instructions for correct interrupt flag clearing */
   M1_END_OF_ISR;
 }
@@ -201,12 +215,10 @@ void PWM1_3_IRQHandler(void)
  */
 RAM_FUNC_LIB
 void TMR1_IRQHandler(void)
-{   
-    static int16_t i = 0;
-    
+{
     /* M1 Slow StateMachine call */
     SM_StateMachineSlow(&g_sM1Ctrl);
-    
+
     /* If in FAULT state turn off DemoMode*/
     if (M1_GetAppState() == 0)
     {
@@ -215,14 +227,14 @@ void TMR1_IRQHandler(void)
 
     /* Demo speed stimulator */
     DemoSpeedStimulator();
-    
+
     /* Clear the CSCTRL0[TCF1] flag */
     TMR1->CHANNEL[0].CSCTRL |= TMR_CSCTRL_TCF1(0x00);
     TMR1->CHANNEL[0].CSCTRL &= ~(TMR_CSCTRL_TCF1_MASK);
 
     /* Clear the CSCTRL0[TCF] flag */
     TMR1->CHANNEL[0].SCTRL &= ~(TMR_SCTRL_TCF_MASK);
-    
+
     /* Add empty instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
 }

@@ -5,16 +5,23 @@
       <name>all</name>
       <member>
         <project>semc_xecc_multi_error_cm7</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>debug</configuration>
       </member>
       <member>
         <project>semc_xecc_multi_error_cm7</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>semc_xecc_multi_error_cm7</project>
         <configuration>release</configuration>
       </member>
+      <member>
+        <project>semc_xecc_multi_error_cm7</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
       <member>
         <project>semc_xecc_multi_error_cm7</project>
         <configuration>debug</configuration>
@@ -28,13 +35,6 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_release</name>
-      <member>
-        <project>semc_xecc_multi_error_cm7</project>
-        <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>release</name>
       <member>
         <project>semc_xecc_multi_error_cm7</project>
@@ -42,10 +42,10 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>debug</name>
+      <name>flexspi_nor_release</name>
       <member>
         <project>semc_xecc_multi_error_cm7</project>
-        <configuration>debug</configuration>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

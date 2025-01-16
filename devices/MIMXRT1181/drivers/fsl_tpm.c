@@ -26,6 +26,8 @@
  * If the incoming base can not make (1U == (uint8_t)FSL_FEATURE_TPM_POL_HAS_EFFECTn(base) true,
  * the subsequent register operation is incorrect.
  *
+ * $Justification tpm_c_ref_5$
+ * Hardware limitations make this code impossible to implement.
  */
 
 /*******************************************************************************
@@ -91,7 +93,7 @@ uint32_t TPM_GetInstance(TPM_Type *base)
      */
     for (instance = 0; instance < tpmArrayCount; instance++)
     {
-        if (s_tpmBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_tpmBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -459,6 +461,15 @@ static status_t TPM_SetupSinglePwmChannel(TPM_Type *base,
         TPM_DisableChannel(base, (tpm_chnl_t)chnlId);
         /* Set the requested PWM mode, output mode MSnB:MSnA field value set to 10 */
         TPM_EnableChannel(base, (tpm_chnl_t)chnlId, controlBits);
+
+        /* 
+         * According to ERR008068, if writing Channel(n) Value register (TPMx_CnV) more than once when the timer
+         * counter is disabled, and writes occur at a frequency faster than the TPM asynchronous clock, the registers
+         * may not update correctly.
+         * This issue occurs when the register is written an even number of times but does not appear when the register
+         * is written an odd number of times.
+         * Use do...while loop to ensure modulo register is updated.
+         */
         do
         {
             base->CONTROLS[chnlId].CnV = cnv;
@@ -552,8 +563,24 @@ status_t TPM_SetupPwm(TPM_Type *base,
     {
         return status;
     }
+
     /* Set the PWM period */
-    base->MOD = mod;
+    /* 
+     * According to ERR008068, if writing the modulo register (TPMx_MOD) more than once when the timer counter is
+     * disabled, and writes occur at a frequency faster than the TPM asynchronous clock, the registers may not 
+     * update correctly.
+     * This issue occurs when the register is written an even number of times but does not appear when the register
+     * is written an odd number of times.
+     * Use do...while loop to ensure modulo register is updated.
+     */
+    do
+    {
+        base->MOD = mod;
+        /*
+         * $Branch Coverage Justification$
+         * (mod != base->MOD) not covered. $ref tpm_c_ref_5$.
+         */
+    } while (mod != base->MOD);
 
     /* Setup each TPM channel */
     for (uint8_t i = 0; i < numOfChnls; i++)

@@ -110,6 +110,10 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (._bt_conn_cb*)
   }
 
+  ER_bt_ias_cb +0 { ;
+    * (._bt_ias_cb*)
+  }
+
   ER_bt_gatt_service_static +0 { ;
     * (._bt_gatt_service_static*)
   }
@@ -153,6 +157,10 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 
   RW_net_buf_pool +0 { ;
     * (._net_buf_pool*)
+  }
+
+  RW_k_mem_slab +0 { ;
+    * (._k_mem_slab*)
   }
 #if (!defined(__heap_noncacheable__))
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up

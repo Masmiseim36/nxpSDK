@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief OCOTP driver version. */
-#define FSL_OCOTP_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
+#define FSL_OCOTP_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
 /*! @} */
 
 #ifndef OCOTP_READ_FUSE_DATA_COUNT

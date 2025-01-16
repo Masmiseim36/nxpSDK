@@ -5,8 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
@@ -20,55 +19,9 @@
 #include "fsl_sd_disk.h"
 #include "fsl_codec_common.h"
 #include "sdmmc_config.h"
-#include "fsl_codec_adapter.h"
-#include "fsl_cs42448.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM                      PDM
-#define DEMO_SAI                      SAI1
-#define DEMO_SAI_CLK_FREQ             24576000
-#define DEMO_SAI_CLOCK_SOURCE         (kSAI_BclkSourceMclkDiv)
-#define DEMO_PDM_CLK_FREQ             24576000
-#define DEMO_PDM_FIFO_WATERMARK       (4)
-#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE    (6144000U) /* 6.144MHZ */
-#define DEMO_PDM_CHANNEL_GAIN         kPDM_DfOutputGain7
-
-/* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
-/* demo audio master clock */
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-/* demo audio data channel */
-#define DEMO_AUDIO_DATA_CHANNEL (8U)
-/* demo audio bit width */
-#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth32bits
-
-#define DEMO_CS42448_I2C_INSTANCE 6
-#define DEMO_CODEC_POWER_GPIO     GPIO9
-#define DEMO_CODEC_POWER_GPIO_PIN 9
-#define DEMO_CODEC_RESET_GPIO     GPIO11
-#define DEMO_CODEC_RESET_GPIO_PIN 11
-
-#define DEMO_EDMA               DMA0
-#define DEMO_DMAMUX             DMAMUX0
-#define DEMO_PDM_EDMA_CHANNEL_0 0
-#define DEMO_PDM_EDMA_CHANNEL_1 1
-#define DEMO_SAI_EDMA_CHANNEL   2
-#define DEMO_PDM_REQUEST_SOURCE kDmaRequestMuxPdm
-#define DEMO_SAI_REQUEST_SOURCE kDmaRequestMuxSai1Tx
-#define EXAMPLE_DMA             DMA0
-#define EXAMPLE_DMAMUX          DMAMUX0
-#define EXAMPLE_CHANNEL         (0U)
-#define EXAMPLE_TX_CHANNEL      (0U)
-#define EXAMPLE_RX_CHANNEL      (1U)
-#define EXAMPLE_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
-#define EXAMPLE_SAI_RX_SOURCE   kDmaRequestMuxSai1Rx
-#define BOARD_MasterClockConfig()
-#define BOARD_MASTER_CLOCK_CONFIG()
 #ifndef DEMO_DMAMUX
 #define DEMO_DMAMUX DMAMUX0
 #endif
@@ -88,8 +41,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitDebugConsole(void);
-void BORAD_CodecReset(bool state);
 static void tx_callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 static status_t DEMO_MountFileSystem(void);
 extern void BORAD_CodecReset(bool state);
@@ -141,54 +92,6 @@ sai_transfer_t saiTxPingPongTransfer[4U] = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = BORAD_CodecReset,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = DEMO_CS42448_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .format       = {.mclk_HZ = 24576000, .sampleRate = 48000U, .bitWidth = 24U},
-    .bus          = kCS42448_BusTDM,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
-
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR0 |= 1 << 8U;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR0 &= ~(1 << 8U);
-    }
-}
-
-
-void BORAD_CodecReset(bool state)
-{
-    if (state)
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 1U);
-    }
-    else
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 0U);
-    }
-}
 static void tx_callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     if (kStatus_SAI_RxError == status)
@@ -212,27 +115,7 @@ int main(void)
     FRESULT error;
     uint32_t leftWAVData = 0U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    EnableIRQ(GPIO13_Combined_0_31_IRQn);
-
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c6, 1);
-    /* audio pll  */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
-    /* 0SC400M */
-    /* 24.576m mic root clock */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
-
-    BOARD_EnableSaiMclkOutput(true);
-
-    /* enable codec power */
-    GPIO_PinWrite(DEMO_CODEC_POWER_GPIO, DEMO_CODEC_POWER_GPIO_PIN, 1U);
+    BOARD_InitHardware();
     BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ, NULL);
 
     PRINTF("\r\nSAI edma TDM example started.\n\r");

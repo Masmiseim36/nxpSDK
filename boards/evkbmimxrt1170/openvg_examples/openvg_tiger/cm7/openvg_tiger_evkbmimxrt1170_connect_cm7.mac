@@ -1,0 +1,282 @@
+/*
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+__ExecDeviceReset()
+{
+    __probeCmd("dap.w 0xE000EDF0 0xA05F0003 0");
+    if ((__probeCmd("dap.r 0xE000EDF0 0") & 0x00030000) == 0x00030000)
+    {
+        __message "CM7 has been halted";
+    }
+    else
+    {
+        __message "CM7 has not been halted";
+    }
+}
+
+SDRAM_WaitIpCmdDone()
+{
+    __var reg;
+    do
+    {
+        reg = __probeCmd("dap.r 0x400D403C 0");
+        __delay(10);
+    }while((reg & 0x3) == 0);
+
+    __probeCmd("dap.w 0x00000003 0x400D403C 0");    // clear IPCMDERR and IPCMDDONE bits
+}
+
+setSemcClock()
+{
+    // Set SEMC root clock to use sys pll2 pfd1 divided by 3: 198Mhz
+    __probeCmd("dap.w 0x40cc0200 0x602 0");
+}
+
+initSDRAM()
+{
+    // Config IOMUX
+    __probeCmd("dap.w 0x400E8010 0x00000000 0");
+    __probeCmd("dap.w 0x400E8014 0x00000000 0");
+    __probeCmd("dap.w 0x400E8018 0x00000000 0");
+    __probeCmd("dap.w 0x400E801C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8020 0x00000000 0");
+    __probeCmd("dap.w 0x400E8024 0x00000000 0");
+    __probeCmd("dap.w 0x400E8028 0x00000000 0");
+    __probeCmd("dap.w 0x400E802C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8030 0x00000000 0");
+    __probeCmd("dap.w 0x400E8034 0x00000000 0");
+    __probeCmd("dap.w 0x400E8038 0x00000000 0");
+    __probeCmd("dap.w 0x400E803C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8040 0x00000000 0");
+    __probeCmd("dap.w 0x400E8044 0x00000000 0");
+    __probeCmd("dap.w 0x400E8048 0x00000000 0");
+    __probeCmd("dap.w 0x400E804C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8050 0x00000000 0");
+    __probeCmd("dap.w 0x400E8054 0x00000000 0");
+    __probeCmd("dap.w 0x400E8058 0x00000000 0");
+    __probeCmd("dap.w 0x400E805C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8060 0x00000000 0");
+    __probeCmd("dap.w 0x400E8064 0x00000000 0");
+    __probeCmd("dap.w 0x400E8068 0x00000000 0");
+    __probeCmd("dap.w 0x400E806C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8070 0x00000000 0");
+    __probeCmd("dap.w 0x400E8074 0x00000000 0");
+    __probeCmd("dap.w 0x400E8078 0x00000000 0");
+    __probeCmd("dap.w 0x400E807C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8080 0x00000000 0");
+    __probeCmd("dap.w 0x400E8084 0x00000000 0");
+    __probeCmd("dap.w 0x400E8088 0x00000000 0");
+    __probeCmd("dap.w 0x400E808C 0x00000000 0");
+    __probeCmd("dap.w 0x400E8090 0x00000000 0");
+    __probeCmd("dap.w 0x400E8094 0x00000000 0");
+    __probeCmd("dap.w 0x400E8098 0x00000000 0");
+    __probeCmd("dap.w 0x400E809C 0x00000000 0");
+    __probeCmd("dap.w 0x400E80A0 0x00000000 0");
+    __probeCmd("dap.w 0x400E80A4 0x00000000 0");
+    __probeCmd("dap.w 0x400E80A8 0x00000000 0");
+    __probeCmd("dap.w 0x400E80AC 0x00000010 0"); // EMC_39, DQS PIN, enable SION
+    __probeCmd("dap.w 0x400E80B0 0x00000000 0");
+    __probeCmd("dap.w 0x400E80B4 0x00000000 0");
+    __probeCmd("dap.w 0x400E80B8 0x00000000 0");
+    __probeCmd("dap.w 0x400E80BC 0x00000000 0");
+    __probeCmd("dap.w 0x400E80C0 0x00000000 0");
+    __probeCmd("dap.w 0x400E80C4 0x00000000 0");
+    __probeCmd("dap.w 0x400E80C8 0x00000000 0");
+    __probeCmd("dap.w 0x400E80CC 0x00000000 0");
+    __probeCmd("dap.w 0x400E80D0 0x00000000 0");
+    __probeCmd("dap.w 0x400E80D4 0x00000000 0");
+    __probeCmd("dap.w 0x400E80D8 0x00000000 0");
+    __probeCmd("dap.w 0x400E80DC 0x00000000 0");
+    __probeCmd("dap.w 0x400E80E0 0x00000000 0");
+    __probeCmd("dap.w 0x400E80E4 0x00000000 0");
+    __probeCmd("dap.w 0x400E80E8 0x00000000 0");
+    __probeCmd("dap.w 0x400E80EC 0x00000000 0");
+    __probeCmd("dap.w 0x400E80F0 0x00000000 0");
+    __probeCmd("dap.w 0x400E80F4 0x00000000 0");
+    __probeCmd("dap.w 0x400E80F8 0x00000000 0");
+    __probeCmd("dap.w 0x400E80FC 0x00000000 0");
+    __probeCmd("dap.w 0x400E8100 0x00000000 0");
+    __probeCmd("dap.w 0x400E8104 0x00000000 0");
+    __probeCmd("dap.w 0x400E8108 0x00000000 0");
+
+    // PAD ctrl
+    // PDRV = 1b (normal); PULL = 10b (PD)
+    __probeCmd("dap.w 0x400E8254 0x00000008 0");
+    __probeCmd("dap.w 0x400E8258 0x00000008 0");
+    __probeCmd("dap.w 0x400E825C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8260 0x00000008 0");
+    __probeCmd("dap.w 0x400E8264 0x00000008 0");
+    __probeCmd("dap.w 0x400E8268 0x00000008 0");
+    __probeCmd("dap.w 0x400E826C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8270 0x00000008 0");
+    __probeCmd("dap.w 0x400E8274 0x00000008 0");
+    __probeCmd("dap.w 0x400E8278 0x00000008 0");
+    __probeCmd("dap.w 0x400E827C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8280 0x00000008 0");
+    __probeCmd("dap.w 0x400E8284 0x00000008 0");
+    __probeCmd("dap.w 0x400E8288 0x00000008 0");
+    __probeCmd("dap.w 0x400E828C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8290 0x00000008 0");
+    __probeCmd("dap.w 0x400E8294 0x00000008 0");
+    __probeCmd("dap.w 0x400E8298 0x00000008 0");
+    __probeCmd("dap.w 0x400E829C 0x00000008 0");
+    __probeCmd("dap.w 0x400E82A0 0x00000008 0");
+    __probeCmd("dap.w 0x400E82A4 0x00000008 0");
+    __probeCmd("dap.w 0x400E82A8 0x00000008 0");
+    __probeCmd("dap.w 0x400E82AC 0x00000008 0");
+    __probeCmd("dap.w 0x400E82B0 0x00000008 0");
+    __probeCmd("dap.w 0x400E82B4 0x00000008 0");
+    __probeCmd("dap.w 0x400E82B8 0x00000008 0");
+    __probeCmd("dap.w 0x400E82BC 0x00000008 0");
+    __probeCmd("dap.w 0x400E82C0 0x00000008 0");
+    __probeCmd("dap.w 0x400E82C4 0x00000008 0");
+    __probeCmd("dap.w 0x400E82C8 0x00000008 0");
+    __probeCmd("dap.w 0x400E82CC 0x00000008 0");
+    __probeCmd("dap.w 0x400E82D0 0x00000008 0");
+    __probeCmd("dap.w 0x400E82D4 0x00000008 0");
+    __probeCmd("dap.w 0x400E82D8 0x00000008 0");
+    __probeCmd("dap.w 0x400E82DC 0x00000008 0");
+    __probeCmd("dap.w 0x400E82E0 0x00000008 0");
+    __probeCmd("dap.w 0x400E82E4 0x00000008 0");
+    __probeCmd("dap.w 0x400E82E8 0x00000008 0");
+    __probeCmd("dap.w 0x400E82EC 0x00000008 0");
+    __probeCmd("dap.w 0x400E82F0 0x00000008 0");
+    __probeCmd("dap.w 0x400E82F4 0x00000008 0");
+    __probeCmd("dap.w 0x400E82F8 0x00000008 0");
+    __probeCmd("dap.w 0x400E82FC 0x00000008 0");
+    __probeCmd("dap.w 0x400E8300 0x00000008 0");
+    __probeCmd("dap.w 0x400E8304 0x00000008 0");
+    __probeCmd("dap.w 0x400E8308 0x00000008 0");
+    __probeCmd("dap.w 0x400E830C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8310 0x00000008 0");
+    __probeCmd("dap.w 0x400E8314 0x00000008 0");
+    __probeCmd("dap.w 0x400E8318 0x00000008 0");
+    __probeCmd("dap.w 0x400E831C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8320 0x00000008 0");
+    __probeCmd("dap.w 0x400E8324 0x00000008 0");
+    __probeCmd("dap.w 0x400E8328 0x00000008 0");
+    __probeCmd("dap.w 0x400E832C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8330 0x00000008 0");
+    __probeCmd("dap.w 0x400E8334 0x00000008 0");
+    __probeCmd("dap.w 0x400E8338 0x00000008 0");
+    __probeCmd("dap.w 0x400E833C 0x00000008 0");
+    __probeCmd("dap.w 0x400E8400 0x00000008 0");
+    __probeCmd("dap.w 0x400E8404 0x00000008 0");
+    __probeCmd("dap.w 0x400E8408 0x00000008 0");
+    __probeCmd("dap.w 0x400E840C 0x00000008 0");
+
+    // Config SDR Controller Registers/
+    __probeCmd("dap.w 0x400d4000 0x10000004 0"); // MCR
+    __probeCmd("dap.w 0x400d4008 0x00030524 0"); // BMCR0
+    __probeCmd("dap.w 0x400d400C 0x06030524 0"); // BMCR1
+    __probeCmd("dap.w 0x400d4010 0x8000001D 0"); // BR0, 64MB
+
+    __probeCmd("dap.w 0x400d4040 0x00000F32 0"); // SDRAMCR0, 32bit
+    __probeCmd("dap.w 0x400d4044 0x00772A22 0"); // SDRAMCR1
+    __probeCmd("dap.w 0x400d4048 0x00010A0D 0"); // SDRAMCR2
+    __probeCmd("dap.w 0x400d404C 0x21210408 0"); // SDRAMCR3
+
+    __probeCmd("dap.w 0x400d4090 0x80000000 0"); // IPCR0
+    __probeCmd("dap.w 0x400d4094 0x00000002 0"); // IPCR1
+    __probeCmd("dap.w 0x400d4098 0x00000000 0"); // IPCR2
+
+    __probeCmd("dap.w 0x400d409C 0xA55A000F 0"); // IPCMD, SD_CC_IPREA
+    SDRAM_WaitIpCmdDone();
+    __probeCmd("dap.w 0x400d409C 0xA55A000C 0"); // SD_CC_IAF
+    SDRAM_WaitIpCmdDone();
+    __probeCmd("dap.w 0x400d409C 0xA55A000C 0"); // SD_CC_IAF
+    SDRAM_WaitIpCmdDone();
+    __probeCmd("dap.w 0x400d40A0 0x00000033 0"); // IPTXDAT
+    __probeCmd("dap.w 0x400d409C 0xA55A000A 0"); // SD_CC_IMS
+    SDRAM_WaitIpCmdDone();
+
+    __probeCmd("dap.w 0x400d404C 0x21210409 0"); // enable sdram self refresh after initialization done.
+
+    __message "SDRAM init done";
+}
+
+clearIRQ()
+{
+    __var reg, i;
+
+    reg = 0xE000E100; /* NVIC Base */
+
+    /* Disable all IRQ: ICERn */
+    i = 0x80;
+    while (i <= 0x9C)
+    {
+        __writeMemory32(0xFFFFFFFF, reg + i, "AP0_Memory");
+        i = i + 4;
+    }
+
+    /* Clear pending IRQ: ICPRn */
+    i = 0x180;
+    while (i <= 0x19C)
+    {
+        __writeMemory32(0xFFFFFFFF, reg + i, "AP0_Memory");
+        i = i+4;
+    }
+
+    __message "IRQ is cleared";
+}
+
+restoreFlexRAM()
+{
+    __var base;
+    __var value;
+
+    base = 0x400E4000;
+
+    value = __readMemory32(base + 0x44, "AP0_Memory");
+    value &= ~(0xFFFF);
+    value |= 0xFFAA;
+    __writeMemory32(value, base + 0x44, "AP0_Memory");
+    value = __readMemory32(base + 0x48, "AP0_Memory");
+    value &= ~(0xFFFF);
+    value |= 0xFFAA;
+    __writeMemory32(value, base + 0x48, "AP0_Memory");
+
+    value = __readMemory32(base + 0x40, "AP0_Memory");
+    value &= ~(0xFF << 8);
+    value |= 0x7 | (0xaa << 8);
+    __writeMemory32(value, base + 0x40, "AP0_Memory");
+    __message "FlexRAM configuration is restored";
+}
+
+resetCM7()
+{
+    __message("CM7 SRC reset start");
+
+    __var t;
+    __probeCmd("dap.w 0x40C042A4 1 0"); // Slice Control Register (CTRL_M7CORE)
+
+    do
+    {
+        t = __probeCmd("dap.r 0x40C042B0 0"); // Slice Status Register (STAT_M7CORE)
+    }while(t & 0x1);
+
+    __message("CM7 SRC reset done");
+}
+
+execUserPreload()
+{
+    clearIRQ();
+
+    restoreFlexRAM();
+    setSemcClock();
+    initSDRAM();
+}
+
+_ExecDeviceCoreConnect()
+{
+//    __probeCmd("dap.w 0x2001ff04 0x00207e11 0");
+//    __probeCmd("dap.w 0x400e404c 0x004003FE 0"); // Vector table offset register out of reset
+    
+    // no longer needed on sdk-mimxrt1170evk-2.6.1.
+    // this will cause an error when reading the STAT_M7CORE register.
+    //resetCM7();
+}

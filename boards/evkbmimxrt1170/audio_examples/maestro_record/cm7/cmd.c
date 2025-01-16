@@ -358,7 +358,7 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
     STREAMER_Start(&streamerHandle);
     while (streamerHandle.audioPlaying)
     {
-        ;
+        OSA_TimeDelay(1);
     }
 
     PRINTF("Encoding finished.\r\n");

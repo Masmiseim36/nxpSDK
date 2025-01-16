@@ -6,42 +6,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_pdm.h"
 #include "fsl_sai.h"
 #include "fsl_debug_console.h"
 #include "fsl_codec_common.h"
-#include "fsl_wm8962.h"
-#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM                      PDM
-#define DEMO_SAI                      SAI1
-#define DEMO_SAI_CLK_FREQ             24576000
-#define DEMO_SAI_CHANNEL              0
-#define DEMO_SAI_MASTER_SLAVE         kSAI_Master
-#define DEMO_SAI_CLOCK_SOURCE         (kSAI_BclkSourceMclkDiv)
-#define DEMO_PDM_CLK_FREQ             24576000
-#define DEMO_PDM_FIFO_WATERMARK       (7)
-#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE    (6144000U) /* 6.144MHZ */
-/* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
-/* demo audio master clock */
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-/* demo audio data channel */
-#define DEMO_AUDIO_DATA_CHANNEL (2U)
-/* demo audio bit width */
-#define DEMO_AUDIO_BIT_WIDTH  kSAI_WordWidth32bits
-#define DEMO_PDM_CHANNEL_GAIN kPDM_DfOutputGain5
-#define DEMO_CODEC_VOLUME     75U
-#define BOARD_MasterClockConfig()
 #define BUFFER_SIZE   (DEMO_PDM_FIFO_WATERMARK * FSL_FEATURE_PDM_FIFO_WIDTH * 2U)
 #define BUFFER_NUMBER (256U)
 #ifndef DEMO_CODEC_VOLUME
@@ -50,7 +23,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitDebugConsole(void);
 static void saiCallback(I2S_Type *base, sai_handle_t *handle, status_t status, void *userData);
 /*******************************************************************************
  * Variables
@@ -72,10 +44,21 @@ static const pdm_config_t pdmConfig         = {
 };
 static pdm_channel_config_t channelConfig = {
 #if (defined(FSL_FEATURE_PDM_HAS_DC_OUT_CTRL) && (FSL_FEATURE_PDM_HAS_DC_OUT_CTRL))
+#ifdef DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY
+    .outputCutOffFreq = DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY,
+#else
     .outputCutOffFreq = kPDM_DcRemoverCutOff40Hz,
+#endif
+#endif
+
+#if !(defined(FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED) && (FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED))
+#ifdef DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY
+    .cutOffFreq = DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY,
 #else
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
 #endif
+#endif
+
 #ifdef DEMO_PDM_CHANNEL_GAIN
     .gain = DEMO_PDM_CHANNEL_GAIN,
 #else
@@ -87,54 +70,6 @@ extern codec_config_t boardCodecConfig;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-wm8962_config_t wm8962Config = {
-    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .route =
-        {
-            .enableLoopBack            = false,
-            .leftInputPGASource        = kWM8962_InputPGASourceInput1,
-            .leftInputMixerSource      = kWM8962_InputMixerSourceInputPGA,
-            .rightInputPGASource       = kWM8962_InputPGASourceInput3,
-            .rightInputMixerSource     = kWM8962_InputMixerSourceInputPGA,
-            .leftHeadphoneMixerSource  = kWM8962_OutputMixerDisabled,
-            .leftHeadphonePGASource    = kWM8962_OutputPGASourceDAC,
-            .rightHeadphoneMixerSource = kWM8962_OutputMixerDisabled,
-            .rightHeadphonePGASource   = kWM8962_OutputPGASourceDAC,
-        },
-    .slaveAddress = WM8962_I2C_ADDR,
-    .bus          = kWM8962_BusI2S,
-    .format       = {.mclk_HZ    = 24576000U,
-                     .sampleRate = kWM8962_AudioSampleRate16KHz,
-                     .bitWidth   = kWM8962_AudioBitWidth16bit},
-    .masterSlave  = false,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};
-
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
-
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR0 |= 1 << 8U;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR0 &= ~(1 << 8U);
-    }
-}
-
-
 static void saiCallback(I2S_Type *base, sai_handle_t *handle, status_t status, void *userData)
 {
     isSaiFinished = true;
@@ -215,22 +150,7 @@ int main(void)
     sai_transfer_t xfer;
     sai_transceiver_t config;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, 1);
-    /* audio pll  */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
-    /* 24.576m mic root clock */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
-
-    BOARD_EnableSaiMclkOutput(true);
+    BOARD_InitHardware();
 
     PRINTF("PDM sai interrupt example started!\n\r");
 

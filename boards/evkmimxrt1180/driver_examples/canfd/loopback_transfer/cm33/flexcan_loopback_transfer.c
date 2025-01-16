@@ -8,35 +8,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN           CAN3
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-#define USE_CANFD             (1)
-/*
- *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
- *    2              8      kFLEXCAN_8BperMB        64
- *    4              10     kFLEXCAN_16BperMB       42
- *    8              13     kFLEXCAN_32BperMB       24
- *    16             15     kFLEXCAN_64BperMB       14
- *
- * Dword in each message buffer, Length of data in bytes, Payload size must align,
- * and the Message Buffers are limited corresponding to each payload configuration:
- */
-#define DWORD_IN_MB (16)
-#define DLC         (15)
-#define BYTES_IN_MB kFLEXCAN_64BperMB
-
-/* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Can3)
-/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
-#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 
@@ -114,10 +91,7 @@ int main(void)
     flexcan_rx_mb_config_t mbConfig;
 
     /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     LOG_INFO("\r\n==FlexCAN loopback example -- Start.==\r\n\r\n");
 

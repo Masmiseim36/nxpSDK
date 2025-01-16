@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP
+ * Copyright 2020-2024 NXP
  * All rights reserved.
  *
  *
@@ -294,6 +294,10 @@ status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const u
 
 status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src)
 {
+#if defined(FLASH_ENABLE_OCTAL_CMD)
+    assert(((uint32_t)dstAddr & (0x1UL)) == 0UL);
+#endif
+
     status_t status;
     flexspi_transfer_t flashXfer;
 
@@ -455,6 +459,10 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     /* To store custom's LUT table in local. */
     uint32_t tempLUT[CUSTOM_LUT_LENGTH] = {0x00U};
 
+    /* Copy LUT information from flash region into RAM region, because LUT update maybe corrupt read sequence(LUT[0])
+     * and load wrong LUT table from FLASH region. */
+    memcpy(tempLUT, customLUTOctalMode, sizeof(tempLUT));
+
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     bool DCacheEnableFlag = false;
     /* Disable D cache. */
@@ -473,10 +481,6 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
         {
         }
     }
-
-    /* Copy LUT information from flash region into RAM region, because LUT update maybe corrupt read sequence(LUT[0])
-     * and load wrong LUT table from FLASH region. */
-    memcpy(tempLUT, customLUTOctalMode, sizeof(tempLUT));
 
     flexspi_clock_init();
 

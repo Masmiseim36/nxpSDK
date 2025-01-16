@@ -8,29 +8,17 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpadc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE             ADC1
-#define DEMO_LPADC_IRQn             ADC1_IRQn
-#define DEMO_LPADC_IRQ_HANDLER_FUNC ADC1_IRQHandler
-#define DEMO_LPADC_USER_CHANNEL     7U
-#define DEMO_LPADC_USER_CMDID       1U /* CMD1 */
-/* ERRATA051385: ADC INL/DNL degrade under high ADC clock frequency when VREFH selected as reference. */
-#define DEMO_LPADC_VREF_SOURCE             kLPADC_ReferenceVoltageAlt2
-#define DEMO_LPADC_USE_HIGH_RESOLUTION     true
-#define DEMO_LPADC_OFFSET_CALIBRATION_MODE kLPADC_OffsetCalibration16bitMode
-#define DEMO_LPADC_DO_OFFSET_CALIBRATION   true
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitADCClock(void);
 
 /*******************************************************************************
  * Variables
@@ -49,15 +37,6 @@ const uint32_t g_LpadcResultShift = 3U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitADCClock(void)
-{
-    clock_root_config_t adc1ClkRoot;
-    adc1ClkRoot.mux      = 1U;
-    adc1ClkRoot.div      = 7U;
-    adc1ClkRoot.clockOff = false;
-    CLOCK_SetRootClock(kCLOCK_Root_Adc1, &adc1ClkRoot);
-}
-
 void DEMO_LPADC_IRQ_HANDLER_FUNC(void)
 {
     g_LpadcInterruptCounter++;
@@ -81,10 +60,7 @@ int main(void)
     lpadc_conv_trigger_config_t mLpadcTriggerConfigStruct;
     lpadc_conv_command_config_t mLpadcCommandConfigStruct;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPADC Interrupt Example\r\n");
 
@@ -133,11 +109,6 @@ int main(void)
     /* Request auto calibration (including gain error calibration and linearity error calibration). */
     LPADC_DoAutoCalibration(DEMO_LPADC_BASE);
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
-
-#if (defined(FSL_FEATURE_LPADC_HAS_CFG_CALOFS) && FSL_FEATURE_LPADC_HAS_CFG_CALOFS)
-    /* Do auto calibration. */
-    LPADC_DoAutoCalibration(DEMO_LPADC_BASE);
-#endif /* FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
 
 #if (defined(FSL_FEATURE_LPADC_HAS_CFG_CALOFS) && FSL_FEATURE_LPADC_HAS_CFG_CALOFS)
     /* Do auto calibration. */

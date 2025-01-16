@@ -5,9 +5,9 @@
 **                          MIMXRT1182XVP2B_cm33
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1180RM, Rev 2, 12/2022
-**     Version:             rev. 0.1, 2021-03-09
-**     Build:               b240109
+**     Reference manual:    IMXRT1180RM, Rev 5, 01/2024
+**     Version:             rev. 2.0, 2024-01-18
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler

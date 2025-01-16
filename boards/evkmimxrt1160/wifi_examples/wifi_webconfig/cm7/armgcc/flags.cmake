@@ -7,155 +7,161 @@ IF(NOT DEFINED SPECS)
 ENDIF()  
 
 IF(NOT DEFINED DEBUG_CONSOLE_CONFIG)  
-    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE_UART")  
+    SET(DEBUG_CONSOLE_CONFIG "-DSDK_DEBUGCONSOLE=1")  
 ENDIF()  
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
-    -D__STARTUP_CLEAR_BSS \
-    -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -mcpu=cortex-m7 \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DOSA_USED \
+    -g \
     -mthumb \
+    -mcpu=cortex-m7 \
     ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -D__STARTUP_CLEAR_BSS \
-    -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -mcpu=cortex-m7 \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DOSA_USED \
     -mthumb \
+    -mcpu=cortex-m7 \
     ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
-    -DDEBUG \
-    -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DLWIP_NETIF_API=1 \
     -DHTTPSRV_CFG_WEBSOCKET_ENABLED=1 \
     -DHTTPSRV_CFG_DEFAULT_SES_CNT=8 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DMFLASH_FILE_BASEADDR=14221312 \
-    -DSDIO_ENABLED \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCPU_MIMXRT1166DVM6A_cm7 \
     -DOSA_USED \
-    -DFSL_OSA_TASK_ENABLE=1 \
-    -DLWIP_DNS=1 \
-    -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_IGMP=1 \
-    -D_XOPEN_SOURCE=500 \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
+    -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
-    -DSO_REUSE=1 \
     -g \
     -O0 \
-    -mcpu=cortex-m7 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
-    -DNDEBUG \
-    -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DLWIP_NETIF_API=1 \
     -DHTTPSRV_CFG_WEBSOCKET_ENABLED=1 \
     -DHTTPSRV_CFG_DEFAULT_SES_CNT=8 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DMFLASH_FILE_BASEADDR=14221312 \
-    -DSDIO_ENABLED \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCPU_MIMXRT1166DVM6A_cm7 \
     -DOSA_USED \
-    -DFSL_OSA_TASK_ENABLE=1 \
-    -DLWIP_DNS=1 \
-    -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_IGMP=1 \
-    -D_XOPEN_SOURCE=500 \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
+    -DSDIO_ENABLED=1 \
     -DSDK_OS_FREE_RTOS \
-    -DSO_REUSE=1 \
     -Os \
-    -mcpu=cortex-m7 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DXIP_EXTERNAL_FLASH=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DUSE_RTOS=1 \
+    -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
-    -mcpu=cortex-m7 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
-    -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DXIP_EXTERNAL_FLASH=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1166DVM6A_cm7 \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMFLASH_FILE_BASEADDR=14221312 \
+    -DUSE_RTOS=1 \
+    -DSDK_OS_FREE_RTOS \
     -Os \
-    -mcpu=cortex-m7 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
     -g \
-    -mcpu=cortex-m7 \
+    -Xlinker \
+    --defsym=__stack_size__=2048 \
+    -Xlinker \
+    --defsym=__heap_size__=90000 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -163,28 +169,25 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__stack_size__=2048 \
-    -Xlinker \
-    --defsym=__heap_size__=90000 \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor.ld\" -static \
+    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_webconfig.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -mcpu=cortex-m7 \
+    -Xlinker \
+    --defsym=__stack_size__=2048 \
+    -Xlinker \
+    --defsym=__heap_size__=90000 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -192,22 +195,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__stack_size__=2048 \
-    -Xlinker \
-    --defsym=__heap_size__=90000 \
+    -mcpu=cortex-m7 \
     ${FPU} \
     ${SPECS} \
-    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor.ld\" -static \
+    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_webconfig.ld\" -static \
 ")

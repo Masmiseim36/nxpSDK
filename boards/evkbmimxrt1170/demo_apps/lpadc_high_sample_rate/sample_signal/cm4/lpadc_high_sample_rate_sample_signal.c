@@ -13,29 +13,17 @@
 #include "fsl_dmamux.h"
 #endif /* defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE        LPADC1
-#define DEMO_LPADC_CHANNEL_NUM 0U
-#define DEMO_LPADC_IRQn        ADC1_IRQn
-#define DEMO_LPADC_IRQ_HANDLER ADC1_IRQHandler
-#define DEMO_LPADC_VREF_SOURCE kLPADC_ReferenceVoltageAlt1
-#define DEMO_DMAMUX_BASE       DMAMUX1
-
-#define DEMO_DMA_BASE    DMA1
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_SOURCE  66U
 #define BUFF_LENGTH 1000
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitADCClock(void);
 static void DEMO_ADCInit(void);
 static void DEMO_EDMAInit(void);
 static void DEMO_OutputResult(void);
@@ -50,16 +38,6 @@ AT_NONCACHEABLE_SECTION_INIT(uint16_t destAddr[BUFF_LENGTH]);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void BOARD_InitADCClock(void)
-{
-    clock_root_config_t adc1ClkRoot;
-    /* Set ADC1 CLK as 88MHz */
-    adc1ClkRoot.mux      = 6U; /* Set clock source as SYS PLL2 CLK. */
-    adc1ClkRoot.div      = 6U;
-    adc1ClkRoot.clockOff = false;
-    CLOCK_SetRootClock(kCLOCK_Root_Adc1, &adc1ClkRoot);
-}
 void EDMA_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds)
 {
     if (transferDone)
@@ -71,10 +49,7 @@ void EDMA_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_InitADCClock();
 
     PRINTF("ADC High Sample Rate Demo: Sample Input Signal\r\n");

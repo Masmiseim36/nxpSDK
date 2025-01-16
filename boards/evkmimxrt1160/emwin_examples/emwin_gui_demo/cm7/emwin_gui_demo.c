@@ -8,8 +8,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "emwin_support.h"
 
 #include "GUI.h"
@@ -20,7 +20,6 @@
 #include "RADIO.h"
 #include "MULTIPAGE.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -62,7 +61,6 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 static DROPDOWN_Handle hDropdown0;
 static RADIO_Handle hRadio0;
@@ -228,23 +226,7 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_MIPIPanelTouch_I2C_Init();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("GUI demo start.\r\n");
 

@@ -53,10 +53,9 @@
 #include "mbedtls/ecdh.h"
 #endif
 #include <string.h>
+#include "app.h"
 #if defined(MBEDTLS_PLATFORM_C)
 #if defined(FREESCALE_KSDK_BM)
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_debug_console.h"
@@ -105,11 +104,9 @@
 #include "mbedtls/memory_buffer_alloc.h"
 #endif
 
-#include "fsl_cache.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CORE_CLK_FREQ CLOCK_GetM7Freq()
 
 /*******************************************************************************
  * Prototypes
@@ -465,10 +462,7 @@ int main(int argc, char *argv[])
 
 #if defined(FREESCALE_KSDK_BM)
     /* HW init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     if( CRYPTO_InitHardware() != kStatus_Success )
     {

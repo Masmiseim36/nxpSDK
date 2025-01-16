@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, 2021 NXP
+ * Copyright 2019, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,14 +11,22 @@
 
 #include "fsl_debug_console.h"
 #include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
+#include "app.h"
+
 #include "vglite_support.h"
 #include "vglite_window.h"
 #include "tiger_paths.h"
 /*-----------------------------------------------------------*/
 #include "vg_lite.h"
 
-#include "fsl_soc_src.h"
+#include "fsl_gpio.h"
+#include "display_support.h"
+
+#if defined(CPU_MIMXRT798SGFOA_cm33_core0)
+#include "fsl_lcdif.h"
+#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -39,14 +47,15 @@ static vg_lite_window_t window;
 static int zoomOut    = 0;
 static int scaleCount = 0;
 static vg_lite_matrix_t matrix;
+volatile bool s_frameDone = false;
 
 #if (CUSTOM_VGLITE_MEMORY_CONFIG != 1)
 #error "Application must be compiled with CUSTOM_VGLITE_MEMORY_CONFIG=1"
 #else
 #define VGLITE_COMMAND_BUFFER_SZ (128 * 1024)
 /* On RT595S */
-#if defined(CPU_MIMXRT595SFFOC_cm33)
-#define VGLITE_HEAP_SZ 0x400000 /* 4 MB */
+#if defined(CPU_MIMXRT595SFFOC_cm33) || defined(CPU_MIMXRT798SGFOA_cm33_core0)
+#define VGLITE_HEAP_SZ 0x100000 /* 1 MB */
 /* On RT1170 */
 #elif defined(CPU_MIMXRT1176DVMAA_cm7) || defined(CPU_MIMXRT1166DVM6A_cm7)
 #define VGLITE_HEAP_SZ 8912896 /* 8.5 MB */
@@ -57,6 +66,10 @@ static vg_lite_matrix_t matrix;
 #define TW 720
 /* On RT595S */
 #if defined(CPU_MIMXRT595SFFOC_cm33)
+/* Tessellation window = 720 x 128 */
+#define TH 128
+/* On RT798S */
+#elif defined(CPU_MIMXRT798SGFOA_cm33_core0)
 /* Tessellation window = 720 x 640 */
 #define TH 640
 /* On RT1170 */
@@ -70,7 +83,7 @@ static vg_lite_matrix_t matrix;
 #elif (400 * 400 == (DEMO_PANEL_WIDTH) * (DEMO_PANEL_HEIGHT))
 /* Tessellation window = 400 x 400 */
 #define TW 400
-#define TH 400
+#define TH 256
 #else
 /* Tessellation window = 256 x 256 */
 #define TW 256
@@ -85,33 +98,14 @@ uint32_t vglite_heap_size     = VGLITE_HEAP_SZ;
 
 /*******************************************************************************
  * Code
- ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
+ *******************************/
 
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
-    if (xTaskCreate(vglite_task, "vglite_task", configMINIMAL_STACK_SIZE + 200, NULL, configMAX_PRIORITIES - 1, NULL) !=
-        pdPASS)
+    if (xTaskCreate(vglite_task, "vglite_task", configMINIMAL_STACK_SIZE + 2000, NULL, configMAX_PRIORITIES - 1, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -152,27 +146,19 @@ static vg_lite_error_t init_vg_lite(void)
         PRINTF("VGLITE_CreateWindow failed: VGLITE_CreateWindow() returned error %d\r\n", error);
         return error;
     }
-    // Initialize the draw.
-    error = vg_lite_init(TW, TH);
-    if (error)
-    {
-        PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\r\n", error);
-        cleanup();
-        return error;
-    }
-    // Set GPU command buffer size for this drawing task.
-    error = vg_lite_set_command_buffer_size(VGLITE_COMMAND_BUFFER_SZ);
-    if (error)
-    {
-        PRINTF("vg_lite_set_command_buffer_size() returned error %d\r\n", error);
-        cleanup();
-        return error;
-    }
     // Set GPU command buffer size for this drawing task.
     error = vg_lite_set_command_buffer_size(VGLITE_COMMAND_BUFFER_SZ);
     if (error)
     {
         PRINTF("vg_lite_set_command_buffer_size() returned error %d\n", error);
+        cleanup();
+        return error;
+    }
+    // Initialize the draw.
+    error = vg_lite_init(TW, TH);
+    if (error)
+    {
+        PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\r\n", error);
         cleanup();
         return error;
     }
@@ -182,7 +168,7 @@ static vg_lite_error_t init_vg_lite(void)
     fb_height = window.height;
     vg_lite_identity(&matrix);
     vg_lite_translate(fb_width / 2 - 20 * fb_width / 640.0f, fb_height / 2 - 100 * fb_height / 480.0f, &matrix);
-    vg_lite_scale(4, 4, &matrix);
+    vg_lite_scale(2, 2, &matrix);
     vg_lite_scale(fb_width / 640.0f, fb_height / 480.0f, &matrix);
 
     return error;
@@ -269,6 +255,7 @@ static void vglite_task(void *pvParameters)
     while (1)
     {
         redraw();
+		
         n++;
         if (n >= 60)
         {

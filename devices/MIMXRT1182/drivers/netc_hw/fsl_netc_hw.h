@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -613,6 +613,16 @@ status_t NETC_DelRPTableEntry(netc_cbdr_handle_t *handle, uint32_t entryID);
  * @return See @ref netc_cmd_error_t
  */
 status_t NETC_GetRPStatistic(netc_cbdr_handle_t *handle, uint32_t entryID, netc_tb_rp_stse_t *statis);
+
+/*!
+ * @brief Reset mark red parameter of specified Rate Policer table entry
+ *
+ * @param handle
+ * @param entryID
+ * @return status_t
+ * @return See @ref netc_cmd_error_t
+ */
+status_t NETC_ResetMRRPTableEntry(netc_cbdr_handle_t *handle, uint32_t entryID);
 
 /*!
  * @brief Config the QBV (Time Gate Scheduling)

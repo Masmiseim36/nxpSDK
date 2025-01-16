@@ -20,8 +20,8 @@
 #include "netif/ethernet.h"
 #include "ethernetif.h"
 
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_phy.h"
 
 #ifdef MBEDTLS_MCUX_ELE_S400_API
@@ -41,89 +41,9 @@
 #include "mbedtls/ssl_cache.h"
 #include "mbedtls/debug.h"
 
-#include "fsl_cache.h"
-#include "fsl_enet.h"
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-#include "fsl_phyksz8081.h"
-#else
-#include "fsl_phyrtl8211f.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* IP address configuration. */
-#ifndef configIP_ADDR0
-#define configIP_ADDR0 192
-#endif
-#ifndef configIP_ADDR1
-#define configIP_ADDR1 168
-#endif
-#ifndef configIP_ADDR2
-#define configIP_ADDR2 0
-#endif
-#ifndef configIP_ADDR3
-#define configIP_ADDR3 102
-#endif
-
-/* Netmask configuration. */
-#ifndef configNET_MASK0
-#define configNET_MASK0 255
-#endif
-#ifndef configNET_MASK1
-#define configNET_MASK1 255
-#endif
-#ifndef configNET_MASK2
-#define configNET_MASK2 255
-#endif
-#ifndef configNET_MASK3
-#define configNET_MASK3 0
-#endif
-
-/* Gateway address configuration. */
-#ifndef configGW_ADDR0
-#define configGW_ADDR0 192
-#endif
-#ifndef configGW_ADDR1
-#define configGW_ADDR1 168
-#endif
-#ifndef configGW_ADDR2
-#define configGW_ADDR2 0
-#endif
-#ifndef configGW_ADDR3
-#define configGW_ADDR3 100
-#endif
-
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-#define EXAMPLE_ENET ENET
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS &phyksz8081_ops
-/* ENET instance select. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
-
-extern phy_ksz8081_resource_t g_phy_resource;
-#else
-#define EXAMPLE_ENET          ENET_1G
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS   BOARD_ENET1_PHY_ADDRESS
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS       &phyrtl8211f_ops
-/* ENET instance select. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif1_init
-
-extern phy_rtl8211f_resource_t g_phy_resource;
-#endif
-
-/* PHY resource. */
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-
-/* ENET clock frequency. */
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-
 /* Must be after include of app.h */
 #ifndef configMAC_ADDR
 #include "fsl_silicon_id.h"
@@ -141,11 +61,6 @@ extern phy_rtl8211f_resource_t g_phy_resource;
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-phy_ksz8081_resource_t g_phy_resource;
-#else
-phy_rtl8211f_resource_t g_phy_resource;
-#endif
 
 static phy_handle_t phyHandle;
 
@@ -163,57 +78,6 @@ mbedtls_ssl_cache_context cache;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_sys_pll1_config_t sysPll1Config = {
-        .pllDiv2En = true,
-    };
-    CLOCK_InitSysPll1(&sysPll1Config);
-
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    clock_root_config_t rootCfg = {.mux = 4, .div = 10}; /* Generate 50M root clock. */
-    CLOCK_SetRootClock(kCLOCK_Root_Enet1, &rootCfg);
-#else
-    clock_root_config_t rootCfg = {.mux = 4, .div = 4};       /* Generate 125M root clock. */
-    CLOCK_SetRootClock(kCLOCK_Root_Enet2, &rootCfg);
-#endif
-}
-
-void IOMUXC_SelectENETClock(void)
-{
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    IOMUXC_GPR->GPR4 |= IOMUXC_GPR_GPR4_ENET_REF_CLK_DIR_MASK; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
-#else
-    IOMUXC_GPR->GPR5 |= IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK; /* bit1:iomuxc_gpr_enet_clk_dir
-                                                                 bit0:GPR_ENET_TX_CLK_SEL(internal or OSC) */
-#endif
-}
-
-void BOARD_ENETFlexibleConfigure(enet_config_t *config)
-{
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    config->miiMode = kENET_RmiiMode;
-#else
-    config->miiMode = kENET_RgmiiMode;
-#endif
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
 
 static void my_debug(void *ctx, int level, const char *file, int line, const char *str)
 {
@@ -271,28 +135,7 @@ int main(void)
 #endif
     };
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_SelectENETClock();
-
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    BOARD_InitEnetPins();
-    BOARD_ENET_PHY0_RESET;
-#else
-    BOARD_InitEnet1GPins();
-    BOARD_ENET_PHY1_RESET;
-
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
-#endif
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     time_init();
 

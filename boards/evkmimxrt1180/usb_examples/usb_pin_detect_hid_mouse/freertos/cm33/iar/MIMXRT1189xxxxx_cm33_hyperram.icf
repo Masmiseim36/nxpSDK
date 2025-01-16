@@ -4,9 +4,9 @@
 **                          MIMXRT1189XVM8B_cm33
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    IMXRT1180RM, Rev 2, 12/2022
-**     Version:             rev. 0.1, 2021-03-09
-**     Build:               b240109
+**     Reference manual:    IMXRT1180RM, Rev 5, 01/2024
+**     Version:             rev. 2.0, 2024-01-18
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -51,13 +51,13 @@ define symbol vector_table_size        = 0x00000400;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x2000;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x2000;
+  define symbol __size_heap__          = 0x0400;
 }
 
 define symbol m_qacode_start           = m_code_tcm_start + (isdefinedsymbol(__ram_vector_table__) ? vector_table_size : 0);
@@ -130,6 +130,10 @@ define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block CORE1_IMAGE_BLOCK  with alignment = 16, maximum size = m_core1_image_maximum_size  { section  __core1_image };
 
+/* cache line size = 16 bytes */
+define block CACHE_LINE_DATA_ZI with alignment = 16, end alignment = 16 { section CacheLineData };
+define block CACHE_LINE_DATA_RW with alignment = 16, end alignment = 16 { section CacheLineData.init };
+
 initialize by copy { readwrite, section .textrw, section DataQuickAccess };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
@@ -141,8 +145,8 @@ place at address mem: m_interrupts_start    { readonly section .intvec };
 place in TEXT_region                        { readonly };
 place in TEXT_region                        { block CORE1_IMAGE_BLOCK };
 place in TEXT_region                        { block QACCESS_CODE };
-place in DATA_region                        { block RW };
-place in DATA_region                        { block ZI };
+place in DATA_region                        { block RW, block CACHE_LINE_DATA_RW };
+place in DATA_region                        { block ZI, block CACHE_LINE_DATA_ZI };
 place in QADATA_region                      { block QACCESS_DATA };
 place in NCACHE_region                      { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };

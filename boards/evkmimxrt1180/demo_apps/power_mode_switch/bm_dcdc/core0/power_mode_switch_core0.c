@@ -14,56 +14,20 @@
 #include "fsl_mu.h"
 #include "fsl_cache.h"
 #include "mcmgr.h"
+#include "app.h"
 
 #if (defined(BOARD_USE_EXT_PMIC) && BOARD_USE_EXT_PMIC)
 #include "fsl_lpi2c.h"
 #include "fsl_pf5020.h"
 #endif /* (defined(BOARD_USE_EXT_PMIC) && BOARD_USE_EXT_PMIC) */
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CPU_NAME "iMXRT1189"
-
-#define APP_WAKEUP_BUTTON_GPIO        BOARD_USER_BUTTON_GPIO
-#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ         BOARD_USER_BUTTON_IRQ
-#define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
-
-#define APP_WAKEUP_BBNSM_IRQ         BBNSM_IRQn
-#define APP_WAKEUP_BBNSM_IRQ_HANDLER BBNSM_IRQHandler
-
-/* Address of memory, from which the secondary core will boot */
-#define CORE1_BOOT_ADDRESS (void *)0x303C0000
-// #define APP_INVALIDATE_CACHE_FOR_SECONDARY_CORE_IMAGE_MEMORY
-
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-extern uint32_t Image$$CORE1_REGION$$Base;
-extern uint32_t Image$$CORE1_REGION$$Length;
-#define CORE1_IMAGE_START &Image$$CORE1_REGION$$Base
-#elif defined(__ICCARM__)
-#pragma section = "__core1_image"
-#define CORE1_IMAGE_START __section_begin("__core1_image")
-#elif (defined(__GNUC__)) && (!defined(__MCUXPRESSO))
-extern const char core1_image_start[];
-extern const char *core1_image_end;
-extern int core1_image_size;
-#define CORE1_IMAGE_START ((void *)core1_image_start)
-#define CORE1_IMAGE_SIZE  ((void *)core1_image_size)
-#endif
-
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void GPIO_ClearStopRequest(void);
-void GPIO_SetStopRequest(void);
-// void APP_BootCore1(void);
-#ifdef CORE1_IMAGE_COPY_TO_RAM
-uint32_t get_core1_image_size(void);
-#endif
 
 /*******************************************************************************
  * Variables
@@ -77,33 +41,6 @@ static volatile bool g_lpi2cIntFlag;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#ifdef CORE1_IMAGE_COPY_TO_RAM
-uint32_t get_core1_image_size(void)
-{
-    uint32_t image_size;
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-    image_size = (uint32_t)&Image$$CORE1_REGION$$Length;
-#elif defined(__ICCARM__)
-    image_size = (uint32_t)__section_end("__core1_image") - (uint32_t)__section_begin("__core1_image");
-#elif defined(__GNUC__)
-    image_size = (uint32_t)core1_image_size;
-#endif
-    return image_size;
-}
-#endif
-
-void GPIO_ClearStopRequest(void)
-{
-    CCM->GPR_SHARED8 &= ~CCM_GPR_SHARED8_m33_gpio1_ipg_stop_MASK;
-    CCM->GPR_SHARED12 &= ~CCM_GPR_SHARED12_m7_gpio1_ipg_stop_MASK;
-}
-
-void GPIO_SetStopRequest(void)
-{
-    CCM->GPR_SHARED8 |= CCM_GPR_SHARED8_m33_gpio1_ipg_stop_MASK;
-    CCM->GPR_SHARED12 |= CCM_GPR_SHARED12_m7_gpio1_ipg_stop_MASK;
-}
-
 void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
 {
     /* Clear GPIO stop request. */
@@ -579,14 +516,7 @@ int main(void)
     uint8_t ch;
 
     /* Init board hardware.*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Workaround: Disable interrupt which might be enabled by ROM. */
-    RGPIO_SetPinInterruptConfig(RGPIO1, 9U, kRGPIO_InterruptOutput0, kRGPIO_InterruptOrDMADisabled);
-    NVIC_ClearPendingIRQ(GPIO1_0_IRQn);
+    BOARD_InitHardware();
 
 /* Macro SINGLE_CORE_M33 is only for single core chip MIMXRT1181/MIMXRT1182 */
 #ifdef SINGLE_CORE_M33

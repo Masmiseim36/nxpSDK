@@ -5,22 +5,6 @@
       <name>all</name>
       <member>
         <project>fmstr_example_can_cm4</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>sdram_release</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -29,44 +13,16 @@
       </member>
       <member>
         <project>fmstr_example_can_cm4</project>
-        <configuration>flexspi_nor_sdram_debug</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>flexspi_nor_sdram_release</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>fmstr_example_can_cm4</project>
         <configuration>debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>fmstr_example_can_cm4</project>
-        <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_debug</name>
       <member>
         <project>fmstr_example_can_cm4</project>
         <configuration>sdram_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
+      <member>
+        <project>fmstr_example_can_cm4</project>
+        <configuration>release</configuration>
+      </member>
       <member>
         <project>fmstr_example_can_cm4</project>
         <configuration>sdram_release</configuration>
@@ -87,31 +43,31 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_sdram_debug</name>
+      <name>debug</name>
       <member>
         <project>fmstr_example_can_cm4</project>
-        <configuration>flexspi_nor_sdram_debug</configuration>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_sdram_release</name>
+      <name>sdram_debug</name>
       <member>
         <project>fmstr_example_can_cm4</project>
-        <configuration>flexspi_nor_sdram_release</configuration>
+        <configuration>sdram_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>sdram_txt_debug</name>
+      <name>release</name>
       <member>
         <project>fmstr_example_can_cm4</project>
-        <configuration>sdram_txt_debug</configuration>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>sdram_txt_release</name>
+      <name>sdram_release</name>
       <member>
         <project>fmstr_example_can_cm4</project>
-        <configuration>sdram_txt_release</configuration>
+        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

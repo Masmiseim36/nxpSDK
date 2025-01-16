@@ -45,8 +45,7 @@ ENTRY(Reset_Handler)
  * listed twice, once with an additional underscore;
  * aout format needs an extra underscore, whereas coff & elf do not. */
 
-
-HEAP_SIZE = 0x120000;
+HEAP_SIZE = 0x00900000;
 __heap_size = HEAP_SIZE;
 _HeapSize = HEAP_SIZE;
 __heap_size__ = HEAP_SIZE;

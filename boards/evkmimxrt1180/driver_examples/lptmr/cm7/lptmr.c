@@ -7,25 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_lptmr.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPTMR_BASE   LPTMR1
-#define DEMO_LPTMR_IRQn   LPTMR1_IRQn
-#define LPTMR_LED_HANDLER LPTMR1_IRQHandler
-/* Get source clock for LPTMR driver */
-#define LPTMR_SOURCE_CLOCK CLOCK_GetRootClockFreq(kCLOCK_Root_Lptimer1)
-/* Define LPTMR microseconds counts value */
-#define LPTMR_USEC_COUNT 1000000U
-
-#define LED_INIT()   USER_LED_INIT(LOGIC_LED_OFF)
-#define LED_TOGGLE() USER_LED_TOGGLE()
 
 /*******************************************************************************
  * Prototypes
@@ -63,10 +52,7 @@ int main(void)
     lptmr_config_t lptmrConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     LED_INIT();
 
@@ -80,6 +66,7 @@ int main(void)
      * lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
      * lptmrConfig.value = kLPTMR_Prescale_Glitch_0;
      */
+    /* Note: the input clock source for prescaler clock must be enabled and attached in advance with configuration in SYSCON or SCG */
     LPTMR_GetDefaultConfig(&lptmrConfig);
 
     /* Initialize the LPTMR */

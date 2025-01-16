@@ -5,18 +5,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
 #include "display_support.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP PXP
-
 
 #define APP_IMG_WIDTH  DEMO_BUFFER_WIDTH
 #define APP_IMG_HEIGHT DEMO_BUFFER_HEIGHT
@@ -81,27 +78,9 @@ static const porter_duff_mode_name_t s_porterDuffModeNameTable[] = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nPXP Porter Duff example start...\r\n");
 

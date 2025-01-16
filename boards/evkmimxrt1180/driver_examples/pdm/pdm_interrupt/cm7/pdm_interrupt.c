@@ -6,43 +6,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_pdm.h"
 #include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM                      PDM
-#define DEMO_PDM_CLK_FREQ             24576000
-#define DEMO_PDM_FIFO_WATERMARK       (FSL_FEATURE_PDM_FIFO_DEPTH - 1U)
-#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_AUDIO_SAMPLE_RATE        (16000)
-
 #define SAMPLE_COUNT (256)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitDebugConsole(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 SDK_ALIGN(static uint32_t txBuff[SAMPLE_COUNT], 4);
 #if (defined(FSL_FEATURE_PDM_HAS_STATUS_LOW_FREQ) && (FSL_FEATURE_PDM_HAS_STATUS_LOW_FREQ == 1U))
 static volatile bool s_lowFreqFlag = false;
@@ -61,10 +39,21 @@ static const pdm_config_t pdmConfig         = {
 };
 static pdm_channel_config_t channelConfig = {
 #if (defined(FSL_FEATURE_PDM_HAS_DC_OUT_CTRL) && (FSL_FEATURE_PDM_HAS_DC_OUT_CTRL))
+#ifdef DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY
+    .outputCutOffFreq = DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY,
+#else
     .outputCutOffFreq = kPDM_DcRemoverCutOff40Hz,
+#endif
+#endif
+
+#if !(defined(FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED) && (FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED))
+#ifdef DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY
+    .cutOffFreq = DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY,
 #else
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
 #endif
+#endif
+
 #ifdef DEMO_PDM_CHANNEL_GAIN
     .gain = DEMO_PDM_CHANNEL_GAIN,
 #else
@@ -74,7 +63,6 @@ static pdm_channel_config_t channelConfig = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 static void pdm_error_irqHandler(void)
 {
     uint32_t status = 0U;
@@ -165,16 +153,7 @@ int main(void)
 {
     uint32_t i = 0U, j = 0U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    /* mic root clock = 24.576M */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 3);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
+    BOARD_InitHardware();
 
     PRINTF("PDM interrupt example started!\n\r");
 

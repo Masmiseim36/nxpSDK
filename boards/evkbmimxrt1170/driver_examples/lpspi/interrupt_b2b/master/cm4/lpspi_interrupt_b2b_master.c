@@ -8,25 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Master related */
-#define EXAMPLE_LPSPI_MASTER_BASEADDR   (LPSPI1)
-#define EXAMPLE_LPSPI_MASTER_IRQN       LPSPI1_IRQn
-#define EXAMPLE_LPSPI_MASTER_IRQHandler LPSPI1_IRQHandler
-
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
-
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetRootClockFreq(kCLOCK_Root_Lpspi1))
 #define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 200000U /*! Transfer baudrate - 200k */
 
@@ -125,10 +112,7 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPSPI interrupt board to board (b2b) master example.\r\n");
     PRINTF("This example use one board as master and another as slave.\r\n");

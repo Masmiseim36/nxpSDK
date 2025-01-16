@@ -7,17 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_wdog.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_WDOG_BASE       WDOG1
-#define DEMO_WDOG_IRQHandler WDOG1_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -55,10 +52,7 @@ int main(void)
 {
     uint16_t resetFlag = 0U;
     wdog_config_t config;
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\n******** System Start ********\r\n");
     PRINTF("System reset by:");

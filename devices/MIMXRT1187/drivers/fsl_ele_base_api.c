@@ -23,7 +23,7 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static status_t nvm_storage_handle_req_baseapi(S3MU_Type *mu, uint32_t *buf, uint32_t wordCount)
+static status_t nvm_storage_handle_req(S3MU_Type *mu, uint32_t *buf, uint32_t wordCount)
 {
     return kStatus_Fail;
 }
@@ -40,7 +40,7 @@ static status_t nvm_storage_handle_req_baseapi(S3MU_Type *mu, uint32_t *buf, uin
  * return Status kStatus_Success if success, kStatus_Fail if fail
  * Possible errors: kStatus_S3MU_InvalidArgument, kStatus_S3MU_AgumentOutOfRange
  */
-static status_t ele_mu_get_response_baseapi(S3MU_Type *mu, uint32_t *buf)
+static status_t ele_mu_get_response(S3MU_Type *mu, uint32_t *buf)
 {
     status_t status                 = kStatus_Fail;
     uint32_t rmsg[MSG_RESPONSE_MAX] = {0u};
@@ -61,7 +61,7 @@ static status_t ele_mu_get_response_baseapi(S3MU_Type *mu, uint32_t *buf)
         }
         else if (msg->hdr_byte.tag == MSG_TAG_CMD)
         {
-            status = nvm_storage_handle_req_baseapi(mu, rmsg, msg->hdr_byte.size);
+            status = nvm_storage_handle_req(mu, rmsg, msg->hdr_byte.size);
             if (status != kStatus_Success)
             {
                 break;
@@ -104,7 +104,7 @@ status_t ELE_BaseAPI_Ping(S3MU_Type *mu)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -148,7 +148,7 @@ status_t ELE_BaseAPI_GetFwVersion(S3MU_Type *mu, uint32_t *EleFwVersion)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -193,7 +193,7 @@ status_t ELE_BaseAPI_EnableAPC(S3MU_Type *mu)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -242,7 +242,7 @@ status_t ELE_BaseAPI_ForwardLifecycle(S3MU_Type *mu, uint32_t Lifecycle)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -284,7 +284,7 @@ status_t ELE_BaseAPI_ClockChangeStart(S3MU_Type *mu)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -331,7 +331,7 @@ status_t ELE_BaseAPI_ClockChangeFinish(S3MU_Type *mu, uint8_t NewClockRateELE, u
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -373,7 +373,7 @@ status_t ELE_BaseAPI_VoltageChangeStart(S3MU_Type *mu)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -415,7 +415,7 @@ status_t ELE_BaseAPI_VoltageChangeFinish(S3MU_Type *mu)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -460,7 +460,7 @@ status_t ELE_BaseAPI_GetFwStatus(S3MU_Type *mu, uint32_t *EleFwStatus)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -511,7 +511,7 @@ status_t ELE_BaseAPI_EnableOtfad(S3MU_Type *mu, uint8_t OtfadID)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -558,7 +558,7 @@ status_t ELE_BaseAPI_ReleaseRDC(S3MU_Type *mu, uint32_t RdcID, uint32_t CoreID)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;
@@ -602,7 +602,7 @@ status_t ELE_BaseAPI_StartRng(S3MU_Type *mu)
     }
 
     /* Wait for response from Security Sub-System */
-    status = ele_mu_get_response_baseapi(mu, rmsg);
+    status = ele_mu_get_response(mu, rmsg);
     if (status != kStatus_Success)
     {
         return status;

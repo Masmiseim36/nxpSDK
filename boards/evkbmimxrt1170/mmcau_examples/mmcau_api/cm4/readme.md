@@ -1,44 +1,12 @@
-Overview
-========
+# mmcau
+
+## Overview
 Memory-Mapped Cryptographic Acceleration Unit (MMCAU)
 
 This project is a demonstration program that uses the KSDK software for encryption/decryption sample
 data using AES-CBC, DES3-CBC and Hash algorithms MD5, SHA1 and SHA256.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- Keil MDK  5.39.0
-- IAR embedded Workbench  9.60.1
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 When the demo runs successfully, from the terminal you can see:
 
 ............................. MMCAU  DRIVER  EXAMPLE .............................
@@ -151,3 +119,10 @@ Computed MD5 at speed 0.190410 MB/s:
 
 .............. THE  END  OF  THE  MMCAU  DRIVER  EXAMPLE ................................
 
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/mmcau_examples/mmcau_api/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../_boards/evkmcimx7ulp/mmcau_examples/mmcau_api/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/mmcau_examples/mmcau_api/example_board_readme.md)
+- [FRDM-K32L2A4S](../../_boards/frdmk32l2a4s/mmcau_examples/mmcau_api/example_board_readme.md)
+- [TWR-KM34Z75M](../../_boards/twrkm34z75m/mmcau_examples/mmcau_api/example_board_readme.md)
+- [TWR-KM35Z75M](../../_boards/twrkm35z75m/mmcau_examples/mmcau_api/example_board_readme.md)

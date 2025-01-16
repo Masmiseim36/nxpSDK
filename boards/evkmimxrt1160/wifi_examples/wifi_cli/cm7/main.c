@@ -13,8 +13,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "wlan_bt_fw.h"
@@ -22,10 +20,13 @@
 #include "wifi.h"
 #include "wm_net.h"
 #include <osa.h>
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include "dhcp-server.h"
+#endif
 #include "cli.h"
 #include "wifi_ping.h"
 #include "iperf.h"
+#include "app.h"
 #ifndef RW610
 #include "wifi_bt_config.h"
 #else
@@ -37,19 +38,17 @@
 #include "host_sleep.h"
 #endif
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 int wlan_driver_init(void);
-int wlan_driver_deinit(void);
-int wlan_driver_reset(void);
-int wlan_reset_cli_init(void);
+#if CONFIG_HOST_SLEEP
+int wlan_hs_cli_init(void);
+#endif
 
 /*******************************************************************************
  * Code
@@ -63,7 +62,7 @@ int wlan_reset_cli_init(void);
 
 static void main_task(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, OSA_PRIORITY_BELOW_NORMAL, 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(main_task, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(main_task_Handle);
 
@@ -83,7 +82,9 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
     char ssid[IEEEtypes_SSID_SIZE + 1] = {0};
     char ip[16];
     static int auth_fail                      = 0;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
     wlan_uap_client_disassoc_t *disassoc_resp = data;
+#endif
 
     switch (reason)
     {
@@ -141,12 +142,14 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
                 return 0;
             }
 
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
             ret = dhcpd_cli_init();
             if (ret != WM_SUCCESS)
             {
                 PRINTF("Failed to initialize DHCP Server CLI\r\n");
                 return 0;
             }
+#endif
 
             PRINTF("CLIs Available:\r\n");
             printSeparator();
@@ -230,6 +233,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_CHAN_SWITCH:
             PRINTF("app_cb: WLAN: channel switch\r\n");
             break;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
         case WLAN_REASON_UAP_SUCCESS:
             PRINTF("app_cb: WLAN: UAP Started\r\n");
             ret = wlan_get_current_uap_network_ssid(ssid);
@@ -285,6 +289,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
             break;
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */
         case WLAN_REASON_PS_ENTER:
             break;
         case WLAN_REASON_PS_EXIT:
@@ -303,11 +308,10 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_PRE_BEACON_LOST:
             break;
 #endif
-#if CONFIG_WIFI_IND_DNLD
         case WLAN_REASON_FW_HANG:
         case WLAN_REASON_FW_RESET:
+            PRINTF("app_cb: WLAN: FW hang Event: %d\r\n", reason);
             break;
-#endif
         default:
             PRINTF("app_cb: WLAN: Unknown Event: %d\r\n", reason);
     }
@@ -318,6 +322,9 @@ int wlan_driver_init(void)
 {
     int result = 0;
 
+#if CONFIG_FW_DNLD_ASYNC
+    result = wlan_init_nb(wlan_fw_bin, wlan_fw_bin_len, wlan_event_callback);
+#else
     /* Initialize WIFI Driver */
     result = wlan_init(wlan_fw_bin, wlan_fw_bin_len);
 
@@ -326,70 +333,28 @@ int wlan_driver_init(void)
     result = wlan_start(wlan_event_callback);
 
     assert(0 == result);
-
+#endif
     return result;
 }
 
 #ifndef RW610
-int wlan_driver_deinit(void)
-{
-    int result = 0;
-
-    result = wlan_stop();
-    assert(0 == result);
-    wlan_deinit(0);
-
-    return result;
-}
-
-static void wlan_hw_reset(void)
-{
-    BOARD_WIFI_BT_Enable(false);
-    OSA_TimeDelay(10);
-    BOARD_WIFI_BT_Enable(true);
-}
-
-int wlan_driver_reset(void)
-{
-    int result = 0;
-
-    result = wlan_driver_deinit();
-    assert(0 == result);
-
-    wlan_hw_reset();
-
-    result = wlan_driver_init();
-    assert(0 == result);
-
-    return result;
-}
-
-static void test_wlan_reset(int argc, char **argv)
-{
-    (void)wlan_driver_reset();
-}
-
 #if CONFIG_HOST_SLEEP
 static void test_mcu_suspend(int argc, char **argv)
 {
     (void)mcu_suspend();
 }
-#endif
 
-static struct cli_command reset_commands[] = {
-    {"wlan-reset", NULL, test_wlan_reset},
-#if CONFIG_HOST_SLEEP
+static struct cli_command hs_commands[] = {
     {"mcu-suspend", NULL, test_mcu_suspend},
-#endif
 };
 
-int wlan_reset_cli_init(void)
+int wlan_hs_cli_init(void)
 {
     unsigned int i;
 
-    for (i = 0; i < sizeof(reset_commands) / sizeof(struct cli_command); i++)
+    for (i = 0; i < sizeof(hs_commands) / sizeof(struct cli_command); i++)
     {
-        if (cli_register_command(&reset_commands[i]) != 0)
+        if (cli_register_command(&hs_commands[i]) != 0)
         {
             return -1;
         }
@@ -397,6 +362,7 @@ int wlan_reset_cli_init(void)
 
     return 0;
 }
+#endif
 #endif
 
 static void main_task(osa_task_param_t arg)
@@ -410,12 +376,6 @@ static void main_task(osa_task_param_t arg)
     result = cli_init();
 
     assert(WM_SUCCESS == result);
-
-#ifndef RW610
-    result = wlan_reset_cli_init();
-
-    assert(WM_SUCCESS == result);
-#endif
 
 #if CONFIG_HOST_SLEEP
 #ifndef RW610
@@ -434,9 +394,11 @@ static void main_task(osa_task_param_t arg)
     assert(WM_SUCCESS == result);
 
 #ifndef RW610
-    result = wlan_reset_cli_init();
+#if CONFIG_HOST_SLEEP
+    result = wlan_hs_cli_init();
 
     assert(WM_SUCCESS == result);
+#endif
 #endif
 
     while (1)
@@ -453,11 +415,7 @@ int main(void)
 {
     OSA_Init();
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitPinsM2();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 #ifdef RW610
     POWER_PowerOffBle();
 #endif

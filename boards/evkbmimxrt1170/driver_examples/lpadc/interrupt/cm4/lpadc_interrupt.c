@@ -8,20 +8,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpadc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE             LPADC1
-#define DEMO_LPADC_IRQn             ADC1_IRQn
-#define DEMO_LPADC_IRQ_HANDLER_FUNC ADC1_IRQHandler
-#define DEMO_LPADC_USER_CHANNEL     0U
-#define DEMO_LPADC_USER_CMDID       1U /* CMD1 */
-#define DEMO_LPADC_VREF_SOURCE      kLPADC_ReferenceVoltageAlt1
 
 /*******************************************************************************
  * Prototypes
@@ -67,10 +60,7 @@ int main(void)
     lpadc_conv_trigger_config_t mLpadcTriggerConfigStruct;
     lpadc_conv_command_config_t mLpadcCommandConfigStruct;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("LPADC Interrupt Example\r\n");
 
@@ -119,11 +109,6 @@ int main(void)
     /* Request auto calibration (including gain error calibration and linearity error calibration). */
     LPADC_DoAutoCalibration(DEMO_LPADC_BASE);
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
-
-#if (defined(FSL_FEATURE_LPADC_HAS_CFG_CALOFS) && FSL_FEATURE_LPADC_HAS_CFG_CALOFS)
-    /* Do auto calibration. */
-    LPADC_DoAutoCalibration(DEMO_LPADC_BASE);
-#endif /* FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
 
 #if (defined(FSL_FEATURE_LPADC_HAS_CFG_CALOFS) && FSL_FEATURE_LPADC_HAS_CFG_CALOFS)
     /* Do auto calibration. */

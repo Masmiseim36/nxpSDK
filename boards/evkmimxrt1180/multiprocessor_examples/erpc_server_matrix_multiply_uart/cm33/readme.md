@@ -1,22 +1,31 @@
-Overview
-========
-This example demonstrates usage of eRPC between PC and board using UART transport layer.
-Board acts like a server and the PC as client. When client starts, it generates two random
-matrixes and sends them to server. Server then performs matrix multiplication and sends
-result data back to client. Result matrix is then printed on the PC side.
+# erpc_server_matrix_multiply_uart
 
-eRPC documentation
+## Overview
+
+This example demonstrates usage of eRPC between PC and board using UART transport layer.
+Board acts like a server and the PC as client.
+
+When client starts, it generates two random matrixes and sends them to server.
+
+Server then performs matrix multiplication and sends result data back to client.
+
+Result matrix is then printed on the PC side.
+
+## eRPC documentation
+
 eRPC specific files are stored in: middleware\multicore\erpc
 eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
 
-PC Side Setup (Python)
+## PC Side Setup (Python)
+
 1. Make sure you have Python installed on your PC
 2. Install serial module by executing following command in command line: "python -m pip install pyserial"
 3. Install eRPC module to Python by executing setup.py located in: middleware\multicore\erpc\erpc_python - "python setup.py install"
 
-Usage of run_uart.py
+## Usage of run_uart.py
+
 usage: run_uart.py [-h] [-c] [-s] [-p PORT] [-b BD]
 
 eRPC Matrix Multiply example
@@ -34,66 +43,28 @@ Example:
 To run PC side as a client with a board connected as a server to COM3 execute:
 "run_uart.py --client --port COM3"
 
-SDK version
-===========
-- Version: 2.16.000
+## Building the application
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- MCUXpresso  11.10.0
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
+This shows example how to build application for `evkbmimxrt1170` board with `cm7` core_id.
+Change the `-b <board>` parameter based on board you want to build.
+Change the `-Dcore_id=<core_id>` parameter based on board core you want to build.
+For these parameters please see attribute `boards:` in `primary/example.yml`.
 
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVKB board
-- Personal Computer
+```
+west build examples/multiprocessor_examples/erpc_server_matrix_multiply_uart --toolchain armgcc --config debug -b evkbmimxrt1170 -Dcore_id=cm7
+```
 
-Board settings
-==============
-No special settings are required.
+## Supported Boards
 
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log below shows the output of the Client eRPC Matrix Multiply demo
-in the Python Shell window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Matrix #1
-  21   33   37   37    9
-  23   45   43    0   32
-  38   44    8   15   36
-  18   18   38   44   16
-  22   23    0   38    7
-
-Matrix #2
-  11   23   27   45   11
-   7   19   23   24    6
-  32   26   49   43   16
-  22   48   36   34   41
-  27   20   32   31   11
-
-eRPC request is sent to the server
-
-Result matrix
-2703 4028 4759 4865 2637
-2808 3142 4787 4956 1563
-2284 3358 4122 4736 1821
-2940 4176 4858 4868 2894
-1428 2907 2715 3051 2015
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [FRDM-K22F](../../_boards/frdmk22f/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [FRDM-K32L2B](../../_boards/frdmk32l2b/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [FRDM-MCXC242](../../_boards/frdmmcxc242/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [FRDM-MCXC444](../../_boards/frdmmcxc444/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/multiprocessor_examples/erpc_server_matrix_multiply_uart/example_board_readme.md)

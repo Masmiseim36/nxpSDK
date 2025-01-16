@@ -7,19 +7,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_rgpio.h"
+#include "app.h"
 #include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SW_GPIO        BOARD_USER_BUTTON_GPIO
-#define BOARD_SW_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
-#define BOARD_SW_IRQ         BOARD_USER_BUTTON_IRQ
-#define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define BOARD_SW_NAME        BOARD_USER_BUTTON_NAME
-
-#define BOARD_SW_INT_OUTPUT kRGPIO_InterruptOutput0
 
 /*******************************************************************************
  * Prototypes
@@ -59,14 +52,7 @@ int main(void)
         0,
     };
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Workaround: Disable interrupt which might be enabled by ROM. */
-    RGPIO_SetPinInterruptConfig(RGPIO1, 9U, kRGPIO_InterruptOutput0, kRGPIO_InterruptOrDMADisabled);
-    NVIC_ClearPendingIRQ(GPIO1_0_IRQn);
+    BOARD_InitHardware();
 
     /* Print a note to terminal. */
     PRINTF("\r\n RGPIO Driver example\r\n");

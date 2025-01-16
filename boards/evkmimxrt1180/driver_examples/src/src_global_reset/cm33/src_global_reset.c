@@ -6,24 +6,18 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_soc_src.h"
 #include "fsl_common.h"
 
-#include "fsl_rtwdog.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_WDOG_BASE         RTWDOG1
-#define DEMO_SRC_BASE          SRC_GENERAL_REG
-#define DEMO_GLOBAL_RESET_FLAG kSRC_Wdog1ResetFlag
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void APP_GlobalSystemResetInit(void);
 
 /*******************************************************************************
  * Variables
@@ -33,30 +27,6 @@ void APP_GlobalSystemResetInit(void);
  * Code
  ******************************************************************************/
 
-void APP_GlobalSystemResetInit(void)
-{
-    rtwdog_config_t config;
-
-    /*
-     * config.enableWdog32 = true;
-     * config.clockSource = kWDOG32_ClockSource1;
-     * config.prescaler = kWDOG32_ClockPrescalerDivide1;
-     * config.testMode = kWDOG32_TestModeDisabled;
-     * config.enableUpdate = true;
-     * config.enableInterrupt = false;
-     * config.enableWindowMode = false;
-     * config.windowValue = 0U;
-     * config.timeoutValue = 0xFFFFU;
-     */
-    RTWDOG_GetDefaultConfig(&config);
-    config.timeoutValue = 0xFFFFU; /* Timeout value is (0xF + 1)/2 = 8 sec. */
-    RTWDOG_Init(DEMO_WDOG_BASE, &config);
-    while (1)
-    {
-    }
-}
-
-
 /*!
  * @brief Main function
  */
@@ -65,14 +35,7 @@ int main(void)
     uint8_t ch;
     uint32_t flags;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Misc config to enable the watchdog */
-    SRC_GENERAL_REG->SRMASK         = 0;
-    BLK_CTRL_S_AONMIX->LP_HANDSHAKE = 0xFFFFFFFF;
+    BOARD_InitHardware();
 
     PRINTF("Example: SRC Global System Reset.\r\n");
 

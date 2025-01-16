@@ -9,33 +9,15 @@
 #include "fsl_pdm.h"
 #include "fsl_debug_console.h"
 #include "fsl_pdm_edma.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
-#include "fsl_dmamux.h"
+#include "app.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM                      PDM
-#define DEMO_PDM_ERROR_IRQn           PDM_ERROR_IRQn
-#define DEMO_PDM_ERROR_IRQHandler     PDM_ERROR_IRQHandler
-#define DEMO_PDM_CLK_FREQ             24576000
-#define DEMO_PDM_FIFO_WATERMARK       (4)
-#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE    (2048000U) /* 2.048MHZ */
-#define DEMO_EDMA                     DMA0
-#define DEMO_DMAMUX                   DMAMUX0
-#define DEMO_EDMA_CHANNEL             0
-#define DEMO_PDM_REQUEST_SOURCE       kDmaRequestMuxPdm
-#define DEMO_AUDIO_SAMPLE_RATE        16000
 #define BUFFER_SIZE (256)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitDebugConsole(void);
 static void pdmEdmallback(PDM_Type *base, pdm_edma_handle_t *handle, status_t status, void *userData);
 /*******************************************************************************
  * Variables
@@ -65,10 +47,21 @@ static const pdm_config_t pdmConfig = {
 };
 static const pdm_channel_config_t channelConfig = {
 #if (defined(FSL_FEATURE_PDM_HAS_DC_OUT_CTRL) && (FSL_FEATURE_PDM_HAS_DC_OUT_CTRL))
+#ifdef DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY
+    .outputCutOffFreq = DEMO_PDM_CHANNEL_OUTPUT_CUTOFF_FREQUENCY,
+#else
     .outputCutOffFreq = kPDM_DcRemoverCutOff40Hz,
+#endif
+#endif
+
+#if !(defined(FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED) && (FSL_FEATURE_PDM_DC_CTRL_VALUE_FIXED))
+#ifdef DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY
+    .cutOffFreq = DEMO_PDM_CHANNEL_CUTOFF_FREQUENCY,
 #else
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
 #endif
+#endif
+
 #ifdef DEMO_PDM_CHANNEL_GAIN
     .gain = DEMO_PDM_CHANNEL_GAIN,
 #else
@@ -78,18 +71,6 @@ static const pdm_channel_config_t channelConfig = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
-
 static void pdmEdmallback(PDM_Type *base, pdm_edma_handle_t *handle, status_t status, void *userData)
 {
     s_pdmRxFinished = true;
@@ -138,21 +119,7 @@ int main(void)
     pdm_edma_transfer_t xfer;
     edma_config_t dmaConfig = {0};
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    CLOCK_SetRootClockMux(kCLOCK_Root_Bus_Lpsr, 0);
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    /* mic root clock = 24.576M */
-    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
-
-    DMAMUX_Init(DEMO_DMAMUX);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_EDMA_CHANNEL, DEMO_PDM_REQUEST_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_EDMA_CHANNEL);
+    BOARD_InitHardware();
 
     PRINTF("PDM edma example started!\n\r");
 

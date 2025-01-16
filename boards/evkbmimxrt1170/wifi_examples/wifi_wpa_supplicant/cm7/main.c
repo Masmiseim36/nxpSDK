@@ -13,8 +13,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "wlan_bt_fw.h"
@@ -22,10 +20,13 @@
 #include "wifi.h"
 #include "wm_net.h"
 #include <osa.h>
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include "dhcp-server.h"
+#endif
 #include "cli.h"
 #include "wifi_ping.h"
 #include "iperf.h"
+#include "app.h"
 #ifndef RW610
 #include "wifi_bt_config.h"
 #else
@@ -62,63 +63,21 @@
 #include "ksdk_mbedtls.h"
 #endif
 #endif
-#include "fsl_common.h"
-#if CONFIG_WIFI_SMOKE_TESTS
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#endif
-#if CONFIG_WIFI_SMOKE_TESTS
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-#include "fsl_phyrtl8201.h"
-#else
-#include "fsl_phyrtl8211f.h"
-#endif
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#if CONFIG_WIFI_SMOKE_TESTS
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-extern phy_rtl8201_resource_t g_phy_resource;
-#define EXAMPLE_ENET ENET
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS &phyrtl8201_ops
-/* ENET instance select. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
-#else
-extern phy_rtl8211f_resource_t g_phy_resource;
-#define EXAMPLE_ENET          ENET_1G
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS   BOARD_ENET1_PHY_ADDRESS
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS       &phyrtl8211f_ops
-/* ENET instance select. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif1_init
-#endif
-
-/* PHY resource. */
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-
-/* ENET clock frequency. */
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#endif
-
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 int wlan_driver_init(void);
-int wlan_driver_deinit(void);
-int wlan_driver_reset(void);
-int wlan_reset_cli_init(void);
+#if CONFIG_HOST_SLEEP
+int wlan_hs_cli_init(void);
+int wlan_hs_cli_deinit(void);
+#endif
 #if CONFIG_WIFI_USB_FILE_ACCESS
 extern usb_host_handle g_HostHandle;
 #endif /* CONFIG_WIFI_USB_FILE_ACCESS */
-
-int wlan_reset_cli_deinit(void);
 
 static int wlan_prov_cli_init(void);
 
@@ -126,71 +85,6 @@ extern int wpa_cli_init(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if CONFIG_WIFI_SMOKE_TESTS
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-phy_rtl8201_resource_t g_phy_resource;
-#else
-phy_rtl8211f_resource_t g_phy_resource;
-#endif
-
-void BOARD_InitModuleClock(void)
-{
-    const clock_sys_pll1_config_t sysPll1Config = {
-        .pllDiv2En = true,
-    };
-    CLOCK_InitSysPll1(&sysPll1Config);
-
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    clock_root_config_t rootCfg = {.mux = 4, .div = 10}; /* Generate 50M root clock. */
-    CLOCK_SetRootClock(kCLOCK_Root_Enet1, &rootCfg);
-#else
-    clock_root_config_t rootCfg = {.mux = 4, .div = 4};       /* Generate 125M root clock. */
-    CLOCK_SetRootClock(kCLOCK_Root_Enet2, &rootCfg);
-#endif
-
-    /* Select syspll2pfd3, 528*18/24 = 396M */
-    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 24);
-    rootCfg.mux = 7;
-    rootCfg.div = 2;
-    CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
-}
-
-void IOMUXC_SelectENETClock(void)
-{
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    IOMUXC_GPR->GPR4 |= 0x3; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
-#else
-    IOMUXC_GPR->GPR5 |= IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK; /* bit1:iomuxc_gpr_enet_clk_dir
-                                                                 bit0:GPR_ENET_TX_CLK_SEL(internal or OSC) */
-#endif
-}
-
-void BOARD_ENETFlexibleConfigure(enet_config_t *config)
-{
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    config->miiMode = kENET_RmiiMode;
-#else
-    config->miiMode = kENET_RgmiiMode;
-#endif
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-#endif
-
 
 #if CONFIG_WPS2
 #define MAIN_TASK_STACK_SIZE 6000
@@ -200,7 +94,7 @@ static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 
 static void main_task(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, PRIORITY_RTOS_TO_OSA(1), 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(main_task, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(main_task_Handle);
 
@@ -220,7 +114,9 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
     char ssid[IEEEtypes_SSID_SIZE + 1] = {0};
     char ip[16];
     static int auth_fail                      = 0;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
     wlan_uap_client_disassoc_t *disassoc_resp = data;
+#endif
 
     switch (reason)
     {
@@ -278,12 +174,14 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
                 return 0;
             }
 
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
             ret = dhcpd_cli_init();
             if (ret != WM_SUCCESS)
             {
                 PRINTF("Failed to initialize DHCP Server CLI\r\n");
                 return 0;
             }
+#endif
 
             ret = wpa_cli_init();
             if (ret != WM_SUCCESS)
@@ -380,6 +278,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_CHAN_SWITCH:
             PRINTF("app_cb: WLAN: channel switch\r\n");
             break;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
         case WLAN_REASON_UAP_SUCCESS:
             PRINTF("app_cb: WLAN: UAP Started\r\n");
             ret = wlan_get_current_uap_network_ssid(ssid);
@@ -435,6 +334,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
             break;
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */
         case WLAN_REASON_PS_ENTER:
             break;
         case WLAN_REASON_PS_EXIT:
@@ -453,11 +353,12 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_PRE_BEACON_LOST:
             break;
 #endif
-#if CONFIG_WIFI_IND_DNLD
         case WLAN_REASON_FW_HANG:
         case WLAN_REASON_FW_RESET:
-            break;
+#ifdef RW610
+            PRINTF("app_cb: WLAN: FW hang Event: %d\r\n", reason);
 #endif
+            break;
         default:
             PRINTF("app_cb: WLAN: Unknown Event: %d\r\n", reason);
     }
@@ -481,65 +382,23 @@ int wlan_driver_init(void)
 }
 
 #ifndef RW610
-int wlan_driver_deinit(void)
-{
-    int result = 0;
-
-    result = wlan_stop();
-    assert(0 == result);
-    wlan_deinit(0);
-
-    return result;
-}
-
-static void wlan_hw_reset(void)
-{
-    BOARD_WIFI_BT_Enable(false);
-    OSA_TimeDelay(10);
-    BOARD_WIFI_BT_Enable(true);
-}
-
-int wlan_driver_reset(void)
-{
-    int result = 0;
-
-    result = wlan_driver_deinit();
-    assert(0 == result);
-
-    wlan_hw_reset();
-
-    result = wlan_driver_init();
-    assert(0 == result);
-
-    return result;
-}
-
-static void test_wlan_reset(int argc, char **argv)
-{
-    (void)wlan_driver_reset();
-}
-
 #if CONFIG_HOST_SLEEP
 static void test_mcu_suspend(int argc, char **argv)
 {
     (void)mcu_suspend();
 }
-#endif
 
-static struct cli_command reset_commands[] = {
-    {"wlan-reset", NULL, test_wlan_reset},
-#if CONFIG_HOST_SLEEP
+static struct cli_command hs_commands[] = {
     {"mcu-suspend", NULL, test_mcu_suspend},
-#endif
 };
 
-int wlan_reset_cli_init(void)
+int wlan_hs_cli_init(void)
 {
     unsigned int i;
 
-    for (i = 0; i < sizeof(reset_commands) / sizeof(struct cli_command); i++)
+    for (i = 0; i < sizeof(hs_commands) / sizeof(struct cli_command); i++)
     {
-        if (cli_register_command(&reset_commands[i]) != 0)
+        if (cli_register_command(&hs_commands[i]) != 0)
         {
             return -1;
         }
@@ -548,13 +407,13 @@ int wlan_reset_cli_init(void)
     return 0;
 }
 
-int wlan_reset_cli_deinit(void)
+int wlan_hs_cli_deinit(void)
 {
     unsigned int i;
 
-    for (i = 0; i < sizeof(reset_commands) / sizeof(struct cli_command); i++)
+    for (i = 0; i < sizeof(hs_commands) / sizeof(struct cli_command); i++)
     {
-        if (cli_unregister_command(&reset_commands[i]) != 0)
+        if (cli_unregister_command(&hs_commands[i]) != 0)
         {
             return -1;
         }
@@ -562,6 +421,7 @@ int wlan_reset_cli_deinit(void)
 
     return 0;
 }
+#endif
 #endif
 #if CONFIG_WIFI_USB_FILE_ACCESS
 static void dump_read_usb_file_usage(void)
@@ -776,12 +636,6 @@ static void main_task(osa_task_param_t arg)
 
     assert(WM_SUCCESS == result);
 
-#ifndef RW610
-    result = wlan_reset_cli_init();
-
-    assert(WM_SUCCESS == result);
-#endif
-
 #if CONFIG_HOST_SLEEP
 #ifndef RW610
     hostsleep_init(wlan_hs_pre_cfg, wlan_hs_post_cfg);
@@ -799,9 +653,11 @@ static void main_task(osa_task_param_t arg)
     assert(WM_SUCCESS == result);
 
 #ifndef RW610
-    result = wlan_reset_cli_init();
+#if CONFIG_HOST_SLEEP
+    result = wlan_hs_cli_init();
 
     assert(WM_SUCCESS == result);
+#endif
 #endif
 
     while (1)
@@ -818,43 +674,7 @@ int main(void)
 {
     OSA_Init();
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitPinsM2();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-#if CONFIG_WIFI_SMOKE_TESTS
-    BOARD_InitModuleClock();
-
-    IOMUXC_SelectENETClock();
-
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-#if BOARD_NETWORK_USE_100M_ENET_PORT
-    BOARD_InitEnetPins();
-    GPIO_PinInit(GPIO12, 12, &gpio_config);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO12, 12, 1);
-    SDK_DelayAtLeastUs(150000, CLOCK_GetFreq(kCLOCK_CpuClk));
-#else
-    BOARD_InitEnet1GPins();
-    GPIO_PinInit(GPIO11, 14, &gpio_config);
-    /* For a complete PHY reset of RTL8211FDI-CG, this pin must be asserted low for at least 10ms. And
-     * wait for a further 30ms(for internal circuits settling time) before accessing the PHY register */
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO11, 14, 1);
-    SDK_DelayAtLeastUs(30000, CLOCK_GetFreq(kCLOCK_CpuClk));
-
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
-#endif
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
-#endif
-
+    BOARD_InitHardware();
 
     printSeparator();
     PRINTF("wifi wpa supplicant demo\r\n");

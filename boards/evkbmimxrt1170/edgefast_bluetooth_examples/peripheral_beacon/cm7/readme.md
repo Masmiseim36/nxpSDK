@@ -1,52 +1,12 @@
-Overview
-========
+# peripheral_beacon
+
+## Overview
 Application demonstrating the BLE Peripheral role, This application implements types of beacon applications .
 Beacon: A simple application demonstrating the BLE Broadcaster role functionality by advertising Company Identifier, Beacon Identifier, UUID, A, B, C, RSSI.
 Eddystone : The Eddystone Configuration Service runs as a GATT service on the beacon while it is connectable and allows configuration of the advertised data, the broadcast power levels, and the advertising intervals.
 iBeacon: This simple application demonstrates the BLE Broadcaster role functionality by advertising an Apple iBeacon.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Micro USB cable
-- evkbmimxrt1170 board
-- Personal Computer
-- Embedded Artists 1XK M.2 Module (EAR00385) - direct M2 connection.
-- Embedded Artists 1ZM M.2 Module (EAR00364) - direct M2 connection.
-- Embedded Artists 2EL M.2 Module (Rev-A1) - direct M2 connection.
-
-Jumper settings for RT1170-EVKB (enables external 5V supply):
-remove  J38 5-6
-connect J38 1-2
-connect J43 with external power(controlled by SW5)
-
-Murata Solution Board settings
-Embedded Artists M.2 module resource page: https://www.embeddedartists.com/m2
-Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
-Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
-Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
-
-The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1170-EVKB and Murata 1XK M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1170-EVKB and Murata 1ZM M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The hardware rework for MIMXRT1170-EVKB and Murata 2EL M.2 Adapter is same as MIMXRT1170-EVKB and Murata 1XK M.2 Adapter.
-Note:
-To ensure that the LITTLEFS flash region has been cleaned,
-all flash sectors need to be erased before downloading example code.
-After downloaded binary into qspiflash and boot from qspiflash directly,
-please reset the board by pressing SW4 or power off and on the board to run the application.
-Prepare the Demo
-================
+## Prepare the Demo
 
 1.  Open example's project and build it.
 
@@ -63,8 +23,7 @@ Prepare the Demo
 
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
+## Running the demo
 Form the app_bluetooth_config.h file we can select witch application is starting. Default Beacon (#define BEACON_APP 1) application is starting.
 To start the Eddystone set #define EDDYSTONE 1 and others to 0. To start the iBeacon set #define IBEACON_APP 1 and others to 0.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,3 +50,18 @@ EDDYSTONE application is demonstrating Eddystone Configuration Service
 
 The Eddystone Configuration Service runs as a GATT service on the beacon while it is connectable and allows configuration of the advertised data, the broadcast power levels, and the advertising intervals. It also forms part of the definition of how Eddystone-EID beacons are configured and registered with a trusted resolver.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/peripheral_beacon/example_board_readme.md)

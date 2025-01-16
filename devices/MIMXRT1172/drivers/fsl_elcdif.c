@@ -78,7 +78,7 @@ static uint32_t ELCDIF_GetInstance(const LCDIF_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_elcdifBases); instance++)
     {
-        if (s_elcdifBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_elcdifBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -212,6 +212,20 @@ void ELCDIF_RgbModeSetPixelFormat(LCDIF_Type *base, elcdif_pixel_format_t pixelF
 
     base->CTRL1 = (base->CTRL1 & ~(LCDIF_CTRL1_BYTE_PACKING_FORMAT_MASK)) |
                   s_pixelFormatReg[(uint32_t)pixelFormat].regCtrl1;
+}
+
+/*!
+ * brief Set the order of the RGB components of each pixel in lines.
+ *
+ * param base eLCDIF peripheral base address.
+ * param order The pixel component order
+ */
+void ELCDIF_SetPixelComponentOrder(LCDIF_Type *base, elcdif_pixel_component_order_t order)
+{
+    assert((uint32_t)order <= kELCDIF_PixelComponentOrderBGR);
+
+    base->CTRL2_CLR = (LCDIF_CTRL2_CLR_EVEN_LINE_PATTERN_MASK | LCDIF_CTRL2_CLR_ODD_LINE_PATTERN_MASK);
+    base->CTRL2_SET = (((uint32_t)order << LCDIF_CTRL2_SET_ODD_LINE_PATTERN_SHIFT) | ((uint32_t)order << LCDIF_CTRL2_SET_EVEN_LINE_PATTERN_SHIFT));
 }
 
 /*!

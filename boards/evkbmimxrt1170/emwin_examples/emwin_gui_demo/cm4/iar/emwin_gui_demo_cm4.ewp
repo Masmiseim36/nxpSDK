@@ -11,9 +11,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>39</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -70,7 +75,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -98,7 +103,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>39</state>
         </option>
         <option>
@@ -115,7 +120,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>39</state>
         </option>
         <option>
@@ -130,7 +135,7 @@
         <option>
           <name>NrRegs</name>
           <version>0</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>NEON</name>
@@ -138,7 +143,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>39</state>
         </option>
         <option>
@@ -211,28 +216,39 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
-          <state>XIP_BOOT_HEADER_ENABLE=0</state>
-          <state>XIP_BOOT_HEADER_DCD_ENABLE=0</state>
-          <state>XIP_BOOT_HEADER_XMCD_ENABLE=0</state>
-          <state>USE_SDRAM</state>
+          <state>USE_SDRAM=1</state>
+          <state>SKIP_SYSCLK_INIT=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CPU_MIMXRT1176DVMAA_cm4</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -272,7 +288,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -309,11 +325,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -349,36 +365,34 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/cm4</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../../components/video</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68191</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
-          <state>$PROJ_DIR$/../../../../../../components/gt911</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_Config</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68191</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -394,7 +408,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -403,7 +417,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -480,11 +494,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -492,6 +506,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -503,6 +525,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -550,8 +576,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1176DVMAA_cm4</state>
         </option>
         <option>
           <name>AList</name>
@@ -643,6 +669,28 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68191</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -672,15 +720,15 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>emwin_gui_demo.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -688,33 +736,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1081,6 +1120,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1104,6 +1147,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_sdram_release</name>
@@ -1115,9 +1166,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -1202,7 +1258,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>39</state>
         </option>
         <option>
@@ -1219,7 +1275,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>39</state>
         </option>
         <option>
@@ -1234,7 +1290,7 @@
         <option>
           <name>NrRegs</name>
           <version>0</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>NEON</name>
@@ -1242,7 +1298,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>39</state>
         </option>
         <option>
@@ -1315,28 +1371,39 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>XIP_EXTERNAL_FLASH=1</state>
-          <state>XIP_BOOT_HEADER_ENABLE=0</state>
-          <state>XIP_BOOT_HEADER_DCD_ENABLE=0</state>
-          <state>XIP_BOOT_HEADER_XMCD_ENABLE=0</state>
-          <state>USE_SDRAM</state>
-          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1176DVMAA_cm4</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>USE_SDRAM=1</state>
+          <state>SKIP_SYSCLK_INIT=1</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CPU_MIMXRT1176DVMAA_cm4</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1376,7 +1443,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1413,11 +1480,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1453,36 +1520,34 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/cm4</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../../components/video</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68191</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
-          <state>$PROJ_DIR$/../../../../../../components/gt911</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_Config</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68191</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1498,7 +1563,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1507,7 +1572,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1584,11 +1649,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -1596,6 +1661,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -1607,6 +1680,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -1654,8 +1731,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1176DVMAA_cm4</state>
         </option>
         <option>
           <name>AList</name>
@@ -1747,6 +1824,28 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68191</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/rpi</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/gt911</state>
+          <state>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1776,15 +1875,15 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>emwin_gui_demo.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1792,33 +1891,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2185,6 +2275,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2208,27 +2302,17 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../display_support.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../display_support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../emwin_support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../emwin_support.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
@@ -2242,16 +2326,16 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
+      <name>$PROJ_DIR$/../board.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
+      <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../xmcd/xmcd.c</name>
+      <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../xmcd/xmcd.h</name>
+      <name>$PROJ_DIR$/../clock_config.c</name>
     </file>
   </group>
   <group>
@@ -2259,51 +2343,36 @@
     <file>
       <name>$PROJ_DIR$/../emwin_gui_demo.c</name>
     </file>
-  </group>
-  <group>
-    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.md</name>
+      <name>$PROJ_DIR$/../emwin_support.c</name>
     </file>
-  </group>
-  <group>
-    <name>evkbmimxrt1170</name>
     <file>
-      <name>$PROJ_DIR$/../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</name>
+      <name>$PROJ_DIR$/../emwin_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hardware_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../app.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../display_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../display_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
   </group>
   <group>
     <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
     </file>
@@ -2323,19 +2392,43 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h</name>
@@ -2344,10 +2437,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.c</name>
@@ -2356,16 +2449,16 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.c</name>
@@ -2374,97 +2467,28 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-  </group>
-  <group>
-    <name>touchpanel</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/gt911/fsl_gt911.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/gt911/fsl_gt911.c</name>
-    </file>
-  </group>
-  <group>
-    <name>video</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/fsl_display.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68191/fsl_rm68191.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68191/fsl_rm68191.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68200/fsl_rm68200.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68200/fsl_rm68200.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/fsl_dc_fb.h</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</name>
     </file>
   </group>
   <group>
@@ -2670,10 +2694,22 @@
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_Resource.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SIM_Win32.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SVG_Global.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SVG_NanoVG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SVG_NemaVG.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/emwin/emWin_header/GUI_SVG_OpenVG.h</name>
@@ -2933,6 +2969,27 @@
     </group>
   </group>
   <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <group>
+      <name>m-profile</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/cmsis_iccarm_m.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/armv7m_mpu.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm4.h</name>
+    </file>
+  </group>
+  <group>
     <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/fsl_device_registers.h</name>
@@ -2941,14 +2998,371 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm4_COMMON.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/MIMXRT1176_cm4_features.h</name>
     </file>
+    <group>
+      <name>periph</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ADC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ADC_ETC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_LDO_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_LDO_SNVS_DIG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_MISC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_OSC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_PMU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ANADIG_TEMPSENSOR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_AOI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ASRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_AUDIO_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CAAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CAN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CAN_WRAPPER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CCM_OBS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CMP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_CSI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DAC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DCDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DCIC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DMA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DMAMUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST_APB_PKT_IF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST_DPI_INTFC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_DSI_HOST_NXP_FDSOI28_DPHY_INTFC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_EMVSIM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ENC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ENET.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ENET_QOS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_ETHERNET_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_EWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_FLEXIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_FLEXRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_FLEXSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPC_CPU_MODE_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPC_SET_POINT_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPC_STBY_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_GPT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_I2S.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IEE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IEE_APC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_LPSR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_LPSR_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IOMUXC_SNVS_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_IPS_DOMAIN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_KEY_MANAGER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_KPP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LCDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LCDIFV2.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LMEM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LPI2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LPSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_LPUART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MECC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MIPI_CSI2RX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MMCAU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_MU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_OCOTP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_OSC_RC_400M.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_OTFAD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PDM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_BPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_CPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_MIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PGMC_PPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PHY_LDO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PUF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_PXP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_RDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_RDC_SEMAPHORE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_RTWDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SEMA4.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SEMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SPDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SSARC_HP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_SSARC_LP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_TMPSNS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_TMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USBHSDCD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USBNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USBPHY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_USDHC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_VIDEO_MUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_VIDEO_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_VMBANDGAP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_WDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XBARA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XBARB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XECC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/periph/PERI_XRDC2.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</name>
     </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/iar/startup_MIMXRT1176_cm4.s</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <group>
+      <name>str</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+      </file>
+    </group>
+    <group>
+      <name>debug_console_lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>component</name>
@@ -2961,53 +3375,83 @@
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
   </group>
   <group>
-    <name>startup</name>
+    <name>video</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/iar/startup_MIMXRT1176_cm4.s</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/fsl_dc_fb.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/fsl_display.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68191/fsl_rm68191.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68191/fsl_rm68191.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68200/fsl_rm68200.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rm68200/fsl_rm68200.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rpi/fsl_rpi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/rpi/fsl_rpi.c</name>
     </file>
   </group>
   <group>
-    <name>xip</name>
+    <name>touchpanel</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/touch/gt911/fsl_gt911.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/touch/gt911/fsl_gt911.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../xip/evkbmimxrt1170_flexspi_nor_config.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../xip/evkbmimxrt1170_flexspi_nor_config.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/touch/ft5406_rt/fsl_ft5406_rt.c</name>
     </file>
   </group>
   <group>
-    <name>CMSIS</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm4.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

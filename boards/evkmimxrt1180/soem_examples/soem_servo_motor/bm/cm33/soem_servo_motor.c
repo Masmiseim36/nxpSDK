@@ -39,6 +39,7 @@
 
 #include "cia402.h"
 #include "servo.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -76,13 +77,6 @@
 #define RX_INTR_MSG_DATA  2U
 #define TX_MSIX_ENTRY_IDX 0U
 #define RX_MSIX_ENTRY_IDX 1U
-
-/*! @brief GPT timer will be used to calculate the system time and delay */
-#define OSAL_TIMER_IRQ_ID	 GPT1_IRQn
-#define OSAL_TIMER			GPT1
-#define OSAL_TIMER_IRQHandler GPT1_IRQHandler
-#define OSAL_TIMER_CLK_FREQ   CLOCK_GetRootClockFreq(kCLOCK_Root_Gpt1)
-
 
 #define CLOCK_GRANULARITY_NS 25UL
 #define CLOCK_GRANULARITY_FRE (1000000000UL/CLOCK_GRANULARITY_NS)
@@ -318,6 +312,7 @@ static void servo_setup(struct servo_t *servo, int servo_num) {
 	for (i = 0; i < servo_num; i++) {
 		if (servo[i].VendorId == asda_b3_VendorId && servo[i].ProductID == asda_b3_ProductID) {
 			servo[i].slave->PO2SOconfig = asda_b3_servo_setup;
+			PRINTF("\r\n delta_servo_setup success!\r\n");
 		} else if (servo[i].VendorId == nxp_VendorId && servo[i].ProductID == nxp_ProductID) {
 			servo[i].slave->PO2SOconfig = nxp_servo_setup;
 			PRINTF("\r\n nxp_servo_setup success!\r\n");
@@ -800,46 +795,8 @@ status_t NETC_EP_PHY_Init(void)
 int main(void)
 {
 	status_t result = kStatus_Success;
-
-	BOARD_ConfigMPU();
-	BOARD_InitBootPins();
-	BOARD_InitBootClocks();
-	BOARD_InitDebugConsole();
 	bool link;
-	/* RMII mode */
-	BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[0] = BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(1);
-	BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[4] = BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(1);
-    /* Define the init structure for the output LED pin*/
-    rgpio_pin_config_t led_config = {
-        kRGPIO_DigitalOutput,
-        0,
-    };
-
-    /* Init output LED GPIO. */
-    RGPIO_PinInit(BOARD_LED_RGPIO, BOARD_LED_RGPIO_PIN, &led_config);
-
-	/* RGMII mode */
-	BLK_CTRL_WAKEUPMIX->NETC_LINK_CFG[1] = BLK_CTRL_WAKEUPMIX_NETC_LINK_CFG_MII_PROT(2);
-
-	/* Output reference clock for RMII */
-	BLK_CTRL_WAKEUPMIX->NETC_PORT_MISC_CFG |= BLK_CTRL_WAKEUPMIX_NETC_PORT_MISC_CFG_PORT0_RMII_REF_CLK_DIR_MASK |
-											  BLK_CTRL_WAKEUPMIX_NETC_PORT_MISC_CFG_PORT4_RMII_REF_CLK_DIR_MASK;
-
-	/* Unlock the IERB. It will warm reset whole NETC. */
-	NETC_PRIV->NETCRR &= ~NETC_PRIV_NETCRR_LOCK_MASK;
-	while ((NETC_PRIV->NETCRR & NETC_PRIV_NETCRR_LOCK_MASK) != 0U)
-	{
-	}
-
-	/* Set the access attribute, otherwise MSIX access will be blocked. */
-	NETC_IERB->ARRAY_NUM_RC[0].RCMSIAMQR &= ~(7U << 27);
-	NETC_IERB->ARRAY_NUM_RC[0].RCMSIAMQR |= (1U << 27);
-
-	/* Lock the IERB. */
-	NETC_PRIV->NETCRR |= NETC_PRIV_NETCRR_LOCK_MASK;
-	while ((NETC_PRIV->NETCSR & NETC_PRIV_NETCSR_STATE_MASK) != 0U)
-	{
-	}
+	BOARD_InitHardware();
 
 	result = NETC_EP_MDIO_Init();
 	if (result != kStatus_Success)

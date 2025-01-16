@@ -11,9 +11,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -70,7 +79,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -98,7 +107,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +124,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +147,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -184,12 +193,12 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -217,16 +226,26 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
+          <state>ENABLE_RAM_VECTOR_TABLE</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -266,7 +285,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -303,11 +322,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -343,25 +362,24 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -463,11 +481,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -475,6 +493,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -486,6 +512,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -533,8 +563,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>AList</name>
@@ -626,6 +656,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -663,7 +707,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>$PROJ_FNAME$.bin</state>
+          <state>flexspi_nor_edma_transfer.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -677,27 +721,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1062,6 +1097,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1085,6 +1124,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>hyperram_debug</name>
@@ -1096,9 +1143,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -1155,7 +1211,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1183,7 +1239,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -1200,7 +1256,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -1223,7 +1279,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -1269,12 +1325,12 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -1302,17 +1358,26 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>USE_HYPERRAM</state>
           <state>DEBUG</state>
+          <state>USE_HYPERRAM=1</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1352,7 +1417,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1389,11 +1454,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1429,25 +1494,24 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1463,7 +1527,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1472,7 +1536,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1549,11 +1613,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -1561,6 +1625,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -1572,6 +1644,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -1619,8 +1695,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>AList</name>
@@ -1712,6 +1788,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1749,7 +1839,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>$PROJ_FNAME$.bin</state>
+          <state>flexspi_nor_edma_transfer.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1763,27 +1853,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2148,6 +2229,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2171,6 +2256,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_debug</name>
@@ -2182,9 +2275,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -2241,7 +2343,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -2269,7 +2371,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -2286,7 +2388,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -2309,7 +2411,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -2355,12 +2457,12 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -2388,19 +2490,28 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>ENABLE_RAM_VECTOR_TABLE</state>
           <state>DEBUG</state>
+          <state>ENABLE_RAM_VECTOR_TABLE</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2440,7 +2551,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2477,11 +2588,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2517,25 +2628,24 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2551,7 +2661,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -2560,7 +2670,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -2637,11 +2747,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -2649,6 +2759,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -2660,6 +2778,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -2707,8 +2829,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>AList</name>
@@ -2800,6 +2922,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2837,7 +2973,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>$PROJ_FNAME$.bin</state>
+          <state>flexspi_nor_edma_transfer.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -2851,27 +2987,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3237,6 +3364,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -3260,6 +3391,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>release</name>
@@ -3271,9 +3410,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -3358,7 +3506,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -3375,7 +3523,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -3398,7 +3546,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -3444,12 +3592,12 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -3477,16 +3625,26 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
+          <state>ENABLE_RAM_VECTOR_TABLE</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3526,7 +3684,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3563,11 +3721,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3603,25 +3761,24 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3646,7 +3803,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -3723,11 +3880,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -3735,6 +3892,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -3746,6 +3911,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -3793,8 +3962,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>AList</name>
@@ -3886,6 +4055,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3923,7 +4106,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>$PROJ_FNAME$.bin</state>
+          <state>flexspi_nor_edma_transfer.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -3937,27 +4120,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4322,6 +4496,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -4345,6 +4523,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>hyperram_release</name>
@@ -4356,9 +4542,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -4443,7 +4638,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -4460,7 +4655,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -4483,7 +4678,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -4529,12 +4724,12 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -4562,17 +4757,26 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>USE_HYPERRAM</state>
+          <state>USE_HYPERRAM=1</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4612,7 +4816,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -4649,11 +4853,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -4689,25 +4893,24 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4723,7 +4926,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -4732,7 +4935,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -4809,11 +5012,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -4821,6 +5024,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -4832,6 +5043,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -4879,8 +5094,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>AList</name>
@@ -4972,6 +5187,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5009,7 +5238,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>$PROJ_FNAME$.bin</state>
+          <state>flexspi_nor_edma_transfer.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -5023,27 +5252,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5408,6 +5628,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -5431,6 +5655,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_release</name>
@@ -5442,9 +5674,18 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -5529,7 +5770,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -5546,7 +5787,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -5569,7 +5810,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>58</state>
         </option>
         <option>
@@ -5615,12 +5856,12 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGAarch64Abi</name>
@@ -5648,19 +5889,28 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
+          <state>NDEBUG</state>
           <state>ENABLE_RAM_VECTOR_TABLE</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
-          <state>NDEBUG</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
-          <state>CPU_MIMXRT1189CVM8B_cm33</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5700,7 +5950,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -5737,11 +5987,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -5777,25 +6027,24 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
           <state>$PROJ_DIR$/../../../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
-          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5811,7 +6060,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -5820,7 +6069,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -5897,11 +6146,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -5909,6 +6158,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -5920,6 +6177,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -5967,8 +6228,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1189CVM8B_cm33</state>
         </option>
         <option>
           <name>AList</name>
@@ -6060,6 +6321,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id</state>
+          <state>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6097,7 +6372,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>$PROJ_FNAME$.bin</state>
+          <state>flexspi_nor_edma_transfer.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -6111,27 +6386,18 @@
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6497,6 +6763,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -6520,6 +6790,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <group>
     <name>source</name>
@@ -6530,11 +6808,23 @@
       <name>$PROJ_DIR$/../flexspi_nor_flash_ops.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../app.h</name>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
     </file>
   </group>
   <group>
     <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
@@ -6542,58 +6832,85 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.c</name>
+      <name>$PROJ_DIR$/../hardware_init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
+      <name>$PROJ_DIR$/../app.h</name>
     </file>
   </group>
   <group>
-    <name>doc</name>
+    <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../readme.md</name>
+      <name>$PROJ_DIR$/../../../../../../xip/evkmimxrt1180_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../xip/evkmimxrt1180_flexspi_nor_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip/fsl_flexspi_nor_boot.h</name>
     </file>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma.h</name>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_pmu.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma_core.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi_edma.h</name>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_pmu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_dcdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_dcdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma_soc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma_soc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_ele_base_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_misc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_soc_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_soc_src.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_common.h</name>
@@ -6608,16 +6925,31 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_common_arm.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma_core.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_misc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_rgpio.h</name>
@@ -6626,43 +6958,40 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_rgpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_pmu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_pmu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_dcdc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_dcdc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/cm33/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma_soc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_edma_soc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_memory.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_s3mu.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.c</name>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_flexspi.h</name>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/drivers/fsl_trdc.c</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <group>
+      <name>m-profile</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile/cmsis_iccarm_m.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/m-profile/armv8m_mpu.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/core_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/tz_context.h</name>
     </file>
   </group>
   <group>
@@ -6674,8 +7003,335 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/MIMXRT1189_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/MIMXRT1189_cm33_COMMON.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/MIMXRT1189_cm33_features.h</name>
     </file>
+    <group>
+      <name>periph</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ADC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG_LDO_BBSM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG_MISC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG_OSC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG_PMU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ANADIG_TEMPSENSOR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_AOI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ASRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_AXBS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_BBNSM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_BLK_CTRL_BBSMMIX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_BLK_CTRL_NS_AONMIX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_BLK_CTRL_S_AONMIX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_BLK_CTRL_WAKEUPMIX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_CACHE_ECC_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_CAN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_CCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_CMP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_DAC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_DCDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_DMA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_DMA4.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ECAT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_EIM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ENETC_GLOBAL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ENETC_PCI_TYPE0.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ENETC_PF_EMDIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ENETC_PF_TMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ENETC_SI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ENETC_VF_PCI_TYPE0.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_EQDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_ERM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_EWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_FLEXIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_FLEXSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_FLEXSPI_SLV.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_GPC_CPU_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_GPC_GLOBAL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_GPC_SYS_SLEEP_CTRL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_GPT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_I2S.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_I3C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_IEE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_IEE_APC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_IERC_IERB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_IERC_PCI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_IOMUXC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_IOMUXC_AON.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_KPP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_LPI2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_LPIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_LPSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_LPTMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_LPUART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_M7_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_MECC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_MSGINTR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_MU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_ENETC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_ETH_LINK.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_IERB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_PORT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_PRIV.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_PSEUDO_LINK.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_SW.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_NETC_SW_ENETC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_OCOTP_FSB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_OSC_RC_400M.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_OTFAD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_PDM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_PHY_LDO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_PLL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_PWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_RGPIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_RTWDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_S3MU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SEMA42.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SEMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SINC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SPDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SRC_GENERAL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SRC_MIF_LN28FDSOI_SPLLRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SRC_MIF_S28SPREGH.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SRC_MIF_S28SPREGH_PSWA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SRC_MIX_SLICE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SYSPM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SYS_CTR_COMPARE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SYS_CTR_CONTROL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_SYS_CTR_READ.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_TCM_ECC_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_TMPSNS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_TMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_TPM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_TRDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_TSTMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_USB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_USBHSDCD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_USBNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_USBPHY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_USDHC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_VMBANDGAP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_VREF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_XBAR_NUM_OUT221.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_XBAR_NUM_OUT32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/periph/PERI_XCACHE.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/system_MIMXRT1189_cm33.c</name>
     </file>
@@ -6684,28 +7340,40 @@
     </file>
   </group>
   <group>
+    <name>startup</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/iar/startup_MIMXRT1189_cm33.s</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/fsl_assert.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
-    </file>
+    <group>
+      <name>str</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/str/fsl_str.c</name>
+      </file>
+    </group>
+    <group>
+      <name>debug_console_lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/utilities/debug_console_lite/fsl_debug_console.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>component</name>
@@ -6719,88 +7387,28 @@
       </file>
     </group>
     <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
       <name>silicon_id</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
+        <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs/imxrt1180/fsl_silicon_id_soc.c</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>startup</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/iar/startup_MIMXRT1189_cm33.s</name>
+      <name>$PROJ_DIR$/../../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
     </file>
   </group>
   <group>
-    <name>xip</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1189/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../xip/evkmimxrt1180_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../xip/evkmimxrt1180_flexspi_nor_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/core_cm33.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/mpu_armv8.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../../CMSIS/Core/Include/tz_context.h</name>
+      <name>$PROJ_DIR$/../example_board_readme.md</name>
     </file>
   </group>
 </project>

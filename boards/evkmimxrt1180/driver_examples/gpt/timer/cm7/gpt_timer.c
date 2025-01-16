@@ -7,20 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_gpt.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define GPT_IRQ_ID             GPT1_IRQn
-#define EXAMPLE_GPT            GPT1
-#define EXAMPLE_GPT_IRQHandler GPT1_IRQHandler
-
-/* Get source clock for GPT driver */
-#define EXAMPLE_GPT_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Gpt1)
 
 /*******************************************************************************
  * Prototypes
@@ -55,10 +48,7 @@ int main(void)
     gpt_config_t gptConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     GPT_GetDefaultConfig(&gptConfig);
 

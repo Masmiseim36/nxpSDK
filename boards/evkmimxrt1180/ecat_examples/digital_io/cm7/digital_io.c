@@ -1,19 +1,8 @@
 /*
- * This source file is part of the EtherCAT Slave Stack Code licensed by Beckhoff Automation GmbH & Co KG, 33415 Verl,
- * Germany. The corresponding license agreement applies. This hint shall not be removed.
+ * Copyright 2022-2024 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
-/**
-\addtogroup digital_io digital_io
-@{
-*/
-
-/**
-\file digital_io.c
-\brief Implementation
-
-\version 1.0.0.11
-*/
 
 /*-----------------------------------------------------------------------------------------
 ------

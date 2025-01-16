@@ -7,29 +7,15 @@
  */
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
 #include "fsl_elcdif.h"
 
-#include "fsl_soc_src.h"
-#include "fsl_gpio.h"
-#include "elcdif_support.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP PXP
-
-#define USE_RGB565 1
-
-/*
- * Frame buffer data alignment.
- * The PXP input buffer, output buffer, and LCDIF frame buffer address 64B align.
- */
-#define FRAME_BUFFER_ALIGN 64
-
 /* PS input buffer is square. */
 #define APP_PS_WIDTH  (APP_IMG_WIDTH / 2U)
 #define APP_PS_HEIGHT (APP_IMG_HEIGHT / 2U)
@@ -100,29 +86,9 @@ AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_asBufferPxp[APP_AS_HEIGHT][APP_AS
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLcdifClock();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nPXP LCDIF hand shake example start...\r\n");
 

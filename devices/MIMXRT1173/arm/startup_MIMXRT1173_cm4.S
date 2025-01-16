@@ -4,13 +4,11 @@
 /*            MIMXRT1173_cm4                                                 */
 /*  @version: 1.0                                                            */
 /*  @date:    2020-12-29                                                     */
-/*  @build:   b220909                                                        */
+/*  @build:   b240823                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2022 NXP                                                   */
-/* All rights reserved.                                                      */
-/*                                                                           */
+/* Copyright 2016-2024 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
@@ -90,9 +88,9 @@ __Vectors:
     .long   CAN2_IRQHandler                                 /* CAN2 interrupt*/
     .long   CAN2_ERROR_IRQHandler                           /* CAN2 error interrupt*/
     .long   CAN3_IRQHandler                                 /* CAN3 interrupt*/
-    .long   CAN3_ERROR_IRQHandler                           /* CAN3 erro interrupt*/
+    .long   CAN3_ERROR_IRQHandler                           /* CAN3 error interrupt*/
     .long   Reserved66_IRQHandler                           /* Reserved interrupt*/
-    .long   KPP_IRQHandler                                  /* Keypad nterrupt*/
+    .long   KPP_IRQHandler                                  /* Keypad interrupt*/
     .long   Reserved68_IRQHandler                           /* Reserved interrupt*/
     .long   GPR_IRQ_IRQHandler                              /* GPR interrupt*/
     .long   eLCDIF_IRQHandler                               /* eLCDIF interrupt*/
@@ -257,8 +255,8 @@ __Vectors:
     .long   XECC_FLEXSPI2_FATAL_INT_IRQHandler              /* XECC fatal int*/
     .long   XECC_SEMC_INT_IRQHandler                        /* XECC int*/
     .long   XECC_SEMC_FATAL_INT_IRQHandler                  /* XECC fatal int*/
-    .long   ENET_QOS_IRQHandler                             /* ENET_QOS interrupt*/
-    .long   ENET_QOS_PMT_IRQHandler                         /* ENET_QOS_PMT interrupt*/
+    .long   Reserved232_IRQHandler                          /* Reserved interrupt*/
+    .long   Reserved233_IRQHandler                          /* Reserved interrupt*/
     .long   DefaultISR                                      /* 234*/
     .long   DefaultISR                                      /* 235*/
     .long   DefaultISR                                      /* 236*/
@@ -1065,24 +1063,6 @@ XECC_FLEXSPI2_FATAL_INT_IRQHandler:
     bx    r0
     .size XECC_FLEXSPI2_FATAL_INT_IRQHandler, . - XECC_FLEXSPI2_FATAL_INT_IRQHandler
 
-    .align 1
-    .thumb_func
-    .weak ENET_QOS_IRQHandler
-    .type ENET_QOS_IRQHandler, %function
-ENET_QOS_IRQHandler:
-    ldr   r0,=ENET_QOS_DriverIRQHandler
-    bx    r0
-    .size ENET_QOS_IRQHandler, . - ENET_QOS_IRQHandler
-
-    .align 1
-    .thumb_func
-    .weak ENET_QOS_PMT_IRQHandler
-    .type ENET_QOS_PMT_IRQHandler, %function
-ENET_QOS_PMT_IRQHandler:
-    ldr   r0,=ENET_QOS_PMT_DriverIRQHandler
-    bx    r0
-    .size ENET_QOS_PMT_IRQHandler, . - ENET_QOS_PMT_IRQHandler
-
 
 /*    Macro to define default handlers. Default handler
  *    will be weak symbol and just dead loops. They can be
@@ -1313,7 +1293,7 @@ ENET_QOS_PMT_IRQHandler:
     def_irq_handler    XECC_FLEXSPI2_FATAL_INT_DriverIRQHandler
     def_irq_handler    XECC_SEMC_INT_IRQHandler
     def_irq_handler    XECC_SEMC_FATAL_INT_IRQHandler
-    def_irq_handler    ENET_QOS_DriverIRQHandler
-    def_irq_handler    ENET_QOS_PMT_DriverIRQHandler
+    def_irq_handler    Reserved232_IRQHandler
+    def_irq_handler    Reserved233_IRQHandler
 
     .end

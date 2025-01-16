@@ -50,7 +50,7 @@
  */
 
 /*! @brief Driver Version */
-#define FSL_NETC_DRIVER_VERSION (MAKE_VERSION(2, 7, 0))
+#define FSL_NETC_DRIVER_VERSION (MAKE_VERSION(2, 8, 1))
 
 /*! @brief Macro to divides an address into a low 32 bits and a possible high 32 bits */
 #define NETC_ADDR_LOW_32BIT(x)  ((uint32_t)(x)&0xFFFFFFFFU)
@@ -253,6 +253,21 @@ typedef enum _netc_hw_port_idx
     kNETC_SWITCH0Port4 = 4U, /*!< Pseudo port4 for SWITCH */
 } netc_hw_port_idx_t;
 
+#if (defined(FSL_FEATURE_NETC_HAS_ERRATA_052031) && FSL_FEATURE_NETC_HAS_ERRATA_052031)
+/* ERR052031: PTCaTSDR registers are implemented in the wrong order within the memory map. */
+/*! @brief Traffic class enumerator */
+typedef enum _netc_hw_tc_idx
+{
+    kNETC_TxTC4 = 0, /*!< Traffic class 4 */
+    kNETC_TxTC5,     /*!< Traffic class 5 */
+    kNETC_TxTC6,     /*!< Traffic class 6 */
+    kNETC_TxTC7,     /*!< Traffic class 7 */
+    kNETC_TxTC0,     /*!< Traffic class 0 */
+    kNETC_TxTC1,     /*!< Traffic class 1 */
+    kNETC_TxTC2,     /*!< Traffic class 2 */
+    kNETC_TxTC3      /*!< Traffic class 3 */
+} netc_hw_tc_idx_t;
+#else
 /*! @brief Traffic class enumerator */
 typedef enum _netc_hw_tc_idx
 {
@@ -265,6 +280,7 @@ typedef enum _netc_hw_tc_idx
     kNETC_TxTC6,     /*!< Traffic class 6 */
     kNETC_TxTC7      /*!< Traffic class 7 */
 } netc_hw_tc_idx_t;
+#endif
 
 /*! @brief Enumeration for the ENETC SI BDR identifier */
 typedef enum _netc_hw_bdr_idx
@@ -673,6 +689,10 @@ typedef struct _netc_port_ethmac
     uint16_t minBackPressOff; /*!< Minimum amount of time backpressure will stay off after reaching the ON max, before
                                       backpressure can reassert after checking if icm_pause_notification is still or again
                                       asserted, in byte times. */
+    uint32_t txWakeupTimeCycleEEE; /*!< Energy Efficient Ethernet feature. Defines the number of NETC cycles (which represents time) required by the PHY to wait before
+                                  transmitting a new frame after the application has indicated it wants to end the low power state. */
+    uint32_t txSleepTimeCycleEEE; /*!< Energy Efficient Ethernet feature. Defines the number of NETC cycles (which represents time) where Tx is idle before mac transmits
+                                  low power EEE. A value of 0 does not activate low power EEE transmission. */
 } netc_port_ethmac_t;
 
 /*! @brief Defines the Port's Stream Gate Open Gate Check mode. */
@@ -2662,6 +2682,13 @@ typedef struct _netc_tb_iseqg_config
     uint32_t entryID;
     netc_tb_iseqg_cfge_t cfge;
 } netc_tb_iseqg_config_t;
+
+/*! @brief Ingress Sequence Generation Table Update Actions */
+typedef enum _netc_tb_iseqg_update_action
+{
+    kNETC_ISEQGCfgEUpdate = 0x1U, /*!< Configuration Element Update */
+    kNETC_ISEQGSgsEUpdate  = 0x2U, /*!< Sequence Generation Element Update */
+} netc_tb_iseqg_update_action_t;
 
 #if !(defined(__GNUC__) || defined(__ICCARM__))
 #pragma endregion Ingress Sequence Generation Table

@@ -68,9 +68,9 @@ void APP_InitDisplay(void)
 
     g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
     fbInfo.pixelFormat = DEMO_BUFFER_PIXEL_FORMAT;
-    fbInfo.width       = DEMO_BUFFER_WIDTH;
-    fbInfo.height      = DEMO_BUFFER_HEIGHT;
-    fbInfo.strideBytes = DEMO_BUFFER_STRIDE_BYTE;
+    fbInfo.width       = DEMO_FB_WIDTH;
+    fbInfo.height      = DEMO_FB_HEIGHT;
+    fbInfo.strideBytes = DEMO_FB_STRIDE(DEMO_FB_WIDTH);
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
     g_dc.ops->setCallback(&g_dc, 0, DEMO_BufferSwitchOffCallback, NULL);

@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
-SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
@@ -14,27 +14,26 @@ if(CMAKE_SCRIPT_MODE_FILE)
 endif()
 
 
-# ENABLE ASM
-ENABLE_LANGUAGE(ASM)
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
 
-SET(CMAKE_STATIC_LIBRARY_PREFIX)
-SET(CMAKE_STATIC_LIBRARY_SUFFIX)
-
-SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
-SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
 # CURRENT DIRECTORY
-SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
-SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
-project(ota_mcuboot_client_enet)
+project(ota_mcuboot_client_enet_cm7)
+
+enable_language(ASM)
 
 set(MCUX_BUILD_TYPES flexspi_nor_debug flexspi_nor_release)
 
-set(MCUX_SDK_PROJECT_NAME ota_mcuboot_client_enet.elf)
+set(MCUX_SDK_PROJECT_NAME ota_mcuboot_client_enet_cm7.elf)
 
 if (NOT DEFINED SdkRootDirPath)
     SET(SdkRootDirPath ${ProjDirPath}/../../../../../../..)
@@ -49,8 +48,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../flash_helper.h"
 "${ProjDirPath}/../flash_helper.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../init_enet.c"
-"${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../httpsclient.c"
 "${ProjDirPath}/../httpsclient.h"
 "${ProjDirPath}/../ota_http.c"
@@ -58,49 +56,48 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../ota_config.h"
 "${ProjDirPath}/../core_http_config.c"
 "${ProjDirPath}/../core_http_config.h"
+"${ProjDirPath}/../network_cfg.h"
+"${ProjDirPath}/../init_enet.c"
+"${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../network_board_cfg.h"
+"${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../flash_partitioning.c"
+"${ProjDirPath}/../sblconfig.h"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../network_cfg.h"
-"${ProjDirPath}/../network_board_cfg.h"
-"${ProjDirPath}/../mbedtls_config_client.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
-"${ProjDirPath}/../mcuboot_app_support.c"
-"${ProjDirPath}/../mcuboot_app_support.h"
-"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
-"${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.c"
-"${ProjDirPath}/../bootutil_port/board_specific/sblconfig.h"
-"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_config.h"
-"${ProjDirPath}/../bootutil_port/mcuboot_config/mcuboot_logging.h"
-"${ProjDirPath}/../bootutil_port/flash_map.h"
-"${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
-"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../app.h"
+"${ProjDirPath}/../FreeRTOSConfig_Gen.h"
+"${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../mcux_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${SdkRootDirPath}/boards/evkmimxrt1160
-    ${SdkRootDirPath}/boards/evkmimxrt1160/ota_examples/ota_mcuboot_client/enet
-    ${ProjDirPath}/../bootutil_port
-    ${ProjDirPath}/../bootutil_port/mcuboot_config
-    ${ProjDirPath}/../bootutil_port/sysflash
-    ${ProjDirPath}/../bootutil_port/board_specific
 )
 
-set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
-set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig_Gen.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="mbedtls_config_client.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="mbedtls_config_client.h")
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
 
 include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 
@@ -115,7 +112,10 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/ota_mcuboot_client.bin)
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/ota_mcuboot_client_enet.bin)
 
-set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/ota_mcuboot_client.bin")
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/ota_mcuboot_client_enet.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
 

@@ -1,0 +1,13 @@
+NXP Software Content Register
+
+Package: mmcau
+Version: 2.0.4
+Outgoing License: BSD-3-Clause
+License File: LICENSE
+Type of content: source code
+Description and comments: S/W library that works with the memory-mapped cryptographic acceleration unit present on some MCUXpresso SoCs
+Release Location: https://github.com/nxp-mcuxpresso/mcux-mmcau
+URL: None
+Origin: 
+      NXP (BSD-3-Clause)
+

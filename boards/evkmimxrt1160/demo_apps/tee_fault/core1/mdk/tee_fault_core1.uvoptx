@@ -5,7 +5,7 @@
   <Extensions>
     <cExt>*.c</cExt>
     <aExt>*.s*; *.src; *.a*</aExt>
-    <oExt>*.obj</oExt>
+    <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
     <tExt>*.txt; *.h; *.inc; *.md</tExt>
     <pExt>*.plm</pExt>
@@ -83,7 +83,7 @@
         <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
-        <tLdApp>0</tLdApp>
+        <tLdApp>1</tLdApp>
         <tGomain>0</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
@@ -108,24 +108,29 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>.\debug_CM4.ini</tIfile>
+        <tIfile>../evkmimxrt1160_ram_cm4.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>JL2CM3</Key>
-          <Name>-U609302996 -O70 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD20000000 -FC1000 -FN1 -FF0MIMXRT105x_HYPER_256KB_SEC.FLM -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1052DVL6A$arm\MIMXRT105x_HYPER_256KB_SEC.FLM)</Name>
+          <Key>ULPL2CM3</Key>
+          <Name>-O206 -S8 -C0 -P01 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC8000 -FN1 -FF0MIMXRT116x_QuadSPI_4KB_SEC.FLM -FS030000000 -FL01000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI</Key>
-          <Name>-X"CMSIS-DAP" -U02280000076e78db0000000000000000 -O966 -S8 -C0 -P01 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC8000 -FN0</Name>
+          <Name>-X"Any" -UAny -O974 -S8 -C0 -P00000001 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD1FFE0000 -FC8000 -FN1 -FF0MIMXRT116x_QuadSPI_4KB_SEC_AliasMIMXRT116x 16mB QuadSPI NOR Flash -FS08000000 -FL01000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC_Alias.FLM)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>JL2CM3</Key>
+          <Name>-U609302996 -O70 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST1 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8001 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD20000000 -FC8000 -FN1 -FF0MIMXRT116x_QuadSPI_4KB_SEC_AliasMIMXRT116x 16mB QuadSPI NOR Flash -FS08000000 -FL01000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC_Alias.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0MIMXRT105x_HYPER_256KB_SEC -FL04000000 -FS060000000 -FP0($$Device:MIMXRT1052DVL6A$arm\MIMXRT105x_HYPER_256KB_SEC.FLM)</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC20000 -FN1 -FF0MIMXRT116x_QuadSPI_4KB_SEC -FS030000000 -FL01000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -172,8 +177,8 @@
       <pSingCmdsp/>
       <pMultCmdsp/>
       <DebugDescription>
-        <Enable>0</Enable>
-        <EnableFlashSeq>1</EnableFlashSeq>
+        <Enable>1</Enable>
+        <EnableFlashSeq>0</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
         <DbgClock>10000000</DbgClock>
@@ -247,8 +252,8 @@
         <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
-        <tLdApp>0</tLdApp>
-        <tGomain>0</tGomain>
+        <tLdApp>1</tLdApp>
+        <tGomain>1</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
         <tRmem>1</tRmem>
@@ -272,24 +277,24 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>.\debug_CM4.ini</tIfile>
+        <tIfile>../evkmimxrt1160_ram_cm4.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>JL2CM3</Key>
-          <Name>-U609302996 -O70 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD20000000 -FC1000 -FN1 -FF0MIMXRT105x_HYPER_256KB_SEC.FLM -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1052DVL6A$arm\MIMXRT105x_HYPER_256KB_SEC.FLM)</Name>
+          <Key>UL2CM3</Key>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC40000 -FN2 -FF0MIMXRT116x_QuadSPI_4KB_SEC -FS030000000 -FL01000000 -FF1MIMXRT116x_QuadSPI_4KB_SEC_Alias -FS18000000 -FL11000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC.FLM) -FP1($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC_Alias.FLM))</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI</Key>
-          <Name>-X"CMSIS-DAP" -U02280000076e78db0000000000000000 -O966 -S8 -C0 -P01 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC8000 -FN0</Name>
+          <Name>-X"Any" -UAny -O974 -S8 -C0 -P00000001 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD1FFE0000 -FC8000 -FN1 -FF0MIMXRT116x_QuadSPI_4KB_SEC_AliasMIMXRT116x 16mB QuadSPI NOR Flash -FS08000000 -FL01000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC_Alias.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0MIMXRT105x_HYPER_256KB_SEC -FL04000000 -FS060000000 -FP0($$Device:MIMXRT1052DVL6A$arm\MIMXRT105x_HYPER_256KB_SEC.FLM)</Name>
+          <Key>JL2CM3</Key>
+          <Name>-U609302996 -O70 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST1 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD1FFF0000 -FC8000 -FN1 -FF0MIMXRT116x_QuadSPI_4KB_SEC_AliasMIMXRT116x_QuadSPI_4KB_SEC_Alias -FS08000000 -FL01000000 -FP0($$Device:MIMXRT1166DVM6A$arm\MIMXRT116x_QuadSPI_4KB_SEC_Alias.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -336,7 +341,7 @@
       <pSingCmdsp/>
       <pMultCmdsp/>
       <DebugDescription>
-        <Enable>0</Enable>
+        <Enable>1</Enable>
         <EnableFlashSeq>1</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>

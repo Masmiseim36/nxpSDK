@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 NXP
+ * Copyright 2021-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,7 +23,7 @@
  * @{
  */
 /*! @brief MU driver version. */
-#define FSL_MU_DRIVER_VERSION (MAKE_VERSION(2, 5, 0))
+#define FSL_MU_DRIVER_VERSION (MAKE_VERSION(2, 7, 0))
 /*! @} */
 
 #define MU_CORE_INTR(intr) ((uint32_t)(intr) << 0U)
@@ -571,6 +571,47 @@ static inline uint32_t MU_GetCoreStatusFlags(MU_Type *base)
 uint32_t MU_GetStatusFlags(MU_Type *base);
 
 /*!
+ * @brief Gets the MU IRQ pending status of enabled interrupts.
+ *
+ * This function returns the bit mask of the pending MU IRQs of enabled interrupts.
+ * Only these flags are checked.
+ *  kMU_Tx0EmptyFlag
+ *  kMU_Tx1EmptyFlag
+ *  kMU_Tx2EmptyFlag
+ *  kMU_Tx3EmptyFlag
+ *  kMU_Rx0FullFlag
+ *  kMU_Rx1FullFlag
+ *  kMU_Rx2FullFlag
+ *  kMU_Rx3FullFlag
+ *  kMU_GenInt0Flag
+ *  kMU_GenInt1Flag
+ *  kMU_GenInt2Flag
+ *  kMU_GenInt3Flag
+ *
+ * @param base MU peripheral base address.
+ * @return  Bit mask of the MU IRQs pending.
+ */
+static inline uint32_t MU_GetInterruptsPending(MU_Type *base)
+{
+    uint32_t flag = 0;
+    uint32_t mask = 0;
+
+    /* TX */
+    flag |= MU_TX_FLAG(base->TSR);
+    mask |= MU_TX_INTR(base->TCR);
+
+    /* RX */
+    flag |= MU_RX_FLAG(base->RSR);
+    mask |= MU_RX_INTR(base->RCR);
+
+    /* General purpose interrupt */
+    flag |= MU_GI_FLAG(base->GSR);
+    mask |= MU_GI_INTR(base->GCR);
+
+    return (flag & mask);
+}
+
+/*!
  * @brief Clears the specific MU status flags.
  *
  * This function clears the specific MU status flags. The flags to clear should
@@ -891,6 +932,41 @@ static inline uint32_t MU_GetGeneralPurposeStatusFlags(MU_Type *base)
 static inline void MU_ClearGeneralPurposeStatusFlags(MU_Type *base, uint32_t flags)
 {
     base->GSR = flags;
+}
+
+/*!
+ * @brief Return the RX status flags in reverse numerical order.
+ *
+ * This function return the RX status flags in reverse order.
+ * Note: RFn bits of SR[3-0](mu status register) are
+ * mapped in ascending numerical order:
+ *      RF0 -> SR[0]
+ *      RF1 -> SR[1]
+ *      RF2 -> SR[2]
+ *      RF3 -> SR[3]
+ * This function will return these bits in reverse numerical
+ * order(RF3->RF1) to comply with MU_GetRxStatusFlags() of
+ * mu driver. See MU_GetRxStatusFlags() from drivers/mu/fsl_mu.h
+ *
+ * @code
+ * status_reg = MU_GetRxStatusFlags(base);
+ * @endcode
+ *
+ * @param base MU peripheral base address.
+ * @return MU RX status flags in reverse order
+ */
+
+static inline uint32_t MU_GetRxStatusFlags(MU_Type *base)
+{
+    uint32_t flags = 0U;
+    flags = MU_GET_RX_FLAG(MU_GetStatusFlags(base));
+    flags = (((flags >> MU_RSR_RF3_SHIFT) << MU_RSR_RF0_SHIFT) |
+             ((flags >> MU_RSR_RF2_SHIFT) << MU_RSR_RF1_SHIFT) |
+             ((flags >> MU_RSR_RF1_SHIFT) << MU_RSR_RF2_SHIFT) |
+             ((flags >> MU_RSR_RF0_SHIFT) << MU_RSR_RF3_SHIFT))
+             & 0x0000000FU;
+
+    return flags;
 }
 
 /*!

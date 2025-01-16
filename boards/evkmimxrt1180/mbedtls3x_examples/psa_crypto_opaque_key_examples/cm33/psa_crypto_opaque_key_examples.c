@@ -51,15 +51,19 @@
 
 #define PSA_ASSERT(status)      ASSERT_STATUS(status, PSA_SUCCESS)
 
-#define PRINT_STATUS(status)                                    \
-    if (status) {                                              \
-        printf(" PASSED\r\n");                                 \
-    } else {                                                   \
-        printf(" FAILED\r\n");                                 \
-    }
+#define PRINT_STATUS(ok)                                    \
+    do                                                                        \
+    {                                                                         \
+        if (ok == 1) {                                              \
+            printf(" PASSED\r\n");                                 \
+        } else if (ok == 2) {                                                   \
+            printf(" NOT SUPPORTED\r\n");                                 \
+        } else {                                                   \
+            printf(" FAILED\r\n");                                 \
+        }								\
+    } while (0)
 
-
-/* The location to be used for generation of keys should come from yml. */
+/* The location to be used for generation of keys can come from command line. */
 #if !defined(TEST_KEY_LOCATION)
 #define TEST_KEY_LOCATION       PSA_KEY_LOCATION_LOCAL_STORAGE
 #endif
@@ -300,7 +304,7 @@ static int can_sign_or_verify_message(psa_key_usage_t usage,
                     PSA_KEY_USAGE_VERIFY_MESSAGE);
 }
 
-static int exercise_signature(mbedtls_svc_key_id_t key,
+int exercise_signature(mbedtls_svc_key_id_t key,
                               psa_key_usage_t usage,
                               psa_algorithm_t alg)
 {
@@ -416,7 +420,7 @@ exit:
     return 0;
 }
 
-bool generate_and_test_key(uint16_t key_type_arg, size_t bits_arg,
+int generate_and_test_key(uint16_t key_type_arg, size_t bits_arg,
                            uint32_t usage_arg, uint32_t alg_arg,
                            uint32_t key_lifetime,
                            uint32_t key_location)
@@ -472,6 +476,8 @@ bool generate_and_test_key(uint16_t key_type_arg, size_t bits_arg,
                 ok = exercise_export_public_key(key_id);
             }
         }
+    } else if (status == PSA_ERROR_NOT_SUPPORTED) {
+        ok = 2;
     }
 
 exit:
@@ -482,7 +488,7 @@ exit:
 }
 
 /* For RSA adding very limited testcases as these are time consuming */
-void generate_rsa_keys(void)
+void generate_rsa_keys(psa_key_lifetime_t lifetime)
 {
     int ok = 0;
 
@@ -491,7 +497,7 @@ void generate_rsa_keys(void)
                                2048,
                                PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH,
                                PSA_ALG_RSA_PKCS1V15_SIGN(PSA_ALG_SHA_256),
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -500,13 +506,13 @@ void generate_rsa_keys(void)
                                2048,
                                PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH,
                                PSA_ALG_RSA_PSS(PSA_ALG_SHA_512),
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 }
 
 
-void generate_mac_keys(void)
+void generate_mac_keys(psa_key_lifetime_t lifetime)
 {
     int ok = 0;
 
@@ -515,31 +521,32 @@ void generate_mac_keys(void)
                                256,
                                PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
                                PSA_ALG_HMAC(PSA_ALG_SHA_256),
-                               PSA_KEY_LIFETIME_PERSISTENT,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
 }
 
-void generate_cipher_keys(void)
+void generate_cipher_keys(psa_key_lifetime_t lifetime)
 {
     int ok = 0;
 
-    printf("128 bit PERSISTENT AES key with encrypt/decrypt algo ECB_NO_PADDING:");
+    printf("128 bit AES key with encrypt/decrypt algo ECB_NO_PADDING:");
     ok = generate_and_test_key(PSA_KEY_TYPE_AES,
                                128,
                                PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT,
                                PSA_ALG_ECB_NO_PADDING,
-                               PSA_KEY_LIFETIME_PERSISTENT,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
+
 
     printf("192 bit AES key with encrypt/decrypt algo CBC_NO_PADDING:");
     ok = generate_and_test_key(PSA_KEY_TYPE_AES,
                                192,
                                PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT,
                                PSA_ALG_CBC_NO_PADDING,
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -548,7 +555,7 @@ void generate_cipher_keys(void)
                                256,
                                PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT,
                                PSA_ALG_CTR,
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -557,7 +564,7 @@ void generate_cipher_keys(void)
                                128,
                                PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT,
                                PSA_ALG_CCM,
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -566,7 +573,7 @@ void generate_cipher_keys(void)
                                256,
                                PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT,
                                PSA_ALG_GCM,
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -576,21 +583,23 @@ void generate_cipher_keys(void)
                                192,
                                PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
                                PSA_ALG_CMAC,
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
+
     PRINT_STATUS(ok);
 }
 
-void generate_ecc_keys(void)
+void generate_ecc_keys(psa_key_lifetime_t lifetime)
 {
     int ok = 0;
 
-    printf("224 bit PERSISTENT ECC_KEY_PAIR(SECP_R1) with sign/verify algo ECDSA(SHA224):");
+    
+    printf("224 bit ECC_KEY_PAIR(SECP_R1) with sign/verify algo ECDSA(SHA224):");
     ok = generate_and_test_key(PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1),
                                224,
                                PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH,
                                PSA_ALG_ECDSA(PSA_ALG_SHA_224),
-                               PSA_KEY_LIFETIME_PERSISTENT,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -600,16 +609,28 @@ void generate_ecc_keys(void)
                                521,
                                PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH | PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
                                PSA_ALG_ECDSA(PSA_ALG_SHA_512),
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
+    
+
+        printf("256 bit ECC_KEY_PAIR(SECP_R1) with sign/verify algo ECDSA(SHA256):");
+    ok = generate_and_test_key(PSA_KEY_TYPE_ECC_KEY_PAIR(
+                                   PSA_ECC_FAMILY_SECP_R1),
+                               256,
+                               PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH| PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
+                               PSA_ALG_ECDSA(PSA_ALG_SHA_256),
+                               lifetime,
+                               TEST_KEY_LOCATION);
+    PRINT_STATUS(ok);
+
 
     printf("256 ECC_KEY_PAIR(BRAINPOOL_R1) with sign/verify algo ECDSA(SHA256):");
     ok = generate_and_test_key(PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_BRAINPOOL_P_R1),
                                256,
                                PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH,
                                PSA_ALG_ECDSA(PSA_ALG_SHA_256),
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
 
@@ -619,32 +640,53 @@ void generate_ecc_keys(void)
                                384,
                                PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH | PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE,
                                PSA_ALG_ECDSA(PSA_ALG_SHA_384),
-                               PSA_KEY_LIFETIME_VOLATILE,
+                               lifetime,
                                TEST_KEY_LOCATION);
     PRINT_STATUS(ok);
+
 }
 
 int main(int argc, char *argv[])
 {
+    psa_key_lifetime_t lifetime = PSA_KEY_LIFETIME_VOLATILE;
 #if defined(MCUX_MBEDTLS)
     /* HW init */
     BOARD_InitHardware();
 #endif
 
+    printf("Location is %x\n", TEST_KEY_LOCATION);
     ASSERT(psa_crypto_init() == PSA_SUCCESS);
 
+    printf("\r\nVOLATILE KEYS\r\n");
     printf("\r\nECC keys\r\n");
-    generate_ecc_keys();
+    generate_ecc_keys(lifetime);
 
     printf("\r\nAES keys \r\n");
-    generate_cipher_keys();
+    generate_cipher_keys(lifetime);
 
     printf("\r\nMAC keys \r\n");
-    generate_mac_keys();
+    generate_mac_keys(lifetime);
 
     printf("\r\nRSA keys \r\n");
-    generate_rsa_keys();
+    generate_rsa_keys(lifetime);
+    
+#if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C)
+    printf("\r\nPERSISTENT KEYS\r\n");
+    
+    lifetime = PSA_KEY_LIFETIME_PERSISTENT;
+    printf("\r\nECC keys\r\n");
+    generate_ecc_keys(lifetime);
 
+    printf("\r\nAES keys \r\n");
+    generate_cipher_keys(lifetime);
+
+    printf("\r\nMAC keys \r\n");
+    generate_mac_keys(lifetime);
+
+    printf("\r\nRSA keys \r\n");
+    generate_rsa_keys(lifetime);
+#endif    
+           
 exit:
     mbedtls_psa_crypto_free();
     return 0;

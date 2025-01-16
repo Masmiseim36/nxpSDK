@@ -5,7 +5,6 @@
 //*****************************************************************************
 //
 // Copyright 2014-2021 NXP
-// All rights reserved.
 //
 // Software that is described herein is for illustrative purposes only
 // which provides customers with programming information regarding the

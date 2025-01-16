@@ -7,54 +7,11 @@
  */
 
 #include "sai.h"
+#include "app.h"
 
-#include "fsl_wm8962.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_codec_common.h"
-#include "fsl_codec_adapter.h"
-#include "fsl_dmamux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* SAI instance and clock */
-#define DEMO_CODEC_WM8962
-#define DEMO_CODEC_VOLUME     100U
-#define DEMO_SAI              SAI1
-#define DEMO_SAI_CHANNEL      (0)
-#define DEMO_SAI_BITWIDTH     (kSAI_WordWidth16bits)
-#define DEMO_SAI_IRQ          SAI1_IRQn
-#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
-#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
-#define DEMO_SAI_MASTER_SLAVE kSAI_Master
-#define SAI_UserIRQHandler    SAI1_IRQHandler
-
-/* demo audio master clock */
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-
-/* IRQ */
-#define DEMO_SAI_TX_IRQ SAI1_IRQn
-#define DEMO_SAI_RX_IRQ SAI1_IRQn
-
-/* DMA */
-#define DEMO_DMA             DMA1
-#define DEMO_DMAMUX          DMAMUX1
-#define DEMO_TX_EDMA_CHANNEL (0U)
-#define DEMO_RX_EDMA_CHANNEL (1U)
-#define DEMO_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
-#define DEMO_SAI_RX_SOURCE   kDmaRequestMuxSai1Rx
-
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Sai1)
-
-/* I2C instance and clock */
-#define DEMO_I2C LPI2C5
-
-/* Get frequency of lpi2c clock */
-#define DEMO_I2C_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Lpi2c5)
-
-#define BOARD_MASTER_CLOCK_CONFIG()
 
 /*******************************************************************************
  * Prototypes
@@ -75,39 +32,6 @@ static int SD_FatFsInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-wm8962_config_t wm8962Config = {
-    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .route =
-        {
-            .enableLoopBack            = false,
-            .leftInputPGASource        = kWM8962_InputPGASourceInput1,
-            .leftInputMixerSource      = kWM8962_InputMixerSourceInputPGA,
-            .rightInputPGASource       = kWM8962_InputPGASourceInput3,
-            .rightInputMixerSource     = kWM8962_InputMixerSourceInputPGA,
-            .leftHeadphoneMixerSource  = kWM8962_OutputMixerDisabled,
-            .leftHeadphonePGASource    = kWM8962_OutputPGASourceDAC,
-            .rightHeadphoneMixerSource = kWM8962_OutputMixerDisabled,
-            .rightHeadphonePGASource   = kWM8962_OutputPGASourceDAC,
-        },
-    .slaveAddress = WM8962_I2C_ADDR,
-    .bus          = kWM8962_BusI2S,
-    .format       = {.mclk_HZ    = 24576000U,
-                     .sampleRate = kWM8962_AudioSampleRate16KHz,
-                     .bitWidth   = kWM8962_AudioBitWidth16bit},
-    .masterSlave  = false,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 768/1000)  / 2
- *                              = 393.216MHZ
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 #if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t rxHandle);
@@ -143,18 +67,6 @@ codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR0 |= IOMUXC_GPR_GPR0_SAI1_MCLK_DIR_MASK;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR0 &= (~IOMUXC_GPR_GPR0_SAI1_MCLK_DIR_MASK);
-    }
-}
-
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     sendCount++;
@@ -287,37 +199,7 @@ int main(void)
     char input              = '1';
     uint8_t userItem        = 1U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    CLOCK_InitAudioPll(&audioPllConfig);
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for LPI2C*/
-    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, 1);
-
-    /*Clock setting for SAI1*/
-    CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
-
-    /*Enable MCLK clock*/
-    BOARD_EnableSaiMclkOutput(true);
-
-    DMAMUX_Init(DEMO_DMAMUX);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL);
-
-    /* ERR050396
-     * Errata description:
-     * AXI to AHB conversion for CM7 AHBS port (port to access CM7 to TCM) is by a NIC301 block, instead of XHB400
-     * block. NIC301 doesn't support sparse write conversion. Any AXI to AHB conversion need XHB400, not by NIC. This
-     * will result in data corruption in case of AXI sparse write reaches the NIC301 ahead of AHBS. Errata workaround:
-     * For uSDHC, don't set the bit#1 of IOMUXC_GPR28 (AXI transaction is cacheable), if write data to TCM aligned in 4
-     * bytes; No such write access limitation for OCRAM or external RAM
-     */
-    IOMUXC_GPR->GPR28 &= (~IOMUXC_GPR_GPR28_AWCACHE_USDHC_MASK);
+    BOARD_InitHardware();
 
     PRINTF("SAI Demo started!\n\r");
 

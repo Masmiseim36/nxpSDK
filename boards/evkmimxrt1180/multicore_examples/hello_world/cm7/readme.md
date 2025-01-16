@@ -1,54 +1,36 @@
-Overview
-========
+# hello_world
+
+## Overview
+
 The Multicore Hello World demo application demonstrates how to set up projects for individual
-cores on a multicore system. In this demo, the primary core prints the "Hello World from the Primary Core!"
-string to the terminal and then releases the secondary core from the reset. The secondary
-core toggles an on-board LED indicating that the secondary core is running.
+cores on a multicore system.
+In this demo, the primary core prints the "Hello World from the Primary Core!" string to the terminal and
+then releases the secondary core from the reset.
+The secondary core toggles an on-board LED indicating that the secondary core is running.
 
-SDK version
-===========
-- Version: 2.16.000
+## Building the application
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+This shows example how to build application for `evkbmimxrt1170` board with `cm7` core_id.
+Change the `-b <board>` parameter based on board you want to build.
+Change the `-Dcore_id=<core_id>` parameter based on board core you want to build.
+For these parameters please see attribute `boards:` in `primary/example.yml`.
 
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
+```
+west build --sysbuild examples/multicore_examples/hello_world/primary --toolchain armgcc --config debug -b evkbmimxrt1170 -Dcore_id=cm7
+```
 
-Board settings
-==============
-No special settings are required.
+## Supported Boards
 
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the hello world multicore demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hello World from the Primary Core!
-
-Copy Secondary core image to address: 0x303C0000, size: 3280
-Starting Secondary core.
-The secondary core application has been started.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Note:
-The "Copy Secondary core image to address..." log message is not displayed on the terminal window when MCUXpresso IDE is used.
-In case of MCUXpresso IDE the secondary core image is copied to the target memory during startup automatically.
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/multicore_examples/hello_world/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/multicore_examples/hello_world/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/multicore_examples/hello_world/example_board_readme.md)
+- [FRDM-K32L3A6](../../_boards/frdmk32l3a6/multicore_examples/hello_world/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/multicore_examples/hello_world/example_board_readme.md)
+- [FRDM-MCXW72](../../_boards/frdmmcxw72/multicore_examples/hello_world/example_board_readme.md)
+- [KW47-EVK](../../_boards/kw47evk/multicore_examples/hello_world/example_board_readme.md)
+- [KW47-LOC](../../_boards/kw47loc/multicore_examples/hello_world/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/multicore_examples/hello_world/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/multicore_examples/hello_world/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/multicore_examples/hello_world/example_board_readme.md)
+- [MCX-W72-EVK](../../_boards/mcxw72evk/multicore_examples/hello_world/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/multicore_examples/hello_world/example_board_readme.md)

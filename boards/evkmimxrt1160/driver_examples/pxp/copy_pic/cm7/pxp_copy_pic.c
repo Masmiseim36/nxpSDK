@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
@@ -13,7 +13,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP PXP
 #define INPUT_BUF_WIDTH   128
 #define INPUT_BUF_HEIGHT  64
 #define OUTPUT_BUF_WIDTH  64
@@ -63,10 +62,7 @@ AT_NONCACHEABLE_SECTION(static pixel_t s_outputBuf[OUTPUT_BUF_HEIGHT][OUTPUT_BUF
  ******************************************************************************/
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_InitLpuartPins();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nPXP picture copy example start...\r\n");
 

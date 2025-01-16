@@ -12,149 +12,150 @@ ENDIF()
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
-    -D__STARTUP_INITIALIZE_RAMFUNCTION=1 \
-    -DDEBUG \
-    -D__STARTUP_CLEAR_BSS=1 \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA=1 \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DOSA_USED \
     -g \
-    -mcpu=cortex-m33 \
-    -Wall \
     -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -D__STARTUP_INITIALIZE_RAMFUNCTION=1 \
-    -DNDEBUG \
-    -D__STARTUP_CLEAR_BSS=1 \
-    -D__STARTUP_INITIALIZE_NONCACHEDATA=1 \
-    -mcpu=cortex-m33 \
-    -Wall \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
+    -D__STARTUP_INITIALIZE_NONCACHEDATA \
+    -D__STARTUP_CLEAR_BSS \
+    -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DOSA_USED \
     -mthumb \
+    -mcpu=cortex-m33 \
     ${FPU} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
-    -DDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
-    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSDIO_ENABLED \
-    -DSDK_OS_FREE_RTOS \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
     -DOSA_USED \
-    -DFSL_OSA_TASK_ENABLE=1 \
-    -DLWIP_DNS=1 \
-    -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_IGMP=1 \
-    -D_XOPEN_SOURCE=500 \
-    -DSO_REUSE=1 \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
+    -DSDIO_ENABLED=1 \
+    -DSDK_OS_FREE_RTOS \
     -O1 \
     -g \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -include ${ProjDirPath}/../mcux_config.h \
+    -DNDEBUG \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
-    -DNDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
-    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
-    -DSDIO_ENABLED \
-    -DSDK_OS_FREE_RTOS \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
     -DOSA_USED \
-    -DFSL_OSA_TASK_ENABLE=1 \
-    -DLWIP_DNS=1 \
-    -DLWIP_NETIF_HOSTNAME=1 \
-    -DLWIP_IGMP=1 \
-    -D_XOPEN_SOURCE=500 \
-    -DSO_REUSE=1 \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DCONFIG_NXP_WIFI_SOFTAP_SUPPORT=1 \
+    -DSDIO_ENABLED=1 \
+    -DSDK_OS_FREE_RTOS \
     -Os \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -std=gnu99 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DXIP_EXTERNAL_FLASH=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DUSE_RTOS=1 \
+    -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
-    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DXIP_EXTERNAL_FLASH=1 \
+    -DMCUX_META_BUILD \
     -DMCUXPRESSO_SDK \
+    -DCPU_MIMXRT1189CVM8B_cm33 \
+    -DOSA_USED \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DUSE_RTOS=1 \
+    -DSDK_OS_FREE_RTOS \
     -Os \
-    -mcpu=cortex-m33 \
     -Wall \
-    -mthumb \
-    -MMD \
-    -MP \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
     -fno-builtin \
+    -mthumb \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
     -g \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    --defsym=__stack_size__=0x400 \
+    -Xlinker \
+    --defsym=__heap_size__=0x400 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -162,28 +163,25 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__stack_size__=0x400 \
-    -Xlinker \
-    --defsym=__heap_size__=0x400 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
-    -T\"${ProjDirPath}/linker/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
+    -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_wifi.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -mcpu=cortex-m33 \
+    -Xlinker \
+    --defsym=__stack_size__=0x400 \
+    -Xlinker \
+    --defsym=__heap_size__=0x400 \
+    -Xlinker \
+    -Map=output.map \
     -Wall \
     -fno-common \
     -ffunction-sections \
@@ -191,22 +189,14 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mthumb \
     -mapcs \
-    -Xlinker \
-    --gc-sections \
-    -Xlinker \
-    -static \
-    -Xlinker \
-    -z \
-    -Xlinker \
-    muldefs \
-    -Xlinker \
-    -Map=output.map \
+    -Wl,--gc-sections \
+    -Wl,-static \
+    -Wl,-z \
+    -Wl,muldefs \
+    -Wl,-Map=output.map \
     -Wl,--print-memory-usage \
-    -Xlinker \
-    --defsym=__stack_size__=0x400 \
-    -Xlinker \
-    --defsym=__heap_size__=0x400 \
+    -mcpu=cortex-m33 \
     ${FPU} \
     ${SPECS} \
-    -T\"${ProjDirPath}/linker/MIMXRT1189xxxxx_cm33_flexspi_nor.ld\" -static \
+    -T\"${ProjDirPath}/MIMXRT1189xxxxx_cm33_wifi.ld\" -static \
 ")

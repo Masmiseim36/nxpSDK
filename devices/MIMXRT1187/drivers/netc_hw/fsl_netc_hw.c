@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -679,6 +679,11 @@ status_t NETC_GetISCStatistic(netc_cbdr_handle_t *handle, uint32_t entryID, netc
     if (kStatus_Success == status)
     {
         *statistic = handle->buffer->isc.response.stse;
+#if (defined(FSL_FEATURE_NETC_HAS_ERRATA_052134) && FSL_FEATURE_NETC_HAS_ERRATA_052134)
+        /* ERR052134: The actual offset of the SG_DROP_COUNT in the Ingress Stream Count Table STSE_DATA element is bit 200 or the offset within
+           the entire Ingress Stream Count Table Response Data Buffer format is bit 232. Starting offset is 8-bits. */
+        statistic->sgDropCount >>= 8U;
+#endif
     }
     return status;
 }
@@ -939,6 +944,38 @@ status_t NETC_AddOrUpdateRPTableEntry(netc_cbdr_handle_t *handle, netc_tb_rp_con
             status = kStatus_NETC_EntryExists;
         }
         else if ((cmd == kNETC_UpdateEntry) && (cmdBd.resp.numMatched == 0U))
+        {
+            status = kStatus_NETC_NotFound;
+        }
+        else
+        {
+            /* Intentional empty */
+        }
+    }
+
+    return status;
+}
+
+status_t NETC_ResetMRRPTableEntry(netc_cbdr_handle_t *handle, uint32_t entryID)
+{
+    status_t status;
+    netc_cmd_bd_t cmdBd = {0};
+    (void)memset(handle->buffer, 0, sizeof(netc_tb_rp_req_data_t));
+    handle->buffer->rp.request.entryID                    = entryID;
+    handle->buffer->rp.request.commonHeader.updateActions = (uint16_t)kNETC_RPPsEUpdate;
+    handle->buffer->rp.request.commonHeader.queryActions  = 0U;
+    cmdBd.req.addr                                        = (uintptr_t)handle->buffer;
+    cmdBd.req.reqLength                                   = sizeof(netc_tb_rp_req_data_t);
+    cmdBd.req.resLength                                   = 0U;
+    cmdBd.req.tableId                                     = kNETC_RPTable;
+    cmdBd.req.cmd                                         = kNETC_UpdateEntry;
+
+    /* Only support Entry ID Match */
+    cmdBd.req.accessType = kNETC_EntryIDMatch;
+    status = NETC_CmdBDSendCommand(handle->base, handle->cmdr, &cmdBd, kNETC_NtmpV2_0);
+    if (kStatus_Success == status)
+    {
+        if (cmdBd.resp.numMatched == 0U)
         {
             status = kStatus_NETC_NotFound;
         }

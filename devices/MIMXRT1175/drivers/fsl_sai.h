@@ -22,7 +22,7 @@
 
 /*! @name Driver version */
 /*! @{ */
-#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 4, 2)) /*!< Version 2.4.2 */
+#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 4, 4)) /*!< Version 2.4.4 */
 /*! @} */
 
 /*! @brief _sai_status_t, SAI return status.*/
@@ -245,10 +245,12 @@ typedef enum _sai_data_pin_state
 /*! @brief sai fifo combine mode definition */
 typedef enum _sai_fifo_combine
 {
-    kSAI_FifoCombineDisabled = 0U,          /*!< sai fifo combine mode disabled */
-    kSAI_FifoCombineModeEnabledOnRead,      /*!< sai fifo combine mode enabled on FIFO reads */
-    kSAI_FifoCombineModeEnabledOnWrite,     /*!< sai fifo combine mode enabled on FIFO write */
-    kSAI_FifoCombineModeEnabledOnReadWrite, /*!< sai fifo combined mode enabled on FIFO read/writes */
+    kSAI_FifoCombineDisabled               = 0U, /*!< sai TX/RX fifo combine mode disabled */
+    kSAI_FifoCombineModeEnabledOnRead      = 1U, /*!< sai TX fifo combine mode enabled on FIFO reads */
+    kSAI_FifoCombineModeEnabledOnWrite     = 2U, /*!< sai TX fifo combine mode enabled on FIFO write */
+    kSAI_RxFifoCombineModeEnabledOnWrite   = 1U, /*!< sai RX fifo combine mode enabled on FIFO write */
+    kSAI_RXFifoCombineModeEnabledOnRead    = 2U, /*!< sai RX fifo combine mode enabled on FIFO reads */
+    kSAI_FifoCombineModeEnabledOnReadWrite = 3U, /*!< sai TX/RX fifo combined mode enabled on FIFO read/writes */
 } sai_fifo_combine_t;
 #endif
 

@@ -21,7 +21,15 @@
 #ifndef DEBUG_CONSOLE_UART_INDEX
 #define DEBUG_CONSOLE_UART_INDEX 1
 #endif
+#if defined (CONFIG_OT_CLI_IW612) && (CONFIG_OT_CLI_IW612 == 1)
+#ifndef BOARD_APP_UART_INSTANCE
+#define BOARD_APP_UART_INSTANCE 2U
+#endif
 
+#ifndef BOARD_APP_UART_BAUDRATE
+#define BOARD_APP_UART_BAUDRATE 115200
+#endif /* BOARD_APP_UART_BAUDRATE */
+#endif
 /* The UART to use for debug messages. */
 #define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_CLK_FREQ 24000000
@@ -31,6 +39,12 @@
 #define BOARD_DEBUG_UART_INSTANCE 1U
 #define BOARD_UART_IRQ            LPUART1_IRQn
 #define BOARD_UART_IRQ_HANDLER    LPUART1_IRQHandler
+#if defined (CONFIG_OT_CLI_IW612) && (CONFIG_OT_CLI_IW612 == 1)
+#define BOARD_APP_UART_BASEADDR (uint32_t) LPUART2
+#define BOARD_APP_UART_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2)
+#define BOARD_APP_UART_IRQ_HANDLER LPUART2_IRQHandler
+#define BOARD_APP_UART_IRQ LPUART2_IRQn
+#endif
 #elif DEBUG_CONSOLE_UART_INDEX == 2
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART2
 #define BOARD_DEBUG_UART_INSTANCE 2U
@@ -74,7 +88,7 @@
 
 #define USER_LED_INIT(output)                                            \
     GPIO_PinWrite(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, output); \
-    BOARD_USER_LED_GPIO->GDIR |= (1U << BOARD_USER_LED_GPIO_PIN) /*!< Enable target USER_LED */
+    BOARD_USER_LED_GPIO->GDIR |= (1U << BOARD_USER_LED_GPIO_PIN)                       /*!< Enable target USER_LED */
 #define USER_LED_OFF() \
     GPIO_PortClear(BOARD_USER_LED_GPIO, 1U << BOARD_USER_LED_GPIO_PIN)                 /*!< Turn off target USER_LED */
 #define USER_LED_ON() GPIO_PortSet(BOARD_USER_LED_GPIO, 1U << BOARD_USER_LED_GPIO_PIN) /*!<Turn on target USER_LED*/
@@ -111,7 +125,7 @@
 #define BOARD_SMARTCARD_MODULE                (EMVSIM1)      /*!< SMARTCARD communicational module instance */
 #define BOARD_SMARTCARD_MODULE_IRQ            (EMVSIM1_IRQn) /*!< SMARTCARD communicational module IRQ handler */
 #define BOARD_SMARTCARD_CLOCK_MODULE_CLK_FREQ (CLOCK_GetRootClockFreq(kCLOCK_Root_Emv1))
-#define BOARD_SMARTCARD_CLOCK_VALUE           (4000000U) /*!< SMARTCARD clock frequency */
+#define BOARD_SMARTCARD_CLOCK_VALUE           (4000000U)     /*!< SMARTCARD clock frequency */
 
 /* USB PHY condfiguration */
 #define BOARD_USB_PHY_D_CAL     (0x07U)
@@ -170,6 +184,8 @@
 /* SD card detection method when using wifi module. */
 #define BOARD_WIFI_SD_DETECT_TYPE kSDMMCHOST_DetectCardByHostDATA3
 
+/* @Brief Board Bluetooth HCI UART configuration */
+#define BOARD_BT_UART_BASEADDR    LPUART7
 #define BOARD_BT_UART_INSTANCE    7
 #define BOARD_BT_UART_BAUDRATE    3000000
 #define BOARD_BT_UART_CLK_FREQ    CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart7);
@@ -182,7 +198,11 @@
 #ifndef BOARD_NETWORK_USE_100M_ENET_PORT
 #define BOARD_NETWORK_USE_100M_ENET_PORT (0U)
 #endif
-
+#if defined (CONFIG_OT_CLI_IW612) && (CONFIG_OT_CLI_IW612 == 1)
+/* Timer Manager definition. */
+#define BOARD_TM_INSTANCE 1
+#define BOARD_TM_CLOCK_ROOT kCLOCK_Root_Gpt1
+#endif
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

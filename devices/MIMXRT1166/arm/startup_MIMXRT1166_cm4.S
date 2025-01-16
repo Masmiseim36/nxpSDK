@@ -4,13 +4,11 @@
 /*            MIMXRT1166_cm4                                                 */
 /*  @version: 0.1                                                            */
 /*  @date:    2020-12-29                                                     */
-/*  @build:   b220909                                                        */
+/*  @build:   b240823                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2022 NXP                                                   */
-/* All rights reserved.                                                      */
-/*                                                                           */
+/* Copyright 2016-2024 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
@@ -90,9 +88,9 @@ __Vectors:
     .long   CAN2_IRQHandler                                 /* CAN2 interrupt*/
     .long   CAN2_ERROR_IRQHandler                           /* CAN2 error interrupt*/
     .long   CAN3_IRQHandler                                 /* CAN3 interrupt*/
-    .long   CAN3_ERROR_IRQHandler                           /* CAN3 erro interrupt*/
+    .long   CAN3_ERROR_IRQHandler                           /* CAN3 error interrupt*/
     .long   Reserved66_IRQHandler                           /* Reserved interrupt*/
-    .long   KPP_IRQHandler                                  /* Keypad nterrupt*/
+    .long   KPP_IRQHandler                                  /* Keypad interrupt*/
     .long   Reserved68_IRQHandler                           /* Reserved interrupt*/
     .long   GPR_IRQ_IRQHandler                              /* GPR interrupt*/
     .long   eLCDIF_IRQHandler                               /* eLCDIF interrupt*/

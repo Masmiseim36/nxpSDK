@@ -5,15 +5,15 @@
 **                          MIMXRT1176DVMAA_cm7
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    IMXRT1170RM, Rev E, 12/2019
-**     Version:             rev. 0.1, 2018-03-05
-**     Build:               b200723
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
+**     Version:             rev. 1.1, 2022-04-02
+**     Build:               b221022
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2022 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -31,12 +31,7 @@ define symbol m_interrupts_start       = 0x30002000;
 define symbol m_interrupts_end         = 0x300023FF;
 
 define symbol m_text_start             = 0x30002400;
-if (isdefinedsymbol(__use_flash64MB__)) {
-  define symbol m_text_end               = 0x33D8FFFF;
-} else{
-  define symbol m_text_end               = 0x30D8FFFF;
-}
-/* NOTE: The last 0x230000 bytes in flash is reserved for data */
+define symbol m_text_end               = 0x30D8FFFF;
 
 define symbol m_interrupts_ram_start   = 0x20000000;
 define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;
@@ -54,15 +49,15 @@ if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol __NCACHE_REGION_START   = rpmsg_sh_mem_start;
   define exported symbol __NCACHE_REGION_SIZE    = rpmsg_sh_mem_end - rpmsg_sh_mem_start + 1;
 } else {
-  define symbol m_ncache_start                   = 0x202C0000;
-  define symbol m_ncache_end                     = 0x202C1FFF;
-
-  define symbol m_data2_start                    = 0x202C2000;
+  define symbol m_data2_start                    = 0x202C0000;
   define symbol m_data2_end                      = 0x2033FFFF;
 
-  define exported symbol __NCACHE_REGION_START   = m_ncache_start;
-  define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
+  define exported symbol __NCACHE_REGION_START   = m_data2_start;
+  define exported symbol __NCACHE_REGION_SIZE    = 0x0;
 }
+
+define symbol m_qacode_start           = 0x00000000;
+define symbol m_qacode_end             = 0x0003FFFF;
 
 define exported symbol m_boot_hdr_conf_start = 0x30000400;
 define symbol m_boot_hdr_ivt_start           = 0x30001000;
@@ -76,18 +71,17 @@ define exported symbol core1_image_end       = 0x33FFFFFF;
 define exported symbol core1_image_start     = 0x30FC0000;
 define exported symbol core1_image_end       = 0x30FFFFFF;
 }
-
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x400;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x200;
+  define symbol __size_heap__          = 0x0400;
 }
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;
@@ -97,8 +91,8 @@ define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
 define memory mem with size = 4G;
 define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
                           | mem:[from m_text_start to m_text_end];
+define region QACODE_region = mem:[from m_qacode_start to m_qacode_end];
 define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
-define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
 define region DATA2_region = mem:[from m_data2_start to m_data2_end];
 define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
 if (isdefinedsymbol(__use_shmem__)) {
@@ -110,16 +104,19 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
+define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
 
 define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
 
 initialize by copy {
   readwrite,
-  /* Place in RAM flash and performance dependent functions */
   object mflash_drv.o,
   object fsl_flexspi.o,
-  section .textrw
+  section .textrw,
+  section CodeQuickAccess,
+  section DataQuickAccess
 };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
@@ -127,11 +124,10 @@ if (isdefinedsymbol(__use_shmem__)) {
 }
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
-
-place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
-place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
-place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
-place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+place at address mem: m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem: m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem: m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem: m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
 
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
 
@@ -139,9 +135,11 @@ place in TEXT_region                        { readonly };
 place in DATA2_region                       { block RW };
 place in DATA2_region                       { block ZI };
 place in DATA_region                        { last block HEAP };
-place in NCACHE_region                      { block NCACHE_VAR };
-place in CSTACK_region                      { block CSTACK };
+place in DATA_region                        { block NCACHE_VAR };
 if (isdefinedsymbol(__use_shmem__)) {
   place in rpmsg_sh_mem_region                { section rpmsg_sh_mem_section };
 }
 place in core1_region                       { block CORE1_IMAGE_BLOCK };
+place in CSTACK_region                      { block CSTACK };
+place in QACODE_region                      { block QACCESS_CODE };
+place in DATA_region                        { block QACCESS_DATA };

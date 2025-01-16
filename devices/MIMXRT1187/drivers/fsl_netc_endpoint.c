@@ -9,6 +9,7 @@
 #include "fsl_netc_timer.h"
 #endif
 #if defined(FSL_FEATURE_NETC_HAS_ERRATA_051587) && FSL_FEATURE_NETC_HAS_ERRATA_051587
+#include "fsl_netc_timer.h"
 #include <math.h>
 #endif
 
@@ -676,11 +677,10 @@ status_t EP_Init(ep_handle_t *handle, uint8_t *macAddr, const ep_config_t *confi
 
 status_t EP_Deinit(ep_handle_t *handle)
 {
-    uint8_t siNum = getSiNum(handle->cfg.si);
-
     (void)EP_CmdBDRDeinit(handle);
-    NETC_EnetcEnableSI(handle->hw.base, siNum, false);
-    NETC_SIEnable(handle->hw.si, false);
+
+    (void)EP_Down(handle);
+
     if (!NETC_PortIsPseudo(handle->hw.portGroup.port))
     {
         NETC_PortEthMacGracefulStop(handle->hw.portGroup.port);
@@ -717,6 +717,13 @@ status_t EP_Down(ep_handle_t *handle)
 {
     NETC_EnetcEnableSI(handle->hw.base, getSiNum(handle->cfg.si), false);
     NETC_SIEnable(handle->hw.si, false);
+#if defined(FSL_FEATURE_NETC_HAS_ERRATA_051936) && FSL_FEATURE_NETC_HAS_ERRATA_051936
+    /* ERRATA051936: MAC Tx FIFO status may not report empty after FLR when operating in RGMII half duplex mode. In some cases, the transmitter
+       may become inoperable and not be able to recover from FLR requiring a full reset instead. The issue can occur when FLR is triggered around
+       the time MAC Tx has started backing off due to a half duplex collision detection. */
+    handle->hw.portGroup.eth->PM0_IF_MODE &= ~NETC_ETH_LINK_PM0_IF_MODE_HD_MASK;
+    handle->hw.portGroup.eth->PM1_IF_MODE &= ~NETC_ETH_LINK_PM0_IF_MODE_HD_MASK;
+#endif
 
     return kStatus_Success;
 }
@@ -901,7 +908,7 @@ status_t EP_SendFrame(ep_handle_t *handle, uint8_t ring, netc_frame_struct_t *fr
     {
         if ((opt->flags & (uint32_t)kEP_TX_OPT_START_TIME) != 0U)
         {
-            txDesc[0].standard.flags = NETC_SI_TXDESCRIP_RD_FLQ(0x2U) | NETC_SI_TXDESCRIP_RD_TSE_MASK |
+            txDesc[0].standard.flags = NETC_SI_TXDESCRIP_RD_FL(0x2U) | NETC_SI_TXDESCRIP_RD_TSE_MASK |
                                        NETC_SI_TXDESCRIP_RD_TXSTART(opt->timestamp);
         }
         if ((opt->flags & (uint32_t)kEP_TX_OPT_VLAN_INSERT) != 0U)

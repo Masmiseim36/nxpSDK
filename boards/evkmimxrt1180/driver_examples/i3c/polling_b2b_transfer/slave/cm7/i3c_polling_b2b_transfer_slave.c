@@ -7,21 +7,14 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SLAVE              I3C2
-#define I3C_SLAVE_CLOCK_FREQUENCY  CLOCK_GetRootClockFreq(kCLOCK_Root_I3c2)
-#define I3C_ASYNC_WAKE_UP_INTR_CLEAR                    \
-    {                                                   \
-        BLK_CTRL_WAKEUPMIX->I3C2_ASYNC_WAKEUP_CTRL = 1; \
-    }
 #ifndef I3C_MASTER_SLAVE_ADDR_7BIT
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
 #endif
@@ -29,7 +22,7 @@
 #define I3C_DATA_LENGTH 34U
 #endif
 #ifndef EXAMPLE_I3C_HDR_SUPPORT
-#define EXAMPLE_I3C_HDR_SUPPORT 0
+#define EXAMPLE_I3C_HDR_SUPPORT 1
 #endif
 
 /*******************************************************************************
@@ -133,10 +126,7 @@ int main(void)
 #endif
     i3c_slave_config_t slaveConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C board2board polling example -- Slave transfer.\r\n\r\n");
 

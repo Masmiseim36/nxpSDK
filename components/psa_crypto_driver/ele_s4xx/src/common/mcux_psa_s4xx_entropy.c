@@ -1,6 +1,5 @@
 /*
  * Copyright 2023 NXP
- * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,55 +31,50 @@
  *
  *  @{
  */
-psa_status_t ele_get_entropy(uint32_t flags, size_t *estimate_bits,
-                             uint8_t *output, size_t output_size)
+psa_status_t ele_get_entropy(uint32_t flags, size_t *estimate_bits, uint8_t *output, size_t output_size)
 {
-    status_t result              = kStatus_Success;
+    status_t result     = kStatus_Success;
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
 
-    if (output == NULL) {
+    if (output == NULL)
+    {
         status = PSA_ERROR_INVALID_ARGUMENT;
         goto end;
     }
 
-    if (estimate_bits == NULL) {
+    if (estimate_bits == NULL)
+    {
         status = PSA_ERROR_INVALID_ARGUMENT;
         goto end;
     }
 
-    if (output_size == 0) {
+    if (output_size == 0)
+    {
         status = PSA_ERROR_INVALID_ARGUMENT;
         goto end;
-    }
-
-    /*
-     * The order of functions in psa_crypto_init() is not correct as
-     * driver init is called after call to random number generator. To
-     * avoid circular dependency add initialization here.
-     */
-    status = CRYPTO_InitHardware();
-    if (status != PSA_SUCCESS) {
-        return status;
     }
 
 #if defined(MBEDTLS_THREADING_C)
-    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_ele_mutex) != 0) {
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_ele_mutex) != 0)
+    {
         return PSA_ERROR_GENERIC_ERROR;
     }
 #endif
 
-    result = ELE_RngGetRandom(S3MU, (uint32_t *) output, output_size, kNoReseed);
+    result = ELE_RngGetRandom(S3MU, (uint32_t *)output, output_size, kNoReseed);
     status = ele_to_psa_status(result);
 
 #if defined(MBEDTLS_THREADING_C)
-    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_ele_mutex) != 0) {
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_ele_mutex) != 0)
+    {
         return PSA_ERROR_GENERIC_ERROR;
     }
 #endif
 
-    if (status == PSA_SUCCESS) {
+    if (status == PSA_SUCCESS)
+    {
         *estimate_bits = output_size * 8;
-        status = PSA_SUCCESS;
+        status         = PSA_SUCCESS;
     }
 
 end:
@@ -97,7 +91,7 @@ end:
 int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen)
 {
     size_t estimate_bits = 0;
-    int status = ele_get_entropy(0, &estimate_bits, output, len);
+    int status           = ele_get_entropy(0, &estimate_bits, output, len);
 
     *olen = estimate_bits / 8;
 

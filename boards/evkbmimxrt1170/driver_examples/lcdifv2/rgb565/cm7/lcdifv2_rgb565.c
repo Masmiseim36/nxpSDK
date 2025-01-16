@@ -6,17 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "app.h"
 #include "fsl_lcdifv2.h"
 #include "lcdifv2_support.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_soc_src.h"
-#include "pin_mux.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_CORE_ID 0
 
 #define DEMO_BYTE_PER_PIXEL 2U
 
@@ -42,19 +39,6 @@ static volatile bool s_frameDone = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_ResetDisplayMix(void)
-{
-    /*
-     * Reset the displaymix, otherwise during debugging, the
-     * debugger may not reset the display, then the behavior
-     * is not right.
-     */
-    SRC_AssertSliceSoftwareReset(SRC, kSRC_DisplaySlice);
-    while (kSRC_SliceResetInProcess == SRC_GetSliceResetState(SRC, kSRC_DisplaySlice))
-    {
-    }
-}
-
 void DEMO_LCDIFV2_IRQHandler(void)
 {
     uint32_t intStatus;
@@ -223,16 +207,7 @@ void DEMO_LCDIFV2_RGB(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
-    BOARD_InitLpuartPins();
-    BOARD_InitMipiPanelPins();
-#if (USE_MIPI_PANEL == MIPI_PANEL_RASPI_7INCH)
-    BOARD_InitLpi2cPins();
-#endif
-    BOARD_InitDebugConsole();
-    BOARD_InitLcdifClock();
+    BOARD_InitHardware();
 
     PRINTF("LCDIF v2 RGB565 example start...\r\n");
 

@@ -71,7 +71,15 @@
 #define configSUPPORT_STATIC_ALLOCATION  0
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 
+#if CONFIG_FREERTOS_LOW_MEMORY_FOOTPRINT
+#ifdef RW610
+#define configTOTAL_HEAP_SIZE            ((size_t)(60 * 1024))
+#else
 #define configTOTAL_HEAP_SIZE            ((size_t)(70 * 1024))
+#endif /* RW610 */
+#else
+#define configTOTAL_HEAP_SIZE            ((size_t)(70 * 1024))
+#endif /* CONFIG_FREERTOS_LOW_MEMORY_FOOTPRINT */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 
 /* Hook function related definitions. */
@@ -103,7 +111,7 @@
 
 /* Software timer related definitions. */
 #define configUSE_TIMERS             1
-#define configTIMER_TASK_PRIORITY    4
+#define configTIMER_TASK_PRIORITY    (configMAX_PRIORITIES - 1)
 #define configTIMER_QUEUE_LENGTH     5
 #define configTIMER_TASK_STACK_DEPTH (configMINIMAL_STACK_SIZE * 2U)
 
@@ -135,77 +143,8 @@
 #define INCLUDE_pcTaskGetTaskName           1
 #define INCLUDE_xSemaphoreGetMutexHolder    1
 
+/****************** Macro definitions ***************/
 
-
-#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
-    /* in Kinetis SDK, this contains the system core clock frequency */
-    #include <stdint.h>
-    extern uint32_t SystemCoreClock;
-#endif
-
-#if (defined(CPU_MIMXRT1181CVP2B) || defined(CPU_MIMXRT1182CVP2B) || defined(CPU_MIMXRT1187CVM8B_cm33) || defined(CPU_MIMXRT1189CVM8B_cm33)) 
-#ifndef configENABLE_FPU
-  #define configENABLE_FPU                        1
-#endif
-#ifndef configENABLE_MPU
-  #define configENABLE_MPU                        0
-#endif
-#ifndef configENABLE_TRUSTZONE
-  #define configENABLE_TRUSTZONE                  0
-#endif
-#ifndef configRUN_FREERTOS_SECURE_ONLY
-  #define configRUN_FREERTOS_SECURE_ONLY          1
-#endif
-
-/* Redefine: Mutex is needed for SRTM communication */
-#undef configUSE_MUTEXES
-#define configUSE_MUTEXES                       1
-
-#ifndef configTOTAL_HEAP_SIZE
-#define configTOTAL_HEAP_SIZE ((size_t)(40 * 1024))
-#endif
-
-#define configSTACK_DEPTH_TYPE uint32_t
-
-/* Interrupt nesting behaviour configuration. Cortex-M specific. */
-#ifdef __NVIC_PRIO_BITS
-/* __NVIC_PRIO_BITS will be specified when CMSIS is being used. */
-#define configPRIO_BITS __NVIC_PRIO_BITS
-#else
-#define configPRIO_BITS 3 /* 7 priority levels */
-#endif
-
-#else
-/* Interrupt nesting behaviour configuration. Cortex-M specific. */
-#ifdef __NVIC_PRIO_BITS
-/* __NVIC_PRIO_BITS will be specified when CMSIS is being used. */
-#define configPRIO_BITS __NVIC_PRIO_BITS
-#else
-#define configPRIO_BITS 4 /* 15 priority levels */
-#endif
-#endif
-
-/* The lowest interrupt priority that can be used in a call to a "set priority"
-function. */
-#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY ((1U << (configPRIO_BITS)) - 1)
-
-/* The highest interrupt priority that can be used by any interrupt service
-routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
-INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
-PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 2
-
-/* Interrupt priorities used by the kernel port layer itself.  These are generic
-to all Cortex-M ports, and do not rely on any particular library functions. */
-#define configKERNEL_INTERRUPT_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
-/* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
-See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
-
-/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
-standard names. */
-#define vPortSVCHandler SVC_Handler
-#define xPortPendSVHandler PendSV_Handler
-#define xPortSysTickHandler SysTick_Handler
+#include "FreeRTOSConfigBoard.h"
 
 #endif /* FREERTOS_CONFIG_H */

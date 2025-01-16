@@ -128,7 +128,13 @@ initialize by copy { readwrite, section .textrw, section DataQuickAccess, sectio
   section .text   object flexspi_nor_flash_ops.o,
   section .rodata object flexspi_nor_flash_ops.o,
   section .text   object fsl_flexspi.o,
-  section .rodata object fsl_flexspi.o
+  section .rodata object fsl_flexspi.o,
+  readonly object ABImemcpy.o,
+  readonly object ABImemset.o,
+  readonly object I64DivZer.o,
+  readonly object ABImemclr4.o,
+  readonly object ABImemset48.o,
+  readonly object I64DivMod.o,
 };
 
 do not initialize  { section .noinit };

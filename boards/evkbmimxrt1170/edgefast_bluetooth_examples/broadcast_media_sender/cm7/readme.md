@@ -1,49 +1,13 @@
-Overview
-========
+# broadcast_media_sender
+
+## Overview
 Application demonstrating how to use the broadcast media sender feature.
 
 There should be three boards: 1 BMS + 1 BMR(left) + 1 BMR(right).
 BMS: broadcast stereo audio stream, left channel on first BIS and right channel on another BIS.
 BMR: lisen one of BIS channel and render it.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Micro USB cable
-- evkbmimxrt1170 board
-- Personal Computer
-- Embedded Artists 2EL M.2 Module (Rev-A1) - direct M2 connection.
-
-Jumper settings for RT1170-EVKB (enables external 5V supply):
-remove  J38 5-6
-connect J38 1-2
-connect J43 with external power(controlled by SW5)
-connect J25-13 with 2EL's GPIO_27
-
-Murata Solution Board settings
-Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
-
-The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1170-EVKB and Murata 1XK M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-The hardware rework for MIMXRT1170-EVKB and Murata 2EL M.2 Adapter is same as MIMXRT1170-EVKB and Murata 1XK M.2 Adapter.
-
-Note:
-To ensure that the LITTLEFS flash region has been cleaned,
-all flash sectors need to be erased before downloading example code.
-After downloaded binary into qspiflash and boot from qspiflash directly,
-please reset the board by pressing SW4 or power off and on the board to run the application.
-Prepare the Demo
-================
+## Prepare the Demo
 
 1.  Open example's project and build it.
 
@@ -66,8 +30,7 @@ Prepare the Demo
 
 8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
+## Running the demo
 The log below shows the output of the example in the terminal window.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,3 +108,8 @@ Other cmds could be used:
 Note:
 1 "exit" command is a shell internal command, only used to exit shell module and could not used to exit demo.
 2 the "music_16_2.wav" should be 16/24/32bits 2 channel with sample rate 8000/16000/24000/32000/48000.
+
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/broadcast_media_sender/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/edgefast_bluetooth_examples/broadcast_media_sender/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/broadcast_media_sender/example_board_readme.md)

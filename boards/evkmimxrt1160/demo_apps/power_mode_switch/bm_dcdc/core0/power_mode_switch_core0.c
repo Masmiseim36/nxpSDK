@@ -12,53 +12,11 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_mu.h"
+#include "app.h"
 
-#include "fsl_soc_src.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CPU_NAME "iMXRT1166"
-
-#define APP_WAKEUP_BUTTON_GPIO        BOARD_USER_BUTTON_GPIO
-#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ         BOARD_USER_BUTTON_IRQ
-#define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
-
-#define APP_WAKEUP_SNVS_IRQ         SNVS_HP_NON_TZ_IRQn
-#define APP_WAKEUP_SNVS_IRQ_HANDLER SNVS_HP_NON_TZ_IRQHandler
-
-/* Address of memory, from which the secondary core will boot */
-#define CORE1_BOOT_ADDRESS 0x20200000
-
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-extern uint32_t Image$$CORE1_REGION$$Base;
-extern uint32_t Image$$CORE1_REGION$$Length;
-#define CORE1_IMAGE_START &Image$$CORE1_REGION$$Base
-#elif defined(__ICCARM__)
-extern unsigned char core1_image_start[];
-#define CORE1_IMAGE_START core1_image_start
-#elif defined(__GNUC__)
-extern const char core1_image_start[];
-extern const char *core1_image_end;
-extern int core1_image_size;
-#define CORE1_IMAGE_START ((void *)core1_image_start)
-#define CORE1_IMAGE_SIZE  ((void *)core1_image_size)
-#endif
-
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-extern uint32_t __Vectors[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
-#elif defined(__MCUXPRESSO)
-extern uint32_t __Vectors[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
-#elif defined(__ICCARM__)
-extern uint32_t __VECTOR_TABLE[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
-#elif defined(__GNUC__)
-extern uint32_t __VECTOR_TABLE[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
-#endif
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
 
@@ -68,10 +26,6 @@ extern uint32_t __VECTOR_TABLE[];
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void APP_BootCore1(void);
-#ifdef CORE1_IMAGE_COPY_TO_RAM
-uint32_t get_core1_image_size(void);
-#endif
 AT_QUICKACCESS_SECTION_CODE(void CLOCK_SetClockRoot(clock_root_t root, const clock_root_config_t *config));
 AT_QUICKACCESS_SECTION_CODE(void SwitchFlexspiRootClock(bool pllLdoDisabled));
 
@@ -82,43 +36,6 @@ AT_QUICKACCESS_SECTION_CODE(void SwitchFlexspiRootClock(bool pllLdoDisabled));
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void APP_BootCore1(void)
-{
-    IOMUXC_LPSR_GPR->GPR0 = IOMUXC_LPSR_GPR_GPR0_CM4_INIT_VTOR_LOW(CORE1_BOOT_ADDRESS >> 3);
-    IOMUXC_LPSR_GPR->GPR1 = IOMUXC_LPSR_GPR_GPR1_CM4_INIT_VTOR_HIGH(CORE1_BOOT_ADDRESS >> 16);
-
-    /* Read back to make sure write takes effect. */
-    (void)IOMUXC_LPSR_GPR->GPR0;
-    (void)IOMUXC_LPSR_GPR->GPR1;
-
-    /* If CM4 is already running (released by debugger), then reset it.
-       If CM4 is not running, release it. */
-    if ((SRC->SCR & SRC_SCR_BT_RELEASE_M4_MASK) == 0)
-    {
-        SRC_ReleaseCoreReset(SRC, kSRC_CM4Core);
-    }
-    else
-    {
-        SRC_AssertSliceSoftwareReset(SRC, kSRC_M4CoreSlice);
-    }
-}
-
-#ifdef CORE1_IMAGE_COPY_TO_RAM
-uint32_t get_core1_image_size(void)
-{
-    uint32_t image_size;
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-    image_size = (uint32_t)&Image$$CORE1_REGION$$Length;
-#elif defined(__ICCARM__)
-#pragma section = "__core1_image"
-    image_size = (uint32_t)__section_end("__core1_image") - (uint32_t)&core1_image_start;
-#elif defined(__GNUC__)
-    image_size = (uint32_t)core1_image_size;
-#endif
-    return image_size;
-}
-#endif
-
 void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
 {
     if ((1U << APP_WAKEUP_BUTTON_GPIO_PIN) & GPIO_GetPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO))
@@ -587,29 +504,7 @@ int main(void)
     uint8_t ch;
 
     /* Init board hardware.*/
-    clock_root_config_t rootCfg = {0};
-
-    BOARD_ConfigMPU();
-
-    /* Workaround: Disable interrupt which might be enabled by ROM. */
-    GPIO_DisableInterrupts(GPIO3, 1U << 24);
-    GPIO_ClearPinsInterruptFlags(GPIO3, 1U << 24);
-
-    /* Interrupt flags can't be cleared when wake up from SNVS mode, clear srtc and gpio interrupts here. */
-    SNVS->LPSR |= SNVS_LPSR_LPTA_MASK;
-    GPIO_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
-
-    BOARD_InitPins();
-
-    rootCfg.mux = kCLOCK_LPUART1_ClockRoot_MuxOscRc16M;
-    rootCfg.div = 1;
-    CLOCK_SetRootClock(kCLOCK_Root_Lpuart1, &rootCfg);
-
-    BOARD_InitDebugConsole();
-
-    // set start address after waking up from SUSPEND mode
-    IOMUXC_LPSR_GPR->GPR26 &= ~IOMUXC_LPSR_GPR_GPR26_CM7_INIT_VTOR_MASK;
-    IOMUXC_LPSR_GPR->GPR26 |= IOMUXC_LPSR_GPR_GPR26_CM7_INIT_VTOR(IMAGE_ENTRY_ADDRESS >> 7);
+    BOARD_InitHardware();
 
     preCpuMode = GPC_CM_GetPreviousCpuMode(GPC_CPU_MODE_CTRL);
     if (preCpuMode != kGPC_RunMode)

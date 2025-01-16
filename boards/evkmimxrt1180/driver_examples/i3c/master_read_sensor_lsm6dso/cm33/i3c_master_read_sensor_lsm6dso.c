@@ -7,21 +7,14 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER             I3C2
-#define EXAMPLE_I2C_BAUDRATE       400000
-#define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetRootClockFreq(kCLOCK_Root_I3c2)
-#define I3C_MASTER_SLAVE_ADDR_7BIT 0x6A
-#define WAIT_TIME                  1000
-#define I3C_DATA_LENGTH            1
 #define LSM6DSO_WHOAMI_REG_ADDR 0x0FU
 #define LSM6DSO_WHOAMI_VALUE 0x6CU
 
@@ -48,10 +41,7 @@ int main(void)
     status_t result      = kStatus_Success;
     uint8_t who_am_i_i3c = 0x00;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nI3C master read sensor data example.\r\n");
 

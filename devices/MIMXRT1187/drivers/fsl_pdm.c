@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2018, Freescale Semiconductor, Inc.
- * Copyright 2019-2020 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -70,7 +69,7 @@ uint32_t PDM_GetInstance(PDM_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_pdmBases); instance++)
     {
-        if (s_pdmBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_pdmBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }

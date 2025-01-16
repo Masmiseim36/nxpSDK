@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,18 +17,22 @@
 #include "fsl_cache.h"
 #include "fsl_debug_console.h"
 #if (DEMO_PANEL_RASPI_7INCH == DEMO_PANEL)
+#include "fsl_lpi2c.h"
 #include "fsl_ft5406_rt.h"
 #else
 #include "fsl_gt911.h"
 #endif
 
-#if LV_USE_GPU_NXP_VG_LITE
+#if LV_USE_DRAW_VGLITE
 #include "vg_lite.h"
 #include "vglite_support.h"
 #endif
 
-#if LV_USE_GPU_NXP_PXP
-#include "draw/nxp/pxp/lv_draw_pxp_blend.h"
+#if LV_USE_PXP
+#if LV_USE_ROTATE_PXP
+#include "src/draw/nxp/pxp/lv_draw_pxp.h"
+#include "src/display/lv_display_private.h"
+#endif
 #endif
 
 #if (DEMO_DISPLAY_CONTROLLER == DEMO_DISPLAY_CONTROLLER_LCDIFV2)
@@ -41,10 +45,14 @@
  * Definitions
  ******************************************************************************/
 
-/* Ratate panel or not. */
+/* Rotate panel or not. */
 #ifndef DEMO_USE_ROTATE
-#if LV_USE_GPU_NXP_PXP
+#if LV_USE_PXP
+#if LV_USE_ROTATE_PXP
 #define DEMO_USE_ROTATE 1
+#else
+#define DEMO_USE_ROTATE 0
+#endif
 #else
 #define DEMO_USE_ROTATE 0
 #endif
@@ -70,34 +78,26 @@
 #define DEMO_FB_ALIGN FRAME_BUFFER_ALIGN
 #endif
 
-#if (LV_ATTRIBUTE_MEM_ALIGN_SIZE > DEMO_FB_ALIGN)
-#undef DEMO_FB_ALIGN
-#define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
-#endif
-
-#define DEMO_FB_SIZE \
-    (((DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
+/* Make the frame buffer cacheline size aligned. */
 
 #if DEMO_USE_ROTATE
-#define LVGL_BUFFER_WIDTH  DEMO_BUFFER_HEIGHT
-#define LVGL_BUFFER_HEIGHT DEMO_BUFFER_WIDTH
+#define ROTATED_FB_WIDTH  DEMO_FB_HEIGHT
+#define ROTATED_FB_HEIGHT DEMO_FB_WIDTH
 #else
-#define LVGL_BUFFER_WIDTH  DEMO_BUFFER_WIDTH
-#define LVGL_BUFFER_HEIGHT DEMO_BUFFER_HEIGHT
+#define ROTATED_FB_WIDTH  DEMO_FB_WIDTH
+#define ROTATED_FB_HEIGHT DEMO_FB_HEIGHT
 #endif
+
+#define DEMO_FB_SIZE DEMO_FB_STRIDE(DEMO_FB_WIDTH) * DEMO_FB_HEIGHT
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
-
-#if (LV_USE_GPU_NXP_VG_LITE || LV_USE_GPU_NXP_PXP)
-static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv);
-#endif
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p);
 
 static void DEMO_InitTouch(void);
 
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data);
 
 static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 
@@ -108,7 +108,7 @@ static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode);
 #endif
 static void DEMO_WaitBufferSwitchOff(void);
 
-#if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
+#if (LV_COLOR_DEPTH == 8)
 /*
  * To support 8 color depth and 1 color depth with this board, color palette is
  * used to map 256 color to 2^16 color.
@@ -122,16 +122,6 @@ static void DEMO_SetLcdColorPalette(void);
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 #if DEMO_USE_ROTATE
 SDK_ALIGN(static uint8_t s_lvglBuffer[1][DEMO_FB_SIZE], DEMO_FB_ALIGN);
-#endif
-
-#if __CORTEX_M == 4
-#define DEMO_FLUSH_DCACHE() L1CACHE_CleanInvalidateSystemCache()
-#else
-#if DEMO_USE_ROTATE
-#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache_by_Addr(s_lvglBuffer[0], DEMO_FB_SIZE)
-#else
-#define DEMO_FLUSH_DCACHE() SCB_CleanInvalidateDCache()
-#endif
 #endif
 
 #if defined(SDK_OS_FREE_RTOS)
@@ -172,44 +162,16 @@ static int s_touchResolutionY;
  * Code
  ******************************************************************************/
 
-#if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
+#if (LV_COLOR_DEPTH == 8)
 static void DEMO_SetLcdColorPalette(void)
 {
-    /*
-     * To support 8 color depth and 1 color depth with this board, color palette is
-     * used to map 256 color to 2^16 color.
-     *
-     * LVGL 1-bit color depth still uses 8-bit per pixel, so the palette size is the
-     * same with 8-bit color depth.
-     */
+    /* For 8 bit format , LVGL uses the luminance of a color. */
     uint32_t palette[256];
 
-#if (LV_COLOR_DEPTH == 8)
-    lv_color_t color;
-    color.full = 0U;
-
-    /* RGB332 map to RGB888 */
-    for (int i = 0; i < 256U; i++)
+    for (uint32_t i = 0; i < 256U; i++)
     {
-        palette[i] =
-            ((uint32_t)color.ch.blue << 6U) | ((uint32_t)color.ch.green << 13U) | ((uint32_t)color.ch.red << 21U);
-        color.full++;
+        palette[i] = (i << 16U) | (i << 8U) | (i << 0U);
     }
-
-#elif (LV_COLOR_DEPTH == 1)
-    for (int i = 0; i < 256U;)
-    {
-        /*
-         * Pixel map:
-         * 0bXXXXXXX1 -> 0xFFFFFF
-         * 0bXXXXXXX0 -> 0x000000
-         */
-        palette[i] = 0x000000U;
-        i++;
-        palette[i] = 0xFFFFFFU;
-        i++;
-    }
-#endif
 
 #if (DEMO_DISPLAY_CONTROLLER == DEMO_DISPLAY_CONTROLLER_ELCDIF)
     ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, 0, palette, 256);
@@ -220,26 +182,14 @@ static void DEMO_SetLcdColorPalette(void)
 }
 #endif
 
-void lv_port_pre_init(void)
-{
-}
-
 void lv_port_disp_init(void)
 {
-    static lv_disp_draw_buf_t disp_buf;
-
-    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
-#if DEMO_USE_ROTATE
-    memset(s_lvglBuffer, 0, sizeof(s_lvglBuffer));
-    lv_disp_draw_buf_init(&disp_buf, s_lvglBuffer[0], NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
-#else
-    lv_disp_draw_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
-#endif
+    lv_display_t * disp_drv; /*Descriptor of a display driver*/
 
     status_t status;
     dc_fb_info_t fbInfo;
 
-#if LV_USE_GPU_NXP_VG_LITE
+#if LV_USE_DRAW_VGLITE
     /* Initialize GPU. */
     BOARD_PrepareVGLiteController();
 #endif
@@ -255,17 +205,17 @@ void lv_port_disp_init(void)
         assert(0);
     }
 
-#if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
+#if (LV_COLOR_DEPTH == 8)
     DEMO_SetLcdColorPalette();
 #endif
 
     g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
     fbInfo.pixelFormat = DEMO_BUFFER_PIXEL_FORMAT;
-    fbInfo.width       = DEMO_BUFFER_WIDTH;
-    fbInfo.height      = DEMO_BUFFER_HEIGHT;
+    fbInfo.width       = DEMO_FB_WIDTH;
+    fbInfo.height      = DEMO_FB_HEIGHT;
     fbInfo.startX      = DEMO_BUFFER_START_X;
     fbInfo.startY      = DEMO_BUFFER_START_Y;
-    fbInfo.strideBytes = DEMO_BUFFER_STRIDE_BYTE;
+    fbInfo.strideBytes = DEMO_FB_STRIDE(DEMO_FB_WIDTH);
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
     g_dc.ops->setCallback(&g_dc, 0, DEMO_BufferSwitchOffCallback, NULL);
@@ -297,36 +247,19 @@ void lv_port_disp_init(void)
 
     g_dc.ops->enableLayer(&g_dc, 0);
 
-    /*-----------------------------------
-     * Register the display in LittlevGL
-     *----------------------------------*/
+    disp_drv = lv_display_create(ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT);
 
-    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
-
-    /*Set up the functions to access to your display*/
-
-    /*Set the resolution of the display*/
-    disp_drv.hor_res = LVGL_BUFFER_WIDTH;
-    disp_drv.ver_res = LVGL_BUFFER_HEIGHT;
-
-    /*Used to copy the buffer's content to the display*/
-    disp_drv.flush_cb = DEMO_FlushDisplay;
-
-#if (LV_USE_GPU_NXP_VG_LITE || LV_USE_GPU_NXP_PXP)
-    disp_drv.clean_dcache_cb = DEMO_CleanInvalidateCache;
+    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
+#if DEMO_USE_ROTATE
+    memset(s_lvglBuffer, 0, sizeof(s_lvglBuffer));
+    lv_display_set_buffers_with_stride(disp_drv, (void *)s_lvglBuffer[0], NULL, DEMO_FB_SIZE, DEMO_FB_STRIDE(ROTATED_FB_WIDTH), LV_DISPLAY_RENDER_MODE_FULL);
+#else
+    lv_display_set_buffers_with_stride(disp_drv, (void *)s_frameBuffer[0], (void *)s_frameBuffer[1], DEMO_FB_SIZE, DEMO_FB_STRIDE(ROTATED_FB_WIDTH), LV_DISPLAY_RENDER_MODE_FULL);
 #endif
 
-    /*Set a display buffer*/
-    disp_drv.draw_buf = &disp_buf;
+    lv_display_set_flush_cb(disp_drv, DEMO_FlushDisplay);
 
-    /* Partial refresh */
-    disp_drv.full_refresh = 1;
-
-    /*Finally register the driver*/
-    lv_disp_drv_register(&disp_drv);
-
-#if LV_USE_GPU_NXP_VG_LITE
+#if LV_USE_DRAW_VGLITE
     if (vg_lite_init(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT) != VG_LITE_SUCCESS)
     {
         PRINTF("VGLite init error. STOP.");
@@ -361,12 +294,15 @@ static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 #endif
 }
 
-#if (LV_USE_GPU_NXP_VG_LITE || LV_USE_GPU_NXP_PXP)
-static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv)
+void DEMO_CleanInvalidateCacheByAddr(void * addr, int32_t dsize)
 {
-    DEMO_FLUSH_DCACHE();
-}
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCacheByRange((uint32_t)addr, dsize);
+#else
+    SCB_CleanInvalidateDCache_by_Addr(addr, dsize);
 #endif
+}
+
 
 static void DEMO_WaitBufferSwitchOff(void)
 {
@@ -384,7 +320,7 @@ static void DEMO_WaitBufferSwitchOff(void)
 #endif
 }
 
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
 #if DEMO_USE_ROTATE
 
@@ -392,7 +328,7 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
      * Work flow:
      *
      * 1. Wait for the available inactive frame buffer to draw.
-     * 2. Draw the ratated frame to inactive buffer.
+     * 2. Draw the rotated frame to inactive buffer.
      * 3. Pass inactive to LCD controller to show.
      */
 
@@ -418,27 +354,35 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
     SCB_CleanInvalidateDCache_by_Addr(inactiveFrameBuffer, DEMO_FB_SIZE);
 #endif
 
-#if LV_USE_GPU_NXP_PXP /* Use PXP to rotate the panel. */
-    lv_area_t dest_area = {
-        .x1 = 0,
-        .x2 = DEMO_BUFFER_HEIGHT - 1,
-        .y1 = 0,
-        .y2 = DEMO_BUFFER_WIDTH - 1,
-    };
-
-    lv_gpu_nxp_pxp_blit(((lv_color_t *)inactiveFrameBuffer), &dest_area, DEMO_BUFFER_WIDTH, color_p, area,
-                        lv_area_get_width(area), LV_OPA_COVER, LV_DISP_ROT_270);
-    lv_gpu_nxp_pxp_wait();
+#if LV_USE_ROTATE_PXP /* Use PXP to rotate the panel. */
+    lv_draw_pxp_rotate(color_p, inactiveFrameBuffer,
+                       ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT,
+                       DEMO_FB_STRIDE(ROTATED_FB_WIDTH),
+                       DEMO_FB_STRIDE(ROTATED_FB_HEIGHT),
+                       LV_DISPLAY_ROTATION_90,
+#if (LV_COLOR_DEPTH == 32)
+                        LV_COLOR_FORMAT_XRGB8888
+#elif (LV_COLOR_DEPTH == 16)
+                        LV_COLOR_FORMAT_RGB565
+#else
+                        LV_COLOR_FORMAT_RAW
+#endif
+                        );
 
 #else /* Use CPU to rotate the panel. */
-    for (uint32_t y = 0; y < LVGL_BUFFER_HEIGHT; y++)
-    {
-        for (uint32_t x = 0; x < LVGL_BUFFER_WIDTH; x++)
-        {
-            ((lv_color_t *)inactiveFrameBuffer)[(DEMO_BUFFER_HEIGHT - x) * DEMO_BUFFER_WIDTH + y] =
-                color_p[y * LVGL_BUFFER_WIDTH + x];
-        }
-    }
+    lv_draw_sw_rotate(color_p, inactiveFrameBuffer,
+                       ROTATED_FB_WIDTH, ROTATED_FB_HEIGHT,
+                       DEMO_FB_STRIDE(ROTATED_FB_WIDTH),
+                       DEMO_FB_STRIDE(ROTATED_FB_HEIGHT),
+                       LV_DISPLAY_ROTATION_90,
+#if (LV_COLOR_DEPTH == 32)
+                        LV_COLOR_FORMAT_XRGB8888
+#elif (LV_COLOR_DEPTH == 16)
+                        LV_COLOR_FORMAT_RGB565
+#else
+                        LV_COLOR_FORMAT_RAW
+#endif
+                        );
 #endif
 
 #if __CORTEX_M == 4
@@ -473,20 +417,13 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
 void lv_port_indev_init(void)
 {
-    static lv_indev_drv_t indev_drv;
-
-    /*------------------
-     * Touchpad
-     * -----------------*/
-
     /*Initialize your touchpad */
     DEMO_InitTouch();
 
     /*Register a touchpad input device*/
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type    = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_cb = DEMO_ReadTouch;
-    lv_indev_drv_register(&indev_drv);
+    lv_indev_t * indev = lv_indev_create();
+    lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
+    lv_indev_set_read_cb(indev, DEMO_ReadTouch);
 }
 #if (DEMO_PANEL_RASPI_7INCH != DEMO_PANEL)
 static void BOARD_PullMIPIPanelTouchResetPin(bool pullUp)
@@ -558,7 +495,7 @@ static void DEMO_InitTouch(void)
 #endif
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     static int touch_x = 0;
     static int touch_y = 0;

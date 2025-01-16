@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 
+#include <porting.h>
+
 #include <bluetooth/audio/audio.h>
 
 /* Codec parameters from source. */

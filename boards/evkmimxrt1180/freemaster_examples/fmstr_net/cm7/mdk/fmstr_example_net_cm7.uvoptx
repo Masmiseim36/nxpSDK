@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>fmstr_example_net_cm7 hyperram_debug</TargetName>
+    <TargetName>fmstr_example_net_cm7 flexspi_nor_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1180_ram_cm7.ini</tIfile>
+        <tIfile>../evkmimxrt1180_flexspi_nor_cm7.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -181,7 +181,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>fmstr_example_net_cm7 hyperram_release</TargetName>
+    <TargetName>fmstr_example_net_cm7 flexspi_nor_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -272,7 +272,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1180_ram_cm7.ini</tIfile>
+        <tIfile>../evkmimxrt1180_flexspi_nor_cm7.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

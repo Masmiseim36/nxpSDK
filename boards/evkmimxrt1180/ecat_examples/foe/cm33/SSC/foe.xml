@@ -103,7 +103,7 @@
 			<ESI Path="/EtherCATInfo/Descriptions/Devices/Device/Info">
 				<Value>
 					<EtherCATController>
-						<DpramSize>8092</DpramSize>
+						<DpramSize>8192</DpramSize>
 						<SmCount>4</SmCount>
 						<FmmuCount>4</FmmuCount>
 					</EtherCATController>

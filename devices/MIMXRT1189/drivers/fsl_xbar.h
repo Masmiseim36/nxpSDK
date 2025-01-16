@@ -19,9 +19,9 @@
  * Definitions
  ******************************************************************************/
 
-#define FSL_XBAR_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+#define FSL_XBAR_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
 typedef uint32_t xbar_reg_t;
 #else
 typedef uint16_t xbar_reg_t;

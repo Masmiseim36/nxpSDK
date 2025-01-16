@@ -5,14 +5,14 @@ The example demonstrates graphical widgets of the emWin library.
 
 SDK version
 ===========
-- Version: 2.16.000
+- Version: 24.12.00
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
+- Keil MDK  5.41
+- IAR embedded Workbench  9.60.3
 - GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+- MCUXpresso  24.12.00
 
 Hardware requirements
 =====================
@@ -25,6 +25,17 @@ Board settings
 ==============
 1. Connect the LCD panel to J48.
 
+Select the panel
+The project uses RK055MHD091A0-CTG panel by default, to use other panels:
+
+If Kconfig is used, select the panel in Kconfig "Panel Selection".
+
+If package is used, modify the mcux_config.h:
+change DEMO_PANEL to 0 to use RK055AHD091-CTG.
+change DEMO_PANEL to 1 to use RK055IQH091-CTG.
+change DEMO_PANEL to 2 to use RK055MHD091A0-CTG(default).
+change DEMO_PANEL to 3 to use RaspberryPi panel.
+
 Prepare the Demo
 ================
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
@@ -34,7 +45,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Build the project, the project uses RK055MHD091 by default, to use other panels, change #define DEMO_PANEL DEMO_PANEL_RK055MHD091 to #define DEMO_PANEL DEMO_PANEL_RK055IQH091 or #define DEMO_PANEL DEMO_PANEL_RK055AHD091 in display_support.h.
+3.  Build the project.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 

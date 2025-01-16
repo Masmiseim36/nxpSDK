@@ -16,17 +16,13 @@
 #include "semphr.h"
 #include "task.h"
 #include "limits.h"
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "sdmmc_config.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TASK_GET_SEM_BLOCK_TICKS 1U
-#define DEMO_TASK_ACCESS_SDCARD_TIMES 2U
 /*! @brief Task stack size. */
 #define ACCESSFILE_TASK_STACK_SIZE (1024U)
 /*! @brief Task stack priority. */
@@ -155,10 +151,7 @@ static void CardDetectTask(void *pvParameters)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nSDCARD fatfs freertos example.\r\n");
 

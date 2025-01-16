@@ -1,6 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
- * All rights reserved.
+ * Copyright 2022-2024 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +8,7 @@
 #include "psa/crypto.h"
 #include "psa_crypto_rsa.h"
 #include "mbedtls/asn1write.h"
+#include "mbedtls/platform.h"
 
 #include "mcux_psa_s4xx_common_key_management.h"
 #include "mcux_psa_s4xx_common_init.h"
@@ -170,6 +170,7 @@ static psa_status_t mcux_write_rsa_keypair_from_asn(psa_key_type_t key_type,
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     mbedtls_rsa_context *rsa = NULL;
+    int ret = -1;
 
     /* Parse input - We will use mbedtls_rsa_context to parse the context into*/
     status = mbedtls_psa_rsa_load_representation(key_type,
@@ -185,11 +186,13 @@ static psa_status_t mcux_write_rsa_keypair_from_asn(psa_key_type_t key_type,
 #if defined(USE_MALLOC)
     rsa_key->modulus = malloc(key_bytes);
     if (rsa_key->modulus == NULL) {
-        return PSA_ERROR_INSUFFICIENT_MEMORY;
+        status = PSA_ERROR_INSUFFICIENT_MEMORY;
+        goto exit;
     }
 #else
     if (key_bytes > sizeof(rsa_key->modulus)) {
-        return PSA_ERROR_INSUFFICIENT_MEMORY;
+        status = PSA_ERROR_INSUFFICIENT_MEMORY;
+        goto exit;
     }
 #endif
     rsa_key->modulus_len = key_bytes;
@@ -200,44 +203,76 @@ static psa_status_t mcux_write_rsa_keypair_from_asn(psa_key_type_t key_type,
         rsa_key->pub_exp = malloc(sizeof(uint32_t));
         if (rsa_key->pub_exp == NULL) {
             free(rsa_key->modulus);
-            return PSA_ERROR_INSUFFICIENT_MEMORY;
+            status = PSA_ERROR_INSUFFICIENT_MEMORY;
+            goto exit;
         }
 #else
         if (sizeof(uint32_t) > sizeof(rsa_key->pub_exp)) {
-            return PSA_ERROR_INSUFFICIENT_MEMORY;
+            status = PSA_ERROR_INSUFFICIENT_MEMORY;
+            goto exit;
         }
 #endif
 
         rsa_key->pub_exp_len = sizeof(uint32_t);
-        mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(E),
-                                 (unsigned char *) rsa_key->pub_exp,
-                                 rsa_key->pub_exp_len);
+        ret = mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(E),
+                                      (unsigned char *) rsa_key->pub_exp,
+                                      rsa_key->pub_exp_len);
+        if (ret < 0) {
+#if defined(USE_MALLOC)
+            free(rsa_key->modulus);
+#endif
+            status = PSA_ERROR_BAD_STATE;
+            goto exit;
+        }
     } else {
 #if defined(USE_MALLOC)
         /* Alocate MPI structure for Private exponent */
         rsa_key->priv_exp = malloc(key_bytes);
         if (rsa_key->priv_exp == NULL) {
             free(rsa_key->modulus);
-            return PSA_ERROR_INSUFFICIENT_MEMORY;
+            status = PSA_ERROR_INSUFFICIENT_MEMORY;
+            goto exit;
         }
 #else
         if (key_bytes > sizeof(rsa_key->priv_exp)) {
-            return PSA_ERROR_INSUFFICIENT_MEMORY;
+            status = PSA_ERROR_INSUFFICIENT_MEMORY;
+            goto exit;
         }
 #endif
         rsa_key->priv_exp_len = key_bytes;
         /* Read private exponent data from MPI ctx structure */
-        mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(D),
-                                 (unsigned char *) rsa_key->priv_exp,
-                                 rsa_key->priv_exp_len);
+        ret = mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(D),
+                                       (unsigned char *) rsa_key->priv_exp,
+                                       rsa_key->priv_exp_len);
+        if (ret < 0) {
+#if defined(USE_MALLOC)
+            free(rsa_key->modulus);
+            free(rsa_key->priv_exp);
+#endif
+            status = PSA_ERROR_BAD_STATE;
+            goto exit;
+        }
     }
 
-    /* Read motulus data from MPI ctx structure */
-    mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(N), (unsigned char *) rsa_key->modulus,
-                             key_bytes);
+    /* Read modulus data from MPI ctx structure */
+    ret = mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(N),
+                                   (unsigned char *) rsa_key->modulus,
+                                   key_bytes);
+    if (ret < 0) {
+#if defined(USE_MALLOC)
+        free(rsa_key->modulus);
+        free(rsa_key->priv_exp);
+#endif
+        status = PSA_ERROR_BAD_STATE;
+    } else {
+        status = PSA_SUCCESS;
+    }
 
-    return PSA_SUCCESS;
+exit:
+    mbedtls_rsa_free(rsa);
+    mbedtls_free(rsa);
 
+    return status;
 }
 
 psa_status_t mcux_key_buf_to_raw_rsa(

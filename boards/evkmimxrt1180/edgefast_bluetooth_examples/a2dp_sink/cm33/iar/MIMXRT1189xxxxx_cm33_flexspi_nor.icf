@@ -152,6 +152,7 @@ initialize by copy { readwrite, section .textrw, section DataQuickAccess, sectio
 define block ._bt_gatt_service_static  with fixed order { readonly section ._bt_gatt_service_static*};
 define block ._bt_settings_static      with fixed order { readonly section ._bt_settings*};
 define block ._bt_conn_cb              with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_ias_cb               with fixed order { readonly section ._bt_ias_cb*};
 define block ._bt_l2cap_fixed_chan     with fixed order { readonly section ._bt_l2cap_fixed_chan*};
 define block ._bt_l2cap_br_fixed_chan  with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
 define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
@@ -173,6 +174,7 @@ place in TEXT_region                        { block CORE1_IMAGE_BLOCK };
 place in TEXT_region                        { block ._bt_gatt_service_static };
 place in TEXT_region                        { block ._bt_settings_static };
 place in TEXT_region                        { block ._bt_conn_cb };
+place in TEXT_region                        { block ._bt_ias_cb };
 place in TEXT_region                        { block ._bt_l2cap_fixed_chan };
 place in TEXT_region                        { block ._bt_l2cap_br_fixed_chan };
 place in TEXT_region                        { block ._settings_handler_static };

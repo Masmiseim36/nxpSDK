@@ -89,42 +89,34 @@ void GPC_ConfigCore1SetpointMapping()
 //---------------------------------------------------------------------------
 void GPC_ConfigCore0CpuModeTransitionFlow()
 {
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.enableStep = true;
-    tranStepConfig.cntMode    = kGPC_StepCounterDisableMode;
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepSsar, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepLpcg, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepPll, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepIso, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepReset, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepPower, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupPower, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupReset, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupIso, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupPll, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupLpcg, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupSsar, &tranStepConfig);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepSsar);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepLpcg);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepPll);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepIso);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepReset);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_SleepPower);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupPower);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupReset);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupIso);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupPll);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupLpcg);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupSsar);
 }
 
 void GPC_ConfigCore1CpuModeTransitionFlow()
 {
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.enableStep = true;
-    tranStepConfig.cntMode    = kGPC_StepCounterDisableMode;
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepSsar, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepLpcg, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepPll, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepIso, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepReset, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepPower, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupPower, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupReset, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupIso, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupPll, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupLpcg, &tranStepConfig);
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupSsar, &tranStepConfig);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepSsar);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepLpcg);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepPll);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepIso);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepReset);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_SleepPower);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupPower);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupReset);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupIso);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupPll);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupLpcg);
+    GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupSsar);
 }
 
 //---------------------------------------------------------------------------
@@ -133,34 +125,30 @@ void GPC_ConfigCore1CpuModeTransitionFlow()
 //---------------------------------------------------------------------------
 void GPC_ConfigSetpointTransitionFlow()
 {
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.enableStep = true;
-    tranStepConfig.cntMode    = kGPC_StepCounterDisableMode;
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_SsarSave, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LpcgOff, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_GroupDown, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_RootDown, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PllOff, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_IsoOn, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_ResetEarly, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PowerOff, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BiasOff, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BandgapPllLdoOff, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LdoPre, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_DcdcDown, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_DcdcUp, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LdoPost, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BandgapPllLdoOn, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BiasOn, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PowerOn, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_ResetLate, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_IsoOff, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PllOn, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_RootUp, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_GroupUp, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LpcgOn, &tranStepConfig);
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_SsarRestore, &tranStepConfig);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_SsarSave);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LpcgOff);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_GroupDown);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_RootDown);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PllOff);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_IsoOn);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_ResetEarly);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PowerOff);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BiasOff);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BandgapPllLdoOff);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LdoPre);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_DcdcDown);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_DcdcUp);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LdoPost);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BandgapPllLdoOn);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_BiasOn);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PowerOn);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_ResetLate);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_IsoOff);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PllOn);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_RootUp);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_GroupUp);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_LpcgOn);
+    GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_SsarRestore);
 }
 
 //---------------------------------------------------------------------------
@@ -169,26 +157,22 @@ void GPC_ConfigSetpointTransitionFlow()
 //---------------------------------------------------------------------------
 void GPC_ConfigStbyTransitionFlow()
 {
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.enableStep = true;
-    tranStepConfig.cntMode    = kGPC_StepCounterDisableMode;
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LpcgIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PllIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BiasIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PldoIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BandgapIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LdoIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_DcdcIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PmicIn, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PmicOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_DcdcOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LdoOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BandgapOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PldoOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BiasOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PllOut, &tranStepConfig);
-    GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LpcgOut, &tranStepConfig);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LpcgIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PllIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BiasIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PldoIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BandgapIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LdoIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_DcdcIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PmicIn);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PmicOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_DcdcOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LdoOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BandgapOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PldoOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_BiasOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_PllOut);
+    GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL, kGPC_STBY_LpcgOut);
 }
 
 void GPC_ConfigROSC()
@@ -363,7 +347,7 @@ void PGMC_InitConfig()
     PGMC_BPC2->BPC_SSAR_SAVE_CTRL &= ~PGMC_BPC_BPC_SSAR_SAVE_CTRL_SAVE_AT_SP_MASK;
     PGMC_BPC2->BPC_SSAR_SAVE_CTRL |= PGMC_BPC_BPC_SSAR_SAVE_CTRL_SAVE_AT_SP(PD_WKUP_SP_VAL);
     PGMC_BPC2->BPC_SSAR_RESTORE_CTRL &= ~PGMC_BPC_BPC_SSAR_RESTORE_CTRL_RESTORE_AT_SP_MASK;
-    PGMC_BPC2->BPC_SSAR_RESTORE_CTRL |= PGMC_BPC_BPC_SSAR_RESTORE_CTRL_RESTORE_AT_SP(~PD_WKUP_SP_VAL);
+    PGMC_BPC2->BPC_SSAR_RESTORE_CTRL |= PGMC_BPC_BPC_SSAR_RESTORE_CTRL_RESTORE_AT_SP((uint16_t)(~PD_WKUP_SP_VAL));
 #endif
 }
 

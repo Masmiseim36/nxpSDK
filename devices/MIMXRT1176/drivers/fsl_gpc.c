@@ -97,19 +97,46 @@ void GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_Type *base,
 
         if (config->enableStep)
         {
-            tmp32 &= ~(GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_STEP_CNT_MASK |
-                       GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_CNT_MODE_MASK);
-            tmp32 |= GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_CNT_MODE(config->cntMode);
-            if (config->cntMode != kGPC_StepCounterDisableMode)
-            {
-                tmp32 |= GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_STEP_CNT(config->stepCount);
-            }
             tmp32 &= ~GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_DISABLE_MASK;
         }
         else
         {
             tmp32 |= GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_DISABLE_MASK;
         }
+        *(uint32_t *)((uint32_t)base + s_cmRegOffset[step]) = tmp32;
+    }
+}
+
+/*!
+ * brief Enable the specific cpu mode transition step.
+ * 
+ * param base GPC CPU module base address.
+ * param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_CM_EnableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_Type *base, gpc_cm_tran_step_t step)
+{
+    if (!((step >= kGPC_CM_SleepSP) && (step <= kGPC_CM_WakeupSP)))
+    {
+        uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_cmRegOffset[step]);
+
+        tmp32 &= ~GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_DISABLE_MASK;
+        *(uint32_t *)((uint32_t)base + s_cmRegOffset[step]) = tmp32;
+    }
+}
+
+/*!
+ * brief Disable the specific cpu mode transition step.
+ * 
+ * param base GPC CPU module base address.
+ * param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_CM_DisableCpuModeTransitionStep(GPC_CPU_MODE_CTRL_Type *base, gpc_cm_tran_step_t step)
+{
+    if (!((step >= kGPC_CM_SleepSP) && (step <= kGPC_CM_WakeupSP)))
+    {
+        uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_cmRegOffset[step]);
+
+        tmp32 |= GPC_CPU_MODE_CTRL_CM_SLEEP_SSAR_CTRL_DISABLE_MASK;
         *(uint32_t *)((uint32_t)base + s_cmRegOffset[step]) = tmp32;
     }
 }
@@ -288,19 +315,40 @@ void GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL_Type *base,
 
     if (config->enableStep)
     {
-        tmp32 &=
-            ~(GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_STEP_CNT_MASK | GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_CNT_MODE_MASK);
-        tmp32 |= GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_CNT_MODE(config->cntMode);
-        if (config->cntMode != kGPC_StepCounterDisableMode)
-        {
-            tmp32 |= GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_STEP_CNT(config->stepCount);
-        }
         tmp32 &= ~GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_DISABLE_MASK;
     }
     else
     {
         tmp32 |= GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_DISABLE_MASK;
     }
+    *(uint32_t *)((uint32_t)base + s_spRegOffset[step]) = tmp32;
+}
+
+/*!
+ * brief Enable the specific setpoint transition step.
+ * 
+ * param base GPC CPU module base address.
+ * param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_SP_EnableSetPointTransitionStep(GPC_SET_POINT_CTRL_Type *base, gpc_sp_tran_step_t step)
+{
+    uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_spRegOffset[step]);
+
+    tmp32 &= ~GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_DISABLE_MASK;
+    *(uint32_t *)((uint32_t)base + s_spRegOffset[step]) = tmp32;
+}
+
+/*!
+ * brief Disable the specific setpoint transition step.
+ * 
+ * param base GPC CPU module base address.
+ * param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_SP_DisableSetPointTransitionStep(GPC_SET_POINT_CTRL_Type *base, gpc_sp_tran_step_t step)
+{
+    uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_spRegOffset[step]);
+
+    tmp32 |= GPC_SET_POINT_CTRL_SP_SSAR_SAVE_CTRL_DISABLE_MASK;
     *(uint32_t *)((uint32_t)base + s_spRegOffset[step]) = tmp32;
 }
 
@@ -319,12 +367,6 @@ void GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL_Type *base,
 
     if (config->enableStep)
     {
-        tmp32 &= ~(GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_STEP_CNT_MASK | GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_CNT_MODE_MASK);
-        tmp32 |= GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_CNT_MODE(config->cntMode);
-        if (config->cntMode != kGPC_StepCounterDisableMode)
-        {
-            tmp32 |= GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_STEP_CNT(config->stepCount);
-        }
         tmp32 &= ~GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_DISABLE_MASK;
     }
     else
@@ -332,4 +374,52 @@ void GPC_STBY_ConfigStandbyTransitionStep(GPC_STBY_CTRL_Type *base,
         tmp32 |= GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_DISABLE_MASK;
     }
     *(uint32_t *)((uint32_t)base + s_stbyRegOffset[step]) = tmp32;
+}
+
+/*!
+ * brief Enable the specific standby transition step.
+ * 
+ * param base GPC CPU module base address.
+ * param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_STBY_EnableStandbyTransitionStep(GPC_STBY_CTRL_Type *base, gpc_stby_tran_step_t step)
+{
+    uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_stbyRegOffset[step]);
+
+    tmp32 &= ~GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_DISABLE_MASK;
+    *(uint32_t *)((uint32_t)base + s_stbyRegOffset[step]) = tmp32;
+}
+
+/*!
+ * brief Disable the specific standby transition step.
+ * 
+ * param base GPC CPU module base address.
+ * param step step type, refer to "gpc_cm_tran_step_t".
+ */
+void GPC_STBY_DisableStandbyTransitionStep(GPC_STBY_CTRL_Type *base, gpc_stby_tran_step_t step)
+{
+    uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_stbyRegOffset[step]);
+
+    tmp32 |= GPC_STBY_CTRL_STBY_LPCG_IN_CTRL_DISABLE_MASK;
+    *(uint32_t *)((uint32_t)base + s_stbyRegOffset[step]) = tmp32;
+}
+
+/*!
+ * brief Set count mode for PMIC_OUT Step.
+ * 
+ * param base GPC CPU module base address.
+ * param cntMode Step counter working mode.
+ * param stepCount Step count, which is depended on the value of cntMode
+ */
+void GPC_STBY_SetPmicOutStepCountMode(GPC_STBY_CTRL_Type *base,
+                                    gpc_tran_step_counter_mode_t cntMode,
+                                    uint32_t stepCount)
+{
+    uint32_t tmp32 = *(uint32_t *)((uint32_t)base + s_stbyRegOffset[kGPC_STBY_PmicOut]);
+
+    tmp32 &= ~(GPC_STBY_CTRL_STBY_PMIC_OUT_CTRL_STEP_CNT_MASK | GPC_STBY_CTRL_STBY_PMIC_OUT_CTRL_CNT_MODE_MASK);
+    tmp32 |= GPC_STBY_CTRL_STBY_PMIC_OUT_CTRL_CNT_MODE(cntMode);
+    tmp32 |= GPC_STBY_CTRL_STBY_PMIC_OUT_CTRL_STEP_CNT(stepCount);
+
+    *(uint32_t *)((uint32_t)base + s_stbyRegOffset[kGPC_STBY_PmicOut]) = tmp32;
 }

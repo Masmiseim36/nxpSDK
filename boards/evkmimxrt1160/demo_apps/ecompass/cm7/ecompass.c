@@ -7,15 +7,13 @@
  */
 #include "fsl_debug_console.h"
 #include "fsl_fxos.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "math.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define MAX_ACCEL_AVG_COUNT 25U
 #define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
@@ -221,10 +219,7 @@ int main(void)
     double By               = 0;
     uint8_t array_addr_size = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     HW_Timer_init();
 

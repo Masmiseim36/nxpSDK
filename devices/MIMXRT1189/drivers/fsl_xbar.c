@@ -16,19 +16,31 @@
 #define FSL_COMPONENT_ID "platform.drivers.xbar_1"
 #endif
 
-#define XBAR_INST_FROM_INPUT(input)   ((uint16_t)(input) >> 8U)
-#define XBAR_INST_FROM_OUTPUT(output) ((uint16_t)(output) >> 8U)
+/*
+ * kXBAR1_InputLogicLow            = 0|0x10000U = 0x10000
+ * 0x1000 = 0b0000 0000 0000 0001            0000 0000 0000 0000
+ *            |                 |            |                 |
+ *            +-----------------+            +-----------------+
+ *                |                                  |
+ *        xbar instance index(16bits)      xbar input/output signal index(16bits)
+ *
+ */
+#define XBAR_INST_FROM_INPUT(input)   ((uint16_t)(input >> 16U))
+#define XBAR_INST_FROM_OUTPUT(output) ((uint16_t)(output >> 16U))
 
-#define XBAR_EXTRACT_INPUT(input)   ((uint16_t)(input)&0xFFU)
-#define XBAR_EXTRACT_OUTPUT(output) ((uint16_t)(output)&0xFFU)
+#define XBAR_EXTRACT_INPUT(input)   ((uint16_t)(input & 0xFFFFU))
+#define XBAR_EXTRACT_OUTPUT(output) ((uint16_t)(output& 0xFFFFU))
+
 
 #define XBAR_CTRL_STAT_SHIFT 4U
 #define XBAR_CTRL_STAT_MASK  ((xbar_reg_t)1U << 4U)
 
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
 #define XBAR_CTRL_ALL_STAT_MASK (XBAR_CTRL_STAT_MASK)
+#define XBAR_SEL_MAX_MASK  (0x1FFU)
 #else
 #define XBAR_CTRL_ALL_STAT_MASK (XBAR_CTRL_STAT_MASK | (XBAR_CTRL_STAT_MASK << 8U))
+#define XBAR_SEL_MAX_MASK  (0xFFU)
 #endif
 
 /* Array of XBAR clock name. */
@@ -36,7 +48,7 @@ static const clock_ip_name_t s_xbaraClock[] = XBAR_CLOCKS;
 
 static const xbar_info_t s_xbarInfo[] = XBAR_INFO;
 
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
 /*!
  * brief Get the XBAR peripheral address CTRL register address.
  *
@@ -57,7 +69,7 @@ static status_t XBAR_GetCtrlReg(xbar_output_signal_t output, volatile xbar_reg_t
     }
     else
     {
-        *ctrlRegAddr = s_xbarInfo[inst - 1U].baseAddr + (s_xbarInfo[inst - 1U].regCtrlOffset + outputIndex);
+        *ctrlRegAddr = s_xbarInfo[inst - 1U].baseAddr + (s_xbarInfo[inst - 1U].regCtrlOffset / sizeof(xbar_reg_t) + outputIndex);
         status       = kStatus_Success;
     }
 
@@ -154,7 +166,7 @@ status_t XBAR_SetSignalsConnection(xbar_input_signal_t input, xbar_output_signal
     uint16_t inputIndex  = XBAR_EXTRACT_INPUT(input);
     volatile xbar_reg_t *selRegAddr;
 
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
     if ((inst > ARRAY_SIZE(s_xbarInfo)) || (outputIndex > (s_xbarInfo[inst - 1U].regSelNum)))
     {
         status = kStatus_InvalidArgument;
@@ -162,7 +174,7 @@ status_t XBAR_SetSignalsConnection(xbar_input_signal_t input, xbar_output_signal
     else
     {
         selRegAddr  = s_xbarInfo[inst - 1U].baseAddr + ((s_xbarInfo[inst - 1U].regSelOffset + outputIndex));
-        *selRegAddr = (*selRegAddr & ~((xbar_reg_t)0xFFU)) | (inputIndex);
+        *selRegAddr = (*selRegAddr & ~((xbar_reg_t)XBAR_SEL_MAX_MASK)) | (inputIndex);
         status      = kStatus_Success;
     }
 #else
@@ -176,7 +188,7 @@ status_t XBAR_SetSignalsConnection(xbar_input_signal_t input, xbar_output_signal
     {
         selRegAddr  = s_xbarInfo[inst - 1U].baseAddr + ((s_xbarInfo[inst - 1U].regSelOffset + outputIndex) / 2U);
         shiftInReg  = (uint8_t)(uint16_t)(8U * (outputIndex % 2U));
-        *selRegAddr = (*selRegAddr & ~((xbar_reg_t)0xFFU << shiftInReg)) | (inputIndex << shiftInReg);
+        *selRegAddr = (*selRegAddr & ~((xbar_reg_t)XBAR_SEL_MAX_MASK << shiftInReg)) | (inputIndex << shiftInReg);
         status      = kStatus_Success;
     }
 #endif
@@ -196,7 +208,7 @@ status_t XBAR_ClearOutputStatusFlag(xbar_output_signal_t output)
     status_t status;
     volatile xbar_reg_t *ctrlRegAddr;
 
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
     status = XBAR_GetCtrlReg(output, &ctrlRegAddr);
 
     if (status == kStatus_Success)
@@ -235,7 +247,7 @@ status_t XBAR_GetOutputStatusFlag(xbar_output_signal_t output, bool *flag)
 {
     status_t status;
     volatile xbar_reg_t *ctrlRegAddr;
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
     status = XBAR_GetCtrlReg(output, &ctrlRegAddr);
 
     if (status == kStatus_Success)
@@ -279,7 +291,7 @@ status_t XBAR_SetOutputSignalConfig(xbar_output_signal_t output, const xbar_cont
 {
     status_t status;
     volatile xbar_reg_t *ctrlRegAddr;
-#if defined(FSL_FEATURE_XBAR_REG_WIDTH) && (FSL_FEATURE_XBAR_REG_WIDTH == 32)
+#if defined(FSL_FEATURE_XBAR_DSC_REG_WIDTH) && (FSL_FEATURE_XBAR_DSC_REG_WIDTH == 32)
     status = XBAR_GetCtrlReg(output, &ctrlRegAddr);
 
     if (status == kStatus_Success)

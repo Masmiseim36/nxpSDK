@@ -86,8 +86,14 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Defines ELE Base API version 1.0.1.*/
-#define FSL_ELE_BASE_API_DRIVER_VERSION (MAKE_VERSION(1, 0, 1))
+/*! @brief Defines ELE Base API version 1.0.0.
+ *
+ * Change log:
+ *
+ * - Version 1.0.0
+ *   - initial version
+ */
+#define FSL_ELE_BASE_API_DRIVER_VERSION (MAKE_VERSION(1, 0, 0))
 /*@}*/
 
 

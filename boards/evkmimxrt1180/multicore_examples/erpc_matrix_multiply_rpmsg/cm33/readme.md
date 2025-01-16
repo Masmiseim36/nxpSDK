@@ -1,97 +1,57 @@
-Overview
-========
+# erpc_matrix_multiply_rpmsg
+
+## Overview
+
 The Multicore eRPC Matrix Multiply project is a simple demonstration program that uses the
 MCUXpresso SDK software and the Multicore SDK to show how to implement the Remote Procedure Call
-between cores of the multicore system. The primary core (eRPC client) releases the secondary core
-(eRPC server) from the reset and then the erpcMatrixMultiply() eRPC call is issued to let the
-secondary core to perform the multiplication of two randomly generated matrices. The original
-matrices and the result matrix is printed out to the serial console by the primary core. The
-matrix multiplication can be issued repeatedly when pressing a SW board button. RPMsg-Lite erpc
-transport layer is used in this example application.
+between cores of the multicore system.
 
-Shared memory usage
-This multicore example uses the shared memory for data exchange. The shared memory region is
-defined and the size can be adjustable in the linker file. The shared memory region start address
-and the size have to be defined in linker file for each core equally. The shared memory start
-address is then exported from the linker to the application.
+The primary core (eRPC client) releases the secondary core (eRPC server) from the reset and then
+the erpcMatrixMultiply() eRPC call is issued to let the secondary core to perform the multiplication of
+two randomly generated matrices.
 
-eRPC documentation
+The original matrices and the result matrix is printed out to the serial console by the primary core.
+
+The matrix multiplication can be issued repeatedly when pressing a SW board button.
+
+RPMsg-Lite erpc transport layer is used in this example application.
+
+## Shared memory usage
+
+This multicore example uses the shared memory for data exchange.
+The shared memory region is defined and the size can be adjustable in the linker file.
+The shared memory region start address and the size have to be defined in linker file for each core equally.
+The shared memory start address is then exported from the linker to the application.
+
+## eRPC documentation
 eRPC specific files are stored in: middleware\multicore\erpc
 eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
 
-SDK version
-===========
-- Version: 2.16.000
+## Building the application
 
-Toolchain supported
-===================
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-- IAR embedded Workbench  9.60.1
-- MCUXpresso  11.10.0
+This shows example how to build application for `evkbmimxrt1170` board with `cm7` core_id.
+Change the `-b <board>` parameter based on board you want to build.
+Change the `-Dcore_id=<core_id>` parameter based on board core you want to build.
+For these parameters please see attribute `boards:` in `primary/example.yml`.
 
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1180-EVK board
-- Personal Computer
+```
+west build --sysbuild examples/multicore_examples/erpc_matrix_multiply_rpmsg/primary --toolchain armgcc --config debug -b evkbmimxrt1170 -Dcore_id=cm7
+```
 
-Board settings
-==============
-No special settings are required.
+## Supported Boards
 
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-
-Running the demo
-================
-The log below shows the output of the eRPC Matrix Multiply demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Primary core started
-Copy CORE1 image to address: 0x303C0000, size: 15548
-
-Matrix #1
-  21   33   37   37    9
-  23   45   43    0   32
-  38   44    8   15   36
-  18   18   38   44   16
-  22   23    0   38    7
-
-Matrix #2
-  11   23   27   45   11
-   7   19   23   24    6
-  32   26   49   43   16
-  22   48   36   34   41
-  27   20   32   31   11
-
-eRPC request is sent to the server
-
-Result matrix
-2703 4028 4759 4865 2637
-2808 3142 4787 4956 1563
-2284 3358 4122 4736 1821
-2940 4176 4858 4868 2894
-1428 2907 2715 3051 2015
-
-Press the SW8 button to initiate the next matrix multiplication
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Note:
-The "Copy CORE1 image to address..." log message is not displayed on the terminal window when MCUXpresso IDE is used.
-In case of MCUXpresso IDE the secondary core image is copied to the target memory during startup automatically.
-
-Note:
-MIMXRT1180-EVK GPIO_AON_04 pin is shared between SW8 button and headphone HP_DET_B pin. Once a headphone is inserted into
-J101 Audio Jack connector the SW8 button functionality is affected, causing eRPC request are triggered repeatedly without
-the button being pressed. Please remove the headphone in this case.
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [FRDM-K32L3A6](../../_boards/frdmk32l3a6/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [FRDM-MCXW72](../../_boards/frdmmcxw72/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [KW47-EVK](../../_boards/kw47evk/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [KW47-LOC](../../_boards/kw47loc/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [MCX-W72-EVK](../../_boards/mcxw72evk/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/multicore_examples/erpc_matrix_multiply_rpmsg/example_board_readme.md)

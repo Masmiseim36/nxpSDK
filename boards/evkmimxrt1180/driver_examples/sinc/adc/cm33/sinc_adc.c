@@ -5,17 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_sinc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SINC             SINC2
-#define DEMO_SINC_IRQn        SINC2_CH3_IRQn
-#define DEMO_SINC_IRQ_HANDLER SINC2_CH3_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -53,15 +50,7 @@ int main(void)
     sinc_channel_conv_option_t sincChannel3ConvOption;
     sinc_channel_protection_option_t sincChannel3ProtectionOption;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    clock_root_config_t rootCfg = {0};
-    rootCfg.mux                 = kCLOCK_BUS_WAKEUP_ClockRoot_MuxSysPll2Out;
-    rootCfg.div                 = 4;
-    CLOCK_SetRootClock(kCLOCK_Root_Bus_Wakeup, &rootCfg);
+    BOARD_InitHardware();
     PRINTF("\r\nSINC ADC Example.\r\n");
 
     sincChannel3InputOption.inputBitFormat = kSINC_InputBit_FormatExternalBitstream;

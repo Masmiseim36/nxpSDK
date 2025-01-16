@@ -5,9 +5,9 @@
 **                          MIMXRT1182XVP2B_cm33
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1180RM, Rev 2, 12/2022
-**     Version:             rev. 0.1, 2021-03-09
-**     Build:               b240109
+**     Reference manual:    IMXRT1180RM, Rev 5, 01/2024
+**     Version:             rev. 2.0, 2024-01-18
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -122,6 +122,19 @@ LR_m_text   m_text_start   m_text_size
   RW_m_data               m_data_start                                     m_data_size-stack_size
   {
     .ANY (+RW +ZI)
+  }
+
+  ; cache line size is 16 bytes
+  RW_m_CacheLineData      +0             ALIGN 16                          (m_data_size-stack_size-ImageLength(RW_m_data))/16*16
+  {
+    * (CacheLineData)
+    * (CacheLineData.init)
+  }
+
+  ; auxiliary to make sure RW_m_CacheLineData end-aligned CACHE LINE SIZE
+  ; DO NOT insert any region between RW_m_CacheLineData and RW_m_CacheLineData_Aux
+  RW_m_CacheLineData_Aux  +0             ALIGN 16            EMPTY         0
+  {
   }
 
   ; ncache data

@@ -14,6 +14,16 @@ SDK_Examples               Name: SDK examples
                            Location: boards/<board>/                         
                            Origin: NXP (BSD-3-Clause)                        
 
+mcux-edgelock              Name: Edgelock Firmware                           
+                           Version: 0.1.1                                    
+                           Outgoing License: LA_OPT_Online_Code_Hosting      
+                           License File: firmware/edgelock/LICENSE.txt       
+                           Format: Binary                                    
+                           Description: Edgelock Firmware                    
+                           Release Location:                                 
+                           https://github.com/nxp-mcuxpresso/mcux-edgelock   
+                           Origin: NXP (proprietary)                         
+
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
                            Version: 2.x.x                                    
                            Outgoing License: BSD-3-Clause                    
@@ -490,6 +500,42 @@ arser                      Version: NA
                            http://www.bradapp.com/ftp/src/libs/C++/Options.ht
                            ml                                                
 
+motor_control_rtcesl       Name: rtcesl                                      
+                           Version: 4.8                                      
+                           Outgoing License: LA_OPT_Online_Code_Hosting      
+                           License File: middleware/motor_control/LICENSE.txt
+                           Format: object code & header files                
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+                           Location: middleware/rtcesl                       
+                           Origin: NXP (Proprietary)                         
+
+motor_control              Name: motor_control                               
+                           Version: 3.0.0                                    
+                           Outgoing License: LA_OPT_Online_Code_Hosting      
+                           License File: middleware/motor_control/LICENSE.txt
+                           Format: source code                               
+                           Description: Motor control examples for PMSM and  
+                           BLDC motors.                                      
+                           Location: middleware/motor_control                
+                           Origin: NXP (Proprietary)                         
+
+motor_control_mcat_float   Name: MCAT float                                  
+                           Version: 3.0.0                                    
+                           Outgoing License: LA_OPT_Online_Code_Hosting      
+                           License File: middleware/motor_control/LICENSE.txt
+                           Format: link, source code                         
+                           Description: Motor Control Application Tuning     
+                           Location:                                         
+                           middleware/motor_control/freemaster/pmsm_float/mca
+                           t                                                 
+                           Origin: NXP(Proprietary) Bootstrap(MIT)           
+                           FontAwesome(CC BY 4.0) simple-jsonrpc-js(MIT)     
+                           NXP(BSD 3-clause)                                 
+                           Url: https://getbootstrap.com                     
+                           https://fontawesome.com/                          
+                           https://www.npmjs.org/package/simple-jsonrpc-js   
+
 mcuboot                    Name: MCUBoot                                     
                            Version: 2.0.0                                    
                            Outgoing License: Apache-2.0                      
@@ -544,18 +590,6 @@ voice_seeker_cm7           Name: VoiceSeeker (no AEC)
                            https://www.nxp.com/design/software/embedded-softw
                            are/voiceseeker-audio-front-end:VOICESEEKER       
                            https://github.com/ARM-software/CMSIS_5           
-
-vit                        Name: VIT_v4.10.0                                 
-                           Version: 4.10.0                                   
-                           Outgoing License: LA_OPT_NXP_Software_License v57 
-                           July 2024 - Additional distribution license       
-                           granted, license in Section 2.3 applies           
-                           License File: ./LA_OPT_NXP_Software_License.txt   
-                           Format: Precompiled libraries, header files,      
-                           example application                               
-                           Description: Voice Intelligent Technology library 
-                           Location: middleware/audio_voice/components/vit   
-                           Origin: NXP (Proprietary)                         
 
 audio_voice_components     Name: Audio Voice Components                      
                            Version: 1.0.0                                    

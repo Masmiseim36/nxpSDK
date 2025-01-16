@@ -1,5 +1,6 @@
-Overview
-========
+# puf
+
+## Overview
 The PUF Example project is a demonstration program that uses the KSDK software implement secure key storage using PUF software driver.
 
 Usual use consists of these steps:
@@ -20,47 +21,15 @@ Usual use consists of these steps:
 5. 	Get Key: The digital fingerprint generated during the Start operation and the KC generated during a Set Key operation 
 	are used to retrieve a stored key. Perform this operation every time a key is needed.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- MCUXpresso  11.10.0
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1160-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (P6) on the board
-2.  Open a serial terminal with the following settings (See Appendix A in Getting started guide for description how to determine serial port number):
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the PUF driver example in the terminal window (the key value will vary):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-PUF Peripheral Driver Example
-
-Reconstructed key = ad e7 b4 fe 99 ce 41 b7 c6 f9 78 2f 49 6b 87 27
-Example end.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Note: Please make sure PUF is enabled in eFUSE (OCOTP) memory
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/puf/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/puf/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/driver_examples/puf/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/driver_examples/puf/example_board_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/driver_examples/puf/example_board_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/driver_examples/puf/example_board_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/driver_examples/puf/example_board_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/driver_examples/puf/example_board_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/driver_examples/puf/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/driver_examples/puf/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/driver_examples/puf/example_board_readme.md)

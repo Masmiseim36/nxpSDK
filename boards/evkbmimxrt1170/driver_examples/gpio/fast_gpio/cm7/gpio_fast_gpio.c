@@ -5,34 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define NORMAL_GPIO_OUT_PORT                GPIO3
-#define NORMAL_GPIO_OUT_PIN                 3
-#define NORMAL_GPIO_IN_PORT                 GPIO3
-#define NORMAL_GPIO_IN_PIN                  4U
-#define NORMAL_GPIO_OP_CLK_IN_HZ            CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#define NORMAL_GPIO_OUT_PIN_SET_TO_NORMAL() IOMUXC_GPR->GPR42 &= ~(1UL << NORMAL_GPIO_OUT_PIN)
-#define NORMAL_GPIO_IN_PIN_SET_TO_NORMAL()  IOMUXC_GPR->GPR42 &= ~(1UL << NORMAL_GPIO_IN_PIN)
-
-#define FAST_GPIO_OUT_PORT              CM7_GPIO3
-#define FAST_GPIO_OUT_PIN               3U
-#define FAST_GPIO_IN_PORT               CM7_GPIO3
-#define FAST_GPIO_IN_PIN                4U
-#define FAST_GPIO_OP_CLK_IN_HZ          CLOCK_GetRootClockFreq(kCLOCK_Root_M7)
-#define FAST_GPIO_OUT_PIN_SET_TO_FAST() IOMUXC_GPR->GPR42 |= (1UL << FAST_GPIO_OUT_PIN)
-#define FAST_GPIO_IN_PIN_SET_TO_FAST()  IOMUXC_GPR->GPR42 |= (1UL << FAST_GPIO_IN_PIN)
-
-#define FAST_GPIO_IRQ_HANDLER     CM7_GPIO2_3_IRQHandler
-#define FAST_GPIO_IN_IRQ          CM7_GPIO2_3_IRQn
-#define FAST_GPIO_IN_IRQ_PRIORITY 1
 #define GPIO_LOOP_NUM 1000000UL
 
 #define NORMAL_GPIO_OUT_PIN_MASK (1UL << NORMAL_GPIO_OUT_PIN)
@@ -273,10 +253,7 @@ int main(void)
     uint32_t u32Time;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Set systick reload value to generate 1ms interrupt */
     if (SysTick_Config(SystemCoreClock / 1000U))

@@ -33,16 +33,12 @@ define symbol m_text_start             = 0x80000400;
 define symbol m_text_end               = 0x801FFFFF;
 
 // length: 0x0004_0000
-define symbol m_ram1_start             = 0x20000000;
+define symbol m_ram1_start             = 0x20200000;
 define symbol m_ram1_end               = 0x2003FFFF;
 
-// length: 0x0008_0000
-define symbol m_ram2_start            = 0x202C0000;
-define symbol m_ram2_end              = 0x2033FFFF;
-
 // length: 0x02E0_0000
-define symbol m_ram3_start            = 0x80200000;
-define symbol m_ram3_end              = 0x82FFFFFF;
+define symbol m_ram3_start             = 0x80200000;
+define symbol m_ram3_end               = 0x82FFFFFF;
 
 // length: 0x0100_0000
 define symbol m_ncache_start           = 0x83000000;
@@ -50,8 +46,8 @@ define symbol m_ncache_end             = 0x83FFFFFF;
 
 
 // this is for malloc()
-define symbol __size_heap__            = 0x120000;
-define symbol __size_cstack__          = 0x0F00;
+define symbol __size_heap__            = 0x900000;
+define symbol __size_cstack__          = 0xFA00;
 
 define exported symbol __NCACHE_REGION_START   = m_ncache_start;
 define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
@@ -71,8 +67,6 @@ define region region_TEXT    = mem:[from m_interrupts_start to m_interrupts_end]
 
 define region region_RAM1    = mem:[from m_ram1_start to m_ram1_end - __size_cstack__];
 define region region_CSTACK1 = mem:[from m_ram1_end - __size_cstack__ + 1 to m_ram1_end];
-
-define region region_RAM2    = mem:[from m_ram2_start to m_ram2_end];
 
 define region region_RAM3    = mem:[from m_ram3_start to m_ram3_end];
 
@@ -97,7 +91,7 @@ if (isdefinedsymbol(__use_shmem__)) {
 place at address mem: m_interrupts_start    { readonly section .intvec };
 place in region_TEXT                        { readonly };
 place in region_CSTACK1                     { block CSTACK };
-place in region_RAM2                        { last block ZI };
+place in region_RAM3                        { block ZI };
 place in region_RAM3                        { block RW };
 place in region_RAM3                        { last block HEAP };
 place in region_NCACHE                      { block NCACHE_VAR };

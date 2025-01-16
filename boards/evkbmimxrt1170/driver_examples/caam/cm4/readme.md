@@ -1,53 +1,29 @@
-Overview
-========
+# caam
+
+## Overview
 
 The CAAM Example project is a demonstration program that uses the KSDK software to encrypt plain text
 and decrypt it back using AES algorithm. CBC and GCM modes are demonstrated.
 The symmetric key is generated at random, using CAAM's random number generator.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1170-EVKB board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the hello world demo in the terminal window:
-
-CAAM AES Peripheral Driver Example
+## Running the demo
+The log below shows example output of the CAAM AES driver demo in the terminal window:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CAAM Peripheral Driver Example
 
 *CAAM Job Ring 0* :
 
 SHA:done successfully.
+
+HMAC-SHA1:done successfully.
+
+HMAC-SHA224:done successfully.
+
+HMAC-SHA256:done successfully.
+
+HMAC-SHA384:done successfully.
+
+HMAC-SHA512:done successfully.
 
 AES CBC: encrypting using 128 bit key done successfully.
 AES CBC: decrypting back done successfully.
@@ -79,5 +55,25 @@ AES CBC: decrypting back done successfully.
 AES GCM: encrypt done successfully.
 AES GCM: decrypt done successfully.
 
-Note:
-CAAM peripheral works with OCRAM memory. Please avoid using DTCM memory for storage CAAM data.
+RNG : Generate 128-bit random number: 0x18BED894D712F2895DEC91B18C61F6A4
+RNG : Random number generated successfully.
+
+CAAM Red Blob Example
+
+Generate Red Blob successfully.
+
+Generate AES Key and blacken it.
+
+Blacken key successfully.
+
+CAAM Black blob Example
+
+Generate black blob successfully.
+
+CRC: done successfully.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/caam/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/caam/example_board_readme.md)

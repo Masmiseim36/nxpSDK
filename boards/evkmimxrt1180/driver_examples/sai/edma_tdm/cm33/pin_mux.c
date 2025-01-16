@@ -64,16 +64,6 @@ BOARD_InitPins:
     open_drain: Disable, drive_strength: High, slew_rate: Slow}
   - {pin_num: D5, peripheral: RGPIO1, signal: 'gpio_io, 19', pin_signal: GPIO_AON_19, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
     open_drain: Disable, drive_strength: High, slew_rate: Fast}
-  - {pin_num: N12, peripheral: PDM, signal: CLK, pin_signal: GPIO_AD_00, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper, open_drain: Disable,
-    drive_strength: High, slew_rate: Fast}
-  - {pin_num: R14, peripheral: PDM, signal: 'mic_bitstream, 0', pin_signal: GPIO_AD_01, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Fast}
-  - {pin_num: R13, peripheral: PDM, signal: 'mic_bitstream, 1', pin_signal: GPIO_AD_02, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Fast}
-  - {pin_num: R15, peripheral: PDM, signal: 'mic_bitstream, 2', pin_signal: GPIO_AD_03, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Fast}
-  - {pin_num: P15, peripheral: PDM, signal: 'mic_bitstream, 3', pin_signal: GPIO_AD_04, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
-    open_drain: Disable, drive_strength: High, slew_rate: Fast}
   - {pin_num: D14, peripheral: USDHC1, signal: 'usdhc_data, 0', pin_signal: GPIO_SD_B1_02}
   - {pin_num: D15, peripheral: USDHC1, signal: usdhc_clk, pin_signal: GPIO_SD_B1_01}
   - {pin_num: B16, peripheral: USDHC1, signal: usdhc_cmd, pin_signal: GPIO_SD_B1_00}
@@ -122,21 +112,6 @@ void BOARD_InitPins(void) {
   /* Initialize GPIO functionality on GPIO_AD_29 (pin L15) */
   RGPIO_PinInit(RGPIO4, 29U, &SD_VSELECT_config);
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_00_MIC_CLK,              /* GPIO_AD_00 is configured as MIC_CLK */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_01_MIC_BITSTREAM00,      /* GPIO_AD_01 is configured as MIC_BITSTREAM00 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_02_MIC_BITSTREAM01,      /* GPIO_AD_02 is configured as MIC_BITSTREAM01 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_03_MIC_BITSTREAM02,      /* GPIO_AD_03 is configured as MIC_BITSTREAM02 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_04_MIC_BITSTREAM03,      /* GPIO_AD_04 is configured as MIC_BITSTREAM03 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_14_GPIO4_IO14,           /* GPIO_AD_14 is configured as GPIO4_IO14 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
@@ -203,46 +178,6 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AON_27_SAI1_RX_SYNC,        /* GPIO_AON_27 is configured as SAI1_RX_SYNC */
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_AON_27 */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_00_MIC_CLK,              /* GPIO_AD_00 PAD functional properties : */
-      0x03U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
-                                                 Pull / Keep Select Field: Pull Disable, Highz
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Force ibe off Field: Disabled */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_01_MIC_BITSTREAM00,      /* GPIO_AD_01 PAD functional properties : */
-      0x03U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
-                                                 Pull / Keep Select Field: Pull Disable, Highz
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Force ibe off Field: Disabled */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_02_MIC_BITSTREAM01,      /* GPIO_AD_02 PAD functional properties : */
-      0x03U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
-                                                 Pull / Keep Select Field: Pull Disable, Highz
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Force ibe off Field: Disabled */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_03_MIC_BITSTREAM02,      /* GPIO_AD_03 PAD functional properties : */
-      0x03U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
-                                                 Pull / Keep Select Field: Pull Disable, Highz
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Force ibe off Field: Disabled */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_04_MIC_BITSTREAM03,      /* GPIO_AD_04 PAD functional properties : */
-      0x03U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
-                                                 Pull / Keep Select Field: Pull Disable, Highz
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Force ibe off Field: Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_18_LPI2C3_SCL,           /* GPIO_AD_18 PAD functional properties : */
       0x1AU);                                 /* Slew Rate Field: Fast Slew Rate

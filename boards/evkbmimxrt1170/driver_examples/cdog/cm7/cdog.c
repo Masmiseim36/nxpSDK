@@ -11,9 +11,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_cdog.h"
 
@@ -22,7 +21,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CDOG_AppIRQHandler CDOG_DriverIRQHandler
 
 /*******************************************************************************
  * Variables
@@ -134,10 +132,7 @@ int main(void)
     cdog_config_t conf;
 
     /* Init hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("CDOG Peripheral Driver Example\r\n\r\n");
 

@@ -1,35 +1,13 @@
-Overview
-========
+# lwip_ping_bm
+
+## Overview
 
 The lwip_ping demo application demonstrates a Ping Demo on the lwIP TCP/IP stack, which uses the ICMP protocol. The
 application periodically sends the ICMP echo request to a PC, and processes the PC reply. Type "ping $board_address"
 in the PC command window to send an ICMP echo request to the board. The lwIP stack sends the ICMP echo reply back to the
 PC.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- GCC ARM Embedded  13.2.1
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- MIMXRT1180-EVK board
-- Personal Computer
-
-Board settings
-==============
-This example uses Ethernet RJ45 port J32.
-Prepare the Demo
-================
+## Prepare the Demo
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
 2.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
@@ -43,8 +21,7 @@ Prepare the Demo
 6.  Download the program to the target board.
 7.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 When the demo runs, the log would be seen on the terminal like:
 	Initializing PHY...
 
@@ -79,3 +56,27 @@ When the demo runs, the log would be seen on the terminal like:
 	192.168.0.100
 	 3 ms
 
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../_boards/imx95lp4xevk15/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../_boards/imx95lpd5evk19/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [imx95verdinevk](../../../_boards/imx95verdinevk/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [LPCXpresso54S018](../../../_boards/lpcxpresso54s018/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [LPCXpresso54S018M](../../../_boards/lpcxpresso54s018m/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../_boards/mcimx93autoevk/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MCIMX93-EVK](../../../_boards/mcimx93evk/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/lwip_examples/lwip_ping/bm/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/lwip_examples/lwip_ping/bm/example_board_readme.md)

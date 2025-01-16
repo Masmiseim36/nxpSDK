@@ -7,23 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_gpt.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_GPT_IRQn GPT2_IRQn
-#define DEMO_GPT_BASE GPT2
-/* GPT channel used for input capture */
-#define BOARD_GPT_INPUT_CAPTURE_CHANNEL kGPT_InputCapture_Channel1
-/* Interrupt to enable and flag to read; depends on the GPT channel used */
-#define EXAMPLE_GPT_CAPTURE_IRQHandler     GPT2_IRQHandler
-#define BOARD_GPT_CHANNEL_INTERRUPT_ENABLE kGPT_InputCapture1InterruptEnable
-#define BOARD_GPT_CHANNEL_FLAG             kGPT_InputCapture1Flag
 
 /*******************************************************************************
  * Prototypes
@@ -58,10 +48,7 @@ int main(void)
     gpt_config_t gptConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Print a note to terminal */
     PRINTF("\r\nGPT input capture example\r\n");

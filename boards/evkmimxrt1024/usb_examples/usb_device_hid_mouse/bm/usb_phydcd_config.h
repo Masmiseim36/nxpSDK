@@ -1,19 +1,12 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#ifndef _USB_DEVICE_PHYDCD_CONFIG_H_
-#define _USB_DEVICE_PHYDCD_CONFIG_H_
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
 
-/*${macro:start}*/
-/* USB DCD config*/
+#ifndef _USB_PHYDCD_CONFIG_H_
+#define _USB_PHYDCD_CONFIG_H_
 
-/*reserved for future use*/
+#define USB_PHYDCD_CONFIG_UNUSED 0
 
-/*${macro:end}*/
-
-#endif /* _USB_DEVICE_PHYDCD_CONFIG_H_ */
+#endif /* _USB_PHYDCD_CONFIG_H_ */

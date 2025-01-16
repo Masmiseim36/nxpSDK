@@ -49,7 +49,9 @@ static uint8_t tmap_addata[] = {
 	BT_BYTES_LIST_LE16(BT_TMAP_ROLE_UMR | BT_TMAP_ROLE_CT), /* TMAP Role */
 };
 
+#if (defined(CONFIG_BT_CSIP_SET_MEMBER) && (CONFIG_BT_CSIP_SET_MEMBER > 0))
 static uint8_t csis_rsi_addata[BT_CSIP_RSI_SIZE];
+#endif /* CONFIG_BT_CSIP_SET_MEMBER */
 static bool peer_is_cg;
 static bool peer_is_ums;
 
@@ -59,12 +61,14 @@ static const struct bt_data ad[] = {
 		      BT_BYTES_LIST_LE16(BT_APPEARANCE_WEARABLE_AUDIO_DEVICE_EARBUD)),
 	BT_DATA_BYTES(BT_DATA_UUID16_SOME, BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL),
 		      BT_UUID_16_ENCODE(BT_UUID_CAS_VAL), BT_UUID_16_ENCODE(BT_UUID_TMAS_VAL)),
-#if defined(CONFIG_BT_CSIP_SET_MEMBER)
+#if (defined(CONFIG_BT_CSIP_SET_MEMBER) && (CONFIG_BT_CSIP_SET_MEMBER > 0))
 	BT_DATA(BT_DATA_CSIS_RSI, csis_rsi_addata, ARRAY_SIZE(csis_rsi_addata)),
 #endif /* CONFIG_BT_CSIP_SET_MEMBER */
 	BT_DATA(BT_DATA_SVC_DATA16, tmap_addata, ARRAY_SIZE(tmap_addata)),
 	BT_DATA(BT_DATA_SVC_DATA16, cap_addata, ARRAY_SIZE(cap_addata)),
 	BT_DATA(BT_DATA_SVC_DATA16, unicast_server_addata, ARRAY_SIZE(unicast_server_addata)),
+	BT_DATA(BT_DATA_NAME_COMPLETE, CONFIG_BT_DEVICE_NAME,
+		sizeof(CONFIG_BT_DEVICE_NAME) - 1),
 };
 
 static OSA_SEMAPHORE_HANDLE_DEFINE(sem_connected);
@@ -259,7 +263,7 @@ void tmap_peripheral_task(void *param)
 	}
 	printk("BAP initialized\n");
 
-	err = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN_NAME, &adv_cb, &adv);
+	err = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN, &adv_cb, &adv);
 	if (err) {
 		printk("Failed to create advertising set (err %d)\n", err);
 		while(1);

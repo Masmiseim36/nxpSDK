@@ -51,7 +51,7 @@
 #define BOARD_USER_LED_GPIO GPIO3
 #endif
 #ifndef BOARD_USER_LED_GPIO_PIN
-#define BOARD_USER_LED_GPIO_PIN (21U)
+#define BOARD_USER_LED_GPIO_PIN 21U
 #endif
 
 #define USER_LED_INIT(output)                                            \

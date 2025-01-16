@@ -8,30 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Master related */
-#define EXAMPLE_LPSPI_MASTER_BASEADDR   (LPSPI1)
-#define EXAMPLE_LPSPI_MASTER_IRQN       LPSPI1_IRQn
-#define EXAMPLE_LPSPI_MASTER_IRQHandler LPSPI1_IRQHandler
-
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
-
-/* Select USB1 PLL PFD0 (392.72 MHz) as lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
-
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
 #define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 200000U /*! Transfer baudrate - 200k */
 
@@ -130,14 +112,7 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /*Set clock source for LPSPI*/
-    CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("LPSPI interrupt board to board (b2b) master example.\r\n");
     PRINTF("This example use one board as master and another as slave.\r\n");

@@ -1,94 +1,9 @@
-Overview
-========
+# a2dp_source
+
+##  Overview
 Application demonstrating how to use the a2dp source feature.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
-- One of the following modules:
-  - AzureWave AW-AM510-uSD
-  - AzureWave AW-AM457-uSD
-  - AzureWave AW-CM358-uSD
-  - Murata uSD-M.2 Adapter (LBEE0ZZ1WE-uSD-M2) and Embedded Artists 1ZM M.2 Module (EAR00364)
-  - Murata uSD-M.2 Adapter (LBEE0ZZ1WE-uSD-M2) and Embedded Artists 1XK M.2 Module (EAR00385)
-  - Murata uSD-M.2 Adapter (LBEE0ZZ1WE-uSD-M2) and Embedded Artists 2EL M.2 Module (EAR00409)
-  
-Board settings
-==============
-Before building the example application select Wi-Fi module macro in the app_bluetooth_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
-If you want to use the AzureWave WIFI_IW416_BOARD_AW_AM510_USD, please change the macro to WIFI_IW416_BOARD_AW_AM510_USD.
-If you want to use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
-If you want to use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
-If you want to use the Murata Type 1ZM module, please change the macro to WIFI_88W8987_BOARD_MURATA_1ZM_USD.
-If you want to use the Murata Type 1XK module, please change the macro to WIFI_IW416_BOARD_MURATA_1XK_USD.
-If you want to use the Murata Type 2EL module, please change the macro to WIFI_IW612_BOARD_MURATA_2EL_USD.
-
-Jumper settings for Murata uSD-M.2 adapter:
-  - J12 = 1-2: WLAN-SDIO = 1.8V
-  - J13 = 1-2: BT-UART & WLAN/BT-CTRL = 3.3V
-  - J1 = 2-3: 3.3V from uSD connector
-
-The following pins between the evkbmimxrt1050 board and Murata uSD-M.2 Adapter with Embedded Artists 1ZM M.2 Module or 1XK M.2 Module are connected using male-to-female jumper cables:
-------------------------------------------------------------------------------------------
-PIN NAME         | uSD-M.2 Adapter | I.MXRT1050 | PIN NAME OF RT1050 | GPIO NAME OF RT1050
-------------------------------------------------------------------------------------------
-BT_UART_TXD_HOST | J9(pin 1)       | J22(pin 1) | LPUART3_RXD        | GPIO_AD_B1_07
-BT_UART_RXD_HOST | J9(pin 2)       | J22(pin 2) | LPUART3_TXD        | GPIO_AD_B1_06
-BT_UART_RTS_HOST | J8(pin 3)       | J23(pin 3) | LPUART3_CTS        | GPIO_AD_B1_04
-BT_UART_CTS_HOST | J8(pin 4)       | J23(pin 4) | LPUART3_RTS        | GPIO_AD_B1_05
-------------------------------------------------------------------------------------------
-
-Jumper settings for AzureWave AW-AM510-uSD Module:
-  - J2 1-2: 3.3V VIO_uSD (Power supply from uSD connector)
-  - J4 2-3: 3.3V VIO
-
-The hardware should be reworked according to the Hardware Rework Guide for EVKB-IMXRT1050 and AW-AM510-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
-The pin connect for UART HCI as the following table,
--------------------------------------------------------------------------------
-PIN NAME | AW-AM510-USD | I.MXRT1050 | PIN NAME OF RT1050 | GPIO NAME OF RT1050
--------------------------------------------------------------------------------
-UART_TXD | J10(pin 4)   | J22(pin 1) | LPUART3_RXD        | GPIO_AD_B1_07
-UART_RXD | J10(pin 2)   | J22(pin 2) | LPUART3_TXD        | GPIO_AD_B1_06
-UART_RTS | J10(pin 6)   | J23(pin 3) | LPUART3_CTS        | GPIO_AD_B1_04
-UART_CTS | J10(pin 8)   | J23(pin 4) | LPUART3_RTS        | GPIO_AD_B1_05
-GND      | J6(pin 7)    | J25(pin 7) | GND                | GND
--------------------------------------------------------------------------------
-
-Jumper settings for AzureWave AW-AM358-uSD Module:
-  - J2 1-2: 3.3V VIO_uSD (Power supply from uSD connector)
-  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
-
-The hardware should be reworked according to the Hardware Rework Guide for EVKB-IMXRT1050 and AW-CM358-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
-The pin connect for UART HCI as the following table,
--------------------------------------------------------------------------------
-PIN NAME | AW-CM358-USD | I.MXRT1050 | PIN NAME OF RT1050 | GPIO NAME OF RT1050
--------------------------------------------------------------------------------
-UART_TXD | J10(pin 4)   | J22(pin 1) | LPUART3_RXD        | GPIO_AD_B1_07
-UART_RXD | J10(pin 2)   | J22(pin 2) | LPUART3_TXD        | GPIO_AD_B1_06
-UART_RTS | J10(pin 6)   | J23(pin 3) | LPUART3_CTS        | GPIO_AD_B1_04
-UART_CTS | J10(pin 8)   | J23(pin 4) | LPUART3_RTS        | GPIO_AD_B1_05
-GND      | J6(pin 7)    | J25(pin 7) | GND                | GND
--------------------------------------------------------------------------------
-
-Note:
-To ensure that the LITTLEFS flash region has been cleaned,
-all flash sectors need to be erased before downloading example code.
-Prepare the Demo
-================
+## Prepare the Demo
 
 1.  Open example's project and build it.
 
@@ -107,8 +22,7 @@ Prepare the Demo
 
 6.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
+## Running the demo
 The log below shows the output of the example in the terminal window.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -126,3 +40,16 @@ Procedures to run
 2 input "bt discover" to discover connctable bluetooth devices
 3 input "bt connect [index]" to create basic bluetooth connection with the discovered device
 4 the music start playing after connection success.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/a2dp_source/example_board_readme.md)

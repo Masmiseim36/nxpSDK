@@ -1,0 +1,37 @@
+NXP Software Content Register
+
+Release - VoiceSeeker_v0.6.8
+
+Outgoing License: LA_OPT_NXP_Software_License v49 September 2023 - Appendix A: NXP Voice Software applies.
+License File:     license.txt
+
+Release tag: v0.6.8
+
+--------------------------------------------
+
+Package:                    libvoiceseeker
+Version:                    0.6.8
+Outgoing License:           LA_OPT_NXP_Software_License v49 September 2023 - Appendix A: NXP Voice Software applies.
+License File:               ./LICENSE.txt
+Package Category:           library
+Type of Content:            binary and headers
+Description and comments:   Multi-microphone audio-front-end with acoustic echo cancellation.
+Release Location:           ./include
+							./lib/libvoiceseeker.a
+							./lib/libvoiceseeker_no_aec.a
+Origin:                     NXP (proprietary)
+							ARM CMSIS 5.0.4 (Apache-2.0) - https://github.com/ARM-software/CMSIS_5
+
+--------------------------------------------
+
+Package:                    ARM CMSIS
+Version:                    5.0.4
+Outgoing License:           Apache v2.0
+License File:               ./licenses/Apache-CMSIS.txt
+Package Category:           library
+Type of Content:            object code
+Description and comments:	Used for ARM Cortex-M accelerated math.
+Release Location:           ./lib/libvoiceseeker.a
+							./lib/libvoiceseeker_no_aec.a
+Origin:                     https://github.com/ARM-software/CMSIS_5
+

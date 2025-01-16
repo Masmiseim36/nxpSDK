@@ -1,14 +1,13 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
 #include "lvgl_support.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "lvgl.h"
 #include "gui_guider.h"
 #include "events_init.h"
@@ -37,8 +36,15 @@ static volatile bool s_lvglTaskPending = false;
  * Prototypes
  ******************************************************************************/
 static void DEMO_SetupTick(void);
+void print_cb(lv_log_level_t level, const char * buf);
+
 #if LV_USE_LOG
-static void print_cb(const char *buf);
+void print_cb(lv_log_level_t level, const char * buf)
+{
+    LV_UNUSED(level);
+
+    PRINTF("\r%s\n", buf);
+}
 #endif
 
 /*******************************************************************************
@@ -50,29 +56,18 @@ static void print_cb(const char *buf);
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Set LPSPI_PODF. */
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, LPSPI_CLOCK_SOURCE_DIVIDER);
-    /* Set Lpspi clock source. */
-    CLOCK_SetMux(kCLOCK_LpspiMux, LPSPI_CLOCK_SOURCE_SELECT);
-
-    /* Set LPI2C_CLK_PODF. */
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
-    /* Set Lpi2c clock source. */
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, LPI2C_CLOCK_SOURCE_SELECT);
+    BOARD_InitHardware();
     DEMO_SetupTick();
+
+    lv_init();
+    lv_port_disp_init();
+    lv_port_indev_init();
+
 #if LV_USE_LOG
     lv_log_register_print_cb(print_cb);
 #endif
 
-    lv_port_pre_init();
-    lv_init();
-    lv_port_disp_init();
-    lv_port_indev_init();
+    LV_LOG("lvgl guider_bm demo started\r\n");
 
     setup_ui(&guider_ui);
     events_init(&guider_ui);
@@ -85,7 +80,7 @@ int main(void)
         }
         s_lvglTaskPending = false;
 
-        lv_task_handler();
+        lv_timer_handler();
     }
 }
 
@@ -110,9 +105,3 @@ void SysTick_Handler(void)
     }
 }
 
-#if LV_USE_LOG
-static void print_cb(const char *buf)
-{
-    PRINTF("\r%s\n", buf);
-}
-#endif

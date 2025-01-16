@@ -36,14 +36,12 @@ to be available here. */
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /* Priorities at which the tasks are created.  The event semaphore task is
 given the maximum priority of ( configMAX_PRIORITIES - 1 ) to ensure it runs as
 soon as the semaphore is given. */
@@ -114,10 +112,7 @@ int main(void)
     TimerHandle_t xExampleSoftwareTimer = NULL;
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Create the queue used by the queue send and queue receive tasks. */
     xQueue = xQueueCreate(/* The number of items the queue can hold. */

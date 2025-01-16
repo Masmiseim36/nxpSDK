@@ -7,16 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_src.h"
 #include "fsl_common.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SRC SRC
 
 /*******************************************************************************
  * Prototypes
@@ -38,10 +36,7 @@ int main(void)
     uint8_t ch;
     uint32_t flags;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("Example: SRC Reset Soruce.\r\n");
 

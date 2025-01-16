@@ -147,9 +147,10 @@ static int sss_rsakey_verify(void *ctx,
     status = sss_asymmetric_verify_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, (uint8_t *)sig, sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_verify_digest Failed.");
+        sss_asymmetric_context_free(&asymVerifyCtx);
         return 1;
     }
-
+    sss_asymmetric_context_free(&asymVerifyCtx);
     return (0);
 }
 
@@ -205,11 +206,12 @@ static int sss_rsakey_sign(void *ctx,
     status = sss_asymmetric_sign_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, sig, &u16_sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_sign_digest failed.");
+        sss_asymmetric_context_free(&asymVerifyCtx);
         return 1;
     }
 
     *sig_len = u16_sig_len;
-
+    sss_asymmetric_context_free(&asymVerifyCtx);
     return (ret);
 }
 

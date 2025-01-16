@@ -1,72 +1,38 @@
-Overview
-========
-The SDCARD Interrupt project is a demonstration program that uses the SDK software. It reads/writes
-/erases the SD card continusly. The purpose of this example is to show how to use SDCARD driver and
-show how to use interrupt based transfer API in SDHC driver in SDK software to access SD card.
-Note: If DATA3 is used as the card detect PIN, please make sure DATA3 is pull down, no matter internal or external, at the same time, make sure the card can pull DATA3 up, then host can detect card through DATA3.And SDHC do not support detect card through CD by host, card can be detected through DATA3 or GPIO.No matter detect card through host or gpio, make sure the pinmux configuration is correct.
+# sdcard_interrupt
 
-SDK version
-===========
-- Version: 2.16.000
+## Overview
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+The SDCARD Interrupt project is a demonstration program that uses the SDK
+software. It reads/writes/erases the SD card continusly. The purpose of this
+example is to show how to use SDCARD driver andshow how to use interrupt based
+transfer API in SDHC driver in SDK software to access SD card.Note: If DATA3 is
+used as the card detect PIN, please make sure DATA3 is pull down, no matter
+internal or external, at the same time, make sure the card can pull DATA3 up,
+then host can detect card through DATA3.And SDHC do not support detect card
+through CD by host, card can be detected through DATA3 or GPIO.No matter detect
+card through host or gpio, make sure the pinmux configuration is correct.
 
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKB board
-- Personal Computer
-- SD card
-
-Board settings
-==============
-Make sure resistors R368/R347/R349/R365/R363 are removed.
-
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Insert SD card to card slot
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the terminal like:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Card size xxxxx bytes
-
-Working condition:
-
-  Voltage : xxxV
-
-  Timing mode: xxx
-
-  Freq : xxx HZ
-
-Read/Write/Erase the card continuously until encounter error......
-
-Write/read one data block......
-Compare the read/write content......
-The read/write content is consistent.
-Write/read multiple data blocks......
-Compare the read/write content......
-The read/write content is consistent.
-Erase multiple data blocks......
-
-Input 'q' to quit read/write/erase process.
-Input other char to read/write/erase data blocks again.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [FRDM-K32L3A6](../../_boards/frdmk32l3a6/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/sdmmc_examples/sdcard_interrupt/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/sdmmc_examples/sdcard_interrupt/example_board_readme.md)

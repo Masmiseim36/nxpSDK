@@ -6,8 +6,7 @@
  */
 
 #include <stdio.h>
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
@@ -16,52 +15,9 @@
 #include "fsl_sai_edma.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
-#include "fsl_common.h"
-#include "fsl_cs42448.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* SAI */
-#define DEMO_SAI SAI1
-
-/* IRQ */
-#define DEMO_SAI_TX_IRQ SAI1_IRQn
-#define DEMO_SAI_RX_IRQ SAI1_IRQn
-
-/* DMA */
-#define EXAMPLE_DMA           DMA0
-#define EXAMPLE_DMAMUX        DMAMUX
-#define EXAMPLE_TX_CHANNEL    (0U)
-#define EXAMPLE_RX_CHANNEL    (1U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
-#define EXAMPLE_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
-
-/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
-/* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (3U)
-/* Clock divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (7U)
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ                                                        \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
-     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
-
-/* I2C instance and clock */
-#define DEMO_I2C          LPI2C3
-#define DEMO_I2C_INSTANCE 3
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-#define DEMO_CODEC_POWER_GPIO     GPIO2
-#define DEMO_CODEC_POWER_GPIO_PIN 8
-#define DEMO_CODEC_RESET_GPIO     GPIO2
-#define DEMO_CODEC_RESET_GPIO_PIN 6
-#define BOARD_MASTER_CLOCK_CONFIG()
 #define OVER_SAMPLE_RATE (384U)
 #define BUFFER_SIZE      (1024U)
 #define BUFFER_NUMBER    (4U)
@@ -76,8 +32,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BORAD_CodecReset(bool state);
-
 static void DEMO_InitCodec(void);
 extern void BORAD_CodecReset(bool state);
 extern void BOARD_Codec_CS42888_I2C_Init(void);
@@ -88,31 +42,6 @@ extern status_t BOARD_Codec_CS42888_I2C_Receive(
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
- *                              = 24 * (32 + 768/1000)
- *                              = 786.432 MHz
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
-
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = BORAD_CodecReset,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = DEMO_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .format       = {.mclk_HZ = 24576000, .sampleRate = 48000U, .bitWidth = 24U},
-    .bus          = kCS42448_BusTDM,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t Buffer[BUFFER_NUMBER * BUFFER_SIZE], 4);
 #if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
@@ -130,52 +59,6 @@ codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
-    }
-}
-
-
-status_t BOARD_Codec_CS42888_I2C_Send(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize)
-{
-    return BOARD_LPI2C_Send(DEMO_I2C, deviceAddress, subAddress, subAddressSize, (uint8_t *)txBuff, txBuffSize);
-}
-
-status_t BOARD_Codec_CS42888_I2C_Receive(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
-{
-    return BOARD_LPI2C_Receive(DEMO_I2C, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
-}
-
-void BORAD_CodecReset(bool state)
-{
-    if (state)
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 1U);
-    }
-    else
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 0U);
-    }
-}
-
 static void rx_callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     if (kStatus_SAI_RxError == status)
@@ -209,30 +92,7 @@ int main(void)
     edma_config_t dmaConfig = {0};
     sai_transceiver_t saiConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    CLOCK_InitAudioPll(&audioPllConfig);
-    BOARD_InitDebugConsole();
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    /*Clock setting for LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
-
-    /*Clock setting for SAI1*/
-    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
-    BOARD_USDHCClockConfiguration();
-    GPIO_PinInit(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, &gpio_config);
-
-    /*Enable MCLK clock*/
-    BOARD_EnableSaiMclkOutput(true);
-
-    /* enable codec power */
-    GPIO_PinInit(DEMO_CODEC_POWER_GPIO, DEMO_CODEC_POWER_GPIO_PIN, &gpio_config);
-    GPIO_PinWrite(DEMO_CODEC_POWER_GPIO, DEMO_CODEC_POWER_GPIO_PIN, 1U);
+    BOARD_InitHardware();
 
     PRINTF("SAI TDM record playback example started!\n\r");
 

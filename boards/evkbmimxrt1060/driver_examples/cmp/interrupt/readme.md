@@ -1,5 +1,6 @@
-Overview
-========
+# cmp_interrupt
+
+## Overview
 
 The CMP interrupt Example shows how to use interrupt with CMP driver.
 
@@ -13,50 +14,20 @@ comparator's output would generate the falling and rising edge events with their
 interrupt happens, the CMP's ISR would turn on the LED light if detecting the output's rising edge, or turn off it when
 detecting the output's falling edge.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKB board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Note
-- This demo will access GPIO DR_SET/DR_CLEAR registers which is only available on A1 silicon (MIMXRT106xxxxxA).
-
-Running the demo
-================
-When the example runs successfully, the following message is displayed in the terminal:
-
-~~~~~~~~~~~~~~~~~~~~~
-CMP interrupt Example
-~~~~~~~~~~~~~~~~~~~~~
-
-Then change CMP analog input, and watch the change of LED.
-    - CMP1_IN0 (J33-5) connected to VCC =3.3V (J17-8): USER LED on
-    - CMP1_IN0 (J33-5) connected to GND (J17-7): USER LED off
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/cmp/interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/cmp/interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/cmp/interrupt/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/cmp/interrupt/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/cmp/interrupt/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/cmp/interrupt/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/cmp/interrupt/example_board_readme.md)
+- [FRDM-K22F](../../../_boards/frdmk22f/driver_examples/cmp/interrupt/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../_boards/frdmk32l2a4s/driver_examples/cmp/interrupt/example_board_readme.md)
+- [FRDM-K32L2B](../../../_boards/frdmk32l2b/driver_examples/cmp/interrupt/example_board_readme.md)
+- [FRDM-MCXC041](../../../_boards/frdmmcxc041/driver_examples/cmp/interrupt/example_board_readme.md)
+- [FRDM-MCXC242](../../../_boards/frdmmcxc242/driver_examples/cmp/interrupt/example_board_readme.md)
+- [FRDM-MCXC444](../../../_boards/frdmmcxc444/driver_examples/cmp/interrupt/example_board_readme.md)
+- [TWR-KM34Z50MV3](../../../_boards/twrkm34z50mv3/driver_examples/cmp/interrupt/example_board_readme.md)
+- [TWR-KM34Z75M](../../../_boards/twrkm34z75m/driver_examples/cmp/interrupt/example_board_readme.md)
+- [TWR-KM35Z75M](../../../_boards/twrkm35z75m/driver_examples/cmp/interrupt/example_board_readme.md)

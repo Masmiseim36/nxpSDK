@@ -1,57 +1,9 @@
-Overview
-========
+# a2dp_sink
+
+## Overview
 Application demonstrating how to use the a2dp sink feature.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-
-Hardware requirements
-=====================
-- Micro USB cable
-- evkcmimxrt1060 board
-- Personal Computer
-- One of the following modules:
-  - Embedded Artists 1XK M.2 Module (EAR00385) - direct M2 connection.
-  - Embedded Artists 1ZM M.2 Module (EAR00364) - direct M2 connection.
-  - Embedded Artists 2EL M.2 Module (Rev-A1) - direct M2 connection.
-
-Board settings
-==============
-Before building the example application select Wi-Fi module macro in the app_bluetooth_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
-If you want to use Embedded Artists 1XK M.2 Module(EAR00385), please change the macro to WIFI_IW416_BOARD_MURATA_1XK_M2.
-If you want to use Embedded Artists 1ZM M.2 Module(EAR00364), please change the macro to WIFI_88W8987_BOARD_MURATA_1ZM_M2.
-If you want to use Embedded Artists 1ZM M.2 Module(Rev-A1), please change the macro to WIFI_IW612_BOARD_MURATA_2EL_M2.
-
-Jumper settings for RT1060-EVKC (enables external 5V supply):
-remove  J40 5-6
-connect J40 1-2
-connect J45 with external power(controlled by SW6)
-
-Murata Solution Board settings
-Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
-Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
-Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
-
-The hardware should be reworked according to the hardware rework guide for evkcmimxrt1060 and Murata 1XK M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-
-The hardware should be reworked according to the hardware rework guide for evkcmimxrt1060 and Murata 1ZM M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
-
-Note:
-To ensure that the LITTLEFS flash region has been cleaned,
-all flash sectors need to be erased before downloading example code.
-After downloaded binary into qspiflash and boot from qspiflash directly,
-please reset the board by pressing SW7 or power off and on the board to run the application.
-Prepare the Demo
-================
+## Prepare the Demo
 
 1.  Open example's project and build it.
 
@@ -70,8 +22,7 @@ Prepare the Demo
 
 6.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
+## Running the demo
 The log below shows the output of the example in the terminal window.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -84,3 +35,15 @@ Procedures to run
 1 Open Android phone, and connect the "a2dp sink" device in bluetooth setting window.
 2 Play music in the phone
 3 The music can be heared in the audio port of the board.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/a2dp_sink/example_board_readme.md)

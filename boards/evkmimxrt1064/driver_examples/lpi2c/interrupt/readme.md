@@ -1,5 +1,6 @@
-Overview
-========
+# lpi2c_interrupt
+
+## Overview
 The lpi2c_functional_interrupt example shows how to use lpi2c functional driver to build a interrupt based application:
 
 In this example , one lpi2c instance used as lpi2c master and another lpi2c instance used as lpi2c slave .
@@ -7,71 +8,31 @@ In this example , one lpi2c instance used as lpi2c master and another lpi2c inst
 2. lpi2c master read data using interrupt from lpi2c slave in interrupt .
 3. The example assumes that the connection is OK between master and slave, so there's NO error handling code.
 
-SDK version
-===========
-- Version: 2.15.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1064 board
-- Personal Computer
-
-Board settings
-==============
-To make lpi2c example work, connections needed to be as follows:
-
-        LPI2C1 SCL(J23-6)     -->          LPI2C3 SCL(J22-1)
-        LPI2C1 SDA(J23-5)     -->          LPI2C3 SDA(J22-2)
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The following message shows in the terminal if the example runs successfully.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LPI2C example -- MasterFunctionalInterrupt_SlaveFunctionalInterrupt.
-Master will send data :
-0x 0  0x 1  0x 2  0x 3  0x 4  0x 5  0x 6  0x 7
-0x 8  0x 9  0x a  0x b  0x c  0x d  0x e  0x f
-0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
-0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f
-
-Slave received data :
-0x 0  0x 1  0x 2  0x 3  0x 4  0x 5  0x 6  0x 7
-0x 8  0x 9  0x a  0x b  0x c  0x d  0x e  0x f
-0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
-0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f
-
-This time , slave will send data:
-0xff  0xfe  0xfd  0xfc  0xfb  0xfa  0xf9  0xf8
-0xf7  0xf6  0xf5  0xf4  0xf3  0xf2  0xf1  0xf0
-0xef  0xee  0xed  0xec  0xeb  0xea  0xe9  0xe8
-0xe7  0xe6  0xe5  0xe4  0xe3  0xe2  0xe1  0xe0
-
-Master received data :
-0xff  0xfe  0xfd  0xfc  0xfb  0xfa  0xf9  0xf8
-0xf7  0xf6  0xf5  0xf4  0xf3  0xf2  0xf1  0xf0
-0xef  0xee  0xed  0xec  0xeb  0xea  0xe9  0xe8
-0xe7  0xe6  0xe5  0xe4  0xe3  0xe2  0xe1  0xe0
-
-End of I2C example .
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../_boards/evkmcimx7ulp/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../_boards/frdmk32l2a4s/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-K32L3A6](../../../_boards/frdmk32l3a6/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-KE15Z](../../../_boards/frdmke15z/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXA156](../../../_boards/frdmmcxa156/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXA166](../../../_boards/frdmmcxa166/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXA276](../../../_boards/frdmmcxa276/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXW71](../../../_boards/frdmmcxw71/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [FRDM-MCXW72](../../../_boards/frdmmcxw72/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [K32W148-EVK](../../../_boards/k32w148evk/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [KW45B41Z-EVK](../../../_boards/kw45b41zevk/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [KW47-EVK](../../../_boards/kw47evk/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/driver_examples/lpi2c/interrupt/example_board_readme.md)
+- [MCX-W72-EVK](../../../_boards/mcxw72evk/driver_examples/lpi2c/interrupt/example_board_readme.md)

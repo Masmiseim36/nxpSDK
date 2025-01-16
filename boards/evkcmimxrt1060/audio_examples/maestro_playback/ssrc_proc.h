@@ -8,7 +8,9 @@
 #ifndef _SSRC_PROC_H_
 #define _SSRC_PROC_H_
 
-#include "ssrc_head.h" // SSRC library
+#ifdef SSRC_PROC
+
+#include "SSRC.h" // SSRC library
 
 #define MINBLOCKSIZE 100
 
@@ -17,5 +19,5 @@ int SSRC_Proc_Execute(void *arg, void *inputBuffer, int size);
 int SSRC_Proc_Deinit();
 
 int SSRC_register_post_process(void *streamer);
-
+#endif
 #endif

@@ -152,8 +152,6 @@ typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNM
 
 #include "kinetis_configchecks.h"
 
-#define ENET_HW_CHKSUM (CHECKSUM_GEN_IP == 0)
-
 /*!
  * @brief Used to wrap received data in a pbuf to be passed into lwIP
  *        without copying.
@@ -498,14 +496,22 @@ void ethernetif_plat_init(struct netif *netif,
         ethernetif->RxPbufs[i].netif                  = netif;
     }
 
-#if ENET_HW_CHKSUM == 1
-    config.txAccelerConfig |= kENET_TxAccelProtoCheckEnabled | kENET_TxAccelIpCheckEnabled;
-    config.rxAccelerConfig |=
-        kENET_RxAccelProtoCheckEnabled | kENET_RxAccelIpCheckEnabled | kENET_RxAccelMacCheckEnabled;
-    config.macSpecialConfig &= ~(kENET_ControlStoreAndFwdDisable);
-#else
     config.txAccelerConfig = 0;
-    config.rxAccelerConfig = 0;
+    config.rxAccelerConfig = kENET_RxAccelMacCheckEnabled;
+
+#if (CHECKSUM_GEN_IP == 0)
+    config.txAccelerConfig |= kENET_TxAccelIpCheckEnabled;
+#endif
+#if (CHECKSUM_GEN_TCP == 0) && (CHECKSUM_GEN_UDP == 0) && (CHECKSUM_GEN_ICMP == 0)
+    config.txAccelerConfig |= kENET_TxAccelProtoCheckEnabled;
+#endif
+#if (CHECKSUM_CHECK_IP == 0)
+    config.rxAccelerConfig |= kENET_RxAccelIpCheckEnabled;
+    config.macSpecialConfig &= ~(kENET_ControlStoreAndFwdDisable);
+#endif
+#if (CHECKSUM_CHECK_TCP == 0) || (CHECKSUM_CHECK_UDP == 0) || (CHECKSUM_CHECK_ICMP == 0)
+    config.rxAccelerConfig |= kENET_RxAccelProtoCheckEnabled;
+    config.macSpecialConfig &= ~(kENET_ControlStoreAndFwdDisable);
 #endif
 
     /* Initialize the ENET module. */

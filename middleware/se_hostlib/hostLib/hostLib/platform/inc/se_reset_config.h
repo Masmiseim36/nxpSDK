@@ -5,7 +5,10 @@
 #ifndef _SE_RESET_CONFIG_H
 #define _SE_RESET_CONFIG_H
 
+#if defined(CPU_MPC5748G)
+#else
 #include "board.h"
+#endif
 
 /*
  * Platform based definitions for Enable pin

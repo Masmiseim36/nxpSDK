@@ -106,7 +106,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1064_sdram_init.ini</tIfile>
+        <tIfile>../evkmimxrt1064_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -168,7 +168,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>pxp_rotate flexspi_nor_debug</TargetName>
+    <TargetName>pxp_rotate flexspi_nor_sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -257,7 +257,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1064_flexspi_nor.ini</tIfile>
+        <tIfile>../evkmimxrt1064_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -408,7 +408,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1064_sdram_init.ini</tIfile>
+        <tIfile>../evkmimxrt1064_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -470,7 +470,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>pxp_rotate flexspi_nor_release</TargetName>
+    <TargetName>pxp_rotate flexspi_nor_sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -559,7 +559,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1064_flexspi_nor.ini</tIfile>
+        <tIfile>../evkmimxrt1064_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

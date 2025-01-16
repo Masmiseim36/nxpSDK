@@ -1,74 +1,46 @@
-Overview
-========
+# flexio_i2c_interrupt_lpi2c_transfer
+
+## Overview
 The flexio_lpi2c_interrupt example shows how to use flexio i2c master  driver in interrupt way:
 
 In this example, a flexio simulated i2c master connect to a LPI2C slave
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1010 board
-- Personal Computer
-
-Board settings
-==============
-To make this example work, connections needed to be as follows:
-
-    FLEXIO_I2C        connected to  LPI2C1
-SCL     J26-8           -->        J57-20
-SDA     J26-6           -->        J57-18
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-You can see the similar message shows following in the terminal if the example runs successfully.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FlexIO I2C interrupt - LPI2C interrupt
-Master will send data :
-0x00  0x01  0x02  0x03  0x04  0x05  0x06  0x07
-0x08  0x09  0x0A  0x0B  0x0C  0x0D  0x0E  0x0F
-0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
-0x18  0x19  0x1A  0x1B  0x1C  0x1D  0x1E  0x1F
-
-Slave received data :
-0x00  0x01  0x02  0x03  0x04  0x05  0x06  0x07
-0x08  0x09  0x0A  0x0B  0x0C  0x0D  0x0E  0x0F
-0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
-0x18  0x19  0x1A  0x1B  0x1C  0x1D  0x1E  0x1F
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Known Issue:
-Only master send data will be printed when running flexspi_nor_debug target in keil.
-External flash's speed can not support the rate of I2C transmit because it is affected by performance.
-Workaround: Set "I2C_BAUDRATE" to no more than 150k.
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J41.
-3. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../../_boards/evk9mimx8ulp/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../../_boards/evkbimxrt1050/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../../_boards/evkbmimxrt1170/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../../_boards/evkmcimx7ulp/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../../_boards/evkmimx8ulp/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../../_boards/evkmimxrt1010/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../_boards/evkmimxrt1015/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../_boards/evkmimxrt1020/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../_boards/evkmimxrt1024/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../_boards/evkmimxrt1040/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../../_boards/evkmimxrt1160/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../../_boards/evkmimxrt1180/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../../_boards/frdmk32l2a4s/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-K32L3A6](../../../../_boards/frdmk32l3a6/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-KE15Z](../../../../_boards/frdmke15z/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-KE17Z](../../../../_boards/frdmke17z/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-KE17Z512](../../../../_boards/frdmke17z512/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-MCXA156](../../../../_boards/frdmmcxa156/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-MCXA276](../../../../_boards/frdmmcxa276/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-MCXN236](../../../../_boards/frdmmcxn236/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-MCXN947](../../../../_boards/frdmmcxn947/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [FRDM-MCXW71](../../../../_boards/frdmmcxw71/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [IMX95LP4XEVK-15](../../../../_boards/imx95lp4xevk15/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [IMX95LPD5EVK-19](../../../../_boards/imx95lpd5evk19/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [imx95verdinevk](../../../../_boards/imx95verdinevk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [K32W148-EVK](../../../../_boards/k32w148evk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [KW45B41Z-EVK](../../../../_boards/kw45b41zevk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [KW47-EVK](../../../../_boards/kw47evk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../../_boards/mcimx93autoevk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MCIMX93-EVK](../../../../_boards/mcimx93evk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MCIMX93-QSB](../../../../_boards/mcimx93qsb/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../../_boards/mcxn5xxevk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../../_boards/mcxn9xxevk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MCX-W72-EVK](../../../../_boards/mcxw72evk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)
+- [MIMXRT700-EVK](../../../../_boards/mimxrt700evk/driver_examples/flexio/i2c/interrupt_lpi2c_transfer/example_board_readme.md)

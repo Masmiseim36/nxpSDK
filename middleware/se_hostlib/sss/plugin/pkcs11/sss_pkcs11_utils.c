@@ -1,20 +1,21 @@
 /*
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* ************************************************************************** */
-/* Includes                                                                   */
-/* ************************************************************************** */
-
+/* ********************** Include files ********************** */
 #include "sss_pkcs11_pal.h"
+#if defined(USE_RTOS) && (USE_RTOS == 1) /* FreeRTOS includes. */
+#include "FreeRTOS.h"
+#include "semphr.h"
+#elif (__GNUC__ && !AX_EMBEDDED)
+#include <errno.h>
+#include <pthread.h>
+#endif
 
-/* ************************************************************************** */
-/* Public Functions                                                           */
-/* ************************************************************************** */
+/* ********************** Constants ********************** */
 
 /* clang-format off */
-
 /* RSA Header */
 const uint8_t rsa512PubHeader[] = {
     0x30, 0x5C, 0x30, 0x0D,     0x06, 0x09, 0x2A, 0x86,  \
@@ -24,7 +25,7 @@ const uint8_t rsa512PubHeader[] = {
 const uint8_t rsa1kPubHeader[] = {
     0x30, 0x81, 0x9F, 0x30,     0x0D, 0x06, 0x09, 0x2A,  \
     0x86, 0x48, 0x86, 0xF7,     0x0D, 0x01, 0x01, 0x01,  \
-    0x05, 0x00, 0x03, 0x81,     0x8D, };
+    0x05, 0x00, 0x03, 0x81,     0x8D, 0x00,};
 
 const uint8_t rsa1152PubHeader[] = {
     0x30, 0x81, 0xAF, 0x30,     0x0D, 0x06, 0x09, 0x2A,  \
@@ -49,19 +50,152 @@ const uint8_t rsa4kPubHeader[] = {
     0x01, 0x05, 0x00, 0x03,     0x82, 0x02, 0x0F, 0x00,  \
     };
 
+// /* ECC Header */
+const uint8_t ecc_der_header_secp192[] = {
+    0x30, 0x49, 0x30, 0x13,     0x06, 0x07, 0x2A, 0x86,
+    0x48, 0xCE, 0x3D, 0x02,     0x01, 0x06, 0x08, 0x2A,
+    0x86, 0x48, 0xCE, 0x3D,     0x03, 0x01, 0x01, 0x03,
+    0x32, 0x00, };
+
+const uint8_t ecc_der_header_secp224[] = {
+    0x30, 0x4E, 0x30, 0x10,     0x06, 0x07, 0x2A, 0x86,
+    0x48, 0xCE, 0x3D, 0x02,     0x01, 0x06, 0x05, 0x2B,
+    0x81, 0x04, 0x00, 0x21,     0x03, 0x3A, 0x00, };
+
+const uint8_t ecc_der_header_secp256[] = {
+    0x30, 0x59, 0x30, 0x13,     0x06, 0x07, 0x2A, 0x86,
+    0x48, 0xCE, 0x3D, 0x02,     0x01, 0x06, 0x08, 0x2A,
+    0x86, 0x48, 0xCE, 0x3D,     0x03, 0x01, 0x07, 0x03,
+    0x42, 0x00 };
+
+const uint8_t ecc_der_header_secp384[] = {
+    0x30, 0x76, 0x30, 0x10,     0x06, 0x07, 0x2A, 0x86,
+    0x48, 0xCE, 0x3D, 0x02,     0x01, 0x06, 0x05, 0x2B,
+    0x81, 0x04, 0x00, 0x22,     0x03, 0x62, 0x00, };
+
+const uint8_t ecc_der_header_secp521[] = {
+    0x30, 0x81, 0x9B, 0x30,     0x10, 0x06, 0x07, 0x2A,
+    0x86, 0x48, 0xCE, 0x3D,     0x02, 0x01, 0x06, 0x05,
+    0x2B, 0x81, 0x04, 0x00,     0x23, 0x03, 0x81, 0x86,
+    0x00, };
+
+const uint8_t ecc_der_header_secp160k1[] = {
+    0x30, 0x3e, 0x30, 0x10,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x05, 0x2b,
+    0x81, 0x04, 0x00, 0x09,     0x03, 0x2a, 0x00, };
+
+const uint8_t ecc_der_header_secp192k1[] = {
+    0x30, 0x46, 0x30, 0x10,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x05, 0x2b,
+    0x81, 0x04, 0x00, 0x1f,     0x03, 0x32, 0x00, };
+
+const uint8_t ecc_der_header_secp224k1[] = {
+    0x30, 0x4e, 0x30, 0x10,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x05, 0x2b,
+    0x81, 0x04, 0x00, 0x20,     0x03, 0x3a, 0x00, };
+
+const uint8_t ecc_der_header_secp256k1[] = {
+    0x30, 0x56, 0x30, 0x10,     0x06, 0x07, 0x2A, 0x86,
+    0x48, 0xCE, 0x3D, 0x02,     0x01, 0x06, 0x05, 0x2B,
+    0x81, 0x04, 0x00, 0x0A,     0x03, 0x42, 0x00 };
+
+const uint8_t ecc_der_header_bp160r1[] = {
+    0x30, 0x42, 0x30, 0x14,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x09, 0x2b,
+    0x24, 0x03, 0x03, 0x02,     0x08, 0x01, 0x01, 0x01,
+    0x03, 0x2a, 0x00, };
+
+const uint8_t ecc_der_header_bp192r1[] = {
+    0x30, 0x4a, 0x30, 0x14,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x09, 0x2b,
+    0x24, 0x03, 0x03, 0x02,     0x08, 0x01, 0x01, 0x03,
+    0x03, 0x32, 0x00, };
+
+const uint8_t ecc_der_header_bp224r1[] = {
+    0x30, 0x52, 0x30, 0x14,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x09, 0x2b,
+    0x24, 0x03, 0x03, 0x02,     0x08, 0x01, 0x01, 0x05,
+    0x03, 0x3a, 0x00, };
+
+const uint8_t ecc_der_header_bp256r1[] = {
+    0x30, 0x5a, 0x30, 0x14,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x09, 0x2b,
+    0x24, 0x03, 0x03, 0x02,     0x08, 0x01, 0x01, 0x07,
+    0x03, 0x42, 0x00, };
+
+const uint8_t ecc_der_header_bp320r1[] = {
+    0x30, 0x6a, 0x30, 0x14,     0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02,     0x01, 0x06, 0x09, 0x2b,
+    0x24, 0x03, 0x03, 0x02,     0x08, 0x01, 0x01, 0x09,
+    0x03, 0x52, 0x00, };
+
+const uint8_t ecc_der_header_bp384r1[] = {
+    0x30, 0x7A, 0x30, 0x14,     0x06, 0x07, 0x2A, 0x86,
+    0x48, 0xCE, 0x3D, 0x02,     0x01, 0x06, 0x09, 0x2B,
+    0x24, 0x03, 0x03, 0x02,     0x08, 0x01, 0x01, 0x0B,
+    0x03, 0x62, 0x00, };
+
+const uint8_t ecc_der_header_bp512r1[] = {
+    0x30, 0x81, 0x9B, 0x30,     0x14, 0x06, 0x07, 0x2A,
+    0x86, 0x48, 0xCE, 0x3D,     0x02, 0x01, 0x06, 0x09,
+    0x2B, 0x24, 0x03, 0x03,     0x02, 0x08, 0x01, 0x01,
+    0x0D, 0x03, 0x81, 0x82,     0x00, };
+
+size_t const der_ecc_secp192_header_len         = sizeof(ecc_der_header_secp192);
+size_t const der_ecc_secp224_header_len         = sizeof(ecc_der_header_secp224);
+size_t const der_ecc_secp256_header_len         = sizeof(ecc_der_header_secp256);
+size_t const der_ecc_secp384_header_len         = sizeof(ecc_der_header_secp384);
+size_t const der_ecc_secp521_header_len         = sizeof(ecc_der_header_secp521);
+size_t const der_ecc_secp160k1_header_len       = sizeof(ecc_der_header_secp160k1);
+size_t const der_ecc_secp192k1_header_len       = sizeof(ecc_der_header_secp192k1);
+size_t const der_ecc_secp224k1_header_len       = sizeof(ecc_der_header_secp224k1);
+size_t const der_ecc_secp256k1_header_len       = sizeof(ecc_der_header_secp256k1);
+size_t const der_ecc_bp160r1_header_len         = sizeof(ecc_der_header_bp160r1);
+size_t const der_ecc_bp192r1_header_len         = sizeof(ecc_der_header_bp192r1);
+size_t const der_ecc_bp224r1_header_len         = sizeof(ecc_der_header_bp224r1);
+size_t const der_ecc_bp256r1_header_len         = sizeof(ecc_der_header_bp256r1);
+size_t const der_ecc_bp320r1_header_len         = sizeof(ecc_der_header_bp320r1);
+size_t const der_ecc_bp384r1_header_len         = sizeof(ecc_der_header_bp384r1);
+size_t const der_ecc_bp512r1_header_len         = sizeof(ecc_der_header_bp512r1);
 /* clang-format on */
 
+/* ********************** Global variables ********************** */
 
 /* Mutex handling */
+bool pkcs11_lock_flag = 0; // 0: Unlocked, 1: Locked
+#if defined(USE_RTOS) && (USE_RTOS == 1)
+static SemaphoreHandle_t pkcs11_mutex = NULL;
+#elif (__GNUC__ && !AX_EMBEDDED)
+static pthread_mutex_t pkcs11_mutex;
+#endif
 
-/**
+/* ********************** Functions ********************** */
+
+/*
  * @brief Mutex Init.
  * Return - 0:Success, 1:Error
  */
 int sss_pkcs11_mutex_init(void)
 {
+#if defined(USE_RTOS) && (USE_RTOS == 1)
+    pkcs11_mutex = xSemaphoreCreateMutex();
+    if (pkcs11_mutex == NULL) {
+        return 1;
+    }
+#elif (__GNUC__ && !AX_EMBEDDED)
+    {
+        int ret = EBUSY;
+        while (ret == EBUSY) {
+            ret = pthread_mutex_init(&pkcs11_mutex, NULL);
+        }
+        if (ret != 0) {
+            return 1;
+        }
+    }
+#else
+    LOG_W("sss_pkcs11_mutex_init not implemented \n");
+#endif
     return 0;
-    //TBU
 }
 
 /**
@@ -70,18 +204,51 @@ int sss_pkcs11_mutex_init(void)
  */
 int sss_pkcs11_mutex_lock(void)
 {
-    return 0;
-    //TBU
+#if defined(USE_RTOS) && (USE_RTOS == 1)
+    if (xSemaphoreTake(pkcs11_mutex, portMAX_DELAY) == pdTRUE) {
+        // Semaphore obtained
+        pkcs11_lock_flag = 1;
+        return 0;
+    }
+    return 1;
+#elif (__GNUC__ && !AX_EMBEDDED)
+    int ret = pthread_mutex_lock(&pkcs11_mutex);
+    if (ret == 0) {
+        pkcs11_lock_flag = 1;
+    }
+    return ret;
+#else
+    LOG_W("sss_pkcs11_mutex_lock not implemented \n");
+    return 1;
+#endif
 }
 
 /**
- * @brief Mutex Init.
+ * @brief Mutex Unlock.
  * Return - 0:Success, 1:Error
  */
 int sss_pkcs11_mutex_unlock(void)
 {
-    return 0;
-    //TBU
+    if (pkcs11_lock_flag == 0) {
+        return 0;
+    }
+
+#if defined(USE_RTOS) && (USE_RTOS == 1)
+    if (xSemaphoreGive(pkcs11_mutex) == pdTRUE) {
+        pkcs11_lock_flag = 0;
+        return 0;
+    }
+    return 1;
+#elif (__GNUC__ && !AX_EMBEDDED)
+    if (pthread_mutex_unlock(&pkcs11_mutex) == 0) {
+        pkcs11_lock_flag = 0;
+        return 0;
+    }
+    return 1;
+#else
+    LOG_W("sss_pkcs11_mutex_unlock not implemented \n");
+    return 1;
+#endif
 }
 
 /**
@@ -90,12 +257,24 @@ int sss_pkcs11_mutex_unlock(void)
  */
 int sss_pkcs11_mutex_destroy(void)
 {
+#if defined(USE_RTOS) && (USE_RTOS == 1)
+    vSemaphoreDelete(pkcs11_mutex); // no return value for function vSemaphoreDelete()
     return 0;
-    //TBU
+#elif (__GNUC__ && !AX_EMBEDDED)
+    if (pthread_mutex_destroy(&pkcs11_mutex) == 0) {
+        return 0;
+    }
+    return 1;
+#else
+    LOG_W("sss_pkcs11_mutex_destroy not implemented \n");
+    return 1;
+#endif
 }
 
-
-static int parsecert(uint8_t *pCert, size_t certLen)
+/**
+ * @brief
+ */
+int pkcs11_parse_Cert(uint8_t *pCert, size_t certLen)
 {
     int ret            = -1;
     unsigned char *p   = pCert;
@@ -189,21 +368,23 @@ static int parsecert(uint8_t *pCert, size_t certLen)
     return ret;
 }
 
-/*Function for parsing the private key*/
-int private_key_parse(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, uint8_t *pKey, size_t keyLen)
+/**
+ * @brief Function for parsing the private key
+ */
+int pkcs11_private_key_parse(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, uint8_t *pKey, size_t keyLen)
 {
     CK_RV xResult        = CKR_OK;
     CK_KEY_TYPE key_type = CKK_RSA;
     int ret              = 1;
     CK_ULONG index;
-    xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_KEY_TYPE, &index);
+    xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_KEY_TYPE, &index);
     if (xResult != CKR_OK) {
         return 1;
     }
     memcpy(&key_type, pTemplate[index].pValue, pTemplate[index].ulValueLen);
     if (key_type == CKK_RSA) {
         CK_ULONG modulusIndex;
-        xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
+        xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
         if (xResult != CKR_OK) {
             return 1;
         }
@@ -250,21 +431,23 @@ int private_key_parse(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, uint8_t *pKe
     return ret;
 }
 
-/*Function for parsing the public key*/
-int public_key_parse(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, uint8_t *pKey, size_t keyLen)
+/**
+ * @brief Function for parsing the public key
+ */
+int pkcs11_public_key_parse(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, uint8_t *pKey, size_t keyLen)
 {
     CK_RV xResult        = CKR_OK;
     CK_KEY_TYPE key_type = CKK_RSA;
     int ret              = 1;
     CK_ULONG index;
-    xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_KEY_TYPE, &index);
+    xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_KEY_TYPE, &index);
     if (xResult != CKR_OK) {
         return 1;
     }
     memcpy(&key_type, pTemplate[index].pValue, pTemplate[index].ulValueLen);
     if (key_type == CKK_RSA) {
         CK_ULONG modulusIndex;
-        xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
+        xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
         if (xResult != CKR_OK) {
             return 1;
         }
@@ -311,18 +494,21 @@ int public_key_parse(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, uint8_t *pKey
     return ret;
 }
 
-static int parsePrivateKey(
+/**
+ * @brief
+ */
+int pkcs11_parse_PrivateKey(
     CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index, sss_pkcs11_key_parse_t *keyParse)
 {
     CK_RV xResult = CKR_OK;
     int ret       = 1;
     CK_KEY_TYPE key_type;
 
-    xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_VALUE, index);
+    xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_VALUE, index);
     if (xResult != CKR_OK) {
         uint8_t key[4096] = {0};
-        size_t keyLen = sizeof(key);
-        xResult       = CreateRawPrivateKey(pTemplate, ulCount, &key[0], &keyLen);
+        size_t keyLen     = sizeof(key);
+        xResult           = pkcs11_create_raw_privateKey(pTemplate, ulCount, &key[0], &keyLen);
         if (xResult != CKR_OK) {
             return ret;
         }
@@ -332,11 +518,11 @@ static int parsePrivateKey(
     }
     else {
         if (0 != pTemplate[*index].ulValueLen) {
-            ret = private_key_parse(pTemplate, ulCount, pTemplate[*index].pValue, pTemplate[*index].ulValueLen);
+            ret = pkcs11_private_key_parse(pTemplate, ulCount, pTemplate[*index].pValue, pTemplate[*index].ulValueLen);
             if (ret != 0) {
                 uint8_t key[1024] = {0};
                 size_t keyLen     = sizeof(key);
-                xResult           = CreateRawPrivateKey(pTemplate, ulCount, &key[0], &keyLen);
+                xResult           = pkcs11_create_raw_privateKey(pTemplate, ulCount, &key[0], &keyLen);
                 if (xResult != CKR_OK) {
                     return ret;
                 }
@@ -350,11 +536,9 @@ static int parsePrivateKey(
         }
     }
 
-#if SSS_HAVE_APPLET_SE05X_IOT
-
     key_type = CKK_RSA;
     *index   = 0;
-    xResult  = GetAttributeParameterIndex(pTemplate, ulCount, CKA_KEY_TYPE, index);
+    xResult  = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_KEY_TYPE, index);
     if (xResult != CKR_OK) {
         return 1;
     }
@@ -362,7 +546,7 @@ static int parsePrivateKey(
     if (key_type == CKK_RSA) {
         keyParse->cipherType = kSSS_CipherType_RSA;
         CK_ULONG modulusIndex;
-        xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
+        xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
         if (xResult != CKR_OK) {
             return 1;
         }
@@ -385,12 +569,11 @@ static int parsePrivateKey(
 #if CKK_EC != CKK_ECDSA
 #error "Assumed to be equal"
 #endif
-        keyParse->cipherType = kSSS_CipherType_EC_NIST_P;
 
         /*To calculate the keyBitLen*/
         size_t keyLen = 0;
         *index        = 0;
-        xResult       = GetAttributeParameterIndex(pTemplate, ulCount, CKA_VALUE, index);
+        xResult       = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_VALUE, index);
         if (xResult == CKR_OK) {
             keyLen = (size_t)pTemplate[*index].ulValueLen;
             ret    = 0;
@@ -446,11 +629,19 @@ static int parsePrivateKey(
             /* check for zero padding */
             if (*p == 0x00) {
                 p++;
+                if (len < 1) {
+                    LOG_E("len will wrap");
+                    return 1;
+                }
                 len--;
             }
             /* Uncompressed Key */
 
             if (*p == 0x04) {
+                if (len < 1) {
+                    LOG_E("len will wrap");
+                    return 1;
+                }
                 len--;
             }
             keyLen = len / 2;
@@ -472,22 +663,24 @@ static int parsePrivateKey(
         LOG_E("Key Type not supported");
         return 1;
     }
-#endif
 
     return ret;
 }
 
-static int parsePublicKey(
+/**
+ * @brief
+ */
+int pkcs11_parse_PublicKey(
     CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index, sss_pkcs11_key_parse_t *keyParse)
 {
     CK_RV xResult = CKR_OK;
     int ret       = 1;
 
-    xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_VALUE, index);
+    xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_VALUE, index);
     if (xResult != CKR_OK) {
         uint8_t key[2048] = {0};
-        size_t keyLen = sizeof(key);
-        xResult       = CreateRawPublicKey(pTemplate, ulCount, &key[0], &keyLen);
+        size_t keyLen     = sizeof(key);
+        xResult           = pkcs11_create_raw_publicKey(pTemplate, ulCount, &key[0], &keyLen);
         if (xResult != CKR_OK) {
             return 1;
         }
@@ -497,7 +690,7 @@ static int parsePublicKey(
         ret               = 0;
     }
     else {
-        ret = public_key_parse(pTemplate, ulCount, pTemplate[*index].pValue, pTemplate[*index].ulValueLen);
+        ret = pkcs11_public_key_parse(pTemplate, ulCount, pTemplate[*index].pValue, pTemplate[*index].ulValueLen);
         if (ret != 0) {
             xResult = CKR_ARGUMENTS_BAD;
             return ret;
@@ -507,11 +700,9 @@ static int parsePublicKey(
         keyParse->buffLen = (size_t)pTemplate[*index].ulValueLen;
     }
 
-#if SSS_HAVE_APPLET_SE05X_IOT
-
     CK_KEY_TYPE key_type = CKK_RSA;
     *index               = 0;
-    xResult              = GetAttributeParameterIndex(pTemplate, ulCount, CKA_KEY_TYPE, index);
+    xResult              = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_KEY_TYPE, index);
     if (xResult != CKR_OK) {
         return 1;
     }
@@ -519,7 +710,7 @@ static int parsePublicKey(
     if (key_type == CKK_RSA) {
         keyParse->cipherType = kSSS_CipherType_RSA;
         CK_ULONG modulusIndex;
-        xResult = GetAttributeParameterIndex(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
+        xResult = pkcs11_get_attribute_parameter_index(pTemplate, ulCount, CKA_MODULUS, &modulusIndex);
         if (xResult != CKR_OK) {
             return 1;
         }
@@ -542,7 +733,6 @@ static int parsePublicKey(
 #if CKK_EC != CKK_ECDSA
 #error "Assumed to be equal"
 #endif
-        keyParse->cipherType = kSSS_CipherType_EC_NIST_P;
 
         /*To calculate the keyBitLen*/
 
@@ -592,10 +782,10 @@ static int parsePublicKey(
         }
         keyLen = len / 2;
 
-        if (keyLen < 64) {
+        if (keyLen <= 64) {
             keyParse->keyBitLen = keyLen * 8;
         }
-        else if (keyLen == 66) {
+        else if ((keyLen == 66) || (keyLen == 65)) {
             /*ECP_DP_SECP521R1 Case*/
             keyParse->keyBitLen = 521;
         }
@@ -609,16 +799,13 @@ static int parsePublicKey(
         return 1;
     }
 
-#endif
-
     return ret;
 }
 
 /**
- * @brief Cleans up a key structure.
+ * @brief
  */
-
-static int convertPemToDer(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen)
+int pkcs11_parse_Convert_PemToDer(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen)
 {
     int ret;
     const unsigned char *s1, *s2, *end = input + ilen;
@@ -668,7 +855,10 @@ static int convertPemToDer(const unsigned char *input, size_t ilen, unsigned cha
     return (0);
 }
 
-CK_RV parseCertGetAttr(
+/**
+ * @brief
+ */
+CK_RV pkcs11_parseCert_GetAttr(
     CK_ATTRIBUTE_TYPE attributeType, uint8_t *pCert, size_t certLen, uint8_t *pData, CK_ULONG *ulAttrLength)
 {
     CK_RV xResult            = CKR_OK;
@@ -912,13 +1102,13 @@ CK_RV parseCertGetAttr(
  * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
  * @retval #CKR_ARGUMENTS_BAD The arguments supplied to the function are not appropriate.
  */
-CK_RV CreateRawPrivateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key_buffer, size_t *keyLen)
+CK_RV pkcs11_create_raw_privateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key_buffer, size_t *keyLen)
 {
     CK_RV xResult = CKR_FUNCTION_FAILED;
     CK_ULONG keyTypeIndex;
     CK_KEY_TYPE key_type = CKK_RSA;
 
-    xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_KEY_TYPE, &keyTypeIndex);
+    xResult = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_KEY_TYPE, &keyTypeIndex);
     if (xResult != CKR_OK) {
         goto exit;
     }
@@ -926,14 +1116,14 @@ CK_RV CreateRawPrivateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t
     memcpy(&key_type, pxTemplate[keyTypeIndex].pValue, pxTemplate[keyTypeIndex].ulValueLen);
     if (key_type == CKK_RSA) {
         CK_ULONG componentIndex;
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_MODULUS, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIVATE_EXPONENT, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_1, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_2, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_1, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_2, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_COEFFICIENT, &componentIndex)) {
+        if (pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_MODULUS, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PRIVATE_EXPONENT, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PRIME_1, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PRIME_2, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EXPONENT_1, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EXPONENT_2, &componentIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_COEFFICIENT, &componentIndex)) {
             xResult = CKR_ARGUMENTS_BAD;
             goto exit;
         }
@@ -949,64 +1139,64 @@ CK_RV CreateRawPrivateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t
         uint8_t tag            = ASN_TAG_INT;
         uint8_t key[4096]      = {0};
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_COEFFICIENT, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_COEFFICIENT, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_2, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EXPONENT_2, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_1, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EXPONENT_1, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_2, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PRIME_2, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_1, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PRIME_1, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIVATE_EXPONENT, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PRIVATE_EXPONENT, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_MODULUS, &componentIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_MODULUS, &componentIndex);
         componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
+        xResult      = pkcs11_setASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
 
         uint8_t int_val = 0x00;
-        xResult         = SetASNTLV(tag, &int_val, 1, key, keyLen);
+        xResult         = pkcs11_setASNTLV(tag, &int_val, 1, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
@@ -1061,13 +1251,13 @@ CK_RV CreateRawPrivateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t
     }
     else if (key_type == CKK_EC) {
         CK_ULONG parameterIndex;
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_VALUE, &parameterIndex)) {
+        if (pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_VALUE, &parameterIndex)) {
             xResult = CKR_ARGUMENTS_BAD;
             goto exit;
         }
         CK_ULONG valueIndex = 0;
-        xResult             = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_VALUE, &valueIndex);
+        xResult             = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_VALUE, &valueIndex);
         if (xResult != CKR_OK) {
             return xResult;
         }
@@ -1082,22 +1272,6 @@ exit:
     return xResult;
 }
 
-#if 0
-mbedtls_ecp_group_id EcParametersToGrpId(uint8_t *ecparameters, size_t len)
-{
-    mbedtls_ecp_group ecp_group;
-    mbedtls_ecp_group_init(&ecp_group);
-    mbedtls_asn1_buf params;
-    unsigned char *ptr = &ecparameters[0];
-    if ((pk_get_ecparams(&ptr, ptr + len, &params)) != 0 || (pk_use_ecparams(&params, &ecp_group)) != 0) {
-        LOG_E("FAILURE");
-        return MBEDTLS_ECP_DP_NONE;
-    }
-    LOG_I("mbedtls_mpi_read_binary successfull");
-    return ecp_group.id;
-}
-#endif
-
 /** @brief Create Raw Public Key.
  * This function generates a raw public key.
  *
@@ -1111,14 +1285,14 @@ mbedtls_ecp_group_id EcParametersToGrpId(uint8_t *ecparameters, size_t len)
  * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
  * @retval #CKR_ARGUMENTS_BAD The arguments supplied to the function are not appropriate.
  */
-CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key_buffer, size_t *keyLen)
+CK_RV pkcs11_create_raw_publicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key_buffer, size_t *keyLen)
 {
     CK_RV xResult = CKR_FUNCTION_FAILED;
     CK_ULONG keyTypeIndex;
     CK_KEY_TYPE key_type = CKK_RSA;
     CK_ULONG parameterIndex;
 
-    xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_KEY_TYPE, &keyTypeIndex);
+    xResult = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_KEY_TYPE, &keyTypeIndex);
     if (xResult != CKR_OK) {
         goto exit;
     }
@@ -1126,7 +1300,7 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
     memcpy(&key_type, pxTemplate[keyTypeIndex].pValue, pxTemplate[keyTypeIndex].ulValueLen);
     if (key_type == CKK_RSA) {
         uint8_t publicExponent[] = {0x01, 0x00, 0x01};
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &parameterIndex) == 0) {
+        if (pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &parameterIndex) == 0) {
             if ((pxTemplate[parameterIndex].ulValueLen == 1) ||
                 (memcmp((void *)publicExponent, pxTemplate[parameterIndex].pValue, sizeof(publicExponent)))) {
                 LOG_E("Public Exponent not supported");
@@ -1134,7 +1308,7 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
                 goto exit;
             }
         }
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_MODULUS, &parameterIndex)) {
+        if (pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_MODULUS, &parameterIndex)) {
             xResult = CKR_ARGUMENTS_BAD;
             goto exit;
         }
@@ -1153,9 +1327,9 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
         else {
             memcpy(modulus, pInputModulus, modulusLen);
         }
-        xResult = SetASNTLV(tag, publicExponent, sizeof(publicExponent), key, keyLen);
+        xResult = pkcs11_setASNTLV(tag, publicExponent, sizeof(publicExponent), key, keyLen);
         ENSURE_OR_GO_EXIT(xResult == CKR_OK);
-        xResult = SetASNTLV(tag, modulus, modulusLen, key, keyLen);
+        xResult = pkcs11_setASNTLV(tag, modulus, modulusLen, key, keyLen);
         ENSURE_OR_GO_EXIT(xResult == CKR_OK);
 
         size_t totalLen = bufferSize_copy - *keyLen;
@@ -1259,8 +1433,8 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
         *keyLen = totalLen + index;
     }
     else if (key_type == CKK_EC) {
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_POINT, &parameterIndex)) {
+        if (pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex) ||
+            pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EC_POINT, &parameterIndex)) {
             xResult = CKR_ARGUMENTS_BAD;
             goto exit;
         }
@@ -1270,7 +1444,7 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
         size_t parameterLen    = 0;
         uint8_t tag            = ASN_TAG_BITSTRING;
 
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_POINT, &parameterIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EC_POINT, &parameterIndex);
         parameterLen = (size_t)pxTemplate[parameterIndex].ulValueLen;
 
         /**
@@ -1325,8 +1499,8 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
         }
         memcpy(&ecPoint[1], &ecPointInput[i], len);
 
-        // xResult = SetASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, key, keyLen);
-        xResult = SetASNTLV(tag, &ecPoint[0], len + 1, key, keyLen);
+        // xResult = pkcs11_setASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, key, keyLen);
+        xResult = pkcs11_setASNTLV(tag, &ecPoint[0], len + 1, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
@@ -1335,7 +1509,7 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
         size_t ecPubParams_size = sizeof(ecPubParams);
 
         tag          = ASN_TAG_OBJ_IDF;
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex);
+        xResult      = pkcs11_get_attribute_parameter_index(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex);
         parameterLen = (size_t)pxTemplate[parameterIndex].ulValueLen;
 #if 0
         if (ecPubParams_size < parameterLen) {
@@ -1347,7 +1521,7 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
                 size_t oidLen = sizeof(oid) - 1;
                 // ecPubParams_size = ecPubParams_size - oidLen - 1;
                 // memcpy(&ecPubParams[ecPubParams_size], oid, oidLen);
-                xResult = SetASNTLV(tag, &oid[0], oidLen, ecPubParams, &ecPubParams_size);
+                xResult = pkcs11_setASNTLV(tag, &oid[0], oidLen, ecPubParams, &ecPubParams_size);
                 if (xResult != CKR_OK) {
                     goto exit;
                 }
@@ -1367,13 +1541,13 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
         ecPubParams_size = ecPubParams_size - parameterLen;
         memcpy(&ecPubParams[ecPubParams_size], (uint8_t *)pxTemplate[parameterIndex].pValue, parameterLen);
         //}
-        // // xResult = SetASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, ecPubParams,
+        // // xResult = pkcs11_setASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, ecPubParams,
         // &ecPubParams_size); if(xResult != CKR_OK) {
         //     goto exit;
         // }
 
         uint8_t id_ecPublicKey[] = ID_ECPUBLICKEY;
-        xResult = SetASNTLV(tag, &id_ecPublicKey[0], sizeof(id_ecPublicKey), ecPubParams, &ecPubParams_size);
+        xResult = pkcs11_setASNTLV(tag, &id_ecPublicKey[0], sizeof(id_ecPublicKey), ecPubParams, &ecPubParams_size);
         if (xResult != CKR_OK) {
             goto exit;
         }
@@ -1383,7 +1557,8 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
             goto exit;
         }
 
-        xResult = SetASNTLV(tag, &ecPubParams[ecPubParams_size], sizeof(ecPubParams) - ecPubParams_size, key, keyLen);
+        xResult =
+            pkcs11_setASNTLV(tag, &ecPubParams[ecPubParams_size], sizeof(ecPubParams) - ecPubParams_size, key, keyLen);
         if (xResult != CKR_OK) {
             goto exit;
         }
@@ -1444,6 +1619,9 @@ exit:
     return xResult;
 }
 
+/**
+ * @brief
+ */
 int sss_util_asn1_get_len(unsigned char **p, const unsigned char *end, size_t *len)
 {
     if ((end - *p) < 1)
@@ -1514,37 +1692,4 @@ int sss_util_asn1_get_tag(unsigned char **p, const unsigned char *end, size_t *l
     (*p)++;
 
     return (sss_util_asn1_get_len(p, end, len));
-}
-
-/* Port to implement function which will parse certificate */
-int port_parseCert(uint8_t *pCert, size_t certLen)
-{
-    return parsecert(pCert, certLen);
-}
-
-/* Port to implement function which will parse private key */
-int port_parsePrivateKey(
-    CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index, sss_pkcs11_key_parse_t *keyParse)
-{
-    return parsePrivateKey(pTemplate, ulCount, index, keyParse);
-}
-
-/* Port to implement function which will parse public key */
-int port_parsePublicKey(
-    CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index, sss_pkcs11_key_parse_t *keyParse)
-{
-    return parsePublicKey(pTemplate, ulCount, index, keyParse);
-}
-
-/* Port to implement function which will convert PEM to DER format */
-int port_parseConvertPemToDer(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen)
-{
-    return convertPemToDer(input, ilen, output, olen);
-}
-
-/* Port to implement function which will parse certificate to get attributes */
-CK_RV port_parseCertGetAttr(
-    CK_ATTRIBUTE_TYPE attributeType, uint8_t *pCert, size_t certLen, uint8_t *pData, CK_ULONG *ulAttrLength)
-{
-    return parseCertGetAttr(attributeType, pCert, certLen, pData, ulAttrLength);
 }

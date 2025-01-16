@@ -7,28 +7,13 @@
  */
 
 #include "fsl_flexio_spi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*Slave related*/
-#define BOARD_FLEXIO_BASE   (FLEXIO3)
-#define FLEXIO_SPI_SCK_PIN  0U
-#define FLEXIO_SPI_MOSI_PIN 1U
-#define FLEXIO_SPI_MISO_PIN 6U
-#define FLEXIO_SPI_CSn_PIN  7U
-
-#define SLAVE_FLEXIO_SPI_IRQ FLEXIO3_IRQn
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define SLAVE_FLEXIO_SPI_CLOCK_SELECT (3U)
-/* Clock divider for flexio clock source */
-#define SLAVE_FLEXIO_SPI_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define SLAVE_FLEXIO_SPI_CLOCK_DIVIDER (7U)
 #define BUFFER_SIZE (64)
 /*******************************************************************************
  * Prototypes
@@ -59,15 +44,7 @@ int main(void)
     flexio_spi_slave_config_t userConfig;
     size_t transferredCount = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio3 (Flexio2 and FLexio3 share same clock root and div) */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, SLAVE_FLEXIO_SPI_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, SLAVE_FLEXIO_SPI_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, SLAVE_FLEXIO_SPI_CLOCK_DIVIDER);
+    BOARD_InitHardware();
     PRINTF("\r\nFlexIO SPI interrupt example\r\n");
     PRINTF("Slave is working...\r\n");
 

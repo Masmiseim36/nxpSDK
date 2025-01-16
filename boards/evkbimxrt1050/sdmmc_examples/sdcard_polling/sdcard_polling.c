@@ -8,16 +8,13 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_sd.h"
 #include "sdmmc_config.h"
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
 
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (5U)
@@ -29,8 +26,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_PowerOffSDCARD(void);
-void BOARD_PowerOnSDCARD(void);
 /*!
  * @brief printf the card information log.
  *
@@ -152,10 +147,7 @@ int main(void)
     char ch         = '0';
     bool isReadOnly;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     BOARD_SD_Config(card, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
     PRINTF("\r\nSDCARD polling example.\r\n");

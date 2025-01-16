@@ -27,9 +27,9 @@ static FIL s_File;
 /* 2-byte unicode, the file created when session is opened is used to save object handle lists. */
 USB_RAM_ADDRESS_ALIGNMENT(2U)
 const uint8_t g_ObjHandlePath[] = {
-#if defined(SD_DISK_ENABLE)
+#if (defined(SD_DISK_ENABLE) && (SD_DISK_ENABLE > 0U))
     SDDISK + '0',
-#elif defined(MMC_DISK_ENABLE)
+#elif (defined(MMC_DISK_ENABLE) && (MMC_DISK_ENABLE > 0U))
     MMCDISK + '0',
 #else
     '0',

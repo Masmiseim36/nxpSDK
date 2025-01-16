@@ -25,7 +25,7 @@ static QueueHandle_t app_control_queue = NULL;
 
 #define SDP_CLIENT_USER_BUF_LEN		512U
 NET_BUF_POOL_FIXED_DEFINE(app_sdp_client_pool, CONFIG_BT_MAX_CONN,
-			  SDP_CLIENT_USER_BUF_LEN, NULL);
+			  SDP_CLIENT_USER_BUF_LEN, CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
 static uint8_t app_sdp_a2sink_user(struct bt_conn *conn, struct bt_sdp_client_result *result);
 static struct bt_sdp_discover_params discov_a2dp_sink =
@@ -257,7 +257,7 @@ static void br_device_found(size_t index, const bt_addr_t *addr, int8_t rssi,
     int len = 240;
 
     (void)memset(name, 0, sizeof(name));
-    
+
     while (len)
     {
         if (len < 2)
@@ -270,13 +270,13 @@ static void br_device_found(size_t index, const bt_addr_t *addr, int8_t rssi,
         {
             break;
         }
-        
+
         /* check if field length is correct */
         if (eir[0] > len - 1)
         {
             break;
         }
-        
+
         switch (eir[1])
         {
         case BT_DATA_NAME_SHORTENED:
@@ -467,6 +467,10 @@ static void bt_ready(int err)
         return;
     }
 
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+    settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
     bt_sdp_register_service(&a2dp_source_rec);
@@ -517,7 +521,7 @@ int app_main (int argc, char **argv)
     }
 
     app_a2dp.acl_initiated = 0U;
- 
+
     for (;;)
     {
         /* process delta shadow JSON received in prvDeltaCallback() */

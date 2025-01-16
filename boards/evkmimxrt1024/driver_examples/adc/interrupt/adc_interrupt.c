@@ -7,20 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_adc.h"
 #include "fsl_common.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE          ADC1
-#define DEMO_ADC_IRQn          ADC1_IRQn
-#define DEMO_ADC_USER_CHANNEL  10U
-#define DEMO_ADC_CHANNEL_GROUP 0U
-#define EXAMPLE_ADC_IRQHandler ADC1_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -55,10 +49,7 @@ int main(void)
     adc_config_t adcConfigStruct;
     adc_channel_config_t adcChannelConfigStruct;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     EnableIRQ(DEMO_ADC_IRQn);
 
     PRINTF("\r\nADC interrupt Example.\r\n");

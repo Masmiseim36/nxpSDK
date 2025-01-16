@@ -18,7 +18,7 @@
 #include "fsl_lpi2c.h"
 #include "fsl_gpio.h"
 #include "fsl_cache.h"
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#if (LVGL_PANEL == LVGL_PANEL_RK043FN66HS)
 #include "fsl_gt911.h"
 #else
 #include "fsl_ft5406_rt.h"
@@ -41,7 +41,7 @@
 #define TOUCH_I2C_BAUDRATE   100000U
 
 /* Macros for panel. */
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#if (LVGL_PANEL == LVGL_PANEL_RK043FN66HS)
 
 #define LCD_HSW 4
 #define LCD_HFP 8
@@ -120,25 +120,21 @@ static void DEMO_InitLcdClock(void);
 
 static void DEMO_InitLcdBackLight(void);
 
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
-
-#if LV_USE_GPU_NXP_PXP
-static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv);
-#endif
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p);
 
 static void DEMO_InitTouch(void);
 
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data);
 
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#if (LVGL_PANEL == LVGL_PANEL_RK043FN66HS)
 static void BOARD_PullTouchResetPin(bool pullUp);
 
 static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode);
 #endif
 
-#if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
+#if (LV_COLOR_DEPTH == 8)
 /*
- * To support 8 color depth and 1 color depth with this board, color palette is
+ * To support 8 color depth with this board, color palette is
  * used to map 256 color to 2^16 color.
  */
 static void DEMO_SetLcdColorPalette(void);
@@ -152,7 +148,7 @@ static volatile bool s_framePending;
 static SemaphoreHandle_t s_frameSema;
 #endif
 
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#if (LVGL_PANEL == LVGL_PANEL_RK043FN66HS)
 static gt911_handle_t s_touchHandle;
 static const gt911_config_t s_touchConfig = {
     .I2C_SendFunc     = BOARD_Touch_I2C_Send,
@@ -176,49 +172,19 @@ SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
  * Code
  ******************************************************************************/
 
-void lv_port_pre_init(void)
-{
-}
-
 void lv_port_disp_init(void)
 {
-    static lv_disp_draw_buf_t disp_buf;
-
-    lv_disp_draw_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_WIDTH * LCD_HEIGHT);
+    lv_display_t * disp_drv; /*Descriptor of a display driver*/
 
     /*-------------------------
      * Initialize your display
      * -----------------------*/
     DEMO_InitLcd();
 
-    /*-----------------------------------
-     * Register the display in LittlevGL
-     *----------------------------------*/
+    disp_drv = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
 
-    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
-
-    /*Set up the functions to access to your display*/
-
-    /*Set the resolution of the display*/
-    disp_drv.hor_res = LCD_WIDTH;
-    disp_drv.ver_res = LCD_HEIGHT;
-
-    /*Used to copy the buffer's content to the display*/
-    disp_drv.flush_cb = DEMO_FlushDisplay;
-
-#if LV_USE_GPU_NXP_PXP
-    disp_drv.clean_dcache_cb = DEMO_CleanInvalidateCache;
-#endif
-
-    /*Set a display buffer*/
-    disp_drv.draw_buf = &disp_buf;
-
-    /* Partial refresh */
-    disp_drv.full_refresh = 1;
-
-    /*Finally register the driver*/
-    lv_disp_drv_register(&disp_drv);
+    lv_display_set_buffers(disp_drv, s_frameBuffer[0], s_frameBuffer[1], DEMO_FB_SIZE, LV_DISPLAY_RENDER_MODE_FULL);
+    lv_display_set_flush_cb(disp_drv, DEMO_FlushDisplay);
 }
 
 void LCDIF_IRQHandler(void)
@@ -295,52 +261,18 @@ static void DEMO_InitLcdBackLight(void)
     GPIO_PinInit(LCD_BL_GPIO, LCD_BL_GPIO_PIN, &config);
 }
 
-#if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
+#if (LV_COLOR_DEPTH == 8)
 static void DEMO_SetLcdColorPalette(void)
 {
-    /*
-     * To support 8 color depth and 1 color depth with this board, color palette is
-     * used to map 256 color to 2^16 color.
-     *
-     * LVGL 1-bit color depth still uses 8-bit per pixel, so the palette size is the
-     * same with 8-bit color depth.
-     *
-     * Use ELCDIF_UpdateLut to set color palette, for better performance,
-     * an color palette array(LUT) can be defined and filled first, then call
-     * ELCDIF_UpdateLut to set one time. Here use another way, call ELCDIF_UpdateLut
-     * many times, and update only one item each time, then the array is not necessary,
-     * for smaller stack usage.
-     */
-    uint32_t palette;
+    /* For 8 bit format , LVGL uses the luminance of a color. */
+    uint32_t palette[256];
 
-#if (LV_COLOR_DEPTH == 8)
-    lv_color_t color;
-    color.full = 0U;
-
-    /* RGB332 map to RGB565 */
-    for (int i = 0; i < 256U; i++)
+    for (uint32_t i = 0; i < 256U; i++)
     {
-        palette = ((uint32_t)color.ch.blue << 3U) | ((uint32_t)color.ch.green << 8U) | ((uint32_t)color.ch.red << 13U);
-        color.full++;
-        ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, i, &palette, 1);
+        palette[i] = (i << 16U) | (i << 8U) | (i << 0U);
     }
-#elif (LV_COLOR_DEPTH == 1)
-    for (int i = 0; i < 256U;)
-    {
-        /*
-         * Pixel map:
-         * 0bXXXXXXX1 -> 0xFFFF
-         * 0bXXXXXXX0 -> 0x0000
-         */
-        palette = 0x0000U;
-        ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, i, &palette, 1);
-        i++;
-        palette = 0xFFFFU;
-        ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, i, &palette, 1);
-        i++;
-    }
-#endif
 
+    ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, 0, palette, 256);
     ELCDIF_EnableLut(LCDIF, true);
 }
 #endif
@@ -386,7 +318,7 @@ static void DEMO_InitLcd(void)
 
     ELCDIF_RgbModeInit(LCDIF, &config);
 
-#if ((LV_COLOR_DEPTH == 8) || (LV_COLOR_DEPTH == 1))
+#if (LV_COLOR_DEPTH == 8)
     DEMO_SetLcdColorPalette();
 #endif
 
@@ -397,14 +329,14 @@ static void DEMO_InitLcd(void)
     DEMO_InitLcdBackLight();
 }
 
-#if LV_USE_GPU_NXP_PXP
-static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv)
+#if LV_USE_DRAW_PXP
+void DEMO_CleanInvalidateCacheByAddr(void * addr, int32_t dsize)
 {
-    SCB_CleanInvalidateDCache();
+    SCB_CleanInvalidateDCache_by_Addr(addr, dsize);
 }
 #endif
 
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *color_p)
 {
     DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
 
@@ -437,23 +369,16 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
 void lv_port_indev_init(void)
 {
-    static lv_indev_drv_t indev_drv;
-
-    /*------------------
-     * Touchpad
-     * -----------------*/
-
     /*Initialize your touchpad */
     DEMO_InitTouch();
 
     /*Register a touchpad input device*/
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type    = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_cb = DEMO_ReadTouch;
-    lv_indev_drv_register(&indev_drv);
+    lv_indev_t * indev = lv_indev_create();
+    lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
+    lv_indev_set_read_cb(indev, DEMO_ReadTouch);
 }
 
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#if (LVGL_PANEL == LVGL_PANEL_RK043FN66HS)
 static void BOARD_PullTouchResetPin(bool pullUp)
 {
     if (pullUp)
@@ -515,7 +440,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     static int touch_x = 0;
     static int touch_y = 0;
@@ -573,7 +498,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+static void DEMO_ReadTouch(lv_indev_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;

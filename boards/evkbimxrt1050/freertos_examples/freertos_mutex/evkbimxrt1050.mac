@@ -1,0 +1,85 @@
+/*
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+_load_dcdc_trim()
+{
+  __var ocotp_base;
+  __var ocotp_fuse_bank0_base;
+  __var dcdc_base;
+  __var reg;
+  __var trim_value;
+  __var dcdc_trim_loaded;
+  __var index;
+
+  ocotp_base = 0x401F4000;
+  ocotp_fuse_bank0_base = 0x401F4000 + 0x400;
+  dcdc_base = 0x40080000;
+
+  dcdc_trim_loaded = 0;
+
+  reg = __readMemory32(ocotp_fuse_bank0_base + 0x90, "Memory");
+  if (reg & (1<<10))
+  {
+      // DCDC: REG0->VBG_TRM
+      trim_value = (reg & (0x1F << 11)) >> 11;
+      reg = (__readMemory32(dcdc_base + 0x4, "Memory") & ~(0x1F << 24)) | (trim_value << 24);
+      __writeMemory32(reg, dcdc_base + 0x4, "Memory");
+      dcdc_trim_loaded = 1;
+  }
+
+  reg = __readMemory32(ocotp_fuse_bank0_base + 0x80, "Memory");
+  if (reg & (1<<30))
+  {
+    index = (reg & (3 << 28)) >> 28;
+    if (index < 4)
+    {
+      // DCDC: REG3->TRG 
+      reg = (__readMemory32(dcdc_base + 0xC, "Memory") & ~(0x1F)) | (0xF + index);
+      __writeMemory32(reg, dcdc_base + 0xC, "Memory");
+      dcdc_trim_loaded = 1;
+    }
+  }
+
+  if (dcdc_trim_loaded)
+  {
+      // delay 1ms for dcdc to get stable
+      __delay(1);
+      __message "DCDC trim value loaded.\n";
+  }
+
+}
+
+restoreFlexRAM()
+{
+    __var base;
+    __var value;
+
+    base = 0x400AC000;
+
+    value = __readMemory32(base + 0x44, "Memory");
+    value &= ~(0xFFFFFFFF);
+    value |= 0x55AFFA55;
+    __writeMemory32(value, base + 0x44, "Memory");
+
+    value = __readMemory32(base + 0x40, "Memory");
+    value |= (1 << 2);
+    __writeMemory32(value, base + 0x40, "Memory");
+    __message "FlexRAM configuration is restored";
+}
+
+execUserPreload()
+{
+  restoreFlexRAM();
+  _load_dcdc_trim();
+}
+
+execUserReset()
+{
+  restoreFlexRAM();
+  _load_dcdc_trim();
+}
+

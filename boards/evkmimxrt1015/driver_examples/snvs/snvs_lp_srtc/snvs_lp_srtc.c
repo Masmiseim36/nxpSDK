@@ -8,18 +8,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_snvs_hp.h"
 #include "fsl_snvs_lp.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define kCLOCK_SnvsHp0          kCLOCK_SnvsHp
-#define EXAMPLE_SNVS_IRQn       SNVS_HP_WRAPPER_IRQn
-#define EXAMPLE_SNVS_IRQHandler SNVS_HP_WRAPPER_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -62,10 +58,7 @@ int main(void)
     snvs_lp_srtc_config_t snvsSrtcConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Init SNVS_HP */
     /*
      * config->rtcCalEnable = false;

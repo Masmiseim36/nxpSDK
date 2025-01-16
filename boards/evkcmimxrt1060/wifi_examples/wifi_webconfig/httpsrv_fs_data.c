@@ -1,3 +1,9 @@
+/*
+ * Copyright 2024 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #include <httpsrv_fs.h>
 
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];

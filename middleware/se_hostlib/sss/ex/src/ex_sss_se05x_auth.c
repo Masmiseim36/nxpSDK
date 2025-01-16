@@ -407,7 +407,7 @@ static sss_status_t ex_sss_se05x_prepare_host_userid(
     else {
         status = sss_host_key_store_get_key(pObj->keyStore, pObj, data, &dataLen, &keyBitLen);
         if (status == kStatus_SSS_Success) {
-            if (authKeyLen > sizeof(data)) {
+            if (authKeyLen > dataLen) {
                 status = kStatus_SSS_Fail;
                 goto cleanup;
             }
@@ -453,7 +453,6 @@ static sss_status_t ex_sss_se05x_prepare_host_platformscp(
         memcpy(KEY_MAC, mac, sizeof(KEY_MAC));
         //memcpy(KEY_DEK, dek, sizeof(KEY_DEK));
     }
-
 #endif // EX_SSS_SCP03_FILE_PATH
 
     pAuthCtx->pStatic_ctx = &pEx_auth->scp03.ex_static;

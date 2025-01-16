@@ -27,25 +27,12 @@
 #include "netif/etharp.h"
 #include "usb_ethernetif.h"
 #include "ping.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_device_registers.h"
-#include "usb_host_config.h"
-#include "usb_host.h"
-#include "usb_phy.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define CONTROLLER_ID kUSB_ControllerEhci0
-
-#if defined(__GIC_PRIO_BITS)
-#define USB_HOST_INTERRUPT_PRIORITY (25U)
-#else
-#define USB_HOST_INTERRUPT_PRIORITY (3U)
-#endif
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -71,7 +58,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern usb_host_handle g_HostHandle;
 /*set when dhcp get ip address*/
 uint32_t dhcpReady;
 /*if URL's ip addrss is found, then ping_init is called, and app set this variable, only set once*/
@@ -89,46 +75,6 @@ ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_OTG1_IRQHandler(void)
-{
-    USB_HostEhciIsrFunction(g_HostHandle);
-}
-
-void USB_HostClockInit(void)
-{
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-    CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-}
-
-void USB_HostIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-/* USB_HOST_CONFIG_EHCI */
-
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
-#else
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
-#endif
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-
-void USB_HostTaskFn(void *param)
-{
-    USB_HostEhciTaskFunction(param);
-}
 
 /*!
  * @brief Prints DHCP status of the interface when it has changed from last status.
@@ -278,10 +224,7 @@ static void stack_init(void *arg)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Initialize lwIP from thread */
     if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)

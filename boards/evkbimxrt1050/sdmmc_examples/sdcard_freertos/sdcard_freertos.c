@@ -12,15 +12,12 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "sdmmc_config.h"
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
 
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (5U)
@@ -42,9 +39,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_PowerOffSDCARD(void);
-void BOARD_PowerOnSDCARD(void);
-
 
 /*!
  * @brief SD card access task.
@@ -219,10 +213,7 @@ static void AccessCardTask(void *pvParameters)
 /*! @brief Main function */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nSDCARD freertos example.\r\n");
 

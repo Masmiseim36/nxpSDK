@@ -21,9 +21,8 @@
 #include "diskio.h"
 
 #include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
 #include "board.h"
 
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
@@ -37,7 +36,6 @@
 #if (USB_DEVICE_CONFIG_USE_TASK < 1)
 #error This application requires USB_DEVICE_CONFIG_USE_TASK value defined > 0 in usb_device_config.h. Please recompile with this option.
 #endif
-#include "sdmmc_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -74,7 +72,6 @@ void USB_DeviceDisconnected(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern sd_card_t g_sd;
 const uint16_t g_OpSupported[] = {
     MTP_OPERATION_GET_DEVICE_INFO,
     MTP_OPERATION_OPEN_SESSION,
@@ -247,9 +244,9 @@ usb_device_mtp_obj_prop_list_t g_ObjPropList = {
 /* 2-byte unicode */
 USB_DMA_INIT_DATA_ALIGN(2U)
 uint8_t g_StorageRootPath[] = {
-#if defined(SD_DISK_ENABLE)
+#if (defined(SD_DISK_ENABLE) && (SD_DISK_ENABLE > 0U))
     SDDISK + '0',
-#elif defined(MMC_DISK_ENABLE)
+#elif (defined(MMC_DISK_ENABLE) && (MMC_DISK_ENABLE > 0U))
     MMCDISK + '0',
 #else
     '0',
@@ -300,62 +297,6 @@ usb_mtp_disk_operation_msgq_struct_t g_mtpMsgQueue;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_OTG1_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_mtp.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-
-void USB_OTG2_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_mtp.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-
-void USB_DeviceClockInit(void)
-{
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-}
-
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
-{
-    USB_DeviceEhciTaskFunction(deviceHandle);
-}
-#endif
 
 /*!
  * @brief mtp enter critical.
@@ -1003,7 +944,7 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
 
     /* Step B: state is not changed */
     /* Step C: change to new state */
-
+    (void)memset(&dataInfo, 0, sizeof(dataInfo));
     if (message->length == USB_UNINITIALIZED_VAL_32)
     {
         /* callback to cancel current transaction */
@@ -1889,12 +1830,7 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_ConfigMPU();
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_SD_Config(&g_sd, NULL, USB_DEVICE_INTERRUPT_PRIORITY - 1U, NULL);
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     USB_DeviceApplicationInit();
 
 #if (defined(USB_DEVICE_CONFIG_USE_TASK) && (USB_DEVICE_CONFIG_USE_TASK > 0)) && \

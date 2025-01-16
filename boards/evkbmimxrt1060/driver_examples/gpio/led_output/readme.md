@@ -1,49 +1,25 @@
-Overview
-========
+# igpio_led_output
+
+## Overview
 The GPIO Example project is a demonstration program that uses the KSDK software to manipulate the general-purpose
 outputs.
 The example is supported by the set, clear, and toggle write-only registers for each port output data register. The 
 example take turns to shine the LED.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKB board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-These instructions are displayed/shown on the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-GPIO Driver example
-The LED is blinking.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-And you will find 1 LED is taking turns to shine.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/gpio/led_output/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/gpio/led_output/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/gpio/led_output/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMX8MM](../../../_boards/evkmimx8mm/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMX8MN](../../../_boards/evkmimx8mn/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMX8MNDDR3L](../../../_boards/evkmimx8mnddr3l/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMX8MP](../../../_boards/evkmimx8mp/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMX8MQ](../../../_boards/evkmimx8mq/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/gpio/led_output/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/gpio/led_output/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/gpio/led_output/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/gpio/led_output/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/gpio/led_output/example_board_readme.md)

@@ -311,7 +311,6 @@ int VoiceSeeker_Execute(void *arg, void *inputOutputBuffer, int bufferSize)
 
 int VoiceSeeker_Deinit(void)
 {
-    int32_t fd = -1;
     int status = 0;
 
     VoiceSeekerLight_Destroy(&vsl);

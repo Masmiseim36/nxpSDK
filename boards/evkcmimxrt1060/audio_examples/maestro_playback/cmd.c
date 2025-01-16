@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 NXP
+ * Copyright 2019-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -266,8 +266,6 @@ void cmdList()
 
 void cmdPlay(int32_t argc, char **argv)
 {
-    char *dot = NULL;
-
 #ifdef MULTICHANNEL_EXAMPLE
     uint8_t num_channels = DEMO_CHANNEL_NUM; // default number of channels is 8
 #endif
@@ -278,7 +276,7 @@ void cmdPlay(int32_t argc, char **argv)
         {
             if (isFileOnSDcard(argv[2]))
             {
-                dot = strrchr(argv[2], '.');
+                char *dot = strrchr(argv[2], '.');
                 if (
 #ifdef MULTICHANNEL_EXAMPLE
                     (dot && strncmp(dot + 1, "pcm", 4) == 0)
@@ -412,7 +410,6 @@ void cmdVolume(int32_t argc, char **argv)
 
 void cmdSeek(int32_t argc, char **argv)
 {
-    char *dot = NULL;
     if ((get_app_data()->status != kAppPaused) && (get_app_data()->status != kAppRunning))
     {
         PRINTF("[CMD] First select an audio track to play.\r\n");
@@ -427,24 +424,16 @@ void cmdSeek(int32_t argc, char **argv)
     {
         if (argc >= 3)
         {
-            dot = strrchr(get_app_data()->input, '.');
-            if ((dot && strncmp(dot + 1, "aac", 3) == 0) && (get_app_data()->status == kAppPaused))
+            if (atoi(argv[2]) < 0)
             {
-                PRINTF("[CMD] The AAC decoder does not support the seek command.\r\n");
+                PRINTF("[CMD] The seek time must be a positive value.\r\n");
                 get_app_data()->lastError = kAppCodeOk;
             }
             else
             {
-                if (atoi(argv[2]) < 0)
-                {
-                    PRINTF("[CMD] The seek time must be a positive value.\r\n");
-                    get_app_data()->lastError = kAppCodeOk;
-                }
-                else
-                {
-                    get_app_data()->seek_time = atoi(argv[2]);
-                    get_app_data()->lastError = seek();
-                }
+                get_app_data()->seek_time = atoi(argv[2]);
+                get_app_data()->lastError = seek();
+                get_app_data()->lastError = kAppCodeOk;
             }
         }
         else

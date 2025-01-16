@@ -5,14 +5,6 @@
       <name>all</name>
       <member>
         <project>adc_12b1msps_sar_interrupt</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>adc_12b1msps_sar_interrupt</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>adc_12b1msps_sar_interrupt</project>
         <configuration>sdram_debug</configuration>
       </member>
       <member>
@@ -27,19 +19,13 @@
         <project>adc_12b1msps_sar_interrupt</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>adc_12b1msps_sar_interrupt</project>
-        <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
       <member>
         <project>adc_12b1msps_sar_interrupt</project>
         <configuration>debug</configuration>
+      </member>
+      <member>
+        <project>adc_12b1msps_sar_interrupt</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -68,6 +54,20 @@
       <member>
         <project>adc_12b1msps_sar_interrupt</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>adc_12b1msps_sar_interrupt</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>adc_12b1msps_sar_interrupt</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

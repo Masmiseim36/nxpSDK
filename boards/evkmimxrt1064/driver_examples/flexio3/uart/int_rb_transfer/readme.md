@@ -1,5 +1,6 @@
-Overview
-========
+# flexio3_uart_int_rb_transfer
+
+## Overview
 The flexio_uart_interrupt_ring_buffer example shows how to use flexio uart driver in interrupt way with
 RX ring buffer enabled:
 
@@ -8,49 +9,8 @@ send back all characters that PC send to the board.
 
 Note: The example echo every 8 characters, so input 8 characters every time.
 
-SDK version
-===========
-- Version: 2.15.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1064 board
-- Personal Computer
-- USB to Com Converter
-
-Board settings
-==============
-Connect pin:
-- RX of USB2COM to J22-2
-- TX of USB2COM to J22-1
-- GND of USB2COM to J24-7
-
-Prepare the Demo
-================
-1.  Connect the USB2COM Converter to the host PC 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the UART Terminal port which connected to the USB2COM like:
-
-~~~~~~~~~~~~~~~~~~~~~
-FLEXIO UART RX ring buffer example
-Send back received data
-Echo every 8 bytes
-~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/driver_examples/flexio3/uart/int_rb_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/driver_examples/flexio3/uart/int_rb_transfer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../_boards/evkmimxrt1040/driver_examples/flexio3/uart/int_rb_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/driver_examples/flexio3/uart/int_rb_transfer/example_board_readme.md)

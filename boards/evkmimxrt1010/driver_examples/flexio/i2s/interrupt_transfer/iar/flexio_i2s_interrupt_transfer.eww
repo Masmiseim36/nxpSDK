@@ -5,33 +5,19 @@
       <name>all</name>
       <member>
         <project>flexio_i2s_interrupt_transfer</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>flexio_i2s_interrupt_transfer</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>flexio_i2s_interrupt_transfer</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>flexio_i2s_interrupt_transfer</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>flexio_i2s_interrupt_transfer</project>
-        <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
       <member>
         <project>flexio_i2s_interrupt_transfer</project>
         <configuration>debug</configuration>
+      </member>
+      <member>
+        <project>flexio_i2s_interrupt_transfer</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -46,6 +32,20 @@
       <member>
         <project>flexio_i2s_interrupt_transfer</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>flexio_i2s_interrupt_transfer</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>flexio_i2s_interrupt_transfer</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

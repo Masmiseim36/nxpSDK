@@ -4,7 +4,7 @@
  * @version 1.0
  * @par License
  *
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2020,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
@@ -50,7 +50,7 @@
 
 #if AX_EMBEDDED
 #if defined(MBEDTLS)
-#if !defined(NORDIC_MCU)
+#if !defined(NORDIC_MCU) && (SSS_HAVE_MBEDTLS_2_X)
 #include "ksdk_mbedtls.h"
 #endif
 #endif
@@ -187,7 +187,7 @@ int app_boot_Init()
 
 int app_boot_Init_RTOS()
 {
-#if (AX_EMBEDDED) && defined(MBEDTLS) && !defined(NORDIC_MCU)
+#if (AX_EMBEDDED) && defined(MBEDTLS) && !defined(NORDIC_MCU) && (SSS_HAVE_MBEDTLS_2_X)
     CRYPTO_InitHardware();
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
     CLOCK_EnableClock(kCLOCK_Sha0);
@@ -232,6 +232,7 @@ int app_boot_Connect(SmCommState_t *pCommState, const char *pConnectionParam)
         PRINTF("UART Baudrate Idx: 0x%02X\r\n", pCommState->param2);
         PRINTF("T=1           TA1: 0x%02X\r\n", pCommState->param1);
 #endif
+
         PRINTF(PLUGANDTRUST_HOSTLIB_PROD_NAME_VER_FULL "\r\n");
 
         PRINTF("Applet Version   : 0x%" PRIX32 "X\r\n", pCommState->appletVersion);
@@ -358,6 +359,7 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
         /* for GP ATR is noting but CIP response*/
         PRINTF("CIP=0x");
 #endif
+
         for (i = 0; i < AtrLen; i++) {
             PRINTF("%02X.", Atr[i]);
         }

@@ -1,5 +1,6 @@
-Overview
-========
+# enc_basic
+
+## Overview
 
 The enc_basic example shows how to quickly start using ENC driver.
 
@@ -7,48 +8,7 @@ In this example, user needs to connect a real encoder to the board. Actually, on
 
 The ENC hardware is created with a special synchronize mechanism. There are actually 4 counters (the 32-bit position counter is combined with the two 16-bit counter registers) for position with responding hold registers. When any of the counter registers is read, the contents of each counter register is written to the corresponding hold register. Taking a snapshot of the counters' values provides a consistent view of a system position and a velocity to be attained.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKC board
-- Personal Computer
-- An encoder with PHASE A/B signals.
-
-Board settings
-==============
-1. For pin connection between board and encoder,
-      J16.5 -> kXBARA1_InputIomuxXbarIn21 -> kXBARA1_OutputEnc1PhaseAInput -> ENC_PHA
-      J16.6 -> kXBARA1_InputIomuxXbarIn22 -> kXBARA1_OutputEnc1PhaseBInput -> ENC_PHB
-      J16.3 -> kXBARA1_InputIomuxXbarIn23 -> kXBARA1_OutputEnc1Index -> ENC_INDEX
-
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Connect the wires between encoder and the MCU board. See to the code for pin mux setting in function "BOARD_InitPins()".
-3.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 Turn the encoder and type in any key into terminal.
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 
@@ -65,4 +25,15 @@ Position revolution value: 0
 
 ...
 
-
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/enc/basic/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/enc/basic/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/enc/basic/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/enc/basic/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/enc/basic/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/enc/basic/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/enc/basic/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/enc/basic/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/enc/basic/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/enc/basic/example_board_readme.md)
+- [LPCXpresso55S36](../../../_boards/lpcxpresso55s36/driver_examples/enc/basic/example_board_readme.md)

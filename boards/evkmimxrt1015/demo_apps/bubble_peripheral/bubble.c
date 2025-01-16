@@ -7,17 +7,14 @@
 
 #include "fsl_debug_console.h"
 #include "math.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "peripherals.h"
 #include "board.h"
 #include "fsl_fxos.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DELAY_COUNT 8000000
-
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U
 #define ANGLE_LOWER_BOUND 5U
@@ -94,12 +91,7 @@ int main(void)
     uint8_t array_addr_size = 0;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_I2C_ConfigurePins();
-    BOARD_InitDebugConsole();
-    BOARD_InitPeripherals();
+    BOARD_InitHardware();
 
     /* Configure the I2C function */
     config.I2C_SendFunc    = BOARD_Accel_I2C_Send;

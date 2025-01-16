@@ -28,8 +28,8 @@
 #if defined(TGT_A71CL)
 #include "a71cl_util.h"
 #include "sm_const.h"
-#elif (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
-#include "a71ch_util.h"
+#elif (SSS_HAVE_APPLET_SE05X_IOT)
+//#include "a71ch_util.h"
 #include "sm_const.h"
 #elif defined TGT_A70CI
 #include "a70ci_util.h"
@@ -46,7 +46,7 @@
 extern "C" {
 #endif
 
-ChannelId_t DEV_GetSelectedChannel(scp_CommandType_t *commandType);
+//ChannelId_t DEV_GetSelectedChannel(scp_CommandType_t *commandType);
 void DEV_setDataDerivationArray(U8 ddA[], U16 *pDdALen, U8 ddConstant, U16 ddL, U8 iCounter, U8 *context, U16 contextLen);
 #ifdef __cplusplus
 }

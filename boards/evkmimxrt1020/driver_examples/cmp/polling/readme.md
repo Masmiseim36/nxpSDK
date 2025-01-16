@@ -1,5 +1,6 @@
-Overview
-========
+# cmp_polling
+
+## Overview
 
 The CMP polling Example shows the simplest way to use CMP driver and help user with a quick start.
 
@@ -12,54 +13,20 @@ between logic one and zero when the user's voltage crosses the internal DAC's va
 would detect the logic value of comparator's output, and change the LED. The LED would be turned on when the compare
 output is logic one, or turned off when zero.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the example runs successfully, the following message is displayed in the terminal:
-
-~~~~~~~~~~~~~~~~~~~~~
-CMP polling Example
-~~~~~~~~~~~~~~~~~~~~~
-
-Then change CMP analog input, and watch the change of LED.
-    - CMP1_IN0 (J17-7) connected to VCC =3.3V (J19-8): USER LED on
-    - CMP1_IN0 (J17-7) connected to GND (J19-7): USER LED off
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-3. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/cmp/polling/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/cmp/polling/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/cmp/polling/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/cmp/polling/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/cmp/polling/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/cmp/polling/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/cmp/polling/example_board_readme.md)
+- [FRDM-K22F](../../../_boards/frdmk22f/driver_examples/cmp/polling/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../_boards/frdmk32l2a4s/driver_examples/cmp/polling/example_board_readme.md)
+- [FRDM-K32L2B](../../../_boards/frdmk32l2b/driver_examples/cmp/polling/example_board_readme.md)
+- [FRDM-MCXC041](../../../_boards/frdmmcxc041/driver_examples/cmp/polling/example_board_readme.md)
+- [FRDM-MCXC242](../../../_boards/frdmmcxc242/driver_examples/cmp/polling/example_board_readme.md)
+- [FRDM-MCXC444](../../../_boards/frdmmcxc444/driver_examples/cmp/polling/example_board_readme.md)
+- [TWR-KM34Z50MV3](../../../_boards/twrkm34z50mv3/driver_examples/cmp/polling/example_board_readme.md)
+- [TWR-KM34Z75M](../../../_boards/twrkm34z75m/driver_examples/cmp/polling/example_board_readme.md)
+- [TWR-KM35Z75M](../../../_boards/twrkm35z75m/driver_examples/cmp/polling/example_board_readme.md)

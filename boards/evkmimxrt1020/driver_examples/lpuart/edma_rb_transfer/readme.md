@@ -1,56 +1,28 @@
-Overview
-========
+# lpuart_edma_rb_transfer
+
+## Overview
 The lpuart_edma Ring Buffer Example project is to demonstrate usage of the KSDK lpuart driver.
 In the example, a ring buffer will be used with EDMA enabled, data received will be stored in ring 
 buffer first, while IDLE line was detected, routine will read out the received characters, and echo back
 them to the terminal by using EDMA mode. so, you can see the your pressed characters on the terminal.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LPUART EDMA ring buffer example.
-Board will send back received characters:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-3. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [FRDM-K22F](../../../_boards/frdmk22f/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../_boards/frdmk32l2a4s/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [FRDM-KE15Z](../../../_boards/frdmke15z/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [FRDM-KE17Z](../../../_boards/frdmke17z/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [FRDM-KE17Z512](../../../_boards/frdmke17z512/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [FRDM-MCXW71](../../../_boards/frdmmcxw71/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [K32W148-EVK](../../../_boards/k32w148evk/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [KW45B41Z-EVK](../../../_boards/kw45b41zevk/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [KW47-EVK](../../../_boards/kw47evk/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [MCX-W72-EVK](../../../_boards/mcxw72evk/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)
+- [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/lpuart/edma_rb_transfer/example_board_readme.md)

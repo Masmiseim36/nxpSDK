@@ -7,18 +7,13 @@
  */
 #include "fsl_debug_console.h"
 #include "fsl_fxos.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "math.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define I2C_BAUDRATE         (100000U)
-#define EXAMPLE_LED_GPIO     BOARD_USER_LED_GPIO
-#define EXAMPLE_LED_GPIO_PIN BOARD_USER_LED_GPIO_PIN
-#define EXAMPLE_DELAY_COUNT  8000000
 #define MAX_ACCEL_AVG_COUNT 25U
 #define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
@@ -224,14 +219,7 @@ int main(void)
     double By               = 0;
     uint8_t array_addr_size = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     HW_Timer_init();
 

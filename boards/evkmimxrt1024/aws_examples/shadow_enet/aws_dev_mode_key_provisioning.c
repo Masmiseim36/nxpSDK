@@ -1,7 +1,7 @@
 /*
  * FreeRTOS V202203.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2023 NXP
+ * Copyright 2023-2024 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -57,12 +57,15 @@
 /* Utilities include. */
 #include "core_pki_utils.h"
 
+#define MBEDTLS_ALLOW_PRIVATE_ACCESS
+
 /* mbedTLS includes. */
 #include "mbedtls/pk.h"
 #include "mbedtls/oid.h"
+#include "mbedtls/ctr_drbg.h"
+#include "mbedtls/version.h"
 
-/* Default FreeRTOS API for console logging. */
-#define DEV_MODE_KEY_PROVISIONING_PRINT(X) vLoggingPrintf X
+#include "logging.h"
 
 /* For writing log lines without a prefix. */
 extern void vLoggingPrint(const char *pcFormat);
@@ -123,6 +126,11 @@ typedef struct ProvisionedState_t
 /* This function can be found in libraries/3rdparty/mbedtls_utils/mbedtls_utils.c. */
 extern int convert_pem_to_der(const unsigned char *pucInput, size_t xLen, unsigned char *pucOutput, size_t *pxOlen);
 
+#if MBEDTLS_VERSION_NUMBER >= 0x03000000
+static mbedtls_ctr_drbg_context drbg_ctx;
+static mbedtls_entropy_context entropy_ctx;
+#endif
+
 /*-----------------------------------------------------------*/
 
 /* Import the specified ECDSA private key into storage. */
@@ -159,7 +167,7 @@ static CK_RV prvProvisionPrivateECKey(CK_SESSION_HANDLE xSession,
 
         if (lMbedResult != 0)
         {
-            DEV_MODE_KEY_PROVISIONING_PRINT(("Failed to parse EC private key components. \r\n"));
+            vLoggingPrintf("Failed to parse EC private key components. \r\n");
             xResult = CKR_ATTRIBUTE_VALUE_INVALID;
         }
     }
@@ -243,7 +251,7 @@ static CK_RV prvProvisionPrivateRSAKey(CK_SESSION_HANDLE xSession,
 
         if (lMbedResult != 0)
         {
-            DEV_MODE_KEY_PROVISIONING_PRINT(("Failed to parse RSA private key components. \r\n"));
+            vLoggingPrintf("Failed to parse RSA private key components. \r\n");
             xResult = CKR_ATTRIBUTE_VALUE_INVALID;
         }
 
@@ -257,8 +265,7 @@ static CK_RV prvProvisionPrivateRSAKey(CK_SESSION_HANDLE xSession,
 
         if (lMbedResult != 0)
         {
-            DEV_MODE_KEY_PROVISIONING_PRINT(
-                ("Failed to parse RSA private key Chinese Remainder Theorem variables. \r\n"));
+            vLoggingPrintf("Failed to parse RSA private key Chinese Remainder Theorem variables. \r\n");
             xResult = CKR_ATTRIBUTE_VALUE_INVALID;
         }
     }
@@ -316,11 +323,15 @@ CK_RV xProvisionPrivateKey(CK_SESSION_HANDLE xSession,
     mbedtls_pk_context xMbedPkContext = {0};
 
     mbedtls_pk_init(&xMbedPkContext);
+#if MBEDTLS_VERSION_NUMBER < 0x03000000
     lMbedResult = mbedtls_pk_parse_key(&xMbedPkContext, pucPrivateKey, xPrivateKeyLength, NULL, 0);
+#else
+    lMbedResult = mbedtls_pk_parse_key(&xMbedPkContext, pucPrivateKey, xPrivateKeyLength, NULL, 0, mbedtls_ctr_drbg_random, &drbg_ctx);
+#endif /* MBEDTLS_VERSION_NUMBER < 0x03000000 */
 
     if (lMbedResult != 0)
     {
-        DEV_MODE_KEY_PROVISIONING_PRINT(("Unable to parse private key.\r\n"));
+        vLoggingPrintf("Unable to parse private key.\r\n");
         xResult = CKR_ARGUMENTS_BAD;
     }
 
@@ -340,8 +351,7 @@ CK_RV xProvisionPrivateKey(CK_SESSION_HANDLE xSession,
         }
         else
         {
-            DEV_MODE_KEY_PROVISIONING_PRINT(
-                ("Invalid private key type provided.  RSA-2048 and EC P-256 keys are supported.\r\n"));
+            vLoggingPrintf("Invalid private key type provided.  RSA-2048 and EC P-256 keys are supported.\r\n");
             xResult = CKR_ARGUMENTS_BAD;
         }
     }
@@ -373,7 +383,11 @@ CK_RV xProvisionPublicKey(CK_SESSION_HANDLE xSession,
     mbedtls_pk_init(&xMbedPkContext);
 
     /* Try parsing the private key using mbedtls_pk_parse_key. */
+#if MBEDTLS_VERSION_NUMBER < 0x03000000
     lMbedResult = mbedtls_pk_parse_key(&xMbedPkContext, pucKey, xKeyLength, NULL, 0);
+#else
+    lMbedResult = mbedtls_pk_parse_key(&xMbedPkContext, pucKey, xKeyLength, NULL, 0, mbedtls_ctr_drbg_random, &drbg_ctx);
+#endif /* MBEDTLS_VERSION_NUMBER < 0x03000000 */
 
     /* If mbedtls_pk_parse_key didn't work, maybe the private key is not included in the input passed in.
      * Try to parse just the public key. */
@@ -384,7 +398,7 @@ CK_RV xProvisionPublicKey(CK_SESSION_HANDLE xSession,
 
     if (lMbedResult != 0)
     {
-        DEV_MODE_KEY_PROVISIONING_PRINT(("Failed to parse the public key. \r\n"));
+        vLoggingPrintf("Failed to parse the public key. \r\n");
         xResult = CKR_ARGUMENTS_BAD;
     }
 
@@ -454,7 +468,7 @@ CK_RV xProvisionPublicKey(CK_SESSION_HANDLE xSession,
     else
     {
         xResult = CKR_ATTRIBUTE_VALUE_INVALID;
-        configPRINTF(("Invalid key type. Supported options are CKK_RSA and CKK_EC"));
+        vLoggingPrintf("Invalid key type. Supported options are CKK_RSA and CKK_EC");
     }
 
     mbedtls_pk_free(&xMbedPkContext);
@@ -658,7 +672,7 @@ CK_RV xProvisionCertificate(CK_SESSION_HANDLE xSession,
     /* Create an object using the encoded client certificate. */
     if (xResult == CKR_OK)
     {
-        configPRINTF(("Write certificate...\r\n"));
+        vLoggingPrintf("Write certificate...\r\n");
 
         xResult = pxFunctionList->C_CreateObject(xSession, (CK_ATTRIBUTE_PTR)&xCertificateTemplate,
                                                  sizeof(xCertificateTemplate) / sizeof(CK_ATTRIBUTE), pxObjectHandle);
@@ -923,7 +937,7 @@ static void prvWriteHexBytesToConsole(char *pcDescription, uint8_t *pucData, uin
     uint8_t ucByteValue = 0;
 
     /* Write help text to the console. */
-    configPRINTF(("%s, %d bytes:\r\n", pcDescription, ulDataLength));
+    vLoggingPrintf("%s, %d bytes:\r\n", pcDescription, ulDataLength);
 
     /* Iterate over the bytes of the encoded public key. */
     for (; ulIndex < ulDataLength; ulIndex++)
@@ -987,7 +1001,7 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
 
         if (xResult != CKR_OK)
         {
-            configPRINTF(("Warning: could not clean-up old crypto objects. %d \r\n", xResult));
+            vLoggingPrintf("Warning: could not clean-up old crypto objects. %d \r\n", xResult));
         }
     }
 #endif /* if ( pkcs11configIMPORT_PRIVATE_KEYS_SUPPORTED == 1 ) */
@@ -1001,7 +1015,7 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
 
         if ((xResult != CKR_OK) || (xObject == CK_INVALID_HANDLE))
         {
-            configPRINTF(("ERROR: Failed to provision device certificate. %d \r\n", xResult));
+            vLoggingPrintf("ERROR: Failed to provision device certificate. %d \r\n", xResult);
         }
     }
 
@@ -1016,7 +1030,7 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
 
         if ((xResult != CKR_OK) || (xObject == CK_INVALID_HANDLE))
         {
-            configPRINTF(("ERROR: Failed to provision device private key with status %d.\r\n", xResult));
+            vLoggingPrintf("ERROR: Failed to provision device private key with status %d.\r\n", xResult);
         }
         else
         {
@@ -1038,9 +1052,8 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
         if (xResult == CKR_DEVICE_MEMORY)
         {
             xResult = CKR_OK;
-            configPRINTF(
-                ("Warning: no persistent storage is available for the JITP certificate. The certificate in "
-                 "aws_clientcredential_keys.h will be used instead.\r\n"));
+            vLoggingPrintf("Warning: no persistent storage is available for the JITP certificate. The certificate in "
+                           "aws_clientcredential_keys.h will be used instead.\r\n");
         }
     }
 
@@ -1083,8 +1096,8 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
          * avoided because the logic of generating new key-pair is not executed before the flashing process starts
          * loading the new image onto the board. Note: The delay of 150 seconds is used based on testing with an
          * ESP32+ECC608A board. */
-        configPRINTF(("Waiting for %d seconds before generating key-pair",
-                      keyprovisioningDELAY_BEFORE_KEY_PAIR_GENERATION_SECS));
+        vLoggingPrintf("Waiting for %d seconds before generating key-pair",
+                      keyprovisioningDELAY_BEFORE_KEY_PAIR_GENERATION_SECS);
         vTaskDelay(pdMS_TO_TICKS(keyprovisioningDELAY_BEFORE_KEY_PAIR_GENERATION_SECS * 1000));
 
         /* Generate a new default key pair. */
@@ -1120,9 +1133,7 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
      * matches the public key on the device. */
     if (CK_INVALID_HANDLE != xProvisionedState.xPublicKey)
     {
-        configPRINTF(
-            ("Printing device public key.\nMake sure that provisioned device certificate matches public key on "
-             "device."));
+        vLoggingPrintf("Printing device public key.\nMake sure that provisioned device certificate matches public key on device.");
         prvWriteHexBytesToConsole("Device public key", xProvisionedState.pucDerPublicKey,
                                   xProvisionedState.ulDerPublicKeyLength);
     }
@@ -1133,13 +1144,12 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
         ((CK_INVALID_HANDLE == xProvisionedState.xClientCertificate) || (CK_TRUE == xKeyPairGenerationMode)) &&
         (CK_FALSE == xImportedPrivateKey))
     {
-        configPRINTF(
-            ("Warning: the client certificate should be updated. Please see "
-             "https://aws.amazon.com/freertos/getting-started/.\r\n"));
+        vLoggingPrintf("Warning: the client certificate should be updated. Please see "
+                       "https://aws.amazon.com/freertos/getting-started/.\r\n");
 
         if (NULL != xProvisionedState.pcIdentifier)
         {
-            configPRINTF(("Recommended certificate subject name: CN=%s\r\n", xProvisionedState.pcIdentifier));
+            vLoggingPrintf("Recommended certificate subject name: CN=%s\r\n", xProvisionedState.pcIdentifier);
         }
     }
 
@@ -1194,6 +1204,12 @@ CK_RV vAlternateKeyProvisioning(ProvisioningParams_t *xParams)
 /* Perform device provisioning using the default TLS client credentials. */
 CK_RV vDevModeKeyProvisioning(void)
 {
+#if MBEDTLS_VERSION_NUMBER >= 0x03000000
+    mbedtls_ctr_drbg_init(&drbg_ctx);
+    mbedtls_entropy_init(&entropy_ctx);
+    mbedtls_ctr_drbg_seed(&drbg_ctx, mbedtls_entropy_func, &entropy_ctx, NULL, 0);
+#endif
+
     ProvisioningParams_t xParams;
 
     xParams.pucJITPCertificate   = (uint8_t *)keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM;
@@ -1271,7 +1287,7 @@ CK_RV vCodeVerifyPubKeyProvisioning()
 
         if ((xResult != CKR_OK) || (xObject == CK_INVALID_HANDLE))
         {
-            configPRINTF(("ERROR: Failed to provision public key for code signature verification with status %d.\r\n", xResult));
+            vLoggingPrintf("ERROR: Failed to provision public key for code signature verification with status %d.\r\n", xResult);
         }
 
         pxFunctionList->C_CloseSession(xSession);

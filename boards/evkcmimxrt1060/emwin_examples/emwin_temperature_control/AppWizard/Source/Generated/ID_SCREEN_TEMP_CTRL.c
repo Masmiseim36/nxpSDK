@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2024  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -808,29 +808,29 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_IMAGE_BG,           APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acTemperatureControl_3_480x272),
                                                          ARG_V(391734), } },
   { ID_TEXT_TEMP_CTRL,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_CTRL,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_CTRL,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP_CTRL,     APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_3) } },
   { ID_TEXT_FAN,           APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_FAN,           APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_FAN,           APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_FAN,           APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_4) } },
   { ID_TEXT_TEMP,          APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP,          APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP,          APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP,          APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_5) } },
   { ID_TEXT_ROOM,          APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_ROOM,          APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_ROOM,          APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_ROOM,          APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_6) } },
   { ID_TEXT_FAN_STATE,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_FAN_STATE,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_FAN_STATE,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_FAN_STATE,     APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_7) } },
   { ID_TEXT_TEMP1,         APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP1,         APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP1,         APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP1,         APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_8) } },
   { ID_BOX_BR_BUTTON_HL,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLUE) } },
   { ID_BOX_LR_BUTTON_HL,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLUE) } },
   { ID_BOX_KT_BUTTON_HL,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLUE) } },
   { ID_BOX_FR_BUTTON_HL,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLUE) } },
   { ID_BOX_DR_BUTTON_HL,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLUE) } },
-  { ID_TEXT_DEGR_C,        APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DEGR_C,        APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_DEGR_C,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_0) } },
   { ID_TEXT_DEGR_C,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_ROTARY_BR,          APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acKNOB_106x106),
@@ -843,13 +843,13 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_ROTARY_BR,          APPW_SET_PROP_OFFSET,       { ARG_V(900) } },
   { ID_ROTARY_BR,          APPW_SET_PROP_PERIOD,       { ARG_V(300) } },
   { ID_ROTARY_BR,          APPW_SET_PROP_ROTATE,       { ARG_V(0) } },
-  { ID_TEXT_DEGR_C_BR_B,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DEGR_C_BR_B,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_DEGR_C_BR_B,   APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_0) } },
   { ID_TEXT_DEGR_C_BR_B,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_DEGR_C_LR_B,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DEGR_C_LR_B,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_DEGR_C_LR_B,   APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_0) } },
   { ID_TEXT_DEGR_C_LR_B,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_DEGR_C_KT_B,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DEGR_C_KT_B,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_DEGR_C_KT_B,   APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_0) } },
   { ID_TEXT_DEGR_C_KT_B,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_DECMODE,      { ARG_V(0),
@@ -859,44 +859,44 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
                                                          ARG_V(30) } },
-  { ID_TEXT_TEMP_BR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_BR,       APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_TEMP_BR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_TEXT_DEGR_C_FR_B,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DEGR_C_FR_B,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_DEGR_C_FR_B,   APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_0) } },
   { ID_TEXT_DEGR_C_FR_B,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_DEGR_C_DR_B,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DEGR_C_DR_B,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_DEGR_C_DR_B,   APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_0) } },
   { ID_TEXT_DEGR_C_DR_B,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_BR,            APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_BR,            APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_BR,            APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_BR,            APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_1) } },
   { ID_TEXT_LR,            APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_LR,            APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_LR,            APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_LR,            APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_2) } },
   { ID_TEXT_KT,            APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_KT,            APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_KT,            APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_KT,            APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_9) } },
   { ID_TEXT_FR,            APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_FR,            APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_FR,            APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_FR,            APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_10) } },
   { ID_TEXT_DR,            APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_DR,            APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DR,            APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_DR,            APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_11) } },
-  { ID_TEXT_BR_FAN,        APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_BR_FAN,        APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_BR_FAN,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_BR_FAN,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Off) } },
-  { ID_TEXT_LR_FAN,        APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_LR_FAN,        APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_LR_FAN,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_LR_FAN,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Off) } },
-  { ID_TEXT_KT_FAN,        APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_KT_FAN,        APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_KT_FAN,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_KT_FAN,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Off) } },
-  { ID_TEXT_DR_FAN,        APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_DR_FAN,        APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_DR_FAN,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_DR_FAN,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Off) } },
-  { ID_TEXT_FR_FAN,        APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_FR_FAN,        APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_FR_FAN,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_FR_FAN,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Off) } },
   { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_DECMODE,      { ARG_V(0),
@@ -904,7 +904,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP_BR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -915,7 +915,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP_LR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -926,7 +926,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP_KT_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -937,7 +937,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP_FR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -948,7 +948,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                          ARG_V(0),
                                                          ARG_V(0) } },
   { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_FONT,         { ARG_VPF(0, acNettoOT_24_Normal_EXT_AA4, &APPW__aFont[0]) } },
   { ID_TEXT_TEMP_DR_B,     APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -971,7 +971,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_LR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_TEMP_LR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
                                                          ARG_V(30) } },
-  { ID_TEXT_TEMP_LR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_LR,       APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_TEMP_LR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -983,7 +983,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_BR_FAN_ON,   APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_BR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_BR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_BR_FAN_ON,   APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -998,7 +998,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_BR_FAN_OFF,  APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_BR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_BR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_BR_FAN_OFF,  APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1008,7 +1008,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_BR_FAN_AUTO, APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_BR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_BR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_BR_FAN_AUTO, APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Auto) } },
   { ID_BUTTON_BR_FAN_AUTO, APPW_SET_PROP_COLORS,       { ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_BLACK),
@@ -1022,7 +1022,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_LR_FAN_ON,   APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_LR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_LR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_LR_FAN_ON,   APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1037,7 +1037,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_LR_FAN_OFF,  APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_LR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_LR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_LR_FAN_OFF,  APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1047,7 +1047,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_LR_FAN_AUTO, APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_LR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_LR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_LR_FAN_AUTO, APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Auto) } },
   { ID_BUTTON_LR_FAN_AUTO, APPW_SET_PROP_COLORS,       { ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_BLACK),
@@ -1070,7 +1070,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_KT,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_TEMP_KT,       APPW_SET_PROP_RANGE,        { ARG_V(2),
                                                          ARG_V(30) } },
-  { ID_TEXT_TEMP_KT,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_KT,       APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_TEMP_KT,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -1082,7 +1082,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_KT_FAN_ON,   APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_KT_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_KT_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_KT_FAN_ON,   APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1097,7 +1097,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_KT_FAN_OFF,  APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_KT_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_KT_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_KT_FAN_OFF,  APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1107,7 +1107,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_KT_FAN_AUTO, APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_KT_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_KT_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_KT_FAN_AUTO, APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Auto) } },
   { ID_BUTTON_KT_FAN_AUTO, APPW_SET_PROP_COLORS,       { ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_BLACK),
@@ -1130,7 +1130,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_FR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_TEMP_FR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
                                                          ARG_V(30) } },
-  { ID_TEXT_TEMP_FR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_FR,       APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_TEMP_FR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -1142,7 +1142,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_FR_FAN_ON,   APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_FR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_FR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_FR_FAN_ON,   APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1157,7 +1157,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_FR_FAN_OFF,  APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_FR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_FR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_FR_FAN_OFF,  APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1167,7 +1167,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_FR_FAN_AUTO, APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_FR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_FR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_FR_FAN_AUTO, APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Auto) } },
   { ID_BUTTON_FR_FAN_AUTO, APPW_SET_PROP_COLORS,       { ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_BLACK),
@@ -1192,7 +1192,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_TEXT_TEMP_DR,       APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
   { ID_TEXT_TEMP_DR,       APPW_SET_PROP_RANGE,        { ARG_V(2),
                                                          ARG_V(30) } },
-  { ID_TEXT_TEMP_DR,       APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_24_Normal_EXT_AA4) } },
+  { ID_TEXT_TEMP_DR,       APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_24_Normal_EXT_AA4, &APPW__aFont[1]) } },
   { ID_TEXT_TEMP_DR,       APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_RIGHT | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
@@ -1204,7 +1204,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_DR_FAN_ON,   APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_DR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_DR_FAN_ON,   APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_DR_FAN_ON,   APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1219,7 +1219,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_DR_FAN_OFF,  APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_DR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_DR_FAN_OFF,  APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_DR_FAN_OFF,  APPW_SET_PROP_COLORS,       { ARG_V(0xff121418),
                                                          ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_INVALID_COLOR) } },
@@ -1229,7 +1229,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BUTTON_DR_FAN_AUTO, APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                          ARG_V(0),
                                                          ARG_V(0) } },
-  { ID_BUTTON_DR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_16_Normal_EXT_AA4) } },
+  { ID_BUTTON_DR_FAN_AUTO, APPW_SET_PROP_FONT,         { ARG_VPF(0, acRoboto_16_Normal_EXT_AA4, &APPW__aFont[2]) } },
   { ID_BUTTON_DR_FAN_AUTO, APPW_SET_PROP_TEXTID,       { ARG_V(ID_TEXT_Auto) } },
   { ID_BUTTON_DR_FAN_AUTO, APPW_SET_PROP_COLORS,       { ARG_V(GUI_BLACK),
                                                          ARG_V(GUI_BLACK),
@@ -1241,7 +1241,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
 *
 *       _aAction
 */
-static const APPW_ACTION_ITEM _aAction[] = {
+static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_WINDOW_BR_CTRLS,    APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_WINDOW_BR_CTRLS__APPW_JOB_SETVIS,
     { ARG_V(APPW_SET_ON),
     }, 0, NULL
@@ -1303,14 +1303,19 @@ static const APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BUTTON_BR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BUTTON_BR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BUTTON_LR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BUTTON_LR_FAN_OFF__APPW_JOB_SET_0,
+    { { 0 } }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BUTTON_KT_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BUTTON_KT_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BUTTON_FR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BUTTON_FR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_SCREEN_TEMP_CTRL,   APPW_NOTIFICATION_INITDIALOG,     ID_BUTTON_DR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__APPW_NOTIFICATION_INITDIALOG__ID_BUTTON_DR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR,          WM_NOTIFICATION_CLICKED,          ID_BOX_BR_BUTTON_HL,   APPW_JOB_SETVIS,         ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR__APPW_JOB_CLEAR,
     { ARG_V(APPW_SET_ON),
@@ -1353,30 +1358,39 @@ static const APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_ON,   APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_ON__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_TEXT_BR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_OFF__APPW_JOB_CLEAR,
     { ARG_V(ID_TEXT_On),
     }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_TEXT_BR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_TEXT_BR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Off),
     }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_AUTO, APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_AUTO__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_BR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_BR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_BR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_TEXT_BR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_TEXT_BR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Auto),
@@ -1423,30 +1437,39 @@ static const APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_ON,   APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_ON__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_TEXT_LR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_LR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_On),
     }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_TEXT_LR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_TEXT_LR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Off),
     }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_AUTO, APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_AUTO__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_LR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_LR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_LR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_TEXT_LR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_TEXT_LR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Auto),
@@ -1493,30 +1516,39 @@ static const APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_ON,   APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_ON__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_TEXT_KT_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_LR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_LR_FAN__APPW_JOB_SETTEXT_0,
     { ARG_V(ID_TEXT_On),
     }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_TEXT_KT_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_KT_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Off),
     }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_AUTO, APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_AUTO__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_KT_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_KT_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_KT_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_TEXT_KT_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_TEXT_KT_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Auto),
@@ -1563,30 +1595,39 @@ static const APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_ON,   APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_ON__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_TEXT_FR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_KT_FAN__APPW_JOB_SETTEXT_0,
     { ARG_V(ID_TEXT_On),
     }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_TEXT_FR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_FR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Off),
     }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_AUTO, APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_AUTO__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_FR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_FR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_FR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_TEXT_FR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_KT_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_TEXT_KT_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Auto),
@@ -1633,30 +1674,39 @@ static const APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_ON,   APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_ON__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_BR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_ON,   WM_NOTIFICATION_CLICKED,          ID_TEXT_DR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_FR_FAN__APPW_JOB_SETTEXT_0,
     { ARG_V(ID_TEXT_On),
     }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_OFF,  APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_OFF__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_AUTO, APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_OFF__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_AUTO__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_OFF,  WM_NOTIFICATION_CLICKED,          ID_TEXT_DR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_ON__WM_NOTIFICATION_CLICKED__ID_TEXT_FR_FAN__APPW_JOB_SETTEXT_1,
     { ARG_V(ID_TEXT_Off),
     }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_AUTO, APPW_JOB_SET,            ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_AUTO__APPW_JOB_SET,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_OFF,  APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_OFF__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_BUTTON_DR_FAN_ON,   APPW_JOB_CLEAR,          ID_SCREEN_TEMP_CTRL__ID_BUTTON_DR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_BUTTON_DR_FAN_ON__APPW_JOB_CLEAR,
+    { { 0 } }, 0, NULL
   },
   { ID_BUTTON_DR_FAN_AUTO, WM_NOTIFICATION_CLICKED,          ID_TEXT_DR_FAN,        APPW_JOB_SETTEXT,        ID_SCREEN_TEMP_CTRL__ID_BUTTON_FR_FAN_AUTO__WM_NOTIFICATION_CLICKED__ID_TEXT_FR_FAN__APPW_JOB_SETTEXT,
     { ARG_V(ID_TEXT_Auto),

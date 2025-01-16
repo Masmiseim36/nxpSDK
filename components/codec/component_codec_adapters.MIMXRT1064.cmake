@@ -3,27 +3,22 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_USE_driver_codec AND CONFIG_USE_component_wm8904_adapter) OR (CONFIG_USE_driver_codec AND CONFIG_USE_component_wm8960_adapter) OR (CONFIG_USE_driver_codec AND CONFIG_USE_component_sgtl_adapter) OR (CONFIG_USE_driver_codec AND CONFIG_USE_component_da7212_adapter) OR (CONFIG_USE_driver_codec AND CONFIG_USE_component_cs42888_adapter))
+      target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+          ${CMAKE_CURRENT_LIST_DIR}/port/fsl_codec_adapter.c
+        )
 
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/port/fsl_codec_adapter.c
-)
+  
+      target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+          ${CMAKE_CURRENT_LIST_DIR}/port
+        )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/port
-)
-
-if(CONFIG_USE_COMPONENT_CONFIGURATION)
+    if(CONFIG_USE_COMPONENT_CONFIGURATION)
   message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
 
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DCODEC_MULTI_ADAPTERS=1
-  )
+      target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+                  -DCODEC_MULTI_ADAPTERS=1
+              )
+  
+  
+  endif()
 
-endif()
-
-else()
-
-message(SEND_ERROR "component_codec_adapters.MIMXRT1064 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()

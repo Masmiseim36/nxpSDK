@@ -20,7 +20,7 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*! @{ */
-#define FSL_PWM_DRIVER_VERSION (MAKE_VERSION(2, 8, 3)) /*!< Version 2.8.3 */
+#define FSL_PWM_DRIVER_VERSION (MAKE_VERSION(2, 8, 4)) /*!< Version 2.8.4 */
 /*! @} */
 
 /*! Number of bits per submodule for software output control */
@@ -1153,7 +1153,8 @@ static inline void PWM_SetupFaultDisableMap(PWM_Type *base,
 /*!
  * @brief Set PWM output enable
  *
- * This feature allows the user to enable the PWM Output.
+ * This feature allows the user to enable the PWM Output. Recommend to invoke this API after PWM and fault
+ * configuration. But invoke this API before configure MCTRL register is okay, such as set LDOK or start timer.
  *
  * @param base               PWM peripheral base address
  * @param pwmChannel         PWM channel to configure
@@ -1182,7 +1183,8 @@ static inline void PWM_OutputEnable(PWM_Type *base, pwm_channels_t pwmChannel, p
 /*!
  * @brief Set PWM output disable
  *
- *This feature allows the user to disable the PWM output.
+ * This feature allows the user to disable the PWM output. Recommend to invoke this API after PWM and fault
+ * configuration. But invoke this API before configure MCTRL register is okay, such as set LDOK or start timer.
  *
  * @param base               PWM peripheral base address
  * @param pwmChannel         PWM channel to configure

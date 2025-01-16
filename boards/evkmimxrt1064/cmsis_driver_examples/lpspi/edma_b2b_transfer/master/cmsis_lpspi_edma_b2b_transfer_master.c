@@ -8,29 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Master related */
-#define DRIVER_MASTER_SPI                     Driver_SPI1
-#define EXAMPLE_LPSPI_MASTER_IRQN             (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_DEALY_COUNT             0xfffffU
-#define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR     DMA0
-
-/* Select USB1 PLL PFD0 (480 MHz) as lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
-
-#define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
 #define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
@@ -53,11 +36,6 @@ volatile uint32_t g_systickCounter = 20U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t LPSPI1_GetFreq(void)
-{
-    return EXAMPLE_LPSPI_CLOCK_FREQ;
-}
 void SysTick_Handler(void)
 {
     if (g_systickCounter != 0U)
@@ -88,14 +66,7 @@ void LPSPI_MasterSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /*Set clock source for LPSPI*/
-    CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("LPSPI CMSIS driver board to board edma example.\r\n");
     PRINTF("This example use one board as master and another as slave.\r\n");

@@ -13,7 +13,7 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#if BOARD_NETWORK_USE_100M_ENET_PORT
+#if EXAMPLE_NET_SPEED_100M
 #define EXAMPLE_MDIO_HANDLE ENET
 #else
 #define EXAMPLE_MDIO_HANDLE ENET_1G
@@ -57,5 +57,9 @@ void Network_PhyInit(EXAMPLE_PHY_RES *phy_res, phy_operations_t *phy_ops, uint32
     CLOCK_EnableClock(s_enetExtraClock[ENET_GetInstance(EXAMPLE_MDIO_HANDLE)]);
 #endif
 
+#if ENET_NO_PREAMBLE_PARAM
+    ENET_SetSMI(EXAMPLE_MDIO_HANDLE, csrClock_Hz);
+#else
     ENET_SetSMI(EXAMPLE_MDIO_HANDLE, csrClock_Hz, false);
+#endif
 }

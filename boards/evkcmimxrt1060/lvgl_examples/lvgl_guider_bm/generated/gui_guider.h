@@ -1,6 +1,5 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -8,10 +7,11 @@
 #ifndef GUI_GUIDER_H
 #define GUI_GUIDER_H
 
-#include "lvgl/lvgl.h"
+#include "lvgl.h"
 
 typedef struct
 {
+    lv_obj_t *screen;
     lv_obj_t *btn;
     lv_obj_t *label;
 } lv_ui;

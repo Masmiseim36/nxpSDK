@@ -1,30 +1,32 @@
-Overview
-========
+# ota_mcuboot_basic
+
+## Overview
 This `ota_mcuboot_basic` example demonstrates a basic application that uses MCUBoot as a second stage bootloader.
 
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [FRDM-MCXA153](../../_boards/frdmmcxa153/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/ota_examples/ota_mcuboot_basic/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/ota_examples/ota_mcuboot_basic/example_board_readme.md)
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- micro USB cable
-- EVKMIMRXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special HW settings.
-Prepare the Demo
-================
+## Prepare the Demo
 1. The demo requires MCUBoot booloader to be present in the FLASH memory to function properly.
    It is recommended to build and program the bootloader first, then go on with the application.
    Please refer to respective readme of the `mcuboot_opensource` example and follow the steps there before you continue.
@@ -35,10 +37,9 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
+    - Unix line ending using `\n` (LF)
 
-
-Transfering data to the flash memory
-------------------------------------
+## Transfering data to the flash memory
 There are multiple ways how to transfer image updates to the flash memory:
 
 - This examples implements a simple XMODEM-CRC protocol, that can be used to transfer data to the board at slow speed (~10kB/s).
@@ -53,15 +54,14 @@ There are multiple ways how to transfer image updates to the flash memory:
 - Another option is to use a debug adapter (e.g. JLink, CMSIS DAP...) and flash data using their tools.
 
 
-Running the demo
-================
+## Running the demo
 To get the application properly executed by the bootloader, it is necessary to put signed application image to the primary application partition.
 There are multiple options how to achieve that, however in principle the are two main methods (both presuming the bootlaoder is already in place):
 
-a)  programing signed application image to the primary application partition using an external tool (direct method)
-b)  jump-starting the application by debugger, performing an image update with the signed image, resetting the board and letting the bootloader to perform the update (indirect method)
+1.  programing signed application image to the primary application partition using an external tool (direct method)
+2.  jump-starting the application by debugger, performing an image update with the signed image, resetting the board and letting the bootloader to perform the update (indirect method)
 
-The latter method is used in the following step-by-step description:
+**The latter method is used in the following step-by-step description:**
 
 1.  Open the demo project and build it.
     Known issue: MDK linker issues warning about unused `boot_hdr` sections. This does not affect the functionality of the example.

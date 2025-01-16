@@ -1,52 +1,13 @@
-Overview
-========
+# flexio3_uart_polling_transfer
+
+## Overview
 The flexio_uart_polling example shows how to use flexio uart driver in polling way:
 
 In this example, a flexio simulated uart connect to PC through USB-Serial, the board will send back
 all characters that PC send to the board.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKC board
-- Personal Computer
-- USB to Com Converter
-
-Board settings
-==============
-Connect pin:
-- RX of USB2COM to J16-2
-- TX of USB2COM to J16-1
-- GND of USB2COM to J16-7
-
-Prepare the Demo
-================
-1.  Connect the USB2COM Converter to the host PC 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the UART Terminal port which connected to the USB2COM like:
-
-~~~~~~~~~~~~~~~~~~~~~
-Flexio uart polling example
-Board will send back received characters
-~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/driver_examples/flexio3/uart/polling_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/driver_examples/flexio3/uart/polling_transfer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../_boards/evkmimxrt1040/driver_examples/flexio3/uart/polling_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/driver_examples/flexio3/uart/polling_transfer/example_board_readme.md)

@@ -1,17 +1,16 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2022, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "lvgl/lvgl.h"
+#include "lvgl.h"
 #include "gui_guider.h"
+
+extern void setup_scr_screen(lv_ui *ui);
 
 void setup_ui(lv_ui *ui)
 {
-    ui->btn = lv_btn_create(lv_scr_act());
-
-    ui->label = lv_label_create(ui->btn);
-    lv_label_set_text(ui->label, "Button");
+    setup_scr_screen(ui);
+    lv_scr_load(ui->screen);
 }

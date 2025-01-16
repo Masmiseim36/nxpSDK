@@ -20,6 +20,8 @@
 #include "global_platf.h"
 #include "smCom.h"
 
+#include "se05x_GetInfo.h"
+
 #ifndef SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO
 #include "UWBIOT_APP_BUILD.h"
 #endif
@@ -34,6 +36,8 @@ static ex_sss_boot_ctx_t gex_sss_get_info_ctx;
 #define EX_SSS_BOOT_SKIP_SELECT_APPLET 1
 
 #define SEMS_LITE_GETDATA_UUID_TAG 0xFE
+
+#define JCOP_IDENTIFY_MAX_RSP_LEN 92
 
 /* ************************************************************************** */
 /* Include "main()" with the platform specific startup code for Plug & Trust  */
@@ -211,7 +215,7 @@ static sss_status_t sems_lite_verify_GetDataResponse(uint8_t tag_P2, uint8_t *pR
             if (pRspBuf[0] == tag_P2) {
                 // pRspBuf[1] is data length. It should be less than response buffer - tag - lenght - SW1SW2 field.
                 if (pRspBuf[1] <= getDataRspLen - 4) {
-                    *pRspBufLen = (size_t)(pRspBuf[1]);
+                    *pRspBufLen = (U32)(pRspBuf[1]);
                     memmove(pRspBuf, pRspBuf + 2, pRspBuf[1]);
                     sss_stat = kStatus_SSS_Success;
                 }
@@ -334,6 +338,9 @@ static sss_status_t Iot_Applet_Identify(sss_se05x_session_t *pSession, int getUi
     LOG_I("Applet Minor = %d", applet_version[1]);
     LOG_I("Applet patch = %d", applet_version[2]);
     LOG_I("AppletConfig = %02X%02X", applet_version[3], applet_version[4]);
+
+    pSession->s_ctx.applet_version = (0xFFFFFF00 & ((applet_version[0] << (8 * 3)) | (applet_version[1] << (8 * 2)) |
+                                                       (applet_version[2] << (8 * 1))));
     {
         U16 AppletConfig = applet_version[3] << 8 | applet_version[4];
         CHECK_FEATURE_PRESENT(AppletConfig, ECDSA_ECDH_ECDHE);
@@ -363,57 +370,15 @@ cleanup:
 *       (select applet, establish optional session, like in the sss_session_open()
 */
 
+#define EX_SE05X_CHECK_52F_VERSION(app_ver) ((((app_ver >> 8) & 0xFF) >= 0x10) && (((app_ver >> 8) & 0xFF) <= 0x1F))
+
 static sss_status_t JCOP4_GetDataIdentify(void *conn_ctx)
 {
-    sss_status_t status = kStatus_SSS_Fail;
+    sss_status_t status           = kStatus_SSS_Fail;
+    sss_se05x_session_t *pSession = (sss_se05x_session_t *)(&gex_sss_get_info_ctx.session);
     smStatus_t rxStatus;
     char jcop_platform_id[17] = {0};
     /* Must be packed */
-    typedef struct
-    {
-        //0xFE Tag value - proprietary data Only present if class byte is 0x80
-        uint8_t vTag_value_proprietary_data;
-        //0x49 / 0x45 Length of following data Only present if class byte is 0x80
-        uint8_t vLength_of_following_data;
-        //0xDF28 Tag card identification data Only present if class byte is 0x80
-        uint8_t vTag_card_identification_data[0x02];
-        //0x46 Length of card identification data Only present if class byte is 0x80
-        uint8_t vLength_of_card_identification_data;
-        //0x01 Tag configuration ID Identifies the configuration content
-        uint8_t vTag_configuration_ID;
-        uint8_t vLength_configuration_ID; //0x0C Length configuration ID
-        uint8_t vConfiguration_ID[0x0C];  //var Configuration ID
-        uint8_t vTag_patch_ID;            //0x02 Tag patch ID Identifies the patch level
-        uint8_t vLength_patch_ID;         //0x08 Length patch ID
-        uint8_t vPatch_ID[0x08];          //var Patch ID
-                                          //0x03 Tag platform build ID1 Identifies the JCOP platform
-        uint8_t vTag_platform_build_ID1;
-        uint8_t vLength_platform_build_ID; //0x18 Length platform build ID
-        uint8_t vPlatform_build_ID[0x18];  //var Platform build ID
-        uint8_t vTag_FIPS_mode;            //0x052 Tag FIPS mode FIPS mode active
-        uint8_t vLength_FIPS_mode;         //0x01 Length FIPS mode
-                                           //var FIPS mode 0x00 - FIPS mode not active, 0x01 - FIPS mode active
-        uint8_t vFIPS_mode;
-
-        //uint8_t vTag_modules_enabled; //0x06 Tag modules enabled Lists enabled and disabled modules
-        //uint8_t vLength_modules_enabled; //0x02 Length modules enabled Big endian format
-        //uint8_t vBit_mask_of_enabled_modules[0x02]; //var Bit mask of enabled modules See Table 5.3
-
-        //0x07 Tag pre-perso state Lists pre-perso state
-        uint8_t vTag_pre_perso_state;
-
-        //0x01 Length pre-perso state
-        uint8_t vLength_pre_perso_state;
-
-        //var Bit mask of pre-perso state bit0 = 1 = config module available,
-        //  bit1 = 1 = transport state is active.
-        //  Unused bits are set to 0x0.
-        uint8_t vBit_mask_of_pre_perso_state;
-        uint8_t vTag_ROM_ID;            //'08' Tag ROM ID Indentifies the ROM content
-        uint8_t vLength_ROM_ID;         //'08' Length ROM ID Normal ending
-        uint8_t vROM_ID[0x08];          //var ROM ID
-        uint8_t vStatus_Word_SW_[0x02]; //9000h Status Word (SW)
-    } identifyRsp_t;
 
     const uint8_t cmd[] = {
         0x80, // CLA '80' / '00' GlobalPlatform / ISO / IEC
@@ -426,64 +391,75 @@ static sss_status_t JCOP4_GetDataIdentify(void *conn_ctx)
         0x00  // Le '00' Length of response data
     };
 
-    identifyRsp_t identifyRsp = {0};
-    U32 prspLen               = sizeof(identifyRsp_t);
+    uint8_t identifyBuf[JCOP_IDENTIFY_MAX_RSP_LEN] = {0};
+    identifyRsp_t *pIdentifyRsp                    = (identifyRsp_t *)&identifyBuf;
+    identifyRsp_v2_t *pIdentifyRsp_v2              = (identifyRsp_v2_t *)&identifyBuf;
 
-    U16 dummyResponse16 = sizeof(identifyRsp_t);
+    U32 prspLen = JCOP_IDENTIFY_MAX_RSP_LEN;
+
+    U16 dummyResponse16 = JCOP_IDENTIFY_MAX_RSP_LEN;
     /* Select card manager / ISD
     * (ReUsing same dummy buffers) */
-    rxStatus = (smStatus_t)GP_Select(
-        conn_ctx, (uint8_t *)&identifyRsp /* dummy */, 0, (uint8_t *)&identifyRsp, &dummyResponse16);
+    rxStatus = (smStatus_t)GP_Select(conn_ctx, identifyBuf /* dummy */, 0, identifyBuf, &dummyResponse16);
     if (rxStatus != SM_OK) {
         LOG_E("Could not select ISD.");
         goto cleanup;
     }
 
-    rxStatus =
-        (smStatus_t)smCom_TransceiveRaw(conn_ctx, (uint8_t *)cmd, sizeof(cmd), (uint8_t *)&identifyRsp, &prspLen);
-    if (rxStatus == SM_OK && prspLen == sizeof(identifyRsp)) {
+    rxStatus = (smStatus_t)smCom_TransceiveRaw(conn_ctx, (uint8_t *)cmd, sizeof(cmd), identifyBuf, &prspLen);
+    if (rxStatus == SM_OK /*  && ((prspLen == sizeof(identifyRsp_t)) || (prspLen == sizeof(identifyRsp_v2_t))) */) {
         LOG_W("#####################################################");
-        LOG_I("%s = 0x%02X", "Tag value - proprietary data 0xFE", identifyRsp.vTag_value_proprietary_data);
-        LOG_I("%s = 0x%02X", "Length of following data 0x45", identifyRsp.vLength_of_following_data);
+        LOG_I("%s = 0x%02X", "Tag value - proprietary data 0xFE", pIdentifyRsp->vTag_value_proprietary_data);
+        LOG_I("%s = 0x%02X", "Length of following data 0x45", pIdentifyRsp->vLength_of_following_data);
         LOG_MAU8_I("Tag card identification data",
-            identifyRsp.vTag_card_identification_data,
-            sizeof(identifyRsp.vTag_card_identification_data));
+            pIdentifyRsp->vTag_card_identification_data,
+            sizeof(pIdentifyRsp->vTag_card_identification_data));
         LOG_I("%s = 0x%02X",
             "Length of card identification data", // 0x46
-            identifyRsp.vLength_of_card_identification_data);
-        LOG_I("%s = 0x%02X", "Tag configuration ID (Must be 0x01)", identifyRsp.vTag_configuration_ID);
-        LOG_D("%s = 0x%02X", "Length configuration ID 0x0C", identifyRsp.vLength_configuration_ID);
-        LOG_MAU8_I("Configuration ID", identifyRsp.vConfiguration_ID, sizeof(identifyRsp.vConfiguration_ID));
+            pIdentifyRsp->vLength_of_card_identification_data);
+        LOG_I("%s = 0x%02X", "Tag configuration ID (Must be 0x01)", pIdentifyRsp->vTag_configuration_ID);
+        LOG_D("%s = 0x%02X", "Length configuration ID 0x0C", pIdentifyRsp->vLength_configuration_ID);
+        LOG_MAU8_I("Configuration ID", pIdentifyRsp->vConfiguration_ID, sizeof(pIdentifyRsp->vConfiguration_ID));
 
         //Third and fourth Byte of vConfiguration_ID is the OEF ID
-        LOG_MAU8_I("OEF ID", &identifyRsp.vConfiguration_ID[2], 2);
-        LOG_I("%s = 0x%02X", "Tag patch ID (Must be 0x02)", identifyRsp.vTag_patch_ID);
-        LOG_D("%s = 0x%02X", "Length patch ID 0x08", identifyRsp.vLength_patch_ID);
-        LOG_MAU8_I("Patch ID", identifyRsp.vPatch_ID, sizeof(identifyRsp.vPatch_ID));
-        LOG_I("%s = 0x%02X", "Tag platform build ID1 (Must be 0x03)", identifyRsp.vTag_platform_build_ID1);
-        LOG_D("%s = 0x%02X", "Length platform build ID 0x18", identifyRsp.vLength_platform_build_ID);
-        LOG_MAU8_I("Platform build ID", identifyRsp.vPlatform_build_ID, sizeof(identifyRsp.vPlatform_build_ID));
-        memcpy(jcop_platform_id, identifyRsp.vPlatform_build_ID, 16);
+        LOG_MAU8_I("OEF ID", &pIdentifyRsp->vConfiguration_ID[2], 2);
+        LOG_I("%s = 0x%02X", "Tag patch ID (Must be 0x02)", pIdentifyRsp->vTag_patch_ID);
+        LOG_D("%s = 0x%02X", "Length patch ID 0x08", pIdentifyRsp->vLength_patch_ID);
+        LOG_MAU8_I("Patch ID", pIdentifyRsp->vPatch_ID, sizeof(pIdentifyRsp->vPatch_ID));
+        LOG_I("%s = 0x%02X", "Tag platform build ID1 (Must be 0x03)", pIdentifyRsp->vTag_platform_build_ID1);
+        LOG_D("%s = 0x%02X", "Length platform build ID 0x18", pIdentifyRsp->vLength_platform_build_ID);
+        LOG_MAU8_I("Platform build ID", pIdentifyRsp->vPlatform_build_ID, sizeof(pIdentifyRsp->vPlatform_build_ID));
+        memcpy(jcop_platform_id, pIdentifyRsp->vPlatform_build_ID, 16);
 
         LOG_I("%s = %s", "JCOP Platform ID", jcop_platform_id);
-        LOG_I("%s = 0x%02X", "Tag FIPS mode (Must be 0x05)", identifyRsp.vTag_FIPS_mode);
-        LOG_D("%s = 0x%02X", "Length FIPS mode 0x01", identifyRsp.vLength_FIPS_mode);
-        LOG_I("%s = 0x%02X", "FIPS mode var", identifyRsp.vFIPS_mode);
-        //LOG_I("%s = 0x%02X", "Tag modules enabled 0x06", identifyRsp.vTag_modules_enabled);
-        //LOG_I("%s = 0x%02X", "Length modules enabled 0x02", identifyRsp.vLength_modules_enabled);
-        //LOG_MAU8_I("Bit mask of enabled modules", identifyRsp.vBit_mask_of_enabled_modules, sizeof(identifyRsp.vBit_mask_of_enabled_modules));
-        LOG_I("%s = 0x%02X", "Tag pre-perso state (Must be 0x07)", identifyRsp.vTag_pre_perso_state);
-        LOG_D("%s = 0x%02X", "Length pre-perso state 0x01", identifyRsp.vLength_pre_perso_state);
-        LOG_I("%s = 0x%02X", "Bit mask of pre-perso state var", identifyRsp.vBit_mask_of_pre_perso_state);
+        LOG_I("%s = 0x%02X", "Tag FIPS mode (Must be 0x05)", pIdentifyRsp->vTag_FIPS_mode);
+        LOG_D("%s = 0x%02X", "Length FIPS mode 0x01", pIdentifyRsp->vLength_FIPS_mode);
+        LOG_I("%s = 0x%02X", "FIPS mode var", pIdentifyRsp->vFIPS_mode);
+        //LOG_I("%s = 0x%02X", "Tag modules enabled 0x06", pIdentifyRsp->vTag_modules_enabled);
+        //LOG_I("%s = 0x%02X", "Length modules enabled 0x02", pIdentifyRsp->vLength_modules_enabled);
+        //LOG_MAU8_I("Bit mask of enabled modules", pIdentifyRsp->vBit_mask_of_enabled_modules, sizeof(pIdentifyRsp->vBit_mask_of_enabled_modules));
+        LOG_I("%s = 0x%02X", "Tag pre-perso state (Must be 0x07)", pIdentifyRsp->vTag_pre_perso_state);
+        LOG_D("%s = 0x%02X", "Length pre-perso state 0x01", pIdentifyRsp->vLength_pre_perso_state);
+        LOG_I("%s = 0x%02X", "Bit mask of pre-perso state var", pIdentifyRsp->vBit_mask_of_pre_perso_state);
 
-        LOG_I("%s = 0x%02X", "Tag ROM ID (Must be 0x08)", identifyRsp.vTag_ROM_ID);
-        LOG_D("%s = 0x%02X", "Length ROM ID 0x08", identifyRsp.vLength_ROM_ID);
-        LOG_MAU8_I("ROM ID", identifyRsp.vROM_ID, sizeof(identifyRsp.vROM_ID));
-        LOG_MAU8_I("Status Word (SW)", identifyRsp.vStatus_Word_SW_, sizeof(identifyRsp.vStatus_Word_SW_));
+        LOG_I("%s = 0x%02X", "Tag ROM ID (Must be 0x08)", pIdentifyRsp->vTag_ROM_ID);
+        LOG_D("%s = 0x%02X", "Length ROM ID 0x08", pIdentifyRsp->vLength_ROM_ID);
+        LOG_MAU8_I("ROM ID", pIdentifyRsp->vROM_ID, sizeof(pIdentifyRsp->vROM_ID));
+        if (EX_SE05X_CHECK_52F_VERSION(pSession->s_ctx.applet_version)) {
+            (void)(pIdentifyRsp_v2);
+            LOG_I("%s = 0x%02X", "Tag JCOP OS Core ID (Must be 0x0A)", pIdentifyRsp_v2->vTag_JCOP_OS_Core);
+            LOG_D("%s = 0x%02X", "Length ROM ID 0x08", pIdentifyRsp_v2->vLength_JCOP_OS_Core_ID);
+            LOG_MAU8_I("JCOP OS Core", pIdentifyRsp_v2->vJCOP_OS_Core_ID, sizeof(pIdentifyRsp_v2->vJCOP_OS_Core_ID));
+            LOG_MAU8_I(
+                "Status Word (SW)", pIdentifyRsp_v2->vStatus_Word_SW_, sizeof(pIdentifyRsp_v2->vStatus_Word_SW_));
+        }
+        else {
+            LOG_MAU8_I("Status Word (SW)", pIdentifyRsp->vStatus_Word_SW_, sizeof(pIdentifyRsp->vStatus_Word_SW_));
+        }
     }
     else {
         LOG_E("Error in retreiving the JCOP Identifier. Response is as follows");
-        LOG_AU8_E((uint8_t *)&identifyRsp, sizeof(identifyRsp));
+        LOG_AU8_E(identifyBuf, sizeof(identifyBuf));
         goto cleanup;
     }
     status = kStatus_SSS_Success;

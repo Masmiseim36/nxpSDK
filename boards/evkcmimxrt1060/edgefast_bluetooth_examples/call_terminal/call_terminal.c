@@ -82,6 +82,8 @@ static const struct bt_data ad[] = {
     BT_DATA_BYTES(BT_DATA_UUID16_ALL, BT_UUID_16_ENCODE(BT_UUID_TBS_VAL)),
     BT_DATA_BYTES(BT_DATA_UUID16_ALL, BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL)),
 	BT_DATA(BT_DATA_SVC_DATA16, unicast_server_adv_data, ARRAY_SIZE(unicast_server_adv_data)),
+    BT_DATA(BT_DATA_NAME_COMPLETE, CONFIG_BT_DEVICE_NAME,
+	sizeof(CONFIG_BT_DEVICE_NAME) - 1),
 };
 
 struct bt_le_ext_adv *adv;
@@ -200,7 +202,7 @@ static void bt_ready(int err)
 
     /* Start Advertising */
     /* Create a non-connectable non-scannable advertising set */
-    ret = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN_NAME, NULL, &adv);
+    ret = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN, NULL, &adv);
     if (ret) {
         PRINTF("Failed to create advertising set (error %d)\n", ret);
         return;

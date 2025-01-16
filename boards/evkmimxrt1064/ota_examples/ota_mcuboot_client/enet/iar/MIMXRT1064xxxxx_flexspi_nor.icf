@@ -28,10 +28,12 @@
 define symbol m_interrupts_start       = 0x70040400;
 define symbol m_interrupts_end         = 0x700407FF;
 
-define symbol m_text_start             = 0x70040800;
-define symbol m_text_end               = 0x701BFFFF;
+/* NOTE: Flash in range 0x7013_F000 - 0x7013_FFFF is reserved for image trailer */
 
-/* NOTE: Flash in range 0x7018_0000 - 0x703F_FFFF is reserved for data */
+define symbol m_text_start             = 0x70040800;
+define symbol m_text_end               = 0x7013EFFF;
+
+/* NOTE: Flash in range 0x7014_0000 - 0x703F_FFFF is reserved for data */
 
 define symbol m_data_start             = 0x20000000;
 define symbol m_data_end               = 0x2001FFFF;
@@ -43,13 +45,13 @@ define symbol m_data2_end              = 0x202BFFFF;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x200;
+  define symbol __size_cstack__        = 0x0400;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x200;
+  define symbol __size_heap__          = 0x0400;
 }
 
 define exported symbol __NCACHE_REGION_START   = m_data2_start;

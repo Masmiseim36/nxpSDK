@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2018,2020 NXP
+* Copyright 2018,2020,2024 NXP
 * SPDX-License-Identifier: Apache-2.0
 */
 
@@ -17,6 +17,7 @@
 #endif
 
 #include <string.h>
+#include <limits.h>
 #include <assert.h>
 #include <nxLog_scp.h>
 #include "nxScp03_Apis.h"
@@ -33,7 +34,7 @@
 #error "No hostcrypto"
 #endif // SSS_HAVE_HOSTCRYPTO_MBEDTLS
 
-#if SSS_HAVE_SE05X_VER_GTE_06_00
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 #if defined(SE05X_MAX_BUF_SIZE_CMD) && (SE05X_MAX_BUF_SIZE_CMD != 1024)
 #   error "Expect hard coded for SE05X_MAX_BUF_SIZE_CMD = 1024"
 #endif
@@ -103,6 +104,7 @@ sss_status_t nxSCP03_Encrypt_CommandAPDU(NXSCP03_DynCtx_t *pdySCP03SessCtx, uint
         ENSURE_OR_GO_CLEANUP(sss_status == kStatus_SSS_Success);
         dataLen = *pCmdBufLen;
         LOG_D("Encrypt CommandAPDU");
+        pIv = (uint8_t *)iv;
         sss_status = sss_host_cipher_one_go(&symm, pIv, SCP_KEY_SIZE, apduPayloadToEncrypt, cmdBuf, dataLen);
         ENSURE_OR_GO_CLEANUP(sss_status == kStatus_SSS_Success);
         LOG_AU8_D(cmdBuf, dataLen);
@@ -439,6 +441,7 @@ static void nxSCP03_PadCommandAPDU(uint8_t *cmdBuf, size_t *pCmdBufLen)
     LOG_MAU8_D("Input: cmdBuf", cmdBuf, *pCmdBufLen);
     // pad the payload and adjust the length of the APDU
     cmdBuf[(*pCmdBufLen)] = SCP_DATA_PAD_BYTE;
+    ENSURE_OR_GO_EXIT((SIZE_MAX - 1) >= (*pCmdBufLen));
     *pCmdBufLen += 1;
     zeroBytesToPad = (SCP_KEY_SIZE - ((*pCmdBufLen) % SCP_KEY_SIZE)) % SCP_KEY_SIZE;
 

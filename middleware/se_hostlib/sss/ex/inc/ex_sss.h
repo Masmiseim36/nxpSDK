@@ -19,18 +19,11 @@
 
 #include <fsl_sss_api.h>
 
-#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
-#include <fsl_sscp_a71ch.h>
-#endif
 #if SSS_HAVE_HOSTCRYPTO_MBEDTLS
 #include <fsl_sss_mbedtls_apis.h>
 #endif
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
 #include <fsl_sss_openssl_apis.h>
-#endif
-
-#if SSS_HAVE_SSCP
-#include <fsl_sss_sscp.h>
 #endif
 
 /* ************************************************************************** */
@@ -53,9 +46,6 @@ typedef struct
     sss_key_store_t ks;
 
     sss_sscp_session_t *sscp_session;
-#if (SSS_HAVE_APPLET_A71CH) || (SSS_HAVE_APPLET_A71CH_SIM)
-    sss_a71ch_key_store_t *a71ch_keystore;
-#endif
 
     sscp_context_t sscp;
     sss_asymmetric_t asymVerifyCtx;

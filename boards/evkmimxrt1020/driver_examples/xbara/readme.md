@@ -1,53 +1,19 @@
-Overview
-========
+# xbara
+
+## Overview
 The Xbara project is a simple demonstration program of the SDK Xbara driver.The intended application
 of this module is to provide a flexible crossbar switch function that allows any input to be
 connected to any output under user control.It sets up the Xbara hardware block to trigger a periodic
 interrupt after every 1 second. When the Xbar interrupt is triggered a message a printed on the UART
 terminal.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1020-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1. Connect a USB cable between the PC host and the OpenSDA USB port on the board.
-2. Open a serial terminal with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
-
-Running the demo
-================
-These instructions are displayed/shown on the terminal window:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-XBARA Peripheral Driver Example.
-XBARA interrupt is occurred !
-XBARA interrupt is occurred !
-XBARA interrupt is occurred !
-............................
-............................
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/driver_examples/xbara/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/driver_examples/xbara/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/xbara/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/driver_examples/xbara/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/driver_examples/xbara/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/driver_examples/xbara/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/driver_examples/xbara/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/driver_examples/xbara/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/xbara/example_board_readme.md)

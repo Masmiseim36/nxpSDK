@@ -6,18 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpuart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART            LPUART1
-#define DEMO_LPUART_CLK_FREQ   BOARD_DebugConsoleSrcFreq()
-#define DEMO_LPUART_IRQn       LPUART1_IRQn
-#define DEMO_LPUART_IRQHandler LPUART1_IRQHandler
 
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 16
@@ -81,9 +76,7 @@ int main(void)
     uint16_t tmprxIndex = rxIndex;
     uint16_t tmptxIndex = txIndex;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
+    BOARD_InitHardware();
 
     /*
      * config.baudRate_Bps = 115200U;

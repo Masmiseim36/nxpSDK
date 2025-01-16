@@ -17,7 +17,7 @@
 #include "ble_service/ht.h"
 #include "ble_service/hr.h"
 #include "ble_service/bas.h"
-
+   
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -25,32 +25,16 @@ extern uint8_t mcu_tlv_command_buff[NCP_HOST_COMMAND_LEN];
 
 static uint8_t reg_serv[MAX_SUPPORT_SERVICE] = {0};
 
+stats_set_profile_cmd_t set_profile_cmd;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 static void htc_central_notify(uint8_t *data);
 static void hrc_central_notify(uint8_t *data);
-static int ble_set_adv_data_command(int argc, char **argv);
-static int ble_start_adv_command(int argc, char **argv);
-static int ble_stop_adv_command(int argc, char **argv);
-static int ble_set_scan_param_command(int argc, char **argv);
-static int ble_start_scan_command(int argc, char **argv);
-static int ble_stop_scan_command(int argc, char **argv);
+
 static void ble_connect_command_local(NCP_CMD_CONNECT *param);
-static int ble_connect_command(int argc, char **argv);
-static int ble_disconnect_command(int argc, char **argv);
-static int ble_set_data_len_command(int argc, char **argv);
-static int ble_set_phy_command(int argc, char **argv);
-static int ble_connect_paramter_update_command(int argc, char **argv);
-static int ble_set_filter_list_command(int argc, char **argv);
-static int ble_start_encryption_command(int argc, char **argv);
-static int ble_read_characteristic_command(int argc, char **argv);
-static int ble_register_service_command(int argc, char **argv);
-static int ble_set_power_mode_command(int argc, char **argv);
-static int ble_set_device_address_command(int argc, char **argv);
+//static int ble_set_device_address_command(int argc, char **argv);
 //static int ble_set_device_name_command(int argc, char **argv);
-static int ble_host_service_add_command(int argc, char **argv);
-static int ble_start_service_command(int argc, char **argv);
 //static void ble_disc_prim_command_local(NCP_DISC_PRIM_UUID_CMD *param);
 //static int ble_disc_prim_command(int argc, char **argv);
 //int ble_host_service_discover(int argc, char **argv);
@@ -58,11 +42,6 @@ static int ble_start_service_command(int argc, char **argv);
 //static int ble_disc_chrc_command(int argc, char **argv);
 //static void ble_disc_desc_command_local(NCP_DISC_CHRC_UUID_CMD *param);
 //static int ble_disc_desc_command(int argc, char **argv);
-static int ble_cfg_subscribe_command(int argc, char **argv);
-static int ble_l2cap_connection_command(int argc, char **argv);
-static int ble_l2cap_disconnect_command(int argc, char **argv);
-static int ble_l2cap_send_command(int argc, char **argv);
-static int ble_l2cap_register_command(int argc, char **argv);
 //static int ble_l2cap_metrics_command(int argc, char **argv);
 //static int ble_l2cap_receive_command(int argc, char **argv);
 static int ble_process_adv_report(uint8_t *res);
@@ -72,18 +51,19 @@ static int ble_process_passkey_display(uint8_t *res);
 static int ble_process_conn_param_update(uint8_t *res);
 static int ble_process_phy_update(uint8_t *res);
 static int ble_process_data_len_update(uint8_t *res);
-static int ble_process_idenity_resolved(uint8_t *res);
+static int ble_process_identity_resolved(uint8_t *res);
 static int ble_process_security_level_changed(uint8_t *res);
 static int ble_process_gatt_notification(uint8_t *res);
 static int ble_process_attr_value_changed(uint8_t *res);
 static int ble_process_gatt_ccc_cfg_changed(uint8_t *res);
-static int ble_process_gatt_subscriptioned(uint8_t *res);
+static int ble_process_gatt_subscription(uint8_t *res);
 static int ble_process_l2cap_connected(uint8_t *res);
 static int ble_process_l2cap_disconnected(uint8_t *res);
 static int ble_process_l2cap_received(uint8_t *res);
 static int ble_process_gatt_prim_discovered(uint8_t *res);
 static int ble_process_gatt_chrc_discovered(uint8_t *res);
 static int ble_process_gatt_desc_discovered(uint8_t *res);
+static int ble_process_gatt_ncs_info_receive(uint8_t *res);
 static int ble_process_start_adv_response(uint8_t *res);
 static int ble_process_stop_adv_response(uint8_t *res);
 static int ble_process_set_adv_data_response(uint8_t *res);
@@ -103,7 +83,7 @@ static int ble_process_set_dev_name_response(uint8_t *res);
 static int ble_process_set_power_mode_response(uint8_t *res);
 static int ble_process_host_service_add_response(uint8_t *res);
 static int ble_process_start_service_response(uint8_t *res);
-static int ble_process_write_charateristic_response(uint8_t *res);
+static int ble_process_write_characteristic_response(uint8_t *res);
 static int ble_process_disc_prim_response(uint8_t *res);
 static int ble_process_disc_chrc_response(uint8_t *res);
 static int ble_process_disc_desc_response(uint8_t *res);
@@ -143,15 +123,15 @@ struct _host_svc_list host_service_list[] = {
 #if CONFIG_NCP_BAS
     {"bas", peripheral_bas_start},
 #endif
-    NULL,
+    {NULL, NULL},
 };
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-MCU_NCPCmd_DS_COMMAND *ncp_host_get_cmd_buffer_ble()
+MCU_NCPCmd_DS_BLE_COMMAND *ncp_host_get_cmd_buffer_ble()
 {
-    return (MCU_NCPCmd_DS_COMMAND *)(mcu_tlv_command_buff);
+    return (MCU_NCPCmd_DS_BLE_COMMAND *)(mcu_tlv_command_buff);
 }
 
 
@@ -161,11 +141,15 @@ MCU_NCPCmd_DS_COMMAND *ncp_host_get_cmd_buffer_ble()
  * @return Status returned
  */
 
-static int ble_start_adv_command(int argc, char **argv)
+int ble_start_adv_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *start_adv_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *start_adv_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)start_adv_command, 0, NCP_HOST_COMMAND_LEN);
-
+    if (NCP_PROFILE_CMD_STATUS_CHECK(cmd_run_status) == 2)
+    {
+        printf("Error: can not input this cmd after use the profile related cmd\r\n");
+        return NCP_STATUS_ERROR;
+    }
     start_adv_command->header.cmd      = NCP_CMD_BLE_GAP_START_ADV;
     start_adv_command->header.size     = NCP_CMD_HEADER_LEN;
     start_adv_command->header.result   = NCP_CMD_RESULT_OK;
@@ -178,12 +162,12 @@ static int ble_start_adv_command(int argc, char **argv)
  *
  * @return Status returned
  */ 
-static int ble_set_adv_data_command(int argc, char **argv)
+int ble_set_adv_data_command(int argc, char **argv)
 {
     uint32_t i = 0;
     char *endptr;
     char conv_value[2]= {0};
-    MCU_NCPCmd_DS_COMMAND *set_adv_data_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_adv_data_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_adv_data_command, 0, NCP_HOST_COMMAND_LEN);
 
     if(argc != 2 || (strlen(argv[1])%2 !=0))
@@ -218,10 +202,16 @@ static int ble_set_adv_data_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_stop_adv_command(int argc, char **argv)
+int ble_stop_adv_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *stop_adv_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *stop_adv_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)stop_adv_command, 0, NCP_HOST_COMMAND_LEN);
+
+    if (NCP_PROFILE_CMD_STATUS_CHECK(cmd_run_status) == 2)
+    {
+        printf("Error: can not input this cmd after use the profile related cmd\r\n");
+        return NCP_STATUS_ERROR;
+    }
 
     stop_adv_command->header.cmd      = NCP_CMD_BLE_GAP_STOP_ADV;
     stop_adv_command->header.size     = NCP_CMD_HEADER_LEN;
@@ -236,9 +226,9 @@ static int ble_stop_adv_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_set_scan_param_command(int argc, char **argv)
+int ble_set_scan_param_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *set_scan_para_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_scan_para_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_scan_para_command, 0, NCP_HOST_COMMAND_LEN);
 
     if(argc != 4)
@@ -267,11 +257,17 @@ static int ble_set_scan_param_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_start_scan_command(int argc, char **argv)
+int ble_start_scan_command(int argc, char **argv)
 {
     int scan_type;
-    MCU_NCPCmd_DS_COMMAND *start_scan_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *start_scan_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)start_scan_command, 0, NCP_HOST_COMMAND_LEN);
+
+    if (NCP_PROFILE_CMD_STATUS_CHECK(cmd_run_status) == 2)
+    {
+        printf("Error: can not input this cmd after use the profile related cmd\r\n");
+        return NCP_STATUS_ERROR;
+    }
 
     if(argc != 2 || (atoi(argv[1]) != 0 && atoi(argv[1]) != 1))
     {
@@ -305,10 +301,16 @@ static int ble_start_scan_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_stop_scan_command(int argc, char **argv)
+int ble_stop_scan_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *stop_scan_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *stop_scan_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)stop_scan_command, 0, NCP_HOST_COMMAND_LEN);
+
+    if (NCP_PROFILE_CMD_STATUS_CHECK(cmd_run_status) == 2)
+    {
+        printf("Error: can not input this cmd after use the profile related cmd\r\n");
+        return NCP_STATUS_ERROR;
+    }
 
     stop_scan_command->header.cmd      = NCP_CMD_BLE_GAP_STOP_SCAN;
     stop_scan_command->header.size     = NCP_CMD_HEADER_LEN;
@@ -319,7 +321,7 @@ static int ble_stop_scan_command(int argc, char **argv)
 
 static void ble_connect_command_local(NCP_CMD_CONNECT *param)
 {
-    MCU_NCPCmd_DS_COMMAND *connect_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *connect_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)connect_command, 0, NCP_HOST_COMMAND_LEN);
     connect_command->header.cmd      = NCP_CMD_BLE_GAP_CONNECT;
     connect_command->header.size     = NCP_CMD_HEADER_LEN;
@@ -336,7 +338,7 @@ static void ble_connect_command_local(NCP_CMD_CONNECT *param)
  *
  * @return Status returned
  */
-static int ble_connect_command(int argc, char **argv)
+int ble_connect_command(int argc, char **argv)
 {
     int ret;
 
@@ -383,14 +385,14 @@ static int ble_connect_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_disconnect_command(int argc, char **argv)
+int ble_disconnect_command(int argc, char **argv)
 {
     int ret;
 
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
 
-    MCU_NCPCmd_DS_COMMAND *disconnect_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *disconnect_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)disconnect_command, 0, NCP_HOST_COMMAND_LEN);
 
     if(argc != 3)
@@ -435,12 +437,12 @@ static int ble_disconnect_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_set_data_len_command(int argc, char **argv)
+int ble_set_data_len_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *set_data_len_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_data_len_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_data_len_command, 0, NCP_HOST_COMMAND_LEN);
 
     if(argc < 4 || argc > 5)
@@ -496,12 +498,12 @@ static int ble_set_data_len_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_set_phy_command(int argc, char **argv)
+int ble_set_phy_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *set_phy_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_phy_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_phy_command, 0, NCP_HOST_COMMAND_LEN);
 
     if(argc != 5)
@@ -557,11 +559,11 @@ static int ble_set_phy_command(int argc, char **argv)
 }
 
 /**
- * @brief This function prepares LE connect paramter update command
+ * @brief This function prepares LE connect parameter update command
  *
  * @return Status returned
  */
-static int ble_connect_paramter_update_command(int argc, char **argv)
+int ble_connect_parameter_update_command(int argc, char **argv)
 {
     int ret;
 
@@ -572,7 +574,7 @@ static int ble_connect_paramter_update_command(int argc, char **argv)
     uint16_t conn_latency;
     uint16_t conn_timeout;
 
-    MCU_NCPCmd_DS_COMMAND *conn_param_update_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *conn_param_update_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)conn_param_update_command, 0, NCP_HOST_COMMAND_LEN);
 
     conn_param_update_command->header.cmd      = NCP_CMD_BLE_GAP_CONN_PARAM_UPDATE;
@@ -626,13 +628,13 @@ static int ble_connect_paramter_update_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_set_filter_list_command(int argc, char **argv)
+int ble_set_filter_list_command(int argc, char **argv)
 {
     int i = 0;
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *set_filter_list_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_filter_list_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_filter_list_command, 0, NCP_HOST_COMMAND_LEN);
 
     set_filter_list_command->header.cmd      = NCP_CMD_BLE_GAP_SET_FILTER_LIST;
@@ -678,12 +680,12 @@ static int ble_set_filter_list_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_start_encryption_command(int argc, char **argv)
+int ble_start_encryption_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *start_encryption_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *start_encryption_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)start_encryption_command, 0, NCP_HOST_COMMAND_LEN);
 
     start_encryption_command->header.cmd      = NCP_CMD_BLE_GAP_PAIR;
@@ -726,7 +728,7 @@ static int ble_start_encryption_command(int argc, char **argv)
 
 void write_charateristic_command_local(NCP_SET_VALUE_CMD *param)
 {
-    MCU_NCPCmd_DS_COMMAND *write_characteristic_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *write_characteristic_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)write_characteristic_command, 0, NCP_HOST_COMMAND_LEN);
 
     write_characteristic_command->header.cmd      = NCP_CMD_BLE_GATT_SET_VALUE;
@@ -744,7 +746,7 @@ void write_charateristic_command_local(NCP_SET_VALUE_CMD *param)
  *
  * @return Status returned
  */
-static int ble_write_characteristic_command(int argc, char **argv)
+int ble_write_characteristic_command(int argc, char **argv)
 {
     uint8_t uuid_length = 0;
     uint8_t uuid[SERVER_MAX_UUID_LEN] = {0};
@@ -795,12 +797,12 @@ static int ble_write_characteristic_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_read_characteristic_command(int argc, char **argv)
+int ble_read_characteristic_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *read_characteristic_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *read_characteristic_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)read_characteristic_command, 0, NCP_HOST_COMMAND_LEN);
 
     read_characteristic_command->header.cmd      = NCP_CMD_BLE_GATT_READ;
@@ -848,12 +850,12 @@ static int ble_read_characteristic_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_register_service_command(int argc, char **argv)
+int ble_register_service_command(int argc, char **argv)
 {
     uint8_t service_len = 0;
     uint8_t service_id[MAX_SUPPORT_SERVICE] = {0};
 
-    MCU_NCPCmd_DS_COMMAND *register_service_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *register_service_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)register_service_command, 0, NCP_HOST_COMMAND_LEN);
 
     if (argc < 2)
@@ -866,6 +868,7 @@ static int ble_register_service_command(int argc, char **argv)
         printf("                   3  BAS\r\n");
         printf("                   4  Central_HTS\r\n");
         printf("                   5  Central_HRS\r\n");
+        printf("                   6  Peripheral_NCS\r\n");
         return -NCP_STATUS_ERROR;
     }
 
@@ -886,6 +889,7 @@ static int ble_register_service_command(int argc, char **argv)
     register_service->svc_length = service_len;
 
     register_service_command->header.size += (register_service->svc_length + 1);
+    NCP_PROFILE_CMD_SEND_COMPLETE(cmd_run_status);
     return NCP_STATUS_SUCCESS;
 }
 
@@ -894,9 +898,9 @@ static int ble_register_service_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_set_power_mode_command(int argc, char **argv)
+int ble_set_power_mode_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *set_power_mode_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_power_mode_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_power_mode_command, 0, NCP_HOST_COMMAND_LEN);
 
     set_power_mode_command->header.cmd      = NCP_CMD_BLE_VENDOR_POWER_MODE;
@@ -925,6 +929,7 @@ static int ble_set_power_mode_command(int argc, char **argv)
     return NCP_STATUS_SUCCESS;
 }
 
+#if 0
 /**
  * @brief This function prepares set device address command
  *
@@ -934,7 +939,7 @@ static int ble_set_device_address_command(int argc, char **argv)
 {
     int ret;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *set_device_address_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_device_address_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_device_address_command, 0, NCP_HOST_COMMAND_LEN);
 
     set_device_address_command->header.cmd      = NCP_CMD_BLE_VENDOR_SET_DEVICE_ADDR;
@@ -964,7 +969,6 @@ static int ble_set_device_address_command(int argc, char **argv)
     return NCP_STATUS_SUCCESS;
 }
 
-#if 0
 /**
  * @brief This function prepares set device name command
  *
@@ -973,7 +977,7 @@ static int ble_set_device_address_command(int argc, char **argv)
 static int ble_set_device_name_command(int argc, char **argv)
 {
     int len;
-    MCU_NCPCmd_DS_COMMAND *set_device_name_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *set_device_name_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)set_device_name_command, 0, NCP_HOST_COMMAND_LEN);
 
     set_device_name_command->header.cmd      = NCP_CMD_BLE_VENDOR_SET_DEVICE_NAME;
@@ -1048,12 +1052,12 @@ static void dump_ble_host_service_add_usage()
  *
  * @return Status returned
  */
-static int ble_host_service_add_command(int argc, char **argv)
+int ble_host_service_add_command(int argc, char **argv)
 {
     int arg = 1;
 
 
-    MCU_NCPCmd_DS_COMMAND *host_service_add_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *host_service_add_command = ncp_host_get_cmd_buffer_ble();
     NCP_CMD_SERVICE_ADD *host_service_add_tlv       = (NCP_CMD_SERVICE_ADD *)&host_service_add_command->params.host_svc_add;
     uint8_t *ptlv_pos                               = host_service_add_tlv->tlv_buf;
     uint32_t tlv_buf_len                            = 0;
@@ -1192,10 +1196,10 @@ static int ble_host_service_add_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_start_service_command(int argc, char **argv)
+int ble_start_service_command(int argc, char **argv)
 {
 
-    MCU_NCPCmd_DS_COMMAND *start_service_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *start_service_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)start_service_command, 0, NCP_HOST_COMMAND_LEN);
 
 
@@ -1208,6 +1212,7 @@ static int ble_start_service_command(int argc, char **argv)
         printf("                     hrs\r\n");
         printf("                     hrc\r\n");
         printf("                     bas\r\n");
+        printf("                     ncs\r\n");
     }
 
     for (uint8_t i = 0; i < ARRAY_SIZE(host_service_list); i++)
@@ -1216,7 +1221,8 @@ static int ble_start_service_command(int argc, char **argv)
         {
             if (host_service_list[i].svc_start)
             {
-                host_service_list[i].svc_start(); 
+                host_service_list[i].svc_start();
+                NCP_PROFILE_CMD_SEND_COMPLETE(cmd_run_status);
                 return NCP_STATUS_SUCCESS;
             }
         }
@@ -1237,7 +1243,7 @@ static int ble_start_service_command(int argc, char **argv)
 #if 0
 static void ble_disc_prim_command_local(NCP_DISC_PRIM_UUID_CMD *param)
 {
-    MCU_NCPCmd_DS_COMMAND *ble_disc_prim_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *ble_disc_prim_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)ble_disc_prim_command, 0, NCP_HOST_COMMAND_LEN);
 
     ble_disc_prim_command->header.cmd      = NCP_CMD_BLE_GATT_DISC_PRIM;
@@ -1318,7 +1324,7 @@ static int ble_disc_prim_command(int argc, char **argv)
 
 static void ble_disc_chrc_command_local(NCP_DISC_CHRC_UUID_CMD *param)
 {
-    MCU_NCPCmd_DS_COMMAND *ble_disc_chrc_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *ble_disc_chrc_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)ble_disc_chrc_command, 0, NCP_HOST_COMMAND_LEN);
 
     ble_disc_chrc_command->header.cmd      = NCP_CMD_BLE_GATT_DISC_CHRC;
@@ -1409,7 +1415,7 @@ static int ble_disc_chrc_command(int argc, char **argv)
 
 static void ble_disc_desc_command_local(NCP_DISC_CHRC_UUID_CMD *param)
 {
-    MCU_NCPCmd_DS_COMMAND *ble_disc_desc_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *ble_disc_desc_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)ble_disc_desc_command, 0, NCP_HOST_COMMAND_LEN);
 
     ble_disc_desc_command->header.cmd      = NCP_CMD_BLE_GATT_DESC_CHRC;
@@ -1504,12 +1510,12 @@ static int ble_disc_desc_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_cfg_subscribe_command(int argc, char **argv)
+int ble_cfg_subscribe_command(int argc, char **argv)
 {
     int ret;
     uint8_t addr_type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *ble_subcribe_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *ble_subcribe_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)ble_subcribe_command, 0, NCP_HOST_COMMAND_LEN);
 
     ble_subcribe_command->header.size     = NCP_CMD_HEADER_LEN;
@@ -1559,14 +1565,14 @@ static int ble_cfg_subscribe_command(int argc, char **argv)
         printf("Error: invalid ADDRESS type\r\n");
         return -NCP_STATUS_ERROR;
     }
-    NCP_CFG_SUBCRIBE_CMD *ble_subcribe = (NCP_CFG_SUBCRIBE_CMD *)&ble_subcribe_command->params.cfg_subcribe;
+    NCP_CFG_SUBSCRIBE_CMD *ble_subcribe = (NCP_CFG_SUBSCRIBE_CMD *)&ble_subcribe_command->params.cfg_subscribe;
 
     ble_subcribe->address_type = addr_type;
     memcpy(ble_subcribe->address, raw_addr, NCP_BLE_ADDR_LENGTH);
     ble_subcribe->enable = atoi(argv[4]);
     ble_subcribe->ccc_handle = a2hex(argv[5]);
 
-    ble_subcribe_command->header.size += sizeof(NCP_CFG_SUBCRIBE_CMD);
+    ble_subcribe_command->header.size += sizeof(NCP_CFG_SUBSCRIBE_CMD);
 
     return NCP_STATUS_SUCCESS;
 }
@@ -1576,12 +1582,12 @@ static int ble_cfg_subscribe_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_l2cap_connection_command(int argc, char **argv)
+int ble_l2cap_connection_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *l2cap_connect_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *l2cap_connect_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)l2cap_connect_command, 0, NCP_HOST_COMMAND_LEN);
 
     l2cap_connect_command->header.cmd      = NCP_CMD_BLE_L2CAP_CONNECT;
@@ -1637,12 +1643,12 @@ static int ble_l2cap_connection_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_l2cap_disconnect_command(int argc, char **argv)
+int ble_l2cap_disconnect_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *l2cap_disconnect_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *l2cap_disconnect_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)l2cap_disconnect_command, 0, NCP_HOST_COMMAND_LEN);
 
     l2cap_disconnect_command->header.cmd      = NCP_CMD_BLE_L2CAP_DISCONNECT;
@@ -1688,12 +1694,12 @@ static int ble_l2cap_disconnect_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_l2cap_send_command(int argc, char **argv)
+int ble_l2cap_send_command(int argc, char **argv)
 {
     int ret;
     uint8_t type;
     uint8_t raw_addr[NCP_BLE_ADDR_LENGTH];
-    MCU_NCPCmd_DS_COMMAND *l2cap_send_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *l2cap_send_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)l2cap_send_command, 0, NCP_HOST_COMMAND_LEN);
 
     l2cap_send_command->header.cmd      = NCP_CMD_BLE_L2CAP_SEND;
@@ -1740,9 +1746,9 @@ static int ble_l2cap_send_command(int argc, char **argv)
  *
  * @return Status returned
  */
-static int ble_l2cap_register_command(int argc, char **argv)
+int ble_l2cap_register_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *l2cap_register_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *l2cap_register_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)l2cap_register_command, 0, NCP_HOST_COMMAND_LEN);
 
     l2cap_register_command->header.cmd      = NCP_CMD_BLE_L2CAP_REGISTER;
@@ -1795,7 +1801,7 @@ static int ble_l2cap_register_command(int argc, char **argv)
  */
 static int ble_l2cap_metrics_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *l2cap_rmetrics_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *l2cap_rmetrics_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)l2cap_rmetrics_command, 0, NCP_HOST_COMMAND_LEN);
 
     l2cap_rmetrics_command->header.cmd      = NCP_CMD_BLE_L2CAP_METRICS;
@@ -1826,7 +1832,7 @@ static int ble_l2cap_metrics_command(int argc, char **argv)
  */
 static int ble_l2cap_receive_command(int argc, char **argv)
 {
-    MCU_NCPCmd_DS_COMMAND *l2cap_receive_command = ncp_host_get_cmd_buffer_ble();
+    MCU_NCPCmd_DS_BLE_COMMAND *l2cap_receive_command = ncp_host_get_cmd_buffer_ble();
     (void)memset((uint8_t *)l2cap_receive_command, 0, NCP_HOST_COMMAND_LEN);
 
     l2cap_receive_command->header.cmd      = NCP_CMD_BLE_L2CAP_RECEIVE;
@@ -1860,7 +1866,7 @@ static int ble_l2cap_receive_command(int argc, char **argv)
 int ble_process_ncp_event(uint8_t *res)
 {
     int ret                    = -NCP_STATUS_ERROR;
-    MCU_NCPCmd_DS_COMMAND *evt = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     switch (evt->header.cmd)
     {
@@ -1880,8 +1886,8 @@ int ble_process_ncp_event(uint8_t *res)
         case NCP_EVENT_PASSKEY_DISPLAY:
             ret = ble_process_passkey_display(res);
             break;
-        case NCP_EVENT_IDENITY_RESOLVED:
-            ret = ble_process_idenity_resolved(res);
+        case NCP_EVENT_IDENTITY_RESOLVED:
+            ret = ble_process_identity_resolved(res);
             break;
         case NCP_EVENT_CONN_PARAM_UPDATE:
             ret = ble_process_conn_param_update(res);
@@ -1905,8 +1911,8 @@ int ble_process_ncp_event(uint8_t *res)
         case NCP_EVENT_GATT_CCC_CFG_CHANGED:
             ret = ble_process_gatt_ccc_cfg_changed(res);
             break;
-        case NCP_EVENT_GATT_SUBSCRIPTIONED:
-            ret = ble_process_gatt_subscriptioned(res);
+        case NCP_EVENT_GATT_SUBSCRIPTION:
+            ret = ble_process_gatt_subscription(res);
             break;
         case NCP_EVENT_L2CAP_CONNECT:
             ret = ble_process_l2cap_connected(res);
@@ -1926,8 +1932,11 @@ int ble_process_ncp_event(uint8_t *res)
         case NCP_EVENT_GATT_DISC_DESC:
             ret = ble_process_gatt_desc_discovered(res);
             break;
+        case NCP_EVENT_GATT_NCS_INFO:
+            ret = ble_process_gatt_ncs_info_receive(res);
+            break;
         default:
-            printf("Invaild event! Invalid event id is %08x\r\n", evt->header.cmd);
+            printf("Invaild event! Invalid event id is %08lx\r\n", evt->header.cmd);
             break;
     }
     return ret;
@@ -1937,7 +1946,7 @@ static int ble_process_adv_report(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_DEVICE_ADV_REPORT_EV *adv_reported_tlv = (NCP_DEVICE_ADV_REPORT_EV *)&evt_res->params.adv_reported;
 
@@ -1951,7 +1960,7 @@ static int ble_process_device_connected(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_DEVICE_CONNECTED_EV *device_connected_tlv = (NCP_DEVICE_CONNECTED_EV *)&evt_res->params.device_connected;
 
@@ -1979,7 +1988,7 @@ static int ble_process_device_disconnected(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_DEVICE_DISCONNECTED_EV *device_disconnected_tlv = (NCP_DEVICE_DISCONNECTED_EV *)&evt_res->params.device_disconnected;
 
@@ -2004,23 +2013,23 @@ static int ble_process_passkey_display(uint8_t *res)
 {
     uint32_t key = 0;
     
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_PASSKEY_DISPLAY_EV *passkey_display_tlv = (NCP_PASSKEY_DISPLAY_EV *)&evt_res->params.passkey_display;
 
     key = passkey_display_tlv->passkey;
-    printf("Pass Key PIN: %06d\r\n", key);
+    printf("Pass Key PIN: %06ld\r\n", key);
 
     return NCP_STATUS_SUCCESS;
 }
 
-static int ble_process_idenity_resolved(uint8_t *res)
+static int ble_process_identity_resolved(uint8_t *res)
 {
     uint8_t identity_address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
-    NCP_IDENTITY_RESOLVED_EV *idenitiy_resolved_tlv = (NCP_IDENTITY_RESOLVED_EV *)&evt_res->params.idenitiy_resolved;
+    NCP_IDENTITY_RESOLVED_EV *idenitiy_resolved_tlv = (NCP_IDENTITY_RESOLVED_EV *)&evt_res->params.identity_resolved;
 
     memcpy(identity_address,idenitiy_resolved_tlv->identity_address, 6);
 
@@ -2046,7 +2055,7 @@ static int ble_process_conn_param_update(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_CMD_CONN_PARA_UPDATE_EV *conn_update_tlv = (NCP_CMD_CONN_PARA_UPDATE_EV *)&evt_res->params.conn_param_update_ev;
 
@@ -2074,7 +2083,7 @@ static int ble_process_phy_update(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_CMD_PHY_UPDATE_EV *phy_update_tlv = (NCP_CMD_PHY_UPDATE_EV *)&evt_res->params.phy_updated_ev;
 
@@ -2100,7 +2109,7 @@ static int ble_process_data_len_update(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_CMD_DATA_LEN_UPDATE_EV *data_len_update_tlv = (NCP_CMD_DATA_LEN_UPDATE_EV *)&evt_res->params.data_len_updated_ev;
 
@@ -2129,9 +2138,9 @@ static int ble_process_security_level_changed(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
-    NCP_SEC_LEVEL_CHANGED_EV *sec_level_changed_tlv = (NCP_SEC_LEVEL_CHANGED_EV *)&evt_res->params.idenitiy_resolved;
+    NCP_SEC_LEVEL_CHANGED_EV *sec_level_changed_tlv = (NCP_SEC_LEVEL_CHANGED_EV *)&evt_res->params.identity_resolved;
 
     memcpy(address,sec_level_changed_tlv->address, 6);
 
@@ -2175,7 +2184,7 @@ static int ble_process_security_level_changed(uint8_t *res)
 
 static int ble_process_gatt_notification(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     NCP_NOTIFICATION_EV *gatt_notification_tlv = (NCP_NOTIFICATION_EV *)&evt_res->params.gatt_notification;
 
     uint8_t address[6]= {0};
@@ -2220,7 +2229,7 @@ static int ble_process_gatt_notification(uint8_t *res)
 
 static int ble_process_attr_value_changed(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     NCP_ATTR_VALUE_CHANGED_EV *attr_value_changed_tlv = (NCP_ATTR_VALUE_CHANGED_EV *)&evt_res->params.attr_value_changed;
 
     printf("Attribute value changed. Attribute handle: %04X Value: ", attr_value_changed_tlv->handle);
@@ -2234,7 +2243,7 @@ static int ble_process_attr_value_changed(uint8_t *res)
 
 static int ble_process_gatt_ccc_cfg_changed(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     NCP_CCC_CFG_CHANGED_EV *gatt_ccc_cfg_changed_tlv = (NCP_CCC_CFG_CHANGED_EV *)&evt_res->params.gatt_ccc_cfg_changed_ev;
 
     printf("UUID - %02X%02X: Client Characteristic Configuration changed: ", gatt_ccc_cfg_changed_tlv->uuid[1], gatt_ccc_cfg_changed_tlv->uuid[0]);
@@ -2263,10 +2272,10 @@ static int ble_process_gatt_ccc_cfg_changed(uint8_t *res)
     return NCP_STATUS_SUCCESS;
 }
 
-static int ble_process_gatt_subscriptioned(uint8_t *res)
+static int ble_process_gatt_subscription(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
-    NCP_SUBSCRIPTIONED_EV *gatt_subscriptioned_tlv = (NCP_SUBSCRIPTIONED_EV *)&evt_res->params.gatt_subscription_ev;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
+    NCP_SUBSCRIPTION_EV *gatt_subscriptioned_tlv = (NCP_SUBSCRIPTION_EV *)&evt_res->params.gatt_subscription_ev;
     printf("\n");
     printf("Subscription ");
     switch (gatt_subscriptioned_tlv->svc_id)
@@ -2297,7 +2306,7 @@ static int ble_process_l2cap_connected(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_L2CAP_CONNECT_EV *l2cap_connected_tlv = (NCP_L2CAP_CONNECT_EV *)&evt_res->params.l2cap_connect_ev;
 
@@ -2323,7 +2332,7 @@ static int ble_process_l2cap_disconnected(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_L2CAP_DISCONNECT_EV *l2cap_disconnected_tlv = (NCP_L2CAP_DISCONNECT_EV *)&evt_res->params.l2cap_disconnect_ev;
 
@@ -2347,7 +2356,7 @@ static int ble_process_l2cap_disconnected(uint8_t *res)
 
 static int ble_process_gatt_prim_discovered(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     NCP_DISC_PRIM_EV *gatt_disc_prim_tlv = (NCP_DISC_PRIM_EV *)&evt_res->params.gatt_disc_prim_ev;
     GATT_SERVICE_T service;
 
@@ -2393,7 +2402,7 @@ static void print_chrc_props(uint8_t _props)
 
 static int ble_process_gatt_chrc_discovered(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     NCP_DISC_CHRC_EV *gatt_disc_chrc_tlv = (NCP_DISC_CHRC_EV *)&evt_res->params.gatt_disc_chrc_ev;
     GATT_CHARACTERISTIC_T characteristics;
 
@@ -2431,7 +2440,7 @@ int ble_process_l2cap_received(uint8_t *res)
 {
     uint8_t address[6]= {0};
 
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     NCP_L2CAP_RECEIVE_EV *l2cap_received_tlv = (NCP_L2CAP_RECEIVE_EV *)&evt_res->params.l2cap_receive_ev;
 
@@ -2457,7 +2466,7 @@ int ble_process_l2cap_received(uint8_t *res)
 
 int ble_process_gatt_desc_discovered(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *evt_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     NCP_DISC_ALL_DESC_EV *gatt_disc_desc_tlv = (NCP_DISC_ALL_DESC_EV *)&evt_res->params.gatt_disc_desc_ev;
     GATT_DESCRIPTOR_T descriptor;
 
@@ -2471,6 +2480,40 @@ int ble_process_gatt_desc_discovered(uint8_t *res)
     return NCP_STATUS_SUCCESS;
 }
 
+int ble_process_gatt_ncs_info_receive(uint8_t *res)
+{
+    MCU_NCPCmd_DS_BLE_COMMAND *evt_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
+    NCP_NCS_INFO_EV *ncs_info_tlv = (NCP_NCS_INFO_EV *)&evt_res->params.ncs_info_rp;
+    ncp_commission_cfg_t wifi_info;
+
+    (void)PRINTF("Commission ssid, ssid len: %d, ssid: ", ncs_info_tlv->ssid_len);
+    for (uint8_t i = 0; i < ncs_info_tlv->ssid_len; i++)
+    {
+        (void)PRINTF("%c", ncs_info_tlv->ssid[i]);
+    }
+    (void)PRINTF("\r\n");
+
+    (void)PRINTF("Commission password, password len: %d, password: ", ncs_info_tlv->pswd_len);
+    for (uint8_t i = 0; i < ncs_info_tlv->pswd_len; i++)
+    {
+        (void)PRINTF("%c", ncs_info_tlv->pswd[i]);
+    }
+    (void)PRINTF("\r\n");
+
+    (void)PRINTF("Commission secure, secure len: %d, secure mode: ", ncs_info_tlv->secu_len);
+    for (uint8_t i = 0; i < ncs_info_tlv->secu_len; i++)
+    {
+        (void)PRINTF("%c", ncs_info_tlv->secu[i]);
+    }
+    (void)PRINTF("\r\n");
+
+    memcpy(&wifi_info, ncs_info_tlv, sizeof(wifi_info));
+
+    ncp_network_commissioning(&wifi_info);
+
+    return NCP_STATUS_SUCCESS;
+}
+
 /**
  * @brief       This function processes response from ncp_ble
  *
@@ -2480,7 +2523,7 @@ int ble_process_gatt_desc_discovered(uint8_t *res)
 int ble_process_response(uint8_t *res)
 {
     int ret                        = -NCP_STATUS_ERROR;
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     switch (cmd_res->header.cmd)
     {
         case NCP_RSP_BLE_GAP_START_ADV:
@@ -2538,7 +2581,7 @@ int ble_process_response(uint8_t *res)
             ret = ble_process_start_service_response(res);
             break;
         case NCP_RSP_BLE_GATT_SET_VALUE:
-            ret = ble_process_write_charateristic_response(res);
+            ret = ble_process_write_characteristic_response(res);
             break;
         case NCP_RSP_BLE_VENDOR_POWER_MODE:
             ret = ble_process_set_power_mode_response(res);
@@ -2595,9 +2638,11 @@ int ble_process_response(uint8_t *res)
  */
 static int ble_process_start_adv_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
     if (cmd_res->header.result == NCP_CMD_RESULT_OK) {
         printf("Start advertising successfully.\r\n");
+        if (NCP_PROFILE_CMD_STATUS_CHECK(cmd_run_status) == 1)
+            NCP_PROFILE_CMD_RUN_SUCCESS(cmd_run_status);
     }
     else
         printf("Error: Failed to start advertising.\r\n");
@@ -2613,7 +2658,7 @@ static int ble_process_start_adv_response(uint8_t *res)
  */
 static int ble_process_stop_adv_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2634,7 +2679,7 @@ static int ble_process_stop_adv_response(uint8_t *res)
  */
 static int ble_process_set_adv_data_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2655,7 +2700,7 @@ static int ble_process_set_adv_data_response(uint8_t *res)
  */
 static int ble_process_set_scan_param_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2675,11 +2720,13 @@ static int ble_process_set_scan_param_response(uint8_t *res)
  */
 static int ble_process_start_scan_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
         printf("Start scan successfully\r\n");
+        if (NCP_PROFILE_CMD_STATUS_CHECK(cmd_run_status) == 1)
+            NCP_PROFILE_CMD_RUN_SUCCESS(cmd_run_status);
     }
     else
     {
@@ -2696,7 +2743,7 @@ static int ble_process_start_scan_response(uint8_t *res)
  */
 static int ble_process_stop_scan_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2717,7 +2764,7 @@ static int ble_process_stop_scan_response(uint8_t *res)
  */
 static int ble_process_connect_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2738,7 +2785,7 @@ static int ble_process_connect_response(uint8_t *res)
  */
 static int ble_process_disconnect_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2759,7 +2806,7 @@ static int ble_process_disconnect_response(uint8_t *res)
  */
 static int ble_process_set_data_len_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2780,7 +2827,7 @@ static int ble_process_set_data_len_response(uint8_t *res)
  */
 static int ble_process_set_phy_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2801,7 +2848,7 @@ static int ble_process_set_phy_response(uint8_t *res)
  */
 static int ble_process_conn_update_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2823,7 +2870,7 @@ static int ble_process_conn_update_response(uint8_t *res)
  */
 static int ble_process_set_filter_list_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2838,7 +2885,7 @@ static int ble_process_set_filter_list_response(uint8_t *res)
 
 static int ble_process_ble_gap_pair_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2853,7 +2900,7 @@ static int ble_process_ble_gap_pair_response(uint8_t *res)
 
 static int ble_process_ble_gatt_read_char_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2868,7 +2915,7 @@ static int ble_process_ble_gatt_read_char_response(uint8_t *res)
 
 static int ble_process_set_dev_addr_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2883,7 +2930,7 @@ static int ble_process_set_dev_addr_response(uint8_t *res)
 
 static int ble_process_set_dev_name_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2898,7 +2945,7 @@ static int ble_process_set_dev_name_response(uint8_t *res)
 
 static int ble_process_host_service_add_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2913,7 +2960,7 @@ static int ble_process_host_service_add_response(uint8_t *res)
 
 static int ble_process_start_service_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2926,9 +2973,9 @@ static int ble_process_start_service_response(uint8_t *res)
     return NCP_STATUS_SUCCESS;
 }
 
-int ble_process_write_charateristic_response(uint8_t *res)
+int ble_process_write_characteristic_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2952,7 +2999,7 @@ int ble_process_write_charateristic_response(uint8_t *res)
 
 static int ble_process_set_power_mode_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2967,7 +3014,7 @@ static int ble_process_set_power_mode_response(uint8_t *res)
 
 static int ble_process_disc_prim_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2982,7 +3029,7 @@ static int ble_process_disc_prim_response(uint8_t *res)
 
 static int ble_process_disc_chrc_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -2997,7 +3044,7 @@ static int ble_process_disc_chrc_response(uint8_t *res)
 
 static int ble_process_disc_desc_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3012,7 +3059,7 @@ static int ble_process_disc_desc_response(uint8_t *res)
 
 static int ble_process_cfg_notify_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3028,7 +3075,7 @@ static int ble_process_cfg_notify_response(uint8_t *res)
 
 static int ble_process_cfg_indicate_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3043,7 +3090,7 @@ static int ble_process_cfg_indicate_response(uint8_t *res)
 
 static int ble_process_register_service_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3069,6 +3116,9 @@ static int ble_process_register_service_response(uint8_t *res)
                 case 5:
                     printf("Central_HRS ");
                     break;
+                case 6:
+                    printf("Peripheral_NCS ");
+                    break;
 
                 default:
                     break;
@@ -3089,23 +3139,43 @@ static int ble_process_register_service_response(uint8_t *res)
     return NCP_STATUS_SUCCESS;
 }
 
+static double pow(double x, double y)
+{
+	double result = 1;
+
+	if (y < 0) {
+		y = -y;
+		while (y--) {
+			result /= x;
+		}
+	} else {
+		while (y--) {
+			result *= x;
+		}
+	}
+
+	return result;
+}
+
 /* device central service notify function */
 static void htc_central_notify(uint8_t *data)
 {
     struct temp_measurement temp_measurement;
-    uint32_t temperature;
-
-    /* temperature value display */
+    uint8_t temperature;
+    uint32_t mantissa;
+                                             
+    /* temperature value display */          
     temp_measurement = *(struct temp_measurement*)data;
-    temperature = sys_get_le32(temp_measurement.temperature);
+    mantissa = sys_get_le32(temp_measurement.temperature);
+    temperature = (uint8_t)mantissa;
 
     if ((temp_measurement.flags & 0x01) == hts_unit_celsius_c)
     {
-        printf("Temperature %d degrees Celsius \n", temperature);
+        PRINTF("Temperature %d degrees Celsius \n", temperature);
     }
     else
     {
-        printf("Temperature %d degrees Fahrenheit \n", temperature);
+        PRINTF("Temperature %d degrees Fahrenheit \n", temperature);
     }
 }
 
@@ -3128,7 +3198,7 @@ static void hrc_central_notify(uint8_t *data)
  */
 static int ble_process_l2cap_connect_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3149,7 +3219,7 @@ static int ble_process_l2cap_connect_response(uint8_t *res)
  */
 static int ble_process_l2cap_disconnect_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3170,7 +3240,7 @@ static int ble_process_l2cap_disconnect_response(uint8_t *res)
  */
 static int ble_process_l2cap_send_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3191,7 +3261,7 @@ static int ble_process_l2cap_send_response(uint8_t *res)
  */
 static int ble_process_l2cap_register_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3212,7 +3282,7 @@ static int ble_process_l2cap_register_response(uint8_t *res)
  */
 static int ble_process_l2cap_metrics_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3233,7 +3303,7 @@ static int ble_process_l2cap_metrics_response(uint8_t *res)
  */
 static int ble_process_l2cap_receive_response(uint8_t *res)
 {
-    MCU_NCPCmd_DS_COMMAND *cmd_res = (MCU_NCPCmd_DS_COMMAND *)res;
+    MCU_NCPCmd_DS_BLE_COMMAND *cmd_res = (MCU_NCPCmd_DS_BLE_COMMAND *)res;
 
     if (cmd_res->header.result == NCP_CMD_RESULT_OK)
     {
@@ -3262,7 +3332,7 @@ static struct ncp_host_cli_command ncp_host_app_cli_commands_ble[] = {
     {"ble-disconnect", "<addr_type> <addr>", ble_disconnect_command},
     {"ble-set-data-len", "<addr_type> <addr> <tx_max_len> [optional<tx_max_time>]", ble_set_data_len_command},
     {"ble-set-phy", "<addr_type> <addr> <tx_phy> <rx_phy>", ble_set_phy_command},
-    {"ble-conn-param-update", "<addr_type> <addr> <max_interval> <min_interval> <latency> <timeout>", ble_connect_paramter_update_command},
+    {"ble-conn-param-update", "<addr_type> <addr> <min_interval[6-3200]> <max_interval[6-3200]> <latency[0-499]> <timeout[10-3200],(timeout * 4) >= (1 + latency) * max_interval>", ble_connect_parameter_update_command},
     {"ble-set-filter-list", "<filter_addr_num> <addr_type> <addr> ... <addr_type> <addr>", ble_set_filter_list_command},
     {"ble-start-encryption", "<addr_type> <addr>", ble_start_encryption_command},
     {"ble-set-value", "<uuid_len> <uuid> <value_len> <value ...>", ble_write_characteristic_command},
@@ -3300,7 +3370,7 @@ int ncp_host_ble_command_init()
     if (ncp_host_cli_register_commands(ncp_host_app_cli_commands_ble,
                                        sizeof(ncp_host_app_cli_commands_ble) / sizeof(struct ncp_host_cli_command)) != 0)
         return -NCP_STATUS_ERROR;
-
+    NCP_PROFILE_CMD_STATUS_CLEAR(cmd_run_status);
     return NCP_STATUS_SUCCESS;
 }
 

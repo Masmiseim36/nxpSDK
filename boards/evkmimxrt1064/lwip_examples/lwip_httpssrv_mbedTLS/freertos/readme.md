@@ -1,5 +1,6 @@
-Overview
-========
+# lwip_httpssrv_mbedTLS_freertos
+
+## Overview
 
 The lwip_httpsrv_mbedTLS demo application demonstrates an HTTP server set up on lwIP TCP/IP and the MbedTLS stack with
 FreeRTOS. The user uses an internet browser to send an HTTPS request for connection. The board acts as an HTTP server
@@ -21,30 +22,7 @@ so the board will print "IPv6 address update" messages followed by all valid IPv
 The assigned unique local or global unique addresses could be typed into the web browser's address bar in a form like
 "https://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8]" to access the web server over IPv6.
 
-
-SDK version
-===========
-- Version: 2.15.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1064 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
+## Prepare the Demo
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
 2.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
@@ -59,8 +37,7 @@ Prepare the Demo
 7.  Download the program to the target board.
 8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 1.  When the demo runs successfully, the terminal will display the following:
         Initializing PHY...
 
@@ -93,7 +70,7 @@ Running the demo
     For the example output above, https://[FD00:AABB:CCDD:EEFF:5627:8DFF:FE46:29F8] could be typed into the browser's address bar to make it
     show the web page and communicate with the board over IPv6.
 
-Modifying content of static web pages
+## Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
   1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpssrv_mbedTLS_freertos\webpage".
   2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
@@ -113,3 +90,13 @@ To modify content available through the web server you must complete following s
 		Done.
   3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
   4. Re-compile the HTTP server application example and download it to your board.
+
+## Supported Boards
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_httpssrv_mbedTLS/freertos/example_board_readme.md)

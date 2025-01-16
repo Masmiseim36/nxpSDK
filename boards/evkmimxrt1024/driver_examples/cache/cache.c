@@ -5,23 +5,16 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+#include "app.h"
 #include "fsl_cache.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
-
 #include "pin_mux.h"
-#include "clock_config.h"
+
 #include "board.h"
-#include "fsl_dmamux.h"
-#include "fsl_edma.h"
-#include "fsl_semc.h"
-#include <stdint.h>
-#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MEM_DMATRANSFER_LEN         10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
-#define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 
 /* DMA Timtout. */
 #define DMA_TRANSFER_TIMEOUT 0xFFFFU
@@ -29,10 +22,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void APP_CacheConfig(bool enable);
-uint32_t APP_MemoryInit(void);
-void APP_DMAInit(void *userData);
-void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, uint8_t *dstAddr, uint32_t dstWidth, uint32_t size);
 
 /*******************************************************************************
  * Variables
@@ -44,61 +33,6 @@ AT_NONCACHEABLE_SECTION(uint8_t g_data[MEM_DMATRANSFER_LEN]);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/* DATA write test length. */
-edma_handle_t g_DMA_Handle;
-volatile bool g_Transfer_Done = false;
-
-void APP_CacheConfig(bool enable)
-{
-    if (enable)
-    {
-        /* Enable the l1 data cache. */
-        L1CACHE_EnableDCache();
-    }
-    else
-    {
-        L1CACHE_DisableDCache();
-    }
-}
-
-
-uint32_t APP_MemoryInit(void)
-{
-    return 0x20200000;
-}
-
-void EDMA_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds)
-{
-    if (transferDone)
-    {
-        g_Transfer_Done = true;
-    }
-}
-
-void APP_DMAInit(void *userData)
-{
-    edma_config_t config;
-
-    /* Configure DMAMUX */
-    DMAMUX_Init(DMAMUX);
-    DMAMUX_EnableAlwaysOn(DMAMUX, 0, true);
-    DMAMUX_EnableChannel(DMAMUX, 0);
-    /* Configure DMA one shot transfer */
-    EDMA_GetDefaultConfig(&config);
-    EDMA_Init(DMA0, &config);
-    EDMA_CreateHandle(&g_DMA_Handle, DMA0, 0);
-    EDMA_SetCallback(&g_DMA_Handle, EDMA_Callback, userData);
-}
-
-void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, uint8_t *dstAddr, uint32_t dstWidth, uint32_t size)
-{
-    edma_transfer_config_t transferConfig;
-
-    EDMA_PrepareTransfer(&transferConfig, srcAddr, srcWidth, dstAddr, dstWidth, srcWidth, size, kEDMA_MemoryToMemory);
-    EDMA_SubmitTransfer(&g_DMA_Handle, &transferConfig);
-    EDMA_StartTransfer(&g_DMA_Handle);
-}
-
 /*!
  * @brief Main function
  */
@@ -111,10 +45,7 @@ int main(void)
     bool pushResult       = false;
     volatile uint32_t readDummy;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\n Cache example start.\r\n");
 

@@ -23,7 +23,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief Defines the driver version. */
-#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 9, 1))
+#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 9, 2))
 /*! @} */
 
 /*! @name ENET DESCRIPTOR QUEUE */
@@ -325,20 +325,28 @@ typedef enum _enet_idle_slope
 } enet_idle_slope_t;
 #endif                           /* FSL_FEATURE_ENET_HAS_AVB */
 
-/*! @brief Defines the transmit accelerator configuration. */
+/*! @brief Defines the transmit accelerator configuration.
+ *
+ * Note that the hardware does not insert ICMPv6 protocol checksums
+ * as mentioned in errata ERR052152.
+ */
 typedef enum _enet_tx_accelerator
 {
     kENET_TxAccelIsShift16Enabled  = ENET_TACC_SHIFT16_MASK, /*!< Transmit FIFO shift-16. */
     kENET_TxAccelIpCheckEnabled    = ENET_TACC_IPCHK_MASK,   /*!< Insert IP header checksum. */
-    kENET_TxAccelProtoCheckEnabled = ENET_TACC_PROCHK_MASK   /*!< Insert protocol checksum. */
+    kENET_TxAccelProtoCheckEnabled = ENET_TACC_PROCHK_MASK   /*!< Insert protocol checksum (TCP, UDP, ICMPv4). */
 } enet_tx_accelerator_t;
 
-/*! @brief Defines the receive accelerator configuration. */
+/*! @brief Defines the receive accelerator configuration.
+ *
+ * Note that the hardware does not validate ICMPv6 protocol checksums
+ * as mentioned in errata ERR052152.
+ */
 typedef enum _enet_rx_accelerator
 {
     kENET_RxAccelPadRemoveEnabled  = ENET_RACC_PADREM_MASK,  /*!< Padding removal for short IP frames. */
     kENET_RxAccelIpCheckEnabled    = ENET_RACC_IPDIS_MASK,   /*!< Discard with wrong IP header checksum. */
-    kENET_RxAccelProtoCheckEnabled = ENET_RACC_PRODIS_MASK,  /*!< Discard with wrong protocol checksum. */
+    kENET_RxAccelProtoCheckEnabled = ENET_RACC_PRODIS_MASK,  /*!< Discard with wrong protocol checksum (TCP, UDP, ICMPv4). */
     kENET_RxAccelMacCheckEnabled   = ENET_RACC_LINEDIS_MASK, /*!< Discard with Mac layer errors. */
     kENET_RxAccelisShift16Enabled  = ENET_RACC_SHIFT16_MASK  /*!< Receive FIFO shift-16. */
 } enet_rx_accelerator_t;

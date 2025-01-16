@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief LPSPI driver version. */
-#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 6, 6))
+#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 6, 9))
 /*! @} */
 
 #ifndef LPSPI_DUMMY_DATA
@@ -363,7 +363,7 @@ typedef void (*lpspi_slave_transfer_callback_t)(LPSPI_Type *base,
 /*! @brief LPSPI master/slave transfer structure.*/
 typedef struct _lpspi_transfer
 {
-    uint8_t *txData;          /*!< Send buffer. */
+    const uint8_t *txData;    /*!< Send buffer. */
     uint8_t *rxData;          /*!< Receive buffer. */
     volatile size_t dataSize; /*!< Transfer bytes. */
 
@@ -389,7 +389,7 @@ struct _lpspi_master_handle
     volatile uint8_t bytesEachWrite; /*!< Bytes for each write TDR. */
     volatile uint8_t bytesEachRead;  /*!< Bytes for each read RDR. */
 
-    uint8_t *volatile txData;             /*!< Send buffer. */
+    const uint8_t *volatile txData;            /*!< Send buffer. */
     uint8_t *volatile rxData;             /*!< Receive buffer. */
     volatile size_t txRemainingByteCount; /*!< Number of bytes remaining to send.*/
     volatile size_t rxRemainingByteCount; /*!< Number of bytes remaining to receive.*/
@@ -419,7 +419,7 @@ struct _lpspi_slave_handle
     volatile uint8_t bytesEachWrite; /*!< Bytes for each write TDR. */
     volatile uint8_t bytesEachRead;  /*!< Bytes for each read RDR. */
 
-    uint8_t *volatile txData; /*!< Send buffer. */
+    const uint8_t *volatile txData;           /*!< Send buffer. */
     uint8_t *volatile rxData; /*!< Receive buffer. */
 
     volatile size_t txRemainingByteCount; /*!< Number of bytes remaining to send.*/
@@ -623,6 +623,34 @@ static inline void LPSPI_ClearStatusFlags(LPSPI_Type *base, uint32_t statusFlags
     base->SR = statusFlags; /*!< The status flags are cleared by writing 1 (w1c).*/
 }
 
+/*
+ * Avoid register reading problems: Reading the Transmit Command Register will return
+ * the current state of the command register. Reading the Transmit Command Register at the
+ * same time that the Transmit Command Register is loaded from the transmit FIFO, can
+ * return an incorrect Transmit Command Register value. It is recommended:
+ * - to either read the Transmit Command Register when the transmit FIFO is empty,
+ * - or to read the Transmit Command Register more than once and then compare the
+ *   returned values.
+ */
+static inline uint32_t LPSPI_GetTcr(LPSPI_Type *base)
+{
+    uint32_t tcr_values[2];
+    uint32_t i = 0u;
+
+    tcr_values[0] = base->TCR;
+    do
+    {
+        i = (i + 1u) % 2u;
+        /* ERR050606 LPSPI: TCR value does not get resampled when polling the register
+         * Workaround: After reading the Transmit Command Register must always access a different register in
+         * between subsequent reads from TCR.
+         */
+        (void)base->SR;
+        tcr_values[i] = base->TCR;
+    } while(tcr_values[0] != tcr_values[1]);
+
+    return tcr_values[0];
+}
 /*!
  *@}
  */
@@ -776,7 +804,7 @@ static inline void LPSPI_SetMasterSlaveMode(LPSPI_Type *base, lpspi_master_slave
  */
 static inline void LPSPI_SelectTransferPCS(LPSPI_Type *base, lpspi_which_pcs_t select)
 {
-    base->TCR = (base->TCR & (~LPSPI_TCR_PCS_MASK)) | LPSPI_TCR_PCS((uint8_t)select);
+    base->TCR = (LPSPI_GetTcr(base) & (~LPSPI_TCR_PCS_MASK)) | LPSPI_TCR_PCS((uint8_t)select);
 }
 
 /*!
@@ -792,13 +820,14 @@ static inline void LPSPI_SelectTransferPCS(LPSPI_Type *base, lpspi_which_pcs_t s
  */
 static inline void LPSPI_SetPCSContinous(LPSPI_Type *base, bool IsContinous)
 {
+    uint32_t tcr = LPSPI_GetTcr(base);
     if (IsContinous)
     {
-        base->TCR |= LPSPI_TCR_CONT_MASK;
+        base->TCR = tcr | LPSPI_TCR_CONT_MASK;
     }
     else
     {
-        base->TCR &= ~LPSPI_TCR_CONT_MASK;
+        base->TCR = tcr & ~LPSPI_TCR_CONT_MASK;
     }
 }
 
@@ -839,7 +868,7 @@ static inline void LPSPI_FlushFifo(LPSPI_Type *base, bool flushTxFifo, bool flus
 
     /* To read the current state of the existing command word, LPSPI must be enabled */
     LPSPI_Enable(base, true);
-    uint32_t tcr = base->TCR;
+    uint32_t tcr = LPSPI_GetTcr(base);
 
     /* Reset all internal logic and registers. Bit remains set until cleared by software */
     LPSPI_Enable(base, false);
@@ -914,7 +943,7 @@ static inline void LPSPI_SetAllPcsPolarity(LPSPI_Type *base, uint32_t mask)
  */
 static inline void LPSPI_SetFrameSize(LPSPI_Type *base, uint32_t frameSize)
 {
-    base->TCR = (base->TCR & ~LPSPI_TCR_FRAMESZ_MASK) | LPSPI_TCR_FRAMESZ(frameSize - 1U);
+    base->TCR = (LPSPI_GetTcr(base) & ~LPSPI_TCR_FRAMESZ_MASK) | LPSPI_TCR_FRAMESZ(frameSize - 1U);
 }
 
 /*!

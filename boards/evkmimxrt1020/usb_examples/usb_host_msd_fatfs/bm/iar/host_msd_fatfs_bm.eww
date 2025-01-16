@@ -5,7 +5,11 @@
       <name>all</name>
       <member>
         <project>host_msd_fatfs_bm</project>
-        <configuration>debug</configuration>
+        <configuration>sdram_debug</configuration>
+      </member>
+      <member>
+        <project>host_msd_fatfs_bm</project>
+        <configuration>sdram_release</configuration>
       </member>
       <member>
         <project>host_msd_fatfs_bm</project>
@@ -21,18 +25,21 @@
       </member>
       <member>
         <project>host_msd_fatfs_bm</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-      <member>
-        <project>host_msd_fatfs_bm</project>
-        <configuration>sdram_release</configuration>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>debug</name>
+      <name>sdram_debug</name>
       <member>
         <project>host_msd_fatfs_bm</project>
-        <configuration>debug</configuration>
+        <configuration>sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
+      <member>
+        <project>host_msd_fatfs_bm</project>
+        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -57,17 +64,10 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>sdram_debug</name>
+      <name>debug</name>
       <member>
         <project>host_msd_fatfs_bm</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>host_msd_fatfs_bm</project>
-        <configuration>sdram_release</configuration>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

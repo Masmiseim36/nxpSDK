@@ -14,19 +14,16 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_shell.h"
 #include "wpl.h"
 #include "shell_task.h"
+#include "app.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #define main_task_PRIORITY          1
 #define main_task_STACK_DEPTH       800
@@ -223,10 +220,7 @@ int main(void)
     BaseType_t result = 0;
     (void)result;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     printSeparator();
 

@@ -1,5 +1,6 @@
-Overview
-========
+# adc_12b1msps_sar_polling
+
+## Overview
 
 The adc_polling example shows the simplest way to use adc driver.
 
@@ -14,52 +15,13 @@ the configuration structure's setting in application to fit the special requirem
 The auto-calibration is not essential but strongly recommended. It can help to adjust the converter itself and improve
 the adc's performance.
 
-SDK version
-===========
-- Version: 2.15.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1064 board
-- Personal Computer
-
-Board settings
-==============
-ADC1_IN0 is ADC input. Please sample voltage by J23-2 pin.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-These instructions are displayed/shown on the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-ADC polling Example.
-ADC_DoAutoCalibration() Done.
-Press any key to get user channel's ADC value.
-ADC Value: 951
-Press any key to get user channel's ADC value.
-ADC Value: 1169
-Press any key to get user channel's ADC value.
-ADC Value: 1243
-Press any key to get user channel's ADC value.
-...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/adc/polling/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/adc/polling/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/adc/polling/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/adc/polling/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/adc/polling/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/adc/polling/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/adc/polling/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/adc/polling/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/adc/polling/example_board_readme.md)

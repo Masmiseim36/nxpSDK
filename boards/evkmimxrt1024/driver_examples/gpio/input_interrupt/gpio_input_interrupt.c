@@ -9,18 +9,13 @@
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
 #include "fsl_common.h"
-
+#include "app.h"
 #include "pin_mux.h"
-#include "clock_config.h"
+
 #include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SW_GPIO         BOARD_USER_BUTTON_GPIO
-#define EXAMPLE_SW_GPIO_PIN     BOARD_USER_BUTTON_GPIO_PIN
-#define EXAMPLE_SW_IRQ          BOARD_USER_BUTTON_IRQ
-#define EXAMPLE_GPIO_IRQHandler BOARD_USER_BUTTON_IRQ_HANDLER
-#define EXAMPLE_SW_NAME         BOARD_USER_BUTTON_NAME
 
 /*******************************************************************************
  * Prototypes
@@ -64,10 +59,7 @@ int main(void)
     };
 
     /* hardware initialiize, include IOMUX, Uart debug initialize */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("GPIO Driver example.\r\n");
 
     /* Init input switch GPIO. */

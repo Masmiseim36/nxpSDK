@@ -1,61 +1,28 @@
-Overview
-========
+# flexio_spi_edma_b2b_transfer_master
+
+## Overview
 The flexio_spi_master_edma example shows how to use flexio spi master  driver in edma way:
 
 In this example, a flexio simulated master connect to a flexio simulated spi slave .
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Board settings
-==============
-
-To make the example work, connections needed to be as follows:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        SLAVE           connect to      MASTER
-Pin Name   Board Location     Pin Name    Board Location
- MOSI        J18-6                MOSI       J18-6
- MISO        J18-5                MISO       J18-5
- SCK         J18-3                SCK        J18-3
- PCS0        J18-4                PCS0       J18-4
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1. Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2. Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running
-   the demo.
-
-Running the demo
-================
-You can see the similar message shows following in the terminal if the example runs successfully.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FlexIO SPI edma example
-Master Start...
-
-Master runs successfully!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-3. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../../../_boards/evkbimxrt1050/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../../_boards/evkbmimxrt1060/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../../_boards/evkcmimxrt1060/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../../_boards/evkmimxrt1015/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../../_boards/evkmimxrt1020/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../../_boards/evkmimxrt1024/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../../_boards/evkmimxrt1040/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../../_boards/evkmimxrt1064/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [FRDM-MCXA156](../../../../../_boards/frdmmcxa156/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [FRDM-MCXA276](../../../../../_boards/frdmmcxa276/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [FRDM-MCXN236](../../../../../_boards/frdmmcxn236/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [FRDM-MCXN947](../../../../../_boards/frdmmcxn947/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [FRDM-MCXW71](../../../../../_boards/frdmmcxw71/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [K32W148-EVK](../../../../../_boards/k32w148evk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [KW45B41Z-EVK](../../../../../_boards/kw45b41zevk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [KW47-EVK](../../../../../_boards/kw47evk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../../../_boards/mcxn5xxevk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../../../_boards/mcxn9xxevk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MCX-W72-EVK](../../../../../_boards/mcxw72evk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)
+- [MIMXRT700-EVK](../../../../../_boards/mimxrt700evk/driver_examples/flexio/spi/edma_b2b_transfer/master/example_board_readme.md)

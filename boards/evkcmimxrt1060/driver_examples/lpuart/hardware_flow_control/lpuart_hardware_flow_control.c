@@ -5,18 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpuart.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART          LPUART3
-#define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
-#define DELAY_TIME           100000U
 #define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 115200U /*! Transfer baudrate - 115200 */
 
@@ -55,10 +51,7 @@ int main(void)
     lpuart_config_t config;
     lpuart_transfer_t sendXfer;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF("This is LPUART hardware flow control example on one board.\r\n");
     PRINTF("This example will send data to itself and will use hardware flow control to avoid the overflow.\r\n");
     PRINTF("Please make sure you make the correct line connection. Basically, the connection is: \r\n");

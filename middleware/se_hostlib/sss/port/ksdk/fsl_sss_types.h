@@ -7,7 +7,14 @@
 #define FSL_SSS_TYPES_H
 
 #ifndef NORDIC_MCU
+#ifdef CPU_MPC5748G
+#include "pin_mux.h"
+#include "clockMan1.h"
+#include "Cpu.h"
+#include "dmaController1.h"
+#else
 #include <fsl_common.h>
+#endif
 #endif
 
 /*! @brief Compile time sizeof() check */

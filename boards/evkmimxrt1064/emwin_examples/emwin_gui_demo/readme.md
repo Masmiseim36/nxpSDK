@@ -5,14 +5,14 @@ The example demonstrates graphical widgets of the emWin library.
 
 SDK version
 ===========
-- Version: 2.15.000
+- Version: 24.12.00
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
+- Keil MDK  5.41
+- IAR embedded Workbench  9.60.3
+- GCC ARM Embedded  13.2.1
+- MCUXpresso  24.12.00
 
 Hardware requirements
 =====================

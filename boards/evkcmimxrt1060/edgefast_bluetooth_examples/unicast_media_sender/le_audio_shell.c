@@ -21,8 +21,7 @@
 shell_handle_t s_shellHandle;
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 extern serial_handle_t g_serialHandle;
-
-extern int device_scan(void);
+extern OSA_SEMAPHORE_HANDLE_DEFINE(sem_scan);
 extern int device_select(int index);
 extern int open_wav_file(char *path);
 extern int select_lc3_preset(char *preset_name);
@@ -32,6 +31,7 @@ extern int modify_pd(int pd);
 extern int modify_phy(int phy);
 extern int modify_packing(int packing);
 extern void print_sync_info(void);
+extern int modify_conn_param(int interval_min, int interval_max, int latency, int timeout);
 
 static shell_status_t wav_open(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
@@ -72,15 +72,7 @@ static shell_status_t lc3_preset(shell_handle_t shellHandle, int32_t argc, char 
 
 static shell_status_t scan(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-	int ret = device_scan();
-
-	if(ret)
-	{
-		PRINTF("Device scan failed!\n");
-		return kStatus_SHELL_Error;
-	}
-
-	PRINTF("Scanning successfully started\n");
+	(void)OSA_SemaphorePost(sem_scan);
 
 	return kStatus_SHELL_Success;
 }
@@ -290,23 +282,47 @@ static shell_status_t config_packing(shell_handle_t shellHandle, int32_t argc, c
 	return kStatus_SHELL_Success;
 }
 
-SHELL_COMMAND_DEFINE(wav_open,        "wav_open <path>\r\n",   wav_open,        1);
-SHELL_COMMAND_DEFINE(lc3_preset_list, "lc3_preset_list\r\n",   lc3_preset_list, 0);
-SHELL_COMMAND_DEFINE(lc3_preset,      "lc3_preset <name>\r\n", lc3_preset,      1);
-SHELL_COMMAND_DEFINE(scan,            "scan\r\n",              scan,            0);
-SHELL_COMMAND_DEFINE(connect,         "connect [index]\r\n",   connect,         1);
-SHELL_COMMAND_DEFINE(vol_set,         "vol_set [0-255]\r\n",   vol_set,         1);
-SHELL_COMMAND_DEFINE(vol_up,          "vol_up\r\n",            vol_up,          0);
-SHELL_COMMAND_DEFINE(vol_down,        "vol_down\r\n",          vol_down,        0);
-SHELL_COMMAND_DEFINE(vol_mute,        "vol_mute\r\n",          vol_mute,        0);
-SHELL_COMMAND_DEFINE(vol_unmute,      "vol_unmute\r\n",        vol_unmute,      0);
-SHELL_COMMAND_DEFINE(play,            "play\r\n",              play,            0);
-SHELL_COMMAND_DEFINE(pause,           "pause\r\n",             pause,           0);
-SHELL_COMMAND_DEFINE(sync_info,       "sync_info\r\n",         sync_info,       0);
-SHELL_COMMAND_DEFINE(config_rtn,      "config_rtn <rtn>\r\n",  config_rtn,      1);
-SHELL_COMMAND_DEFINE(config_pd,       "config_pd <pd>\r\n",    config_pd,       1);
-SHELL_COMMAND_DEFINE(config_phy,      "config_phy [1,2,4] - 1: 1M, 2: 2M, 4: Coded\r\n", config_phy, 1);
-SHELL_COMMAND_DEFINE(config_packing,  "config_packing [0,1] - 0: sequentially, 1: interleaved\r\n", config_packing, 1);
+static shell_status_t config_conn_param(shell_handle_t shellHandle, int32_t argc, char **argv)
+{
+	int err;
+	int interval_min;
+	int interval_max;
+	int latency;
+	int timeout;
+	
+	interval_min = atoi(argv[1]);
+	interval_max = atoi(argv[2]);
+	latency = atoi(argv[3]);
+	timeout = atoi(argv[4]);
+
+	err = modify_conn_param(interval_min, interval_max, latency, timeout);
+	if(err)
+	{
+		SHELL_Printf(s_shellHandle, "config conn param fail %d\n", err);
+		return kStatus_SHELL_Error;
+	}
+
+	return kStatus_SHELL_Success;
+}
+
+SHELL_COMMAND_DEFINE(wav_open,          "wav_open <path>\r\n",   wav_open,        1);
+SHELL_COMMAND_DEFINE(lc3_preset_list,   "lc3_preset_list\r\n",   lc3_preset_list, 0);
+SHELL_COMMAND_DEFINE(lc3_preset,        "lc3_preset <name>\r\n", lc3_preset,      1);
+SHELL_COMMAND_DEFINE(scan,              "scan\r\n",              scan,            0);
+SHELL_COMMAND_DEFINE(connect,           "connect [index]\r\n",   connect,         1);
+SHELL_COMMAND_DEFINE(vol_set,           "vol_set [0-255]\r\n",   vol_set,         1);
+SHELL_COMMAND_DEFINE(vol_up,            "vol_up\r\n",            vol_up,          0);
+SHELL_COMMAND_DEFINE(vol_down,          "vol_down\r\n",          vol_down,        0);
+SHELL_COMMAND_DEFINE(vol_mute,          "vol_mute\r\n",          vol_mute,        0);
+SHELL_COMMAND_DEFINE(vol_unmute,        "vol_unmute\r\n",        vol_unmute,      0);
+SHELL_COMMAND_DEFINE(play,              "play\r\n",              play,            0);
+SHELL_COMMAND_DEFINE(pause,             "pause\r\n",             pause,           0);
+SHELL_COMMAND_DEFINE(sync_info,         "sync_info\r\n",         sync_info,       0);
+SHELL_COMMAND_DEFINE(config_rtn,        "config_rtn <rtn>\r\n",  config_rtn,      1);
+SHELL_COMMAND_DEFINE(config_pd,         "config_pd <pd>\r\n",    config_pd,       1);
+SHELL_COMMAND_DEFINE(config_phy,        "config_phy [1,2,4] - 1: 1M, 2: 2M, 4: Coded\r\n", config_phy, 1);
+SHELL_COMMAND_DEFINE(config_packing,    "config_packing [0,1] - 0: sequentially, 1: interleaved\r\n", config_packing, 1);
+SHELL_COMMAND_DEFINE(config_conn_param, "config_conn_param [interval_min] [interval_max] [latency] [timeout] - interval: N * 1.25ms, timeout: N * 10ms\r\n", config_conn_param, 4);
 
 
 void le_audio_shell_init(void)
@@ -332,6 +348,7 @@ void le_audio_shell_init(void)
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(config_pd));
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(config_phy));
 	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(config_packing));
+	SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(config_conn_param));
 
 	SHELL_Printf(s_shellHandle, "\r\nUnicast Media Sender.\r\n");
 }

@@ -20,11 +20,9 @@
 #include "display.h"
 #include "h264_dec.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -58,14 +56,10 @@ static QueueHandle_t s_emptyFileDataBlockQueue;
  * Code
  ******************************************************************************/
 
-
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     s_fullFileDataBlockQueue = xQueueCreate(DEMO_FILE_BUF_COUNT, sizeof(file_data_block_t));
     if (NULL == s_fullFileDataBlockQueue)

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -354,17 +354,20 @@ status_t FLEXCAN_TransferReceiveEnhancedFifoEDMA(CAN_Type *base,
             sizeof(uint32_t) * perReadWords,                    /* minor loop bytes : 4* perReadWords */
             sizeof(uint32_t) * perReadWords * handle->frameNum, /* major loop counts : handle->frameNum */
             kEDMA_MemoryToMemory);
+
         /* Submit configuration. */
         (void)EDMA_SubmitTransfer(handle->rxFifoEdmaHandle, &dmaXferConfig);
 
+        /* 
+         * Set minor loop offset as minus Rx FIFO size (- (sizeof(uint32_t) * perReadWords)) to reset minor loop
+         * address to orginal address 0x2000h when each minor loop complete.
+         * Convert negative value to complement to avoid MISRA issue.
+         */
         dmaMinorOffsetConfig.enableDestMinorOffset = false;
         dmaMinorOffsetConfig.enableSrcMinorOffset  = true;
-        dmaMinorOffsetConfig.minorOffset           = 128U - sizeof(uint32_t) * perReadWords;
+        dmaMinorOffsetConfig.minorOffset           = 0xFFFFFU - sizeof(uint32_t) * perReadWords + 1U;
         EDMA_SetMinorOffsetConfig(handle->rxFifoEdmaHandle->base, handle->rxFifoEdmaHandle->channel,
                                   &dmaMinorOffsetConfig);
-
-        EDMA_SetModulo(handle->rxFifoEdmaHandle->base, handle->rxFifoEdmaHandle->channel, kEDMA_Modulo128bytes,
-                       kEDMA_ModuloDisable);
 
         handle->rxFifoState = (uint8_t)KFLEXCAN_RxFifoBusy;
 

@@ -8,39 +8,12 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define APP_OUTPUT1_CLOCK_NAME_ARRAY                                                                         \
-    {                                                                                                        \
-        "PLL3 SW Clock", "PLL2(divided by 2)", "ENET PLL(divided by 2)", "AHB Clock Root", "IPG Clock Root", \
-            "Perclk Root", "PLL4 Main Clock",                                                                \
-    }
-
-#define APP_OUTPUT1_CLOCK_NAME_ENUM_ARRAY                                                                            \
-    {                                                                                                                \
-        kCLOCK_OutputPllUsb1Sw, kCLOCK_OutputPllSys, kCLOCK_OutputPllENET, kCLOCK_OutputAhbClk, kCLOCK_OutputIpgClk, \
-            kCLOCK_OutputPerClk, kCLOCK_OutputPll4MainClk,                                                           \
-    }
-
-#define APP_OUTPUT2_CLOCK_NAME_ARRAY                                                                                  \
-    {                                                                                                                 \
-        "IPI2C Clock Root", "OSC Clock", "LPSPI Clock Root", "SAI1 Clock Root", "SAI2 Clock Root", "SAI3 Clock Root", \
-            "Trace Clock Root", "Flexspi Clock Root", "UART Clock Root", "Spdif0 Clock Root",                         \
-    }
-
-#define APP_OUTPUT2_CLOCK_NAME_ENUM_ARRAY                                                                              \
-    {                                                                                                                  \
-        kCLOCK_OutputLpi2cClk, kCLOCK_OutputOscClk, kCLOCK_OutputLpspiClk, kCLOCK_OutputSai1Clk, kCLOCK_OutputSai2Clk, \
-            kCLOCK_OutputSai3Clk, kCLOCK_OutputTraceClk, kCLOCK_OutputFlexspiClk, kCLOCK_OutputUartClk,                \
-            kCLOCK_OutputSpdif0Clk,                                                                                    \
-    }
-
 
 /*******************************************************************************
  * Prototypes
@@ -58,23 +31,7 @@ int main(void)
     char chDivider;
     uint8_t divider;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    CLOCK_EnableClock(kCLOCK_Lpi2c1);
-    CLOCK_EnableClock(kCLOCK_FlexSpi);
-    CLOCK_EnableClock(kCLOCK_Trace);
-    CLOCK_EnableClock(kCLOCK_Lpspi1);
-    CLOCK_EnableClock(kCLOCK_Sai1);
-    CLOCK_EnableClock(kCLOCK_Sai2);
-    CLOCK_EnableClock(kCLOCK_Spdif);
-    CLOCK_EnableClock(kCLOCK_Gpt2);
-    CLOCK_EnableClock(kCLOCK_Pit);
-
-    /* Set Spdif clock source. */
-    CLOCK_SetMux(kCLOCK_SpdifMux, 0);
+    BOARD_InitHardware();
 
     PRINTF("\r\nClock Output Driver Example.\r\n");
 

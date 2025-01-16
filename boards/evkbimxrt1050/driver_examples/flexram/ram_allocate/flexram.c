@@ -7,43 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_flexram.h"
 #include "fsl_flexram_allocate.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_FLEXRAM     FLEXRAM
-#define APP_FLEXRAM_IRQ FLEXRAM_IRQn
-
-#define APP_FLEXRAM_IRQ_HANDLER FLEXRAM_IRQHandler
-
-#define APP_FLEXRAM_OCRAM_START_ADDR 0x20200000
-#define APP_FLEXRAM_OCRAM_MAGIC_ADDR 0x202000A0
-
-#define APP_FLEXRAM_DTCM_START_ADDR 0x20000000
-#define APP_FLEXRAM_DTCM_MAGIC_ADDR 0x200000A0
-
-/* Start adddress shouldn't be 0x00U, because some toolchain(such as ARMGCC) maybe consider it as null point and assert
- * UDF instruction. */
-#define APP_FLEXRAM_ITCM_START_ADDR 0x4
-#define APP_FLEXRAM_ITCM_MAGIC_ADDR 0xA0
-
-/* OCRAM relocate definition */
-#define APP_OCRAM_SIZE              (512 * 1024U)
-#define APP_OCRAM_ALLOCATE_BANK_NUM 4
-#define APP_ITCM_ALLOCATE_BANK_NUM  8
-#define APP_DTCM_ALLOCATE_BANK_NUM  4
-
-/*
- * If cache is enabled, this example should maintain the cache to make sure
- * CPU core accesses the memory, not cache only.
- */
-#define APP_USING_CACHE 1
-
 
 /*******************************************************************************
  * Prototypes
@@ -115,10 +86,7 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nFLEXRAM ram allocate example.\r\n");
 

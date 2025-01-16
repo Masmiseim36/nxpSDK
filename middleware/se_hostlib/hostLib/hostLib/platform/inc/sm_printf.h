@@ -16,6 +16,8 @@ extern "C" {
 #if AX_EMBEDDED && (!defined(__MBED__))
 #if defined(NORDIC_MCU)
 #include "board.h"
+#elif defined(CPU_MPC5748G)
+//
 #else
 #   include "fsl_debug_console.h"
 #endif

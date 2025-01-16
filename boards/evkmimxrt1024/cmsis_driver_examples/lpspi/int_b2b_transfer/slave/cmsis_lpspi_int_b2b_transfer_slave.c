@@ -8,26 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Master related */
-#define DRIVER_SLAVE_SPI         Driver_SPI1
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
-
-/* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
-
-#define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -47,11 +33,6 @@ volatile bool isSlaveOnReceive    = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t LPSPI1_GetFreq(void)
-{
-    return EXAMPLE_LPSPI_CLOCK_FREQ;
-}
 void LPSPI_SlaveSignalEvent_t(uint32_t event)
 {
     /* user code */
@@ -75,14 +56,7 @@ void LPSPI_SlaveSignalEvent_t(uint32_t event)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /*Set clock source for LPSPI*/
-    CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("LPSPI CMSIS driver board to board interrupt example.\r\n");
 

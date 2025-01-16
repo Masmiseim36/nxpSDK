@@ -9,7 +9,7 @@
 #include "ffconf.h"
 /* This fatfs subcomponent is disabled by default
  * To enable it, define following macro in ffconf.h */
-#ifdef NAND_DISK_ENABLE
+#if defined(NAND_DISK_ENABLE) && (NAND_DISK_ENABLE == 1)
 
 #include <assert.h>
 #include <stdio.h>
@@ -108,7 +108,7 @@ DRESULT nand_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_SECTOR_SIZE:
             if (buff)
             {
-                *(uint32_t *)buff = 1 << EXAMPLE_DHARA_NAND_LOG2_PAGE_SIZE;
+                *(WORD *)buff = 1 << EXAMPLE_DHARA_NAND_LOG2_PAGE_SIZE;
             }
             else
             {
@@ -188,4 +188,4 @@ DSTATUS nand_disk_initialize(BYTE pdrv)
 
     return 0;
 }
-#endif /* NAND_DISK_ENABLE */
+#endif /* defined(NAND_DISK_ENABLE) && (NAND_DISK_ENABLE == 1) */

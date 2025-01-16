@@ -1,68 +1,24 @@
-Overview
-========
+# sai_interrupt_record_playback
+
+## Overview
 The sai_interrupt_record_playback example shows how to use sai driver with record and playback features:
 
 In this example, one sai instance record the audio data from input and playbacks the audio data.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKC board
-- Personal Computer
-- Headphone(OMTP standard)
-- CS42448 Audio board(Not necessary if use on board codec)
-
-Board settings
-==============
-For Audio board:
-1.Insert AUDIO board into J23 if on board codec is not used
-2.Uninstall J41
-For on board codec:
-2.Make sure J41 is installed
-
-Prepare the Demo
-================
-Note: As the EVKCMIMXRT1060 support two codecs, a default on board WM8962 codec and another codec CS42448 on audio board, so to support both of the codecs, the example provide options to switch between the two codecs,
-- DEMO_CODEC_WM8962, set to 1 if wm8962 used
-- DEMO_CODEC_CS42448, set to 1 if cs42448 used
-Please do not set above macros to 1 together, as the demo support one codec only.
-
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-Steps for WM8962:
-4. Insert the headphones into the headphone jack on MIMXRT1060-EVKC board (J101).
-Steps for CS42448:
-4. Insert the headphones into the headphone jack J6 and line in line into J12 on the audio board.
-5. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-
-Note: This demo uses both headphone mic and board main mic(P2) as input source of WM8962. The headphone mic provides left
-channel data, and main mic (P2) provides right channel data. If users found there is noise while do record operation,
-most probably it is the headphone standard issue (OMTP and CTIA standard difference). You should use the OMTP
-standard headphone. You can disable the left channel by using an headphone without microphone feature.
-
-When the demo runs successfully, you can hear the tone and the log would be seen on the OpenSDA terminal like:
-
-~~~~~~~~~~~~~~~~~~~
-SAI example started!
-SAI example finished!
-~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [EVK-MIMX8MP](../../../_boards/evkmimx8mp/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [FRDM-MCXN236](../../../_boards/frdmmcxn236/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/driver_examples/sai/interrupt_record_playback/example_board_readme.md)
+- [MIMXRT700-EVK](../../../_boards/mimxrt700evk/driver_examples/sai/interrupt_record_playback/example_board_readme.md)

@@ -5,6 +5,14 @@
       <name>all</name>
       <member>
         <project>pin_detect_hid_msd_bm</project>
+        <configuration>sdram_debug</configuration>
+      </member>
+      <member>
+        <project>pin_detect_hid_msd_bm</project>
+        <configuration>sdram_release</configuration>
+      </member>
+      <member>
+        <project>pin_detect_hid_msd_bm</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -15,10 +23,16 @@
         <project>pin_detect_hid_msd_bm</project>
         <configuration>release</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_debug</name>
       <member>
         <project>pin_detect_hid_msd_bm</project>
         <configuration>sdram_debug</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
       <member>
         <project>pin_detect_hid_msd_bm</project>
         <configuration>sdram_release</configuration>
@@ -43,20 +57,6 @@
       <member>
         <project>pin_detect_hid_msd_bm</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_debug</name>
-      <member>
-        <project>pin_detect_hid_msd_bm</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>pin_detect_hid_msd_bm</project>
-        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

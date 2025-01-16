@@ -10,28 +10,14 @@
 #include <stdio.h>
 #include <string.h>
 /*  SDK Included Files */
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio_i2c_master.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO2
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define FLEXIO_CLOCK_SELECT (3U)
-/* Clock pre divider for flexio clock source */
-#define FLEXIO_CLOCK_PRE_DIVIDER (1U)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER (5U)
-#define FLEXIO_CLOCK_FREQUENCY \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (FLEXIO_CLOCK_PRE_DIVIDER + 1U) / (FLEXIO_CLOCK_DIVIDER + 1U))
-
-#define FLEXIO_I2C_SDA_PIN 5U
-#define FLEXIO_I2C_SCL_PIN 6U
 
 #define I2C_BAUDRATE       (100000) /* 100K */
 #define FXOS8700_WHOAMI    (0xC7U)
@@ -467,15 +453,7 @@ int main(void)
     i2cDev.timerIndex[1]   = 1U;
     i2cDev.timerIndex[2]   = 2U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, FLEXIO_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, FLEXIO_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, FLEXIO_CLOCK_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("\r\nFlexIO I2C example read accelerometer value\r\n");
 

@@ -9,15 +9,13 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1024RM Rev.1, 02/2021 | IMXRT102XSRM Rev.0
 **     Version:             rev. 0.1, 2020-01-15
-**     Build:               b220124
+**     Build:               b241024
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2022 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2024 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -66,13 +64,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   1000
+  #define Stack_Size                   0x0400
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    25600
+  #define Heap_Size                    0x0400
 #endif
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
@@ -113,9 +111,25 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
 #endif
     .ANY (+RW +ZI)
-    * (*m_usb_dma_init_data)
-    * (*m_usb_dma_noninit_data)
   }
+
+  ; cache line size is 32 bytes
+#if (defined(__heap_noncacheable__))
+  RW_m_CacheLineData      +0             ALIGN 32                          (m_data_size-Stack_Size-ImageLength(RW_m_data))/32*32
+#else
+  RW_m_CacheLineData      +0             ALIGN 32                          (m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_data))/32*32
+#endif
+  {
+    * (CacheLineData)
+    * (CacheLineData.init)
+  }
+
+  ; auxiliary to make sure RW_m_CacheLineData end-aligned CACHE LINE SIZE
+  ; DO NOT insert any region between RW_m_CacheLineData and RW_m_CacheLineData_Aux
+  RW_m_CacheLineData_Aux  +0             ALIGN 32            EMPTY         0
+  {
+  }
+
 #if (!defined(__heap_noncacheable__))
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }

@@ -6,26 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_flexio_uart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE  FLEXIO1
-#define FLEXIO_UART_TX_PIN 21U
-#define FLEXIO_UART_RX_PIN 22U
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define FLEXIO_CLOCK_SELECT (3U)
-/* Clock pre divider for flexio clock source */
-#define FLEXIO_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER (7U)
-#define FLEXIO_CLOCK_FREQUENCY \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (FLEXIO_CLOCK_PRE_DIVIDER + 1U) / (FLEXIO_CLOCK_DIVIDER + 1U))
 
 #define RX_RING_BUFFER_SIZE 20U
 #define ECHO_BUFFER_SIZE    8U
@@ -86,14 +73,7 @@ int main(void)
     uint32_t i;
     status_t result = kStatus_Success;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio1Mux, FLEXIO_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio1PreDiv, FLEXIO_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio1Div, FLEXIO_CLOCK_DIVIDER);
+    BOARD_InitHardware();
 
     /*
      * config.enableUart = true;

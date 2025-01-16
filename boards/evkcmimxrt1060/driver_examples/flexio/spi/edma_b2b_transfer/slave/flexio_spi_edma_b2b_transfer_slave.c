@@ -7,38 +7,13 @@
  */
 
 #include "fsl_flexio_spi_edma.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_common.h"
-#include "fsl_dmamux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Slave related */
-#define BOARD_FLEXIO_BASE   (FLEXIO2)
-#define FLEXIO_SPI_MISO_PIN 6U
-#define FLEXIO_SPI_MOSI_PIN 7U
-#define FLEXIO_SPI_SCK_PIN  5U
-#define FLEXIO_SPI_CSn_PIN  8U
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define SLAVE_FLEXIO_SPI_CLOCK_SELECT (3U)
-/* Clock divider for flexio clock source */
-#define SLAVE_FLEXIO_SPI_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define SLAVE_FLEXIO_SPI_CLOCK_DIVIDER (1U)
-
-#define FLEXIO_DMA_REQUEST_SOURCE_BASE     (kDmaRequestMuxFlexIO2Request0Request1)
-#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_FLEXIO_SPI_DMA_BASEADDR    DMA0
-#define FLEXIO_SPI_TX_DMA_CHANNEL          (0U)
-#define FLEXIO_SPI_RX_DMA_CHANNEL          (1U)
-#define FLEXIO_TX_SHIFTER_INDEX            0U
-#define FLEXIO_RX_SHIFTER_INDEX            2U
-#define EXAMPLE_TX_DMA_SOURCE              (kDmaRequestMuxFlexIO2Request0Request1)
-#define EXAMPLE_RX_DMA_SOURCE              (kDmaRequestMuxFlexIO2Request2Request3)
 #define BUFFER_SIZE (64)
 
 /*******************************************************************************
@@ -82,15 +57,7 @@ int main(void)
     dma_request_source_t dma_request_source_rx;
     edma_config_t config;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, SLAVE_FLEXIO_SPI_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, SLAVE_FLEXIO_SPI_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, SLAVE_FLEXIO_SPI_CLOCK_DIVIDER);
+    BOARD_InitHardware();
     PRINTF("\r\nFlexIO SPI edma example\r\n");
     PRINTF("Slave is working...\r\n");
 

@@ -17,8 +17,7 @@
 #include "board.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
-#include "fsl_gpt.h"
-#include "fsl_phyksz8081.h"
+#include "fsl_enet.h"
 #include "fsl_debug_console.h"
 
 #include "ethercattype.h"
@@ -34,29 +33,16 @@
 #include "enet/enet.h"
 #include "soem_port.h"
 
+#include "app.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
-#define PHY_AUTONEGO_TIMEOUT_COUNT (100000)
-#endif
-
-#ifndef PHY_STABILITY_DELAY_US
-#define PHY_STABILITY_DELAY_US (0U)
-#endif
-
-/*! @brief GPT timer will be used to calculate the system time and delay */
-#define OSAL_TIMER_IRQ_ID     GPT2_IRQn
-#define OSAL_TIMER            GPT2
-#define OSAL_TIMER_IRQHandler GPT2_IRQHandler
-#define OSAL_TIMER_CLK_FREQ   CLOCK_GetFreq(kCLOCK_PerClk)
-
-
 #define NUM_1M      (1000000UL)
-#define SOEM_PERIOD 125 /* 125 us */
+#define SOEM_PERIOD NUM_1M /* 1 second */
 
-#define OSEM_PORT_NAME "enet0"
+#define SOEM_PORT_NAME "enet0"
 
 #define ENET_RXBD_NUM (4)
 #define ENET_TXBD_NUM (4)
@@ -64,9 +50,15 @@
 #define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
 #define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
 
+/*${macro:start}*/
+
+/*${macro:end}*/
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+/*${variable:start}*/
 
 static struct enet_if_port if_port;
 
@@ -74,8 +66,7 @@ static uint32_t timer_irq_period = 0; /* unit: microsecond*/
 
 volatile struct timeval system_time_base = {.tv_sec = 0, .tv_usec = 0};
 
-phy_ksz8081_resource_t phy_resource;
-
+/*${variable:end}*/
 
 /*! @brief Buffer descriptors should be in non-cacheable region and should be align to "ENET_BUFF_ALIGNMENT". */
 AT_NONCACHEABLE_SECTION_ALIGN(static enet_rx_bd_struct_t g_rxBuffDescrip[ENET_RXBD_NUM], ENET_BUFF_ALIGNMENT);
@@ -116,18 +107,10 @@ static char IOmap[100];
  * Code
  ******************************************************************************/
 
-void irq_wake_task(void);
-
-void BOARD_InitModuleClock(void)
+void irq_wake_task(void)
 {
-    const clock_enet_pll_config_t config = {
-        .enableClkOutput    = true,
-        .enableClkOutput25M = false,
-        .loopDivider        = 1,
-    };
-    CLOCK_InitEnetPll(&config);
+    return;
 }
-
 
 void OSAL_TIMER_IRQHandler(void)
 {
@@ -197,54 +180,32 @@ void osal_gettime(struct timeval *current_time)
     return;
 }
 
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
-}
-
 /* OSHW: register enet port to SOEM stack */
 static int if_port_init(void)
 {
     struct soem_if_port soem_port;
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
-    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
-    phy_resource.read  = MDIO_Read;
-    phy_resource.write = MDIO_Write;
-
     memset(&if_port, 0, sizeof(if_port));
     if_port.bufferConfig = buffConfig;
-    if_port.base         = ENET;
+    if_port.base         = EXAMPLE_ENET;
     /* The miiMode should be set according to the different PHY interfaces. */
     if_port.mii_mode                   = kENET_RmiiMode;
     if_port.phy_config.autoNeg         = true;
-    if_port.phy_config.phyAddr         = 0x02U;
-    if_port.phy_config.resource        = &phy_resource;
-    if_port.phy_config.ops             = &phyksz8081_ops;
-    if_port.srcClock_Hz                = CLOCK_GetFreq(kCLOCK_IpgClk);
+    if_port.phy_config.phyAddr         = EXAMPLE_PHY_ADDRESS;
+    if_port.phy_config.resource        = EXAMPLE_PHY_RESOURCE;
+    if_port.phy_config.ops             = EXAMPLE_PHY_OPS;
+    if_port.srcClock_Hz                = EXAMPLE_CLOCK_FREQ;
     if_port.phy_autonego_timeout_count = PHY_AUTONEGO_TIMEOUT_COUNT;
     if_port.phy_stability_delay_us     = PHY_STABILITY_DELAY_US;
-
-
+    
     soem_port.port_init = enet_init;
     soem_port.port_send = enet_send;
     soem_port.port_recv = enet_recv;
     soem_port.port_link_status = enet_link_status;
     soem_port.port_close = enet_close;
-    strncpy(soem_port.ifname, OSEM_PORT_NAME, SOEM_IF_NAME_MAXLEN);
+    strncpy(soem_port.ifname, SOEM_PORT_NAME, SOEM_IF_NAME_MAXLEN);
     strncpy(soem_port.dev_name, "enet", SOEM_DEV_NAME_MAXLEN);
     soem_port.port_pri = &if_port;
     return register_soem_port(&soem_port);
-}
-
-
-void irq_wake_task(void)
-{
-    return;
 }
 
 void control_task(char *ifname)
@@ -300,12 +261,12 @@ void control_task(char *ifname)
             PRINTF("Operational state reached for all slaves.\r\n");
             /* cyclic loop */
             int is_expired;
-            ec_send_processdata();
             osal_gettime(&last_time);
             while (1)
             {
                 osal_gettime(&current_time);
                 timeradd(&current_time, &sleep_time, &target_time);
+                ec_send_processdata();
                 wkc = ec_receive_processdata(EC_TIMEOUTRET);
                 if (wkc >= expectedWKC)
                 {
@@ -344,9 +305,8 @@ void control_task(char *ifname)
                 if (!is_expired)
                 {
                     timersub(&target_time, &current_time, &sleep_time);
-                    ec_send_processdata();
                     osal_usleep(sleep_time.tv_usec);
-                    sleep_time.tv_usec = SOEM_PERIOD;
+                    sleep_time.tv_usec = 125;
                 }
                 else
                 {
@@ -355,6 +315,8 @@ void control_task(char *ifname)
                 }
             }
         }
+    } else {
+        PRINTF("ec_init on %s failed.\r\n", ifname);
     }
 }
 
@@ -363,24 +325,12 @@ void control_task(char *ifname)
  */
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
+    BOARD_InitHardware();
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
+    PRINTF("Start the soem_gpio_pulse baremetal example\r\n");
 
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    SDK_DelayAtLeastUs(NUM_1M, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    PRINTF("Start the soem_gpio_pulse baremetal example...\r\n");
-
-    osal_timer_init(NUM_1M, 0);
+    osal_timer_init(SOEM_PERIOD, 0);
     if_port_init();
-    control_task(OSEM_PORT_NAME);
+    control_task(SOEM_PORT_NAME);
     return 0;
 }

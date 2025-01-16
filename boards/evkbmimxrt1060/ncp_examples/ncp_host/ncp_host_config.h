@@ -1,8 +1,8 @@
 /*
  *  Copyright 2020-2022 NXP
- *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
+ *  The BSD-3-Clause license can be found at https://spdx.org/licenses/BSD-3-Clause.html
  */
 
 #ifndef _WIFI_CONFIG_H_
@@ -20,6 +20,8 @@
 #define CONFIG_NCP_SCAN_WITH_RSSIFILTER  1
 #define CONFIG_NCP_WIFI_DTIM_PERIOD      1
 #define CONFIG_NCP_WIFI_CAPA             1
+#define CONFIG_NCP_11K                   1
+#define CONFIG_NCP_11V                   1
 #define CONFIG_NCP_11R                   1
 
 
@@ -55,13 +57,14 @@
 #define CONFIG_SDIO_IO_DEBUG              0
 
 /* protocol options */
-#define CONFIG_NCP_WIFI                   1 
+#define CONFIG_NCP_WIFI                   1
 #define CONFIG_NCP_BLE                    0
+#define CONFIG_NCP_OT                     0
 
 /* NCP BLE mode options */
 #if (CONFIG_NCP_BLE)
 #define CONFIG_NCP_BLE_PROFILE_MODE       1
-#if !CONFIG_NCP_BLE_PROFILE_MODE       
+#if !CONFIG_NCP_BLE_PROFILE_MODE
 #define CONFIG_NCP_BLE_NO_PROFILE_MODE    1
 #endif /* CONFIG_NCP_BLE_PROFILE_MODE */
 #endif /* CONFIG_NCP_BLE */
@@ -108,7 +111,7 @@
 
 #endif
 
-#if (CONFIG_WIFI_USB_FILE_ACCESS) && (CONFIG_NCP_USB)  
+#if (CONFIG_WIFI_USB_FILE_ACCESS) && (CONFIG_NCP_USB)
     #error " CONFIG_NCP_USB and CONFIG_WIFI_USB_FILE_ACCESS are exclusive for ncp and ncp_supp"
 #endif
 

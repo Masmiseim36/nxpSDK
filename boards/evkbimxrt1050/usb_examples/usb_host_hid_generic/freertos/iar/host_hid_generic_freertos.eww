@@ -5,15 +5,15 @@
       <name>all</name>
       <member>
         <project>host_hid_generic_freertos</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>host_hid_generic_freertos</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>host_hid_generic_freertos</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>host_hid_generic_freertos</project>
+        <configuration>debug</configuration>
       </member>
       <member>
         <project>host_hid_generic_freertos</project>
@@ -29,13 +29,6 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>host_hid_generic_freertos</project>
-        <configuration>debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>flexspi_nor_debug</name>
       <member>
         <project>host_hid_generic_freertos</project>
@@ -47,6 +40,13 @@
       <member>
         <project>host_hid_generic_freertos</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>host_hid_generic_freertos</project>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

@@ -9,6 +9,7 @@
  */
 #include <ctype.h>
 #include "fsl_debug_console.h"
+#include "FreeRTOS.h"
 #include "board.h"
 #include "task.h"
 #include "ncp_tlv_adapter.h"
@@ -22,6 +23,8 @@
 
 #if CONFIG_NCP_UART
 extern lpuart_rtos_handle_t ncp_host_tlv_uart_handle;
+#define UART_WAKEUP_MAGIC_PATTERN (0xABCDEF8987FEDCBAU)
+uint64_t magic_pattern = UART_WAKEUP_MAGIC_PATTERN;
 #endif
 
 #define MAX_CUSTOM_HOOKS 4
@@ -37,11 +40,10 @@ OSA_MUTEX_HANDLE_DEFINE(mcu_command_lock);
 #define MAX_COMMANDS 200
 
 #define CONFIG_CLI_STACK_SIZE 4096
-uint16_t g_cmd_seqno = 0;
+uint16_t g_cmd_seqno = 1;
+uint32_t mcu_last_resp_rcvd, mcu_last_cmd_sent;
+uint16_t mcu_last_seqno_rcvd, mcu_last_seqno_sent;
 unsigned int crc32_table[256];
-
-/*ID number of command sent to ncp*/
-uint32_t mcu_last_cmd_sent;
 
 static struct
 {
@@ -86,8 +88,9 @@ uint8_t recv_buffer[NCP_HOST_INPUT_UART_SIZE];
 
 extern power_cfg_t global_power_config;
 GPIO_HANDLE_DEFINE(ncp_mcu_host_wakeup_handle);
-extern uint8_t mcu_device_status;
+extern uint8_t ncp_device_status;
 OSA_SEMAPHORE_HANDLE_DEFINE(gpio_wakelock);
+OSA_MUTEX_HANDLE_DEFINE(ncp_device_status_mutex);
 
 void ncp_host_input_task(void *param);
 
@@ -102,6 +105,12 @@ extern int ncp_host_wifi_command_init();
 #endif
 #if CONFIG_NCP_BLE
 extern int ncp_host_ble_command_init();
+#endif
+#if CONFIG_NCP_OT
+extern int ncp_host_ot_command_init();
+#if CONFIG_NCP_SDIO
+extern uint8_t ot_reset_flag;
+#endif
 #endif
 
 int mcu_get_command_resp_sem()
@@ -220,11 +229,13 @@ static int handle_input(char *inbuf)
      */
     for (j = 0; j < MCU_CLI_STRING_SIZE; j++)
     {
-        if (inbuf[j] == 0x0D || inbuf[j] == 0x0A)
+        if (inbuf[j] == (char)(0x0D) || inbuf[j] == (char)0x0A)
         {
             if (j < (MCU_CLI_STRING_SIZE - 1))
-                (void)memmove((inbuf + j), inbuf + j + 1, (MCU_CLI_STRING_SIZE - j));
-            inbuf[MCU_CLI_STRING_SIZE] = 0x00;
+            {
+                (void)memmove((inbuf + j), inbuf + j + 1, (MCU_CLI_STRING_SIZE - 1 - j));
+            }
+            inbuf[MCU_CLI_STRING_SIZE - 1] = (char)(0x00);
         }
     }
 
@@ -559,20 +570,55 @@ int ncp_host_send_tlv_command()
         goto done;
     }
 
-    mcu_last_cmd_sent = header->cmd;
-
     if (transfer_len >= sizeof(NCP_HOST_COMMAND))
     {
-        /* Wakeup MCU device through GPIO if host configured GPIO wake mode */
-        if ((global_power_config.wake_mode == WAKE_MODE_GPIO) && (mcu_device_status == MCU_DEVICE_STATUS_SLEEP))
+        if (ncp_device_status != NCP_DEVICE_STATUS_ACTIVE)
         {
-            GPIO_PinWrite(GPIO1, 27, 0);
-            ncp_d("get gpio_wakelock after GPIO wakeup\r\n");
-            /* Block here to wait for MCU device complete the PM3 exit process */
-            OSA_SemaphoreWait((osa_semaphore_handle_t)gpio_wakelock, osaWaitForever_c);
-            GPIO_PinWrite(GPIO1, 27, 1);
-            /* Release semaphore here to make sure software can get it successfully when receiving sleep enter event for next sleep loop. */
-            OSA_SemaphorePost((osa_semaphore_handle_t)gpio_wakelock);
+            switch(global_power_config.wake_mode) {
+                case WAKE_MODE_WIFI_NB:
+                    ncp_e("Command is not allowed when wake mode is WIFI-NB and device is sleeping.");
+                    ncp_e("With WIFI-NB mode, host is not able to wakeup device.");
+                    ncp_e("Please send command after device wakes up.");
+                    ret = -NCP_STATUS_ERROR;
+                    goto done;
+                case WAKE_MODE_INTF:
+                    OSA_MutexLock((osa_mutex_handle_t)ncp_device_status_mutex, osaWaitForever_c);
+                    while (ncp_device_status != NCP_DEVICE_STATUS_SLEEP)
+                    {
+                        OSA_TimeDelay(10); // Wait 10ms to make sure NCP device enters low power.
+                    }
+                    OSA_MutexUnlock((osa_mutex_handle_t)ncp_device_status_mutex);
+#if CONFIG_NCP_UART
+                    /* Send the magic pattern to wakeup the NCP device */
+                    ncp_tlv_send(&magic_pattern, sizeof(magic_pattern));
+                    /* Block here to wait for NCP device complete the PM2 exit process */
+                    OSA_SemaphoreWait((osa_semaphore_handle_t)gpio_wakelock, osaWaitForever_c);
+                    /* Release semaphore here to make sure software can get it successfully when receiving sleep enter event for next sleep loop. */
+                    OSA_SemaphorePost((osa_semaphore_handle_t)gpio_wakelock);
+#endif
+                    break;
+                case WAKE_MODE_GPIO:
+                    OSA_MutexLock((osa_mutex_handle_t)ncp_device_status_mutex, osaWaitForever_c);
+                    while (ncp_device_status != NCP_DEVICE_STATUS_SLEEP)
+                    {
+                        OSA_TimeDelay(10); // Wait 10ms to make sure NCP device enters low power.
+                    }
+                    OSA_MutexUnlock((osa_mutex_handle_t)ncp_device_status_mutex);
+
+                    /* Wakeup MCU device through GPIO if host configured GPIO wake mode */
+                    GPIO_PinWrite(GPIO1, 27, 0);
+                    ncp_d("get gpio_wakelock after GPIO wakeup\r\n");
+                    /* Block here to wait for MCU device complete the PM3 exit process */
+                    OSA_SemaphoreWait((osa_semaphore_handle_t)gpio_wakelock, osaWaitForever_c);
+                    GPIO_PinWrite(GPIO1, 27, 1);
+                    /* Release semaphore here to make sure software can get it successfully when receiving sleep enter event for next sleep loop. */
+                    OSA_SemaphorePost((osa_semaphore_handle_t)gpio_wakelock);
+                    break;
+                default:
+                    ncp_d("invalid wakeup mode");
+                    ret = -NCP_STATUS_ERROR;
+                    goto done;
+            }
         }
         /* write response to host */
         ret = ncp_tlv_send(header, transfer_len);
@@ -583,6 +629,8 @@ int ncp_host_send_tlv_command()
             goto done;
         }
 
+        mcu_last_cmd_sent = header->cmd;
+        mcu_last_seqno_sent = header->seqnum;
         g_cmd_seqno++;
     }
     else
@@ -601,6 +649,7 @@ done:
 
     return ret;
 }
+
 void ncp_host_input_task(void *pvParameters)
 {
     ncp_host_input_uart_config.srcclk = NCP_HOST_INPUT_UART_CLK_FREQ;
@@ -659,8 +708,20 @@ void ncp_host_input_task(void *pvParameters)
                 /*If the string command is empty, release command response semaphore.*/
                 mcu_put_command_resp_sem();
             }
-            else /*Send tlv command to ncp device */
+            else
+            {
+                /*Send tlv command to ncp device */
                 ncp_host_send_tlv_command();
+#if (CONFIG_NCP_OT && CONFIG_NCP_SDIO)
+                if (ot_reset_flag)
+                {
+                  PRINTF("Reseting...\n");
+                  /* Factoryreset need to erase flash, delay 3 seconds to ensure successful reset on the device side,  */
+                  vTaskDelay(pdMS_TO_TICKS(3000));
+                  ot_reset_flag = 0;
+                }
+#endif
+            }
 
             (void)PRINTF(PROMPT);
         }
@@ -711,6 +772,12 @@ int ncp_host_cli_init(void)
 
     OSA_SemaphorePost((osa_semaphore_handle_t)gpio_wakelock);
 
+    if (OSA_MutexCreate((osa_mutex_handle_t)ncp_device_status_mutex) != NCP_SUCCESS)
+    {
+        ncp_e("Failed to create ncp_device_status_mutex");
+        return -NCP_STATUS_ERROR;
+    }
+
     (void)memset((void *)&ncp_host_cli, 0, sizeof(ncp_host_cli));
 
     /* add our built-in commands */
@@ -724,6 +791,9 @@ int ncp_host_cli_init(void)
 #endif
 #if CONFIG_NCP_BLE
     ncp_host_ble_command_init();
+#endif
+#if CONFIG_NCP_OT
+    ncp_host_ot_command_init();
 #endif
 
     int n = 0;

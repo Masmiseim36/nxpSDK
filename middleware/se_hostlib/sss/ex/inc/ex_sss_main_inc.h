@@ -47,7 +47,7 @@
  */
 
 #if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x) || defined(QN9090DK6) || \
-    defined(NORDIC_MCU)
+    defined(NORDIC_MCU) || defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXA153VLH)
 #define HAVE_KSDK
 #endif
 
@@ -73,22 +73,6 @@
 #include "FreeRTOSConfig.h"
 #endif /* INC_FREERTOS_H */
 #include "task.h"
-#if !SSS_HAVE_APPLET_SE051_UWB
-//#include "iot_logging_task.h"
-#ifndef LOGGING_TASK_PRIORITY
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
-#endif // LOGGING_TASK_PRIORITY
-#ifndef LOGGING_TASK_STACK_SIZE
-#define LOGGING_TASK_STACK_SIZE (200)
-#endif // LOGGING_TASK_STACK_SIZE
-#ifndef LOGGING_QUEUE_LENGTH
-#define LOGGING_QUEUE_LENGTH (16)
-#endif // LOGGING_QUEUE_LENGTH
-#endif // SSS_HAVE_APPLET_SE051_UWB
-#endif
-
-#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
-#include "ex_a71ch_scp03.h"
 #endif
 
 #ifdef EX_SSS_BOOT_PCONTEXT
@@ -153,8 +137,6 @@ int main(int argc, const char *argv[])
     ex_sss_main_linux_conf();
 #endif // defined(__linux__) && defined(T1oI2C) && SSS_HAVE_APPLET_SE05X_IOT
 
-    LOG_I(PLUGANDTRUST_PROD_NAME_VER_FULL);
-
 #ifdef EX_SSS_BOOT_PCONTEXT
     memset((EX_SSS_BOOT_PCONTEXT), 0, sizeof(*(EX_SSS_BOOT_PCONTEXT)));
 #endif // EX_SSS_BOOT_PCONTEXT
@@ -179,6 +161,9 @@ int main(int argc, const char *argv[])
     if (nLog_Init() != 0) {
         LOG_E("Lock initialisation failed");
     }
+
+    LOG_I(PLUGANDTRUST_PROD_NAME_VER_FULL);
+
 #if defined(EX_SSS_BOOT_SKIP_SELECT_APPLET) && (EX_SSS_BOOT_SKIP_SELECT_APPLET == 1)
     (PCONTEXT)->se05x_open_ctx.skip_select_applet = 1;
 #endif
@@ -243,35 +228,6 @@ int main(int argc, const char *argv[])
     ex_sss_boot_open_host_session((PCONTEXT));
 #endif
 
-#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM) && SSS_HAVE_A71CH_AUTH_SCP03
-    LOG_I("A71CH SCP03 add-on");
-    {
-        // Variables used by calls to legacy API
-        U8 sCounter[3];
-        U16 sCounterLen = sizeof(sCounter);
-        U16 sw          = 0;
-        U8 scpKeyEncBase[SCP_KEY_SIZE];
-        U8 scpKeyMacBase[SCP_KEY_SIZE];
-        U8 scpKeyDekBase[SCP_KEY_SIZE];
-
-        LOG_I("** Establish SCP03 session: Start **");
-        status = ex_a71ch_FetchRandomScp03Keys(scpKeyEncBase, scpKeyMacBase, scpKeyDekBase);
-        ENSURE_OR_GO_CLEANUP(status == kStatus_SSS_Success);
-
-        status = ex_a71ch_SetSeScp03Keys(scpKeyEncBase, scpKeyMacBase, scpKeyDekBase);
-        ENSURE_OR_GO_CLEANUP(status == kStatus_SSS_Success);
-
-        LOG_I("Clear host-side SCP03 channel state");
-        DEV_ClearChannelState();
-
-        LOG_I("SCP_Authenticate()");
-        sw     = SCP_Authenticate(scpKeyEncBase, scpKeyMacBase, scpKeyDekBase, SCP_KEY_SIZE, sCounter, &sCounterLen);
-        status = (sw == SW_OK) ? kStatus_SSS_Success : kStatus_SSS_Fail;
-        ENSURE_OR_GO_CLEANUP(sw == SW_OK);
-        LOG_I("** Establish SCP03 session: End **");
-    }
-#endif // SSS_HAVE_APPLET_A71CH && SSS_HAVE_A71CH_AUTH_SCP03
-
 #if !AX_EMBEDDED
 before_ex_sss_entry:
 #endif
@@ -314,7 +270,14 @@ cleanup:
         _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
         if (NULL != dummy_portName) {
             free(dummy_portName);
-            free(portName);
+            if ((argc > 1)        /* Alteast 1 cli argument */
+                && (argv != NULL) /* argv not null */
+                && (portName == (char *)argv[argc - 1])) {
+                // portName comes from argv;
+            }
+            else {
+                free(portName);
+            }
         }
     }
 #endif // _MSC_VER
@@ -360,18 +323,6 @@ static void sss_ex_rtos_task(void *ctx)
 #if INCLUDE_uxTaskGetStackHighWaterMark
     sss_ex_rtos_stack_size("after:erase");
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
-#endif
-
-#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
-#if EX_SSS_BOOT_OPEN_HOST_SESSION
-    ex_sss_boot_open_host_session((PCONTEXT));
-#endif
-#endif
-
-#if SSS_HAVE_APPLET_SE051_UWB
-    /* Not available in UWB Branch for time being */
-#else
-    //xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 #endif
 
     status = ex_sss_entry((PCONTEXT));

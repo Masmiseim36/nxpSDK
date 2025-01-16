@@ -8,6 +8,8 @@
 #ifndef _VOICE_SEEKER_H_
 #define _VOICE_SEEKER_H_
 
+#ifdef VOICE_SEEKER_PROC
+
 #define INV_32768    3.0517578125e-05f
 #define FLOAT_TO_INT 32768
 
@@ -31,5 +33,5 @@ void DeInterleave16(const int16_t *pDataInput, int16_t *pDataOutput, uint16_t Fr
 extern VoiceSeeker_Initialize_T VoiceSeeker_Initialize_func;
 extern VoiceSeeker_Execute_T VoiceSeeker_Execute_func;
 extern VoiceSeeker_Deinit_T VoiceSeeker_Deinit_func;
-
+#endif
 #endif

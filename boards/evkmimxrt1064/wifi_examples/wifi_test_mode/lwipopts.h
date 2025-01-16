@@ -37,11 +37,23 @@
  */
 #define NO_SYS 0
 
+/* ---------- Support Wi-Fi SLIM feature ---------- */
+/**
+ * Enabling CONFIG_LWIP_LOW_MEM_FOOTPRINT will have a negative impact on TCP/IP performance.
+ */
+#if CONFIG_LWIP_LOW_MEM_FOOTPRINT
+#define CONFIG_NETWORK_HIGH_PERF 0
+
+#define MAX_SOCKETS_TCP          4
+#define MAX_SOCKETS_UDP          3
+#else
 #define CONFIG_NETWORK_HIGH_PERF 1
 
-#define MAX_SOCKETS_TCP           8
+#define MAX_SOCKETS_TCP          8
+#define MAX_SOCKETS_UDP          6
+#endif
+
 #define MAX_LISTENING_SOCKETS_TCP 4
-#define MAX_SOCKETS_UDP           6
 #define TCP_SND_BUF_COUNT         2
 #define TCPIP_STACK_TX_HEAP_SIZE  0
 #define LWIP_COMPAT_SOCKETS       2
@@ -56,8 +68,8 @@
 
 #define TCPIP_THREAD_NAME      "tcp/ip"
 #define TCPIP_THREAD_STACKSIZE 768
-#define TCPIP_THREAD_PRIO      2
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#define TCPIP_THREAD_PRIO      (configMAX_PRIORITIES - 3)
+#if CONFIG_NETWORK_HIGH_PERF
 #define TCPIP_MBOX_SIZE 64
 #else
 #define TCPIP_MBOX_SIZE 32
@@ -148,7 +160,7 @@
 /* Value of TCP_SND_BUF_COUNT denotes the number of buffers and is set by
  * CONFIG option available in the SDK
  */
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define TCP_SND_BUF (12 * TCP_MSS)
 #else
 #define TCP_SND_BUF (TCP_SND_BUF_COUNT * TCP_MSS)
@@ -176,7 +188,7 @@
 #define MEM_SIZE (TCPIP_STACK_TX_HEAP_SIZE * 1024)
 #endif
 
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #undef MEM_SIZE
 #define MEM_SIZE (20 * 1024)
 #endif
@@ -186,14 +198,14 @@
    ---------- Internal Memory Pool Sizes ----------
    ------------------------------------------------
 */
-//#define MEMP_USE_CUSTOM_POOLS 1
+// #define MEMP_USE_CUSTOM_POOLS 1
 
 /**
  * MEMP_NUM_PBUF: the number of memp struct pbufs (used for PBUF_ROM and PBUF_REF).
  * If the application sends a lot of data out of ROM (or other static memory),
  * this should be set high.
  */
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define MEMP_NUM_PBUF 20
 #else
 #define MEMP_NUM_PBUF 10
@@ -211,7 +223,7 @@
  * MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP segments.
  * (requires the LWIP_TCP option)
  */
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define MEMP_NUM_TCP_SEG 48
 #else
 #define MEMP_NUM_TCP_SEG 12
@@ -222,7 +234,7 @@
  * for incoming packets.
  * (only needed if you use tcpip.c)
  */
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define MEMP_NUM_TCPIP_MSG_INPKT 32
 #else
 #define MEMP_NUM_TCPIP_MSG_INPKT 16
@@ -231,7 +243,7 @@
 /** MEMP_NUM_TCPIP_MSG_*: the number of struct tcpip_msg, which is used
    for sequential API communication and incoming packets. Used in
    src/api/tcpip.c. */
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define MEMP_NUM_TCPIP_MSG_API 16
 #else
 #define MEMP_NUM_TCPIP_MSG_API 8
@@ -247,7 +259,7 @@
  * MEMP_NUM_NETBUF: the number of struct netbufs.
  * (only needed if you use the sequential API, like api_lib.c)
  */
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define MEMP_NUM_NETBUF 32
 #else
 #define MEMP_NUM_NETBUF 16
@@ -266,7 +278,11 @@
 /**
  * PBUF_POOL_SIZE: the number of buffers in the pbuf pool.
  */
+#if CONFIG_LWIP_LOW_MEM_FOOTPRINT
+#define PBUF_POOL_SIZE 20
+#else
 #define PBUF_POOL_SIZE 40
+#endif
 
 /*
    ----------------------------------
@@ -340,7 +356,7 @@
 /**
  * LWIP_IPV6==1: Enable IPv6
  */
-#ifdef CONFIG_IPV6
+#if CONFIG_IPV6
 #define LWIP_IPV6 1
 #endif
 
@@ -371,7 +387,7 @@
  * TCP_WND: The size of a TCP window.  This must be at least
  * (2 * TCP_MSS) for things to work well
  **/
-#ifdef CONFIG_NETWORK_HIGH_PERF
+#if CONFIG_NETWORK_HIGH_PERF
 #define TCP_WND (15 * TCP_MSS)
 #else
 #define TCP_WND (10 * TCP_MSS)
@@ -390,12 +406,20 @@
 /**
  * LWIP_STATS==1: Enable statistics collection in lwip_stats.
  */
+#if CONFIG_LWIP_LOW_MEM_FOOTPRINT
+#define LWIP_STATS 0
+#else
 #define LWIP_STATS 1
+#endif
 
 /**
  * LWIP_STATS_DISPLAY==1: Compile in the statistics output functions.
  */
+#if CONFIG_LWIP_LOW_MEM_FOOTPRINT
+#define LWIP_STATS_DISPLAY 0
+#else
 #define LWIP_STATS_DISPLAY 1
+#endif
 
 /*
    ----------------------------------
@@ -459,7 +483,7 @@
 #define LWIP_PROVIDE_ERRNO 1
 #define ERRNO              1
 
-//#define LWIP_SNMP 1
+// #define LWIP_SNMP 1
 
 /*
    ------------------------------------------------
@@ -479,4 +503,11 @@
 #define TCP_RESOURCE_FAIL_RETRY_LIMIT 50
 
 #define LWIP_COMPAT_MUTEX_ALLOWED 1
+
+/**
+ * Support ip fragment max size 10000 in arp queue
+ */
+#define ARP_QUEUEING  1
+#define ARP_QUEUE_LEN 8
+
 #endif /* __LWIPOPTS_H__ */

@@ -188,6 +188,18 @@ void sys_check_core_locking(void);
 #define TCP_LISTEN_BACKLOG 1
 #endif
 
+/* ---------- IP options ---------- */
+
+/* Disable IP fragmentation and reassembly so HW can be used for offload generation and validation of protocol checksums */
+
+#ifndef IP_REASSEMBLY
+#define IP_REASSEMBLY 0
+#endif
+
+#ifndef IP_FRAG
+#define IP_FRAG 0
+#endif
+
 /* ---------- ICMP options ---------- */
 #ifndef LWIP_ICMP
 #define LWIP_ICMP 1

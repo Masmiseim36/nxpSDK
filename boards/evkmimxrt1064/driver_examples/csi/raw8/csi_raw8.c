@@ -8,14 +8,13 @@
 #include "display_support.h"
 #include "camera_support.h"
 
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /* RAW8 data, 1 byte per pixel. */
 #define APP_CAMERA_BPP 1
 
@@ -61,7 +60,6 @@ static dc_fb_info_t fbInfo;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 static void RAW8_2_RGB565(
     const uint8_t *raw, uint8_t *rgb, int width, int height, uint32_t inputPitch, uint32_t outputPitch)
@@ -215,15 +213,7 @@ static void APP_InitCamera(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitDEBUG_UARTPins();
-    BOARD_InitSDRAMPins();
-    BOARD_EarlyPrepareCamera();
-    BOARD_InitCSIPins();
-    BOARD_InitLCDPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("CSI RAW8 example start...\r\n");
 

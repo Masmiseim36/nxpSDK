@@ -5,30 +5,16 @@
       <name>all</name>
       <member>
         <project>flexram_ram_allocate</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-      <member>
-        <project>flexram_ram_allocate</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
-      <member>
-        <project>flexram_ram_allocate</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>flexram_ram_allocate</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_txt_debug</name>
       <member>
         <project>flexram_ram_allocate</project>
         <configuration>sdram_txt_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_txt_release</name>
       <member>
         <project>flexram_ram_allocate</project>
         <configuration>sdram_txt_release</configuration>
@@ -46,6 +32,20 @@
       <member>
         <project>flexram_ram_allocate</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_txt_debug</name>
+      <member>
+        <project>flexram_ram_allocate</project>
+        <configuration>sdram_txt_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_txt_release</name>
+      <member>
+        <project>flexram_ram_allocate</project>
+        <configuration>sdram_txt_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -25,5 +25,14 @@
 #ifndef MFLASH_BASE_ADDRESS
 #define MFLASH_BASE_ADDRESS (FlexSPI_AMBA_BASE)
 #endif
+
+/* Flash Size expressed in bytes : 32MB */
+#define MFLASH_BSIZE 0x2000000UL
+
+#define MFLASH_REMAP_OFFSET() (IOMUXC_GPR->GPR32 & 0xFFFFF000UL)
+#define MFLASH_REMAP_START()  (IOMUXC_GPR->GPR30 & 0xFFFFF000UL)
+#define MFLASH_REMAP_END()    (IOMUXC_GPR->GPR31 & 0xFFFFF000UL)
+
+#define MFLASH_REMAP_ACTIVE() (MFLASH_REMAP_OFFSET() != 0UL)
 
 #endif

@@ -8,33 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR   (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN       (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_IRQHandler LPSPI1_IRQHandler
-
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
-
-#define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
-
-/* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
-
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
-
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -77,14 +56,7 @@ void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, sta
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /*Set clock source for LPSPI*/
-    CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("LPSPI 3-wire board to board interrupt example.\r\n");
 

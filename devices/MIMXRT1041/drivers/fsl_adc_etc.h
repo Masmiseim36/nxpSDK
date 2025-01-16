@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
- * All rights reserved.
+ * Copyright 2016-2021, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -20,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief ADC_ETC driver version */
-#define FSL_ADC_ETC_DRIVER_VERSION (MAKE_VERSION(2, 2, 1)) /*!< Version 2.2.1. */
+#define FSL_ADC_ETC_DRIVER_VERSION (MAKE_VERSION(2, 3, 0)) /*!< Version 2.3.0. */
 /*! @brief The mask of status flags cleared by writing 1. */
 #define ADC_ETC_DMA_CTRL_TRGn_REQ_MASK 0xFF0000U
 
@@ -325,6 +324,30 @@ static inline void ADC_ETC_DoSoftwareReset(ADC_ETC_Type *base, bool enable)
 static inline void ADC_ETC_DoSoftwareTrigger(ADC_ETC_Type *base, uint32_t triggerGroup)
 {
     assert(triggerGroup < ADC_ETC_TRIGn_CTRL_COUNT);
+
+    base->TRIG[triggerGroup].TRIGn_CTRL |= ADC_ETC_TRIGn_CTRL_SW_TRIG_MASK;
+}
+
+/*!
+ * @brief Do software trigger corresponding to each XBAR trigger sources.
+ *
+ * @note This function provides a workaround implementation for ERR052412
+ *  by using blocking way to implement SW trigger.
+ *
+ * @param base ADC_ETC peripheral base address.
+ * @param triggerGroup Trigger group index. Available number is 0~7.
+ */
+static inline void ADC_ETC_DoSoftwareTriggerBlocking(ADC_ETC_Type *base, uint32_t triggerGroup) 
+{
+    assert(triggerGroup < ADC_ETC_TRIGn_CTRL_COUNT);
+
+     /* ERR052412 ADC_ETC: TRIGx_CTRL[SW_TRIG] is previously high and software writes another
+      * 1 to TRIGx_CTRL[SW_TRIG], which possibly get The ADC_ETC TRIGx_CTRL[SW_TRIG] register
+      * bit to be stuck high.
+      */
+    while ((base->TRIG[triggerGroup].TRIGn_CTRL & ADC_ETC_TRIGn_CTRL_SW_TRIG_MASK) != 0U) 
+    {
+    }
 
     base->TRIG[triggerGroup].TRIGn_CTRL |= ADC_ETC_TRIGn_CTRL_SW_TRIG_MASK;
 }

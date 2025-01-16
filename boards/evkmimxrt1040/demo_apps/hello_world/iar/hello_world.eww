@@ -5,23 +5,11 @@
       <name>all</name>
       <member>
         <project>hello_world</project>
-        <configuration>ram_0x1400_debug</configuration>
+        <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>hello_world</project>
-        <configuration>ram_0x1400_release</configuration>
-      </member>
-      <member>
-        <project>hello_world</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-      <member>
-        <project>hello_world</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
-      <member>
-        <project>hello_world</project>
-        <configuration>release</configuration>
+        <configuration>flexspi_nor_release</configuration>
       </member>
       <member>
         <project>hello_world</project>
@@ -41,50 +29,41 @@
       </member>
       <member>
         <project>hello_world</project>
-        <configuration>sdram_release</configuration>
+        <configuration>sdram_txt_debug</configuration>
       </member>
-      <member>
-        <project>hello_world</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-      <member>
-        <project>hello_world</project>
-        <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>ram_0x1400_debug</name>
       <member>
         <project>hello_world</project>
         <configuration>ram_0x1400_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>ram_0x1400_release</name>
+      <member>
+        <project>hello_world</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>hello_world</project>
+        <configuration>sdram_release</configuration>
+      </member>
+      <member>
+        <project>hello_world</project>
+        <configuration>sdram_txt_release</configuration>
+      </member>
       <member>
         <project>hello_world</project>
         <configuration>ram_0x1400_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>sdram_txt_debug</name>
+      <name>flexspi_nor_debug</name>
       <member>
         <project>hello_world</project>
-        <configuration>sdram_txt_debug</configuration>
+        <configuration>flexspi_nor_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>sdram_txt_release</name>
+      <name>flexspi_nor_release</name>
       <member>
         <project>hello_world</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>hello_world</project>
-        <configuration>release</configuration>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -116,6 +95,27 @@
       </member>
     </batchDefinition>
     <batchDefinition>
+      <name>sdram_txt_debug</name>
+      <member>
+        <project>hello_world</project>
+        <configuration>sdram_txt_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>ram_0x1400_debug</name>
+      <member>
+        <project>hello_world</project>
+        <configuration>ram_0x1400_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>hello_world</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
       <name>sdram_release</name>
       <member>
         <project>hello_world</project>
@@ -123,17 +123,17 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_debug</name>
+      <name>sdram_txt_release</name>
       <member>
         <project>hello_world</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>sdram_txt_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_release</name>
+      <name>ram_0x1400_release</name>
       <member>
         <project>hello_world</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>ram_0x1400_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

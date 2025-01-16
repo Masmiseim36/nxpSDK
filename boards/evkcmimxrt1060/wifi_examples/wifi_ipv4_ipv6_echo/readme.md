@@ -1,10 +1,18 @@
-Overview
-========
+# wifi_ipv4_ipv6_echo
+
+## Overview
 The wifi_ipv4_ipv6_echo application demonstrates a TCP and UDP echo on the lwIP TCP/IP stack with FreeRTOS.
 The demo can use both TCP or UDP protocol over IPv4 or IPv6 and acts as an echo server. The application sends back
 the packets received from the PC, which can be used to test whether a TCP or UDP connection is available.
 
-A few notes about IPv6
+Before building the example application select Wi-Fi module macro in the app_config.h. 
+(see `#define WIFI_<SoC Name>_BOARD_<Module Name>`).
+
+For more information about Wi-Fi module connection see:
+- readme_modules.txt
+- [Getting started guide](https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM)
+
+## A few notes about IPv6
 The demo generates a link-local address (the one from range FE80::/10) after the start. To send something to this (demo) address
 from your computer you need to specify the interface over which the demo is reachable by appending % followed by zone index.
 - On Windows, the zone index is a number. You can get it from the output of the ipconfig command.
@@ -17,75 +25,13 @@ But the demo has only a single interface, so do not append zone ID to any addres
 The LwIP stack is trying to get an IPv6 address automatically by neighbor discovery in the background.
 This takes some time. You can print all addresses using the command print_ip_cfg any time.
 
-Tools
+## Tools
 It is necessary to have installed tools capable of sending and receiving data over TCP or UDP to interact with the demo.
 - ncat - Recommended tool. Supports both IPv4 and IPv6. It is part of nmap tools. It can be found at https://nmap.org/download.html.
 - nc (netcat) - Basically, the same as ncat, but a lot of antiviruses consider this a virus.
 - echotool - Supports only IPv4 and only for Windows. It can be obtained from https://github.com/PavelBansky/EchoTool
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- evkcmimxrt1060 board
-- Personal Computer
-- One of the following WiFi modules:
-- One of the following modules:
-  - Embedded Artists 1XK M.2 Module (EAR00385) - direct M2 connection.
-  - Embedded Artists 1ZM M.2 Module (EAR00364) - direct M2 connection.
-  - Embedded Artists 2EL M.2 Module - direct M2 connection.
-  - Embedded Artists 2DS M.2 Module (EAR00386) - direct M2 connection.
-
-Board settings
-==============
-
-Jumper settings for RT1060-EVKC (enables external 5V supply):
-remove  J40 5-6
-connect J40 1-2
-connect J45 with external power(controlled by SW6)
-
-Murata Solution Board settings
-Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
-Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
-Embedded Artists 2EL module datasheet: https://www.embeddedartists.com/doc/ds/2EL_M2_Datasheet.pdf
-Embedded Artists 2DS module datasheet: https://www.embeddedartists.com/doc/ds/2DS_M2_Datasheet.pdf
-
-RT1060-EVKC Board Rework For M2 Slot Enablement
-A) Wi-Fi Rework:
-	- Jumper Settings : Connect J109, connect J76 2-3
-    - For 2DS M.2 Module: remove R2163
-B) Wi-Fi Host Sleep Wakeup GPIO For 1XK/1ZM/2EL:
-    - add 0Ohm resistor at position R252
-    - 1XK:
-        - Connect Fly-Wire between J33.1 and J108.5.
-        - J108 is routed on M2.P44 which internally routed on GPIO[2] of Controller 1XK.
-    - 1ZM:
-        - Connect Fly-Wire between J33.1 and J108.2.
-        - J108 is routed on M2.P40 which internally routed on GPIO[13] of Controller 1ZM.
-    - 2EL:
-        - No fly-wire connection required.
-C) Wi-Fi Independent Reset OOB Trigger For 1XK/1ZM/2EL:
-	- Connect Fly-Wire between J16.1 and J108.4.
-	- J108 is routed on M2.P48 which internally routed on IR GPIO[15] of Controller 1XK/1ZM.
-	- For 2EL-M2, No fly-wire connection required.
-Prepare the Demo
-================
-Before building the example application, select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
-For more information about Wi-Fi module connection, see:
-    readme_modules.txt
-    Getting started guide on supported modules configuration:
-    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+## Prepare the Demo
     
 1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port on the board.
 2.  Open a serial terminal with the following settings:
@@ -98,15 +44,17 @@ For more information about Wi-Fi module connection, see:
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 
 1.  When the demo starts, a welcome message would appear on the terminal, press enter for the command prompt:
     Press tab or type help to list out all available CLI commands.
-
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ========================================
     Initialize WLAN
+    ========================================
     MAC Address: 9C:50:D1:45:4D:87
     Initialize CLI
+    ========================================
 
     Copyright  2022  NXP
 
@@ -152,8 +100,10 @@ Running the demo
     "wlan_disconnect":
     Disconnect from connected network
     SHELL>>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 2.  You can list all available networks using wlan_scan command.
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SHELL>> wlan_scan
 
     Initiating scan...
@@ -161,52 +111,74 @@ Running the demo
         BSSID         : 00:5F:67:8B:25:8E
         RSSI          : -66dBm
         Channel       : 1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 3.  Connect to the network using one of the following commands:
-
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     wlan_connect <ssid>
     wlan_connect_with_password <ssid> <password>
-    
+
     Use SSID (the name of your network) to join the network.
-    
+
     Example of successful wlan_connect_with_password command:	
 
     SHELL>> wlan_connect_with_password MyWifi pass0123456
     Joining: MyWifi
     Network joined
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     Note: If you see your network in the list of scanned networks but demo 
     prints "Failed to join network!", make sure you entered the correct SSID and password.
     If that did not help, try to restart your Wi-Fi access point.
 
 4.  TCP client echo
-    a) Launch ncat -v -l -p 10001 on your computer.
-    b) Run the command echo_tcp_client <PC IPv4 addr> 10001 in demo shell.
-    c) You should see on your PC "Ncat: Connection from <Demo IPv4 addr>."
-    d) Type some text into ncat (not demo shell) and the demo will send your line back
+
+    1. Launch `ncat -v -l -p 10001` on your computer.
+    2. Run the command `echo_tcp_client <PC IPv4 addr> 10001` in demo shell.
+    3. You should see on your PC `Ncat: Connection from <Demo IPv4 addr>.`
+    4. Type some text into ncat (not demo shell) and the demo will send your line back
        when you hit enter.
-    e) You can terminate the connection by pressing ctrl+c in ncat or typing end to the demo shell.
+    5. You can terminate the connection by pressing ctrl+c in ncat or typing end to the demo shell.
     
-    For IPv6 just replace <PC IPv4 addr> with IPv6 address of your PC.
+    For IPv6 just replace `<PC IPv4 addr>` with IPv6 address of your PC.
     
 5.  TCP server echo
-    a) Run the command echo_tcp_server 10001 in demo shell.
-    b) Launch ncat -v <Demo IPv4 addr> 10001 on your computer.
-    c) You should see on your PC "Ncat: Connected to <Demo IPv4 addr>:10001."
-    d) Type some text into ncat (not demo shell) and the demo will send your line back
+
+    1. Run the command `echo_tcp_server 10001` in demo shell.
+    2. Launch `ncat -v <Demo IPv4 addr> 10001` on your computer.
+    3. You should see on your PC `Ncat: Connected to <Demo IPv4 addr>:10001`
+    4. Type some text into ncat (not demo shell) and the demo will send your line back
        when you hit enter.
-    e) You can terminate the connection by pressing ctrl+c in ncat or typing end to the demo shell.
+    5. You can terminate the connection by pressing ctrl+c in ncat or typing end to the demo shell.
     
-    For IPv6, just replace <Demo IPv4 addr> with the IPv6 address of the demo. In case of
+    For IPv6, just replace `<Demo IPv4 addr>` with the IPv6 address of the demo. In case of
     link-local IPv6 address, don't forget to append % followed by zone id of your PC.
     
 6.  UDP echo
-    a) Run the command echo_udp 10001 in demo shell.
-    b) On your computer launch ncat -v -u <Demo IPv4 addr> 10001
-    c) You should see on your PC "Ncat: Connected to <Demo IPv4 addr>:10001."
-    d) Type some text into ncat (not the demo shell) and the demo will send your line back
+
+    1. Run the command `echo_udp 10001` in demo shell.
+    2. On your computer launch `ncat -v -u <Demo IPv4 addr> 10001`
+    3. You should see on your PC `Ncat: Connected to <Demo IPv4 addr>:10001`
+    4. Type some text into ncat (not the demo shell) and the demo will send your line back
        when you hit enter.
-    e) To terminate is necessary by doing both, pressing ctrl+c in ncat and typing end to demo shell.
+    5. To terminate is necessary by doing both, pressing ctrl+c in ncat and typing end to demo shell.
     
-    For IPv6, just replace <Demo IPv4 addr> with the IPv6 address of the demo. In case of
+    For IPv6, just replace `<Demo IPv4 addr>` with the IPv6 address of the demo. In case of
     link-local IPv6 address, don't forget to append % followed by zone id of your PC.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/wifi_examples/common/wifi_examples_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/wifi_examples/common/wifi_examples_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/wifi_examples/common/wifi_examples_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/wifi_examples/common/wifi_examples_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/wifi_examples/common/wifi_examples_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/wifi_examples/common/wifi_examples_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/wifi_examples/common/wifi_examples_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/wifi_examples/common/wifi_examples_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/wifi_examples/common/wifi_examples_readme.md)

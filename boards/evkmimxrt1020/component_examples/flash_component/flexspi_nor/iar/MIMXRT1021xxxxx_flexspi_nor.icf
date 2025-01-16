@@ -88,6 +88,10 @@ initialize by copy {
   readonly object ABImemset.o,
   readonly object ABImemcpy48.o,
   readonly object ABImemset48.o,
+  readonly object ABImemclr.o,
+  readonly object ABImemclr4.o,
+  readonly object I64DivMod.o,
+  readonly object I64DivZer.o,
 };
 do not initialize  { section .noinit };
 

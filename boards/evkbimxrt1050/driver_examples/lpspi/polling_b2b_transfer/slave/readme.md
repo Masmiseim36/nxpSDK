@@ -1,5 +1,6 @@
-Overview
-========
+# lpspi_polling_b2b_transfer_slave
+
+## Overview
 The lpspi_polling_b2b_transfer example shows how to use LPSPI driver in polling way:
 
 In this example , we need two boards, one board used as LPSPI master and another board used as LPSPI slave.
@@ -7,72 +8,43 @@ The file 'lpspi_polling_b2b_transfer_slave.c' includes the LPSPI slave code.
 
 1. LPSPI master send/received data to/from LPSPI slave in polling . (LPSPI Slave using interrupt to receive/send the data)
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Two EVKB-MIMXRT1050 boards
-- Personal Computer
-
-Board settings
-==============
-Weld 0Ω resistor to R278,R279,R280,R281.
-
-SPI one board:
-Transfer data from one board instance to another board's instance.
-SPI0 pins are connected with SPI0 pins of another board
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-INSTANCE1(LPSPI1)     CONNECTS TO         INSTANCE1(LPSPI1)
-Pin Name   Board Location     Pin Name  Board Location
-SOUT        J24 pin 4           SIN       J24 pin 5
-SIN         J24 pin 5           SOUT      J24 pin 4
-SCK         J24 pin 6           SCK       J24 pin 6
-PCS0        J24 pin 3           PCS0      J24 pin 3 
-GND         J24 pin 7           GND       J24 pin 7
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Reset the SoC and run the project.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LPSPI board to board polling example.
-
- Slave example is running...
-This is LPSPI slave transfer completed callback.
-It's a successful transfer.
-
-This is LPSPI slave transfer completed callback.
-It's a successful transfer.
-
-
- Slave received:
-      1  2  3  4  5  6  7  8  9  A  B  C  D  E  F 10
-     11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F 20
-     21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30
-     31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 40
-
- Slave example is running...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../../_boards/evk9mimx8ulp/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../../_boards/evkbimxrt1050/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../../_boards/evkbmimxrt1170/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../../_boards/evkmcimx7ulp/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../../_boards/evkmimx8ulp/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../../_boards/evkmimxrt1010/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../_boards/evkmimxrt1015/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../_boards/evkmimxrt1020/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../_boards/evkmimxrt1024/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../_boards/evkmimxrt1040/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../../_boards/evkmimxrt1160/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../../_boards/evkmimxrt1180/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../../_boards/frdmk32l2a4s/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-K32L3A6](../../../../_boards/frdmk32l3a6/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-KE15Z](../../../../_boards/frdmke15z/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-KE16Z](../../../../_boards/frdmke16z/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-KE17Z](../../../../_boards/frdmke17z/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-KE17Z512](../../../../_boards/frdmke17z512/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXA153](../../../../_boards/frdmmcxa153/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXA156](../../../../_boards/frdmmcxa156/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXA166](../../../../_boards/frdmmcxa166/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXA276](../../../../_boards/frdmmcxa276/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXN236](../../../../_boards/frdmmcxn236/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXN947](../../../../_boards/frdmmcxn947/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXW71](../../../../_boards/frdmmcxw71/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [FRDM-MCXW72](../../../../_boards/frdmmcxw72/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [K32W148-EVK](../../../../_boards/k32w148evk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [KW45B41Z-EVK](../../../../_boards/kw45b41zevk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [KW47-EVK](../../../../_boards/kw47evk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../../_boards/mcimx93autoevk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MCIMX93-EVK](../../../../_boards/mcimx93evk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MCIMX93-QSB](../../../../_boards/mcimx93qsb/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../../_boards/mcxn5xxevk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../../_boards/mcxn9xxevk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MCX-W72-EVK](../../../../_boards/mcxw72evk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)
+- [MIMXRT700-EVK](../../../../_boards/mimxrt700evk/driver_examples/lpspi/polling_b2b_transfer/slave/example_board_readme.md)

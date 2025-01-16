@@ -16,8 +16,14 @@
 #define FMSTR_PLATFORM_CORTEX_M 1 /* Cortex-M platform (see freemaster.h for list of all supported platforms) */
 
 //! Set the demo application configuration
-#define FMSTR_DEMO_ENOUGH_ROM 1 /* Platform has enough ROM to show most of the FreeMASTER features */
-#define FMSTR_DEMO_LARGE_ROM  1 /* Platform has large ROM enough to store the extended data structures */
+#ifdef XIP_EXTERNAL_FLASH
+    #define FMSTR_DEMO_ENOUGH_ROM  1    /* Platform has enough ROM to show most of the FreeMASTER features */
+    #define FMSTR_DEMO_LARGE_ROM   1    /* Platform has large ROM enough to store the extended data structures used in FreeMASTER demo */
+#else
+    #define FMSTR_DEMO_ENOUGH_ROM  1    /* Platform has enough ROM to show most of the FreeMASTER features */
+    #define FMSTR_DEMO_LARGE_ROM   0    /* Not enough ROM-like storage when running from internal RAM */
+#endif
+
 #define FMSTR_DEMO_SUPPORT_I64 1 /* support for long long type */
 #define FMSTR_DEMO_SUPPORT_FLT 1 /* support for float type */
 #define FMSTR_DEMO_SUPPORT_DBL 1 /* support for double type */

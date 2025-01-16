@@ -86,7 +86,7 @@ static struct bt_conn_auth_cb auth_cb_display = {
 static bool device_scanned(struct bt_data *data, void *user_data)
 {
     bt_addr_le_t *addr = user_data;
-    struct bt_uuid *uuid;
+    const struct bt_uuid *uuid;
     uint16_t u16;
     int err;
     int i;

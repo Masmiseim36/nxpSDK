@@ -1,5 +1,6 @@
-Overview
-========
+# edma_ping_pong_transfer
+
+## Overview
 The EDMA ping pong transfer example is a simple demonstration program that uses the SDK software.
 It excuates ping pong transfer from source buffer to destination buffer using the SDK EDMA drivers.
 The purpose of this example is to show how to use ping pong buffer by the EDMA and to provide a simple example for
@@ -31,59 +32,21 @@ Please reference user manual for the detail of the feature.
                                                                                                                                |         example complete          |
                                                                                                                                +-----------------------------------+
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKB board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the example runs successfully, you can see the similar information from the terminal as below.
-~~~~~~~~~~~~~~~~~~~~~
-EDMA ping pong transfer example begin.
-
-
-
-Destination Buffer:
-
-0	0	0	0	0	0	0	0	
-
-
-
-EDMA ping pong transfer example finish.
-
-
-
-Destination Buffer:
-
-1	2	3	4	5	6	7	8	
-~~~~~~~~~~~~~~~~~~~~~
-
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [FRDM-K22F](../../../_boards/frdmk22f/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../_boards/frdmk32l2a4s/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [FRDM-K32L3A6](../../../_boards/frdmk32l3a6/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [FRDM-KE15Z](../../../_boards/frdmke15z/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [FRDM-KE17Z](../../../_boards/frdmke17z/driver_examples/edma/ping_pong_transfer/example_board_readme.md)
+- [FRDM-KE17Z512](../../../_boards/frdmke17z512/driver_examples/edma/ping_pong_transfer/example_board_readme.md)

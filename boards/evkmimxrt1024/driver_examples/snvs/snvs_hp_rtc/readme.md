@@ -1,60 +1,18 @@
-Overview
-========
+# snvs_hp_rtc
+
+## Overview
 The SNVS HP RTC project is a simple demonstration program of the SDK SNVS HP driver. The test will set up RTC date and time to a predefined value and starts the counter. RTC then triggers an alarm after a user specified time period. The alarm will be set with reference to this predefined date and time.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1024-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of snvs example in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-SNVS HP example:
-Set up time to wake up an alarm.
-Current datetime: 2014-12-25 19:00:00
-Please input the number of second to wait for alarm and press enter
-The second must be positive value
-Alarm will occur at: 2014-12-25 19:00:16
-
- Alarm occurs !!!! Current datetime: 2014-12-25 19:00:16
-Please input the number of second to wait for alarm and press enter
-The second must be positive value
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-3. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../_boards/evkmcimx7ulp/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/snvs/snvs_hp_rtc/example_board_readme.md)

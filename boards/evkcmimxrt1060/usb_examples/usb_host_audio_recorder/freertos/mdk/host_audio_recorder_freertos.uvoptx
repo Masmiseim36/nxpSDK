@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkcmimxrt1060_sdram_init.ini</tIfile>
+        <tIfile>../evkcmimxrt1060_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -265,7 +265,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkcmimxrt1060_flexspi_nor.ini</tIfile>
+        <tIfile>../evkcmimxrt1060_flexspi_nor.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -422,7 +422,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkcmimxrt1060_sdram_init.ini</tIfile>
+        <tIfile>../evkcmimxrt1060_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -586,7 +586,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkcmimxrt1060_flexspi_nor.ini</tIfile>
+        <tIfile>../evkcmimxrt1060_flexspi_nor.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

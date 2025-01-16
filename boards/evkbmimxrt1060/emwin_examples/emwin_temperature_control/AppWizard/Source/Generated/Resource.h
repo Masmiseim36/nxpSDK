@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2024  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -39,8 +39,13 @@ Purpose     : Generated file do NOT edit!
 #define ID_TEXT_10 13
 #define ID_TEXT_11 14
 
-#define APPW_MANAGE_TEXT APPW_MANAGE_TEXT_EXT
 extern GUI_CONST_STORAGE unsigned char acAPPW_Language_0[];
+
+/*********************************************************************
+*
+*       Font data
+*/
+extern APPW_FONT APPW__aFont[3];
 
 /*********************************************************************
 *

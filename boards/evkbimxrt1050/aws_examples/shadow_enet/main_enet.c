@@ -43,6 +43,7 @@
 
 #include "mflash_file.h"
 #include "kvstore.h"
+#include "app.h"
 
 #include "mqtt_agent_task.h"
 #include "aws_dev_mode_key_provisioning.h"
@@ -54,18 +55,11 @@
 #include "ethernetif.h"
 #include "lwip/netifapi.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "fsl_phyksz8081.h"
+#include "logging.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  0x02U
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
 /**
  * @brief Stack size and priority for shadow device sync task.
  */
@@ -99,7 +93,6 @@ extern phy_ksz8081_resource_t g_phy_resource;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitNetwork(void);
 extern void vShadowDeviceTask(void *pvParameters);
 extern void vShadowUpdateTask(void *pvParameters);
 int init_network(void);
@@ -109,7 +102,6 @@ void init_task(void *pvParameters);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 static const mflash_file_t dir_template[] = {{.path = KVSTORE_FILE_PATH, .max_size = 3000},
                                              {.path = pkcs11palFILE_NAME_CLIENT_CERTIFICATE, .max_size = 2000},
                                              {.path = pkcs11palFILE_NAME_KEY, .max_size = 2000},
@@ -122,51 +114,16 @@ static struct netif s_netif;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
 /*!
  * @brief Application entry point.
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    /* Hardware reset PHY. */
-    BOARD_ENET_PHY_RESET;
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     if (CRYPTO_InitHardware() != 0)
     {
-        PRINTF(("\r\nFailed to initialize MBEDTLS crypto.\r\n"));
+        PRINTF("\r\nFailed to initialize MBEDTLS crypto.\r\n");
         while (true)
         {
         }
@@ -229,7 +186,7 @@ void init_task(void *pvParameters)
 
     if (xResult == pdFAIL)
     {
-        configPRINTF(("Failed to initialize key value configuration store.\r\n"));
+        vLoggingPrintf("Failed to initialize key value configuration store.\r\n");
     }
 
     if (xResult == pdPASS)
@@ -316,7 +273,7 @@ void vApplicationMallocFailedHook()
  * used by the Idle task. */
 void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
                                    StackType_t **ppxIdleTaskStackBuffer,
-                                   uint32_t *pulIdleTaskStackSize)
+                                   configSTACK_DEPTH_TYPE *pulIdleTaskStackSize)
 {
     /* If the buffers to be provided to the Idle task are declared inside this
      * function then they must be declared static - otherwise they will be allocated on
@@ -347,7 +304,7 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
  */
 void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
                                     StackType_t **ppxTimerTaskStackBuffer,
-                                    uint32_t *pulTimerTaskStackSize)
+                                    configSTACK_DEPTH_TYPE *pulTimerTaskStackSize)
 {
     /* If the buffers to be provided to the Timer task are declared inside this
      * function then they must be declared static - otherwise they will be allocated on
@@ -420,7 +377,7 @@ int init_network(void)
         (void)PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
     }
 
-    configPRINTF(("Getting IP address from DHCP ...\r\n"));
+    vLoggingPrintf("Getting IP address from DHCP ...\r\n");
     ret = netifapi_dhcp_start(&s_netif);
     if (ret != (err_t)ERR_OK)
     {
@@ -430,8 +387,8 @@ int init_network(void)
         }
     }
     (void)ethernetif_wait_ipv4_valid(&s_netif, ETHERNETIF_WAIT_FOREVER);
-    configPRINTF(("IPv4 Address: %s\r\n", ipaddr_ntoa(&s_netif.ip_addr)));
-    configPRINTF(("DHCP OK\r\n"));
+    vLoggingPrintf("IPv4 Address: %s\r\n", ipaddr_ntoa(&s_netif.ip_addr));
+    vLoggingPrintf("DHCP OK\r\n");
 
     return kStatus_Success;
 }

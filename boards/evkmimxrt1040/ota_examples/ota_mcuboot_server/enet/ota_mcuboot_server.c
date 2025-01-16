@@ -20,8 +20,8 @@
 
 #include "lwip/api.h"
 
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
 #include "httpsrv.h"
 #include "httpsrv_port.h"
@@ -34,18 +34,9 @@
 #include "flash_map.h"
 #include "mcuboot_app_support.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "lwip/opt.h"
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "ethernetif.h"
-#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #ifndef HTTPD_DEBUG
 #define HTTPD_DEBUG LWIP_DBG_ON
@@ -75,7 +66,6 @@ static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];
 
@@ -96,28 +86,6 @@ const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
-    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
-}
-
 
 enum ota_status_t
 {
@@ -197,8 +165,7 @@ static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param)
             char versionstr[40];
             int slotused;
 
-            status = mflash_drv_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih));
-            if (status != kStatus_Success)
+            if (bl_flash_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih)) != 0)
             {
                 PRINTF("Failed to read image header/n");
                 return 0;
@@ -733,23 +700,7 @@ static void main_thread(void *arg)
 
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO3, 4, &gpio_config);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO3, 4, 1);
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     mflash_drv_init();
 

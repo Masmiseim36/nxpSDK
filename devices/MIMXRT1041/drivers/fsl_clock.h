@@ -192,7 +192,7 @@ extern volatile uint32_t g_rtcXtalFreq;
 /*! @brief Clock ip name array for ENET. */
 #define ENET_CLOCKS \
     {               \
-        kCLOCK_Enet \
+        kCLOCK_Enet, kCLOCK_IpInvalid, kCLOCK_Enet2 \
     }
 
 /*! @brief Clock ip name array for EWM. */
@@ -270,7 +270,7 @@ extern volatile uint32_t g_rtcXtalFreq;
 /*! @brief Clock ip name array for LPSPI. */
 #define LPSPI_CLOCKS                                                  \
     {                                                                 \
-        kCLOCK_IpInvalid, kCLOCK_Lpspi1, kCLOCK_Lpspi2, kCLOCK_Lpspi3 \
+        kCLOCK_IpInvalid, kCLOCK_Lpspi1, kCLOCK_Lpspi2, kCLOCK_Lpspi3, kCLOCK_Lpspi4 \
     }
 
 /*! @brief Clock ip name array for LPUART. */
@@ -481,9 +481,10 @@ typedef enum _clock_name
 
     kCLOCK_EnetPll0Clk = 0x13U, /*!< Enet PLLCLK ref_enetpll0. */
     kCLOCK_EnetPll1Clk = 0x14U, /*!< Enet PLLCLK ref_enetpll1. */
+    kCLOCK_EnetPll2Clk = 0x15U, /*!< Enet PLLCLK ref_enetpll2. */
 
-    kCLOCK_AudioPllClk = 0x15U, /*!< Audio PLLCLK. */
-    kCLOCK_VideoPllClk = 0x16U, /*!< Video PLLCLK. */
+    kCLOCK_AudioPllClk = 0x16U, /*!< Audio PLLCLK. */
+    kCLOCK_VideoPllClk = 0x17U, /*!< Video PLLCLK. */
 
     kCLOCK_NoneName = CLOCK_SOURCE_NONE, /*!< None Clock Name. */
 } clock_name_t;
@@ -520,6 +521,7 @@ typedef enum _clock_ip_name
     kCLOCK_Lpspi1   = (1U << 8U) | CCM_CCGR1_CG0_SHIFT,  /*!< CCGR1, CG0   */
     kCLOCK_Lpspi2   = (1U << 8U) | CCM_CCGR1_CG1_SHIFT,  /*!< CCGR1, CG1   */
     kCLOCK_Lpspi3   = (1U << 8U) | CCM_CCGR1_CG3_SHIFT,  /*!< CCGR1, CG3   */
+    kCLOCK_Lpspi4   = (1U << 8U) | CCM_CCGR1_CG2_SHIFT,  /*!< CCGR1, CG3   */
     kCLOCK_Adc2     = (1U << 8U) | CCM_CCGR1_CG4_SHIFT,  /*!< CCGR1, CG4   */
     kCLOCK_Enet     = (1U << 8U) | CCM_CCGR1_CG5_SHIFT,  /*!< CCGR1, CG5   */
     kCLOCK_Pit      = (1U << 8U) | CCM_CCGR1_CG6_SHIFT,  /*!< CCGR1, CG6   */
@@ -622,6 +624,7 @@ typedef enum _clock_ip_name
     kCLOCK_Timer3   = (6U << 8U) | CCM_CCGR6_CG15_SHIFT, /*!< CCGR6, CG15  */
 
     /* CCM CCGR7 */
+    kCLOCK_Enet2     = (7U << 8U) | CCM_CCGR7_CG0_SHIFT, /*!< CCGR7, CG0   */
     kCLOCK_FlexSpi2  = (7U << 8U) | CCM_CCGR7_CG1_SHIFT, /*!< CCGR7, CG1   */
     kCLOCK_Axbs_l    = (7U << 8U) | CCM_CCGR7_CG2_SHIFT, /*!< CCGR7, CG2   */
     kCLOCK_Can3      = (7U << 8U) | CCM_CCGR7_CG3_SHIFT, /*!< CCGR7, CG3   */
@@ -1243,6 +1246,12 @@ typedef struct _clock_enet_pll_config
                                   b10 100MHz (not 50% duty cycle)
                                   b11 125MHz */
     uint8_t src;             /*!< Pll clock source, reference _clock_pll_clk_src */
+    bool enableClkOutput1;   /*!< Power on and enable PLL clock output for ENET1 (ref_enetpll1). */
+    uint8_t loopDivider1;    /*!< Controls the frequency of the ENET1 reference clock.
+                                  b00 25MHz
+                                  b01 50MHz
+                                  b10 100MHz (not 50% duty cycle)
+                                  b11 125MHz */
 } clock_enet_pll_config_t;
 
 /*! @brief PLL name */
@@ -1255,6 +1264,7 @@ typedef enum _clock_pll
     kCLOCK_PllVideo = CCM_ANALOG_TUPLE(PLL_VIDEO_OFFSET, CCM_ANALOG_PLL_VIDEO_ENABLE_SHIFT), /*!< PLL Video */
 
     kCLOCK_PllEnet    = CCM_ANALOG_TUPLE(PLL_ENET_OFFSET, CCM_ANALOG_PLL_ENET_ENABLE_SHIFT),          /*!< PLL Enet0 */
+    kCLOCK_PllEnet2   = CCM_ANALOG_TUPLE(PLL_ENET_OFFSET, CCM_ANALOG_PLL_ENET_ENET2_REF_EN_SHIFT),    /*!< PLL Enet1 */
     kCLOCK_PllEnet25M = CCM_ANALOG_TUPLE(PLL_ENET_OFFSET, CCM_ANALOG_PLL_ENET_ENET_25M_REF_EN_SHIFT), /*!< PLL Enet1 */
 } clock_pll_t;
 

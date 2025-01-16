@@ -8,6 +8,7 @@
 #ifndef _VIT_PROC_H_
 #define _VIT_PROC_H_
 
+#if (VIT_PROC == 1)
 #include "PL_platformTypes_CortexM.h"
 #include "VIT.h"
 
@@ -57,3 +58,4 @@ extern VIT_Language_T Vit_Language;
 #endif
 
 void DeInterleave32(const int16_t *pDataInput, int16_t *pDataOutput, uint16_t FrameSize, uint16_t ChannelNumber);
+#endif

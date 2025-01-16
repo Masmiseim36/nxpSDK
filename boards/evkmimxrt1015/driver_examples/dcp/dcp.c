@@ -11,16 +11,14 @@
  ******************************************************************************/
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_dcp.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #define DCP_TEST_USE_OTP_KEY 0 /* Set to 1 to select OTP key for AES encryption/decryption. */
 
@@ -340,10 +338,7 @@ int main(void)
     dcp_config_t dcpConfig;
 
     /* Init hardware*/
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Note: When DCACHE is enabled input and output buffers should be in non-cached memory
      * or handled properly (DCACHE Clean and Invalidate).

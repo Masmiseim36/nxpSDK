@@ -6,9 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_flexio_uart_edma.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
@@ -17,27 +16,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE  FLEXIO1
-#define FLEXIO_UART_TX_PIN 21U
-#define FLEXIO_UART_RX_PIN 22U
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define FLEXIO_CLOCK_SELECT (3U)
-/* Clock pre divider for flexio clock source */
-#define FLEXIO_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER (7U)
-#define FLEXIO_CLOCK_FREQUENCY \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (FLEXIO_CLOCK_PRE_DIVIDER + 1U) / (FLEXIO_CLOCK_DIVIDER + 1U))
-
-#define EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_FLEXIO_UART_DMA_BASEADDR    DMA0
-#define FLEXIO_UART_TX_DMA_CHANNEL          0U
-#define FLEXIO_UART_RX_DMA_CHANNEL          1U
-#define FLEXIO_TX_SHIFTER_INDEX             0U
-#define FLEXIO_RX_SHIFTER_INDEX             2U
-#define EXAMPLE_TX_DMA_SOURCE               kDmaRequestMuxFlexIO1Request0Request1
-#define EXAMPLE_RX_DMA_SOURCE               kDmaRequestMuxFlexIO1Request2Request3
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -104,14 +82,7 @@ int main(void)
     status_t result = kStatus_Success;
     edma_config_t config;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio1Mux, FLEXIO_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio1PreDiv, FLEXIO_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio1Div, FLEXIO_CLOCK_DIVIDER);
+    BOARD_InitHardware();
 
     /*
      * config.enableUart = true;

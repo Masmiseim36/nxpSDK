@@ -7,18 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_enc.h"
 
-#include "fsl_xbara.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ENC_BASEADDR     ENC1
-#define DEMO_ENC_INDEX_IRQ_ID ENC1_IRQn
-#define ENC_INDEX_IRQHandler  ENC1_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -56,15 +51,7 @@ int main(void)
     enc_config_t mEncConfigStruct;
     uint32_t mCurPosValue;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    XBARA_Init(XBARA1);
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarIn21, kXBARA1_OutputEnc1PhaseAInput);
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarIn22, kXBARA1_OutputEnc1PhaseBInput);
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarIn23, kXBARA1_OutputEnc1Index);
+    BOARD_InitHardware();
 
     PRINTF("\r\nENC INDEX Interrupt Example.\r\n");
 

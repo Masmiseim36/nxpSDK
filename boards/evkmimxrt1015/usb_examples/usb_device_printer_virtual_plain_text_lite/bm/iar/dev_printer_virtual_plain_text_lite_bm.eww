@@ -5,10 +5,6 @@
       <name>all</name>
       <member>
         <project>dev_printer_virtual_plain_text_lite_bm</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>dev_printer_virtual_plain_text_lite_bm</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -17,14 +13,11 @@
       </member>
       <member>
         <project>dev_printer_virtual_plain_text_lite_bm</project>
-        <configuration>release</configuration>
+        <configuration>debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
       <member>
         <project>dev_printer_virtual_plain_text_lite_bm</project>
-        <configuration>debug</configuration>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -39,6 +32,13 @@
       <member>
         <project>dev_printer_virtual_plain_text_lite_bm</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>dev_printer_virtual_plain_text_lite_bm</project>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

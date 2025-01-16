@@ -1,56 +1,16 @@
-Overview
-========
+# lpspi_loopback
+
+## Overview
 The lpspi_loopback demo shows how the lpspi do a loopback transfer, LPSPI
 master will transmit data to itself, so please connect the SOUT pin to SIN 
 pin directly.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- GCC ARM Embedded  13.2.1
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVKB-MIMXRT1050 board
-- Personal Computer
-
-Board settings
-==============
-Remove the resistor R334 and weld 0Ω resistor to R278,R280.
-
-LPSPI:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       MASTER           connect to           MASTER
-Pin Name   Board Location     Pin Name    Board Location
-SOUT       J24-4              SIN         J24-5
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1. Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2. Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running
-   the demo.
-
-Running the demo
-================
-When the example runs successfully, you can see the similar information from the terminal as below.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-***LPSPI Loopback Demo***
-
-LPSPI loopback test pass!!!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/demo_apps/lpspi_loopback/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/demo_apps/lpspi_loopback/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/demo_apps/lpspi_loopback/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/demo_apps/lpspi_loopback/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/demo_apps/lpspi_loopback/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/demo_apps/lpspi_loopback/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/demo_apps/lpspi_loopback/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/demo_apps/lpspi_loopback/example_board_readme.md)

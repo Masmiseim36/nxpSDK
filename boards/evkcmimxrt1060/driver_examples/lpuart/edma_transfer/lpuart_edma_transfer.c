@@ -6,9 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpuart_edma.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
@@ -16,14 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART                    LPUART1
-#define DEMO_LPUART_CLK_FREQ           BOARD_DebugConsoleSrcFreq()
-#define LPUART_TX_DMA_CHANNEL          0U
-#define LPUART_RX_DMA_CHANNEL          1U
-#define LPUART_TX_DMA_REQUEST          kDmaRequestMuxLPUART1Tx
-#define LPUART_RX_DMA_REQUEST          kDmaRequestMuxLPUART1Rx
-#define EXAMPLE_LPUART_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_LPUART_DMA_BASEADDR    DMA0
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -81,9 +72,7 @@ int main(void)
     lpuart_transfer_t receiveXfer;
     edma_config_t userConfig = {0};
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
+    BOARD_InitHardware();
 
     /* Initialize the LPUART. */
     /*

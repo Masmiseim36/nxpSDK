@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2020,2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -11,11 +11,11 @@
 
 /* Flash constants */
 #ifndef MFLASH_SECTOR_SIZE
-#define MFLASH_SECTOR_SIZE (0x1000)
+#define MFLASH_SECTOR_SIZE (0x1000U)
 #endif
 
 #ifndef MFLASH_PAGE_SIZE
-#define MFLASH_PAGE_SIZE (256)
+#define MFLASH_PAGE_SIZE (256U)
 #endif
 
 #ifndef MFLASH_FLEXSPI
@@ -32,5 +32,14 @@
 #ifndef MFLASH_INC_WRITE
 #define MFLASH_INC_WRITE 1
 #endif
+
+/* Flash Size expressed in bytes : 8MB - 64Mb QSPI */
+#define MFLASH_BSIZE 0x800000UL
+
+#define MFLASH_REMAP_OFFSET() (IOMUXC_GPR->GPR32 & 0xFFFFF000UL)
+#define MFLASH_REMAP_START()  (IOMUXC_GPR->GPR30 & 0xFFFFF000UL)
+#define MFLASH_REMAP_END()    (IOMUXC_GPR->GPR31 & 0xFFFFF000UL)
+
+#define MFLASH_REMAP_ACTIVE() (MFLASH_REMAP_OFFSET() != 0UL)
 
 #endif

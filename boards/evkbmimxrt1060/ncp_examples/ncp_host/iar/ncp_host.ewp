@@ -11,9 +11,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>39</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -70,11 +75,11 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
+          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -98,7 +103,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -115,12 +120,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
+          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -138,7 +143,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -211,31 +216,45 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>XIP_EXTERNAL_FLASH=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>USE_RTOS=1</state>
           <state>OSA_USED</state>
+          <state>USB_HOST_CONFIG_LOW_POWER_MODE=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6B_cm7</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>TIMER_PORT_TYPE_PIT=1</state>
-          <state>SDIO_ENABLED</state>
-          <state>SDK_OS_FREE_RTOS</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
+          <state>SDIO_ENABLED=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -275,7 +294,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -312,11 +331,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--preinclude $PROJ_DIR$/../mcux_config.h --diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -352,50 +371,39 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state>$PROJ_DIR$/../app_config.h</state>
+          <state>$PROJ_DIR$/../ncp_host_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../system</state>
-          <state>$PROJ_DIR$/../wifi</state>
           <state>$PROJ_DIR$/../ble</state>
           <state>$PROJ_DIR$/../ble/ble_service</state>
-          <state>$PROJ_DIR$/../usb_host</state>
-          <state>$PROJ_DIR$/../sdio_host</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/spi</state>
-          <state>$PROJ_DIR$/../../common/crc</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_tlv</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter</state>
-          <state>$PROJ_DIR$/../../common/ncp_debug</state>
-          <state>$PROJ_DIR$/../../common</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
-          <state>$PROJ_DIR$/../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -411,7 +419,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -420,7 +428,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -497,11 +505,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -509,6 +517,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -520,6 +536,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -567,8 +587,9 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>OSA_USED</state>
         </option>
         <option>
           <name>AList</name>
@@ -661,13 +682,32 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../system</state>
-          <state>$PROJ_DIR$/../wifi</state>
-          <state>$PROJ_DIR$/../ble</state>
-          <state>$PROJ_DIR$/../ble_service</state>
-          <state>$PROJ_DIR$/../usb_host</state>
-          <state>$PROJ_DIR$/../sdio_host</state>
+          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -697,7 +737,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -713,33 +753,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -817,7 +848,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/linker/MIMXRT1062xxxxx_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1062xxxxx_flexspi_nor.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1106,6 +1137,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1129,6 +1164,14 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_release</name>
@@ -1140,9 +1183,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -1203,7 +1251,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
+          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1227,7 +1275,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -1244,12 +1292,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
+          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1267,7 +1315,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -1340,31 +1388,45 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>XIP_EXTERNAL_FLASH=1</state>
-          <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_EXTERNAL_FLASH=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>USE_RTOS=1</state>
           <state>OSA_USED</state>
+          <state>USB_HOST_CONFIG_LOW_POWER_MODE=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6B_cm7</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
-          <state>TIMER_PORT_TYPE_PIT=1</state>
-          <state>SDIO_ENABLED</state>
-          <state>SDK_OS_FREE_RTOS</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>TIMER_PORT_TYPE_PIT=1</state>
+          <state>SDIO_ENABLED=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1404,7 +1466,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1441,11 +1503,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--preinclude $PROJ_DIR$/../mcux_config.h --diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1481,50 +1543,39 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state>$PROJ_DIR$/../app_config.h</state>
+          <state>$PROJ_DIR$/../ncp_host_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../system</state>
-          <state>$PROJ_DIR$/../wifi</state>
           <state>$PROJ_DIR$/../ble</state>
           <state>$PROJ_DIR$/../ble/ble_service</state>
-          <state>$PROJ_DIR$/../usb_host</state>
-          <state>$PROJ_DIR$/../sdio_host</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/spi</state>
-          <state>$PROJ_DIR$/../../common/crc</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_tlv</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter</state>
-          <state>$PROJ_DIR$/../../common/ncp_debug</state>
-          <state>$PROJ_DIR$/../../common</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf</state>
-          <state>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
-          <state>$PROJ_DIR$/../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1540,7 +1591,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1549,7 +1600,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1626,11 +1677,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -1638,6 +1689,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -1649,6 +1708,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -1696,8 +1759,9 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>OSA_USED</state>
         </option>
         <option>
           <name>AList</name>
@@ -1790,13 +1854,32 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../system</state>
-          <state>$PROJ_DIR$/../wifi</state>
-          <state>$PROJ_DIR$/../ble</state>
-          <state>$PROJ_DIR$/../ble_service</state>
-          <state>$PROJ_DIR$/../usb_host</state>
-          <state>$PROJ_DIR$/../sdio_host</state>
+          <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1826,7 +1909,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -1842,33 +1925,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1946,7 +2020,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/linker/MIMXRT1062xxxxx_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1062xxxxx_flexspi_nor.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2235,6 +2309,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2258,40 +2336,15 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
-  <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../sdmmc_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sdmmc_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
-    </file>
-  </group>
   <group>
     <name>source</name>
     <file>
@@ -2316,32 +2369,23 @@
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../ncp_host_config.h</name>
+      <name>$PROJ_DIR$/../ncp_host_app_system.c</name>
     </file>
-    <group>
-      <name>system</name>
-      <file>
-        <name>$PROJ_DIR$/../system/ncp_host_app_system.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../system/ncp_host_command_system.c</name>
-      </file>
-    </group>
-    <group>
-      <name>wifi</name>
-      <file>
-        <name>$PROJ_DIR$/../wifi/ncp_host_app_wifi.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../wifi/ncp_host_command_wifi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../wifi/ncp_host_command_wifi.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../wifi/ncp_host_utils_wifi.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_command_system.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_app_wifi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_command_wifi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_command_wifi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_utils_wifi.h</name>
+    </file>
     <group>
       <name>ble</name>
       <file>
@@ -2356,273 +2400,216 @@
       <group>
         <name>ble_service</name>
         <file>
-          <name>$PROJ_DIR$/../ble_service/service.h</name>
+          <name>$PROJ_DIR$/../ble/ble_service/service.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/ht.h</name>
+          <name>$PROJ_DIR$/../ble/ble_service/ht.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/htc.c</name>
+          <name>$PROJ_DIR$/../ble/ble_service/htc.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/hts.c</name>
+          <name>$PROJ_DIR$/../ble/ble_service/hts.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/hr.h</name>
+          <name>$PROJ_DIR$/../ble/ble_service/hr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/hrc.c</name>
+          <name>$PROJ_DIR$/../ble/ble_service/hrc.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/hrs.c</name>
+          <name>$PROJ_DIR$/../ble/ble_service/hrs.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/bas.h</name>
+          <name>$PROJ_DIR$/../ble/ble_service/bas.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../ble_service/bas.c</name>
+          <name>$PROJ_DIR$/../ble/ble_service/bas.c</name>
         </file>
       </group>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_app_ot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_host_command_ot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../otopcode.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../otopcode.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../otopcode_private.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_cmd_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_usb_host_cdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_usb_host_cdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_usb_host_cdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_usb_host_cdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_host_cdc_app.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_host_cdc_app.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_host_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_sdio_host.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_sdio_host.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_spi_master.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_spi_master.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../crc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../crc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_tlv_adapter.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_tlv_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_debug.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_cmd_system.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_cmd_wifi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_cmd_ble.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_pm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_pm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_uart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ncp_intf_uart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../FreeRTOSConfigBoard.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../app_config.h</name>
     </file>
-  </group>
-  <group>
-    <name>ncp_common</name>
-    <group>
-      <name>ncp_adapter</name>
-      <group>
-        <name>ncp_intf</name>
-        <group>
-          <name>usb</name>
-          <group>
-            <name>usb_host_cdc</name>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/ncp_intf_usb_host_cdc.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/ncp_intf_usb_host_cdc.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/ncp_usb_host_cdc.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/ncp_usb_host_cdc.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/usb_host_cdc_app.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/usb_host_cdc_app.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../usb_host/usb_host_config.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>sdio</name>
-          <file>
-            <name>$PROJ_DIR$/../sdio_host/ncp_intf_sdio_host.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../sdio_host/ncp_intf_sdio_host.h</name>
-          </file>
-        </group>
-        <group>
-          <name>spi</name>
-          <file>
-            <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/spi/ncp_intf_spi_master.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/spi/ncp_intf_spi_master.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/ncp_intf_pm.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/ncp_intf_pm.h</name>
-        </file>
-        <group>
-          <name>uart</name>
-          <file>
-            <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/uart/ncp_intf_uart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_intf/uart/ncp_intf_uart.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>ncp_tlv</name>
-        <file>
-          <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_tlv/ncp_tlv_adapter.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_tlv/ncp_tlv_adapter.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../common/ncp_adapter/ncp_adapter.h</name>
-      </file>
-    </group>
-    <group>
-      <name>crc</name>
-      <file>
-        <name>$PROJ_DIR$/../../common/crc/crc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../common/crc/crc.h</name>
-      </file>
-    </group>
-    <group>
-      <name>ncp_debug</name>
-      <file>
-        <name>$PROJ_DIR$/../../common/ncp_debug/ncp_debug.h</name>
-      </file>
-    </group>
     <file>
-      <name>$PROJ_DIR$/../../common/ncp_cmd_common.h</name>
+      <name>$PROJ_DIR$/../ncp_host_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../common/ncp_cmd_system.h</name>
+      <name>$PROJ_DIR$/../FreeRTOSConfig_Gen.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../common/ncp_cmd_wifi.h</name>
+      <name>$PROJ_DIR$/../fsl_os_abstraction_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../common/ncp_cmd_ble.h</name>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_host_config.h</name>
     </file>
   </group>
   <group>
-    <name>doc</name>
+    <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../readme.md</name>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hardware_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../app.h</name>
     </file>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
-    <group>
-      <name>timer</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/timer/fsl_adapter_timer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/timer/fsl_adapter_pit.c</name>
-      </file>
-    </group>
-    <group>
-      <name>wifi_bt_module</name>
-      <group>
-        <name>incl</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>gpio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/gpio/fsl_adapter_gpio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/gpio/fsl_adapter_igpio.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
+    <name>xip</name>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkbmimxrt1060_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkbmimxrt1060_flexspi_nor_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../dcd.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
-    </file>
-    <group>
-      <name>freertos</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_freertos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_freertos.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.c</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
@@ -2637,31 +2624,10 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dcdc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dcdc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.h</name>
@@ -2670,39 +2636,456 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pmu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pmu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_src.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_usdhc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_usdhc.h</name>
     </file>
+    <group>
+      <name>freertos</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_freertos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_freertos.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <group>
+      <name>m-profile</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile/cmsis_iccarm_m.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile/armv7m_cachel1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/m-profile/armv7m_mpu.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
     </file>
   </group>
   <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062_COMMON.h</name>
+    </file>
+    <group>
+      <name>periph</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_ADC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_ADC_ETC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_AIPSTZ.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_AOI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_BEE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CAN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CCM_ANALOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CM7_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CMP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CSI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_CSU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_DCDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_DCP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_DMA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_DMAMUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_ENC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_ENET.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_EWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_FLEXIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_FLEXRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_FLEXSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_GPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_GPIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_GPT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_I2S.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_IOMUXC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_IOMUXC_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_IOMUXC_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_IOMUXC_SNVS_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_KPP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_LCDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_LPI2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_LPSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_LPUART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_OCOTP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_PGC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_PIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_PMU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_PWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_PXP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_ROMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_RTWDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_SEMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_SPDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_SRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_TEMPMON.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_TMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_TRNG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_TSC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_USB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_USBNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_USBPHY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_USB_ANALOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_USDHC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_WDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_XBARA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_XBARB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/periph/PERI_XTALOSC24M.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/iar/startup_MIMXRT1062.s</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <group>
+      <name>str</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+      </file>
+    </group>
+    <group>
+      <name>debug_console_lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>gpio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/gpio/fsl_adapter_gpio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/gpio/fsl_adapter_igpio.c</name>
+      </file>
+    </group>
+    <group>
+      <name>timer</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/timer/fsl_adapter_timer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/timer/fsl_adapter_pit.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+    </group>
+    <group>
+      <name>wifi_bt_module</name>
+      <group>
+        <name>incl</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</name>
+        </file>
+      </group>
+    </group>
+  </group>
+  <group>
     <name>usb</name>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_misc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_spec.h</name>
+      </file>
+    </group>
     <group>
       <name>host</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_hci.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_hci.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_devices.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_devices.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_framework.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_ehci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_ehci.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_hci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_devices.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_framework.c</name>
@@ -2728,24 +3111,6 @@
           <name>$PROJ_DIR$/../../../../../middleware/usb/host/class/usb_host_cdc.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_ehci.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_ehci.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_hci.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_devices.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/host/usb_host_framework.h</name>
-      </file>
     </group>
     <group>
       <name>phy</name>
@@ -2756,67 +3121,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/usb/phy/usb_phy.h</name>
       </file>
     </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>sdmmc</name>
     <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/fsl_sdio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c</name>
-      </file>
-    </group>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/fsl_sdio.h</name>
-      </file>
+      <name>common</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
       </file>
-    </group>
-    <group>
-      <name>sdio</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
-    <group>
-      <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c</name>
       </file>
     </group>
     <group>
@@ -2828,6 +3145,33 @@
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</name>
       </file>
     </group>
+    <group>
+      <name>sdio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/fsl_sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/fsl_sdio.h</name>
+      </file>
+    </group>
+    <group>
+      <name>host</name>
+      <group>
+        <name>usdhc</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+        </file>
+        <group>
+          <name>non_blocking</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+        </file>
+      </group>
+    </group>
   </group>
   <group>
     <name>freertos</name>
@@ -2838,6 +3182,21 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
       </file>
       <group>
         <name>include</name>
@@ -2870,12 +3229,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/newlib-freertos.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/picolibc-freertos.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
@@ -2911,11 +3264,20 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
-      </file>
       <group>
         <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
         <group>
           <name>IAR</name>
           <group>
@@ -2931,115 +3293,16 @@
             </file>
           </group>
         </group>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
-      </file>
     </group>
   </group>
   <group>
-    <name>utilities</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-  </group>
-  <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h</name>
-    </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/iar/startup_MIMXRT1062.s</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkbmimxrt1060_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkbmimxrt1060_flexspi_nor_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../example_board_readme.md</name>
     </file>
   </group>
 </project>

@@ -263,6 +263,10 @@ static void bt_ready(int err)
         return;
     }
 
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+    settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
     buf = bt_hci_cmd_create(BT_HCI_OP_WRITE_CLASS_OF_DEVICE, sizeof(*cp));
@@ -299,6 +303,9 @@ static void bt_ready(int err)
     bt_sdp_register_service(&a2dp_sink_rec);
     app_edgefast_a2dp_init();
 }
+
+static StackType_t xStack[ configMINIMAL_STACK_SIZE * 8 ];
+static StaticTask_t xTaskBuffer;
 
 void app_a2dp_sink_task(void *pvParameters)
 {
@@ -346,7 +353,7 @@ void app_a2dp_sink_task(void *pvParameters)
         PRINTF("Switch role cmd create fail\r\n");
     }
 
-    if (xTaskCreate(unicast_media_sender_task, "unicast_media_sender_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    if (NULL == xTaskCreateStatic(unicast_media_sender_task, "unicast_media_sender_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, xStack, &xTaskBuffer))
     {
         PRINTF("unicast_media_sender_task creation failed!\r\n");
         while (1)

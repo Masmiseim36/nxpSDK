@@ -1,9 +1,23 @@
 /*
- * Copyright 2020 NXP
- * All rights reserved.
+ * Copyright 2020-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
+/*****************************************************************************
+ * PHY DP83848 driver change log
+ *****************************************************************************/
+
+/*!
+@page driver_log Driver Change Log
+
+@section phydp83848 PHYDP83848
+  The current PHYDP83848 driver version is 2.0.0.
+
+  - 2.0.0
+    - Initial version.
+*/
+
 #ifndef _FSL_PHYDP83848_H_
 #define _FSL_PHYDP83848_H_
 
@@ -19,19 +33,9 @@
  ******************************************************************************/
 
 /*! @brief PHY driver version */
-#define FSL_PHY_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0. */
+#define FSL_PHY_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
 
-/*! @brief Defines the PHY registers. */
-#define PHY_CONTROL1_REG 0x19U /*!< The PHY control one register. */
-#define PHY_STATUS_REG 0x10     /*!< The PHY Status register. */
-
-#define PHY_CONTROL_ID1 0x2000U /*!< The PHY ID1*/
-
-#define PHY_LINK_READY_MASK 0x0001U         /*!< The PHY link up. */
-#define PHY_STATUS_SPEED_MASK 0x0002U       /*!< The PHY speed mask. */
-#define PHY_STATUS_DUPLEX_MASK 0x0004U      /*!< The PHY duplex mask. */
-
-/*! @brief ENET MDIO operations structure. */
+/*! @brief PHY operations structure. */
 extern const phy_operations_t phydp83848_ops;
 
 /*******************************************************************************
@@ -49,40 +53,88 @@ extern "C" {
 
 /*!
  * @brief Initializes PHY.
- *
- *  This function initialize PHY.
+ *  This function initializes PHY.
  *
  * @param handle       PHY device handle.
  * @param config       Pointer to structure of phy_config_t.
- * @retval kStatus_Success  PHY initializes success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
- * @retval kStatus_PHY_AutoNegotiateFail  PHY auto negotiate fail
+ * @retval kStatus_Success  PHY initialization succeeds
+ * @retval kStatus_Fail  PHY initialization fails
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
  */
 status_t PHY_DP83848_Init(phy_handle_t *handle, const phy_config_t *config);
 
 /*!
- * @brief PHY Write function. This function writes data over the SMI to
- * the specified PHY register. This function is called by all PHY interfaces.
+ * @brief PHY Write function.
+ * This function writes data over the MDIO to the specified PHY register.
  *
  * @param handle  PHY device handle.
  * @param phyReg  The PHY register.
  * @param data    The data written to the PHY register.
  * @retval kStatus_Success     PHY write success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
  */
-status_t PHY_DP83848_Write(phy_handle_t *handle, uint32_t phyReg, uint32_t data);
+status_t PHY_DP83848_Write(phy_handle_t *handle, uint8_t phyReg, uint16_t data);
 
 /*!
- * @brief PHY Read function. This interface read data over the SMI from the
- * specified PHY register. This function is called by all PHY interfaces.
+ * @brief PHY Read function.
+ * This interface read data over the MDIO from the specified PHY register.
  *
  * @param handle   PHY device handle.
  * @param phyReg   The PHY register.
- * @param dataPtr  The address to store the data read from the PHY register.
+ * @param pData  The address to store the data read from the PHY register.
  * @retval kStatus_Success  PHY read success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
  */
-status_t PHY_DP83848_Read(phy_handle_t *handle, uint32_t phyReg, uint32_t *dataPtr);
+status_t PHY_DP83848_Read(phy_handle_t *handle, uint8_t phyReg, uint16_t *pData);
+
+/*!
+ * @brief Gets the PHY auto-negotiation status.
+ *
+ * @param handle   PHY device handle.
+ * @param status   The auto-negotiation status of the PHY.
+ *         - true the auto-negotiation is over.
+ *         - false the auto-negotiation is on-going or not started.
+ * @retval kStatus_Success   PHY gets status success
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
+ */
+status_t PHY_DP83848_GetAutoNegotiationStatus(phy_handle_t *handle, bool *status);
+
+/*!
+ * @brief Gets the PHY link status.
+ *
+ * @param handle   PHY device handle.
+ * @param status   The link up or down status of the PHY.
+ *         - true the link is up.
+ *         - false the link is down.
+ * @retval kStatus_Success   PHY gets link status success
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
+ */
+status_t PHY_DP83848_GetLinkStatus(phy_handle_t *handle, bool *status);
+
+/*!
+ * @brief Gets the PHY link speed and duplex.
+ *
+ * @brief This function gets the speed and duplex mode of PHY. User can give one of speed
+ * and duplex address paramter and set the other as NULL if only wants to get one of them.
+ *
+ * @param handle   PHY device handle.
+ * @param speed    The address of PHY link speed.
+ * @param duplex   The link duplex of PHY.
+ * @retval kStatus_Success   PHY gets link speed and duplex success
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
+ */
+status_t PHY_DP83848_GetLinkSpeedDuplex(phy_handle_t *handle, phy_speed_t *speed, phy_duplex_t *duplex);
+
+/*!
+ * @brief Sets the PHY link speed and duplex.
+ *
+ * @param handle   PHY device handle.
+ * @param speed    Specified PHY link speed.
+ * @param duplex   Specified PHY link duplex.
+ * @retval kStatus_Success   PHY gets status success
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
+ */
+status_t PHY_DP83848_SetLinkSpeedDuplex(phy_handle_t *handle, phy_speed_t speed, phy_duplex_t duplex);
 
 /*!
  * @brief Enables/disables PHY loopback.
@@ -94,34 +146,11 @@ status_t PHY_DP83848_Read(phy_handle_t *handle, uint32_t phyReg, uint32_t *dataP
  * @param speed    PHY speed for loopback mode.
  * @param enable   True to enable, false to disable.
  * @retval kStatus_Success  PHY loopback success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
+ * @retval kStatus_PHY_MDIOVisitTimeout  PHY MDIO visit time out
  */
 status_t PHY_DP83848_EnableLoopback(phy_handle_t *handle, phy_loop_t mode, phy_speed_t speed, bool enable);
 
-/*!
- * @brief Gets the PHY link status.
- *
- * @param handle   PHY device handle.
- * @param status   The link up or down status of the PHY.
- *         - true the link is up.
- *         - false the link is down.
- * @retval kStatus_Success   PHY gets link status success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
- */
-status_t PHY_DP83848_GetLinkStatus(phy_handle_t *handle, bool *status);
-
-/*!
- * @brief Gets the PHY link speed and duplex.
- *
- * @param handle   PHY device handle.
- * @param speed    The address of PHY link speed.
- * @param duplex   The link duplex of PHY.
- * @retval kStatus_Success   PHY gets link speed and duplex success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
- */
-status_t PHY_DP83848_GetLinkSpeedDuplex(phy_handle_t *handle, phy_speed_t *speed, phy_duplex_t *duplex);
-
-/* @} */
+/*! @} */
 
 #if defined(__cplusplus)
 }

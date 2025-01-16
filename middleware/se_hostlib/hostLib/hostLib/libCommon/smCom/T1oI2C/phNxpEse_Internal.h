@@ -1,4 +1,5 @@
 /*
+ * Copyright 2024 NXP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #ifndef _PHNXPESE_INTERNAL_H_
 #define _PHNXPESE_INTERNAL_H_
 
@@ -50,5 +52,6 @@ typedef struct phNxpEse_Context
 ESESTATUS phNxpEse_WriteFrame(void* conn_ctx, uint32_t data_len, const uint8_t *p_data);
 ESESTATUS phNxpEse_read(void* conn_ctx, uint32_t *data_len, uint8_t **pp_data);
 void phNxpEse_clearReadBuffer(void* conn_ctx);
+void phNxpEse_waitForWTX(void* conn_ctx);
 
 #endif /* _PHNXPESE_INTERNAL_H_ */

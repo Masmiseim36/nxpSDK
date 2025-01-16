@@ -11,9 +11,8 @@
  * Includes
  ******************************************************************************/
 #include "lwip/tcpip.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "wpl.h"
 #include "timers.h"
 #include "httpsrv.h"
@@ -27,7 +26,6 @@
 
 #include "FreeRTOS.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -44,7 +42,6 @@ static uint32_t CleanUpClient();
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 typedef enum board_wifi_states
 {
     WIFI_STATE_CLIENT,
@@ -622,10 +619,7 @@ static uint32_t CleanUpClient()
 int main(void)
 {
     /* Initialize the hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Create the main Task */
     if (xTaskCreate(main_task, "main_task", 2048, NULL, configMAX_PRIORITIES - 4, &g_BoardState.mainTask) != pdPASS)

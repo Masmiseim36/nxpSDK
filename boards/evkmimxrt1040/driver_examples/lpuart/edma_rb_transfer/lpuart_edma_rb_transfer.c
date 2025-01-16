@@ -5,9 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_lpuart_edma.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
@@ -15,16 +14,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPUART                 LPUART1
-#define EXAMPLE_LPUART_CLK_FREQ        BOARD_DebugConsoleSrcFreq()
-#define LPUART_TX_DMA_CHANNEL          0U
-#define LPUART_RX_DMA_CHANNEL          1U
-#define LPUART_TX_DMA_REQUEST          kDmaRequestMuxLPUART1Tx
-#define LPUART_RX_DMA_REQUEST          kDmaRequestMuxLPUART1Rx
-#define EXAMPLE_LPUART_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_LPUART_DMA_BASEADDR    DMA0
-#define EXAMPLE_LPUART_IRQHandler      LPUART1_IRQHandler
-#define EXAMPLE_LPUART_IRQn            LPUART1_IRQn
 /* Ring buffer size definition, please make sure to set this value large enough.
  * Otherwise, once overflow occurred, data in ring buffer will be overwritten.
  */
@@ -264,9 +253,7 @@ int main(void)
 {
     lpuart_transfer_t sendXfer;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
+    BOARD_InitHardware();
 
     /* Initialize the LPUART module. */
     EXAMPLE_InitLPUART();

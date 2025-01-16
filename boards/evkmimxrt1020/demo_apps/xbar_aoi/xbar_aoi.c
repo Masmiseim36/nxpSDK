@@ -7,11 +7,6 @@
  */
 
 #include "fsl_debug_console.h"
-#if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
-#include "fsl_acmp.h"
-#else
-#include "fsl_cmp.h"
-#endif
 
 #if defined(FSL_FEATURE_SOC_PIT_COUNT) && FSL_FEATURE_SOC_PIT_COUNT
 #include "fsl_pit.h"
@@ -34,37 +29,18 @@
 #endif
 
 #include "fsl_aoi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
+
+#if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
+#include "fsl_acmp.h"
+#elif defined(FSL_FEATURE_SOC_CMP_COUNT) && FSL_FEATURE_SOC_CMP_COUNT
+#include "fsl_cmp.h"
+#endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_XBARA_BASEADDR XBARA
-#define DEMO_XBARB_BASEADDR XBARB
-
-#define DEMO_PIT_BASEADDR PIT
-#define DEMO_CMP_BASEADDR CMP1
-#define DEMO_AOI_BASEADDR AOI
-
-#define DEMO_XBARA_IRQ_HANDLER_FUNC XBAR1_IRQ_0_1_IRQHandler
-#define DEMO_XBARA_IRQ_ID           XBAR1_IRQ_0_1_IRQn
-
-#define DEMO_CMP_MINUS_CHANNEL 0U
-#define DEMO_CMP_PLUS_CHANNEL  7U
-#define DEMO_PIT_CHANNEL       kPIT_Chnl_0
-
-#define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_OscClk)
-
-#define DEMO_XBARB_INPUT_CMP_SIGNAL    kXBARB2_InputAcmp1Out
-#define DEMO_XBARB_OUTPUT_AOI_SIGNAL_1 kXBARB2_OutputAoi1In00
-
-#define DEMO_XBARB_INPUT_PIT_SIGNAL    kXBARB2_InputPitTrigger0
-#define DEMO_XBARB_OUTPUT_AOI_SIGNAL_2 kXBARB2_OutputAoi1In01
-
-#define DEMO_XBARA_INPUT_AOI_SIGNAL kXBARA1_InputAoi1Out0
-#define DEMO_XBARA_OUTPUT_SIGNAL    kXBARA1_OutputDmaChMuxReq30
-
 
 /*******************************************************************************
  * Prototypes
@@ -74,7 +50,9 @@
  * @brief Initialize the CMP.
  *
  */
+#if defined(DEMO_CMP_BASEADDR)
 static void CMP_Configuration(void);
+#endif
 
 /*!
  * @brief Initialize the PIT timer.
@@ -102,6 +80,7 @@ volatile bool g_xbaraInterrupt = false;
  * Code
  ******************************************************************************/
 
+#if defined(DEMO_CMP_BASEADDR)
 static void CMP_Configuration(void)
 {
 #if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
@@ -138,7 +117,7 @@ static void CMP_Configuration(void)
     ACMP_SetDACConfig(DEMO_CMP_BASEADDR, &dacConfigStruct);
 
     ACMP_Enable(DEMO_CMP_BASEADDR, true);
-#else
+#elif defined(FSL_FEATURE_SOC_CMP_COUNT) && FSL_FEATURE_SOC_CMP_COUNT
     cmp_config_t cmpConfig;
     cmp_dac_config_t cmpdacConfig;
 
@@ -152,6 +131,7 @@ static void CMP_Configuration(void)
     CMP_SetDACConfig(DEMO_CMP_BASEADDR, &cmpdacConfig);
 #endif
 }
+#endif
 
 #if defined(FSL_FEATURE_SOC_PIT_COUNT) && FSL_FEATURE_SOC_PIT_COUNT
 static void PIT_Configuration(void)
@@ -207,7 +187,9 @@ static void XBAR_Configuration(void)
     XBARB_Init(DEMO_XBARB_BASEADDR);
 
     /* Configure the XBAR signal connections */
+#if defined(DEMO_CMP_BASEADDR)
     XBARB_SetSignalsConnection(DEMO_XBARB_BASEADDR, DEMO_XBARB_INPUT_CMP_SIGNAL, DEMO_XBARB_OUTPUT_AOI_SIGNAL_1);
+#endif
     XBARB_SetSignalsConnection(DEMO_XBARB_BASEADDR, DEMO_XBARB_INPUT_PIT_SIGNAL, DEMO_XBARB_OUTPUT_AOI_SIGNAL_2);
     XBARA_SetSignalsConnection(DEMO_XBARA_BASEADDR, DEMO_XBARA_INPUT_AOI_SIGNAL, DEMO_XBARA_OUTPUT_SIGNAL);
 
@@ -239,7 +221,9 @@ static void XBAR_Configuration(void)
     XBAR_Init(kXBAR_DSC2);
 
     /* Configure the XBAR signal connections */
+#if defined(DEMO_CMP_BASEADDR)
     XBAR_SetSignalsConnection(DEMO_XBAR_INPUT_CMP_SIGNAL, DEMO_XBAR_OUTPUT_AOI_SIGNAL_1);
+#endif
     XBAR_SetSignalsConnection(DEMO_XBAR_INPUT_PIT_SIGNAL, DEMO_XBAR_OUTPUT_AOI_SIGNAL_2);
     XBAR_SetSignalsConnection(DEMO_XBAR_INPUT_AOI_SIGNAL, DEMO_XBAR_OUTPUT_SIGNAL);
 
@@ -271,7 +255,11 @@ static void AOI_Configuration(void)
     aoi_event_config_t aoiEventLogicStruct;
 
     /* Configure the AOI event */
+#if defined(DEMO_CMP_BASEADDR)
     aoiEventLogicStruct.PT0AC = kAOI_InputSignal;    /* CMP0 output*/
+#else
+    aoiEventLogicStruct.PT0AC = kAOI_LogicOne;    /* force input to become 1 */
+#endif
     aoiEventLogicStruct.PT0BC = kAOI_InvInputSignal; /* PIT0 output*/
     aoiEventLogicStruct.PT0CC = kAOI_LogicOne;
     aoiEventLogicStruct.PT0DC = kAOI_LogicOne;
@@ -299,14 +287,13 @@ static void AOI_Configuration(void)
 int main(void)
 {
     /* Init board hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Init PIT timer */
     PIT_Configuration();
     /* Init CMP */
+#if defined(DEMO_CMP_BASEADDR)
     CMP_Configuration();
+#endif
     /* Init XBAR */
     XBAR_Configuration();
     /* Init AOI */

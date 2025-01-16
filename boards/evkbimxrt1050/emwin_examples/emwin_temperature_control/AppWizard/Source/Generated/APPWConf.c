@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -29,10 +29,6 @@ Purpose     : Generated file do NOT edit!
 #define DISPLAY_DRIVER GUIDRV_WIN32
 #define NUM_BUFFERS   2
 #define _aVarList NULL
-#define _appDrawing      NULL
-#define _NumDrawings     0
-#define _aScrollerList   NULL
-#define _NumScrollers    0
 
 /*********************************************************************
 *
@@ -40,26 +36,6 @@ Purpose     : Generated file do NOT edit!
 *
 **********************************************************************
 */
-/*********************************************************************
-*
-*       _apRootList
-*/
-static APPW_ROOT_INFO * _apRootList[] = {
-  &ID_SCREEN_TEMP_CTRL_RootInfo,
-};
-
-/*********************************************************************
-*
-*       _NumScreens
-*/
-static unsigned _NumScreens = GUI_COUNTOF(_apRootList);
-
-/*********************************************************************
-*
-*       _NumVars
-*/
-static unsigned _NumVars = 0;
-
 /*********************************************************************
 *
 *       Multibuffering
@@ -74,23 +50,6 @@ static U8 _ShowMissingCharacters = 1;
 
 /*********************************************************************
 *
-*       _apLang
-*/
-static GUI_CONST_STORAGE char * _apLang[] = {
-  (GUI_CONST_STORAGE char *)acAPPW_Language_0,
-};
-
-/*********************************************************************
-*
-*       _TextInit
-*/
-static GUI_CONST_STORAGE APPW_TEXT_INIT _TextInit = {
-  _apLang,
-  GUI_COUNTOF(_apLang),
-};
-
-/*********************************************************************
-*
 *       Static code
 *
 **********************************************************************
@@ -100,7 +59,10 @@ static GUI_CONST_STORAGE APPW_TEXT_INIT _TextInit = {
 *       _InitText
 */
 static void _InitText(void) {
-  APPW_TextInitMem(&_TextInit);
+  GUI_CONST_STORAGE APPW_TEXT_INIT * pTextInit;
+
+  APPW__GetTextInit(&pTextInit);
+  APPW_TextInitMem(pTextInit);
 }
 
 /*********************************************************************
@@ -114,10 +76,30 @@ static void _InitText(void) {
 *       APPW_X_Setup
 */
 void APPW_X_Setup(void) {
+  APPW_ROOT_INFO         ** ppRootInfo;
+  APPW_VAR_OBJECT         * paVarList;
+  const APPW_SCROLLER_DEF * paScrollerDef;
+  APPW_DRAWING_ITEM      ** ppDrawingList;
+  int                       NumScreens;
+  int                       NumVars;
+  int                       NumScrollers;
+  int                       NumDrawings;
+  int                       CreateFlags;
+
   APPW_SetpfInitText(_InitText);
   APPW_X_FS_Init();
   APPW_MULTIBUF_Enable(_MultibufEnable);
-  APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars, _aScrollerList, _NumScrollers, (APPW_DRAWING_ITEM **)_appDrawing, _NumDrawings);
+  APPW__GetResource(&ppRootInfo,
+                    &NumScreens,
+                    &paVarList,
+                    &NumVars,
+                    &paScrollerDef,
+                    &NumScrollers,
+                    &ppDrawingList,
+                    &NumDrawings,
+                    &CreateFlags);
+  WM_SetCreateFlags(CreateFlags);
+  APPW_SetData(ppRootInfo, NumScreens, paVarList, NumVars, paScrollerDef, NumScrollers, ppDrawingList, NumDrawings);
   APPW_SetSupportScroller(0);
   GUI_ShowMissingCharacters(_ShowMissingCharacters);
 }

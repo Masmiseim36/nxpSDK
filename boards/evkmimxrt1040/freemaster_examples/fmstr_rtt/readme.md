@@ -1,0 +1,36 @@
+# fmstr_example_rtt
+
+## Overview
+Example application demonstrates the communication over SEGGER J-Link RTT interface. Example requires the FreeMASTER TCP/UDP communication plug-in to be used on the PC host side.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-KE17Z512](../../_boards/frdmke17z512/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXA153](../../_boards/frdmmcxa153/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXA166](../../_boards/frdmmcxa166/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXA276](../../_boards/frdmmcxa276/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXC242](../../_boards/frdmmcxc242/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXC444](../../_boards/frdmmcxc444/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [FRDM-MCXW71](../../_boards/frdmmcxw71/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [KW47-EVK](../../_boards/kw47evk/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MCX-W72-EVK](../../_boards/mcxw72evk/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/freemaster_examples/fmstr_rtt/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/freemaster_examples/fmstr_rtt/example_board_readme.md)

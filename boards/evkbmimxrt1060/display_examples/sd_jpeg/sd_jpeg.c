@@ -1,14 +1,13 @@
 /*
  * Copyright 2017-2019 NXP
- * All rights reserved.
  *
- *
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: IJG
  */
 
 #include <stdio.h>
 #include <string.h>
 #include "fsl_common.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_cache.h"
 #include "ff.h"
@@ -16,11 +15,8 @@
 #include "fsl_sd_disk.h"
 #include "jpeglib.h"
 #include "display_support.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "sdmmc_config.h"
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -135,7 +131,6 @@ AT_NONCACHEABLE_SECTION(static FIL jpgFil);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 /* Get the empty frame buffer from the s_fbList. */
 static void *APP_GetFrameBuffer(void)
@@ -382,10 +377,7 @@ int main(void)
     void *freeFb;
     uint32_t oldIntStat;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("SD JPEG demo start:\r\n");
 

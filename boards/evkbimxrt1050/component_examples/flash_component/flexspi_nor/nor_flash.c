@@ -7,16 +7,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "app.h"
 #include "fsl_nor_flash.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_flexspi.h"
-#include "fsl_flexspi_nor_flash.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -47,40 +43,6 @@ extern status_t Nor_Flash_Initialization(nor_config_t *config, nor_handle_t *han
 /*******************************************************************************
  * Code
  ******************************************************************************/
-flexspi_mem_config_t mem_Config = {
-    .deviceConfig =
-        {
-            .flexspiRootClk       = 120000000,
-            .flashSize            = FLASH_SIZE,
-            .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
-            .CSInterval           = 2,
-            .CSHoldTime           = 3,
-            .CSSetupTime          = 3,
-            .dataValidTime        = 0,
-            .columnspace          = 0,
-            .enableWordAddress    = 0,
-            .AHBWriteWaitUnit     = kFLEXSPI_AhbWriteWaitUnit2AhbCycle,
-            .AHBWriteWaitInterval = 0,
-        },
-    .devicePort      = kFLEXSPI_PortA1,
-    .deviceType      = kSerialNorCfgOption_DeviceType_ReadSFDP_SDR,
-    .quadMode        = kSerialNorQuadMode_NotConfig,
-    .transferMode    = kSerialNorTransferMode_SDR,
-    .enhanceMode     = kSerialNorEnhanceMode_Disabled,
-    .commandPads     = kFLEXSPI_1PAD,
-    .queryPads       = kFLEXSPI_1PAD,
-    .statusOverride  = 0,
-    .busyOffset      = 0,
-    .busyBitPolarity = 0,
-
-};
-
-nor_config_t norConfig = {
-    .memControlConfig = &mem_Config,
-    .driverBaseAddr   = EXAMPLE_FLEXSPI,
-};
-
-
 
 /*Error trap function*/
 void ErrorTrap(void)
@@ -99,10 +61,7 @@ int main(void)
 {
     status_t status;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     status = Nor_Flash_Initialization(&norConfig, &norHandle);
     if (status != kStatus_Success)

@@ -17,7 +17,7 @@
 
 /* Packet size and interval. */
 #if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
-#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
+#define HS_ISO_OUT_ENDP_INTERVAL (0x02)
 #else
 #define HS_ISO_OUT_ENDP_INTERVAL (0x04) /*interval must be 1ms for usb audio 1.0 */
 #endif
@@ -39,8 +39,8 @@
 #define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT         (6U)
 #endif
 #elif (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
-/* 6 means 16 mico frames (6*125us), make sure the latency is smaller than 1ms for ehci high speed */
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT (0x06U)
+/* 3 means 3*250us, make sure the latency is smaller than 1ms for ehci high speed */
+#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT (0x03)
 /* 2 units size buffer (1 unit means the size to play during 1ms) */
 #define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT         (2U)
 #endif

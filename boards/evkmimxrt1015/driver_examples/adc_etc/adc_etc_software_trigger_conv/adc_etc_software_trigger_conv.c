@@ -6,9 +6,8 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_adc.h"
 #include "fsl_adc_etc.h"
 #include "fsl_common.h"
@@ -16,14 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE          ADC1
-#define DEMO_ADC_USER_CHANNEL  16U
-#define DEMO_ADC_CHANNEL_GROUP 0U
-
-#define DEMO_ADC_ETC_BASE             ADC_ETC
-#define DEMO_ADC_ETC_CHAIN_LENGTH     0U
-#define DEMO_ADC_ETC_CHANNEL          13U
-#define EXAMPLE_ADC_ETC_DONE0_Handler ADC_ETC_IRQ0_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -56,10 +47,7 @@ int main(void)
     adc_etc_trigger_config_t adcEtcTriggerConfig;
     adc_etc_trigger_chain_config_t adcEtcTriggerChainConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("ADC_ETC_Software_Trigger_Conv Example Start!\r\n");
 

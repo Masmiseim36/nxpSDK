@@ -10,15 +10,13 @@
 #include "task.h"
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "serial_mwm.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /* Task priorities. */
 #define MAIN_TASK_PRIORITY (configMAX_PRIORITIES - 1)
 
@@ -961,10 +959,7 @@ void main_task(void *pvParameters)
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     if (xTaskCreate(main_task, "main_task", 350, NULL, MAIN_TASK_PRIORITY, NULL) != pdPASS)
     {

@@ -5,15 +5,8 @@
       <name>all</name>
       <member>
         <project>central_ht</project>
-        <configuration>flexspi_nor_release</configuration>
-      </member>
-      <member>
-        <project>central_ht</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_release</name>
       <member>
         <project>central_ht</project>
         <configuration>flexspi_nor_release</configuration>
@@ -24,6 +17,13 @@
       <member>
         <project>central_ht</project>
         <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>central_ht</project>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

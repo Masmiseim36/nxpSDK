@@ -6,9 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
@@ -16,57 +15,9 @@
 #include "fsl_debug_console.h"
 #include "fsl_codec_common.h"
 #include "fsl_sai.h"
-#include "fsl_wm8962.h"
-#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* SAI and I2C instance and clock */
-/* SAI and I2C instance and clock */
-#define DEMO_CODEC_WM8962
-#define DEMO_I2C         LPI2C1
-#define DEMO_FLEXIO_BASE FLEXIO2
-#define DEMO_SAI         SAI1
-/* Select Audio PLL (393.216 MHz) as sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
-/* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (3U)
-/* Clock divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (15U)
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ                                                        \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
-     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
-
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-/* Select Audio PLL (393.216 MHz) as flexio clock source, need to sync with sai clock, or the codec may not work */
-#define DEMO_FLEXIO_CLKSRC_SEL (0U)
-/* Clock pre divider for flexio clock source */
-#define DEMO_FLEXIO_CLKSRC_PRE_DIV (3U)
-/* Clock divider for flexio clock source */
-#define DEMO_FLEXIO_CLKSRC_DIV (15U)
-#define DEMO_FLEXIO_CLK_FREQ \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_FLEXIO_CLKSRC_DIV + 1U) / (DEMO_FLEXIO_CLKSRC_PRE_DIV + 1U))
-
-#define BCLK_PIN                (8U)
-#define FRAME_SYNC_PIN          (7U)
-#define TX_DATA_PIN             (6U)
-#define RX_DATA_PIN             (5U)
-#define FLEXIO_TX_SHIFTER_INDEX 0
-#define FLEXIO_RX_SHIFTER_INDEX 2
-
-#define EXAMPLE_DMAMUX        DMAMUX
-#define EXAMPLE_DMA           DMA0
-#define EXAMPLE_TX_CHANNEL    1U
-#define EXAMPLE_RX_CHANNEL    0U
-#define EXAMPLE_TX_DMA_SOURCE kDmaRequestMuxFlexIO2Request0Request1
-#define EXAMPLE_RX_DMA_SOURCE kDmaRequestMuxFlexIO2Request2Request3
 #define OVER_SAMPLE_RATE (384)
 #define BUFFER_SIZE      (128)
 #define BUFFER_NUM       (4)
@@ -92,35 +43,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-wm8962_config_t wm8962Config = {
-    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .route =
-        {
-            .enableLoopBack            = false,
-            .leftInputPGASource        = kWM8962_InputPGASourceInput1,
-            .leftInputMixerSource      = kWM8962_InputMixerSourceInputPGA,
-            .rightInputPGASource       = kWM8962_InputPGASourceInput3,
-            .rightInputMixerSource     = kWM8962_InputMixerSourceInputPGA,
-            .leftHeadphoneMixerSource  = kWM8962_OutputMixerDisabled,
-            .leftHeadphonePGASource    = kWM8962_OutputPGASourceDAC,
-            .rightHeadphoneMixerSource = kWM8962_OutputMixerDisabled,
-            .rightHeadphonePGASource   = kWM8962_OutputPGASourceDAC,
-        },
-    .slaveAddress = WM8962_I2C_ADDR,
-    .bus          = kWM8962_BusI2S,
-    .format       = {.mclk_HZ    = 24576000U,
-                     .sampleRate = kWM8962_AudioSampleRate16KHz,
-                     .bitWidth   = kWM8962_AudioBitWidth16bit},
-    .masterSlave  = false,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};
-/* USB1 PLL configuration for RUN mode */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t txHandle)                           = {0};
 AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t rxHandle)                           = {0};
 edma_handle_t txDmaHandle                                                                 = {0};
@@ -155,18 +77,6 @@ codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
-    }
-}
-
 static void txCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_edma_handle_t *handle, status_t status, void *userData)
 {
     if ((emptyBlock < BUFFER_NUM) && (!isZeroBuffer))
@@ -211,28 +121,7 @@ int main(void)
     uint8_t txIndex = 0, rxIndex = 0;
     edma_config_t dmaConfig = {0};
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_I2C_ConfigurePins();
-    BOARD_FLEXIO_ConfigurePins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_SAI_ConfigurePins();
-    CLOCK_InitAudioPll(&audioPllConfig);
-
-    /* Clock setting for LPI2C */
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
-    /* Clock setting for FLEXIO */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, DEMO_FLEXIO_CLKSRC_SEL);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, DEMO_FLEXIO_CLKSRC_PRE_DIV);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, DEMO_FLEXIO_CLKSRC_DIV);
-    /* Clock setting for SAI1 */
-    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
-    /* Enable SAI1 MCLK output */
-    BOARD_EnableSaiMclkOutput(true);
+    BOARD_InitHardware();
     BOARD_Codec_I2C_Init();
     PRINTF("FLEXIO I2S EDMA example started!\n\r");
 

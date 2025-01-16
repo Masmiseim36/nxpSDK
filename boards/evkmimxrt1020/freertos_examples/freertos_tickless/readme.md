@@ -1,45 +1,28 @@
-Overview
-========
+# freertos_tickless
+
+## Overview
 This document explains the freertos_tickless example. It shows how the CPU enters the sleep mode and then
 it is woken up either by expired time delay using low power timer module or by external interrupt caused by a
 user defined button.
 
+## Prepare the Demo
+Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
+(http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
 
-SDK version
-===========
-- Version: 2.16.000
+1. Start Tera Term
+2. New connection -> Serial
+3. Set appropriate COMx port (x is port number) in Port context menu. Number is provided by operation
+   system and could be different from computer to computer. Select COM number related to virtual
+   serial port. Confirm selected port by OK button.
+4. Set following connection parameters in menu Setup->Serial port...
+        Baud rate:    115200
+        Data:         8
+        Parity:       none
+        Stop:         1
+        Flow control: none
+5.  Confirm selected parameters by OK button.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 After flashing the example to the board the console will start printing the number of tick count periodically
 when the CPU is running.
 To wake up the CPU by external interrupt, press the button, that is specified at the beginning of the
@@ -61,7 +44,7 @@ CPU woken up by external interrupt
 20000
 25000
 
-Explanation of the example
+## Explanation of the example
 The example application prints the actual tick count number every time after the specified
 delay. When the vTaskDelay() is called, the CPU enters the sleep mode for that defined period
 of time.
@@ -70,9 +53,46 @@ While the CPU is in sleep mode and the user defined button is pressed, the CPU i
 by the external interrupt and continues to sleep after the interrupt is handled.
 The period of time delay is not changed after the external interrupt occurs.
 
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-3. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../_boards/evkmcimx7ulp/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMX8MM](../../_boards/evkmimx8mm/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMX8MN](../../_boards/evkmimx8mn/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMX8MNDDR3L](../../_boards/evkmimx8mnddr3l/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMX8MP](../../_boards/evkmimx8mp/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMX8MQ](../../_boards/evkmimx8mq/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/freertos_examples/freertos_tickless/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-K22F](../../_boards/frdmk22f/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-K32L2A4S](../../_boards/frdmk32l2a4s/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-K32L2B](../../_boards/frdmk32l2b/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-K32L3A6](../../_boards/frdmk32l3a6/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-KE15Z](../../_boards/frdmke15z/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-KE16Z](../../_boards/frdmke16z/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-KE17Z](../../_boards/frdmke17z/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-KE17Z512](../../_boards/frdmke17z512/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXA166](../../_boards/frdmmcxa166/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXA276](../../_boards/frdmmcxa276/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXC242](../../_boards/frdmmcxc242/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXC444](../../_boards/frdmmcxc444/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/freertos_examples/freertos_tickless/example_board_readme.md)
+- [FRDM-MCXW71](../../_boards/frdmmcxw71/freertos_examples/freertos_tickless/example_board_readme.md)
+- [K32W148-EVK](../../_boards/k32w148evk/freertos_examples/freertos_tickless/example_board_readme.md)
+- [KW45B41Z-EVK](../../_boards/kw45b41zevk/freertos_examples/freertos_tickless/example_board_readme.md)
+- [KW45B41Z-LOC](../../_boards/kw45b41zloc/freertos_examples/freertos_tickless/example_board_readme.md)
+- [KW47-EVK](../../_boards/kw47evk/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/freertos_examples/freertos_tickless/example_board_readme.md)
+- [MCX-W72-EVK](../../_boards/mcxw72evk/freertos_examples/freertos_tickless/example_board_readme.md)
+- [TWR-KM34Z50MV3](../../_boards/twrkm34z50mv3/freertos_examples/freertos_tickless/example_board_readme.md)
+- [TWR-KM34Z75M](../../_boards/twrkm34z75m/freertos_examples/freertos_tickless/example_board_readme.md)
+- [TWR-KM35Z75M](../../_boards/twrkm35z75m/freertos_examples/freertos_tickless/example_board_readme.md)

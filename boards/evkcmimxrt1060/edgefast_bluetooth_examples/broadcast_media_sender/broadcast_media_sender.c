@@ -130,8 +130,8 @@ static struct bt_bap_broadcast_source *broadcast_source;
 
 NET_BUF_POOL_FIXED_DEFINE(tx_pool,
 			  TOTAL_BUF_NEEDED,
-			  BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU), NULL);
-static uint16_t seq_num;
+			  BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU), CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
+static uint32_t seq_num;
 static uint64_t tx_samples = 0;
 static uint32_t tx_time_stamp_start;
 
@@ -183,10 +183,7 @@ static void stream_started_cb(struct bt_bap_stream *stream)
 	if(stream == &streams[0].stream)
 	{
 		seq_num = 0;
-		if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
-		{
-			BOARD_SyncSignal_Start(0);
-		}
+		BOARD_SyncSignal_Start(0);
 	}
 
 	source_stream->seq_num = 0U;
@@ -196,10 +193,7 @@ static void stream_started_cb(struct bt_bap_stream *stream)
 
 static void stream_stopped_cb(struct bt_bap_stream *stream, uint8_t reason)
 {
-	if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
-	{
-		BOARD_SyncSignal_Stop();
-	}
+	BOARD_SyncSignal_Stop();
 	OSA_SemaphorePost(sem_stopped);
 }
 
@@ -307,11 +301,20 @@ static int audio_stream_encode(void)
 	}
 
     struct net_buf *buf[CONFIG_BT_BAP_BROADCAST_SRC_STREAM_COUNT];
-	
+
 	for(int i = 0; i < CONFIG_BT_BAP_BROADCAST_SRC_STREAM_COUNT; i++)
 	{
 		do {
-			buf[i] = net_buf_alloc(&tx_pool, 10);
+			int timeout;
+			if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
+			{
+				timeout = (lc3_codec_info.frame_duration_us * 2 + 5000) / 1000;
+			}
+			else
+			{
+				timeout = (lc3_codec_info.frame_duration_us + 5000) / 1000;
+			}
+			buf[i] = net_buf_alloc(&tx_pool, timeout);
 			if(buf[i] == NULL)
 			{
 				PRINTF("iso net buff alloc timeout!\n");
@@ -325,28 +328,21 @@ static int audio_stream_encode(void)
 		net_buf_add_mem(buf[i], sdu_buff[i], lc3_codec_info.octets_per_frame);
 	}
 
-	if(lc3_preset.qos.framing == BT_AUDIO_CODEC_QOS_FRAMING_FRAMED)
+	if(seq_num == 0)
 	{
-		if(seq_num == 0)
-		{
-			tx_samples = 0;
-			tx_time_stamp_start = get_sync_signal_timestamp() + get_iso_interval();
-			sdu_time_stamp = tx_time_stamp_start;
-		}
-		else
-		{
-			tx_samples += lc3_codec_info.samples_per_frame;
-			sdu_time_stamp = (uint32_t)((double)tx_time_stamp_start + (double)tx_samples * 1000000.0 / (double)lc3_codec_info.sample_rate);
-		}
+		tx_samples = 0;
+		tx_time_stamp_start = get_sync_signal_timestamp() + get_iso_interval();
+		sdu_time_stamp = tx_time_stamp_start;
 	}
 	else
 	{
-		sdu_time_stamp = BT_ISO_TIMESTAMP_NONE;
+		tx_samples += lc3_codec_info.samples_per_frame;
+		sdu_time_stamp = (uint32_t)((double)tx_time_stamp_start + (double)tx_samples * 1000000.0 / (double)lc3_codec_info.sample_rate);
 	}
 
 	for(int i = 0; i < CONFIG_BT_BAP_BROADCAST_SRC_STREAM_COUNT; i++)
 	{
-		int ret = bt_bap_stream_send_ts(&streams[i].stream, buf[i], seq_num, sdu_time_stamp);
+		int ret = bt_bap_stream_send_ts(&streams[i].stream, buf[i], (uint16_t)(seq_num & 0xffff), sdu_time_stamp);
 		if (ret < 0) {
 			/* This will end broadcasting on this stream. */
 			PRINTF("Unable to broadcast data on %p: %d\n", &streams[i], ret);
@@ -490,7 +486,7 @@ int select_lc3_preset(char *preset_name)
 	for(int i = 0; i < ARRAY_SIZE(lc3_broadcast_presets); i++)
 	{
 		const struct bt_audio_codec_cfg *codec_cfg = &lc3_broadcast_presets[i].preset.codec_cfg;
-		
+
 		if(0 == strcmp(lc3_broadcast_presets[i].name, preset_name))
 		{
 			int sample_rate = bt_audio_codec_cfg_freq_to_freq_hz((enum bt_audio_codec_cfg_freq)bt_audio_codec_cfg_get_freq(codec_cfg));
@@ -722,12 +718,12 @@ void broadcast_media_sender_task(void *param)
 		NET_BUF_SIMPLE_DEFINE(ad_buf,
 				      BT_UUID_SIZE_16 + BT_AUDIO_BROADCAST_ID_SIZE);
 		NET_BUF_SIMPLE_DEFINE(base_buf, 128);
-		struct bt_data ext_ad;
+		struct bt_data ext_ad[2];
 		struct bt_data per_ad;
 		uint32_t broadcast_id;
 
 		/* Create a non-connectable non-scannable advertising set */
-		err = bt_le_ext_adv_create(BT_LE_EXT_ADV_NCONN_NAME, NULL, &adv);
+		err = bt_le_ext_adv_create(BT_LE_EXT_ADV_NCONN, NULL, &adv);
 		if (err != 0) {
 			printk("Unable to create extended advertising set: %d\n",
 			       err);
@@ -758,10 +754,12 @@ void broadcast_media_sender_task(void *param)
 		/* Setup extended advertising data */
 		net_buf_simple_add_le16(&ad_buf, BT_UUID_BROADCAST_AUDIO_VAL);
 		net_buf_simple_add_le24(&ad_buf, broadcast_id);
-		ext_ad.type = BT_DATA_SVC_DATA16;
-		ext_ad.data_len = ad_buf.len;
-		ext_ad.data = ad_buf.data;
-		err = bt_le_ext_adv_set_data(adv, &ext_ad, 1, NULL, 0);
+		ext_ad[0].type = BT_DATA_SVC_DATA16;
+		ext_ad[0].data_len = ad_buf.len;
+		ext_ad[0].data = ad_buf.data;
+		ext_ad[1] = (struct bt_data)BT_DATA(BT_DATA_NAME_COMPLETE, CONFIG_BT_DEVICE_NAME,
+						    sizeof(CONFIG_BT_DEVICE_NAME) - 1);
+		err = bt_le_ext_adv_set_data(adv, ext_ad, ARRAY_SIZE(ext_ad), NULL, 0);
 		if (err != 0) {
 			printk("Failed to set extended advertising data: %d\n",
 			       err);
@@ -821,7 +819,7 @@ void broadcast_media_sender_task(void *param)
 				if(bis_stream_play_update)
 				{
 					bis_stream_play_update = false;
-					
+
 					/* Enable stream. */
 					err = bt_bap_broadcast_source_start(broadcast_source, adv);
 					if(err)
@@ -842,7 +840,7 @@ void broadcast_media_sender_task(void *param)
 				if(bis_stream_play_update)
 				{
 					bis_stream_play_update = false;
-					
+
 					/* Disable stream. */
 					err = bt_bap_broadcast_source_stop(broadcast_source);
 					if(err)

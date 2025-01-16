@@ -10,11 +10,8 @@
 #ifndef __DFU_FLASH_H__
 #define __DFU_FLASH_H__
 #include "usb.h"
-/* USB DFU config*/
-/*! @brief DFU application address and size*/
-#define USB_DFU_APP_ADDRESS (0x10000U)
-#define USB_DFU_APP_SIZE    (0x8000U)
-
+/****************** Macro definitions ***************/
+#include "usb_device_dfu_config.h"
 ///*******************************************************************************
 // * Definitions
 // ******************************************************************************/

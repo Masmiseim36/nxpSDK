@@ -29,9 +29,6 @@
 
 #include <fsl_sss_api.h>
 
-#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
-#include <fsl_sscp_a71ch.h>
-#endif
 #if SSS_HAVE_HOSTCRYPTO_MBEDTLS
 #include <fsl_sss_mbedtls_apis.h>
 #endif

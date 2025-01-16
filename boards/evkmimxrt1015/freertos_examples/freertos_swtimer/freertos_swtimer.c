@@ -19,14 +19,12 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /* The software timer period. */
 #define SW_TIMER_PERIOD_MS (1000 / portTICK_PERIOD_MS)
 /*******************************************************************************
@@ -46,10 +44,7 @@ int main(void)
     TimerHandle_t SwTimerHandle = NULL;
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     SystemCoreClockUpdate();
     /* Create the software timer. */
     SwTimerHandle = xTimerCreate("SwTimer",          /* Text name. */

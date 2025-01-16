@@ -20,13 +20,11 @@
 
 #include "lwip/api.h"
 
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
 #include "httpsrv.h"
 #include "httpsrv_port.h"
-
-#include "mbedtls/certs.h"
 
 #include "mflash_drv.h"
 #include "timers.h"
@@ -36,19 +34,9 @@
 #include "flash_map.h"
 #include "mcuboot_app_support.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "lwip/opt.h"
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "ethernetif.h"
-#include "fsl_phyksz8081.h"
-#include "ksdk_mbedtls.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #ifndef HTTPD_DEBUG
 #define HTTPD_DEBUG LWIP_DBG_ON
@@ -63,10 +51,6 @@
 #define DEBUG_WS 0
 #endif
 
-#define OTA_UPDATE_PART     (BL_FEATURE_SECONDARY_IMG_START - FlexSPI_AMBA_BASE)
-#define OTA_MAX_IMAGE_SIZE  (BL_FEATURE_PRIMARY_IMG_PARTITION_SIZE - BL_IMG_HEADER_SIZE)
-#define OTA_IMAGE_LOAD_ADDR (BL_FEATURE_PRIMARY_IMG_START + BL_IMG_HEADER_SIZE)
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -79,12 +63,9 @@ static int ssi_ota_status(HTTPSRV_SSI_PARAM_STRUCT *param);
 static int ssi_ota_image_upload(HTTPSRV_SSI_PARAM_STRUCT *param);
 static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param);
 
-static int32_t mcuboot_image_size_sanity_check(const uint8_t *data, uint32_t size);
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];
 
@@ -105,32 +86,6 @@ const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {
-        .enableClkOutput    = true,
-        .enableClkOutput25M = false,
-        .loopDivider        = 1,
-    };
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
-    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
-}
-
-status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
-}
-
-status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
-}
-
 
 enum ota_status_t
 {
@@ -210,8 +165,7 @@ static int ssi_ota_image_info(HTTPSRV_SSI_PARAM_STRUCT *param)
             char versionstr[40];
             int slotused;
 
-            status = mflash_drv_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih));
-            if (status != kStatus_Success)
+            if (bl_flash_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih)) != 0)
             {
                 PRINTF("Failed to read image header/n");
                 return 0;
@@ -667,65 +621,6 @@ static int cgi_ota_accept(HTTPSRV_CGI_REQ_STRUCT *param)
 static HTTPSRV_TLS_PARAM_STRUCT tls_params;
 #endif
 
-static int32_t mcuboot_image_size_sanity_check(const uint8_t *data, uint32_t size)
-{
-    struct image_header *ih;
-    struct image_tlv_info *it;
-    uint32_t decl_size;
-    uint32_t tlv_size;
-
-    ih = (struct image_header *)data;
-
-    /* do we have at least the header */
-    if (size < sizeof(struct image_header))
-    {
-        return 0;
-    }
-
-    /* check magic number */
-    if (ih->ih_magic != IMAGE_MAGIC)
-    {
-        return 0;
-    }
-
-    /* check that we have at least the amount of data declared by the header */
-    decl_size = ih->ih_img_size + ih->ih_hdr_size + ih->ih_protect_tlv_size;
-    if (size < decl_size)
-    {
-        return 0;
-    }
-
-    /* check protected TLVs if any */
-    if (ih->ih_protect_tlv_size > 0)
-    {
-        if (ih->ih_protect_tlv_size < sizeof(struct image_tlv_info))
-        {
-            return 0;
-        }
-        it = (struct image_tlv_info *)(data + ih->ih_img_size + ih->ih_hdr_size);
-        if ((it->it_magic != IMAGE_TLV_PROT_INFO_MAGIC) || (it->it_tlv_tot != ih->ih_protect_tlv_size))
-        {
-            return 0;
-        }
-    }
-
-    /* check for optional TLVs following the image as declared by the header */
-    tlv_size = size - decl_size;
-    if (tlv_size > 0)
-    {
-        if (tlv_size < sizeof(struct image_tlv_info))
-        {
-            return 0;
-        }
-        it = (struct image_tlv_info *)(data + decl_size);
-        if ((it->it_magic != IMAGE_TLV_INFO_MAGIC) || (it->it_tlv_tot != tlv_size))
-        {
-            return 0;
-        }
-    }
-
-    return 1;
-}
 
 /*!
  * @brief Initializes server.
@@ -805,24 +700,7 @@ static void main_thread(void *arg)
 
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
-    CRYPTO_InitHardware();
+    BOARD_InitHardware();
 
     mflash_drv_init();
 

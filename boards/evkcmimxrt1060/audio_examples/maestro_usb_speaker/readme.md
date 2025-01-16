@@ -1,5 +1,6 @@
-Overview
-========
+# maestro_usb_speaker
+
+## Overview
 The maestro_usb_speaker application demonstrates audio processing on the ARM cortex core
 utilizing the Maestro Audio Solutions library.
 
@@ -28,7 +29,7 @@ After running the "usb_speaker" command, the USB device will be enumerated on yo
 User will see the volume levels obtained from the USB host as in the example below.
 This is just an example application. To leverage the values, the demo has to be modified.
 
-### Notes
+**Notes**
 1. If the USB device audio speaker example uses an ISO IN feedback endpoint, please attach
    the device to a host like PC which supports feedback function. Otherwise, there might be
    attachment issue or other problems.
@@ -40,55 +41,7 @@ This is just an example application. To leverage the values, the demo has to be 
 3. When device functionality is changed, such as UAC 5.1, please uninstall the previous PC
    driver to make sure the device with changed functionality can run normally.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- 2x Micro USB cable
-- JTAG/SWD debugger
-- EVKC-IMXRT1060 board
-- Personal Computer
-- Headphones with 3.5 mm stereo jack
-
-Board settings
-==============
-1. Set the hardware jumpers (Tower system/base module) to default settings.
-
-Prepare the Demo
-================
-1. Connect the first micro USB cable between the PC host and the debug USB port on the board.
-2. Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Connect the second micro USB cable between the PC host and the USB port on the board.
-5. Connect the earphone/headphone at Audio Line Out port of target board.
-6. Either press the reset button on your board or launch the debugger in your IDE to begin
-   running the demo.
-
-### Notes
-1. If the USB device audio speaker example uses an ISO IN feedback endpoint, please attach
-   the device to a host like PC which supports feedback function. Otherwise, there might be
-   attachment issue or other problems.
-2. This example supports UAC 5.1 and UAC 5.1 is disabled by default, this feature can be enabled
-   by set macro USB_AUDIO_CHANNEL5_1 as 1U.
-3. When device functionality is changed, such as UAC 5.1, please uninstall the previous PC
-   driver to make sure the device with changed functionality can run normally.
-
-Running the demo
-================
+## Running the demo
 When the example runs successfully, you should see similar output on the serial terminal as below:
 
 ```
@@ -109,3 +62,8 @@ When the example runs successfully, you should see similar output on the serial 
     Set Cur Volume : fbd5
 ```
 
+## Supported Boards
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/audio_examples/maestro_usb_speaker/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/audio_examples/maestro_usb_speaker/example_board_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/audio_examples/maestro_usb_speaker/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/audio_examples/maestro_usb_speaker/example_board_readme.md)

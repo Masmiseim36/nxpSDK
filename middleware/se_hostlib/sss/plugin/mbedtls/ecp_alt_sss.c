@@ -39,11 +39,6 @@ void mbedtls_ecp_keypair_free(mbedtls_ecp_keypair *key)
     if (key == NULL) {
         return;
     }
-
-    // if ( key->grp.hlse_handle != 0 )
-    // {
-    //     key->grp.hlse_handle = 0;
-    // }
     mbedtls_ecp_keypair_free_o(key);
 }
 
@@ -58,7 +53,6 @@ int mbedtls_ecp_tls_read_group(mbedtls_ecp_group *grp, const unsigned char **buf
     ret                                  = mbedtls_ecp_tls_read_group_o(grp, buf, len);
     grp->pSSSObject                      = backup_type_SSS_Object;
     grp->hostKs                          = backup_type_hostKs;
-
     return ret;
 }
 

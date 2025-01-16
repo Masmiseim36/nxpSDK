@@ -9,9 +9,8 @@
 #include <stdlib.h>
 /*${standard_header_anchor}*/
 #include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
 #include "board.h"
 
 #include "usb_device_config.h"
@@ -31,15 +30,14 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#include "usb_phy.h"
-#include "fsl_iomuxc.h"
-#include "fsl_phyksz8081.h"
-#include "fsl_phy.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* Base unit for ENIT layer is 1Mbps while for RNDIS its 100bps*/
 #define ENET_CONVERT_FACTOR (10000)
+#define VNIC_EVENT_DEVICE_TX (0x1U)
+#define VNIC_EVENT_DEVICE_RX (0x2U)
+#define VNIC_EVENT_MASK      (0xFFU)
 
 /*******************************************************************************
  * Prototypes
@@ -51,6 +49,12 @@ void USB_DeviceIsrEnable(void);
 void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if !((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+void USB_DeviceHsPhyChirpIssueWorkaround(void);
+void USB_DeviceDisconnected(void);
+#endif
+#endif
 void VNIC_EnetRxBufFree(pbuf_t *pbuf);
 void VNIC_EnetTxBufFree(pbuf_t *pbuf);
 bool VNIC_EnetGetLinkStatus(void);
@@ -63,8 +67,6 @@ usb_status_t VNIC_EnetTxDone(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
-extern usb_cdc_vnic_t g_cdcVnic;
 extern usb_device_endpoint_struct_t g_cdcVnicDicEp[];
 extern usb_device_class_struct_t g_cdcVnicClass;
 extern queue_t g_enetRxServiceQueue;
@@ -118,100 +120,32 @@ static char const *s_appName = "app task";
 /*******************************************************************************
  * Code
  ******************************************************************************/
-ENET_Type *BOARD_GetExampleEnetBase(void)
+
+/*!
+ * @brief Set events for data transmission.
+ *
+ * @param events to set.
+ * @return None.
+ */     
+static inline void USB_DeviceVnicEventSet(EventBits_t event)
 {
-    return ENET;
-}
-
-uint32_t BOARD_GetPhySysClock(void)
-{
-    return CLOCK_GetFreq(kCLOCK_IpgClk);
-}
-
-const phy_operations_t *BOARD_GetPhyOps(void)
-{
-    return &phyksz8081_ops;
-}
-
-void *BOARD_GetPhyResource(void)
-{
-    return (void *)&g_phy_resource;
-}
-
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {
-        .enableClkOutput    = true,
-        .enableClkOutput25M = false,
-        .loopDivider        = 1,
-    };
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
-    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
-}
-
-
-void USB_OTG1_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_cdcVnic.deviceHandle);
-}
-
-void USB_OTG2_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_cdcVnic.deviceHandle);
-}
-
-void USB_DeviceClockInit(void)
-{
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
+    if (0U != __get_IPSR())
     {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
+        portBASE_TYPE taskToWake = (portBASE_TYPE)pdFALSE;
+
+        (void)xEventGroupSetBitsFromISR(g_cdcVnic.eventHandle, event, &taskToWake);
+        portYIELD_FROM_ISR(((bool)(taskToWake)));
     }
     else
     {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
+        (void)xEventGroupSetBits(g_cdcVnic.eventHandle, event);
     }
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
 }
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
 
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
+void USB_DeviceVnicTxEventSet(void)
 {
-    USB_DeviceEhciTaskFunction(deviceHandle);
+    USB_DeviceVnicEventSet(VNIC_EVENT_DEVICE_TX);
 }
-#endif
 
 /*!
  * @brief Set the state of the usb transmit direction
@@ -225,6 +159,7 @@ static inline usb_status_t USB_DeviceVnicTransmitSetState(usb_cdc_vnic_tx_state_
     USB_DEVICE_VNIC_ENTER_CRITICAL();
     g_cdcVnic.nicTrafficInfo.usbTxState = state;
     USB_DEVICE_VNIC_EXIT_CRITICAL();
+    USB_DeviceVnicEventSet(VNIC_EVENT_DEVICE_TX);
     return kStatus_USB_Success;
 }
 
@@ -240,6 +175,7 @@ static inline usb_status_t USB_DeviceVnicReceiveSetState(usb_cdc_vnic_rx_state_t
     USB_DEVICE_VNIC_ENTER_CRITICAL();
     g_cdcVnic.nicTrafficInfo.usbRxState = state;
     USB_DEVICE_VNIC_EXIT_CRITICAL();
+    USB_DeviceVnicEventSet(VNIC_EVENT_DEVICE_RX);
     return kStatus_USB_Success;
 }
 
@@ -716,6 +652,16 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             g_cdcVnic.attach               = 0;
             g_cdcVnic.currentConfiguration = 0U;
             error                          = kStatus_USB_Success;
+
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if !((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+            /* The work-around is used to fix the HS device Chirping issue.
+             * Please refer to the implementation for the detail information.
+             */
+            USB_DeviceHsPhyChirpIssueWorkaround();
+#endif
+#endif
+
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -735,6 +681,18 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             USB_DeviceVnicReceiveSetState(RX_PART_ONE_PROCESS);
         }
         break;
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
+        case kUSB_DeviceEventDetach:
+        {
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if !((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+            USB_DeviceDisconnected();
+#endif
+#endif
+            error = kStatus_USB_Success;
+        }
+        break;
+#endif
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
@@ -862,6 +820,12 @@ void USB_DeviceApplicationInit(void)
     g_cdcVnic.cdcAcmHandle = (class_handle_t)NULL;
     g_cdcVnic.deviceHandle = NULL;
 
+    g_cdcVnic.eventHandle = xEventGroupCreate();
+    if (NULL == g_cdcVnic.eventHandle)
+    {
+        usb_echo("Event create failed\r\n");
+    }
+
     USB_DeviceVnicReceiveSetState(RX_PART_ONE_PROCESS);
 
     if (kStatus_USB_Success != USB_DeviceClassInit(CONTROLLER_ID, &s_cdcAcmConfigList, &g_cdcVnic.deviceHandle))
@@ -937,9 +901,18 @@ void APPTask(void *handle)
     {
         if ((1 == g_cdcVnic.attach))
         {
+            EventBits_t eventValue;
+
             /* User Code */
-            USB_DeviceVnicTransmit();
-            USB_DeviceVnicReceive();
+            eventValue = xEventGroupWaitBits(g_cdcVnic.eventHandle, VNIC_EVENT_MASK, pdTRUE, pdFALSE, portMAX_DELAY);
+            if ((eventValue & VNIC_EVENT_DEVICE_TX) != 0U)
+            {
+                USB_DeviceVnicTransmit();
+            }
+            if ((eventValue & VNIC_EVENT_DEVICE_RX) != 0U)
+            {
+                USB_DeviceVnicReceive();
+            }
         }
     }
 }
@@ -950,29 +923,7 @@ int main(void)
 void main(void)
 #endif
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_ConfigMPU();
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* Pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-    SDK_DelayAtLeastUs(6, CLOCK_GetFreq(kCLOCK_CpuClk));
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     if (xTaskCreate(APPTask,                         /* pointer to the task                      */
                     s_appName,                       /* task name for kernel awareness debugging */

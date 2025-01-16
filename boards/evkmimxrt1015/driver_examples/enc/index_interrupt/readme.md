@@ -1,5 +1,6 @@
-Overview
-========
+# enc_index_interrupt
+
+## Overview
 
 The enc_index_interrupt example shows how to use the interrupt of ENC module with ENC driver.
 
@@ -13,50 +14,7 @@ TRIGGER: This input can be used to clear the position counters or to take a snap
 
 This example uses INDEX to response the external event. When running the project, user can turn the encoder so that ENC module can monitor the position change. Also, a variable counter would count the time of INDEX interrupt for rising edge on INDEX signal line.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1015 board
-- Personal Computer
-- An encoder with PHASE A/B signals, optionally with INDEX signal.
-
-Board settings
-==============
-Remove D25 
-
-For pin connection between board and encoder
-      J30-3 -> kXBARA1_InputIomuxXbarInout12 -> kXBARA1_OutputEnc1PhaseAInput -> ENC_PHA
-      J30-1 -> kXBARA1_InputIomuxXbarInout13 -> kXBARA1_OutputEnc1PhaseBInput -> ENC_PHB
-      D25-C -> kXBARA1_InputIomuxXbarInout16 -> kXBARA1_OutputEnc1Index -> ENC_INDEX
-
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Connect the wires between encoder and the MCU board. See to the code for pin mux setting in function "BOARD_InitPins()".
-3.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
+## Running the demo
 Turn the encoder feed the negative pulse into INDEX and type in any key into terminal.
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 
@@ -80,11 +38,15 @@ g_EncIndexCounter: 2
 
 ...
 
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J41.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/driver_examples/enc/index_interrupt/example_board_readme.md)
+- [LPCXpresso55S36](../../../_boards/lpcxpresso55s36/driver_examples/enc/index_interrupt/example_board_readme.md)

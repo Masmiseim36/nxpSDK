@@ -11,9 +11,8 @@
  * Includes
  ******************************************************************************/
 #include "lwip/tcpip.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "wpl.h"
 #include "timers.h"
 #include "httpsrv.h"
@@ -25,7 +24,6 @@
 
 #include "FreeRTOS.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -147,10 +145,7 @@ static void main_task(void *arg)
 int main(void)
 {
     /* Initialize the hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     /* Create the main Task */
     if (xTaskCreate(main_task, "main_task", 1024, NULL, configMAX_PRIORITIES - 4, NULL) != pdPASS)

@@ -34,10 +34,10 @@ static void mcc_send_command_cb(struct bt_conn *conn, int err, const struct mpl_
 {
 	if (err) {
 		printk("MCP: Command send failed (%d) - opcode: %u, param: %d\n",
-			err, cmd->opcode, cmd->param);
+			err, cmd->opcode, (int)cmd->param);
 	} else {
 		printk("MCP: Successfully sent command (%d) - opcode: %u, param: %d\n",
-			err, cmd->opcode, cmd->param);
+			err, cmd->opcode, (int)cmd->param);
 	}
 }
 

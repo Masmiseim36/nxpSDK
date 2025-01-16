@@ -1,0 +1,43 @@
+/*
+ *  Copyright 2023-2024 NXP
+ *  All rights reserved.
+ *
+ *  SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#include "edgefast_bluetooth_config_Gen.h"
+#include "edgefast_bluetooth_audio_config_Gen.h"
+#include "edgefast_bluetooth_debug_config_Gen.h"
+#include "edgefast_bluetooth_extension_config_Gen.h"
+
+/* Controller config
+ * Supported controller list,
+ * WIFI_IW612_BOARD_MURATA_2EL_M2
+ *
+ * If Murata Type 2EL module(Rev-A1 M2 only) used , define macro WIFI_IW612_BOARD_MURATA_2EL_M2 in following.
+ */
+
+/* @TEST_ANCHOR */
+#define WIFI_IW612_BOARD_MURATA_2EL_M2
+/* @END_TEST_ANCHOR */
+/*#define WIFI_IW612_BOARD_MURATA_2EL_M2*/
+
+#if defined(WIFI_IW612_BOARD_MURATA_2EL_M2)
+#include "wifi_bt_module_config.h"
+#include "wifi_config.h"
+#else
+#error The Wi-Fi module is unsupported
+#endif
+
+/* CIS */
+
+/* VCP */
+
+/* MCC */
+
+/* CSIS */
+
+/* Mandatory to support at least 1 for ASCS */
+
+/* LE Audio Sync Enable. */
+

@@ -1,52 +1,20 @@
-Overview
-========
+# xbar_aoi
+
+## Overview
 The XBAR AOI demo application demonstrates the usage of the XBAR, AOI peripheral to combine interrupt
 from CMP and PIT. If the button is pressed(CMP interrupt) and the PIT periodic interrupt occurs a message is printed.
 
-SDK version
-===========
-- Version: 2.15.000
+When there is no CMP/ACMP ip in SoC, AOI combines a high level signal(force the input to be 1) and PIT trigger signal, then
+the message "PIT periodic interrupt occurs" will be printed when the PIT timer period has timed out.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1064-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the xbar aoi demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-XBAR and AOI Demo: Start...
-
-Then change CMP analog input.
-    - CMP1_IN0 (J23-5) connected to VCC =3.3V (J24-8): XBAR interrupt occurred
-    - CMP1_IN0 (J23-5) connected to GND (J24-7)): XBAR interrupt stopped
-
-XBAR interrupt occurred
-
-XBAR interrupt occurred
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/demo_apps/xbar_aoi/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/demo_apps/xbar_aoi/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/demo_apps/xbar_aoi/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/demo_apps/xbar_aoi/example_board_readme.md)

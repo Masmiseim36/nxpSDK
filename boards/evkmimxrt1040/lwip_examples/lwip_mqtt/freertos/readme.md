@@ -1,5 +1,6 @@
-Overview
-========
+# lwip_mqtt_freertos
+
+## Overview
 
 The lwip_mqtt demo application demonstrates MQTT client connecting to MQTT broker via unsecured socket.
 The application obtains IP and DNS addresses from DHCP and resolves broker's hostname if needed.
@@ -8,30 +9,7 @@ Further it publishes five messages to the "lwip_topic/100" which are also receiv
 as the board is subscribed to the "lwip_topic/#".
 Meanwhile it continues to receive messages published to the subscribed topics from other clients.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1040-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
+## Prepare the Demo
 1.  Make sure the MQTT broker pointed to by EXAMPLE_MQTT_SERVER_HOST and EXAMPLE_MQTT_SERVER_PORT definitions
     is up and accessible on your network via unsecured socket. A public MQTT testing server can be used
     or you can install a broker locally and modify the definitions mentioned above.
@@ -46,8 +24,7 @@ Prepare the Demo
 5.  Download the program to the target board.
 6.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
+## Running the demo
 When the demo runs, the log would be seen on the terminal like:
 
 Initializing PHY...
@@ -83,3 +60,23 @@ Received 18 bytes from the topic "lwip_topic/100": "message from board"
 Going to publish to the topic "lwip_topic/100"...
 Published to the topic "lwip_topic/100".
 Received 18 bytes from the topic "lwip_topic/100": "message from board"
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../_boards/evkmimxrt1160/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [FRDM-MCXN947](../../../_boards/frdmmcxn947/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [FRDM-RW612](../../../_boards/frdmrw612/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [LPCXpresso54628](../../../_boards/lpcxpresso54628/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [LPCXpresso54S018](../../../_boards/lpcxpresso54s018/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [LPCXpresso54S018M](../../../_boards/lpcxpresso54s018m/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../_boards/mcxn5xxevk/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../_boards/mcxn9xxevk/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)
+- [RD-RW612-BGA](../../../_boards/rdrw612bga/lwip_examples/lwip_mqtt/freertos/example_board_readme.md)

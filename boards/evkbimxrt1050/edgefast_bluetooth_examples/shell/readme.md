@@ -1,94 +1,10 @@
-Overview
-========
+# edgefast_bluetooth_shell
+
+## Overview
 Application demonstrating the shell mode of the simplified Adapter APIs.
+> Note: Some platforms only support BLE (like: rw610/rw612), classic Bluetooth are not supported on these platforms, so the classic Bluetooth related shell cmds don't exist on the platforms.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- MCUXpresso  11.10.0
-- IAR embedded Workbench  9.60.1
-- GCC ARM Embedded  13.2.1
-- Keil MDK  5.39.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
-- One of the following modules:
-  - AzureWave AW-AM510-uSD
-  - AzureWave AW-AM457-uSD
-  - AzureWave AW-CM358-uSD
-  - Murata uSD-M.2 Adapter (LBEE0ZZ1WE-uSD-M2) and Embedded Artists 1ZM M.2 Module (EAR00364)
-  - Murata uSD-M.2 Adapter (LBEE0ZZ1WE-uSD-M2) and Embedded Artists 1XK M.2 Module (EAR00385)
-  - Murata uSD-M.2 Adapter (LBEE0ZZ1WE-uSD-M2) and Embedded Artists 2EL M.2 Module (EAR00409)
-
-Board settings
-==============
-Before building the example application select Wi-Fi module macro in the app_bluetooth_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
-If you want to use the AzureWave WIFI_IW416_BOARD_AW_AM510_USD, please change the macro to WIFI_IW416_BOARD_AW_AM510_USD.
-If you want to use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
-If you want to use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
-If you want to use the Murata Type 1ZM module, please change the macro to WIFI_88W8987_BOARD_MURATA_1ZM_USD.
-If you want to use the Murata Type 1XK module, please change the macro to WIFI_IW416_BOARD_MURATA_1XK_USD.
-If you want to use the Murata Type 2EL module, please change the macro to WIFI_IW612_BOARD_MURATA_2EL_USD.
-
-Jumper settings for Murata uSD-M.2 adapter:
-  - J12 = 1-2: WLAN-SDIO = 1.8V
-  - J13 = 1-2: BT-UART & WLAN/BT-CTRL = 3.3V
-  - J1 = 2-3: 3.3V from uSD connector
-
-The following pins between the evkbmimxrt1050 board and Murata uSD-M.2 Adapter with Embedded Artists 1ZM M.2 Module or 1XK M.2 Module are connected using male-to-female jumper cables:
-------------------------------------------------------------------------------------------
-PIN NAME         | uSD-M.2 Adapter | I.MXRT1050 | PIN NAME OF RT1050 | GPIO NAME OF RT1050
-------------------------------------------------------------------------------------------
-BT_UART_TXD_HOST | J9(pin 1)       | J22(pin 1) | LPUART3_RXD        | GPIO_AD_B1_07
-BT_UART_RXD_HOST | J9(pin 2)       | J22(pin 2) | LPUART3_TXD        | GPIO_AD_B1_06
-BT_UART_RTS_HOST | J8(pin 3)       | J23(pin 3) | LPUART3_CTS        | GPIO_AD_B1_04
-BT_UART_CTS_HOST | J8(pin 4)       | J23(pin 4) | LPUART3_RTS        | GPIO_AD_B1_05
-------------------------------------------------------------------------------------------
-
-Jumper settings for AzureWave AW-AM510-uSD Module:
-  - J2 1-2: 3.3V VIO_uSD (Power supply from uSD connector)
-  - J4 2-3: 3.3V VIO
-
-The hardware should be reworked according to the Hardware Rework Guide for EVKB-IMXRT1050 and AW-AM510-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
-The pin connect for UART HCI as the following table,
--------------------------------------------------------------------------------
-PIN NAME | AW-AM510-USD | I.MXRT1050 | PIN NAME OF RT1050 | GPIO NAME OF RT1050
--------------------------------------------------------------------------------
-UART_TXD | J10(pin 4)   | J22(pin 1) | LPUART3_RXD        | GPIO_AD_B1_07
-UART_RXD | J10(pin 2)   | J22(pin 2) | LPUART3_TXD        | GPIO_AD_B1_06
-UART_RTS | J10(pin 6)   | J23(pin 3) | LPUART3_CTS        | GPIO_AD_B1_04
-UART_CTS | J10(pin 8)   | J23(pin 4) | LPUART3_RTS        | GPIO_AD_B1_05
-GND      | J6(pin 7)    | J25(pin 7) | GND                | GND
--------------------------------------------------------------------------------
-
-Jumper settings for AzureWave AW-AM358-uSD Module:
-  - J2 1-2: 3.3V VIO_uSD (Power supply from uSD connector)
-  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
-
-The hardware should be reworked according to the Hardware Rework Guide for EVKB-IMXRT1050 and AW-CM358-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
-The pin connect for UART HCI as the following table,
--------------------------------------------------------------------------------
-PIN NAME | AW-CM358-USD | I.MXRT1050 | PIN NAME OF RT1050 | GPIO NAME OF RT1050
--------------------------------------------------------------------------------
-UART_TXD | J10(pin 4)   | J22(pin 1) | LPUART3_RXD        | GPIO_AD_B1_07
-UART_RXD | J10(pin 2)   | J22(pin 2) | LPUART3_TXD        | GPIO_AD_B1_06
-UART_RTS | J10(pin 6)   | J23(pin 3) | LPUART3_CTS        | GPIO_AD_B1_04
-UART_CTS | J10(pin 8)   | J23(pin 4) | LPUART3_RTS        | GPIO_AD_B1_05
-GND      | J6(pin 7)    | J25(pin 7) | GND                | GND
--------------------------------------------------------------------------------
-
-Note:
-To ensure that the LITTLEFS flash region has been cleaned,
-all flash sectors need to be erased before downloading example code.
-Prepare the Demo
-================
+## Prepare the Demo
 
 1.  Open example's project and build it.
 
@@ -105,8 +21,7 @@ Prepare the Demo
 
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
+## Running the demo
 The log below shows the output of the example in the terminal window. 
 
 Note:
@@ -384,7 +299,7 @@ API returned success...
 Observe the packet count in command complete event. 
 
 
-Running a2dp
+## Running a2dp
 The commands are as follow:
 +---"a2dp": a2dp Bluetooth A2DP shell commands
     +---"register_sink_ep": register_sink_ep <select codec.
@@ -429,7 +344,7 @@ Test flow:
    8.6 "a2dp.stop" stops media.
    8.7 "a2dp.send_delay_report" send delay report.
 
-Running avrcp
+## Running avrcp
 The commands are as follow:
 +---"avrcp": avrcp Bluetooth AVRCP shell commands
     +---"init_ct": init_ct [none]
@@ -488,7 +403,7 @@ Test flow:
    13.1 In device A, input "avrcp.ct_list_all_cases" to list all the test cases.
    13.2 In device A, input "avrcp.ct_test_case x" to test one selected case.
 
-Running BR/EDR L2CAP
+## Running BR/EDR L2CAP
 Test L2CAP basic mode
 1 Create ACL connection between two devices (A and B).
 2 In device A and B, input "br.l2cap-register <psm>" to register one psm (for example: br.l2cap-register 1001).
@@ -694,7 +609,7 @@ LE data len updated: TX (len: 50 time: 512) RX (len: 65 time: 632)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Running BR/EDR RFCOMM
+## Running BR/EDR RFCOMM
 Note: Only 1 rfcomm connection is supported in shell project.
 
 RFCOMM Server Side,
@@ -714,32 +629,359 @@ RFCOMM Client Side,
 5. After rfcomm connection is created, input "rfcomm.disconnect" to disconnect with peer device
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Here is an example running In-band and Out-of-band independent reset
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Running BR/EDR PBAP
+Note: Only 1 PBAP connection is supported in shell project.
+shell project supports PCE and PSE.
+
+The commands are as follow:
++---"pbap": pbap Bluetooth pbap shell commands
+    +---"pce": pce [none]
+        +---"register": register [none]
+        +---"connect": connect SDP first, then connect.
+                            -psm(optional).
+                            obex auth params(optional)
+                            -uid   : [userid].
+                            -pwd   : [password].
+        +---"disconnect": disconnect [none]
+        +---"abort": abort [none]
+        +---"pull_phonebook": pull_phonebook 
+                           -name(mandatory) : [name].
+                            -srmp(optional)  : [Single Response Mode Param(>=0)].
+                           input application parameters(optional). 
+                           1: -ps  : [Property Selector (64-bit)].
+                           2: -f   : [Format(0: vcard 2.1 | 1 : vcard 3.0)].
+                           3: -mlc : [MaxListCount (0 - 0xFFFF)].
+                           4: -lso : [ListStartOffset (0 - 0xFFFF)].
+                           5: -rnmc: [RestNewMissedCalls(0/1)].
+                           6: -cs  : [vCardSelector(64-bit)].
+                           7: -cso : [vCardSelecorOperator(0 : or | 1 : and)]
+        +---"set_path": set_path [path_name]
+        +---"pull_vcardlist": pull_vcardlist 
+                            -name(mandatory) : [name].
+                            -srmp(optional)  : [Single Response Mode Param(>=0)].
+                           input application parameters(optional). 
+                           1: -o   : [order(0 : Indexed | 1 : Alphanumeric | 2 : Phonetical)].
+                           2: -sp  : [SearchProperty(0 : name | 1 : number | 2 : sound)].
+                           3: -sv  : [SearchValue(string)].
+                           4: -mlc : [MaxListCount (0 - 0xFFFF)].
+                           5: -lso : [ListStartOffset (0 - 0xFFFF)].
+                           6: -rnmc: [ResetNewMissedCalls(0/1)].
+                           7: -cs  : [vCardSelector (64-bit)].
+                           8: -cso : [vCardSelecorOperator(0 : or | 1 : and)].
+        +---"pull_vcardentry": pull_vcardentry 
+                            -name(mandatory) : [name].
+                            -srmp(optional)  : [Single Response Mode Param(>=0)].
+                           input application parameters(optional).
+                           1: -ps  : [Property Selector (64-bit)].
+                           2: -f   : [Format(0: vcard 2.1 | 1 : vcard 3.0)].
+    +---"pse": pse [none]
+        +---"register": register [none]
+        +---"disconnect": disconnect [none]
+
+Here is an example of run PCE, and PSE is a mobile phone or a board running a PSE application.
+
 1. Input "bt.init" to initialize bluetooth
-@bt> bt.init
-download starts(384072)
-.....................
-download success!
-@bt> Bluetooth initialized
-Settings Loaded
-2. Input "bt.ind_reset inband"  to run In-band independent reset
-@bt> bt.ind_reset inband
-IR configured successfully for mode 2, ir_state = 3
-EtherMind: Bluetooth OFF ...
-Sending Inband IR Trigger
-download starts(384072)
-.....................
-download success!
-IR exit with state = 0
-3. Input "bt.ind_reset oob"  to run  Out-of-band independent reset
-@bt> bt.ind_reset oob
-IR configured successfully for mode 1, ir_state = 3
-EtherMind: Bluetooth OFF ...
-Sending Out of Band IR Trigger
-download starts(384072)
-.....................
-download success!
-IR exit with state = 0
+2. After bluetooth init successfully, Input "br.pscan on" to turn on pscan, PCE can be discoverable.
+3. Input "br.iscan on" to turn on iscan, PCE can be connectable.
+4. Input "pbap.pce.register" to init PBAP PCE.
+5. Input "hfp.init" to init HFP.
+   If PSE is a mobile phone and it wants to connect PCE proactively, this step is mandatory, otherwise optional.
+6. Input "br.discovery on" to discover PSE.
+   If PSE connect PCE proactively, this step is optional.
+7. Input "br.connect xx:xx:xx:xx:x:xx" to create ACL connection to PSE.
+   If PSE connect PCE proactively, do not perform this step.
+8. After ACL connected successfully, input "pbap.pce.connect" to create PBAP connection to PSE.
+   PCE establishes PBAP connections to PSE based on the rfcomm channel by default.
+   If want to based on GOEP_L2CAP_PSM, add parameter "-psm", like "pbap.pce.connect -psm".
+   If PSE does not supported GOEP_L2CAP_PSM, PCE will continue to establishe PBAP connection based on the rfcomm channel.
+   If PCE wants to authenticate PSE proactively, add parameter "-pwd" which means OBEX pin_code, like "pbap.pce.connect -pwd 0000".
+   parameter '-uid' which means OBEX use_id is optional because it is not suppoeted now.
+   If PSE and PCE have not negotiated authenticate information, it is recommended that PCE do not authenticate PSE proactively.
+   For example: PSE is a mobile phone.
+9. After PBAP connected successfully, input "pbap.pce.pull_phonebook -name telecom/pb.vcf" to pull phonebook object from PSE.
+   The name shall contain the absolute path in the virtual folders architecture of the PSE.
+   Example: telecom/pb.vcf or SIM1/telecom/pb.vcf.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "pbap.pce.pull_phonebook -name telecom/pb.vcf -srmp 3". 
+   If want to add applicaton parameters, input like "pbap.pce.pull_phonebook -name telecom/pb.vcf -f 1".
+   All application parameters are optional and their specific information can be found in spec.
+   It is possible that PSE does not support all parameters. 
+10. After receiving all the information from PSE, input "pbap.pce.set_path ./telecom" to set PSE path to telecom.
+   When name is "/", go to root directory.
+   When name is ".." or "../", go up one level.
+   When name is "child" or "./child", go to child.
+11. After setting path successfully, input "pbap.pce.pull_vcardlist -name cch" to pull cch vcard listing object from PSE.
+   The name shall not include any path information, since the PullvCardListing function uses relative paths.
+   Example: cch or ich or och.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "pbap.pce.pull_vcardlist -name cch -srmp 3". 
+   If want to add applicaton parameters, input like "pbap.pce.pull_vcardlist -name cch -name telecom/pb.vcf -o 0".
+   All application parameters are optional and their specific information can be found in spec.
+   It is possible that PSE does not support all parameters or name(spd, fav). 
+12. After receiving all the information from PSE, Input "pbap.pce.set_path ./cch" to set pse path to cch
+   When name is "/", go to root directory.
+   When name is ".." or "../", go up one level.
+   When name is "child" or "./child", go to child.
+13. After setting path successfully, Input "pbap.pce.pull_vcardentry -name 4.vcf" to pull handle=4 vcard entry object from PSE.
+   The name shall be used to indicate the name or the X-BT-UID of the object, and not include any path information.
+   Example: 4.vcf or X-BT-UID:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "pbap.pce.pull_vcardentry -name 4.vcf -srmp 3". 
+   If want to add applicaton parameters, input like "pbap.pce.pull_vcardentry -name 4.vcf -f 1".
+   All application parameters are optional and their specific information can be found in spec.
+   It is possible that PSE does not support all parameters or X-BT-UID. 
+14. Input "pbap.pce.disconnect" to disconnect PBAP connection to PSE
+   If PSE is a mobile phone, it will disconnect ACL connect proactively after pbap disconnect.
 
+Note:
+1. If using the a mobile phone as PSE to actively connect to PCE, please be sure to follow step 5 and ignore step 6, 7.
+   After testing, it was found that some mobile phones would only actively query for major services such as HFP or A2DP etc,
+   and if it did not find them or establish an L2CAP connection within the allotted time, the phone would actively disconnect ACL connection.
+   If the PCE initiates the connection to a mobile phone actively, step 5 is optional.
+2. If PSE is a mobile iphone, after connection,  user needs to actively turn on the "Share Contacts Permission" on the phone.
+   Otherwise PCE can not get message from PSE.
+3. If you want to get the vcard listing object or vcard entry object which belongs to a certain folder, please set path to the certain folder first.
+   Example： if you want to get vcard entry object "telecom/cch/4.vcf", first set path to "telecom", then set path to "cch".
+4. It is possible that PSE does not support all application parameters.
 
+Here is an example of run PSE, and PCE is a board running a shell project.
+
+1. Input "bt.init" to initialize bluetooth.
+2. After bluetooth init successfully, Input "br.pscan on" to turn on pscan, PSE can be discoverable.
+3. Input "br.iscan on" to turn on iscan, PSE can be connectable.
+4. Input "pbap.pse.register" to init PBAP PSE.
+5. After that, on PCE side, perform the above steps(step 1 - 14) to test PSE functions.
+6. Input "pbap.pse.disconnect" to disconnect PBAP connection.
+   PBAP connection also can be disconnected by inputting "pbap.pce.disconnect" on PCE side.
+
+Note:
+1. This example acting as PSE doesn't support all application parameters and only supports to parse/send the part of application parameters from/to PCE.
+
+## Running BR/EDR MAP
+Note: Only 1 MAP MAS and MNS connection is supported in shell project.
+shell project supports MCE and MSE.
+
+The commands are as follow:
++---"map": map Bluetooth MAP shell commands
+    +---"mce": mce [none]
+        +---"register": register [none]
+        +---"unregister": unregister [none]
+        +---"mns_register": mns_register [none]
+        +---"mns_unregister": mns_unregister [none]
+        +---"connect": connect SDP first, then connect
+        +---"disconnect": disconnect [none]
+        +---"mns_disconnect": mns_disconnect [none]
+        +---"abort": abort [none]
+        +---"get_folder_list": get_folder_list 
+               -srmp(optional) : [Single Response Mode Param (>=0)].
+               input application parameters(optional).
+               1: -mlc : [MaxListCount (0 - 0xFFFF)].
+               2: -lso : [ListStartOffset (0 - 0xFFFF)].
+        +---"set_folder": set_folder 
+               -name(mandatory) : [name ("/" : root | "../" : parent | "child" : child | "../child" : parent then child)].
+        +---"get_msg_list": get_msg_list 
+               -name(mandatory if getting child folder, or optional) : [name (string)].
+               -srmp(optional) : [Single Response Mode Param (>=0)].
+               input application parameters(optional).
+               1: -mlc : [MaxListCount (0 - 0xFFFF)].
+               2: -lso : [ListStartOffset (0 - 0xFFFF)].
+               3: -sl  : [SubjectLength (1 - 255)].
+               4: -pm  : [ParameterMask (0 - 0x1FFFFF)].
+               5: -fmt : [FilterMessageType (0 - 0x1F)].
+               6: -fpb : [FilterPeriodBegin (string of timestamp)].
+               7: -fpe : [FilterPeriodEnd (string of timestamp)].
+               8: -frs : [FilterReadStatus (0 : no-filter | 1: unread | 2 : read)].
+               9: -fr  : [FilterRecipient (string)].
+               10: -fo : [FilterOriginator (string)].
+               11: -fp : [FilterPriority (0 : no-filter | 1: high priority msg | 2 : non-high priority msg)].
+               12: -ci : [ConversationID (128-bit value in hex string format)].
+               13: -fmh : [FilterMessageHandle (64-bit value in hex string format)].
+        +---"get_msg": get_msg 
+               -name(mandatory) : [MessageHandle (string)].
+               -srmp(optional)  : [Single Response Mode Param (>=0)].
+               input application parameters.
+               1: -a(mandatory) : [Attachment (0 : OFF | 1 : ON)].
+               2: -c(mandatory) : [Charset (0 : native | 1 : UTF-8)].
+               3: -fr(optional) : [FractionRequest (0 : first | 1 : next)].
+        +---"set_msg_status": set_msg_status 
+               -name(mandatory) : [Message Handle (string)].
+               input application parameters.
+               1: -si(mandatory) : [StatusIndicator (0 : readStatus | 1 : deletedStatus | 2 : setExtendedData)].
+               2: -sv(mandatory) : [StatusValue (0 : no | 1 : yes)].
+               3: -ed(optional)  : [ExtendedData (string)].
+        +---"push_msg": push_msg 
+               -name(mandatory if pushing child folder, or optional) : [name (string)].
+               input application parameters.
+               1: -t(optional)  : [Transparent (0 : OFF | 1 : ON)].
+               2: -r(optional)  : [Retry (0 : OFF | 1 : ON)].
+               3: -c(mandatory) : [Charset (0 : native | 1 : UTF-8)].
+               4: -ci(optional) : [ConversationID (128-bit value in hex string format)].
+               5: -mh(optional if Message Forwarding is supported or excluded) : [MessageHandle (string)].
+               6: -a(mandatory if MessageHandle present in request or excluded)  : [Attachment (0 : OFF | 1 : ON)].
+               7: -mt(mandatory if MessageHandle present in request or excluded) : [ModifyText (0 : REPLACE | 1 : PREPEND)].
+        +---"set_ntf_reg": set_ntf_reg 
+               input application parameters(mandatory).
+               1: -ns : [NotificationStatus (0 : OFF | 1 : ON)].
+        +---"update_inbox": update_inbox [none]
+        +---"get_mas_inst_info": get_mas_inst_info 
+               -srmp(optional) : [Single Response Mode Param (>=0)].
+               input application parameters(mandatory).
+               1: -mii : [MASInstanceID (0 - 255)].
+        +---"set_owner_status": set_owner_status 
+               input application parameters(at least one parameter present).
+               1: -pa : [PresenceAvailability (0 - 255)].
+               2: -pt : [PresenceText (string)].
+               3: -la : [LastActivity (string of timestamp)].
+               4: -cs : [ChatState (0 - 255)].
+               5: -ci : [ConversationID (128-bit value in hex string format)].
+        +---"get_owner_status": get_owner_status 
+               -srmp(optional) : [Single Response Mode Param (>=0)].
+               input application parameters(optional).
+               1: -ci : [ConversationID (128-bit value in hex string format)].
+        +---"get_convo_list": get_convo_list 
+               -srmp(optional) : [Single Response Mode Param (>=0)].
+               input application parameters(optional).
+               1: -mlc  : [MaxListCount (0 - 0xFFFF)].
+               2: -lso  : [ListStartOffset (0 - 0xFFFF)].
+               3: -flab : [FilterLastActivityBegin (string)].
+               4: -flae : [FilterLastActivityEnd (string)].
+               5: -frs  : [FilterReadStatus (0 : no-filter | 1: unread | 2 : read)].
+               6: -fr   : [FilterRecipient (string)].
+               7. -ci   : [ConversationID (128-bit value in hex string format)].
+               8: -cpm  : [ConvParameterMask (0 - 0x7FFF)].
+        +---"set_ntf_filter": set_ntf_filter 
+               input application parameters(mandatory).
+               1: -nfm : [NotificationFilterMask (0 - 0x7FFF)].
+    +---"mse": mse [none]
+        +---"register": register [none]
+        +---"unregister": unregister [none]
+        +---"mns_register": mns_register [none]
+        +---"mns_unregister": mns_unregister [none]
+        +---"disconnect": disconnect [none]
+        +---"mns_disconnect": mns_disconnect [none]
+        +---"send_event": send_event 
+               input application parameters(mandatory).
+               1: -mii : [MASInstanceID (0 - 255)].
+
+Here is an example of run MCE, and MSE is a mobile phone or a board running a MSE application.
+
+1. Input "bt.init" to initialize bluetooth.
+2. After bluetooth init successfully, Input "br.pscan on" to turn on pscan, MCE can be discoverable.
+3. Input "br.iscan on" to turn on iscan, MCE can be connectable.
+4. Input "map.mce.register" to init MAP MCE MAS. Input "map.mce.mns_register" to init MAP MCE MNS.
+5. Input "hfp.init" to init HFP.
+   If MSE is a mobile phone and it wants to connect MCE proactively, this step is mandatory, otherwise optional.
+6. Input "br.discovery on" to discover MSE.
+   If MSE connects MCE proactively, this step is optional.
+7. Input "br.connect xx:xx:xx:xx:xx:xx" to create ACL connection to MSE.
+   If MSE connects MCE proactively, do not perform this step.
+8. After ACL connected successfully, input "map.mce.connect" to create MAP MAS connection to MSE.
+   MAP MAS connection to MSE based on the RFCOMM channel or L2CAP depends on whether the GoepL2capPsm is found in SDP record.
+   If the GoepL2capPsm is found, this connection is based on L2CAP otherwise RFCOMM channel. 
+9. After MAP MAS connection is established, input "map.mce.get_folder_list" to get folder listing from the current folder of MSE.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "map.mce.get_folder_list -srmp 3". 
+   If want to add applicaton parameters, input like "map.mce.get_folder_list -mlc 10 -lso 0".
+   All application parameters are optional and their specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+10. Input "map.mce.set_folder -name ./telecom" to set path to "telecom".
+   Input "map.mce.set_folder -name ./msg" to set path to "msg".
+   Input "map.mce.set_folder -name ./inbox" to set path to "inbox".
+   When name is "/", go to root directory.
+   When name is ".." or "../", go up one level.
+   When name is "child" or "./child", go to child.
+   When name is "../child", go up one level and then go to child.
+11. After going to "inbox", input "map.mce.get_msg_list" to get Messages-Listing objects from the current folder of MSE.
+   If getting Messages-Listing objects in the child folder, the name is mandatory otherwise excluded. The name shall not include any path information.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "map.mce.get_msg_list -srmp 3". 
+   If want to add application parameters, input like "map.mce.get_msg_list -mlc 10 -lso 0 -fpb 20240713T000000".
+   All application parameters are optional and their specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+12. After getting Messages-Listing objects successfully, input "map.mce.get_msg -name XXXXXXXXXXXXXXXX -a 0 -c 0" to get message content.
+   The name "XXXXXXXXXXXXXXXX" is a message handle returned in the "map.mce.get_msg_list" repsonse.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "map.mce.get_msg -name XXXXXXXXXXXXXXXX -a 0 -c 0 -srmp 3".
+   The "FractionRequest" application parameter is optional and its specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+13. After getting Messages-Listing objects successfully, input "map.mce.set_msg_status -name XXXXXXXXXXXXXXXX -si 0 -sv 0" to set message status to "unread".
+   The name "XXXXXXXXXXXXXXXX" is a message handle returned in the "map.mce.get_msg_list" repsonse.
+   The "ExtendedData" application parameter is optional and its specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+14. Input "map.mce.push_msg -c 0" to push a message to the current folder of MSE.
+   If pushing message to a child folder, the name is mandatory otherwise excluded. The name shall not include any path information.
+   Other application parameters are optional and their specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+15. Input "map.mce.set_ntf_reg -ns 1" to register itself for being notified of the arrival of new messages.
+   After receiving this command, MSE will initiate a MAP MNS connection. After MAP MNS connection is established, MSE can send event to MCE.
+16. Input "map.mce.update_inbox" to initiate an update of the MSE's inbox.
+   MSE shall contact the network to retrieve new messages if available.
+17. Input "map.mce.get_mas_inst_info -mii 0" to get user-readable information about the MAS Instances provided by the MSE.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "map.mce.get_mas_inst_info -mii 0 -srmp 3".
+18. Input "map.mce.set_owner_status -cs 1" to change the Chat State of the owner on the MSE.
+   At least one application parameter is selected to set.
+   Other application parameters are optional and their specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+   The command will not be sent if the 'Owner status' bit in the MapSupportedFeatures of the MSE is not set.
+19. Input "map.mce.get_owner_status -ci XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" to the Presence, Chat State, or Last Activity of the owner on MSE.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "map.mce.get_owner_status -ci XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -srmp 3".
+   It is possible that MSE is not able to handle the ConversationID.
+   The command will not be sent if the 'Owner status' bit in the MapSupportedFeatures of the MSE is not set.
+20. Input "map.mce.get_convo_list" to get Conversation-Listing objects from MSE.
+   If want to set the parameter "srmp", add the parameter "-srmp", like "map.mce.get_convo_list -srmp 3".
+   If want to add application parameters, input like "map.mce.get_convo_list -mlc 10 -lso 0".
+   All application parameters are optional and their specific information can be found in spec.
+   It is possible that MSE does not support all parameters.
+   The command will not be sent if the 'Conversation listing' bit in the MapSupportedFeatures of the MSE is not set.
+21. Input "map.mce.set_ntf_filter -nfm 7FFF" to unmask all notifications.
+   The command will not be sent if the 'Notification Filtering' bit in the MapSupportedFeatures of the MSE is not set.
+22. Input "map.mce.set_ntf_reg -ns 0" to unregister itself for being notified of the arrival of new messages.
+   After receiving this command, MSE will disconnect the MAP MNS connection.
+   MAP MNS connection also can be disconnected by inputting "map.mce.mns_disconnect".
+23. Input "map.mce.disconnect" to disconnect MAP MAS connection to MSE
+   If MSE is a mobile phone, it will disconnect ACL connect proactively after MAP MAS diconnection.
+
+Note:
+1. If using the a mobile phone as an MSE to actively connect to MCE, please be sure to follow step 5 and ignore step 6, 7.
+   After testing, it was found that some mobile phones would only actively query for major services such as HFP or A2DP etc,
+   and if it did not find them or establish an L2CAP connection within the allotted time, the phone would actively disconnect ACL connection.
+   If the MCE initiates a connection to a mobile phone actively, step 5 is optional.
+2. If MSE is a mobile iphone, after connection, user needs to actively turn on the permission to allow access to messages.
+   Otherwise MCE can not get message from MSE.
+3. It is possible that MSE does not support all MAP commands and application parameters.
+
+Here is an example of run MSE, and MCE is a board running a shell project.
+
+1. Input "bt.init" to initialize bluetooth.
+2. After bluetooth init successfully, Input "br.pscan on" to turn on pscan, MSE can be discoverable.
+3. Input "br.iscan on" to turn on iscan, MSE can be connectable.
+4. Input "map.mse.register" to init MAP MSE MAS. Input "map.mse.mns_register" to init MAP MSE MNS.
+5. After that, on MCE side, perform the above steps(step 1 - 23) to test MSE functions.
+6. After MAP MNS connection is established, input "map.mse.send_event -mii 0" to send MAP-Event-Report object to MCE.
+7. Input "map.mse.mns_disconnect" to disconnect MAP MNS connection.
+   MAP MNS connection also can be disconnected by inputting "map.mce.set_ntf_reg -ns 0" or "map.mce.mns_disconnect" on MCE side.
+8. Input "map.mse.disconnect" to disconnect MAP MAS connection.
+   MAP MAS connection also can be disconnected by inputting "map.mce.disconnect" on MCE side.
+
+Note:
+1. Due to the memory size limitation, some boards don't enable MSE function, such as MIMXRT1170-EVKB.
+   If users wants to enable MSE function, please set the following macros.
+   - CONFIG_BT_MAP_MSE = 1
+   - CONFIG_BT_MAP_MSE_MAS_NUM_INSTANCES = 2
+   - CONFIG_BT_MAP_MSE_MNS_NUM_INSTANCES = 1
+   - CONFIG_BT_MAP_MSE_MAS_MAX_PKT_LEN = 1790
+   - CONFIG_BT_MAP_MSE_MNS_MAX_PKT_LEN = 512
+   - CONFIG_BT_MAP_MSE_MNS_SUPPORTED_FEATURES = 0x0077FFFF
+   - RAM_DISK_ENABLE = 1
+2. This example acting as MSE doesn't support all application parameters and only supports to parse/send the part of application parameters from/to MCE.
+3. This example acting as MSE is based on FatFs RAM disk. There is a limited memory to store the incoming message from MCE.
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/edgefast_bluetooth_examples/shell/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/edgefast_bluetooth_examples/shell/example_board_readme.md)

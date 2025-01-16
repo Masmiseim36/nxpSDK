@@ -38,10 +38,9 @@
 #endif
 
 #define STREAMER_TASK_STACK_SIZE         16 * 1024
-#define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
+#define STREAMER_MESSAGE_TASK_STACK_SIZE 2 * 1024
 #define MAX_FILE_NAME_LENGTH             100
 
-ringbuf_t *audioBuffer;
 OSA_MUTEX_HANDLE_DEFINE(audioMutex);
 OSA_TASK_HANDLE_DEFINE(msg_thread);
 
@@ -64,21 +63,16 @@ static void STREAMER_MessageTask(void *arg)
 
     handle = (streamer_handle_t *)arg;
 
-    while (!handle->streamer->mq_out)
+    while (handle->streamer->message_channel_out.is_mq_created == false)
     {
         OSA_TimeDelay(1);
-    }
-    if (handle->streamer->mq_out == NULL)
-    {
-        PRINTF("[STREAMER] osa_mq_open failed: %d\r\n");
-        return;
     }
 
     PRINTF("[STREAMER] Message Task started\r\n");
 
     do
     {
-        ret = OSA_MsgQGet(&handle->streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        ret = OSA_MsgQGet(handle->streamer->message_channel_out.mq, (void *)&msg, osaWaitForever_c);
         if (ret != KOSA_StatusSuccess)
         {
             PRINTF("OSA_MsgQGet error: %d\r\n", ret);
@@ -112,42 +106,10 @@ static void STREAMER_MessageTask(void *arg)
 
     } while (!exit_thread);
 
-    OSA_MsgQDestroy(&handle->streamer->mq_out);
-    handle->streamer->mq_out = NULL;
+    OSA_MsgQDestroy(handle->streamer->message_channel_out.mq);
+    handle->streamer->message_channel_out.is_mq_created = false;
 
     OSA_TaskDestroy(msg_thread);
-}
-
-int STREAMER_Read(uint8_t *data, uint32_t size)
-{
-    uint32_t bytes_read;
-
-    OSA_MutexLock(&audioMutex, osaWaitForever_c);
-    bytes_read = ringbuf_read(audioBuffer, data, size);
-    OSA_MutexUnlock(&audioMutex);
-
-    if (bytes_read != size)
-    {
-        PRINTF("[STREAMER WARN] read underrun: size: %d, read: %d\r\n", size, bytes_read);
-    }
-
-    return bytes_read;
-}
-
-int STREAMER_Write(uint8_t *data, uint32_t size)
-{
-    uint32_t written;
-
-    OSA_MutexLock(&audioMutex, osaWaitForever_c);
-    written = ringbuf_write(audioBuffer, data, size);
-    OSA_MutexUnlock(&audioMutex);
-
-    if (written != size)
-    {
-        PRINTF("[STREAMER ERR] write overflow: size %d, written %d\r\n", size, written);
-    }
-
-    return written;
 }
 
 bool STREAMER_IsPlaying(streamer_handle_t *handle)
@@ -169,12 +131,6 @@ void STREAMER_Stop(streamer_handle_t *handle)
 
     handle->audioPlaying = false;
     streamer_set_state(handle->streamer, 0, STATE_NULL, true);
-
-    /* Empty input ringbuffer. */
-    if (audioBuffer)
-    {
-        ringbuf_clear(audioBuffer);
-    }
 }
 
 status_t STREAMER_mic_Create(streamer_handle_t *handle, ElementIndex out_sink, char *file_name)
@@ -429,12 +385,7 @@ void STREAMER_Destroy(streamer_handle_t *handle)
 {
     streamer_destroy(handle->streamer);
     handle->streamer = NULL;
-
-    if (audioBuffer != NULL)
-    {
-        ringbuf_destroy(audioBuffer);
-        audioBuffer = NULL;
-    }
+    
     deinit_logging();
 }
 

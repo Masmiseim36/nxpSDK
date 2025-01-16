@@ -5,14 +5,14 @@ Please note that this example does not make use of receive buffer thus this exam
 
 SDK version
 ===========
-- Version: 2.16.000
+- Version: 24.12.00
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
+- Keil MDK  5.41
+- IAR embedded Workbench  9.60.3
 - GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+- MCUXpresso  24.12.00
 
 Hardware requirements
 =====================

@@ -5,17 +5,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "system_MIMXRT1062.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LED_GPIO     BOARD_USER_LED_GPIO
-#define EXAMPLE_LED_GPIO_PIN BOARD_USER_LED_PIN
-
 
 /*******************************************************************************
  * Prototypes
@@ -53,11 +48,7 @@ void SysTick_DelayTicks(uint32_t n)
 int main(void)
 {
     /* Board pin init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    /* Update the core clock */
-    SystemCoreClockUpdate();
+    BOARD_InitHardware();
 
     /* Set systick reload value to generate 1ms interrupt */
     if (SysTick_Config(SystemCoreClock / 1000U))

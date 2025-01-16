@@ -185,7 +185,7 @@ uint32_t ENET_GetInstance(ENET_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_enetBases); instance++)
     {
-        if (s_enetBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_enetBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -603,6 +603,17 @@ static void ENET_SetMacController(ENET_Type *base,
         {
             ecr &= ~ENET_ECR_SPEED_MASK;
         }
+
+        /* Make sure RGMII mode is (temporarily) disabled.
+         * The ENET_RCR_RGMII_EN bit must not be set before changing
+         * the ENET_ECR_SPEED bit, otherwise there is a chance of ENET IP
+         * getting into a wrong state. */
+        base->RCR &= ~ENET_RCR_RGMII_EN_MASK;
+
+        /* Set/clear the ENET_ECR_SPEED bit, while the ENET_RCR_RGMII bit is 0.
+         * The rest of the ECR bits will be set later, as well as
+         * the requested value of the ENET_RCR_RGMII_EN bit. */
+        base->ECR = ecr;
     }
 #endif /* FSL_FEATURE_ENET_HAS_AVB */
     rcr |= ENET_RCR_MII_MODE_MASK;
@@ -1116,6 +1127,15 @@ void ENET_SetMII(ENET_Type *base, enet_mii_speed_t speed, enet_mii_duplex_t dupl
         else
         {
             ecr &= ~ENET_ECR_SPEED_MASK;
+        }
+
+        if (ENET_RCR_RGMII_EN_MASK == (rcr & ENET_RCR_RGMII_EN_MASK))
+        {
+            /* Make sure RGMII mode is (temporarily) disabled.
+             * The ENET_RCR_RGMII_EN bit must not be set before changing
+             * the ENET_ECR_SPEED bit, otherwise there is a chance of ENET IP
+             * getting into a wrong state. RGMII will be re-enabled later. */
+            base->RCR &= ~ENET_RCR_RGMII_EN_MASK;
         }
 
         base->ECR = ecr;
@@ -2263,7 +2283,7 @@ status_t ENET_GetRxFrame(ENET_Type *base, enet_handle_t *handle, enet_rx_frame_s
         if (0U != (curBuffDescrip->control & ENET_BUFFDESCRIPTOR_RX_LAST_MASK))
         {
             /* The last buffer descriptor stores the error status of this received frame. */
-            result = ENET_GetRxFrameErr((enet_rx_bd_struct_t *)(uint32_t)curBuffDescrip, &rxFrame->rxFrameError);
+            result = ENET_GetRxFrameErr((enet_rx_bd_struct_t *)(uintptr_t)curBuffDescrip, &rxFrame->rxFrameError);
             break;
         }
 

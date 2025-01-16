@@ -236,6 +236,10 @@ int VoiceSeeker_Execute(void *arg, void *inputOutputBuffer, int bufferSize)
 #endif
     float *vsl_out         = NULL;
     AudioRefData_t refData = {NULL, 0};
+#if (RDSP_NUM_SPK == 0)
+    /* Avoid compiler warning. */
+    (void) refData;
+#endif
 
     if ((buf == NULL) || (pkt_hdr_size == NULL))
     {

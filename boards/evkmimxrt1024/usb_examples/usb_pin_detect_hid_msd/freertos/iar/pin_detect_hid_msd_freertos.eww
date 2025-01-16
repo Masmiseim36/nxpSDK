@@ -5,6 +5,10 @@
       <name>all</name>
       <member>
         <project>pin_detect_hid_msd_freertos</project>
+        <configuration>sdram_release</configuration>
+      </member>
+      <member>
+        <project>pin_detect_hid_msd_freertos</project>
         <configuration>flexspi_nor_sdram_debug</configuration>
       </member>
       <member>
@@ -15,6 +19,9 @@
         <project>pin_detect_hid_msd_freertos</project>
         <configuration>release</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
       <member>
         <project>pin_detect_hid_msd_freertos</project>
         <configuration>sdram_release</configuration>
@@ -39,13 +46,6 @@
       <member>
         <project>pin_detect_hid_msd_freertos</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>pin_detect_hid_msd_freertos</project>
-        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

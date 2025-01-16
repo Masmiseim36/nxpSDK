@@ -9,61 +9,15 @@
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
 #include "fsl_flexio_spi_edma.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*Master related*/
-#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
-#define TRANSFER_BAUDRATE 150000U /*! Transfer baudrate - 150k */
-
-#define MASTER_FLEXIO_SPI_BASEADDR (FLEXIO2)
-#define FLEXIO_SPI_SOUT_PIN        6U
-#define FLEXIO_SPI_SIN_PIN         7U
-#define FLEXIO_SPI_CLK_PIN         5U
-#define FLEXIO_SPI_PCS_PIN         8U
-
-#define MASTER_FLEXIO_SPI_IRQ FLEXIO2_IRQn
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define MASTER_FLEXIO_SPI_CLOCK_SELECT (3U)
-/* Clock pre divider for flexio clock source */
-#define MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define MASTER_FLEXIO_SPI_CLOCK_DIVIDER (7U)
-#define MASTER_FLEXIO_SPI_CLOCK_FREQUENCY                                            \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER + 1U) / \
-     (MASTER_FLEXIO_SPI_CLOCK_DIVIDER + 1U))
-
-#define FLEXIO_DMA_REQUEST_SOURCE_BASE        (kDmaRequestMuxFlexIO2Request0Request1)
-#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR    DMAMUX
-#define EXAMPLE_FLEXIO_SPI_DMA_LPSPI_BASEADDR DMA0
-#define FLEXIO_SPI_TX_DMA_LPSPI_CHANNEL       (0U)
-#define FLEXIO_SPI_RX_DMA_LPSPI_CHANNEL       (1U)
-#define FLEXIO_TX_SHIFTER_INDEX               0U
-#define FLEXIO_RX_SHIFTER_INDEX               2U
-#define EXAMPLE_TX_DMA_SOURCE                 (kDmaRequestMuxFlexIO2Request0Request1)
-#define EXAMPLE_RX_DMA_SOURCE                 (kDmaRequestMuxFlexIO2Request2Request3)
-
-/*Slave related*/
-#define SLAVE_LPSPI_BASEADDR   (LPSPI1)
-#define SLAVE_LPSPI_IRQ_HANDLE (LPSPI1_DriverIRQHandler)
-#define SLAVE_LPSPI_IRQN       (LPSPI1_IRQn)
-
-/* Select USB1 PLL PFD0 (480 MHz) as lpspi clock source */
-#define SLAVE_LPSPI_CLOCK_SELECT (1U)
-/* Clock divider for lpspi clock source */
-#define SLAVE_LPSPI_CLOCK_DIVIDER (7U)
-
-#define SLAVE_LPSPI_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define SLAVE_LPSPI_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
-
 
 /*******************************************************************************
  * Prototypes
@@ -124,19 +78,7 @@ void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, sta
 
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, MASTER_FLEXIO_SPI_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, MASTER_FLEXIO_SPI_CLOCK_DIVIDER);
-
-    /* Clock setting for Lpspi */
-    CLOCK_SetMux(kCLOCK_LpspiMux, SLAVE_LPSPI_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, SLAVE_LPSPI_CLOCK_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("FLEXIO Master edma - LPSPI Slave interrupt example start.\r\n");
     PRINTF("This example use one flexio spi as master and one lpspi instance as slave on one board.\r\n");
@@ -221,6 +163,9 @@ int main(void)
 
     /* Init the EDMA module */
     EDMA_GetDefaultConfig(&config);
+#if defined(BOARD_GetEDMAConfig)
+    BOARD_GetEDMAConfig(config);
+#endif
     EDMA_Init(EXAMPLE_FLEXIO_SPI_DMA_LPSPI_BASEADDR, &config);
     EDMA_CreateHandle(&txHandle, EXAMPLE_FLEXIO_SPI_DMA_LPSPI_BASEADDR, FLEXIO_SPI_TX_DMA_LPSPI_CHANNEL);
     EDMA_CreateHandle(&rxHandle, EXAMPLE_FLEXIO_SPI_DMA_LPSPI_BASEADDR, FLEXIO_SPI_RX_DMA_LPSPI_CHANNEL);

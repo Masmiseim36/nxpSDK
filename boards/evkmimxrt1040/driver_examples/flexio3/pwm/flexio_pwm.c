@@ -9,28 +9,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE (2000000U)
-#define DEMO_FLEXIO_BASEADDR                  FLEXIO3
-#define DEMO_FLEXIO_OUTPUTPIN                 (2U) /* Select FXIO3_D2 as PWM output */
-#define DEMO_FLEXIO_TIMER_CH                  (0U) /* Flexio timer0 used */
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define FLEXIO_CLOCK_SELECT (3U)
-/* Clock pre divider for flexio clock source */
-#define FLEXIO_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define FLEXIO_CLOCK_DIVIDER (7U)
-#define DEMO_FLEXIO_CLOCK_FREQUENCY \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (FLEXIO_CLOCK_PRE_DIVIDER + 1U) / (FLEXIO_CLOCK_DIVIDER + 1U))
-/* FLEXIO output PWM frequency */
-#define DEMO_FLEXIO_FREQUENCY (48000U)
 #define FLEXIO_MAX_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 2U)
 #define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 512U)
 
@@ -226,15 +210,7 @@ int main(void)
     flexio_config_t fxioUserConfig;
 
     /* Init board hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, FLEXIO_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, FLEXIO_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, FLEXIO_CLOCK_DIVIDER);
+    BOARD_InitHardware();
 
     /* Init flexio, use default configure
      * Disable doze and fast access mode

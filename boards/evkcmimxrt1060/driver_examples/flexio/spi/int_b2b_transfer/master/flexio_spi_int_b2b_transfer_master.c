@@ -7,30 +7,13 @@
  */
 
 #include "fsl_flexio_spi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*Master related*/
-#define BOARD_FLEXIO_BASE   (FLEXIO2)
-#define FLEXIO_SPI_MOSI_PIN 6U
-#define FLEXIO_SPI_MISO_PIN 7U
-#define FLEXIO_SPI_SCK_PIN  5U
-#define FLEXIO_SPI_CSn_PIN  8U
-
-/* Select USB1 PLL (480 MHz) as flexio clock source */
-#define MASTER_FLEXIO_SPI_CLOCK_SELECT (3U)
-/* Clock pre divider for flexio clock source */
-#define MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER (4U)
-/* Clock divider for flexio clock source */
-#define MASTER_FLEXIO_SPI_CLOCK_DIVIDER (7U)
-#define FLEXIO_CLOCK_FREQUENCY                                                       \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER + 1U) / \
-     (MASTER_FLEXIO_SPI_CLOCK_DIVIDER + 1U))
 #define BUFFER_SIZE (64)
 /*******************************************************************************
  * Prototypes
@@ -61,15 +44,7 @@ int main(void)
     flexio_spi_master_config_t userConfig;
     size_t transferredCount = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Clock setting for Flexio */
-    CLOCK_SetMux(kCLOCK_Flexio2Mux, MASTER_FLEXIO_SPI_CLOCK_SELECT);
-    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Flexio2Div, MASTER_FLEXIO_SPI_CLOCK_DIVIDER);
+    BOARD_InitHardware();
     PRINTF("\r\nFlexIO SPI interrupt example\r\n");
     PRINTF("Master Start...\r\n");
     /*

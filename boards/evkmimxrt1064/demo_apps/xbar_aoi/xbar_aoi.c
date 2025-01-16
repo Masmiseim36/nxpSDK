@@ -7,46 +7,40 @@
  */
 
 #include "fsl_debug_console.h"
+
+#if defined(FSL_FEATURE_SOC_PIT_COUNT) && FSL_FEATURE_SOC_PIT_COUNT
+#include "fsl_pit.h"
+#endif
+
+#if defined(FSL_FEATURE_SOC_XBARA_COUNT) && FSL_FEATURE_SOC_XBARA_COUNT
+#include "fsl_xbara.h"
+#endif
+
+#if defined(FSL_FEATURE_SOC_XBARB_COUNT) && FSL_FEATURE_SOC_XBARB_COUNT
+#include "fsl_xbarb.h"
+#endif
+
+#if defined(FSL_FEATURE_SOC_LPIT_COUNT) && FSL_FEATURE_SOC_LPIT_COUNT
+#include "fsl_lpit.h"
+#endif
+
+#if defined(FSL_FEATURE_SOC_XBAR_DSC_COUNT) && FSL_FEATURE_SOC_XBAR_DSC_COUNT
+#include "fsl_xbar.h"
+#endif
+
+#include "fsl_aoi.h"
+#include "board.h"
+#include "app.h"
+
 #if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
 #include "fsl_acmp.h"
-#else
+#elif defined(FSL_FEATURE_SOC_CMP_COUNT) && FSL_FEATURE_SOC_CMP_COUNT
 #include "fsl_cmp.h"
 #endif
-#include "fsl_pit.h"
-#include "fsl_aoi.h"
-#include "fsl_xbara.h"
-#include "fsl_xbarb.h"
-#include "pin_mux.h"
-#include "board.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_XBARA_BASEADDR XBARA1
-#define DEMO_XBARB_BASEADDR XBARB2
-
-#define DEMO_PIT_BASEADDR PIT
-#define DEMO_CMP_BASEADDR CMP1
-#define DEMO_AOI_BASEADDR AOI1
-
-#define DEMO_XBARA_IRQ_HANDLER_FUNC XBAR1_IRQ_0_1_IRQHandler
-#define DEMO_XBARA_IRQ_ID           XBAR1_IRQ_0_1_IRQn
-
-#define DEMO_CMP_MINUS_CHANNEL 0U
-#define DEMO_CMP_PLUS_CHANNEL  7U
-#define DEMO_PIT_CHANNEL       kPIT_Chnl_0
-
-#define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_OscClk)
-
-#define DEMO_XBARB_INPUT_CMP_SIGNAL    kXBARB2_InputAcmp1Out
-#define DEMO_XBARB_OUTPUT_AOI_SIGNAL_1 kXBARB2_OutputAoi1In00
-
-#define DEMO_XBARB_INPUT_PIT_SIGNAL    kXBARB2_InputPitTrigger0
-#define DEMO_XBARB_OUTPUT_AOI_SIGNAL_2 kXBARB2_OutputAoi1In01
-
-#define DEMO_XBARA_INPUT_AOI_SIGNAL kXBARA1_InputAoi1Out0
-#define DEMO_XBARA_OUTPUT_SIGNAL    kXBARA1_OutputDmaChMuxReq30
-
 
 /*******************************************************************************
  * Prototypes
@@ -56,7 +50,9 @@
  * @brief Initialize the CMP.
  *
  */
+#if defined(DEMO_CMP_BASEADDR)
 static void CMP_Configuration(void);
+#endif
 
 /*!
  * @brief Initialize the PIT timer.
@@ -84,6 +80,7 @@ volatile bool g_xbaraInterrupt = false;
  * Code
  ******************************************************************************/
 
+#if defined(DEMO_CMP_BASEADDR)
 static void CMP_Configuration(void)
 {
 #if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
@@ -120,7 +117,7 @@ static void CMP_Configuration(void)
     ACMP_SetDACConfig(DEMO_CMP_BASEADDR, &dacConfigStruct);
 
     ACMP_Enable(DEMO_CMP_BASEADDR, true);
-#else
+#elif defined(FSL_FEATURE_SOC_CMP_COUNT) && FSL_FEATURE_SOC_CMP_COUNT
     cmp_config_t cmpConfig;
     cmp_dac_config_t cmpdacConfig;
 
@@ -134,7 +131,9 @@ static void CMP_Configuration(void)
     CMP_SetDACConfig(DEMO_CMP_BASEADDR, &cmpdacConfig);
 #endif
 }
+#endif
 
+#if defined(FSL_FEATURE_SOC_PIT_COUNT) && FSL_FEATURE_SOC_PIT_COUNT
 static void PIT_Configuration(void)
 {
     pit_config_t pitConfig;
@@ -148,6 +147,37 @@ static void PIT_Configuration(void)
     PIT_StartTimer(DEMO_PIT_BASEADDR, DEMO_PIT_CHANNEL);
 }
 
+#elif defined(FSL_FEATURE_SOC_LPIT_COUNT) && FSL_FEATURE_SOC_LPIT_COUNT
+static void PIT_Configuration(void)
+{
+    lpit_config_t lpitConfig;
+    lpit_chnl_params_t lpitChannelConfig;
+
+    LPIT_GetDefaultConfig(&lpitConfig);
+    lpitConfig.enableRunInDebug = false;
+    LPIT_Init(DEMO_LPIT_BASE, &lpitConfig);
+
+    lpitChannelConfig.chainChannel          = false;
+    lpitChannelConfig.enableReloadOnTrigger = false;
+    lpitChannelConfig.enableStartOnTrigger  = false;
+    lpitChannelConfig.enableStopOnTimeout   = false;
+    lpitChannelConfig.timerMode             = kLPIT_PeriodicCounter;
+
+    /* Set default values for the trigger source */
+    lpitChannelConfig.triggerSelect = kLPIT_Trigger_TimerChn0;
+    lpitChannelConfig.triggerSource = kLPIT_TriggerSource_External;
+
+    LPIT_SetupChannel(DEMO_LPIT_BASE, DEMO_LPIT_CHANNEL, &lpitChannelConfig);
+
+    /* Set timer period to 0.5 second */
+    LPIT_SetTimerPeriod(DEMO_LPIT_BASE, DEMO_LPIT_CHANNEL, USEC_TO_COUNT(500000U, LPIT_SOURCECLOCK));
+
+    LPIT_StartTimer(DEMO_LPIT_BASE, DEMO_LPIT_CHANNEL);
+}
+#endif
+
+#if defined(FSL_FEATURE_SOC_XBARA_COUNT) && FSL_FEATURE_SOC_XBARA_COUNT && defined(FSL_FEATURE_SOC_XBARB_COUNT) && FSL_FEATURE_SOC_XBARB_COUNT
+
 static void XBAR_Configuration(void)
 {
     xbara_control_config_t xbaraConfig;
@@ -157,7 +187,9 @@ static void XBAR_Configuration(void)
     XBARB_Init(DEMO_XBARB_BASEADDR);
 
     /* Configure the XBAR signal connections */
+#if defined(DEMO_CMP_BASEADDR)
     XBARB_SetSignalsConnection(DEMO_XBARB_BASEADDR, DEMO_XBARB_INPUT_CMP_SIGNAL, DEMO_XBARB_OUTPUT_AOI_SIGNAL_1);
+#endif
     XBARB_SetSignalsConnection(DEMO_XBARB_BASEADDR, DEMO_XBARB_INPUT_PIT_SIGNAL, DEMO_XBARB_OUTPUT_AOI_SIGNAL_2);
     XBARA_SetSignalsConnection(DEMO_XBARA_BASEADDR, DEMO_XBARA_INPUT_AOI_SIGNAL, DEMO_XBARA_OUTPUT_SIGNAL);
 
@@ -170,12 +202,64 @@ static void XBAR_Configuration(void)
     EnableIRQ(DEMO_XBARA_IRQ_ID);
 }
 
+void DEMO_XBARA_IRQ_HANDLER_FUNC(void)
+{
+    /* Clear interrupt flag */
+    XBARA_ClearStatusFlags(DEMO_XBARA_BASEADDR, kXBARA_EdgeDetectionOut0);
+    g_xbaraInterrupt = true;
+    SDK_ISR_EXIT_BARRIER;
+}
+
+#elif defined(FSL_FEATURE_SOC_XBAR_DSC_COUNT) && FSL_FEATURE_SOC_XBAR_DSC_COUNT
+
+static void XBAR_Configuration(void)
+{
+    xbar_control_config_t xbaraConfig;
+
+    /* Init XBAR module. */
+    XBAR_Init(kXBAR_DSC1);
+    XBAR_Init(kXBAR_DSC2);
+
+    /* Configure the XBAR signal connections */
+#if defined(DEMO_CMP_BASEADDR)
+    XBAR_SetSignalsConnection(DEMO_XBAR_INPUT_CMP_SIGNAL, DEMO_XBAR_OUTPUT_AOI_SIGNAL_1);
+#endif
+    XBAR_SetSignalsConnection(DEMO_XBAR_INPUT_PIT_SIGNAL, DEMO_XBAR_OUTPUT_AOI_SIGNAL_2);
+    XBAR_SetSignalsConnection(DEMO_XBAR_INPUT_AOI_SIGNAL, DEMO_XBAR_OUTPUT_SIGNAL);
+
+    /* Configure the XBAR interrupt */
+    xbaraConfig.activeEdge      = kXBAR_EdgeRising;
+    xbaraConfig.requestType     = kXBAR_RequestInterruptEnable;
+    XBAR_SetOutputSignalConfig(DEMO_XBAR_OUTPUT_SIGNAL, &xbaraConfig);
+    EnableIRQ(DEMO_XBAR_IRQ_ID);
+}
+
+void DEMO_XBAR_IRQ_HANDLER_FUNC(void)
+{
+    bool status;
+
+    XBAR_GetOutputStatusFlag(DEMO_XBAR_OUTPUT_SIGNAL, &status);
+    if (status)
+    {
+        XBAR_ClearOutputStatusFlag(DEMO_XBAR_OUTPUT_SIGNAL);
+    }
+    g_xbaraInterrupt = true;
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+#endif
+
 static void AOI_Configuration(void)
 {
     aoi_event_config_t aoiEventLogicStruct;
 
     /* Configure the AOI event */
+#if defined(DEMO_CMP_BASEADDR)
     aoiEventLogicStruct.PT0AC = kAOI_InputSignal;    /* CMP0 output*/
+#else
+    aoiEventLogicStruct.PT0AC = kAOI_LogicOne;    /* force input to become 1 */
+#endif
     aoiEventLogicStruct.PT0BC = kAOI_InvInputSignal; /* PIT0 output*/
     aoiEventLogicStruct.PT0CC = kAOI_LogicOne;
     aoiEventLogicStruct.PT0DC = kAOI_LogicOne;
@@ -200,25 +284,16 @@ static void AOI_Configuration(void)
     AOI_SetEventLogicConfig(DEMO_AOI_BASEADDR, kAOI_Event0, &aoiEventLogicStruct);
 }
 
-void DEMO_XBARA_IRQ_HANDLER_FUNC(void)
-{
-    /* Clear interrupt flag */
-    XBARA_ClearStatusFlags(DEMO_XBARA_BASEADDR, kXBARA_EdgeDetectionOut0);
-    g_xbaraInterrupt = true;
-    SDK_ISR_EXIT_BARRIER;
-}
-
 int main(void)
 {
     /* Init board hardware */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Init PIT timer */
     PIT_Configuration();
     /* Init CMP */
+#if defined(DEMO_CMP_BASEADDR)
     CMP_Configuration();
+#endif
     /* Init XBAR */
     XBAR_Configuration();
     /* Init AOI */

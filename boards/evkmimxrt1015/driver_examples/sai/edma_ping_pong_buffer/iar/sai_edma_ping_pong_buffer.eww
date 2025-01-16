@@ -5,19 +5,12 @@
       <name>all</name>
       <member>
         <project>sai_edma_ping_pong_buffer</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>sai_edma_ping_pong_buffer</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>sai_edma_ping_pong_buffer</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
       <member>
         <project>sai_edma_ping_pong_buffer</project>
         <configuration>release</configuration>
@@ -35,6 +28,13 @@
       <member>
         <project>sai_edma_ping_pong_buffer</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>sai_edma_ping_pong_buffer</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

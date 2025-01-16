@@ -7,23 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_cmp.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT() USER_LED_INIT(LOGIC_LED_OFF)
-#define LED_ON()   USER_LED_ON()
-#define LED_OFF()  USER_LED_OFF()
-
-#define DEMO_CMP_BASE             CMP1
-#define DEMO_CMP_USER_CHANNEL     0U
-#define DEMO_CMP_DAC_CHANNEL      7U
-#define DEMO_CMP_IRQ_ID           ACMP1_IRQn
-#define DEMO_CMP_IRQ_HANDLER_FUNC ACMP1_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -68,14 +58,7 @@ int main(void)
     cmp_dac_config_t mCmpDacConfigStruct;
 
     /* Initialize hardware */
-    gpio_pin_config_t led_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Init output LED GPIO. */
-    GPIO_PinInit(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, &led_config);
+    BOARD_InitHardware();
     EnableIRQ(DEMO_CMP_IRQ_ID);
 
     PRINTF("\r\nCMP interrupt Example.\r\n");

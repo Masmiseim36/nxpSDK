@@ -6,9 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
@@ -17,8 +16,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA    DMA0
-#define EXAMPLE_DMAMUX DMAMUX
 #define BUFFER_LENGTH      8U
 #define HALF_BUFFER_LENGTH (BUFFER_LENGTH / 2U)
 #define TCD_QUEUE_SIZE     2U
@@ -62,10 +59,7 @@ int main(void)
     edma_transfer_config_t transferConfig;
     edma_config_t userConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     /* Print source buffer */
     PRINTF("EDMA scatter gather transfer example begin.\r\n\r\n");
     PRINTF("Destination Buffer:\r\n");

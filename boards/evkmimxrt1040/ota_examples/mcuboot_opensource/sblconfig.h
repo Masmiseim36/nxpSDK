@@ -24,6 +24,20 @@
 /* Board specific register for flash remap functionality */
 #define FLASH_REMAP_OFFSET_REG 0x400AC080 /* RT1040 flash remap offset register */
 
+/* Encrypted XIP support config */
+
+/*
+ * Enable extension utilizing on-the-fly decryption of encrypted image.
+ * For more information please see readme file.
+ */
+//#define CONFIG_ENCRYPT_XIP_EXT_ENABLE
+
+/*
+ * Encrypted XIP extension uses simpler OVERWRITE_ONLY mode instead of three
+ * slot configuration.
+ */
+//#define CONFIG_ENCRYPT_XIP_EXT_OVERWRITE_ONLY
+
 /* Crypto Config */
 
 #define COMPONENT_MCUBOOT_SECURE

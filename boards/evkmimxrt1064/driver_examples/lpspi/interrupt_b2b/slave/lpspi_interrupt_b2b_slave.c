@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2020 NXP
+ * Copyright 2017, 2020, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,31 +8,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR   (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN       (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_IRQHandler LPSPI1_IRQHandler
-
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
-
-/* Select USB1 PLL PFD0 (480 MHz) as lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
-
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
-
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -90,7 +71,7 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
     {
         while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) < g_slaveFifoSize)
         {
-            /*Write the word to TX register*/
+            /* Write the word to TX register */
             LPSPI_WriteData(EXAMPLE_LPSPI_SLAVE_BASEADDR, slaveTxData[slaveTxCount]);
             ++slaveTxCount;
 
@@ -117,16 +98,9 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
-    /*Set clock source for LPSPI*/
-    CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
-
-    PRINTF("LPSPI board to board functional interrupt example.\r\n");
+    PRINTF("LPSPI interrupt board to board (b2b) slave example.\r\n");
     PRINTF("  Slave start to receive data...\r\n");
 
     uint32_t errorCount;
@@ -135,13 +109,13 @@ int main(void)
     lpspi_which_pcs_t whichPcs;
     uint8_t txWatermark;
 
-    /*Slave config*/
+    /* Slave config */
     LPSPI_SlaveGetDefaultConfig(&slaveConfig);
     slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 
-    /*Set up the transfer data*/
+    /* Set up the transfer data */
     for (i = 0; i < TRANSFER_SIZE; i++)
     {
         slaveTxData[i] = i % 256;
@@ -153,10 +127,10 @@ int main(void)
     slaveRxCount             = 0;
     whichPcs                 = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
-    /*The TX and RX FIFO sizes are always the same*/
+    /* The TX and RX FIFO sizes are always the same */
     g_slaveFifoSize = LPSPI_GetRxFifoSize(EXAMPLE_LPSPI_SLAVE_BASEADDR);
 
-    /*Set the RX and TX watermarks to reduce the ISR times.*/
+    /* Set the RX and TX watermarks to reduce the ISR times. */
     if (g_slaveFifoSize > 1)
     {
         txWatermark        = 1;
@@ -174,27 +148,27 @@ int main(void)
     EXAMPLE_LPSPI_SLAVE_BASEADDR->CFGR1 &= (~LPSPI_CFGR1_NOSTALL_MASK);
     LPSPI_Enable(EXAMPLE_LPSPI_SLAVE_BASEADDR, true);
 
-    /*Flush FIFO , clear status , disable all the interrupts.*/
+    /* Flush FIFO, clear status, disable all the interrupts. */
     LPSPI_FlushFifo(EXAMPLE_LPSPI_SLAVE_BASEADDR, true, true);
     LPSPI_ClearStatusFlags(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllStatusFlag);
     LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllInterruptEnable);
 
     LPSPI_SelectTransferPCS(EXAMPLE_LPSPI_SLAVE_BASEADDR, whichPcs);
 
-    /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
+    /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX,
      * and you should also enable the INTMUX interrupt in your application.
      */
     EnableIRQ(EXAMPLE_LPSPI_SLAVE_IRQN);
 
-    /*TCR is also shared the FIFO , so wait for TCR written.*/
+    /* TCR is also shared the FIFO, so wait for TCR written. */
     while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) != 0)
     {
     }
 
-    /*Fill up the TX data in FIFO */
+    /* Fill up the TX data in FIFO */
     while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) < g_slaveFifoSize)
     {
-        /*Write the word to TX register*/
+        /* Write the word to TX register */
         LPSPI_WriteData(EXAMPLE_LPSPI_SLAVE_BASEADDR, slaveTxData[slaveTxCount]);
         ++slaveTxCount;
 
@@ -228,14 +202,14 @@ int main(void)
     }
     if (errorCount == 0)
     {
-        PRINTF("\r\nLPSPI transfer all data matched! \r\n");
+        PRINTF("\r\nLPSPI transfer all data matched!\r\n");
     }
     else
     {
-        PRINTF("\r\nError occurred in LPSPI transfer ! \r\n");
+        PRINTF("\r\nError occurred in LPSPI transfer!\r\n");
     }
     /* Print out receive buffer */
-    PRINTF("\r\n Slave received:\r\n");
+    PRINTF("\r\n Slave received:");
     for (i = 0U; i < TRANSFER_SIZE; i++)
     {
         /* Print 16 numbers in a line */
@@ -249,7 +223,7 @@ int main(void)
 
     LPSPI_Deinit(EXAMPLE_LPSPI_SLAVE_BASEADDR);
 
-    PRINTF("End of slave example! \r\n");
+    PRINTF("\r\nEnd of slave example!\r\n");
 
     while (1)
     {

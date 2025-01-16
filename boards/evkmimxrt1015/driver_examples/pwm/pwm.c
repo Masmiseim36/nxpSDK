@@ -7,18 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_pwm.h"
 
-#include "fsl_xbara.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* The PWM base address */
-#define BOARD_PWM_BASEADDR PWM1
-
-#define PWM_SRC_CLK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 /* Definition for default PWM frequence in hz. */
 #ifndef APP_DEFAULT_PWM_FREQUENCY
 #define APP_DEFAULT_PWM_FREQUENCY (1000UL)
@@ -95,20 +90,7 @@ int main(void)
     uint32_t pwmVal = 4;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    CLOCK_SetDiv(kCLOCK_AhbDiv, 0x2); /* Set AHB PODF to 2, divide by 3 */
-    CLOCK_SetDiv(kCLOCK_IpgDiv, 0x3); /* Set IPG PODF to 3, divede by 4 */
-
-    /* Set the PWM Fault inputs to a low value */
-    XBARA_Init(XBARA);
-    XBARA_SetSignalsConnection(XBARA, kXBARA1_InputLogicHigh, kXBARA1_OutputFlexpwm1Fault0);
-    XBARA_SetSignalsConnection(XBARA, kXBARA1_InputLogicHigh, kXBARA1_OutputFlexpwm1Fault1);
-    XBARA_SetSignalsConnection(XBARA, kXBARA1_InputLogicHigh, kXBARA1_OutputFlexpwm1Fault2);
-    XBARA_SetSignalsConnection(XBARA, kXBARA1_InputLogicHigh, kXBARA1_OutputFlexpwm1Fault3);
+    BOARD_InitHardware();
 
     PRINTF("FlexPWM driver example\n");
 
@@ -186,7 +168,11 @@ int main(void)
     PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_2, kPWM_PwmA, kPWM_faultchannel_0,
                              kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
 
-    /* Call the init function with demo configuration */
+    /* 
+     * Call the init function with demo configuration.
+     * Recommend to invoke API PWM_SetupPwm after PWM and fault configuration, because reference manual advises to
+     * set OUTEN register after other PWM configurations. But set OUTEN register before MCTRL register is okay.
+     */
     PWM_DRV_Init3PhPwm();
 
     /* Set the load okay bit for all submodules to load registers from their buffer */

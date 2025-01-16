@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -9,21 +9,12 @@
 #include "fsl_silicon_id.h"
 #include "fsl_enet.h"
 #include "fsl_phy.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET                  ENET
-#define EXAMPLE_PHY_ADDRESS           0x02U
-#define EXAMPLE_PHY_OPS               &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE          &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ            CLOCK_GetFreq(kCLOCK_IpgClk)
-#define EXAMPLE_PHY_LINK_INTR_SUPPORT (1U)
 #define ENET_RXBD_NUM          (4)
 #define ENET_TXBD_NUM          (4)
 #define ENET_RXBUFF_SIZE       (ENET_FRAME_MAX_FRAMELEN)
@@ -36,11 +27,20 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #ifndef PHY_AUTONEGO_TIMEOUT_COUNT
 #define PHY_AUTONEGO_TIMEOUT_COUNT (300000)
 #endif
-#ifndef PHY_STABILITY_DELAY_US
-#define PHY_STABILITY_DELAY_US (0U)
-#endif
 #ifndef EXAMPLE_PHY_LINK_INTR_SUPPORT
 #define EXAMPLE_PHY_LINK_INTR_SUPPORT (0U)
+#endif
+#ifndef EXAMPLE_USES_LOOPBACK_CABLE
+#define EXAMPLE_USES_LOOPBACK_CABLE (0U)
+#endif
+
+#ifndef PHY_STABILITY_DELAY_US
+#if EXAMPLE_USES_LOOPBACK_CABLE
+#define PHY_STABILITY_DELAY_US (0U)
+#else
+/* If cable is not used there is no "readiness wait" caused by auto negotiation. Lets wait 100ms.*/
+#define PHY_STABILITY_DELAY_US (100000U)
+#endif
 #endif
 
 /* @TEST_ANCHOR */
@@ -67,10 +67,6 @@ void GPIO_EnableLinkIntr(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
-extern void PHY_LinkStatusChange(void);
-#endif
 /*! @brief Buffer descriptors should be in non-cacheable region and should be align to "ENET_BUFF_ALIGNMENT". */
 AT_NONCACHEABLE_SECTION_ALIGN(enet_rx_bd_struct_t g_rxBuffDescrip[ENET_RXBD_NUM], ENET_BUFF_ALIGNMENT);
 AT_NONCACHEABLE_SECTION_ALIGN(enet_tx_bd_struct_t g_txBuffDescrip[ENET_TXBD_NUM], ENET_BUFF_ALIGNMENT);
@@ -92,61 +88,13 @@ uint8_t g_macAddr[6] = MAC_ADDRESS;
 
 /*! @brief PHY status. */
 static phy_handle_t phyHandle;
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
+#if ((EXAMPLE_USES_LOOPBACK_CABLE) && defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
 static bool linkChange = false;
 #endif
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    /* Set 50MHz output clock required by PHY. */
-    const clock_enet_pll_config_t config = {
-        .enableClkOutput    = true,
-        .enableClkOutput25M = false,
-        .loopDivider        = 1,
-    };
-    CLOCK_InitEnetPll(&config);
-
-    /* Output 50MHz clock to PHY. */
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
-
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
-void GPIO_EnableLinkIntr(void)
-{
-    GPIO_EnableInterrupts(GPIO1, BOARD_INITENETPINS_PHY_INTR_GPIO_PIN_MASK);
-}
-
-void GPIO1_Combined_0_15_IRQHandler(void)
-{
-    if (0U != (GPIO_GetPinsInterruptFlags(GPIO1) & BOARD_INITENETPINS_PHY_INTR_GPIO_PIN_MASK))
-    {
-        PHY_LinkStatusChange();
-        GPIO_DisableInterrupts(GPIO1, BOARD_INITENETPINS_PHY_INTR_GPIO_PIN_MASK);
-        GPIO_ClearPinsInterruptFlags(GPIO1, BOARD_INITENETPINS_PHY_INTR_GPIO_PIN_MASK);
-    }
-    SDK_ISR_EXIT_BARRIER;
-}
-#endif
 /*! @brief Build Frame for transmit. */
 static void ENET_BuildBroadCastFrame(void)
 {
@@ -170,7 +118,9 @@ static void ENET_BuildBroadCastFrame(void)
 #if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
 void PHY_LinkStatusChange(void)
 {
+#if (EXAMPLE_USES_LOOPBACK_CABLE)
     linkChange = true;
+#endif
 }
 #endif
 
@@ -179,37 +129,23 @@ void PHY_LinkStatusChange(void)
  */
 int main(void)
 {
-    volatile uint32_t count = 0;
     phy_config_t phyConfig = {0};
-    uint32_t testTxNum = 0;
+    uint32_t testTxNum     = 0;
     uint32_t length        = 0;
-    bool autonego          = false;
-    bool link              = false;
-    bool tempLink          = false;
     enet_data_error_stats_t eErrStatic;
+    status_t status;
     enet_config_t config;
+#if EXAMPLE_USES_LOOPBACK_CABLE
+    volatile uint32_t count = 0;
     phy_speed_t speed;
     phy_duplex_t duplex;
-    status_t status;
-
-    /* Hardware Initialization. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    /* Hardware reset PHY. */
-    BOARD_ENET_PHY_RESET;
-
-#if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
-    IRQ_ClearPendingIRQ(GPIO1_Combined_0_15_IRQn);
-    EnableIRQ(GPIO1_Combined_0_15_IRQn);
+    bool autonego = false;
+    bool link     = false;
+    bool tempLink = false;
 #endif
 
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    /* Hardware Initialization. */
+    BOARD_InitHardware();
 
     PRINTF("\r\nENET example start.\r\n");
 
@@ -243,8 +179,13 @@ int main(void)
 #else
     config.miiMode = kENET_RmiiMode;
 #endif
-    phyConfig.phyAddr  = EXAMPLE_PHY_ADDRESS;
-    phyConfig.autoNeg  = true;
+    phyConfig.phyAddr = EXAMPLE_PHY_ADDRESS;
+#if EXAMPLE_USES_LOOPBACK_CABLE
+    phyConfig.autoNeg = true;
+#else
+    phyConfig.autoNeg = false;
+    config.miiDuplex  = kENET_MiiFullDuplex;
+#endif
     phyConfig.ops      = EXAMPLE_PHY_OPS;
     phyConfig.resource = EXAMPLE_PHY_RESOURCE;
 #if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
@@ -253,6 +194,7 @@ int main(void)
 
     /* Initialize PHY and wait auto-negotiation over. */
     PRINTF("Wait for PHY init...\r\n");
+#if EXAMPLE_USES_LOOPBACK_CABLE
     do
     {
         status = PHY_Init(&phyHandle, &phyConfig);
@@ -279,16 +221,28 @@ int main(void)
             }
         }
     } while (!(link && autonego));
+#else
+    while (PHY_Init(&phyHandle, &phyConfig) != kStatus_Success)
+    {
+        PRINTF("PHY_Init failed\r\n");
+    }
+
+    /* set PHY link speed/duplex and enable loopback. */
+    PHY_SetLinkSpeedDuplex(&phyHandle, (phy_speed_t)config.miiSpeed, (phy_duplex_t)config.miiDuplex);
+    PHY_EnableLoopback(&phyHandle, kPHY_LocalLoop, (phy_speed_t)config.miiSpeed, true);
+#endif /* EXAMPLE_USES_LOOPBACK_CABLE */
 
 #if PHY_STABILITY_DELAY_US
     /* Wait a moment for PHY status to be stable. */
     SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #endif
 
+#if EXAMPLE_USES_LOOPBACK_CABLE
     /* Get the actual PHY link speed and set in MAC. */
     PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
     config.miiSpeed  = (enet_mii_speed_t)speed;
     config.miiDuplex = (enet_mii_duplex_t)duplex;
+#endif
 
 #ifndef USER_DEFINED_MAC_ADDRESS
     /* Set special address for each chip. */
@@ -304,6 +258,7 @@ int main(void)
 
     while (1)
     {
+#if EXAMPLE_USES_LOOPBACK_CABLE
         /* PHY link status update. */
 #if (defined(EXAMPLE_PHY_LINK_INTR_SUPPORT) && (EXAMPLE_PHY_LINK_INTR_SUPPORT))
         if (linkChange)
@@ -321,7 +276,7 @@ int main(void)
             PRINTF("PHY link changed, link status = %u\r\n", link);
             tempLink = link;
         }
-
+#endif /*EXAMPLE_USES_LOOPBACK_CABLE*/
         /* Get the Frame size */
         status = ENET_GetRxFrameSize(&g_handle, &length, 0);
         /* Call ENET_ReadFrame when there is a received frame. */
@@ -351,7 +306,9 @@ int main(void)
         if (testTxNum < ENET_TRANSMIT_DATA_NUM)
         {
             /* Send a multicast frame when the PHY is link up. */
+#if EXAMPLE_USES_LOOPBACK_CABLE
             if (link)
+#endif
             {
                 testTxNum++;
                 if (kStatus_Success ==

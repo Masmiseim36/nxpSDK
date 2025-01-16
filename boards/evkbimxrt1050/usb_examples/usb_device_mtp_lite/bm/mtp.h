@@ -41,12 +41,8 @@
 
 #define USB_DEVICE_MTP_MSG_QUEUE_COUNT (1U)
 
-/* USB MTP config*/
-/*buffer size for mtp example. the larger the buffer size ,the faster the data transfer speed is ,*/
-/*the block size should be multiple of 512, the least value is 1024*/
-
-#define USB_DEVICE_MTP_TRANSFER_BUFF_SIZE (512 * 9U)
-
+/****************** Macro definitions ***************/
+#include "usb_device_mtp_config.h"
 
 typedef struct _usb_mtp_struct
 {

@@ -2,10 +2,10 @@
  *
  *  @brief main file
  *
- *  Copyright 2023 NXP
- *  All rights reserved.
+ *  Copyright 2023-2024 NXP
  *
  *  SPDX-License-Identifier: BSD-3-Clause
+ *  The BSD-3-Clause license can be found at https://spdx.org/licenses/BSD-3-Clause.html
  */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -13,19 +13,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_os_abstraction.h"
+#include "app.h"
 #include "ncp_host_app.h"
 #include "ncp_adapter.h"
 
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Prototypes
@@ -36,6 +33,9 @@ extern int ncp_wifi_app_init();
 #endif
 #if CONFIG_NCP_BLE
 extern int ncp_ble_app_init();
+#endif
+#if CONFIG_NCP_OT
+extern int ncp_ot_app_init();
 #endif
 
 /*******************************************************************************
@@ -94,6 +94,10 @@ void task_main(void *param)
     result = ncp_ble_app_init();
     assert(NCP_SUCCESS == result);
 #endif
+#if CONFIG_NCP_OT
+    result = ncp_ot_app_init();
+    assert(NCP_SUCCESS == result);
+#endif
 
     printSeparator();
 
@@ -112,10 +116,7 @@ int main(void)
     BaseType_t result = 0;
     (void)result;
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     //    POWER_PowerOffBle();
 
     printSeparator();

@@ -1,0 +1,92 @@
+/*
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+ 
+void Load_Dcdc_Trim()
+{
+  unsigned int ocotp_base;  
+  unsigned int dcdc_base;  
+  unsigned int ocotp_fuse_bank0_base;  
+  unsigned int reg;
+  unsigned int index;
+  unsigned int trim_value;
+  unsigned int dcdc_trim_loaded;
+
+  ocotp_base = 0x401F4000;
+  ocotp_fuse_bank0_base = 0x401F4000 + 0x400;
+  dcdc_base = 0x40080000;
+
+  dcdc_trim_loaded = 0;
+
+  reg = MEM_ReadU32(ocotp_fuse_bank0_base + 0x90);
+  if (reg & (1<<10))
+  {
+      // DCDC: REG0->VBG_TRM
+      trim_value = (reg & (0x1F << 11)) >> 11;
+      reg = (MEM_ReadU32(dcdc_base + 0x4) & ~(0x1F << 24)) | (trim_value << 24);
+      MEM_WriteU32(dcdc_base + 0x4, reg);
+      dcdc_trim_loaded = 1;
+  }
+
+  reg = MEM_ReadU32(ocotp_fuse_bank0_base + 0x80);
+  if (reg & (1<<30))
+  {
+    index = (reg & (3 << 28)) >> 28;
+    if (index < 4)
+    {
+      // DCDC: REG3->TRG 
+      reg = (MEM_ReadU32(dcdc_base + 0xC) & ~(0x1F)) | (0xF + index);
+      MEM_WriteU32(dcdc_base + 0xC, reg);
+      dcdc_trim_loaded = 1;
+    }
+  }
+
+  if (dcdc_trim_loaded)
+  {
+      // delay 1ms for dcdc to get stable
+      SYS_Sleep(1);
+      Report("DCDC trim value loaded.");
+  }
+}
+
+void RestoreFlexRAM()
+{
+    unsigned int base;
+    unsigned int value;
+
+    base = 0x400AC000;
+
+    value = MEM_ReadU32(base + 0x44);
+    value &= ~(0xFFFFFFFF);
+    value |= 0x55AFFA55;
+    MEM_WriteU32(base + 0x44, value);
+
+    value = MEM_ReadU32(base + 0x40);
+    value |= (1 << 2);
+    MEM_WriteU32(base + 0x40, value);
+    Report("FlexRAM configuration is restored");
+}
+
+/* ConfigTarget */
+void ConfigTargetSettings(void)
+{
+  Report("Config JTAG Speed to 4000kHz");
+  JTAG_Speed = 4000;
+}
+
+/* SetupTarget */
+void SetupTarget(void) {
+
+  RestoreFlexRAM();
+  Load_Dcdc_Trim();
+}
+
+/* AfterResetTarget */
+void AfterResetTarget(void) {
+
+  RestoreFlexRAM();
+  Load_Dcdc_Trim();
+}

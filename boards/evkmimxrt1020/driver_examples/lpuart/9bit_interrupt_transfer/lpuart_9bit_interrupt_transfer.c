@@ -5,18 +5,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
+#include "app.h"
 #include "fsl_lpuart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART          LPUART3
-#define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 
 #define EXAMPLE_ADDRESS 0x7EU
 #define TRANSFER_SIZE   16U
@@ -60,10 +57,7 @@ void LPUART_UserCallback(LPUART_Type *base, lpuart_handle_t *handle, status_t st
 int main(void)
 {
     uint32_t i;
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     PRINTF(
         "LPUART 9-bit mode example begins\r\nLPUART is configured with address, only data sent to itself after matched "
         "address can be received\r\n");

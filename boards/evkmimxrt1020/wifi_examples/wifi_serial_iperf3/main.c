@@ -14,8 +14,7 @@
 #include "timers.h"
 /* Application includes */
 #include <stdio.h>
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
@@ -24,7 +23,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 #define RECV_TIMEOUT_MS 100
 
@@ -861,10 +859,7 @@ int main(void)
 {
     BaseType_t result = 0;
     (void)result;
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     iperf_timer = xTimerCreate("iperf_timer", configTICK_RATE_HZ * 12, pdFALSE, (void *)0, callback_time);
     if (iperf_timer == NULL)

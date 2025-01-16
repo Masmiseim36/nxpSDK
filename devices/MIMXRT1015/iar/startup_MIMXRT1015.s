@@ -2,15 +2,13 @@
 ;  @file:    startup_MIMXRT1015.s
 ;  @purpose: CMSIS Cortex-M7 Core Device Startup File
 ;            MIMXRT1015
-;  @version: 1.2
-;  @date:    2019-4-29
-;  @build:   b200319
+;  @version: 1.3
+;  @date:    2021-8-10
+;  @build:   b240823
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2020 NXP
-; All rights reserved.
-;
+; Copyright 2016-2024 NXP
 ; SPDX-License-Identifier: BSD-3-Clause
 ;
 ; The modules in this file are included in the libraries, and may be replaced
@@ -185,8 +183,8 @@ __vector_table_0x1c
         DCD     USB_OTG1_IRQHandler                           ;USBO2 USB OTG1
         DCD     Reserved130_IRQHandler                        ;Reserved interrupt
         DCD     Reserved131_IRQHandler                        ;Reserved interrupt
-        DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBAR1 interrupt
-        DCD     XBAR1_IRQ_2_3_IRQHandler                      ;XBAR1 interrupt
+        DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBARA output signal 0, 1 interrupt
+        DCD     XBAR1_IRQ_2_3_IRQHandler                      ;XBARA output signal 2, 3 interrupt
         DCD     ADC_ETC_IRQ0_IRQHandler                       ;ADCETC IRQ0 interrupt
         DCD     ADC_ETC_IRQ1_IRQHandler                       ;ADCETC IRQ1 interrupt
         DCD     ADC_ETC_IRQ2_IRQHandler                       ;ADCETC IRQ2 interrupt

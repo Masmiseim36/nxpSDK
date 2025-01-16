@@ -11,9 +11,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>39</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -70,7 +75,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -98,7 +103,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +120,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +143,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -211,20 +216,34 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -264,7 +283,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -301,11 +320,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -341,20 +360,21 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -456,11 +476,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -468,6 +488,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -479,6 +507,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -526,8 +558,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>AList</name>
@@ -619,6 +651,17 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -648,7 +691,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -664,33 +707,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1055,6 +1089,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1076,686 +1114,6 @@
           <name>IarchiveOutput</name>
           <state>###Unitialized###</state>
         </option>
-      </data>
-    </settings>
-  </configuration>
-  <configuration>
-    <name>flexspi_nor_debug</name>
-    <toolchain>
-      <name>ARM</name>
-    </toolchain>
-    <debug>1</debug>
-    <settings>
-      <name>General</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <version>36</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>BrowseInfoPath</name>
-          <state>Debug\BrowseInfo</state>
-        </option>
-        <option>
-          <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug</state>
-        </option>
-        <option>
-          <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/obj</state>
-        </option>
-        <option>
-          <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/list</state>
-        </option>
-        <option>
-          <name>GEndianMode</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>Input description</name>
-          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
-        </option>
-        <option>
-          <name>Output description</name>
-          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
-        </option>
-        <option>
-          <name>GOutputBinary</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGCoreOrChip</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelect</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelectSlave</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>RTDescription</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGProductVersion</name>
-          <state>6.50.6.4952</state>
-        </option>
-        <option>
-          <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
-        </option>
-        <option>
-          <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
-        </option>
-        <option>
-          <name>GenLowLevelInterface</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GEndianModeBE</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OGBufferedTerminalOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GenStdoutInterface</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
-        </option>
-        <option>
-          <name>GBECoreSlave</name>
-          <version>33</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>OGUseCmsis</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGUseCmsisDspLib</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GRuntimeLibThreads</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CoreVariant</name>
-          <version>33</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
-        </option>
-        <option>
-          <name>FPU2</name>
-          <version>0</version>
-          <state>7</state>
-        </option>
-        <option>
-          <name>NrRegs</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>NEON</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GFPUCoreSlave2</name>
-          <version>33</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>OGCMSISPackSelectDevice</name>
-        </option>
-        <option>
-          <name>OgLibHeap</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGLibAdditionalLocale</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGPrintfVariant</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>OGPrintfMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGScanfVariant</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>OGScanfMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GenLocaleTags</name>
-          <state/>
-        </option>
-        <option>
-          <name>GenLocaleDisplayOnly</name>
-          <state/>
-        </option>
-        <option>
-          <name>DSPExtension</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>TrustZone</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>TrustZoneModes</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGAarch64Abi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OG_32_64Device</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>BuildFilesPath</name>
-          <state>Debug</state>
-        </option>
-        <option>
-          <name>PointerAuthentication</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>FPU64</name>
-          <state>1</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>ICCARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>38</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>CCDefines</name>
-          <state>DEBUG</state>
-          <state>XIP_EXTERNAL_FLASH=1</state>
-          <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>CPU_MIMXRT1052DVL6B</state>
-          <state>MCUXPRESSO_SDK</state>
-        </option>
-        <option>
-          <name>CCPreprocFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocComments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMnemonics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMessages</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssSource</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
-        </option>
-        <option>
-          <name>CCDiagRemark</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagWarning</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagError</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCAllowList</name>
-          <version>1</version>
-          <state>00100000</state>
-        </option>
-        <option>
-          <name>CCDebugInfo</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IEndianMode</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IExtraOptionsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IExtraOptions</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCLangConformance</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCSignedPlainChar</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagWarnAreErr</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCompilerRuntimeInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>CCLibConfigHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>PreInclude</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-        </option>
-        <option>
-          <name>CCStdIncCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCodeSection</name>
-          <state>.text</state>
-        </option>
-        <option>
-          <name>IProcessorMode2</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCOptLevel</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CCOptStrategy</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptLevelSlave</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CCPosIndRopi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndRwpi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndNoDynInit</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccLang</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCDialect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccStaticDestr</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccCppInlineSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccFloatSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptimizationNoSizeConstraints</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCNoLiteralPool</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptStrategySlave</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCGuardCalls</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCEncSource</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEncOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEncOutputBom</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCEncInput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OICompilerExtraOption</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCStackProtection</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>AARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>12</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>AObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AEndian</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ACaseSensitivity</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacroChars</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>AWarnEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AWarnWhat</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AWarnOne</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange1</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange2</name>
-          <state/>
-        </option>
-        <option>
-          <name>ADebug</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AltRegisterNames</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-        </option>
-        <option>
-          <name>AList</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AListHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AListing</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>Includes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacDefs</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacExps</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacExec</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OnlyAssed</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MultiLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLengthCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLength</name>
-          <state>80</state>
-        </option>
-        <option>
-          <name>TabSpacing</name>
-          <state>8</state>
-        </option>
-        <option>
-          <name>AXRef</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDefines</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefInternal</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDual</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AOutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>ALimitErrorsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>ALimitErrorsEdit</name>
-          <state>100</state>
-        </option>
-        <option>
-          <name>AIgnoreStdInclude</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AUserIncludes</name>
-        </option>
-        <option>
-          <name>AExtraOptionsCheckV2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AExtraOptionsV2</name>
-          <state/>
-        </option>
-        <option>
-          <name>AsmNoLiteralPool</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PreInclude</name>
-          <state/>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>OBJCOPY</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>1</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>OOCOutputFormat</name>
-          <version>3</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OCOutputOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OOCOutputFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>OOCCommandLineProducer</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OOCObjCopyEnable</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <extensions/>
-        <cmdline/>
-        <hasPrio>0</hasPrio>
-        <buildSequence>inputOutputBased</buildSequence>
       </data>
     </settings>
     <settings>
@@ -1764,398 +1122,6 @@
       <data>
         <prebuild/>
         <postbuild/>
-      </data>
-    </settings>
-    <settings>
-      <name>ILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>27</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>IlinkLibIOConfig</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkInputFileSlave</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOutputFile</name>
-          <state>src_reset_source.out</state>
-        </option>
-        <option>
-          <name>IlinkDebugInfoEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkKeepSymbols</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySymbol</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySegment</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryAlign</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkDefines</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkConfigDefines</name>
-        </option>
-        <option>
-          <name>IlinkMapFile</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogInitialization</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogModule</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogSection</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogVeneer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfOverride</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1052xxxxx_flexspi_nor.icf</state>
-        </option>
-        <option>
-          <name>IlinkIcfFileSlave</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkSuppressDiags</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsRem</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsWarn</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsErr</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkWarningsAreErrors</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkUseExtraOptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkExtraOptions</name>
-        </option>
-        <option>
-          <name>IlinkLowLevelInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAutoLibEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAdditionalLibs</name>
-        </option>
-        <option>
-          <name>IlinkOverrideProgramEntryLabel</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabelSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabel</name>
-          <state>Reset_Handler</state>
-        </option>
-        <option>
-          <name>DoFill</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>FillerByte</name>
-          <state>0xFF</state>
-        </option>
-        <option>
-          <name>FillerStart</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>FillerEnd</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>CrcSize</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcAlign</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcPoly</name>
-          <state>0x11021</state>
-        </option>
-        <option>
-          <name>CrcCompl</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcBitOrder</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcInitialValue</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>DoCrc</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkBE8Slave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkBufferedTerminalOutput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkStdoutInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcFullSize</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIElfToolPostProcess</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogAutoLibSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogRedirSymbols</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogUnusedFragments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcReverseByteOrder</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcUseAsInput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptInline</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsAllow</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsForce</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptMergeDuplSections</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOptUseVfe</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptForceVfe</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackAnalysisEnable</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackControlFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkStackCallGraphFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>CrcAlgorithm</name>
-          <version>1</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcUnitSize</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkThreadsSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogCallGraph</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile_AltDefault</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkEncInput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkEncOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkEncOutputBom</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkHeapSelect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLocaleSelect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkTrustzoneImportLibraryOut</name>
-          <state>###Unitialized###</state>
-        </option>
-        <option>
-          <name>OILinkExtraOption</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkRawBinaryFile2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySymbol2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySegment2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryAlign2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkLogCrtRoutineSelection</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogFragmentInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogInlining</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogMerging</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkDemangle</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkWrapperFileEnable</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkWrapperFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkFpuProcessor</name>
-          <state>1</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>IARCHIVE</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>0</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>IarchiveInputs</name>
-          <state/>
-        </option>
-        <option>
-          <name>IarchiveOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IarchiveOutput</name>
-          <state>###Unitialized###</state>
-        </option>
       </data>
     </settings>
   </configuration>
@@ -2169,9 +1135,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>39</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Debug\BrowseInfo</state>
@@ -2228,7 +1199,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.30.1.48832</state>
+          <state>9.60.1.2936</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -2256,7 +1227,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -2273,7 +1244,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -2296,7 +1267,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -2369,22 +1340,37 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state>SKIP_SYSCLK_INIT</state>
-          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
-          <state>CPU_MIMXRT1052DVL6B</state>
+          <state>USE_SDRAM=1</state>
+          <state>SKIP_SYSCLK_INIT=1</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2424,7 +1410,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2461,11 +1447,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2501,20 +1487,21 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2530,7 +1517,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -2539,7 +1526,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -2616,11 +1603,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -2628,6 +1615,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -2639,6 +1634,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -2686,8 +1685,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>AList</name>
@@ -2779,6 +1778,17 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2808,7 +1818,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -2824,33 +1834,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3215,6 +2216,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -3238,6 +2243,1140 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
+  </configuration>
+  <configuration>
+    <name>flexspi_nor_debug</name>
+    <toolchain>
+      <name>ARM</name>
+    </toolchain>
+    <debug>1</debug>
+    <settings>
+      <name>General</name>
+      <archiveVersion>3</archiveVersion>
+      <data>
+        <version>37</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>39</state>
+        </option>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
+        <option>
+          <name>ExePath</name>
+          <state>$PROJ_DIR$/flexspi_nor_debug</state>
+        </option>
+        <option>
+          <name>ObjPath</name>
+          <state>$PROJ_DIR$/flexspi_nor_debug/obj</state>
+        </option>
+        <option>
+          <name>ListPath</name>
+          <state>$PROJ_DIR$/flexspi_nor_debug/list</state>
+        </option>
+        <option>
+          <name>GEndianMode</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>Input description</name>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
+        </option>
+        <option>
+          <name>Output description</name>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
+        </option>
+        <option>
+          <name>GOutputBinary</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGCoreOrChip</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GRuntimeLibSelect</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GRuntimeLibSelectSlave</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>RTDescription</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGProductVersion</name>
+          <state>6.50.6.4952</state>
+        </option>
+        <option>
+          <name>OGLastSavedByProductVersion</name>
+          <state>9.60.1.2936</state>
+        </option>
+        <option>
+          <name>OGChipSelectEditMenu</name>
+          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
+        </option>
+        <option>
+          <name>GenLowLevelInterface</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GEndianModeBE</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OGBufferedTerminalOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenStdoutInterface</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>RTConfigPath2</name>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
+        </option>
+        <option>
+          <name>GBECoreSlave</name>
+          <version>34</version>
+          <state>41</state>
+        </option>
+        <option>
+          <name>OGUseCmsis</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGUseCmsisDspLib</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GRuntimeLibThreads</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CoreVariant</name>
+          <version>34</version>
+          <state>41</state>
+        </option>
+        <option>
+          <name>GFPUDeviceSlave</name>
+          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
+        </option>
+        <option>
+          <name>FPU2</name>
+          <version>0</version>
+          <state>7</state>
+        </option>
+        <option>
+          <name>NrRegs</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>NEON</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GFPUCoreSlave2</name>
+          <version>34</version>
+          <state>41</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>ICCARM</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>39</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCDefines</name>
+          <state>DEBUG</state>
+          <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
+        </option>
+        <option>
+          <name>CCPreprocFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPreprocComments</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPreprocLine</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListCFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListCMnemonics</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListCMessages</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListAssFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListAssSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEnableRemarks</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCDiagSuppress</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCDiagRemark</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCDiagWarning</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCDiagError</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCObjPrefix</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCAllowList</name>
+          <version>1</version>
+          <state>00100000</state>
+        </option>
+        <option>
+          <name>CCDebugInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IEndianMode</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IExtraOptionsCheck</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IExtraOptions</name>
+          <state>--diag_suppress=Pa082,Pa050</state>
+        </option>
+        <option>
+          <name>CCLangConformance</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCSignedPlainChar</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCRequirePrototypes</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCDiagWarnAreErr</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCCompilerRuntimeInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IFpuProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OutputFile</name>
+          <state>$FILE_BNAME$.o</state>
+        </option>
+        <option>
+          <name>CCLibConfigHeader</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
+        </option>
+        <option>
+          <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+        </option>
+        <option>
+          <name>CCStdIncCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCCodeSection</name>
+          <state>.text</state>
+        </option>
+        <option>
+          <name>IProcessorMode2</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCOptLevel</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptStrategy</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptLevelSlave</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosIndRopi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosIndRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosIndNoDynInit</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccLang</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccCDialect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccAllowVLA</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccStaticDestr</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccCppInlineSemantics</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccCmsis</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccFloatSemantics</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCNoLiteralPool</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptStrategySlave</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCGuardCalls</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>AARM</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>12</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AObjPrefix</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AEndian</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>ACaseSensitivity</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>MacroChars</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>AWarnEnable</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AWarnWhat</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AWarnOne</name>
+          <state/>
+        </option>
+        <option>
+          <name>AWarnRange1</name>
+          <state/>
+        </option>
+        <option>
+          <name>AWarnRange2</name>
+          <state/>
+        </option>
+        <option>
+          <name>ADebug</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AltRegisterNames</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>ADefines</name>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
+        </option>
+        <option>
+          <name>AList</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AListHeader</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AListing</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>Includes</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>MacDefs</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>MacExps</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>MacExec</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OnlyAssed</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>MultiLine</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>PageLengthCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>PageLength</name>
+          <state>80</state>
+        </option>
+        <option>
+          <name>TabSpacing</name>
+          <state>8</state>
+        </option>
+        <option>
+          <name>AXRef</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AXRefDefines</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AXRefInternal</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AXRefDual</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AFpuProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AOutputFile</name>
+          <state>$FILE_BNAME$.o</state>
+        </option>
+        <option>
+          <name>ALimitErrorsCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>ALimitErrorsEdit</name>
+          <state>100</state>
+        </option>
+        <option>
+          <name>AIgnoreStdInclude</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+        </option>
+        <option>
+          <name>AExtraOptionsCheckV2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AExtraOptionsV2</name>
+          <state/>
+        </option>
+        <option>
+          <name>AsmNoLiteralPool</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>OBJCOPY</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>1</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>OOCOutputFormat</name>
+          <version>3</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OCOutputOverride</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OOCOutputFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>OOCCommandLineProducer</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OOCObjCopyEnable</name>
+          <state>1</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>CUSTOM</name>
+      <archiveVersion>4</archiveVersion>
+      <data>
+        <extensions/>
+        <cmdline/>
+        <buildSequence>inputOutputBased</buildSequence>
+      </data>
+    </settings>
+    <settings>
+      <name>ILINK</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>28</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>IlinkLibIOConfig</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkInputFileSlave</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkOutputFile</name>
+          <state>src_reset_source.out</state>
+        </option>
+        <option>
+          <name>IlinkDebugInfoEnable</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkKeepSymbols</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkDefines</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkConfigDefines</name>
+        </option>
+        <option>
+          <name>IlinkMapFile</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLogFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInitialization</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogModule</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogSection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogVeneer</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkIcfOverride</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkIcfFile</name>
+          <state>$PROJ_DIR$/MIMXRT1052xxxxx_flexspi_nor.icf</state>
+        </option>
+        <option>
+          <name>IlinkIcfFileSlave</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkEnableRemarks</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkSuppressDiags</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkTreatAsRem</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkTreatAsWarn</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkTreatAsErr</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkWarningsAreErrors</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkUseExtraOptions</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkExtraOptions</name>
+        </option>
+        <option>
+          <name>IlinkLowLevelInterfaceSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkAutoLibEnable</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkAdditionalLibs</name>
+        </option>
+        <option>
+          <name>IlinkOverrideProgramEntryLabel</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkProgramEntryLabelSelect</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkProgramEntryLabel</name>
+          <state>Reset_Handler</state>
+        </option>
+        <option>
+          <name>DoFill</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FillerByte</name>
+          <state>0xFF</state>
+        </option>
+        <option>
+          <name>FillerStart</name>
+          <state>0x0</state>
+        </option>
+        <option>
+          <name>FillerEnd</name>
+          <state>0x0</state>
+        </option>
+        <option>
+          <name>CrcSize</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcAlign</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcPoly</name>
+          <state>0x11021</state>
+        </option>
+        <option>
+          <name>CrcCompl</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CrcBitOrder</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CrcInitialValue</name>
+          <state>0x0</state>
+        </option>
+        <option>
+          <name>DoCrc</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkBE8Slave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkBufferedTerminalOutput</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkStdoutInterfaceSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcFullSize</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkIElfToolPostProcess</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogAutoLibSelect</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogRedirSymbols</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogUnusedFragments</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcReverseByteOrder</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcUseAsInput</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptInline</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkOptExceptionsAllow</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptExceptionsForce</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCmsis</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptMergeDuplSections</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkOptUseVfe</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptForceVfe</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkStackAnalysisEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkStackControlFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkStackCallGraphFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>CrcAlgorithm</name>
+          <version>1</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcUnitSize</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkThreadsSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLogCallGraph</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkIcfFile_AltDefault</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>IARCHIVE</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>0</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>IarchiveInputs</name>
+          <state/>
+        </option>
+        <option>
+          <name>IarchiveOverride</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IarchiveOutput</name>
+          <state>###Unitialized###</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <configuration>
     <name>release</name>
@@ -3249,9 +3388,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -3336,7 +3480,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -3353,7 +3497,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -3376,7 +3520,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -3449,20 +3593,34 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3502,7 +3660,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3539,11 +3697,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3579,20 +3737,21 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3617,7 +3776,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -3694,11 +3853,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -3706,6 +3865,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -3717,6 +3884,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -3764,8 +3935,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>AList</name>
@@ -3857,6 +4028,17 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3886,7 +4068,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -3902,33 +4084,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4293,6 +4466,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -4314,686 +4491,6 @@
           <name>IarchiveOutput</name>
           <state/>
         </option>
-      </data>
-    </settings>
-  </configuration>
-  <configuration>
-    <name>flexspi_nor_release</name>
-    <toolchain>
-      <name>ARM</name>
-    </toolchain>
-    <debug>0</debug>
-    <settings>
-      <name>General</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <version>36</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>BrowseInfoPath</name>
-          <state>Release\BrowseInfo</state>
-        </option>
-        <option>
-          <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release</state>
-        </option>
-        <option>
-          <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/obj</state>
-        </option>
-        <option>
-          <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/list</state>
-        </option>
-        <option>
-          <name>GEndianMode</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>Input description</name>
-          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
-        </option>
-        <option>
-          <name>Output description</name>
-          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
-        </option>
-        <option>
-          <name>GOutputBinary</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGCoreOrChip</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelect</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelectSlave</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>RTDescription</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGProductVersion</name>
-          <state>6.50.6.4952</state>
-        </option>
-        <option>
-          <name>OGLastSavedByProductVersion</name>
-          <state>7.60.1.11206</state>
-        </option>
-        <option>
-          <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
-        </option>
-        <option>
-          <name>GenLowLevelInterface</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GEndianModeBE</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OGBufferedTerminalOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GenStdoutInterface</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
-        </option>
-        <option>
-          <name>GBECoreSlave</name>
-          <version>33</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>OGUseCmsis</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGUseCmsisDspLib</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GRuntimeLibThreads</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CoreVariant</name>
-          <version>33</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
-        </option>
-        <option>
-          <name>FPU2</name>
-          <version>0</version>
-          <state>7</state>
-        </option>
-        <option>
-          <name>NrRegs</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>NEON</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GFPUCoreSlave2</name>
-          <version>33</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>OGCMSISPackSelectDevice</name>
-        </option>
-        <option>
-          <name>OgLibHeap</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGLibAdditionalLocale</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGPrintfVariant</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>OGPrintfMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGScanfVariant</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>OGScanfMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GenLocaleTags</name>
-          <state/>
-        </option>
-        <option>
-          <name>GenLocaleDisplayOnly</name>
-          <state/>
-        </option>
-        <option>
-          <name>DSPExtension</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>TrustZone</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>TrustZoneModes</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGAarch64Abi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OG_32_64Device</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>BuildFilesPath</name>
-          <state>Release</state>
-        </option>
-        <option>
-          <name>PointerAuthentication</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>FPU64</name>
-          <state>1</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>ICCARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>38</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>CCDefines</name>
-          <state>XIP_EXTERNAL_FLASH=1</state>
-          <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>NDEBUG</state>
-          <state>CPU_MIMXRT1052DVL6B</state>
-          <state>MCUXPRESSO_SDK</state>
-        </option>
-        <option>
-          <name>CCPreprocFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocComments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMnemonics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMessages</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssSource</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
-        </option>
-        <option>
-          <name>CCDiagRemark</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagWarning</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagError</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCAllowList</name>
-          <version>1</version>
-          <state>11111110</state>
-        </option>
-        <option>
-          <name>CCDebugInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IEndianMode</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IExtraOptionsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IExtraOptions</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCLangConformance</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCSignedPlainChar</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagWarnAreErr</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCompilerRuntimeInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>CCLibConfigHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>PreInclude</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-        </option>
-        <option>
-          <name>CCStdIncCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCodeSection</name>
-          <state>.text</state>
-        </option>
-        <option>
-          <name>IProcessorMode2</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCOptLevel</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CCOptStrategy</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptLevelSlave</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CCPosIndRopi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndRwpi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndNoDynInit</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccLang</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCDialect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccStaticDestr</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccCppInlineSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccFloatSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptimizationNoSizeConstraints</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCNoLiteralPool</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptStrategySlave</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCGuardCalls</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCEncSource</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEncOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEncOutputBom</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCEncInput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OICompilerExtraOption</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCStackProtection</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>AARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>12</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>AObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AEndian</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ACaseSensitivity</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacroChars</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>AWarnEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AWarnWhat</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AWarnOne</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange1</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange2</name>
-          <state/>
-        </option>
-        <option>
-          <name>ADebug</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AltRegisterNames</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-        </option>
-        <option>
-          <name>AList</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AListHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AListing</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>Includes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacDefs</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacExps</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacExec</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OnlyAssed</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MultiLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLengthCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLength</name>
-          <state>80</state>
-        </option>
-        <option>
-          <name>TabSpacing</name>
-          <state>8</state>
-        </option>
-        <option>
-          <name>AXRef</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDefines</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefInternal</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDual</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AOutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>ALimitErrorsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>ALimitErrorsEdit</name>
-          <state>100</state>
-        </option>
-        <option>
-          <name>AIgnoreStdInclude</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AUserIncludes</name>
-        </option>
-        <option>
-          <name>AExtraOptionsCheckV2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AExtraOptionsV2</name>
-          <state/>
-        </option>
-        <option>
-          <name>AsmNoLiteralPool</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PreInclude</name>
-          <state/>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>OBJCOPY</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>1</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>OOCOutputFormat</name>
-          <version>3</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OCOutputOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OOCOutputFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>OOCCommandLineProducer</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OOCObjCopyEnable</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <extensions/>
-        <cmdline/>
-        <hasPrio>0</hasPrio>
-        <buildSequence>inputOutputBased</buildSequence>
       </data>
     </settings>
     <settings>
@@ -5002,398 +4499,6 @@
       <data>
         <prebuild/>
         <postbuild/>
-      </data>
-    </settings>
-    <settings>
-      <name>ILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>27</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>IlinkLibIOConfig</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkInputFileSlave</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOutputFile</name>
-          <state>src_reset_source.out</state>
-        </option>
-        <option>
-          <name>IlinkDebugInfoEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkKeepSymbols</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySymbol</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySegment</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryAlign</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkDefines</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkConfigDefines</name>
-        </option>
-        <option>
-          <name>IlinkMapFile</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogInitialization</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogModule</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogSection</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogVeneer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfOverride</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1052xxxxx_flexspi_nor.icf</state>
-        </option>
-        <option>
-          <name>IlinkIcfFileSlave</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkSuppressDiags</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsRem</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsWarn</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsErr</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkWarningsAreErrors</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkUseExtraOptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkExtraOptions</name>
-        </option>
-        <option>
-          <name>IlinkLowLevelInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAutoLibEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAdditionalLibs</name>
-        </option>
-        <option>
-          <name>IlinkOverrideProgramEntryLabel</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabelSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabel</name>
-          <state>Reset_Handler</state>
-        </option>
-        <option>
-          <name>DoFill</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>FillerByte</name>
-          <state>0xFF</state>
-        </option>
-        <option>
-          <name>FillerStart</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>FillerEnd</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>CrcSize</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcAlign</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcPoly</name>
-          <state>0x11021</state>
-        </option>
-        <option>
-          <name>CrcCompl</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcBitOrder</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcInitialValue</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>DoCrc</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkBE8Slave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkBufferedTerminalOutput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkStdoutInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcFullSize</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIElfToolPostProcess</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogAutoLibSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogRedirSymbols</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogUnusedFragments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcReverseByteOrder</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcUseAsInput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptInline</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsAllow</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsForce</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptMergeDuplSections</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOptUseVfe</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptForceVfe</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackAnalysisEnable</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackControlFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkStackCallGraphFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>CrcAlgorithm</name>
-          <version>1</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcUnitSize</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkThreadsSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogCallGraph</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile_AltDefault</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkEncInput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkEncOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkEncOutputBom</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkHeapSelect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLocaleSelect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkTrustzoneImportLibraryOut</name>
-          <state>###Unitialized###</state>
-        </option>
-        <option>
-          <name>OILinkExtraOption</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkRawBinaryFile2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySymbol2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySegment2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryAlign2</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkLogCrtRoutineSelection</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogFragmentInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogInlining</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogMerging</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkDemangle</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkWrapperFileEnable</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkWrapperFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkFpuProcessor</name>
-          <state>1</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>IARCHIVE</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>0</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>IarchiveInputs</name>
-          <state/>
-        </option>
-        <option>
-          <name>IarchiveOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IarchiveOutput</name>
-          <state/>
-        </option>
       </data>
     </settings>
   </configuration>
@@ -5407,9 +4512,14 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>36</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
         <option>
           <name>BrowseInfoPath</name>
           <state>Release\BrowseInfo</state>
@@ -5494,7 +4604,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -5511,7 +4621,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -5534,7 +4644,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>33</version>
+          <version>34</version>
           <state>41</state>
         </option>
         <option>
@@ -5607,22 +4717,37 @@
           <name>FPU64</name>
           <state>1</state>
         </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>38</version>
+        <version>39</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>SKIP_SYSCLK_INIT</state>
+          <state>USE_SDRAM=1</state>
+          <state>SKIP_SYSCLK_INIT=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5662,7 +4787,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -5699,11 +4824,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress=Pa082,Pa050</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -5739,20 +4864,21 @@
         </option>
         <option>
           <name>PreInclude</name>
-          <state/>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
         </option>
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5768,7 +4894,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -5777,7 +4903,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -5854,11 +4980,11 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccRTTI2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OICompilerExtraOption</name>
@@ -5866,6 +4992,14 @@
         </option>
         <option>
           <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
           <state>0</state>
         </option>
       </data>
@@ -5877,6 +5011,10 @@
         <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -5924,8 +5062,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
         </option>
         <option>
           <name>AList</name>
@@ -6017,6 +5155,17 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6046,7 +5195,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -6062,33 +5211,24 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
     <settings>
       <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
+      <archiveVersion>4</archiveVersion>
       <data>
         <extensions/>
         <cmdline/>
-        <hasPrio>0</hasPrio>
         <buildSequence>inputOutputBased</buildSequence>
-      </data>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
       </data>
     </settings>
     <settings>
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>27</version>
+        <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6453,6 +5593,10 @@
           <name>IlinkFpuProcessor</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -6476,15 +5620,1164 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
+  </configuration>
+  <configuration>
+    <name>flexspi_nor_release</name>
+    <toolchain>
+      <name>ARM</name>
+    </toolchain>
+    <debug>0</debug>
+    <settings>
+      <name>General</name>
+      <archiveVersion>3</archiveVersion>
+      <data>
+        <version>37</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>OG_32_64DeviceCoreSlave</name>
+          <version>34</version>
+          <state>38</state>
+        </option>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
+        <option>
+          <name>ExePath</name>
+          <state>$PROJ_DIR$/flexspi_nor_release</state>
+        </option>
+        <option>
+          <name>ObjPath</name>
+          <state>$PROJ_DIR$/flexspi_nor_release/obj</state>
+        </option>
+        <option>
+          <name>ListPath</name>
+          <state>$PROJ_DIR$/flexspi_nor_release/list</state>
+        </option>
+        <option>
+          <name>GEndianMode</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>Input description</name>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
+        </option>
+        <option>
+          <name>Output description</name>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
+        </option>
+        <option>
+          <name>GOutputBinary</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGCoreOrChip</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GRuntimeLibSelect</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GRuntimeLibSelectSlave</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>RTDescription</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGProductVersion</name>
+          <state>6.50.6.4952</state>
+        </option>
+        <option>
+          <name>OGLastSavedByProductVersion</name>
+          <state>7.60.1.11206</state>
+        </option>
+        <option>
+          <name>OGChipSelectEditMenu</name>
+          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
+        </option>
+        <option>
+          <name>GenLowLevelInterface</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GEndianModeBE</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OGBufferedTerminalOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenStdoutInterface</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>RTConfigPath2</name>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
+        </option>
+        <option>
+          <name>GBECoreSlave</name>
+          <version>34</version>
+          <state>41</state>
+        </option>
+        <option>
+          <name>OGUseCmsis</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGUseCmsisDspLib</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GRuntimeLibThreads</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CoreVariant</name>
+          <version>34</version>
+          <state>41</state>
+        </option>
+        <option>
+          <name>GFPUDeviceSlave</name>
+          <state>MIMXRT1052xxx6B	NXP MIMXRT1052xxx6B</state>
+        </option>
+        <option>
+          <name>FPU2</name>
+          <version>0</version>
+          <state>7</state>
+        </option>
+        <option>
+          <name>NrRegs</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>NEON</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GFPUCoreSlave2</name>
+          <version>34</version>
+          <state>41</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>GOutputSo</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>ICCARM</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>39</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>CCPointerAutentiction</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCBranchTargetIdentification</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCDefines</name>
+          <state>NDEBUG</state>
+          <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_EXTERNAL_FLASH=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUX_META_BUILD</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
+        </option>
+        <option>
+          <name>CCPreprocFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPreprocComments</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPreprocLine</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListCFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListCMnemonics</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListCMessages</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListAssFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCListAssSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEnableRemarks</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCDiagSuppress</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCDiagRemark</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCDiagWarning</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCDiagError</name>
+          <state/>
+        </option>
+        <option>
+          <name>CCObjPrefix</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCAllowList</name>
+          <version>1</version>
+          <state>11111110</state>
+        </option>
+        <option>
+          <name>CCDebugInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IEndianMode</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IExtraOptionsCheck</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IExtraOptions</name>
+          <state>--diag_suppress=Pa082,Pa050</state>
+        </option>
+        <option>
+          <name>CCLangConformance</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCSignedPlainChar</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCRequirePrototypes</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCDiagWarnAreErr</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCCompilerRuntimeInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IFpuProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OutputFile</name>
+          <state>$FILE_BNAME$.o</state>
+        </option>
+        <option>
+          <name>CCLibConfigHeader</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state>$PROJ_DIR$/../mcux_config.h</state>
+        </option>
+        <option>
+          <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+        </option>
+        <option>
+          <name>CCStdIncCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCCodeSection</name>
+          <state>.text</state>
+        </option>
+        <option>
+          <name>IProcessorMode2</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCOptLevel</name>
+          <state>3</state>
+        </option>
+        <option>
+          <name>CCOptStrategy</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptLevelSlave</name>
+          <state>3</state>
+        </option>
+        <option>
+          <name>CCPosIndRopi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosIndRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosIndNoDynInit</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccLang</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccCDialect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccAllowVLA</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccStaticDestr</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccCppInlineSemantics</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccCmsis</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccFloatSemantics</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCNoLiteralPool</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCOptStrategySlave</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCGuardCalls</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosRadRwpi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPosSharedSlave</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>AARM</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>12</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>A_32_64Device</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AObjPrefix</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AEndian</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>ACaseSensitivity</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>MacroChars</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>AWarnEnable</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AWarnWhat</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AWarnOne</name>
+          <state/>
+        </option>
+        <option>
+          <name>AWarnRange1</name>
+          <state/>
+        </option>
+        <option>
+          <name>AWarnRange2</name>
+          <state/>
+        </option>
+        <option>
+          <name>ADebug</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AltRegisterNames</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>ADefines</name>
+          <state>MCUXPRESSO_SDK</state>
+          <state>CPU_MIMXRT1052DVL6B</state>
+        </option>
+        <option>
+          <name>AList</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AListHeader</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AListing</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>Includes</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>MacDefs</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>MacExps</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>MacExec</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OnlyAssed</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>MultiLine</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>PageLengthCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>PageLength</name>
+          <state>80</state>
+        </option>
+        <option>
+          <name>TabSpacing</name>
+          <state>8</state>
+        </option>
+        <option>
+          <name>AXRef</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AXRefDefines</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AXRefInternal</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AXRefDual</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AFpuProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>AOutputFile</name>
+          <state>$FILE_BNAME$.o</state>
+        </option>
+        <option>
+          <name>ALimitErrorsCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>ALimitErrorsEdit</name>
+          <state>100</state>
+        </option>
+        <option>
+          <name>AIgnoreStdInclude</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+        </option>
+        <option>
+          <name>AExtraOptionsCheckV2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>AExtraOptionsV2</name>
+          <state/>
+        </option>
+        <option>
+          <name>AsmNoLiteralPool</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>OBJCOPY</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>1</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>OOCOutputFormat</name>
+          <version>3</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OCOutputOverride</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OOCOutputFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>OOCCommandLineProducer</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OOCObjCopyEnable</name>
+          <state>1</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>CUSTOM</name>
+      <archiveVersion>4</archiveVersion>
+      <data>
+        <extensions/>
+        <cmdline/>
+        <buildSequence>inputOutputBased</buildSequence>
+      </data>
+    </settings>
+    <settings>
+      <name>ILINK</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>28</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>IlinkLibIOConfig</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkInputFileSlave</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkOutputFile</name>
+          <state>src_reset_source.out</state>
+        </option>
+        <option>
+          <name>IlinkDebugInfoEnable</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkKeepSymbols</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkDefines</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkConfigDefines</name>
+        </option>
+        <option>
+          <name>IlinkMapFile</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLogFile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInitialization</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogModule</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogSection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogVeneer</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkIcfOverride</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkIcfFile</name>
+          <state>$PROJ_DIR$/MIMXRT1052xxxxx_flexspi_nor.icf</state>
+        </option>
+        <option>
+          <name>IlinkIcfFileSlave</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkEnableRemarks</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkSuppressDiags</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkTreatAsRem</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkTreatAsWarn</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkTreatAsErr</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkWarningsAreErrors</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkUseExtraOptions</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkExtraOptions</name>
+        </option>
+        <option>
+          <name>IlinkLowLevelInterfaceSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkAutoLibEnable</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkAdditionalLibs</name>
+        </option>
+        <option>
+          <name>IlinkOverrideProgramEntryLabel</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkProgramEntryLabelSelect</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkProgramEntryLabel</name>
+          <state>Reset_Handler</state>
+        </option>
+        <option>
+          <name>DoFill</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FillerByte</name>
+          <state>0xFF</state>
+        </option>
+        <option>
+          <name>FillerStart</name>
+          <state>0x0</state>
+        </option>
+        <option>
+          <name>FillerEnd</name>
+          <state>0x0</state>
+        </option>
+        <option>
+          <name>CrcSize</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcAlign</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcPoly</name>
+          <state>0x11021</state>
+        </option>
+        <option>
+          <name>CrcCompl</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CrcBitOrder</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CrcInitialValue</name>
+          <state>0x0</state>
+        </option>
+        <option>
+          <name>DoCrc</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkBE8Slave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkBufferedTerminalOutput</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkStdoutInterfaceSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcFullSize</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkIElfToolPostProcess</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogAutoLibSelect</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogRedirSymbols</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogUnusedFragments</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcReverseByteOrder</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcUseAsInput</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptInline</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptExceptionsAllow</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptExceptionsForce</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCmsis</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptMergeDuplSections</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkOptUseVfe</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkOptForceVfe</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkStackAnalysisEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkStackControlFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkStackCallGraphFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>CrcAlgorithm</name>
+          <version>1</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcUnitSize</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkThreadsSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLogCallGraph</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkIcfFile_AltDefault</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkSharedSlave</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>IARCHIVE</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>0</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>IarchiveInputs</name>
+          <state/>
+        </option>
+        <option>
+          <name>IarchiveOverride</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IarchiveOutput</name>
+          <state/>
+        </option>
+      </data>
+    </settings>
+    <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <prebuild/>
+        <postbuild/>
+      </data>
+    </settings>
   </configuration>
   <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../src_reset_source.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../mcux_config.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
@@ -6492,64 +6785,49 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.c</name>
+      <name>$PROJ_DIR$/../hardware_init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
+      <name>$PROJ_DIR$/../app.h</name>
     </file>
   </group>
   <group>
-    <name>doc</name>
+    <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../readme.md</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../xip/evkbimxrt1050_flexspi_nor_config.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../xip/evkbimxrt1050_flexspi_nor_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../dcd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.h</name>
+      <name>$PROJ_DIR$/../../../../dcd.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</name>
     </file>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_src.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_src.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_common.h</name>
@@ -6564,19 +6842,64 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_dcdc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_dcdc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_gpc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_pmu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_pmu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_src.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <group>
+      <name>m-profile</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/cmsis_iccarm_m.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/armv7m_cachel1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/m-profile/armv7m_mpu.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
     </file>
   </group>
   <group>
@@ -6591,11 +6914,233 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052_COMMON.h</name>
+    </file>
+    <group>
+      <name>periph</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_ADC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_ADC_ETC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_AIPSTZ.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_AOI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_BEE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CAN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CCM_ANALOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CM7_MCM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CMP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CSI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_CSU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_DCDC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_DCP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_DMA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_DMAMUX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_ENC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_ENET.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_EWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_FLEXIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_FLEXRAM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_FLEXSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_GPC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_GPIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_GPT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_I2S.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_IOMUXC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_IOMUXC_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_IOMUXC_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_IOMUXC_SNVS_GPR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_KPP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_LCDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_LPI2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_LPSPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_LPUART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_OCOTP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_PGC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_PIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_PMU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_PWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_PXP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_ROMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_RTWDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_SEMC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_SNVS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_SPDIF.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_SRC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_TEMPMON.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_TMR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_TRNG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_TSC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_USB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_USBNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_USBPHY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_USB_ANALOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_USDHC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_WDOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_XBARA.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_XBARB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/periph/PERI_XTALOSC24M.h</name>
+      </file>
+    </group>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</name>
     </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/iar/startup_MIMXRT1052.s</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <group>
+      <name>str</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
+      </file>
+    </group>
+    <group>
+      <name>debug_console_lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_debug_console.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>component</name>
@@ -6608,56 +7153,14 @@
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
   </group>
   <group>
-    <name>startup</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/iar/startup_MIMXRT1052.s</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkbimxrt1050_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkbimxrt1050_flexspi_nor_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../example_board_readme.md</name>
     </file>
   </group>
 </project>

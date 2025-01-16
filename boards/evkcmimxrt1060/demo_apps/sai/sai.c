@@ -7,96 +7,15 @@
  */
 
 #include "sai.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_codec_common.h"
-#if defined DEMO_CODEC_WM8962
-#include "fsl_wm8962.h"
-#else
-#include "fsl_cs42448.h"
-#endif
-#include "fsl_codec_adapter.h"
-#include "fsl_dmamux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* SAI instance and clock */
-#ifndef DEMO_CODEC_WM8962
-#define DEMO_CODEC_WM8962 1
-#endif
-#ifndef DEMO_CODEC_CS42448
-#define DEMO_CODEC_CS42448 0
-#endif
-#if DEMO_CODEC_WM8962 && DEMO_CODEC_CS42448
-#error "Duplicate codec defined"
-#endif
-#define DEMO_CODEC_VOLUME     100U
-#define DEMO_SAI              SAI1
-#define DEMO_SAI_CHANNEL      (0)
-#define DEMO_SAI_IRQ          SAI1_IRQn
-#define DEMO_SAITxIRQHandler  SAI1_IRQHandler
-#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
-#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
-#define DEMO_SAI_MCLK_OUTPUT  true
-#define DEMO_SAI_MASTER_SLAVE kSAI_Master
-#define SAI_UserIRQHandler    SAI1_IRQHandler
-
-/* demo audio master clock */
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-
-/* IRQ */
-#define DEMO_SAI_TX_IRQ SAI1_IRQn
-#define DEMO_SAI_RX_IRQ SAI1_IRQn
-
-/* DMA */
-#define DEMO_DMA             DMA0
-#define DEMO_DMAMUX          DMAMUX
-#define DEMO_TX_EDMA_CHANNEL (0U)
-#define DEMO_RX_EDMA_CHANNEL (1U)
-#define DEMO_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
-#define DEMO_SAI_RX_SOURCE   kDmaRequestMuxSai1Rx
-
-#if DEMO_CODEC_CS42448
-#define DEMO_CS42448_I2C_INSTANCE      3
-#define DEMO_CODEC_POWER_GPIO          GPIO1
-#define DEMO_CODEC_POWER_GPIO_PIN      0
-#define DEMO_CODEC_RESET_GPIO          GPIO1
-#define DEMO_CODEC_RESET_GPIO_PIN      2
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (11U)
-#define DEMO_SAI_MASTER_SLAVE          kSAI_Master
-#else
-#define DEMO_WM8962_I2C_INSTANCE       1
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (3U)
-#define DEMO_SAI_MASTER_SLAVE          kSAI_Master
-#endif
-
-/* Select Audio/Video PLL (393.24 MHz) as sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
-/* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (3U)
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ                                                        \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
-     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
-
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-#define BOARD_MASTER_CLOCK_CONFIG()
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-#if defined DEMO_CODEC_CS42448
-void BORAD_CodecReset(bool state);
-#endif
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 #if defined DEMO_SDCARD
@@ -113,56 +32,6 @@ static int SD_FatFsInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if DEMO_CODEC_WM8962
-wm8962_config_t wm8962Config = {
-    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .route =
-        {
-            .enableLoopBack            = false,
-            .leftInputPGASource        = kWM8962_InputPGASourceInput1,
-            .leftInputMixerSource      = kWM8962_InputMixerSourceInputPGA,
-            .rightInputPGASource       = kWM8962_InputPGASourceInput3,
-            .rightInputMixerSource     = kWM8962_InputMixerSourceInputPGA,
-            .leftHeadphoneMixerSource  = kWM8962_OutputMixerDisabled,
-            .leftHeadphonePGASource    = kWM8962_OutputPGASourceDAC,
-            .rightHeadphoneMixerSource = kWM8962_OutputMixerDisabled,
-            .rightHeadphonePGASource   = kWM8962_OutputPGASourceDAC,
-        },
-    .slaveAddress = WM8962_I2C_ADDR,
-    .bus          = kWM8962_BusI2S,
-    .format       = {.mclk_HZ    = 24576000U,
-                     .sampleRate = kWM8962_AudioSampleRate16KHz,
-                     .bitWidth   = kWM8962_AudioBitWidth16bit},
-    .masterSlave  = false,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8962, .codecDevConfig = &wm8962Config};
-#elif DEMO_CODEC_CS42448
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = BORAD_CodecReset,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = DEMO_CS42448_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .format       = {.mclk_HZ = 16384000U, .sampleRate = 16000U, .bitWidth = 16U},
-    .bus          = kCS42448_BusI2S,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
-#else
-#error "no codec enabled, please check."
-#endif
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / DIV_AFTER_PLL
- *                              = 24 * (32 + 768/1000) / 2
- *                              = 393.216 MHz
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 2,    /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 #if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t rxHandle);
@@ -198,32 +67,6 @@ codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
-    }
-}
-
-
-#if DEMO_CODEC_CS42448
-void BORAD_CodecReset(bool state)
-{
-    if (state)
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 1U);
-    }
-    else
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 0U);
-    }
-}
-#endif
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     sendCount++;
@@ -356,40 +199,7 @@ int main(void)
     char input              = '1';
     uint8_t userItem        = 1U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-#if DEMO_CODEC_WM8962
-    BOARD_InitWM8962Pins();
-#else
-    BOARD_InitCS42448Pins();
-#endif
-    BOARD_InitBootClocks();
-    CLOCK_InitAudioPll(&audioPllConfig);
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
-
-    /*Clock setting for SAI1*/
-    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
-
-    /*Enable MCLK clock*/
-    BOARD_EnableSaiMclkOutput(true);
-
-    /* Init DMAMUX */
-    DMAMUX_Init(DEMO_DMAMUX);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL);
-
-#if DEMO_CODEC_CS42448
-    /* enable codec power */
-    GPIO_PinWrite(DEMO_CODEC_POWER_GPIO, DEMO_CODEC_POWER_GPIO_PIN, 1U);
-#endif
+    BOARD_InitHardware();
 
     PRINTF("SAI Demo started!\n\r");
 

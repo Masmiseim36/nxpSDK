@@ -1,5 +1,6 @@
-Overview
-========
+# temperaturemonitor
+
+## Overview
 The TEMPMON project is a simple demonstration program of the SDK TEMPMON driver.The
 temperatue monitor (TEMPMON) module features alarm functions that can raise independent
 interrupt signals if the temperature is above two high-temperature thresholds and below
@@ -7,43 +8,13 @@ a low temperature threshold, the system can then use this module to monitor the 
 temperature and take appropriate actions such as throttling back the core frequency when
 a the high temperature interrupt is set.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Board settings
-==============
-
-Prepare the Demo
-================
-1. Connect a USB cable between the PC host and the OpenSDA USB port on the board.
-2. Open a serial terminal with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
-
-Running the demo
-================
-When the example runs successfully, the following message is displayed in the terminal:
-~~~~~~~~~~~~~~~~~~~~~~~~
-TEMPMON driver example.
-The chip initial temperature is 40.8 ℃.
-The chip temperature has reached high temperature that is 42.7 ℃.
-The chip throttling back core frequency to waiting a desired cool down temperature .
-The chip core frequency is 62500000 Hz.
-The chip temperature has reached low temperature that is 39.5 ℃.
-The chip will return to the normal process .
-The chip core frequency is 500000000 Hz.
-~~~~~~~~~~~~~~~~~~~~~~~
-
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/driver_examples/tempmon/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/driver_examples/tempmon/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/driver_examples/tempmon/example_board_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/driver_examples/tempmon/example_board_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/driver_examples/tempmon/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/driver_examples/tempmon/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/driver_examples/tempmon/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/driver_examples/tempmon/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/driver_examples/tempmon/example_board_readme.md)

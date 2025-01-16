@@ -9,30 +9,14 @@
  * Includes
  ******************************************************************************/
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 #include "fsl_qtmr.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* The QTMR instance/channel used for board */
-#define BOARD_QTMR_BASEADDR       TMR1
-#define BOARD_FIRST_QTMR_CHANNEL  kQTMR_Channel_0
-#define BOARD_SECOND_QTMR_CHANNEL kQTMR_Channel_1
-#define QTMR_ClockCounterOutput   kQTMR_ClockCounter0Output
-
-/* Interrupt number and interrupt handler for the QTMR instance used */
-#define QTMR_IRQ_ID      TMR1_IRQn
-#define QTMR_IRQ_HANDLER TMR1_IRQHandler
-
-/* QTMR Clock source divider for Ipg clock source, the value of two macros below should be aligned. */
-#define QTMR_PRIMARY_SOURCE       (kQTMR_ClockDivide_128)
-#define QTMR_CLOCK_SOURCE_DIVIDER (128U)
-/* The frequency of the source clock after divided. */
-#define QTMR_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_IpgClk) / QTMR_CLOCK_SOURCE_DIVIDER)
 
 /*******************************************************************************
  * Prototypes
@@ -65,10 +49,7 @@ int main(void)
     qtmr_config_t qtmrConfig;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\n*********QUADTIMER EXAMPLE START*********");
 

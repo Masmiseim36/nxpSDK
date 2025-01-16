@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -28,6 +28,21 @@
 #define SE05X_TLV_BUF_SIZE_RSP 900
 #endif
 
+static const char* getErrorMessage(smStatus_t status) {
+   switch (status) {
+       case SM_NOT_OK: return "Error";
+       case SM_ERR_WRONG_LENGTH: return "Wrong length (e.g. C-APDU does not fit into APDU buffer)";
+       case SM_ERR_CONDITIONS_NOT_SATISFIED: return "Conditions not satisfied";
+       case SM_ERR_COMMAND_NOT_ALLOWED: return "Command not allowed - access denied based on object policy";
+       case SM_ERR_SECURITY_STATUS: return "Security status not satisfied";
+       case SM_ERR_WRONG_DATA: return "Wrong data provided";
+       case SM_ERR_DATA_INVALID: return "Data invalid - policy set invalid for the given object";
+       case SM_ERR_FILE_FULL: return "Not enough memory space available (either transient or persistent memory)";
+       case SM_ERR_APDU_THROUGHPUT: return "APDU Throughput error";
+       default: return "Error Not listed";
+   }
+}
+
 int tlvSet_U8(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint8_t value)
 {
     uint8_t *pBuf            = *buf;
@@ -36,6 +51,9 @@ int tlvSet_U8(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint8_t value)
         return 1;
     }
     if (((*bufLen) + size_of_tlv) > SE05X_TLV_BUF_SIZE_CMD) {
+        return 1;
+    }
+    if ((UINTPTR_MAX - 3) < (uintptr_t)pBuf) {
         return 1;
     }
     *pBuf++ = (uint8_t)tag;
@@ -83,6 +101,9 @@ int tlvSet_U32(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint32_t value)
         return 1;
     }
     if (((*bufLen) + size_of_tlv) > SE05X_TLV_BUF_SIZE_CMD) {
+        return 1;
+    }
+    if ((UINTPTR_MAX - 6) < (uintptr_t)pBuf) {
         return 1;
     }
     *pBuf++ = (uint8_t)tag;
@@ -203,16 +224,28 @@ int tlvSet_u8buf(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, const uint8_t *
         LOG_E("Not enough buffer");
         return 1;
     }
+    if ((UINTPTR_MAX - 1) < (uintptr_t)pBuf) {
+        return 1;
+    }
     *pBuf++ = (uint8_t)tag;
 
     if (cmdLen <= 0x7Fu) {
+        if ((UINTPTR_MAX - 1) < (uintptr_t)pBuf) {
+            return 1;
+        }
         *pBuf++ = (uint8_t)cmdLen;
     }
     else if (cmdLen <= 0xFFu) {
+        if ((UINTPTR_MAX - 2) < (uintptr_t)pBuf) {
+            return 1;
+        }
         *pBuf++ = (uint8_t)(0x80 /* Extended */ | 0x01 /* Additional Length */);
         *pBuf++ = (uint8_t)((cmdLen >> 0 * 8) & 0xFF);
     }
     else if (cmdLen <= 0xFFFFu) {
+        if ((UINTPTR_MAX - 3) < (uintptr_t)pBuf) {
+            return 1;
+        }
         *pBuf++ = (uint8_t)(0x80 /* Extended */ | 0x02 /* Additional Length */);
         *pBuf++ = (uint8_t)((cmdLen >> 1 * 8) & 0xFF);
         *pBuf++ = (uint8_t)((cmdLen >> 0 * 8) & 0xFF);
@@ -222,6 +255,9 @@ int tlvSet_u8buf(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, const uint8_t *
     }
     if ((cmdLen > 0) && (cmd != NULL)) {
         while (cmdLen-- > 0) {
+            if ((UINTPTR_MAX - 1) < (uintptr_t)pBuf) {
+                return 1;
+            }
             *pBuf++ = *cmd++;
         }
     }
@@ -236,7 +272,12 @@ int tlvSet_u8buf_features(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, pSe05x
 {
     uint8_t features[32] = {0};
     size_t features_size = 0;
-    features[0]          = (uint8_t)((appletVariant->variant >> 1 * 8) & 0xFF);
+
+    if (appletVariant == NULL) {
+        return 1;
+    }
+
+    features[0] = (uint8_t)((appletVariant->variant >> 1 * 8) & 0xFF);
     features_size++;
     features[1] = (uint8_t)((appletVariant->variant >> 0 * 8) & 0xFF);
     features_size++;
@@ -260,11 +301,15 @@ int tlvGet_U8(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t 
     if (bufLen < 3) {
         goto cleanup;
     }
-
-    if ((*pBufIndex) > bufLen - 3) {
+    if ((*pBufIndex) > (bufLen - 3)) {
         goto cleanup;
     }
-
+    if (pRsp == NULL) {
+        goto cleanup;
+    }
+    if ((UINTPTR_MAX - 2) < (uintptr_t)pBuf) {
+        return 1;
+    }
     got_tag = *pBuf++;
 
     if (got_tag != tag) {
@@ -326,7 +371,10 @@ int tlvGet_U16(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t
     if (bufLen < 4) {
         goto cleanup;
     }
-    if ((*pBufIndex) > bufLen - 4) {
+    if ((*pBufIndex) > (bufLen - 4)) {
+        goto cleanup;
+    }
+    if (pRsp == NULL) {
         goto cleanup;
     }
 
@@ -341,6 +389,53 @@ int tlvGet_U16(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t
     *pRsp = (*pBuf++) << 8;
     *pRsp |= *pBuf++;
     *pBufIndex += (1 + 1 + (rspLen));
+    retVal = 0;
+cleanup:
+    return retVal;
+}
+
+int tlvGet_U32(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, uint32_t *pRsp)
+{
+    int retVal    = 1;
+    uint8_t *pBuf = buf + (*pBufIndex);
+    uint8_t got_tag;
+    size_t rspLen;
+    uint8_t lenLen = 0;
+
+    if (bufLen < 4) {
+        goto cleanup;
+    }
+    if ((*pBufIndex) > (bufLen - 6)) {
+        goto cleanup;
+    }
+    if (pRsp == NULL) {
+        goto cleanup;
+    }
+
+    got_tag = *pBuf++;
+    if (got_tag != tag) {
+        goto cleanup;
+    }
+    rspLen = *pBuf++;
+    if (rspLen & 0x80) {
+        if ((*pBufIndex) > (bufLen - 8)) {
+            goto cleanup;
+        }
+        lenLen = rspLen & 0x7F;
+        if (lenLen != 2) {
+            goto cleanup;
+        }
+        rspLen = (*pBuf++) << (8 * 1);
+        rspLen = rspLen + (*pBuf++);
+    }
+    if (rspLen > 4) {
+        goto cleanup;
+    }
+    *pRsp = (*pBuf++) << (8 * 3);
+    *pRsp |= (*pBuf++) << (8 * 2);
+    *pRsp |= (*pBuf++) << (8 * 1);
+    *pRsp |= *pBuf++;
+    *pBufIndex += (1 + 1 + 2 + (rspLen));
     retVal = 0;
 cleanup:
     return retVal;
@@ -366,7 +461,7 @@ int tlvGet_u8buf(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG
     if (bufLen < 2) {
         goto cleanup;
     }
-    if ((*pBufIndex) > bufLen - 2 /* Tag + len */) {
+    if ((*pBufIndex) > (bufLen - 2) /* Tag + len */) {
         goto cleanup;
     }
 
@@ -381,14 +476,14 @@ int tlvGet_u8buf(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG
         *pBufIndex += (1 + 1);
     }
     else if (rspLen == 0x81) {
-        if ((*pBufIndex) > bufLen - 3 /* Ext len */) {
+        if ((*pBufIndex) > (bufLen - 3) /* Ext len */) {
             goto cleanup;
         }
         extendedLen = *pBuf++;
         *pBufIndex += (1 + 1 + 1);
     }
     else if (rspLen == 0x82) {
-        if ((*pBufIndex) > bufLen - 4 /* Ext len */) {
+        if ((*pBufIndex) > (bufLen - 4) /* Ext len */) {
             goto cleanup;
         }
         extendedLen = *pBuf++;
@@ -432,7 +527,7 @@ int tlvGet_ValueIndex(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05
     if (bufLen < 2) {
         goto cleanup;
     }
-    if ((*pBufIndex) > bufLen - 2 /* Tag + len */) {
+    if ((*pBufIndex) > (bufLen - 2) /* Tag + len */) {
         goto cleanup;
     }
     got_tag = *pBuf++;
@@ -446,14 +541,14 @@ int tlvGet_ValueIndex(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05
         *pBufIndex += (1 + 1);
     }
     else if (rspLen == 0x81) {
-        if ((*pBufIndex) > bufLen - 3 /* Ext len */) {
+        if ((*pBufIndex) > (bufLen - 3) /* Ext len */) {
             goto cleanup;
         }
         extendedLen = *pBuf++;
         *pBufIndex += (1 + 1 + 1);
     }
     else if (rspLen == 0x82) {
-        if ((*pBufIndex) > bufLen - 4 /* Ext len */) {
+        if ((*pBufIndex) > (bufLen - 4) /* Ext len */) {
             goto cleanup;
         }
         extendedLen = *pBuf++;
@@ -489,11 +584,19 @@ smStatus_t DoAPDUTx_s_Case3(Se05xSession_t *pSessionCtx, const tlvHeader_t *hdr,
     uint8_t rxBuf[SE05X_TLV_BUF_SIZE_RSP + 2] = {0};
     size_t rxBufLen                           = sizeof(rxBuf);
     smStatus_t apduStatus                     = SM_NOT_OK;
+
+    if (pSessionCtx == NULL) {
+        return apduStatus;
+    }
+
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
     }
     else {
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rxBuf, &rxBufLen, 0);
+    }
+    if(apduStatus != SM_OK) {
+        LOG_W("APDU Transaction Error: %s (0x%04X)\n", getErrorMessage(apduStatus), apduStatus);
     }
     return apduStatus;
 }
@@ -506,11 +609,19 @@ smStatus_t DoAPDUTxRx_s_Case2(Se05xSession_t *pSessionCtx,
     size_t *pRspBufLen)
 {
     smStatus_t apduStatus;
+
+    if (pSessionCtx == NULL) {
+        return SM_NOT_OK;
+    }
+
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
     }
     else {
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rspBuf, pRspBufLen, 0);
+    }
+    if(apduStatus != SM_OK) {
+        LOG_W("APDU Transaction Error: %s (0x%04X)\n", getErrorMessage(apduStatus), apduStatus);
     }
     return apduStatus;
 }
@@ -523,11 +634,19 @@ smStatus_t DoAPDUTxRx_s_Case4(Se05xSession_t *pSessionCtx,
     size_t *pRspBufLen)
 {
     smStatus_t apduStatus;
+
+    if (pSessionCtx == NULL) {
+        return SM_NOT_OK;
+    }
+
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
     }
     else {
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rspBuf, pRspBufLen, 0);
+    }
+    if(apduStatus != SM_OK) {
+        LOG_W("APDU Transaction Error: %s (0x%04X)\n", getErrorMessage(apduStatus), apduStatus);
     }
     return apduStatus;
 }
@@ -540,11 +659,19 @@ smStatus_t DoAPDUTxRx_s_Case4_ext(Se05xSession_t *pSessionCtx,
     size_t *pRspBufLen)
 {
     smStatus_t apduStatus = SM_NOT_OK;
+
+    if (pSessionCtx == NULL) {
+        return apduStatus;
+    }
+
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
     }
     else {
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rspBuf, pRspBufLen, 1);
+    }
+    if(apduStatus != SM_OK) {
+        LOG_W("APDU Transaction Error: %s (0x%04X)\n", getErrorMessage(apduStatus), apduStatus);
     }
     return apduStatus;
 }
@@ -582,6 +709,9 @@ smStatus_t DoAPDUTxRx(
             LOG_E("Invalid APDU TxRX case");
             break;
         }
+    }
+    if(apduStatus != SM_OK) {
+        LOG_W("APDU Transaction Error: %s (0x%04X)\n", getErrorMessage(apduStatus), apduStatus);
     }
     return apduStatus;
 }
@@ -721,10 +851,11 @@ smStatus_t se05x_DeCrypt(
     AX_UNUSED_ARG(hasle);
 
     if (*rspLength >= 2) {
-        rv = (smStatus_t) (rsp[(*rspLength) - 2] << 8 | rsp[(*rspLength) - 1]);
+        rv = (smStatus_t)(rsp[(*rspLength) - 2] << 8 | rsp[(*rspLength) - 1]);
         if ((rv == SM_OK) && (pSessionCtx->pdynScp03Ctx != NULL)) {
 #if SSS_HAVE_SCP_SCP03_SSS
-            rv = (smStatus_t) nxpSCP03_Decrypt_ResponseAPDU(pSessionCtx->pdynScp03Ctx, cmd_cmacLen, rsp, rspLength, hasle);
+            rv = (smStatus_t)nxpSCP03_Decrypt_ResponseAPDU(
+                pSessionCtx->pdynScp03Ctx, cmd_cmacLen, rsp, rspLength, hasle);
 #else
             LOG_W("Decrypting without SSS_HAVE_SCP_SCP03_SSS");
             rv = SM_NOT_OK;
@@ -791,6 +922,7 @@ smStatus_t se05x_Transform_scp(struct Se05xSession *pSession,
         outhdr->hdr[3] = kSE05x_P2_DEFAULT;
 
         /* Add CMAC Length in SE05X command LC */
+        ENSURE_OR_GO_CLEANUP((SIZE_MAX - SCP_GP_IU_CARD_CRYPTOGRAM_LEN) >= se05xApdu.se05xCmdLen);
         se05xApdu.se05xCmdLC  = se05xApdu.se05xCmdLen + SCP_GP_IU_CARD_CRYPTOGRAM_LEN;
         se05xApdu.se05xCmdLCW = (se05xApdu.se05xCmdLC == 0) ? 0 : (((se05xApdu.se05xCmdLC < 0xFF) && !(hasle)) ? 1 : 3);
 
@@ -863,6 +995,7 @@ smStatus_t se05x_Transform_scp(struct Se05xSession *pSession,
     }
     else {
         /* If there is no session create the tx buffer with SE05X command only*/
+        ENSURE_OR_GO_CLEANUP((SIZE_MAX - SCP_GP_IU_CARD_CRYPTOGRAM_LEN) >= se05xApdu.se05xCmdLen);
         se05xApdu.se05xCmdLC  = se05xApdu.se05xCmdLen + SCP_GP_IU_CARD_CRYPTOGRAM_LEN;
         se05xApdu.se05xCmdLCW = (se05xApdu.se05xCmdLC == 0) ? 0 : (((se05xApdu.se05xCmdLC < 0xFF) && !(hasle)) ? 1 : 3);
 

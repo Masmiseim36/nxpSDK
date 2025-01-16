@@ -1,0 +1,4 @@
+        . = ALIGN(32);
+        *(CacheLineData)
+        . = ALIGN(32);
+        *(.bss*)

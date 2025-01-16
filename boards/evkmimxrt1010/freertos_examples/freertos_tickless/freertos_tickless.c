@@ -13,23 +13,15 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#if configUSE_TICKLESS_IDLE
-#include "fsl_gpt.h"
-#endif
+#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SW_GPIO        BOARD_USER_BUTTON_GPIO
-#define BOARD_SW_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
-#define BOARD_SW_IRQ         BOARD_USER_BUTTON_IRQ
-#define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define BOARD_SW_NAME        BOARD_USER_BUTTON_NAME
 /* Task priorities. */
 /* clang-format off */
 #define tickless_task_PRIORITY   ( configMAX_PRIORITIES - 2 )
@@ -43,9 +35,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern void vPortGptIsr(void);
-IRQn_Type vPortGetGptIrqn(void);
-GPT_Type *vPortGetGptBase(void);
 
 /*******************************************************************************
  * Variables
@@ -57,38 +46,6 @@ SemaphoreHandle_t xSWSemaphore = NULL;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/*!
- * @brief Interrupt service fuction of GPT timer.
- *
- * This function to call low power timer ISR
- */
-void GPT1_IRQHandler(void)
-{
-    vPortGptIsr();
-}
-
-/*!
- * @brief Fuction of GPT timer.
- *
- * This function to return GPT timer base address
- */
-
-GPT_Type *vPortGetGptBase(void)
-{
-    return GPT1;
-}
-
-/*!
- * @brief Fuction of GPT timer.
- *
- * This function to return GPT timer interrupt number
- */
-
-IRQn_Type vPortGetGptIrqn(void)
-{
-    return GPT1_IRQn;
-}
 /*!
  * @brief Main function
  */
@@ -104,29 +61,7 @@ int main(void)
 #endif
     };
 #endif
-#if configUSE_TICKLESS_IDLE
-    gpt_config_t gptConfig;
-#endif
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-#if configUSE_TICKLESS_IDLE
-    GPT_GetDefaultConfig(&gptConfig);
-
-    /* Initialize GPT module */
-    GPT_Init(GPT1, &gptConfig);
-
-    /* Divide GPT clock source frequency by 1 inside GPT module */
-    GPT_SetClockDivider(GPT1, 1);
-
-    /* Enable GPT Output Compare1 interrupt */
-    GPT_EnableInterrupts(GPT1, kGPT_OutputCompare1InterruptEnable);
-
-    /* Enable at the Interrupt */
-    EnableIRQ(GPT1_IRQn);
-#endif
+    BOARD_InitHardware();
 
     PRINTF("Press any key to start the example\r\n");
     GETCHAR();

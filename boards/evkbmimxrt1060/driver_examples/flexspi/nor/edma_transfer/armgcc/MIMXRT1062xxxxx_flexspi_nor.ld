@@ -89,6 +89,9 @@ SECTIONS
         */fsl_flexspi_edma.c.obj
         */fsl_edma.c.obj
         */fsl_clock.c.obj
+        */fsl_memcpy.S.obj
+        */lib_a-memcmp.obj
+        */lib_a-memset.o.obj
     ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
@@ -97,6 +100,9 @@ SECTIONS
         */fsl_flexspi_edma.c.obj
         */fsl_edma.c.obj
         */fsl_clock.c.obj
+        */fsl_memcpy.S.obj
+        */lib_a-memcmp.obj
+        */lib_a-memset.o.obj
     ) .text*)                /* .text* sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
@@ -105,6 +111,9 @@ SECTIONS
         */fsl_flexspi_edma.c.obj
         */fsl_edma.c.obj
         */fsl_clock.c.obj
+        */fsl_memcpy.S.obj
+        */lib_a-memcmp.obj
+        */lib_a-memset.o.obj
     ) .rodata)               /* .rodata sections (constants, strings, etc.) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
@@ -113,6 +122,9 @@ SECTIONS
         */fsl_flexspi_edma.c.obj
         */fsl_edma.c.obj
         */fsl_clock.c.obj
+        */fsl_memcpy.S.obj
+        */lib_a-memcmp.obj
+        */lib_a-memset.o.obj
     ) .rodata*)              /* .rodata* sections (constants, strings, etc.) */
     *(.glue_7)               /* glue arm to thumb code */
     *(.glue_7t)              /* glue thumb to arm code */

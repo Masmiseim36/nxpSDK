@@ -1,6 +1,5 @@
 /*
  * Copyright 2022, 2024 NXP
- * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -288,7 +287,9 @@ status_t Nor_Flash_Erase_Sector(nor_handle_t *handle, uint32_t address)
         }
         default:
         {
-            return kStatus_OutOfRange;
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
+            break;
         }
     }
     status = LPSPI_MemErase(address, tmpEraseOption, blocking, base);

@@ -1,30 +1,17 @@
 /*
- * Copyright 2018-2021 NXP
- * All rights reserved.
+ * Copyright 2018-2021, 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_tempmon.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TEMP_MONITOR             TEMPMON
-#define DEMO_TEMP_LOW_HIGH_IRQn       TEMP_LOW_HIGH_IRQn
-#define DEMO_TEMP_PANIC_IRQn          TEMP_PANIC_IRQn
-#define DEMO_TEMP_LOW_HIGH_IRQHandler TEMP_LOW_HIGH_IRQHandler
-#define DEMO_TEMP_PANIC_IRQHandler    TEMP_PANIC_IRQHandler
-
-#define DEMO_HIGH_ALARM_TEMP 42U
-#define DEMO_LOW_ALARM_TEMP  40U
-
-#define DEMO_CLOCK_SOURCE kCLOCK_AhbClk
-#define DEMO_CLOCK_DIV    kCLOCK_AhbDiv
 
 /*******************************************************************************
  * Prototypes
@@ -59,10 +46,7 @@ int main(void)
     uint32_t coreFrequency;
 
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     EnableIRQ(DEMO_TEMP_LOW_HIGH_IRQn);
 
     PRINTF("TEMPMON driver example. \r\n");
@@ -78,7 +62,7 @@ int main(void)
     /* Get temperature */
     temperature = TEMPMON_GetCurrentTemperature(DEMO_TEMP_MONITOR);
 
-    PRINTF("The chip initial temperature is %.1f degrees celsius. \r\n", temperature);
+    PRINTF("The chip initial temperature is %.1f degrees celsius. \r\n", (double)temperature);
 
     while (1)
     {
@@ -92,7 +76,7 @@ int main(void)
             if (0x01U == temperatureReachHighCount)
             {
                 PRINTF("The chip temperature has reached high temperature that is %.1f degrees celsius. \r\n",
-                       temperature);
+                       (double)temperature);
                 PRINTF("The chip throttling back core frequency to waiting a desired cool down temperature . \r\n");
 
                 /* Set the core frequency into a lower frequency. */
@@ -115,7 +99,7 @@ int main(void)
             if (0x01U == temperatureReachLowCount)
             {
                 PRINTF("The chip temperature has reached low temperature that is %.1f degrees celsius. \r\n",
-                       temperature);
+                       (double)temperature);
                 PRINTF("The chip will return to the normal process . \r\n");
 
                 /* Set the core frequency into a higher frequency. */

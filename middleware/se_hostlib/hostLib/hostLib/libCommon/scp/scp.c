@@ -31,9 +31,6 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if ! (SSS_HAVE_APPLET_A71CH)
-
-
 U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 {
     U32 rv = ERR_COMM_ERROR;
@@ -50,5 +47,3 @@ U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 
     return rv;
 }
-
-#endif  // (SSS_HAVE_APPLET_SE05X_IOT) || (SSS_HAVE_APPLET_LOOPBACK)

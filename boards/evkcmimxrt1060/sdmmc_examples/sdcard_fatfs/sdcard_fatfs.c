@@ -13,15 +13,12 @@
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd_disk.h"
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "sdmmc_config.h"
-#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /* buffer size (in byte) for read/write operations */
 #define BUFFER_SIZE (513U)
 /*******************************************************************************
@@ -69,10 +66,7 @@ int main(void)
     char ch                            = '0';
     BYTE work[FF_MAX_SS];
 
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nFATFS example to demonstrate how to use FATFS with SD card.\r\n");
 

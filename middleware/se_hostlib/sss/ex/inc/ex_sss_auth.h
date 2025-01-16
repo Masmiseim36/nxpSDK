@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2020,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -65,7 +65,7 @@
  * See https://www.nxp.com/docs/en/application-note/AN12436.pdf
  */
 
-#if EXTERNAL_CUSTOMER_BUILD_CONFIGURATION
+#if defined(EXTERNAL_CUSTOMER_BUILD_CONFIGURATION) && (EXTERNAL_CUSTOMER_BUILD_CONFIGURATION == 1)
 
 #ifndef EX_SSS_AUTH_SE05X_KEY_ENC
 #   define EX_SSS_AUTH_SE05X_KEY_ENC SSS_AUTH_KEY_ENC
@@ -96,7 +96,6 @@
 #endif
 
 #endif
-
 
 #define EX_SSS_AUTH_SE05X_KEY_VERSION_NO 0x0B
 

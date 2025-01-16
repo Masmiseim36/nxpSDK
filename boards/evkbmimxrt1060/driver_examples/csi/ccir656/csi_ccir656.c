@@ -10,14 +10,13 @@
 #include "display_support.h"
 #include "camera_support.h"
 
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP PXP
 
 /* Pixel format YUV422, bytesPerPixel is 2. */
 #define APP_BPP 2
@@ -62,7 +61,6 @@ static dc_fb_info_t fbInfo;
  * Code
  ******************************************************************************/
 
-
 static void APP_InitCamera(void)
 {
     const camera_config_t cameraConfig = {
@@ -104,15 +102,7 @@ static void APP_InitCamera(void)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitDEBUG_UARTPins();
-    BOARD_InitSDRAMPins();
-    BOARD_EarlyPrepareCamera();
-    BOARD_InitCSIPins();
-    BOARD_InitLCDPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("CSI CCIR656 example start...\r\n");
 

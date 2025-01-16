@@ -1,32 +1,9 @@
-Overview
-========
+# aws_shadow_enet
+
+## Overview
 Demo for showing how to use the Device Shadow library's API.
 
-
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKC board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
+## Prepare the Demo
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
@@ -34,16 +11,20 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 2.  Configure device in the AWS IoT Console base on this guide: https://docs.aws.amazon.com/iot/latest/developerguide/create-iot-resources.html
 
     Make note of example's "Thing name" and "REST API endpoint". These strings need to be set in the "aws_clientcredential.h".
+
     Example:
+
         #define clientcredentialMQTT_BROKER_ENDPOINT "abcdefgh123456.iot.us-west-2.amazonaws.com"
         #define clientcredentialIOT_THING_NAME "MyExample"
 
     Device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
     Note: be sure to add " at the beginning of a line and \n"\ on every line break.
+
     Example:
+
         #define keyCLIENT_CERTIFICATE_PEM NULL
 
-        Needs to be changed to:
+      Needs to be changed to:
 
         #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
         "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
@@ -58,6 +39,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
     Files "aws_clientcredential.h" and "aws_clientcredential_keys.h" are located in project folder.
 
 3.  This demo doesn't need Wi-Fi network, you can leave the following macros from "aws_clientcredential.h" unmodified.
+
         #define clientcredentialWIFI_SSID       "Paste Wi-Fi SSID here."
         #define clientcredentialWIFI_PASSWORD   "Paste Wi-Fi password here."
 
@@ -78,8 +60,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
     - One stop bit
     - No flow control
 
-Running the demo
-================
+## Running the demo
 The log below shows the output of the demo in the terminal window. The log can be different based on your local network configuration.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -191,3 +172,20 @@ The log below shows the output of the demo in the terminal window. The log can b
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/aws_examples/shadow_enet/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/aws_examples/shadow_enet/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/aws_examples/shadow_enet/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/aws_examples/shadow_enet/example_board_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/aws_examples/shadow_enet/example_board_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/aws_examples/shadow_enet/example_board_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/aws_examples/shadow_enet/example_board_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/aws_examples/shadow_enet/example_board_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/aws_examples/shadow_enet/example_board_readme.md)

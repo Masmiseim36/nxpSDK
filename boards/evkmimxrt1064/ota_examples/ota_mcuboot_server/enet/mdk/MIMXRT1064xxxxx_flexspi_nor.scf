@@ -29,12 +29,10 @@
 #define m_interrupts_start             0x70040400
 #define m_interrupts_size              0x00000400
 
-#define m_text_start                   0x70040800
-#define m_text_size                    0x0017F800
+/* NOTE: Flash in range 0x7013_EFFF - 0x7014_0000 is reserved for image trailer */
 
-/* Reserved area for "mflash_files" */
-#define  m_mflash_start                0x70180000
-#define  m_mflash_size                 0x00280000
+#define m_text_start                   0x70040800
+#define m_text_size                    0x000FF000
 
 #define m_data_start                   0x20000000
 #define m_data_size                    0x00020000
@@ -46,13 +44,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   1000
+  #define Stack_Size                   0x0400
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    100000
+  #define Heap_Size                    0x0400
 #endif
 
 

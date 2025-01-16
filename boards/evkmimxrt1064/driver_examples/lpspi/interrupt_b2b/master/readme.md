@@ -1,82 +1,78 @@
-Overview
-========
+# lpspi_interrupt_b2b_master
+
+## Overview
 The lpspi_interrupt_b2b example shows how to use LPSPI driver in interrupt way:
 
-In this example , we need two boards , one board used as LPSPI master and another board used as LPSPI slave.
+In this example, we need two boards, one board used as LPSPI master and another board used as LPSPI slave.
 The file 'lpspi_interrupt_b2b_master.c' includes the LPSPI master code.
-This example does not use the transactional API in LPSPI driver. It's a demonstration that how to use the interrupt in KSDK driver.
+This example does not use the transactional API in LPSPI driver.
 
-1. LPSPI master send/received data to/from LPSPI slave in interrupt . (LPSPI Slave using interrupt to receive/send the data)
+Note:
+  - In case other firmwares (such as bootrom, sm and oei) operating lpspi in master side to mis-trigger slave transfer, please run master first, after master print "Please running slave here, then type any key to continue", then run slave and type any key in master side to run.
+  - LPSPI master send/received data to/from LPSPI slave in interrupt. (LPSPI Slave using interrupt to receive/send the data)
 
-SDK version
-===========
-- Version: 2.15.000
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.40.1
-- Keil MDK  5.38.1
-- GCC ARM Embedded  12.2
-- MCUXpresso  11.8.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Two EVK-MIMXRT1064 board
-- Personal Computer
-
-Board settings
-==============
-Weld 0Ω resistor to R278,R279,R280,R281.
-
-SPI one board:
-Transfer data from one board instance to another board's instance.
-SPI0 pins are connected with SPI0 pins of another board
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-INSTANCE0(SPI0)     CONNECTS TO         INSTANCE0(SPI0)
-Pin Name   Board Location     Pin Name  Board Location
-SOUT        J24 pin 4           SIN       J24 pin 5
-SIN         J24 pin 5           SOUT      J24 pin 4
-SCK         J24 pin 6           SCK       J24 pin 6
-PCS0        J24 pin 3           PCS0      J24 pin 3 
-GND         J24 pin 7           GND       J24 pin 7
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Reset the SoC and run the project.
-
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
-
+## Running the demo
+When the demo runs successfully, the log would be seen in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-lpspi_functional_interrupt_board_2_board_master start.
+LPSPI interrupt board to board (b2b) master example.
 This example use one board as master and another as slave.
-Master and slave uses interrupt way. Slave should start first. 
-Please make sure you make the correct line connection. Basically, the connection is: 
-LPSPI_master -- LPSPI_slave   
-   CLK      --    CLK  
-   PCS      --    PCS 
-   SOUT     --    SIN  
-   SIN      --    SOUT 
-   GND      --    GND 
+Please make sure you make the correct line connection. Basically, the connection is:
+LPSPI_master -- LPSPI_slave
+    CLK      --    CLK
+    PCS      --    PCS
+    SOUT     --    SIN
+    SIN      --    SOUT
+    GND      --    GND
+Please running slave here, then type any key to continue
 
-LPSPI transfer all data matched! 
+LPSPI transfer all data matched!
 
  Master received:
-
   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
  10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F
  20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F
  30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
-End of master example! 
+
+End of master example!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Supported Boards
+- [EVK9-MIMX8ULP](../../../../_boards/evk9mimx8ulp/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVKB-IMXRT1050](../../../../_boards/evkbimxrt1050/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../../_boards/evkbmimxrt1170/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVK-MCIMX7ULP](../../../../_boards/evkmcimx7ulp/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVK-MIMX8ULP](../../../../_boards/evkmimx8ulp/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../../_boards/evkmimxrt1010/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../_boards/evkmimxrt1015/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../_boards/evkmimxrt1020/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../_boards/evkmimxrt1024/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../_boards/evkmimxrt1040/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1160-EVK](../../../../_boards/evkmimxrt1160/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../../_boards/evkmimxrt1180/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-K32L2A4S](../../../../_boards/frdmk32l2a4s/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-K32L3A6](../../../../_boards/frdmk32l3a6/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-KE15Z](../../../../_boards/frdmke15z/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-KE16Z](../../../../_boards/frdmke16z/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-KE17Z](../../../../_boards/frdmke17z/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-KE17Z512](../../../../_boards/frdmke17z512/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXA153](../../../../_boards/frdmmcxa153/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXA156](../../../../_boards/frdmmcxa156/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXA166](../../../../_boards/frdmmcxa166/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXA276](../../../../_boards/frdmmcxa276/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXN236](../../../../_boards/frdmmcxn236/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXN947](../../../../_boards/frdmmcxn947/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXW71](../../../../_boards/frdmmcxw71/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [FRDM-MCXW72](../../../../_boards/frdmmcxw72/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [K32W148-EVK](../../../../_boards/k32w148evk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [KW45B41Z-EVK](../../../../_boards/kw45b41zevk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [KW47-EVK](../../../../_boards/kw47evk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MCIMX93AUTO-EVK](../../../../_boards/mcimx93autoevk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MCIMX93-EVK](../../../../_boards/mcimx93evk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MCIMX93-QSB](../../../../_boards/mcimx93qsb/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MCX-N5XX-EVK](../../../../_boards/mcxn5xxevk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MCX-N9XX-EVK](../../../../_boards/mcxn9xxevk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)
+- [MCX-W72-EVK](../../../../_boards/mcxw72evk/driver_examples/lpspi/interrupt_b2b/master/example_board_readme.md)

@@ -7,17 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_adc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE          ADC1
-#define DEMO_ADC_USER_CHANNEL  14U
-#define DEMO_ADC_CHANNEL_GROUP 0U
 
 /*******************************************************************************
  * Prototypes
@@ -40,10 +36,7 @@ int main(void)
     adc_config_t adcConfigStruct;
     adc_channel_config_t adcChannelConfigStruct;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nADC polling Example.\r\n");
 

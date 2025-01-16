@@ -17,8 +17,8 @@
  * Definitions
  ******************************************************************************/
 typedef struct ncp_cmd_t ble_ncp_command_t;
-extern uint32_t mcu_last_resp_rcvd;
-extern uint32_t mcu_last_cmd_sent;
+extern uint32_t mcu_last_resp_rcvd, mcu_last_cmd_sent;
+extern uint16_t mcu_last_seqno_rcvd, mcu_last_seqno_sent;
 
 #define BLE_NCP_STACK_SIZE   4096
 static OSA_TASK_HANDLE_DEFINE(ble_ncp_task_handle);
@@ -35,7 +35,8 @@ OSA_MSGQ_HANDLE_DEFINE(ble_ncp_command_queue_buff, BLE_NCP_COMMAND_QUEUE_NUM,  s
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
+extern int ble_process_response(uint8_t *res);
+extern int ble_process_ncp_event(uint8_t *res);
 
 /*******************************************************************************
  * Code
@@ -82,11 +83,13 @@ static int ble_ncp_handle_cmd_input(uint8_t *cmd)
         if (ret == NCP_STATUS_ERROR)
             PRINTF("Failed to parse ncp tlv reponse\r\n");
 
-        mcu_last_resp_rcvd = ((NCPCmd_DS_COMMAND *)cmd)->header.cmd;
+        mcu_last_resp_rcvd = ((NCP_HOST_COMMAND *)cmd)->cmd;
+        mcu_last_seqno_rcvd = ((NCP_HOST_COMMAND *)cmd)->seqnum;
         if (mcu_last_resp_rcvd == NCP_CMD_BLE_INVALID_CMD)
         {
             PRINTF("Previous command is invalid\r\n");
             mcu_last_resp_rcvd = 0;
+            mcu_last_seqno_rcvd = 0;
         }
     }
 

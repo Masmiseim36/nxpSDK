@@ -70,7 +70,14 @@ volatile static usb_device_composite_struct_t *g_deviceComposite;
 /*!
  * @brief CDC class specific callback function.
  *
- * This function handles the CDC class specific requests.
+ * This function handles the CDC class specific requests. For the current case, device is waiting for data from host.
+ * Once device receives data, kUSB_DeviceCdcEventRecvResponse event will be asserted. In kUSB_DeviceCdcEventRecvResponse
+ * event, the received data lenght is saved to s_recvSize. If s_recvSize is 0, device will call USB_DeviceCdcAcmRecv to
+ * schedule buffer for next receiving event directly and it means there is no data to echo to host. If s_recvSize is not
+ * 0, USB_DeviceCdcVcomTask will copy the received data into s_currSendBuf then send back to host. Once data is echoed
+ * back completely, USB_DeviceCdcAcmRecv is called in kUSB_DeviceCdcEventSendResponse event to be ready to receive the
+ * next data from host. Instead, USB_DeviceCdcAcmRecv also can be called in kUSB_DeviceCdcEventRecvResponse event as
+ * long as the received data is handled completely.
  *
  * @param handle          The CDC ACM class handle.
  * @param event           The CDC ACM class event type.
@@ -105,7 +112,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 if ((epCbParam->buffer != NULL) || ((epCbParam->buffer == NULL) && (epCbParam->length == 0)))
                 {
                     /* User: add your own code for send complete event */
-                    /* Schedule buffer for next receive event */
+                    /* In this case, the received data has been sent back to host, then now schedule buffer for next
+                       receiving event. Note that USB_DeviceCdcAcmRecv also can be called in
+                       kUSB_DeviceCdcEventRecvResponse as long as we make sure the received data can be handled properly
+                     */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
                                                  g_cdcVcomDicEndpoints[1].maxPacketSize);
                 }
@@ -119,11 +129,16 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         {
             if ((1 == g_deviceComposite->cdcVcom.attach) && (1 == g_deviceComposite->cdcVcom.startTransactions))
             {
+                /* Save the received data length, the data will be handled in USB_DeviceCdcVcomTask. Certainly, the
+                   received data also can be handled by any other user's application. Meanwhile, once complete handling
+                   the received data then we can also call USB_DeviceCdcAcmRecv here to be ready to receive the next
+                   data.  */
                 s_recvSize = epCbParam->length;
 
+                /* There is no data to echo to host (host sends 0 length data packet), now directly schedule buffer for
+                 * next receiving event */
                 if (!s_recvSize)
                 {
-                    /* Schedule buffer for next receive event */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
                                                  g_cdcVcomDicEndpoints[1].maxPacketSize);
                 }
@@ -247,9 +262,9 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             acmInfo->serialStateBuf[1] = USB_DEVICE_CDC_NOTIF_SERIAL_STATE; /* bNotification */
             acmInfo->serialStateBuf[2] = 0x00;                              /* wValue */
             acmInfo->serialStateBuf[3] = 0x00;
-            acmInfo->serialStateBuf[4] = 0x00; /* wIndex */
+            acmInfo->serialStateBuf[4] = 0x00;                              /* wIndex */
             acmInfo->serialStateBuf[5] = 0x00;
-            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
+            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE;                  /* wLength */
             acmInfo->serialStateBuf[7] = 0x00;
             /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = acmReqParam->interfaceIndex;

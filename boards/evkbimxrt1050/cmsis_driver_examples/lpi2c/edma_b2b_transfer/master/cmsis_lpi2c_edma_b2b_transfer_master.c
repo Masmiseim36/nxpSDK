@@ -8,27 +8,15 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
+#include "app.h"
 #include "fsl_lpi2c_cmsis.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER            Driver_I2C1
-#define EXAMPLE_LPI2C_DMAMUX_BASEADDR (DMAMUX)
-#define EXAMPLE_LPI2C_DMA_BASEADDR    (DMA0)
-#define DMA0_IRQn                     DMA0_DMA16_IRQn
-
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#define LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 #define I2C_DATA_LENGTH            (32) /* MAX is 256 */
@@ -48,11 +36,6 @@ volatile bool g_MasterCompletionFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t LPI2C1_GetFreq(void)
-{
-    return LPI2C_CLOCK_FREQUENCY;
-}
 
 static void lpi2c_master_callback(uint32_t event)
 {
@@ -76,14 +59,7 @@ int main(void)
     uint32_t i = 0;
 
     /*Init BOARD*/
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
 /* DMAMux init and EDMA init */
 #if (defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT)

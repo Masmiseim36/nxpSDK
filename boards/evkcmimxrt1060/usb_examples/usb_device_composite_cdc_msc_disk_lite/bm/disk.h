@@ -30,13 +30,8 @@ USB_DEVICE_CONFIG_USE_TASK macro should also be enable.*/
 
 #define LOGICAL_UNIT_SUPPORTED (1U)
 
-/* USB MSC config*/
-/*buffer size for sd card example. the larger the buffer size ,the faster the data transfer speed is ,*/
-/*the block size should be multiple of 512, the least value is 512*/
-
-#define USB_DEVICE_MSC_WRITE_BUFF_SIZE (512 * 8U)
-#define USB_DEVICE_MSC_READ_BUFF_SIZE  (512 * 8U)
-
+/****************** Macro definitions ***************/
+#include "usb_device_msc_config.h"
 
 #define USB_DEVICE_SDCARD_BLOCK_SIZE_POWER (9U)
 #define USB_DEVICE_MSC_ADMA_TABLE_WORDS    (8U)

@@ -1,54 +1,19 @@
-Overview
-========
+# sai_edma_ping_pong_buffer
+
+## Overview
 The sai_edma_ping_pong_buffer example shows how to use sai driver with EDMA scatter gather feature to implement ping pong buffer case.
 
 In this example, one sai instance playbacks the audio data received from external codec.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1040-EVK board
-- Personal Computer
-- Headphone(OMTP standard)
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4. Insert the headphones into the headphone jack on MIMXRT1040-EVK board (J34).
-5. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-Note: This demo uses both headphone mic and board main mic(P1) as input source. The headphone mic provides left
-channel data, and main mic (P1) provides right channel data. If users found there is noise while do record operation,
-most probably it is the headphone standard issue (OMTP and CTIA standard difference). You should use the OMTP
-standard headphone. You can disable the left channel by using an headphone without microphone feature.
-This demo outputs 1KHZ sine wave audio signal.
-
-When the demo runs successfully, you can hear the tone and the log would be seen on the OpenSDA terminal like:
-
-~~~~~~~~~~~~~~~~~~~
-SAI EDMA ping pong buffer example started!
-~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../_boards/evkbimxrt1050/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../_boards/evkbmimxrt1060/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../../_boards/evkbmimxrt1170/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../_boards/evkcmimxrt1060/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../_boards/evkmimxrt1010/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../_boards/evkmimxrt1015/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../_boards/evkmimxrt1020/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../_boards/evkmimxrt1024/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../_boards/evkmimxrt1040/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../_boards/evkmimxrt1064/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../_boards/evkmimxrt1180/driver_examples/sai/edma_ping_pong_buffer/example_board_readme.md)

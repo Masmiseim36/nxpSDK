@@ -1,48 +1,42 @@
-Overview
-========
+# lvgl_guider_bm
+
+## Overview
 
 This project is used to work with LVGL GUI Guider. The GUI Guider generated
 code is placed in the folder "generated". The example generated code shows a
 button in the panel.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Micro USB cable
-- EVK-MIMXRT1015 board
-- Personal Computer
-- Adafruit TFT LCD shield w/Cap Touch
-
-Board settings
-==============
-There are different versions of Adafruit 2.8" TFT LCD shields. The shields marked
-v2.0 works directly with this project. For the other shields, please solder
-the center pin of IOREF pads to the 3.3V pad, and solder the pads 11, 12, and 13.
-See the link for details:
-https://community.nxp.com/t5/MCUXpresso-Community-Articles/Modifying-the-latest-Adafruit-2-8-quot-LCD-for-SDK-graphics/ba-p/1131104
-
-1. Attach the LCD shield to the board.
-2. Connect jumper J21
-(Note: If we do not connect jumper J21, LCD may not display correctly when debugging 
-because it can't get reset signal.)
-
-Prepare the Demo
-================
-1.  Connect a micro USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Build the project.
-3.  Download the program to the target board.
-4.  Reset the SoC and run the project.
-
-Running the demo
-================
-If this example runs correctly, the sample GUI is displayed.
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT595](../../_boards/evkmimxrt595/lvgl_examples/lvgl_examples_readme.md)
+- [EVK-MIMXRT685](../../_boards/evkmimxrt685/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-K22F](../../_boards/frdmk22f/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXA156](../../_boards/frdmmcxa156/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXA276](../../_boards/frdmmcxa276/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXN236](../../_boards/frdmmcxn236/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-MCXN947](../../_boards/frdmmcxn947/lvgl_examples/lvgl_examples_readme.md)
+- [FRDM-RW612](../../_boards/frdmrw612/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso51U68](../../_boards/lpcxpresso51u68/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso54628](../../_boards/lpcxpresso54628/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso54S018](../../_boards/lpcxpresso54s018/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso54S018M](../../_boards/lpcxpresso54s018m/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S06](../../_boards/lpcxpresso55s06/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S16](../../_boards/lpcxpresso55s16/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S28](../../_boards/lpcxpresso55s28/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S36](../../_boards/lpcxpresso55s36/lvgl_examples/lvgl_examples_readme.md)
+- [LPCXpresso55S69](../../_boards/lpcxpresso55s69/lvgl_examples/lvgl_examples_readme.md)
+- [MCX-N5XX-EVK](../../_boards/mcxn5xxevk/lvgl_examples/lvgl_examples_readme.md)
+- [MCX-N9XX-EVK](../../_boards/mcxn9xxevk/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT685-AUD-EVK](../../_boards/mimxrt685audevk/lvgl_examples/lvgl_examples_readme.md)
+- [MIMXRT700-EVK](../../_boards/mimxrt700evk/lvgl_examples/lvgl_examples_readme.md)
+- [RD-RW612-BGA](../../_boards/rdrw612bga/lvgl_examples/lvgl_examples_readme.md)

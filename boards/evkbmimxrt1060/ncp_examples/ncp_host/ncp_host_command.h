@@ -20,8 +20,9 @@
 #define WM_INVAILD_FAIL        2
 #define WM_INVAILD_STRING_FAIL 3
 
-#define MCU_DEVICE_STATUS_ACTIVE 1
-#define MCU_DEVICE_STATUS_SLEEP  2
+#define NCP_DEVICE_STATUS_ACTIVE    1
+#define NCP_DEVICE_STATUS_PRE_SLEEP 2
+#define NCP_DEVICE_STATUS_SLEEP     3
 
 /** Structure for registering CLI commands */
 struct ncp_host_cli_command

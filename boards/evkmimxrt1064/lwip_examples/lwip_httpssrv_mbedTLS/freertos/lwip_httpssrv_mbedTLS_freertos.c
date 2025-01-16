@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  * All rights reserved.
  *
  *
@@ -20,11 +20,8 @@
 #include <ctype.h>
 
 #include "ethernetif.h"
-#include "pin_mux.h"
 #include "board.h"
-#ifndef configMAC_ADDR
-#include "fsl_silicon_id.h"
-#endif
+#include "app.h"
 #include "fsl_phy.h"
 
 #include "lwip/netif.h"
@@ -48,66 +45,13 @@
 // dm #include "certs_buff.h"
 #include "mbedtls/certs.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* IP address configuration. */
-#ifndef configIP_ADDR0
-#define configIP_ADDR0 192
+/* Must be after include of app.h */
+#ifndef configMAC_ADDR
+#include "fsl_silicon_id.h"
 #endif
-#ifndef configIP_ADDR1
-#define configIP_ADDR1 168
-#endif
-#ifndef configIP_ADDR2
-#define configIP_ADDR2 0
-#endif
-#ifndef configIP_ADDR3
-#define configIP_ADDR3 102
-#endif
-
-/* Netmask configuration. */
-#ifndef configNET_MASK0
-#define configNET_MASK0 255
-#endif
-#ifndef configNET_MASK1
-#define configNET_MASK1 255
-#endif
-#ifndef configNET_MASK2
-#define configNET_MASK2 255
-#endif
-#ifndef configNET_MASK3
-#define configNET_MASK3 0
-#endif
-
-/* Gateway address configuration. */
-#ifndef configGW_ADDR0
-#define configGW_ADDR0 192
-#endif
-#ifndef configGW_ADDR1
-#define configGW_ADDR1 168
-#endif
-#ifndef configGW_ADDR2
-#define configGW_ADDR2 0
-#endif
-#ifndef configGW_ADDR3
-#define configGW_ADDR3 100
-#endif
-
-/* Ethernet configuration. */
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  BOARD_ENET0_PHY_ADDRESS
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -142,7 +86,6 @@ static bool cgi_get_varval(char *var_str, char *var_name, char *var_val, uint32_
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 
 static phy_handle_t phyHandle;
 
@@ -179,32 +122,6 @@ const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {{"config", ssi_config}, {0, 0}};
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {
-        .enableClkOutput    = true,
-        .enableClkOutput25M = false,
-        .loopDivider        = 1,
-    };
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
 static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param)
 {
 #define BUFF_SIZE sizeof("00\n00\n00\n")
@@ -554,6 +471,7 @@ static void netif_ipv6_callback(struct netif *cb_netif)
  */
 static void stack_init(void)
 {
+    status_t status;
 #if LWIP_IPV4
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
 #endif /* LWIP_IPV4 */
@@ -567,7 +485,8 @@ static void stack_init(void)
 #endif
     };
 
-    CRYPTO_InitHardware();
+    status = CRYPTO_InitHardware();
+    LWIP_ASSERT("CRYPTO_InitHardware() has failed\r\n", status == kStatus_Success);
 
     tcpip_init(NULL, NULL);
 
@@ -611,21 +530,21 @@ static void stack_init(void)
      * in case IPv6 address would become valid early.
      */
     LOCK_TCPIP_CORE();
-    LWIP_PLATFORM_DIAG(("\r\n***********************************************************"));
-    LWIP_PLATFORM_DIAG(("mbedTLS HTTPS Server example"));
-    LWIP_PLATFORM_DIAG(("***********************************************************"));
+    LWIP_PLATFORM_DIAG(("\r\n***********************************************************\r\n"));
+    LWIP_PLATFORM_DIAG(("mbedTLS HTTPS Server example\r\n"));
+    LWIP_PLATFORM_DIAG(("***********************************************************\r\n"));
 #if LWIP_IPV4
-    LWIP_PLATFORM_DIAG((" IPv4 Address     : %u.%u.%u.%u", ((u8_t *)&netif_ipaddr)[0], ((u8_t *)&netif_ipaddr)[1],
+    LWIP_PLATFORM_DIAG((" IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&netif_ipaddr)[0], ((u8_t *)&netif_ipaddr)[1],
                         ((u8_t *)&netif_ipaddr)[2], ((u8_t *)&netif_ipaddr)[3]));
-    LWIP_PLATFORM_DIAG((" IPv4 Subnet mask : %u.%u.%u.%u", ((u8_t *)&netif_netmask)[0], ((u8_t *)&netif_netmask)[1],
+    LWIP_PLATFORM_DIAG((" IPv4 Subnet mask : %u.%u.%u.%u\r\n", ((u8_t *)&netif_netmask)[0], ((u8_t *)&netif_netmask)[1],
                         ((u8_t *)&netif_netmask)[2], ((u8_t *)&netif_netmask)[3]));
-    LWIP_PLATFORM_DIAG((" IPv4 Gateway     : %u.%u.%u.%u", ((u8_t *)&netif_gw)[0], ((u8_t *)&netif_gw)[1],
+    LWIP_PLATFORM_DIAG((" IPv4 Gateway     : %u.%u.%u.%u\r\n", ((u8_t *)&netif_gw)[0], ((u8_t *)&netif_gw)[1],
                         ((u8_t *)&netif_gw)[2], ((u8_t *)&netif_gw)[3]));
 #endif /* LWIP_IPV4 */
 #if LWIP_IPV6
     print_ipv6_addresses(&netif);
 #endif /* LWIP_IPV6 */
-    LWIP_PLATFORM_DIAG(("***********************************************************"));
+    LWIP_PLATFORM_DIAG(("***********************************************************\r\n"));
     UNLOCK_TCPIP_CORE();
 }
 
@@ -660,10 +579,7 @@ static void http_server_socket_init(void)
 #endif
     /* Init HTTP Server.*/
     httpsrv_handle = HTTPSRV_init(&params);
-    if (httpsrv_handle == 0)
-    {
-        LWIP_PLATFORM_DIAG(("HTTPSRV_init() is Failed"));
-    }
+    LWIP_ASSERT("HTTPSRV_init() has failed\r\n", httpsrv_handle != 0);
 }
 
 /*!
@@ -684,20 +600,7 @@ static void main_thread(void *arg)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    /* Hardware reset PHY. */
-    BOARD_ENET_PHY_RESET;
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     /* create server thread in RTOS */
     if (sys_thread_new("main", main_thread, NULL, HTTPD_STACKSIZE, HTTPD_PRIORITY) == NULL)

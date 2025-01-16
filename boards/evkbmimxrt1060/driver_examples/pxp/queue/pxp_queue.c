@@ -6,22 +6,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
 #include "display_support.h"
 
-#include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP PXP
-
-/* Use RGB565 or XRGB8888 */
-#define USE_RGB565 0
-
 #define APP_IMG_WIDTH  DEMO_BUFFER_WIDTH
 #define APP_IMG_HEIGHT DEMO_BUFFER_HEIGHT
 
@@ -166,13 +159,9 @@ static dc_fb_info_t fbInfo;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nPXP command queue example start...\r\n");
 

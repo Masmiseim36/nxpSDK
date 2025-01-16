@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2015-2016 Intel Corporation
  * Copyright 2022 NXP
- * 
+ *
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -43,6 +43,10 @@ static const struct bt_data ad[] = {
 	BT_DATA_BYTES(BT_DATA_UUID128_ALL,
 		      0x95, 0xe2, 0xed, 0xeb, 0x1b, 0xa0, 0x39, 0x8a,
 		      0xdf, 0x4b, 0xd3, 0x8e, 0x00, 0x75, 0xc8, 0xa3),
+};
+
+static const struct bt_data sd[] = {
+	BT_DATA(BT_DATA_NAME_COMPLETE, CONFIG_BT_DEVICE_NAME, sizeof(CONFIG_BT_DEVICE_NAME) - 1),
 };
 
 /* Eddystone Service Variables */
@@ -113,7 +117,6 @@ enum {
 	EDS_SLOT_EID = sys_cpu_to_be16(BIT(3)),
 };
 
-STRUCT_PACKED_PRE
 struct eds_capabilities {
 	uint8_t version;
 	uint8_t slots;
@@ -121,7 +124,7 @@ struct eds_capabilities {
 	uint8_t adv_types;
 	uint16_t slot_types;
 	uint8_t tx_power;
-}STRUCT_PACKED_POST;
+}__packed;
 
 static struct eds_capabilities eds_caps = {
 	.version = EDS_VERSION,
@@ -165,7 +168,7 @@ static struct eds_slot eds_slots[NUMBER_OF_SLOTS] = {
 				      0x10, /* Eddystone-URL frame type */
 				      0x00, /* Calibrated Tx power at 0m */
 				      0x00, /* URL Scheme Prefix http://www. */
-				      'n', 'x', 'p', 
+				      'n', 'x', 'p',
                       0x00, /* .com */
                       'w', 'i', 'r', 'e', 'l', 'e', 's', 's')
 		},
@@ -435,8 +438,8 @@ static int eds_slot_restart(struct eds_slot *slot, uint8_t type)
 			addr = oob.addr;
 		}
 
-		err = bt_le_adv_start(BT_LE_ADV_CONN_NAME, ad, ARRAY_SIZE(ad),
-				      NULL, 0);
+		err = bt_le_adv_start(BT_LE_ADV_CONN, ad, ARRAY_SIZE(ad),
+				      sd, ARRAY_SIZE(sd));
 	} else {
 		size_t count = 1;
 
@@ -670,16 +673,16 @@ static void bt_ready(int err)
 		PRINTF("Bluetooth init failed (err %d)\n", err);
 		return;
 	}
-	if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
+	if (IS_ENABLED(CONFIG_BT_SETTINGS))
 	{
 		settings_load();
 	}
 	PRINTF("Bluetooth initialized\n");
-    
-    bt_conn_cb_register(&conn_callbacks);
-    
+
+	bt_conn_cb_register(&conn_callbacks);
+
 	/* Start advertising */
-	err = bt_le_adv_start(BT_LE_ADV_CONN_NAME, ad, ARRAY_SIZE(ad), NULL, 0);
+	err = bt_le_adv_start(BT_LE_ADV_CONN, ad, ARRAY_SIZE(ad), sd, ARRAY_SIZE(sd));
 	if (err) {
 		PRINTF("Advertising failed to start (err %d)\n", err);
 		return;

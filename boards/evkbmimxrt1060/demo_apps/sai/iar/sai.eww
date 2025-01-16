@@ -5,6 +5,14 @@
       <name>all</name>
       <member>
         <project>sai</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>sai</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>sai</project>
         <configuration>debug</configuration>
       </member>
       <member>
@@ -19,10 +27,16 @@
         <project>sai</project>
         <configuration>release</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_debug</name>
       <member>
         <project>sai</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
       <member>
         <project>sai</project>
         <configuration>flexspi_nor_release</configuration>
@@ -54,20 +68,6 @@
       <member>
         <project>sai</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_debug</name>
-      <member>
-        <project>sai</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_release</name>
-      <member>
-        <project>sai</project>
-        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

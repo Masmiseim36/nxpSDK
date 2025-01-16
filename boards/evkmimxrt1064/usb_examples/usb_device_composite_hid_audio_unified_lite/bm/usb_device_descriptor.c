@@ -87,8 +87,13 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                            SetConfiguration() request to select this configuration */
     0x00U,                                              /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
-        (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
-        (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
+#if defined(USB_DEVICE_CONFIG_SELF_POWER) && (USB_DEVICE_CONFIG_SELF_POWER > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
+#endif
+#if defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT) |
+#endif
+     0U,
     /* Configuration characteristics
        D7: Reserved (set to one)
        D6: Self-powered
@@ -127,7 +132,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_HEADER, /* HEADER descriptor subtype  */
     0x00U, 0x02U, /* Audio Device compliant to the USB Audio specification version 2.00  */
     0x04,         /* Undefied(0x00) : Indicating the primary use of this audio function   */
-    0x6F, 0x00U,  /* Total number of bytes returned for the class-specific
+    0x77, 0x00U,  /* Total number of bytes returned for the class-specific
                      AudioControl interface descriptor. Includes the combined length of this descriptor header and all
                      Unit and Terminal descriptors.   */
     0x00U,        /* D1..0: Latency Control  */
@@ -520,8 +525,13 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                             SetConfiguration() request to select this configuration */
     0x00U,                               /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
-        (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
-        (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
+#if defined(USB_DEVICE_CONFIG_SELF_POWER) && (USB_DEVICE_CONFIG_SELF_POWER > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
+#endif
+#if defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT) |
+#endif
+     0U,
     /* Configuration characteristics
        D7: Reserved (set to one)
        D6: Self-powered

@@ -1,75 +1,20 @@
-Overview
-========
-The nor flash demo application demonstrates the use of nor flash component to erase, program, and read an
-external flash device.
+# flash_component_nor_flexspi
 
-SDK version
-===========
-- Version: 2.16.000
+## Overview
 
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
+nor flash demo shows the use of nor flash component to erase, program, and read
+an external nor flash device.
 
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKB board
-- Personal Computer
-
-Board settings
-==============
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-The log below shows the output of the hello world demo in the terminal window:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-***NOR Flash Component Demo Start!***
-
-
-***NOR Flash Page 0 Read/Write Success!***
-
-
-***NOR Flash Page 1 Read/Write Success!***
-
-
-***NOR Flash Page 2 Read/Write Success!***
-
-
-***NOR Flash Page 3 Read/Write Success!***
-
-.....
-
-
-***NOR Flash Page 12 Read/Write Success!***
-
-
-***NOR Flash Page 13 Read/Write Success!***
-
-
-***NOR Flash Page 14 Read/Write Success!***
-
-
-***NOR Flash Page 15 Read/Write Success!***
-
-***NOR Flash All Pages Read/Write Success!***
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Known issue
-The MCUX release target and armgcc flexspi_nor_release run fail.
+## Supported Boards
+- [EVKB-IMXRT1050](../../../../_boards/evkbimxrt1050/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [EVK-MIMXRT1010](../../../../_boards/evkmimxrt1010/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [EVK-MIMXRT1015](../../../../_boards/evkmimxrt1015/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [EVK-MIMXRT1020](../../../../_boards/evkmimxrt1020/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [MIMXRT1024-EVK](../../../../_boards/evkmimxrt1024/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [MIMXRT1040-EVK](../../../../_boards/evkmimxrt1040/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [MIMXRT1180-EVK](../../../../_boards/evkmimxrt1180/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [FRDM-RW612](../../../../_boards/frdmrw612/component_examples/flash_component/flexspi_nor/example_board_readme.md)
+- [RD-RW612-BGA](../../../../_boards/rdrw612bga/component_examples/flash_component/flexspi_nor/example_board_readme.md)

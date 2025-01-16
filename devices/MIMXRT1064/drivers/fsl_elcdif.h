@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 NXP
+ * Copyright 2017-2024 NXP
  * All rights reserved.
  *
  *
@@ -27,7 +27,7 @@
 /*! @name Driver version */
 /*! @{ */
 /*! @brief eLCDIF driver version */
-#define FSL_ELCDIF_DRIVER_VERSION (MAKE_VERSION(2, 0, 6))
+#define FSL_ELCDIF_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*! @} */
 
 /* All IRQ flags in CTRL1 register. */
@@ -294,6 +294,17 @@ typedef enum _elcdif_lut
     kELCDIF_Lut1,     /*!< LUT 1. */
 } elcdif_lut_t;
 
+/*! @brief eLCDIF pixel component order. */
+typedef enum _elcdif_pixel_component_order
+{
+    kELCDIF_PixelComponentOrderRGB = 0, /*!< Input order RGB. */
+    kELCDIF_PixelComponentOrderRBG = 1, /*!< Input order RBG. */
+    kELCDIF_PixelComponentOrderGBR = 2, /*!< Input order GBR. */
+    kELCDIF_PixelComponentOrderGRB = 3, /*!< Input order GRB. */
+    kELCDIF_PixelComponentOrderBRG = 4, /*!< Input order BRG. */
+    kELCDIF_PixelComponentOrderBGR = 5, /*!< Input order BGR. */
+} elcdif_pixel_component_order_t;
+
 /*******************************************************************************
  * APIs
  ******************************************************************************/
@@ -441,6 +452,14 @@ static inline void ELCDIF_EnablePxpHandShake(LCDIF_Type *base, bool enable)
     }
 }
 #endif
+
+/*!
+ * @brief Set the order of the RGB components of each pixel in lines.
+ *
+ * @param base eLCDIF peripheral base address.
+ * @param order The pixel component order
+ */
+void ELCDIF_SetPixelComponentOrder(LCDIF_Type *base, elcdif_pixel_component_order_t order);
 
 /*! @} */
 

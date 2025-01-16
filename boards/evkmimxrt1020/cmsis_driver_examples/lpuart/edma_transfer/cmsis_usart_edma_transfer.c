@@ -6,17 +6,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART                    Driver_USART1
-#define EXAMPLE_USART_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_USART_DMA_BASEADDR    DMA0
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -44,11 +39,6 @@ volatile bool rxOnGoing                                              = false;
  * Code
  ******************************************************************************/
 
-uint32_t LPUART1_GetFreq(void)
-{
-    return BOARD_DebugConsoleSrcFreq();
-}
-
 /* USART  callback */
 void USART_Callback(uint32_t event)
 {
@@ -70,14 +60,7 @@ void USART_Callback(uint32_t event)
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_BootClockRUN();
-
-    /* DMAMux init and EDMA init */
-    DMAMUX_Init(EXAMPLE_USART_DMAMUX_BASEADDR);
-    edma_config_t edmaConfig = {0};
-    EDMA_GetDefaultConfig(&edmaConfig);
-    EDMA_Init(EXAMPLE_USART_DMA_BASEADDR, &edmaConfig);
+    BOARD_InitHardware();
     DEMO_USART.Initialize(USART_Callback);
     DEMO_USART.PowerControl(ARM_POWER_FULL);
 

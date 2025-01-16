@@ -9,9 +9,8 @@
 #include <stdlib.h>
 /*${standard_header_anchor}*/
 #include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
 #include "board.h"
 
 #include "usb_device_config.h"
@@ -53,6 +52,12 @@ void USB_DeviceIsrEnable(void);
 void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if !((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+void USB_DeviceHsPhyChirpIssueWorkaround(void);
+void USB_DeviceDisconnected(void);
+#endif
+#endif
 void BOARD_DbgConsole_Deinit(void);
 void BOARD_DbgConsole_Init(void);
 usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, void *param);
@@ -120,58 +125,17 @@ volatile static uint8_t s_comOpen            = 0;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_OTG1_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(s_cdcVcom.deviceHandle);
-}
-
-void USB_OTG2_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(s_cdcVcom.deviceHandle);
-}
-
-void USB_DeviceClockInit(void)
-{
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-}
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
-{
-    USB_DeviceEhciTaskFunction(deviceHandle);
-}
-#endif
 /*!
  * @brief CDC class specific callback function.
  *
- * This function handles the CDC class specific requests.
+ * This function handles the CDC class specific requests. For the current case, device is waiting for data from host.
+ * Once device receives data, kUSB_DeviceCdcEventRecvResponse event will be asserted. In kUSB_DeviceCdcEventRecvResponse
+ * event, the received data lenght is saved to s_recvSize. If s_recvSize is 0, device will call USB_DeviceCdcAcmRecv to
+ * schedule buffer for next receiving event directly and it means there is no data to echo to host. If s_recvSize is not
+ * 0, USB_DeviceCdcVcomTask will copy the received data into s_currSendBuf then send back to host. Once data is echoed
+ * back completely, USB_DeviceCdcAcmRecv is called in kUSB_DeviceCdcEventSendResponse event to be ready to receive the
+ * next data from host. Instead, USB_DeviceCdcAcmRecv also can be called in kUSB_DeviceCdcEventRecvResponse event as
+ * long as the received data is handled completely.
  *
  * @param handle          The CDC ACM class handle.
  * @param event           The CDC ACM class event type.
@@ -210,7 +174,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 if ((epCbParam->buffer != NULL) || ((epCbParam->buffer == NULL) && (epCbParam->length == 0)))
                 {
                     /* User: add your own code for send complete event */
-                    /* Schedule buffer for next receive event */
+                    /* In this case, the received data has been sent back to host, then now schedule buffer for next
+                       receiving event. Note that USB_DeviceCdcAcmRecv also can be called in
+                       kUSB_DeviceCdcEventRecvResponse as long as we make sure the received data can be handled properly
+                     */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf,
                                                  g_UsbDeviceCdcVcomDicEndpoints[1].maxPacketSize);
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
@@ -230,6 +197,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         {
             if ((1U == s_cdcVcom.attach) && (1U == s_cdcVcom.startTransactions))
             {
+                /* Save the received data length, the data will be handled in USB_DeviceCdcVcomTask. Certainly, the
+                   received data also can be handled by any other user's application. Meanwhile, once complete handling
+                   the received data then we can also call USB_DeviceCdcAcmRecv here to be ready to receive the next
+                   data.  */
                 s_recvSize = epCbParam->length;
                 error      = kStatus_USB_Success;
 
@@ -239,9 +210,10 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 s_waitForDataReceive = 0;
                 USB0->INTEN |= USB_INTEN_SOFTOKEN_MASK;
 #endif
+                /* There is no data to echo to host (host sends 0 length data packet), now directly schedule buffer for
+                 * next receiving event */
                 if (0U == s_recvSize)
                 {
-                    /* Schedule buffer for next receive event */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf,
                                                  g_UsbDeviceCdcVcomDicEndpoints[1].maxPacketSize);
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
@@ -365,9 +337,9 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             acmInfo->serialStateBuf[1] = USB_DEVICE_CDC_NOTIF_SERIAL_STATE; /* bNotification */
             acmInfo->serialStateBuf[2] = 0x00;                              /* wValue */
             acmInfo->serialStateBuf[3] = 0x00;
-            acmInfo->serialStateBuf[4] = 0x00; /* wIndex */
+            acmInfo->serialStateBuf[4] = 0x00;                              /* wIndex */
             acmInfo->serialStateBuf[5] = 0x00;
-            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
+            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE;                  /* wLength */
             acmInfo->serialStateBuf[7] = 0x00;
             /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = acmReqParam->interfaceIndex;
@@ -446,6 +418,16 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             s_cdcVcom.attach               = 0;
             s_cdcVcom.currentConfiguration = 0U;
             error                          = kStatus_USB_Success;
+
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if !((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+            /* The work-around is used to fix the HS device Chirping issue.
+             * Please refer to the implementation for the detail information.
+             */
+            USB_DeviceHsPhyChirpIssueWorkaround();
+#endif
+#endif
+
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -456,6 +438,18 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 #endif
         }
         break;
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
+        case kUSB_DeviceEventDetach:
+        {
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if !((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+            USB_DeviceDisconnected();
+#endif
+#endif
+            error = kStatus_USB_Success;
+        }
+        break;
+#endif
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
@@ -729,18 +723,14 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_ConfigMPU();
+    BOARD_InitHardware();
 
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    if (xTaskCreate(APPTask,                                       /* pointer to the task                      */
-                    s_appName,                                     /* task name for kernel awareness debugging */
-                    APP_TASK_STACK_SIZE / sizeof(portSTACK_TYPE),  /* task stack size                          */
-                    &s_cdcVcom,                                    /* optional task startup argument           */
-                    4,                                             /* initial priority                         */
-                    &s_cdcVcom.applicationTaskHandle               /* optional task handle to create           */
+    if (xTaskCreate(APPTask,                                      /* pointer to the task                      */
+                    s_appName,                                    /* task name for kernel awareness debugging */
+                    APP_TASK_STACK_SIZE / sizeof(portSTACK_TYPE), /* task stack size                          */
+                    &s_cdcVcom,                                   /* optional task startup argument           */
+                    4,                                            /* initial priority                         */
+                    &s_cdcVcom.applicationTaskHandle              /* optional task handle to create           */
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");

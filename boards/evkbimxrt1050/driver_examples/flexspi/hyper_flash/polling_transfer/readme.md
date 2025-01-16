@@ -1,5 +1,6 @@
-Overview
-========
+# flexspi_hyper_flash_polling_transfer
+
+## Overview
 The flexspi_hyper_flash_polling_transfer example shows how to use flexspi driver with polling:
 
 In this example, flexspi will send data and operate the external Hyper flash connected with FLEXSPI. Some simple flash command will
@@ -8,68 +9,8 @@ Example will first configures hyper flash to enter ASO mode, read ID-CFI paramet
 Second, the example erase a sector in flash, check if the erase is successful and program the same sector, then read back
 the sector data. At last check if the data read back is correct.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
-
-Board settings
-==============
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the example runs successfully, you can see the similar information from the terminal as below.
-
-For flexspi_nor targets, the result is:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FLEXSPI hyperflash example started!
-Found the HyperFlash by CFI
-loop nummber: 0
-loop nummber: 1
-loop nummber: 2
-loop nummber: 3
-loop nummber: 4
-loop nummber: 5
-FLEXSPI hyperflash example successfully. 
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-For ram/sdram targets, the result is:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FLEXSPI hyperflash example started!
-Found the HyperFlash by CFI
-Erasing whole chip over FlexSPI...
-Erase finished !
-loop nummber: 0
-loop nummber: 1
-loop nummber: 2
-loop nummber: 3
-loop nummber: 4
-loop nummber: 5
-FLEXSPI hyperflash example successfully. 
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Supported Boards
+- [EVKB-IMXRT1050](../../../../_boards/evkbimxrt1050/driver_examples/flexspi/hyper_flash/polling_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../../../_boards/evkbmimxrt1060/driver_examples/flexspi/hyper_flash/polling_transfer/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../../../_boards/evkcmimxrt1060/driver_examples/flexspi/hyper_flash/polling_transfer/example_board_readme.md)
+- [EVK-MIMXRT1064](../../../../_boards/evkmimxrt1064/driver_examples/flexspi/hyper_flash/polling_transfer/example_board_readme.md)

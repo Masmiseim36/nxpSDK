@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#if (VIT_PROC == 1)
+
 #include <stddef.h>
 #include <string.h>
 #include <math.h>
@@ -515,3 +517,4 @@ VIT_Initialize_T VIT_Initialize_func = VIT_Initialize;
 VIT_Execute_T VIT_Execute_func       = VIT_Execute;
 VIT_Deinit_T VIT_Deinit_func         = VIT_Deinit;
 VIT_Language_T Vit_Language;
+#endif

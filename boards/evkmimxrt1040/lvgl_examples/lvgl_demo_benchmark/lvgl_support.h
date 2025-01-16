@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, 2023 NXP
+ * Copyright 2021, 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,13 +13,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PANEL_RK043FN02H  0 /* RK043FN02H-CT */
-#define DEMO_PANEL_RK043FN66HS 1 /* RK043FN66HS-CTG */
+#define LVGL_PANEL_RK043FN02H  0 /* RK043FN02H-CT */
+#define LVGL_PANEL_RK043FN66HS 1 /* RK043FN66HS-CTG */
 
 /* @TEST_ANCHOR */
 
-#ifndef DEMO_PANEL
-#define DEMO_PANEL DEMO_PANEL_RK043FN66HS
+#ifndef LVGL_PANEL
+#define LVGL_PANEL LVGL_PANEL_RK043FN66HS
 #endif
 
 #define LCD_WIDTH  480
@@ -36,6 +36,7 @@ extern "C" {
 void lv_port_pre_init(void);
 void lv_port_disp_init(void);
 void lv_port_indev_init(void);
+void DEMO_CleanInvalidateCacheByAddr(void * addr, int32_t dsize);
 
 #if defined(__cplusplus)
 }

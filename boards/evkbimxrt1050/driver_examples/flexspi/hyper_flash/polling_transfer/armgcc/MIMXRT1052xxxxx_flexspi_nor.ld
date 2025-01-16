@@ -93,6 +93,9 @@ SECTIONS
         *_aeabi_ldivmod.o
         *_aeabi_uldivmod.o
         *_dvmd_tls.o
+        */fsl_memcpy.S.obj
+        */lib_a-memcmp.obj
+        */lib_a-memset.o.obj
     ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
@@ -103,6 +106,9 @@ SECTIONS
         *_aeabi_ldivmod.o
         *_aeabi_uldivmod.o
         *_dvmd_tls.o
+        */fsl_memcpy.S.obj
+        */lib_a-memcmp.obj
+        */lib_a-memset.o.obj
     ) .text*)                /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
@@ -201,6 +207,9 @@ SECTIONS
     *_aeabi_ldivmod.o
     *_aeabi_uldivmod.o
     *_dvmd_tls.o
+    */fsl_memcpy.S.obj
+    */lib_a-memcmp.obj
+    */lib_a-memset.o.obj
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))

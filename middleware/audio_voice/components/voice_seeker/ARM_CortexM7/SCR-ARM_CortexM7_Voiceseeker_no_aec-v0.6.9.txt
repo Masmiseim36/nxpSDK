@@ -1,0 +1,55 @@
+NXP Software Content Register
+
+Release - VoiceSeeker_v0.6.9
+
+Outgoing License: LA_OPT_NXP_Software_License v56 April 2024 - Additional distribution license granted - Section 2.3 applies
+License File:     LICENSE.txt
+
+Release tag: v0.6.9
+
+
+#### Voiceseeker no AEC package #######
+Outgoing License : LA_OPT_NXP_Software_License v56 April 2024 - Additional distribution license granted - Section 2.3 applies
+License file : LICENSE.txt
+Author: NXP
+Format: Voiceseeker no AEC package
+
+
+#### Package content #######
+
+Name:                       public source files
+Version:                    0.6.9
+Outgoing License:           BSD-3
+License File:               ./COPYING-BSD-3.txt
+Package Category:           header files, application files
+Type of Content:            binary and headers
+Description and comments:   public source files
+Release Location:           ./include; ./rdsp_utilities_public
+Origin:                     NXP
+
+--------------------------------------------
+
+Name:                       libvoiceseeker_no_aec.a
+Version:                    0.6.9
+Outgoing License:           LA_OPT_NXP_Software_License v56 April 2024 - Additional distribution license granted - Section 2.3 applies
+License File:               ./LICENSE.txt
+Package Category:           library
+Type of Content:            binary and headers
+Description and comments:   Multi-microphone audio-front-end with acoustic echo cancellation.
+Release Location:           ./lib/libvoiceseeker_no_aec.a
+
+Origin:                     NXP (proprietary)
+                            ARM CMSIS 5.0.4 (Apache-2.0) - https://github.com/ARM-software/CMSIS_5
+
+--------------------------------------------
+
+Name:                       ARM CMSIS
+Version:                    5.0.4
+Outgoing License:           Apache v2.0
+License File:               ./licenses/Apache-CMSIS.txt
+Package Category:           library
+Type of Content:            object code
+Description and comments:   Used for ARM Cortex-M accelerated math.
+Release Location:           ./lib/libvoiceseeker_no_aec.a
+Origin:                     https://github.com/ARM-software/CMSIS_5
+

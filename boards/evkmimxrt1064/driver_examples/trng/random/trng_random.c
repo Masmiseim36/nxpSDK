@@ -9,16 +9,14 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_trng.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define TRNG0 TRNG
 #define TRNG_EXAMPLE_RANDOM_NUMBER 10
 
 /*******************************************************************************
@@ -45,10 +43,7 @@ int main(void)
     uint32_t data[TRNG_EXAMPLE_RANDOM_NUMBER];
 
     /* Init hardware*/
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("TRNG Peripheral Driver Example\r\n");
 

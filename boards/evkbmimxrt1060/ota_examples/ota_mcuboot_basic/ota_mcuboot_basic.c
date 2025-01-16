@@ -9,9 +9,9 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_shell.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "clock_config.h"
+#include "app.h"
 
 #include "mcuboot_app_support.h"
 #include "mflash_drv.h"
@@ -75,7 +75,6 @@ static hashctx_t sha256_xmodem_ctx;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 
 static void hexdump(const void *src, size_t size)
 {
@@ -450,10 +449,7 @@ int main(void)
     s_shellHandle = &s_shellHandleBuffer[0];
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
     
     ret = mflash_drv_init();
     if (ret)

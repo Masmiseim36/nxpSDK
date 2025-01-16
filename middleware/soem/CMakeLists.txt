@@ -1,113 +1,121 @@
-cmake_minimum_required(VERSION 3.9)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules")
-project(SOEM
-    DESCRIPTION "Simple Open EtherCAT Master"
-    VERSION 1.4.0
-    LANGUAGES C)
+# This is NXP version of soem CMakeLists.txt, the soem upstream version is not used.
 
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  # Default to installing in SOEM source directory
-  set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_LIST_DIR}/install)
+if (CONFIG_MCUX_COMPONENT_middleware.soem)
+    mcux_add_include(
+        PROJECT_BASE_PATH soem
+        INCLUDES osal
+                 oshw/mcux-sdk
+                 soem
+    )
+
 endif()
 
-set(SOEM_INCLUDE_INSTALL_DIR include/soem)
-set(SOEM_LIB_INSTALL_DIR lib)
+if (CONFIG_MCUX_COMPONENT_middleware.soem.enet)
+    mcux_add_include(
+        INCLUDES oshw/mcux-sdk
+        INCLUDES oshw/mcux-sdk/enet
+    )
+    mcux_add_source(
+        SOURCES
+            oshw/mcux-sdk/nicdrv.c
+            oshw/mcux-sdk/enet/soem_enet.h
+            oshw/mcux-sdk/enet/enet.c
+            oshw/mcux-sdk/enet/enet.h
+    )
+endif ()
 
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-  set(BUILD_TESTS TRUE)
-else()
-  message(STATUS "SOEM: not building tests when built as dependency")
-  set(BUILD_TESTS FALSE)
-endif()
+if (CONFIG_MCUX_COMPONENT_middleware.soem.netc)
+    mcux_add_include(
+        INCLUDES oshw/mcux-sdk
+        INCLUDES oshw/mcux-sdk/netc_ep
+    )
+    mcux_add_source(
+        SOURCES
+            oshw/mcux-sdk/nicdrv.c
+            oshw/mcux-sdk/netc_ep/soem_netc_ep.h
+            oshw/mcux-sdk/netc_ep/netc_ep.c
+            oshw/mcux-sdk/netc_ep/netc_ep.h
+    )
+endif ()
 
-if(WIN32)
-  set(OS "win32")
-  include_directories(oshw/win32/wpcap/Include)
-  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    link_directories(${CMAKE_CURRENT_LIST_DIR}/oshw/win32/wpcap/Lib/x64)
-  elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    link_directories(${CMAKE_CURRENT_LIST_DIR}/oshw/win32/wpcap/Lib)
-  endif()
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /D _CRT_SECURE_NO_WARNINGS")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  /WX")
-  set(OS_LIBS wpcap.lib Packet.lib Ws2_32.lib Winmm.lib)
-elseif(UNIX AND NOT APPLE)
-  set(OS "linux")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
-  set(OS_LIBS pthread rt)
-elseif(APPLE)
-  # This must come *before* linux or MacOSX will identify as Unix.
-  set(OS "macosx")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
-  set(OS_LIBS pthread pcap)
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "rt-kernel")
-  set(OS "rtk")
-  message(STATUS "ARCH is ${ARCH}")
-  message(STATUS "BSP is ${BSP}")
-  include_directories(oshw/${OS}/${ARCH})
-  file(GLOB OSHW_EXTRA_SOURCES oshw/${OS}/${ARCH}/*.c)
-  set(OSHW_SOURCES "${OS_HW_SOURCES} ${OSHW_ARCHSOURCES}")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-but-set-variable")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-function")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-format")
-  set(OS_LIBS "-Wl,--start-group -l${BSP} -l${ARCH} -lkern -ldev -lsio -lblock -lfs -lusb -llwip -leth -li2c -lrtc -lcan -lnand -lspi -lnor -lpwm -ladc -ltrace -lc -lm -Wl,--end-group")
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "rtems")
-  message(STATUS "Building for RTEMS")
-  set(OS "rtems")
-  set(SOEM_LIB_INSTALL_DIR ${LIB_DIR})
-  set(BUILD_TESTS FALSE)
-endif()
+if (CONFIG_MCUX_COMPONENT_middleware.soem.bm)
+    mcux_add_include(
+        INCLUDES soem
+        INCLUDES oshw/mcux-sdk
+        INCLUDES osal
+        INCLUDES osal/baremetal
+    )
+    mcux_add_source(
+        SOURCES
+            soem/ethercat.h
+            soem/ethercatbase.c
+            soem/ethercatbase.h
+            soem/ethercatcoe.c
+            soem/ethercatcoe.h
+            soem/ethercatconfig.c
+            soem/ethercatconfig.h
+            soem/ethercatconfiglist.h
+            soem/ethercatdc.c
+            soem/ethercatdc.h
+            soem/ethercateoe.c
+            soem/ethercateoe.h
+            soem/ethercatfoe.c
+            soem/ethercatfoe.h
+            soem/ethercatmain.c
+            soem/ethercatmain.h
+            soem/ethercatprint.c
+            soem/ethercatprint.h
+            soem/ethercatsoe.c
+            soem/ethercatsoe.h
+            soem/ethercattype.h
+            oshw/mcux-sdk/nicdrv.h
+            oshw/mcux-sdk/oshw.c
+            oshw/mcux-sdk/oshw.h
+            oshw/mcux-sdk/soem_port.c
+            oshw/mcux-sdk/soem_port.h
+            osal/osal.h
+            osal/baremetal/osal.c
+            osal/baremetal/osal_defs.h
+    )
+endif ()
 
-message(STATUS "OS is ${OS}")
-
-file(GLOB SOEM_SOURCES soem/*.c)
-file(GLOB OSAL_SOURCES osal/${OS}/*.c)
-file(GLOB OSHW_SOURCES oshw/${OS}/*.c)
-
-file(GLOB SOEM_HEADERS soem/*.h)
-file(GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
-file(GLOB OSHW_HEADERS oshw/${OS}/*.h)
-
-add_library(soem STATIC
-  ${SOEM_SOURCES}
-  ${OSAL_SOURCES}
-  ${OSHW_SOURCES}
-  ${OSHW_EXTRA_SOURCES})
-target_link_libraries(soem ${OS_LIBS})
-
-target_include_directories(soem PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/soem>
-  $<INSTALL_INTERFACE:include/soem>)
-
-target_include_directories(soem PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/osal>
-  $<INSTALL_INTERFACE:include/soem>)
-
-target_include_directories(soem PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/osal/${OS}>
-  $<INSTALL_INTERFACE:include/soem>)
-
-target_include_directories(soem
-  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/oshw/${OS}>
-  $<INSTALL_INTERFACE:include/soem>
-  )
-
-message(STATUS "LIB_DIR: ${SOEM_LIB_INSTALL_DIR}")
-
-install(TARGETS soem EXPORT soemConfig DESTINATION ${SOEM_LIB_INSTALL_DIR})
-
-install(EXPORT soemConfig DESTINATION share/soem/cmake)
-
-install(FILES
-  ${SOEM_HEADERS}
-  ${OSAL_HEADERS}
-  ${OSHW_HEADERS}
-  DESTINATION ${SOEM_INCLUDE_INSTALL_DIR})
-
-if(BUILD_TESTS) 
-  add_subdirectory(test/simple_ng)
-  add_subdirectory(test/linux/slaveinfo)
-  add_subdirectory(test/linux/eepromtool)
-  add_subdirectory(test/linux/simple_test)
-endif()
+if (CONFIG_MCUX_COMPONENT_middleware.soem.freertos)
+    mcux_add_include(
+        INCLUDES soem
+        INCLUDES oshw/mcux-sdk
+        INCLUDES osal
+        INCLUDES osal/freertos
+    )
+    mcux_add_source(
+        SOURCES
+            soem/ethercat.h
+            soem/ethercatbase.c
+            soem/ethercatbase.h
+            soem/ethercatcoe.c
+            soem/ethercatcoe.h
+            soem/ethercatconfig.c
+            soem/ethercatconfig.h
+            soem/ethercatconfiglist.h
+            soem/ethercatdc.c
+            soem/ethercatdc.h
+            soem/ethercateoe.c
+            soem/ethercateoe.h
+            soem/ethercatfoe.c
+            soem/ethercatfoe.h
+            soem/ethercatmain.c
+            soem/ethercatmain.h
+            soem/ethercatprint.c
+            soem/ethercatprint.h
+            soem/ethercatsoe.c
+            soem/ethercatsoe.h
+            soem/ethercattype.h
+            oshw/mcux-sdk/nicdrv.h
+            oshw/mcux-sdk/oshw.c
+            oshw/mcux-sdk/oshw.h
+            oshw/mcux-sdk/soem_port.c
+            oshw/mcux-sdk/soem_port.h
+            osal/osal.h
+            osal/freertos/osal.c
+            osal/freertos/osal_defs.h
+    )
+endif ()

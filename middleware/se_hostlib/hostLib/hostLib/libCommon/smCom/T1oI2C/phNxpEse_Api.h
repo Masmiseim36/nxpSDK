@@ -70,5 +70,6 @@ void *phNxpEse_memalloc(uint32_t size);
 void phNxpEse_free(void* ptr);
 ESESTATUS phNxpEse_getAtr(void* conn_ctx, phNxpEse_data *pRsp);
 ESESTATUS phNxpEse_getCip(void* conn_ctx, phNxpEse_data *pRsp);
+ESESTATUS phNxpEse_deepPwrDown(void* conn_ctx);
 /** @} */
 #endif /* _PHNXPESE_API_H_ */

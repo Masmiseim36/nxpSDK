@@ -20,10 +20,9 @@
 
 #include "usb_disk_adapter.h"
 #include "fsl_device_registers.h"
+#include "clock_config.h"
 #include "fsl_debug_console.h"
 #include "composite.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
@@ -32,7 +31,6 @@
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
-#include "sdmmc_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -107,60 +105,6 @@ usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void USB_OTG1_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_composite.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-
-void USB_OTG2_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_composite.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-
-void USB_DeviceClockInit(void)
-{
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
-
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-}
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
-#if USB_DEVICE_CONFIG_USE_TASK
-void USB_DeviceTaskFn(void *deviceHandle)
-{
-    USB_DeviceEhciTaskFunction(deviceHandle);
-}
-#endif
 /*!
  * @brief USB device callback function.
  *
@@ -405,12 +349,7 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_ConfigMPU();
-
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_USB_Disk_Config(USB_DEVICE_INTERRUPT_PRIORITY);
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     APPInit();
 

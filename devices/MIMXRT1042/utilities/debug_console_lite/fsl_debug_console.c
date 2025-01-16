@@ -1,10 +1,7 @@
 /*
- * Copyright 2017-2018, 2020, 2022NXP
- * All rights reserved.
- *
+ * Copyright 2017-2018, 2020, 2022 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- *
  */
 
 #include <stdarg.h>

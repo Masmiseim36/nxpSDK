@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2023 NXP
+ * Copyright 2016-2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -9,6 +9,10 @@
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
 #include "fsl_cache.h"
 #endif /* FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL */
+#if defined(FSL_FEATURE_ENET_HAS_RSTCTL) && (FSL_FEATURE_ENET_HAS_RSTCTL > 0)
+#include "fsl_reset.h"
+#endif /* FSL_FEATURE_ENET_HAS_RSTCTL */
+#include <stddef.h>
 
 /*******************************************************************************
  * Definitions
@@ -25,6 +29,12 @@
 #define ENET_MDC_FREQUENCY 2500000U
 /*! @brief NanoSecond in one second. */
 #define ENET_NANOSECOND_ONE_SECOND 1000000000U
+
+#if defined(ENET_RSTS_N)
+#define ENET_RESETS_ARRAY ENET_RSTS_N
+#elif defined(ENET_RSTS)
+#define ENET_RESETS_ARRAY ENET_RSTS
+#endif
 
 /*! @brief Define the ENET ring/class bumber . */
 enum
@@ -47,6 +57,14 @@ const clock_ip_name_t s_enetClock[] = ENET_CLOCKS;
 const clock_ip_name_t s_enetExtraClock[] = ENET_EXTRA_CLOCKS;
 #endif
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
+
+#if defined(FSL_FEATURE_ENET_HAS_RSTCTL) && (FSL_FEATURE_ENET_HAS_RSTCTL > 0)
+#if defined(ENET_RESETS_ARRAY)
+static const reset_ip_name_t s_enetResets[] = ENET_RESETS_ARRAY;
+#else
+#error "FSL_FEATURE_ENET_HAS_RSTCTL is set but reset names are not provided."
+#endif /* ENET_RESETS_ARRAY */
+#endif /* FSL_FEATURE_ENET_HAS_RSTCTL */
 
 /*! @brief Pointers to enet transmit IRQ number for each instance. */
 static const IRQn_Type s_enetTxIrqId[] = ENET_Transmit_IRQS;
@@ -167,7 +185,7 @@ uint32_t ENET_GetInstance(ENET_Type *base)
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < ARRAY_SIZE(s_enetBases); instance++)
     {
-        if (s_enetBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(s_enetBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -378,6 +396,18 @@ void ENET_Deinit(ENET_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+#if defined(FSL_FEATURE_ENET_HAS_RSTCTL) && (FSL_FEATURE_ENET_HAS_RSTCTL > 0)
+void ENET_ResetHardware(void)
+{
+    size_t reset;
+
+    for (reset = 0; reset < ARRAY_SIZE(s_enetResets); reset++)
+    {
+        RESET_PeripheralReset(s_enetResets[reset]);
+    }
+}
+#endif /* FSL_FEATURE_ENET_HAS_RSTCTL */
+
 #if FSL_FEATURE_ENET_QUEUE > 1
 void ENET_SetRxISRHandler(ENET_Type *base, enet_isr_ring_t ISRHandler)
 {
@@ -573,6 +603,17 @@ static void ENET_SetMacController(ENET_Type *base,
         {
             ecr &= ~ENET_ECR_SPEED_MASK;
         }
+
+        /* Make sure RGMII mode is (temporarily) disabled.
+         * The ENET_RCR_RGMII_EN bit must not be set before changing
+         * the ENET_ECR_SPEED bit, otherwise there is a chance of ENET IP
+         * getting into a wrong state. */
+        base->RCR &= ~ENET_RCR_RGMII_EN_MASK;
+
+        /* Set/clear the ENET_ECR_SPEED bit, while the ENET_RCR_RGMII bit is 0.
+         * The rest of the ECR bits will be set later, as well as
+         * the requested value of the ENET_RCR_RGMII_EN bit. */
+        base->ECR = ecr;
     }
 #endif /* FSL_FEATURE_ENET_HAS_AVB */
     rcr |= ENET_RCR_MII_MODE_MASK;
@@ -715,6 +756,9 @@ static void ENET_SetMacController(ENET_Type *base,
         ENET_SetSMI(base, srcClock_Hz,
                     ((0U != (config->macSpecialConfig & (uint32_t)kENET_ControlSMIPreambleDisable)) ? true : false));
     }
+
+    /* Enable collection of data for ENET_GetStatistics. */
+    ENET_EnableStatistics(base, true);
 
 /* Enables Ethernet interrupt, enables the interrupt coalsecing if it is required. */
 #if defined(FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE) && FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE
@@ -1083,6 +1127,15 @@ void ENET_SetMII(ENET_Type *base, enet_mii_speed_t speed, enet_mii_duplex_t dupl
         else
         {
             ecr &= ~ENET_ECR_SPEED_MASK;
+        }
+
+        if (ENET_RCR_RGMII_EN_MASK == (rcr & ENET_RCR_RGMII_EN_MASK))
+        {
+            /* Make sure RGMII mode is (temporarily) disabled.
+             * The ENET_RCR_RGMII_EN bit must not be set before changing
+             * the ENET_ECR_SPEED bit, otherwise there is a chance of ENET IP
+             * getting into a wrong state. RGMII will be re-enabled later. */
+            base->RCR &= ~ENET_RCR_RGMII_EN_MASK;
         }
 
         base->ECR = ecr;
@@ -1479,7 +1532,31 @@ void ENET_GetRxErrBeforeReadFrame(enet_handle_t *handle, enet_data_error_stats_t
 }
 
 /*!
- * brief Gets statistical data in transfer.
+ * brief Enables/disables collection of transfer statistics.
+ *
+ * Note that this function does not reset any of the already collected data,
+ * use the function ENET_ResetStatistics to clear the transfer statistics if needed.
+ *
+ * param base   ENET peripheral base address.
+ * param enable True enable statistics collection, false disable statistics collection.
+ */
+void ENET_EnableStatistics(ENET_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->MIBC &= ~ENET_MIBC_MIB_DIS_MASK;
+    }
+    else
+    {
+        base->MIBC |= ENET_MIBC_MIB_DIS_MASK;
+    }
+}
+
+/*!
+ * brief Gets transfer statistics.
+ *
+ * Copies the actual value of hardware counters into the provided structure.
+ * Calling this function does not reset the counters in hardware.
  *
  * param base  ENET peripheral base address.
  * param statistics The statistics structure pointer.
@@ -1499,6 +1576,19 @@ void ENET_GetStatistics(ENET_Type *base, enet_transfer_stats_t *statistics)
     statistics->statsTxFrameOk         = base->IEEE_T_FRAME_OK;
     statistics->statsTxCrcAlignErr     = base->RMON_T_CRC_ALIGN;
     statistics->statsTxFifoUnderRunErr = base->IEEE_T_MACERR;
+}
+
+/*!
+ * brief Resets transfer statistics.
+ *
+ * Sets the value of hardware transfer counters to zero.
+ *
+ * param base ENET peripheral base address.
+ */
+void ENET_ResetStatistics(ENET_Type *base)
+{
+    base->MIBC |= ENET_MIBC_MIB_CLEAR_MASK;
+    base->MIBC &= ~ENET_MIBC_MIB_CLEAR_MASK;
 }
 
 /*!
@@ -2152,10 +2242,10 @@ static inline status_t ENET_GetRxFrameErr(enet_rx_bd_struct_t *rxDesc, enet_rx_f
  * this function, driver stores the buffer address(es) in enet_buffer_struct_t and allocate new buffer(s) for the BD(s).
  * If there's no memory buffer in the pool, this function drops current one frame to keep the Rx frame in BD ring is as
  * fresh as possible.
- * note Application must provide a memory pool including at least BD number + n buffers in order for this function to work
- * properly, because each BD must always take one buffer while driver is running, then other extra n buffer(s) can be taken
- * by application. Here n is the ceil(max_frame_length(set by RCR) / bd_rx_size(set by MRBR)). Application must also provide
- * an array structure in rxFrame->rxBuffArray with n index to receive one complete frame in any case.
+ * note Application must provide a memory pool including at least BD number + n buffers in order for this function to
+ * work properly, because each BD must always take one buffer while driver is running, then other extra n buffer(s) can
+ * be taken by application. Here n is the ceil(max_frame_length(set by RCR) / bd_rx_size(set by MRBR)). Application must
+ * also provide an array structure in rxFrame->rxBuffArray with n index to receive one complete frame in any case.
  *
  * param base   ENET peripheral base address.
  * param handle The ENET handler pointer. This is the same handler pointer used in the ENET_Init.
@@ -2193,7 +2283,7 @@ status_t ENET_GetRxFrame(ENET_Type *base, enet_handle_t *handle, enet_rx_frame_s
         if (0U != (curBuffDescrip->control & ENET_BUFFDESCRIPTOR_RX_LAST_MASK))
         {
             /* The last buffer descriptor stores the error status of this received frame. */
-            result = ENET_GetRxFrameErr((enet_rx_bd_struct_t *)(uint32_t)curBuffDescrip, &rxFrame->rxFrameError);
+            result = ENET_GetRxFrameErr((enet_rx_bd_struct_t *)(uintptr_t)curBuffDescrip, &rxFrame->rxFrameError);
             break;
         }
 
@@ -2307,7 +2397,7 @@ status_t ENET_GetRxFrame(ENET_Type *base, enet_handle_t *handle, enet_rx_frame_s
 #if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
             buffer = MEMORY_ConvertMemoryMapAddress(newBuff, kMEMORY_Local2DMA);
 #else
-            buffer  = newBuff;
+            buffer = newBuff;
 #endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
             if (handle->rxMaintainEnable[ringId])
@@ -2500,7 +2590,7 @@ status_t ENET_StartTxFrame(ENET_Type *base, enet_handle_t *handle, enet_tx_frame
             /* Map loacl memory address to DMA for special platform. */
             buffer = MEMORY_ConvertMemoryMapAddress((uintptr_t)(uint8_t *)txBuff->buffer, kMEMORY_Local2DMA);
 #else
-            buffer  = (uintptr_t)(uint8_t *)txBuff->buffer;
+            buffer = (uintptr_t)(uint8_t *)txBuff->buffer;
 #endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
 
             /* Set data buffer and length. */

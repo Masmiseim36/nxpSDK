@@ -107,7 +107,6 @@ extern phy_rtl8211f_resource_t g_phy_resource;
 /* PHY operations. */
 #endif // (LPC_ENET)
 
-#include "HLSEAPI.h"
 #include "sm_demo_utils.h"
 
 /*******************************************************************************
@@ -154,9 +153,6 @@ static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 /*******************************************************************************
  * Global variables
  ******************************************************************************/
-#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM)
-HLSE_OBJECT_HANDLE Gpstorage_handle;
-#endif
 
 /*******************************************************************************
  * Global Function Definitions
@@ -360,93 +356,5 @@ WIFIReturnCode_t network_wifi_connect_ap(void)
 }
 
 #endif //LPC_WIFI
-
-#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM)
-
-/*Set and Get the flag value from GP Storage */
-int SetGetFlag_GPstorage(U32 *p_val, GpStorageMode_t mode, HLSE_OBJECT_HANDLE handle)
-{
-    int ret = 1;
-    HLSE_RET_CODE hlseRc;
-    HLSE_ATTRIBUTE attr;
-    uint8_t tempBuffer[32] = {0};
-    memcpy((void *)tempBuffer, (void *)p_val, sizeof(*p_val));
-
-    attr.type     = HLSE_ATTR_OBJECT_VALUE;
-    attr.value    = tempBuffer;
-    attr.valueLen = 32;
-    if (mode == SET) {
-        hlseRc = HLSE_SetObjectAttribute(handle, &attr);
-    }
-    else if (mode == GET) {
-        attr.value = tempBuffer;
-        hlseRc     = HLSE_GetObjectAttribute(handle, &attr);
-        if (hlseRc == HLSE_SW_OK) {
-            memcpy((void *)p_val, (void *)tempBuffer, sizeof(*p_val));
-        }
-    }
-    else {
-        hlseRc = 0;
-    }
-    if (hlseRc == HLSE_SW_OK) {
-        ret = 0;
-    }
-
-    return ret;
-}
-
-static int GetHandle_GPstorageType(HLSE_OBJECT_INDEX index, HLSE_OBJECT_TYPE objType)
-{
-    HLSE_RET_CODE hlseret;
-    HLSE_OBJECT_HANDLE Handles[5];
-    U16 HandlesNum = sizeof(Handles) / sizeof(HLSE_OBJECT_HANDLE);
-    U16 HandlesNum_copy;
-    U8 i    = 0;
-    int ret = 1;
-
-    hlseret = HLSE_EnumerateObjects(objType, Handles, &HandlesNum);
-    if (hlseret == HLSE_SW_OK) {
-        HandlesNum_copy = HandlesNum;
-        while (HandlesNum_copy) {
-            if (HLSE_GET_OBJECT_INDEX(Handles[i]) == index) {
-                Gpstorage_handle = Handles[i];
-                ret              = 0;
-                break;
-            }
-            i++;
-            HandlesNum_copy--;
-        }
-    }
-    return ret;
-}
-
-/*Get the Handle of the GP storage */
-int GetHandle_GPstorage(HLSE_OBJECT_INDEX index)
-{
-    /* New way. 3rd entry in table would be HLSE_DATA  */
-    int ret = GetHandle_GPstorageType(index, HLSE_DATA);
-
-    if (ret == 1) {
-        /* iMX UL Way. No entry. So insert 3rd entry in table. */
-        HLSE_OBJECT_TYPE objType = HLSE_DATA;
-        U16 templateSize         = 3;
-        HLSE_ATTRIBUTE attr[3];
-        U8 objData[]     = {0xFF, 0xFF, 0xFF, 0xFF};
-        attr[0].type     = HLSE_ATTR_OBJECT_TYPE;
-        attr[0].value    = &objType;
-        attr[0].valueLen = sizeof(objType);
-        attr[1].type     = HLSE_ATTR_OBJECT_INDEX;
-        attr[1].value    = &index;
-        attr[1].valueLen = sizeof(index);
-        attr[2].type     = HLSE_ATTR_OBJECT_VALUE;
-        attr[2].value    = &objData;
-        attr[2].valueLen = 4;
-
-        ret = HLSE_CreateObject(attr, templateSize, &Gpstorage_handle);
-    }
-    return ret;
-}
-
-#endif
 
 #endif /* USE_RTOS */

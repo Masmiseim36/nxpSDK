@@ -14,28 +14,15 @@
 #include "timers.h"
 /* Application includes */
 #include <stdio.h>
-#include "pin_mux.h"
+#include "app.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
 #include "iperf_api.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* Ethernet configuration. */
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  BOARD_ENET0_PHY_ADDRESS
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #define RECV_TIMEOUT_MS 100
 
@@ -102,7 +89,6 @@ extern phy_ksz8081_resource_t g_phy_resource;
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 
 static TaskHandle_t task_main_task_handler;
 
@@ -156,28 +142,6 @@ static phy_handle_t phyHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
 
 static void separator()
 {
@@ -895,20 +859,7 @@ int main(void)
 {
     BaseType_t result = 0;
     (void)result;
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    /* Hardware reset PHY. */
-    BOARD_ENET_PHY_RESET;
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     iperf_timer = xTimerCreate("iperf_timer", configTICK_RATE_HZ * 12, pdFALSE, (void *)0, callback_time);
     if (iperf_timer == NULL)

@@ -275,30 +275,30 @@ static int ecdsa_verify_restartable_o(mbedtls_ecp_group *grp,
     mbedtls_mpi_init( &u1 ); mbedtls_mpi_init( &u2 );
 
     /* Fail cleanly on curves such as Curve25519 that can't be used for ECDSA */
-    if( ! mbedtls_ecdsa_can_do( grp->id ) || grp->N.p == NULL )
-        return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );
+    if (!mbedtls_ecdsa_can_do(grp->id) || grp->N.p == NULL) {
+        return MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+    }
 
-    ECDSA_RS_ENTER( ver );
+    ECDSA_RS_ENTER(ver);
 
 #if defined(MBEDTLS_ECP_RESTARTABLE)
-    if( rs_ctx != NULL && rs_ctx->ver != NULL )
-    {
+    if (rs_ctx != NULL && rs_ctx->ver != NULL) {
         /* redirect to our context */
         pu1 = &rs_ctx->ver->u1;
         pu2 = &rs_ctx->ver->u2;
 
         /* jump to current step */
-        if( rs_ctx->ver->state == ecdsa_ver_muladd )
+        if (rs_ctx->ver->state == ecdsa_ver_muladd) {
             goto muladd;
+        }
     }
 #endif /* MBEDTLS_ECP_RESTARTABLE */
 
     /*
      * Step 1: make sure r and s are in range 1..n-1
      */
-    if( mbedtls_mpi_cmp_int( r, 1 ) < 0 || mbedtls_mpi_cmp_mpi( r, &grp->N ) >= 0 ||
-        mbedtls_mpi_cmp_int( s, 1 ) < 0 || mbedtls_mpi_cmp_mpi( s, &grp->N ) >= 0 )
-    {
+    if (mbedtls_mpi_cmp_int(r, 1) < 0 || mbedtls_mpi_cmp_mpi(r, &grp->N) >= 0 ||
+        mbedtls_mpi_cmp_int(s, 1) < 0 || mbedtls_mpi_cmp_mpi(s, &grp->N) >= 0) {
         ret = MBEDTLS_ERR_ECP_VERIFY_FAILED;
         goto cleanup;
     }
@@ -306,35 +306,35 @@ static int ecdsa_verify_restartable_o(mbedtls_ecp_group *grp,
     /*
      * Step 3: derive MPI from hashed message
      */
-    MBEDTLS_MPI_CHK( derive_mpi( grp, &e, buf, blen ) );
+    MBEDTLS_MPI_CHK(derive_mpi(grp, &e, buf, blen));
 
     /*
      * Step 4: u1 = e / s mod n, u2 = r / s mod n
      */
-    ECDSA_BUDGET( MBEDTLS_ECP_OPS_CHK + MBEDTLS_ECP_OPS_INV + 2 );
+    ECDSA_BUDGET(MBEDTLS_ECP_OPS_CHK + MBEDTLS_ECP_OPS_INV + 2);
 
-    MBEDTLS_MPI_CHK( mbedtls_mpi_inv_mod( &s_inv, s, &grp->N ) );
+    MBEDTLS_MPI_CHK(mbedtls_mpi_inv_mod(&s_inv, s, &grp->N));
 
-    MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( pu1, &e, &s_inv ) );
-    MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( pu1, pu1, &grp->N ) );
+    MBEDTLS_MPI_CHK(mbedtls_mpi_mul_mpi(pu1, &e, &s_inv));
+    MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(pu1, pu1, &grp->N));
 
-    MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( pu2, r, &s_inv ) );
-    MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( pu2, pu2, &grp->N ) );
+    MBEDTLS_MPI_CHK(mbedtls_mpi_mul_mpi(pu2, r, &s_inv));
+    MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(pu2, pu2, &grp->N));
 
 #if defined(MBEDTLS_ECP_RESTARTABLE)
-    if( rs_ctx != NULL && rs_ctx->ver != NULL )
+    if (rs_ctx != NULL && rs_ctx->ver != NULL) {
         rs_ctx->ver->state = ecdsa_ver_muladd;
+    }
 
 muladd:
 #endif
     /*
      * Step 5: R = u1 G + u2 Q
      */
-    MBEDTLS_MPI_CHK( mbedtls_ecp_muladd_restartable( grp,
-                     &R, pu1, &grp->G, pu2, Q, ECDSA_RS_ECP ) );
+    MBEDTLS_MPI_CHK(mbedtls_ecp_muladd_restartable(grp,
+                                                   &R, pu1, &grp->G, pu2, Q, ECDSA_RS_ECP));
 
-    if( mbedtls_ecp_is_zero( &R ) )
-    {
+    if (mbedtls_ecp_is_zero(&R)) {
         ret = MBEDTLS_ERR_ECP_VERIFY_FAILED;
         goto cleanup;
     }
@@ -343,25 +343,24 @@ muladd:
      * Step 6: convert xR to an integer (no-op)
      * Step 7: reduce xR mod n (gives v)
      */
-    MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( &R.X, &R.X, &grp->N ) );
+    MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(&R.X, &R.X, &grp->N));
 
     /*
      * Step 8: check if v (that is, R.X) is equal to r
      */
-    if( mbedtls_mpi_cmp_mpi( &R.X, r ) != 0 )
-    {
+    if (mbedtls_mpi_cmp_mpi(&R.X, r) != 0) {
         ret = MBEDTLS_ERR_ECP_VERIFY_FAILED;
         goto cleanup;
     }
 
 cleanup:
-    mbedtls_ecp_point_free( &R );
-    mbedtls_mpi_free( &e ); mbedtls_mpi_free( &s_inv );
-    mbedtls_mpi_free( &u1 ); mbedtls_mpi_free( &u2 );
+    mbedtls_ecp_point_free(&R);
+    mbedtls_mpi_free(&e); mbedtls_mpi_free(&s_inv);
+    mbedtls_mpi_free(&u1); mbedtls_mpi_free(&u2);
 
-    ECDSA_RS_LEAVE( ver );
+    ECDSA_RS_LEAVE(ver);
 
-    return( ret );
+    return ret;
 }
 
 /*
@@ -573,12 +572,14 @@ int mbedtls_ecdsa_verify(mbedtls_ecp_group *grp,
         status = sss_key_object_allocate_handle(
             &sssKeyObject, (__LINE__), kSSS_KeyPart_Public, cipherType, publickeylen, kKeyObject_Mode_Transient);
         if (status != kStatus_SSS_Success) {
+            sss_key_object_free(&sssKeyObject);
             return 1;
         }
 
         status =
             sss_key_store_set_key(ecdsa_verify_ssskeystore, &sssKeyObject, publickey, publickeylen, keyBitLen, NULL, 0);
         if (status != kStatus_SSS_Success) {
+            sss_key_object_free(&sssKeyObject);
             return 1;
         }
 
@@ -599,22 +600,28 @@ int mbedtls_ecdsa_verify(mbedtls_ecp_group *grp,
             algorithm = kAlgorithm_SSS_SHA512;
             break;
         default:
+            sss_key_object_free(&sssKeyObject);
             return 1;
         }
 
         status = sss_asymmetric_context_init(
             &asymVerifyCtx, ecdsa_verify_ssskeystore->session, &sssKeyObject, algorithm, kMode_SSS_Verify);
         if (status != kStatus_SSS_Success) {
+            sss_key_object_free(&sssKeyObject);
             return 1;
         }
 
         LOG_D("Verify using sss_asymmetric_verify_digest \n");
         status = sss_asymmetric_verify_digest(&asymVerifyCtx, (uint8_t *)buf, blen, (uint8_t *)signature, sigLen);
         if (status != kStatus_SSS_Success) {
+            sss_asymmetric_context_free(&asymVerifyCtx);
+            sss_key_object_free(&sssKeyObject);
             return 1;
         }
 
         status = sss_key_store_erase_key(ecdsa_verify_ssskeystore, &sssKeyObject);
+        sss_asymmetric_context_free(&asymVerifyCtx);
+        sss_key_object_free(&sssKeyObject);
         if (status != kStatus_SSS_Success) {
             return 1;
         }

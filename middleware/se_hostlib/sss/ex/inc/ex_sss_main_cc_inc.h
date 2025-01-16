@@ -49,7 +49,7 @@
  *
  */
 
-#if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x) || defined(QN9090DK6)
+#if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x) || defined(QN9090DK6) || defined(CPU_MCXN947VDF_cm33_core0) || defined(CPU_MCXA153VLH)
 #define HAVE_KSDK
 #endif
 
@@ -73,10 +73,6 @@
 #include "FreeRTOSConfig.h"
 #endif /* INC_FREERTOS_H */
 #include "task.h"
-#endif
-
-#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
-#include "ex_a71ch_scp03.h"
 #endif
 
 #ifdef EX_SSS_BOOT_PCONTEXT
@@ -160,37 +156,6 @@ int main(int argc, const char *argv[])
 
 #else /* No RTOS, No Embedded */
 
-    //Session to SE is opened inside the Demo
-
-#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM) && SSS_HAVE_A71CH_AUTH_SCP03
-    LOG_I("A71CH SCP03 add-on");
-    {
-        // Variables used by calls to legacy API
-        U8 sCounter[3];
-        U16 sCounterLen = sizeof(sCounter);
-        U16 sw          = 0;
-        U8 scpKeyEncBase[SCP_KEY_SIZE];
-        U8 scpKeyMacBase[SCP_KEY_SIZE];
-        U8 scpKeyDekBase[SCP_KEY_SIZE];
-
-        LOG_I("** Establish SCP03 session: Start **");
-        status = ex_a71ch_FetchRandomScp03Keys(scpKeyEncBase, scpKeyMacBase, scpKeyDekBase);
-        ENSURE_OR_GO_CLEANUP(status == kStatus_SSS_Success);
-
-        status = ex_a71ch_SetSeScp03Keys(scpKeyEncBase, scpKeyMacBase, scpKeyDekBase);
-        ENSURE_OR_GO_CLEANUP(status == kStatus_SSS_Success);
-
-        LOG_I("Clear host-side SCP03 channel state");
-        DEV_ClearChannelState();
-
-        LOG_I("SCP_Authenticate()");
-        sw     = SCP_Authenticate(scpKeyEncBase, scpKeyMacBase, scpKeyDekBase, SCP_KEY_SIZE, sCounter, &sCounterLen);
-        status = (sw == SW_OK) ? kStatus_SSS_Success : kStatus_SSS_Fail;
-        ENSURE_OR_GO_CLEANUP(sw == SW_OK);
-        LOG_I("** Establish SCP03 session: End **");
-    }
-#endif // SSS_HAVE_APPLET_A71CH && SSS_HAVE_A71CH_AUTH_SCP03
-
     status = ex_sss_entry((PCONTEXT));
     LOG_I("ex_sss Finished");
     if (kStatus_SSS_Success != status) {
@@ -261,12 +226,6 @@ static void sss_ex_rtos_task(void *ctx)
 #if INCLUDE_uxTaskGetStackHighWaterMark
     sss_ex_rtos_stack_size("after:erase");
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
-#endif
-
-#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
-#if EX_SSS_BOOT_OPEN_HOST_SESSION
-    ex_sss_boot_open_host_session((PCONTEXT));
-#endif
 #endif
 
     status = ex_sss_entry((PCONTEXT));

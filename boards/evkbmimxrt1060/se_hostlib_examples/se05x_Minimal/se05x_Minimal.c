@@ -30,6 +30,7 @@ static ex_sss_boot_ctx_t gex_sss_boot_ctx;
 #define EX_SSS_BOOT_PCONTEXT (&gex_sss_boot_ctx)
 #define EX_SSS_BOOT_DO_ERASE 0
 #define EX_SSS_BOOT_EXPOSE_ARGC_ARGV 0
+#define SE05X_VERSION_HEX_07_02 0x07020000
 
 /* ************************************************************************** */
 /* Include "main()" with the platform specific startup code for Plug & Trust  */
@@ -43,16 +44,15 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
 
     sss_se05x_session_t *pSession = (sss_se05x_session_t *)&pCtx->session;
 
-    uint16_t mem = 0;
+    uint32_t mem = 0;
     smStatus_t sm_status;
     sm_status = Se05x_API_GetFreeMemory(&pSession->s_ctx, kSE05x_MemoryType_PERSISTENT, &mem);
     if (sm_status != SM_OK) {
         LOG_E("Se05x_API_GetFreeMemory Failed");
         status = kStatus_SSS_Fail;
     }
-    LOG_U16_I(mem);
-
-    if (mem >= 0x7FFF) {
+    LOG_U32_I(mem);
+    if ((mem >= 0x7FFF) && (pSession->s_ctx.applet_version <= SE05X_VERSION_HEX_07_02)) {
         LOG_W("If 32768 bytes or more bytes are available, 32767 bytes free is reported.");
     }
 

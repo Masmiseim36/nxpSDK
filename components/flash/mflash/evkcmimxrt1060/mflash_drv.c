@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2021,2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -35,8 +35,8 @@
 
 #ifndef XIP_EXTERNAL_FLASH
 flexspi_device_config_t deviceconfig = {
-    .flexspiRootClk       = 133000000,
-    .flashSize            = FLASH_SIZE,
+    .flexspiRootClk       = 133000000UL,
+    .flashSize            = MFLASH_BSIZE / 1024U,
     .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
     .CSInterval           = 2,
     .CSHoldTime           = 3,
@@ -196,7 +196,7 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
     status_t status;
     uint32_t writeValue = 0x40;
 
-    /* Write neable */
+    /* Write enable */
     status = flexspi_nor_write_enable(base, 0);
 
     if (status != kStatus_Success)
@@ -341,9 +341,11 @@ static int32_t mflash_drv_init_internal(void)
     /* Configure flash settings according to serial flash feature. */
     FLEXSPI_SetFlashConfig(MFLASH_FLEXSPI, &deviceconfig, kFLEXSPI_PortA1);
 #endif
+    uint32_t tmpLUT[CUSTOM_LUT_LENGTH] = {0x00U};
 
+    memcpy(tmpLUT, customLUT, sizeof(tmpLUT));
     /* Update LUT table. */
-    FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, customLUT, CUSTOM_LUT_LENGTH);
+    FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, tmpLUT, CUSTOM_LUT_LENGTH);
 
 #ifndef XIP_EXTERNAL_FLASH
     /* Enter quad mode. */
@@ -482,34 +484,45 @@ int32_t mflash_drv_read(uint32_t addr, uint32_t *buffer, uint32_t len)
 void *mflash_drv_phys2log(uint32_t addr, uint32_t len)
 {
     /* take FLEXSPI remapping into account */
-    uint32_t remap_offset = IOMUXC_GPR->GPR32 & 0xFFFFF000;
-    uint32_t remap_start  = IOMUXC_GPR->GPR30 & 0xFFFFF000;
-    uint32_t remap_end    = IOMUXC_GPR->GPR31 & 0xFFFFF000;
+    uint32_t remap_offset = MFLASH_REMAP_OFFSET();
+    uint32_t remap_start  = MFLASH_REMAP_START();
+    uint32_t remap_end    = MFLASH_REMAP_END();
+    uint32_t bus_addr;
 
-    /* calculate the bus address where the requested FLASH region is expected to be available */
-    uint32_t bus_addr = addr + MFLASH_BASE_ADDRESS;
+    do {
+        if (addr >= MFLASH_BSIZE)
+        {
+            bus_addr = 0UL;
+            break;
+        }
+        /* calculate the bus address where the requested FLASH region is expected to be available */
+        bus_addr = addr + MFLASH_BASE_ADDRESS;
 
-    if (remap_offset == 0 || (remap_end <= remap_start))
-    {
-        /* remapping is not active */
-        return (void *)bus_addr;
-    }
+        if((remap_offset == 0UL) || (remap_end <= remap_start))
+        {
+            /* remapping is not active */
+            break;
+        }
 
-    if ((remap_start >= bus_addr + len) || (remap_end <= bus_addr))
-    {
-        /* remapping window does not collide with bus addresses normally assigned for requested range of FLASH */
-        return (void *)bus_addr;
-    }
+        if((remap_start >= bus_addr + len) || (remap_end <= bus_addr))
+        {
+            /* remapping window does not collide with bus addresses normally assigned for requested range of FLASH */
+            break;
+        }
 
-    if ((remap_start + remap_offset <= bus_addr) && (remap_end + remap_offset >= bus_addr + len))
-    {
-        /* remapping window coveres the whole requested range of FLASH, return address adjusted by negative offset */
-        return (void *)(bus_addr - remap_offset);
-    }
+        if((remap_start + remap_offset <= bus_addr) && (remap_end + remap_offset >= bus_addr + len))
+        {
+            /* remapping window covers the whole requested range of FLASH, return address adjusted by negative offset */
+            bus_addr -= remap_offset;
+            break;
+        }
+        bus_addr = 0UL;
+        /* the bus address region normally assigned for requested range of FLASH is partially or completely shadowed by
+        * remapping, fail */
 
-    /* the bus address region normally assigned for requested range of FLASH is partially or completely shadowed by
-     * remapping, fail */
-    return NULL;
+    } while (false);
+
+    return (void *) bus_addr;
 }
 
 /* Returns address of physical memory where the area accessible by given pointer is actually stored, UINT32_MAX on
@@ -517,38 +530,53 @@ void *mflash_drv_phys2log(uint32_t addr, uint32_t len)
 uint32_t mflash_drv_log2phys(void *ptr, uint32_t len)
 {
     /* take FLEXSPI remapping into account */
-    uint32_t remap_offset = IOMUXC_GPR->GPR32 & 0xFFFFF000;
-    uint32_t remap_start  = IOMUXC_GPR->GPR30 & 0xFFFFF000;
-    uint32_t remap_end    = IOMUXC_GPR->GPR31 & 0xFFFFF000;
+    uint32_t remap_offset = MFLASH_REMAP_OFFSET();
+    uint32_t remap_start  = MFLASH_REMAP_START();
+    uint32_t remap_end    = MFLASH_REMAP_END();
+    uint32_t ret = UINT32_MAX;
 
     /* calculate the bus address where the requested FLASH region is expected to be available */
-    uint32_t bus_addr = (uint32_t)ptr;
+    do {
+        uint32_t bus_addr = (uint32_t)ptr;
 
-    if (bus_addr < MFLASH_BASE_ADDRESS)
-    {
-        /* the pointer points outside of the flash memory area */
-        return UINT32_MAX;
-    }
+        if(bus_addr < MFLASH_BASE_ADDRESS)
+        {
+            /* the pointer points outside of the flash memory area */
+            break;
+        }
 
-    if (remap_offset == 0 || (remap_end <= remap_start))
-    {
-        /* remapping is not active */
-        return (bus_addr - MFLASH_BASE_ADDRESS);
-    }
+        ret = (bus_addr - MFLASH_BASE_ADDRESS);
 
-    if ((remap_start >= bus_addr + len) || (remap_end <= bus_addr))
-    {
-        /* remapping window does not affect the requested memory area */
-        return (bus_addr - MFLASH_BASE_ADDRESS);
-    }
+        if (ret >= MFLASH_BSIZE)
+        {
+            /* the pointer points beyond the flash memory area */
+            ret = UINT32_MAX;
+            break;
+        }
 
-    if ((remap_start <= bus_addr) && (remap_end >= bus_addr + len))
-    {
-        /* remapping window coveres the whole address range, return address adjusted by offset */
-        return (bus_addr + remap_offset - MFLASH_BASE_ADDRESS);
-    }
+        if((remap_offset == 0UL) || (remap_end <= remap_start))
+        {
+            /* remapping is not active */
+            break;
+        }
 
-    /* the bus address region partially collides with the remapping window, hence the range is not mapped to continuous
-     * block in the FLASH, fail */
-    return UINT32_MAX;
+        if((remap_start >= bus_addr + len) || (remap_end <= bus_addr))
+        {
+            /* remapping window does not affect the requested memory area */
+            break;
+        }
+
+        if((remap_start <= bus_addr) && (remap_end >= bus_addr + len))
+        {
+            /* remapping window covers the whole address range, return address adjusted by offset */
+            ret += remap_offset;
+            break;
+        }
+
+        ret = UINT32_MAX;
+        /* the bus address region partially collides with the remapping window, hence the range is not mapped to continuous
+         * block in the FLASH, fail */
+    } while (false);
+
+    return ret;
 }

@@ -1,6 +1,5 @@
 /*
- * Copyright 2019 NXP
- * All rights reserved.
+ * Copyright 2024 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -18,15 +17,6 @@
 /* The virtual buffer for DBI panel, it should be ~1/10 screen size. */
 #define LCD_VIRTUAL_BUF_SIZE (LCD_WIDTH * LCD_HEIGHT / 10)
 
-/* Select PLL2_MAIN_CLK (528 MHz) as master lpspi clock source */
-#define LPSPI_CLOCK_SOURCE_SELECT (2U)
-/* Clock divider for master lpspi clock source */
-#define LPSPI_CLOCK_SOURCE_DIVIDER (5U)
-/* Select OSC_CLK (24 MHz) as master lpi2c clock source */
-#define LPI2C_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpi2c clock source */
-#define LPI2C_CLOCK_SOURCE_DIVIDER (1U)
-
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -35,7 +25,6 @@
 extern "C" {
 #endif
 
-void lv_port_pre_init(void);
 void lv_port_disp_init(void);
 void lv_port_indev_init(void);
 

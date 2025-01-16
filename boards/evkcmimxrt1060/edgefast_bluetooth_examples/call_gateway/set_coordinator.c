@@ -501,7 +501,7 @@ static bool set_member_found(struct bt_data *data, void *user_data)
         return false;
     }
 
-	if (bt_csip_set_coordinator_is_set_member(scan->state->member->insts[scan->state->set_scanning_index - 1].info.set_sirk, data)) {
+	if (bt_csip_set_coordinator_is_set_member(scan->state->member->insts[scan->state->set_scanning_index - 1].info.sirk, data)) {
 		const bt_addr_le_t *addr = scan->addr;
 		char addr_str[BT_ADDR_LE_STR_LEN];
         struct bt_conn *default_conn;
@@ -638,9 +638,9 @@ static void set_coordinator_discover(
     {
         PRINTF("Member instance %p info:\n", &member->insts[i]);
         PRINTF("    SIRK:");
-        for (uint32_t j = 0; j < BT_CSIP_SET_SIRK_SIZE; j++)
+        for (uint32_t j = 0; j < BT_CSIP_SIRK_SIZE; j++)
         {
-            PRINTF(" %02X", member->insts[i].info.set_sirk[j]);
+            PRINTF(" %02X", member->insts[i].info.sirk[j]);
         }
         PRINTF("\n");
         PRINTF("    Set size %d\n", member->insts[i].info.set_size);

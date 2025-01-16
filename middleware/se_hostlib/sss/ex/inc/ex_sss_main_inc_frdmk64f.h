@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2019 NXP
+ * Copyright 2019,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -26,7 +26,7 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
+#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS) && (SSS_HAVE_MBEDTLS_2_X)
 #include "ksdk_mbedtls.h"
 #endif
 
@@ -61,7 +61,7 @@ void ex_sss_main_ksdk_bm()
     axReset_HostConfigure();
     axReset_PowerUp();
 
-#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
+#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS) && (SSS_HAVE_MBEDTLS_2_X)
     CRYPTO_InitHardware();
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
     CLOCK_EnableClock(kCLOCK_Sha0);

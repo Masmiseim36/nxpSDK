@@ -29,10 +29,6 @@
 extern "C" {
 #endif
 
-#if SSS_HAVE_APPLET_A71CH
-#include <HLSETypes.h>
-#endif
-
 /*******************************************************************************
  * includes
  ******************************************************************************/
@@ -60,9 +56,6 @@ typedef enum GpStorageMode
 /*******************************************************************
 * GLOBAL VARIABLES
 *******************************************************************/
-#if SSS_HAVE_APPLET_A71CH
-extern HLSE_OBJECT_HANDLE Gpstorage_handle;
-#endif
 
 /*******************************************************************
 * GLOBAL FUNCTION DECLARATIONS
@@ -74,12 +67,6 @@ extern HLSE_OBJECT_HANDLE Gpstorage_handle;
  * The 18 byte buffer is extracted from the A7x IC.
  */
 extern void BOARD_InitNetwork_MAC(const unsigned char buffer[18]);
-
-#if SSS_HAVE_APPLET_A71CH
-extern int SetGetFlag_GPstorage(U32 *p_val, GpStorageMode_t mode, HLSE_OBJECT_HANDLE handle);
-
-extern int GetHandle_GPstorage(HLSE_OBJECT_INDEX index);
-#endif
 
 #ifdef __cplusplus
 }

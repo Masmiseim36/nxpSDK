@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2018-2020 NXP
+* Copyright 2018-2020,2024 NXP
 * SPDX-License-Identifier: Apache-2.0
 */
 
@@ -27,6 +27,7 @@
 #define ASN_TAG_CNT_SPECIFIC_PRIMITIVE 0x80
 #define ASN_TAG_CRL_EXTENSIONS 0xA0
 
+extern const uint8_t grsa512PubHeader[];
 extern const uint8_t grsa1kPubHeader[];
 extern const uint8_t grsa1152PubHeader[];
 extern const uint8_t grsa2kPubHeader[];
@@ -71,6 +72,12 @@ extern const size_t der_ecc_bp512_header_len;
 extern const size_t der_ecc_mont_dh_448_header_len;
 extern const size_t der_ecc_mont_dh_25519_header_len;
 extern const size_t der_ecc_twisted_ed_25519_header_len;
+extern const size_t der_rsa_512_len;
+extern const size_t der_rsa_1024_len;
+extern const size_t der_rsa_1152_len;
+extern const size_t der_rsa_2048_len;
+extern const size_t der_rsa_3072_len;
+extern const size_t der_rsa_4096_len;
 
 /* ************************************************************************** */
 /* Functions                                                                  */
@@ -128,11 +135,6 @@ sss_status_t sss_util_asn1_rsa_parse_public(
 sss_status_t sss_util_asn1_rsa_get_public(
     uint8_t *key, size_t *keylen, uint8_t *modulus, size_t modlen, uint8_t *pubExp, size_t pubExplen);
 
-#if SSS_HAVE_ECDAA
-sss_status_t sss_util_asn1_ecdaa_get_signature(
-    uint8_t *signature, size_t *signatureLen, uint8_t *rawSignature, size_t rawSignatureLen);
-#endif
-
 sss_status_t sss_util_asn1_get_oid_from_header(uint8_t *input, size_t inLen, uint32_t *output, uint8_t *outLen);
 
 sss_status_t sss_util_asn1_get_oid_from_sssObj(sss_object_t *pkeyObject, uint32_t *output, uint8_t *outLen);
@@ -161,9 +163,6 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc(
 
 sss_status_t sss_util_asn1_rsa_parse_public_nomalloc_complete_modulus(
     const uint8_t *key, size_t keylen, uint8_t *modulus, size_t *modlen, uint8_t *pubExp, size_t *pubExplen);
-
-sss_status_t sss_util_openssl_read_pkcs12(
-    const char *pkcs12_cert, const char *password, uint8_t *private_key, uint8_t *cert);
 
 sss_status_t sss_util_openssl_write_pkcs12(const char *pkcs12_cert,
     const char *password,

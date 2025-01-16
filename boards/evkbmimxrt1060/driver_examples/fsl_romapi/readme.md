@@ -1,75 +1,21 @@
-Overview
-========
-The fsl_romapi example shows how to use ROM API:
+# fsl_romapi
 
-In this example, fsl_romapi driver will call the API and operate the external Nor flash connected to
-the FLEXSPI controller. Some simple flash command will be executed, such as FLEXSPI NOR get config, FLEXSPI NOR Flash init,
-Erase sector, Program page.
-Example will first erase the sector and program a page into the flash, at last check if the data in flash is correct.
+## Overview
 
+The fsl_romapi example shows how to use flexspi rom api In this example, rom api
+will send data and operate the external Nor flash connected with FLEXSPI. Some
+simple flash command willbe executed, such as Write Enable, Erase sector,
+Program page.Example will first erase the sector and program a page into the
+flash, at last check if the data in flash is correct.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- GCC ARM Embedded  13.2.1
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1060-EVKB board
-- Personal Computer
-
-Board settings
-==============
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-When the example runs successfully, you can see the similar information from the terminal as below.
-
-For FLEXSPI NOR targets, the result is:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FLEXSPI NOR example started!
-
-Successfully get FLEXSPI NOR configuration block
-
-Successfully init FLEXSPI serial NOR flash
-
-Serial NOR flash has been found successfully
-
-Vendor ID: xx
-
-Serial NOR flash Information:
-
-Total program flash size: xx KB, Hex: (xx)
-
-Program flash sector size: xx KB, Hex: (xx)
-
-Program flash page size: xx B, Hex: (xx)
-
-Erasing serial NOR flash over FLEXSPI
-
-Successfully erased one sector of NOR flash device xx -> xx
-
-Program a buffer to a page of NOR flash
-
-Successfully programmed and verified location FLEXSPI memory xx -> xx
-
-End of FLEXSPI NOR Example!
+## Supported Boards
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/driver_examples/fsl_romapi/example_board_readme.md)
+- [MIMXRT1170-EVKB](../../_boards/evkbmimxrt1170/driver_examples/fsl_romapi/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/driver_examples/fsl_romapi/example_board_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/driver_examples/fsl_romapi/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/driver_examples/fsl_romapi/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/driver_examples/fsl_romapi/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/driver_examples/fsl_romapi/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/driver_examples/fsl_romapi/example_board_readme.md)
+- [MIMXRT1160-EVK](../../_boards/evkmimxrt1160/driver_examples/fsl_romapi/example_board_readme.md)
+- [MIMXRT1180-EVK](../../_boards/evkmimxrt1180/driver_examples/fsl_romapi/example_board_readme.md)

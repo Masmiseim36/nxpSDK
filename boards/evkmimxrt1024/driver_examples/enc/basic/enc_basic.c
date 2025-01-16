@@ -7,15 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_enc.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ENC_BASEADDR ENC1
 
 /*******************************************************************************
  * Prototypes
@@ -37,10 +35,7 @@ int main(void)
     enc_config_t mEncConfigStruct;
     uint32_t mCurPosValue;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\nENC Basic Example.\r\n");
 

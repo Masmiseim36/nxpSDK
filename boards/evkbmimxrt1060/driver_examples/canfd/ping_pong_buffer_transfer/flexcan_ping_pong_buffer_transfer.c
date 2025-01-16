@@ -7,38 +7,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN                   CAN3
-#define EXAMPLE_FLEXCAN_RxWarningIRQn CAN3_IRQn
-#define EXAMPLE_FLEXCAN_BusOffIRQn    CAN3_IRQn
-#define EXAMPLE_FLEXCAN_ErrorIRQn     CAN3_IRQn
-#define EXAMPLE_FLEXCAN_MBIRQn        CAN3_IRQn
-#define EXAMPLE_FLEXCAN_IRQHandler    CAN3_IRQHandler
-
-/* Considering that the first valid MB must be used as Reserved TX MB for ERR005829. */
-#define RX_QUEUE_BUFFER_BASE  (1U)
-#define RX_QUEUE_BUFFER_SIZE  (4U)
-#define TX_MESSAGE_BUFFER_NUM (8U)
-
-#define USE_CANFD (1)
-
-/* Frame length of data in bytes (DLC) should Less than or equal to MB Payload size in bytes (BYTES_IN_MB). */
-
-#define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
-/* Select 60M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_DIVIDER (2U)
-/* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8U) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
-#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /* Rx queue end Message Buffer index. */
@@ -479,14 +453,7 @@ int main(void)
     static uint32_t TxCount = 1;
 
     /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for FLEXCAN*/
-    CLOCK_SetMux(kCLOCK_CanMux, FLEXCAN_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_CanDiv, FLEXCAN_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     LOG_INFO("********* FLEXCAN PingPong Buffer Example *********\r\n");
     LOG_INFO("    Message format: Standard (11 bit id)\r\n");

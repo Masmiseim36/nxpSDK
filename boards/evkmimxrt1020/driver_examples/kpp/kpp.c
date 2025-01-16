@@ -5,19 +5,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include <stdlib.h>
+#include "app.h"
 #include "fsl_debug_console.h"
 #include "fsl_kpp.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_KPP_ACTIVE_COLUMROWS  (0x3D)
-#define EXAMPLE_KPP_MATRX_NUM         (4)
-#define EXAMPLE_KPP_COLROW_START_INDX (2)
-#define EXAMPLE_KPP                   KPP
 #define EXAMPLE_KPP_KEYPRESS_LONG_NUM (0xFFF)
 /*******************************************************************************
  * Prototypes
@@ -25,13 +19,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-char *keyMap[EXAMPLE_KPP_MATRX_NUM][EXAMPLE_KPP_MATRX_NUM] = {
-    /* COL0    COL1    COL2    COL3   */
-    {"SW1", "SW2", "SW3", "SW4"},     /* ROW0 */
-    {"SW5", "SW6", "SW7", "SW8"},     /* ROW1 */
-    {"SW9", "SW10", "SW11", "SW12"},  /* ROW2 */
-    {"SW13", "SW14", "SW15", "SW16"}, /* ROW3 */
-};
 kpp_config_t kppConfig;
 uint8_t read_keys[KPP_KEYPAD_COLUMNNUM_MAX] = {0};
 extern char *keyMap[EXAMPLE_KPP_MATRX_NUM][EXAMPLE_KPP_MATRX_NUM];
@@ -75,10 +62,7 @@ int main(void)
     uint8_t colOld = 0xFF;
     uint32_t index = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
     PRINTF("\r\n KPP Driver Example Start.\r\n");
 

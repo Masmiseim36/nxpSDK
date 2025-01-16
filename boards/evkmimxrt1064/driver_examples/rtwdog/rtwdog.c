@@ -7,9 +7,8 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_rtwdog.h"
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
 #include "fsl_rcm.h"
@@ -23,16 +22,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* RESET_CHECK_CNT_VALUE and RESET_CHECK_FLAG is RAM variables used for wdog32 self test.
- * Make sure these variables' locations are proper and will not be affected by watchdog reset,
- * that is, these variables will not be intialized in startup code.
- */
-#define RESET_CHECK_CNT_VALUE  (*((uint32_t *)0x20001000))
-#define RESET_CHECK_FLAG       (*((uint32_t *)0x20002000))
-#define RESET_CHECK_INIT_VALUE 0x0D0DU
-#define EXAMPLE_WDOG_BASE      RTWDOG
-#define DELAY_TIME             100000U
-#define WDOG_IRQHandler        RTWDOG_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -149,8 +138,12 @@ void RTWdogFastTesting(void)
     }
     else if (current_test_mode == kRTWDOG_LowByteTest)
     {
+#if defined(RTWDOG_HAS_ERRATA_051578) && (RTWDOG_HAS_ERRATA_051578)
+        if ((RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 1U)
+#else
         if ((RESET_CHECK_CNT_VALUE != (config.timeoutValue & 0x00FFU)) ||
-            (RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 1)
+            (RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 1)      
+#endif
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
             || ((RCM_GetPreviousResetSources(rcm_base) & kRCM_SourceWdog) == 0)
 #elif defined(FSL_FEATURE_SOC_SMC_COUNT) && (FSL_FEATURE_SOC_SMC_COUNT > 1) /* MSMC */
@@ -185,8 +178,12 @@ void RTWdogFastTesting(void)
     }
     else if (current_test_mode == kRTWDOG_HighByteTest)
     {
+#if defined(RTWDOG_HAS_ERRATA_051578) && (RTWDOG_HAS_ERRATA_051578)
+        if ((RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 2U)
+#else
         if ((RESET_CHECK_CNT_VALUE != ((config.timeoutValue >> 8U) & 0x00FFU)) ||
-            (RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 2)
+            (RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 2)      
+#endif
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
             || ((RCM_GetPreviousResetSources(rcm_base) & kRCM_SourceWdog) == 0)
 #elif defined(FSL_FEATURE_SOC_SMC_COUNT) && (FSL_FEATURE_SOC_SMC_COUNT > 1) /* MSMC */
@@ -314,13 +311,7 @@ void RTWdogRefreshTest(void)
 int main(void)
 {
     /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    /* Enable RTWDOG clock */
-    CLOCK_EnableClock(kCLOCK_Wdog3);
-    NVIC_EnableIRQ(RTWDOG_IRQn);
+    BOARD_InitHardware();
 
 #if defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)
     if ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag))

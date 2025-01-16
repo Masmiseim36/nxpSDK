@@ -27,12 +27,18 @@
 #include "fsl_loader.h"
 #include "fsl_ocotp.h"
 #else
+#ifdef CONFIG_BT_IND_DNLD
+#include "fw_loader_uart.h"
+#endif
+#include "fwdnld_intf_abs.h"
 #include "mfg_wlan_bt_fw.h"
 #include "wlan.h"
 #include "wifi.h"
 #include "wm_net.h"
 #include <osa.h>
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include "dhcp-server.h"
+#endif
 #include "cli.h"
 #include "wifi_ping.h"
 #include "iperf.h"
@@ -47,28 +53,9 @@
 #endif
 #endif
 
-#if CONFIG_WIFI_SMOKE_TESTS
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#endif
-#if CONFIG_WIFI_SMOKE_TESTS
-#include "fsl_phyksz8081.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* Ethernet configuration. */
-#if CONFIG_WIFI_SMOKE_TESTS
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  BOARD_ENET0_PHY_ADDRESS
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
-#endif
 #define SERIAL_PORT_NVIC_PRIO 5
 
 #if !defined(RW610_SERIES) && !defined(RW612_SERIES)
@@ -113,8 +100,6 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define BUF_LEN         2048
 
 #if defined(RW610_SERIES) || defined(RW612_SERIES)
-#define CONFIG_WIFI_MAX_PRIO (configMAX_PRIORITIES - 1)
-
 #define WM_SUCCESS 0
 #define WM_FAIL    1
 
@@ -134,13 +119,13 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define WIFI_WRITE_REG32(reg, val) (WIFI_REG32(reg) = (val))
 
 /* Set default mode of fw download */
-#if !CONFIG_SUPPORT_WIFI
+#ifndef CONFIG_SUPPORT_WIFI
 #define CONFIG_SUPPORT_WIFI 1
 #endif
-#if !CONFIG_SUPPORT_BLE
+#ifndef CONFIG_SUPPORT_BLE
 #define CONFIG_SUPPORT_BLE 1
 #endif
-#if !CONFIG_SUPPORT_15D4
+#ifndef CONFIG_SUPPORT_15D4
 #define CONFIG_SUPPORT_15D4 1
 #endif
 
@@ -148,7 +133,30 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define WLAN_CAU_TEMPERATURE_ADDR    (0x4500400CU)
 #define WLAN_CAU_TEMPERATURE_FW_ADDR (0x41382490U)
 #define WLAN_FW_WAKE_STATUS_ADDR     (0x40031068U)
+#define WLAN_PMIP_TSEN_ADDR    (0x45004010U)
+#define WLAN_V33_VSEN_ADDR     (0x45004028U)
+#define WLAN_ADC_CTRL_ADDR     (0x45004000U)
 
+#if (CONFIG_SUPPORT_WIFI) && (CONFIG_MONOLITHIC_WIFI)
+extern const uint32_t fw_cpu1[];
+#define WIFI_FW_ADDRESS  (uint32_t)&fw_cpu1[0]
+#else
+#define WIFI_FW_ADDRESS  0U
+#endif
+
+#if (CONFIG_SUPPORT_15D4) && (CONFIG_MONOLITHIC_BLE_15_4)
+extern const uint32_t fw_cpu2_combo[];
+#define COMBO_FW_ADDRESS (uint32_t)&fw_cpu2_combo[0]
+#else
+#define COMBO_FW_ADDRESS   0U
+#endif
+
+#if ((CONFIG_SUPPORT_BLE) && !(CONFIG_SUPPORT_15D4)) && ((CONFIG_MONOLITHIC_BLE) && !(CONFIG_MONOLITHIC_BLE_15_4))
+extern const uint32_t fw_cpu2_ble[];
+#define BLE_FW_ADDRESS   (uint32_t)&fw_cpu2_ble[0]
+#else
+#define BLE_FW_ADDRESS   0U
+#endif
 #endif
 
 enum
@@ -207,7 +215,11 @@ lpuart_rtos_handle_t handle_bt;
 struct _lpuart_handle t_handle_bt;
 
 lpuart_rtos_config_t lpuart_config_bt = {
-    .baudrate    = 115200,
+#ifdef WIFI_BT_USE_M2_INTERFACE
+    .baudrate    = 115200,/* Tested for FC 2EL M2 */
+#else
+    .baudrate    = 3000000,
+#endif
     .parity      = kLPUART_ParityDisabled,
     .stopbits    = kLPUART_OneStopBit,
     .buffer      = background_buffer_bt,
@@ -297,41 +309,26 @@ uint32_t resp_buf_len, reqd_resp_len;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if CONFIG_WIFI_SMOKE_TESTS
-phy_ksz8081_resource_t g_phy_resource;
-
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-#endif
-
 #define MAIN_TASK_STACK_SIZE 4096
 
 static void main_task(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, OSA_PRIORITY_NORMAL, 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(main_task, PRIORITY_RTOS_TO_OSA((configMAX_PRIORITIES - 2)), 1, MAIN_TASK_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(main_task_Handle);
 
 #define SDK_VERSION "NXPSDK_2.15.0_r48.p1"
+
+#ifndef RW610
+/* Callback Function passed to WLAN Connection Manager. The callback function
+ * gets called when there are WLAN Events that need to be handled by the
+ * application.
+ */
+int wlan_event_callback(enum wlan_event_reason reason, void *data)
+{
+    return 0;
+}
+#endif
 
 static void uart_init_crc32(uart_cb *uartcb)
 {
@@ -935,6 +932,29 @@ void wifi_cau_temperature_enable()
     WIFI_WRITE_REG32(WLAN_CAU_ENABLE_ADDR, val);
 }
 
+void wifi_pmip_v33_enable()
+{
+    uint32_t val;
+
+    val = WIFI_REG32(WLAN_PMIP_TSEN_ADDR);
+    val &= ~(0xE);
+    val |= (5 << 1);
+    WIFI_WRITE_REG32(WLAN_PMIP_TSEN_ADDR, val);
+
+    val = WIFI_REG32(WLAN_V33_VSEN_ADDR);
+    val &= ~(0xE);
+    val |= (5 << 1);
+    WIFI_WRITE_REG32(WLAN_V33_VSEN_ADDR, val);
+
+    val = WIFI_REG32(WLAN_ADC_CTRL_ADDR);
+    val |= 1 << 0;
+    WIFI_WRITE_REG32(WLAN_ADC_CTRL_ADDR, val);
+
+    val = WIFI_REG32(WLAN_ADC_CTRL_ADDR);
+    val &= ~(1 << 0);
+    WIFI_WRITE_REG32(WLAN_ADC_CTRL_ADDR, val);
+}
+
 static uint32_t wifi_get_board_type()
 {
     status_t status;
@@ -1021,6 +1041,15 @@ static void main_task(osa_task_param_t arg)
 #endif
 
 #if !defined(RW610_SERIES) && !defined(RW612_SERIES)
+#ifdef CONFIG_BT_IND_DNLD
+    void *intf = NULL;
+    /* BTonly firmware download over UART */
+    BOARD_WIFI_BT_Enable(true);
+    intf = (void *)uart_init_interface();
+    assert(intf != NULL);
+    result = firmware_download(bt_fw_bin, bt_fw_bin_len, intf, 0);
+    assert(result == FWDNLD_INTF_SUCCESS);
+#else
     result = wifi_init_fcc(wlan_fw_bin, wlan_fw_bin_len);
     if (result != 0)
     {
@@ -1044,6 +1073,7 @@ static void main_task(osa_task_param_t arg)
     }
 
     assert(WM_SUCCESS == result);
+#endif /* CONFIG_BT_IND_DNLD */
 #endif
 
 #if defined(RW610_SERIES) || defined(RW612_SERIES)
@@ -1058,7 +1088,7 @@ static void main_task(osa_task_param_t arg)
 #else
     NVIC_SetPriority(LPUART1_IRQn, 5);
 #if defined(MIMXRT1176_cm7_SERIES)
-    NVIC_SetPriority(LPUART7_IRQn, HAL_UART_ISR_PRIORITY);
+    NVIC_SetPriority(LPUART2_IRQn, HAL_UART_ISR_PRIORITY);
 #else
     NVIC_SetPriority(LPUART3_IRQn, HAL_UART_ISR_PRIORITY);
 #endif
@@ -1073,7 +1103,7 @@ static void main_task(osa_task_param_t arg)
 
     lpuart_config_bt.srcclk = BOARD_BT_UART_CLK_FREQ;
 #if defined(MIMXRT1176_cm7_SERIES)
-    lpuart_config_bt.base   = LPUART7;
+    lpuart_config_bt.base   = LPUART2;
 #else
     lpuart_config_bt.base = LPUART3;
 #endif
@@ -1103,27 +1133,28 @@ static void main_task(osa_task_param_t arg)
     "One of CONFIG_SUPPORT_WIFI CONFIG_SUPPORT_15D4 and CONFIG_SUPPORT_BLE should be defined, or it will not download any formware!!"
 #endif
 #if (CONFIG_SUPPORT_WIFI) && (CONFIG_SUPPORT_WIFI == 1)
-    sb3_fw_download(LOAD_WIFI_FIRMWARE, 1, 0);
+    sb3_fw_reset(LOAD_WIFI_FIRMWARE, 1, WIFI_FW_ADDRESS);
 #endif
 
     wifi_cau_temperature_enable();
+    wifi_pmip_v33_enable();
     wifi_cau_temperature_write_to_firmware();
 
+#if (CONFIG_SUPPORT_15D4 == 1)
     /* 15d4 single and 15d4+ble combo */
-#if (CONFIG_SUPPORT_15D4) && (CONFIG_SUPPORT_15D4 == 1)
-    sb3_fw_download(LOAD_15D4_FIRMWARE, 1, 0);
-#endif
+    sb3_fw_reset(LOAD_15D4_FIRMWARE, 1, COMBO_FW_ADDRESS);
+#elif (CONFIG_SUPPORT_BLE == 1)
     /* only ble, no 15d4 */
-#if (CONFIG_SUPPORT_15D4) && (CONFIG_SUPPORT_15D4 == 0) && (CONFIG_SUPPORT_BLE) && (CONFIG_SUPPORT_BLE == 1)
-    sb3_fw_download(LOAD_BLE_FIRMWARE, 1, 0);
+    sb3_fw_reset(LOAD_BLE_FIRMWARE, 1, BLE_FW_ADDRESS);
 #endif
 
     /* Initialize WIFI Driver */
     imu_wifi_config();
 
+#if (CONFIG_SUPPORT_15D4 == 1) || (CONFIG_SUPPORT_BLE == 1)
     /* Initialize imumc */
     imumc_init();
-
+#endif
     /* Initialize CAU temperature timer */
     g_wifi_cau_temperature_timer =
         xTimerCreate("CAU Timer", 5000 / portTICK_PERIOD_MS, pdTRUE, NULL, wifi_cau_temperature_timer_cb);
@@ -1237,34 +1268,12 @@ int main(void)
     BOARD_InitPins();
     BOARD_InitBootClocks();
     BOARD_InitBTUARTPins();
+    BOARD_InitPinsM2();
     BOARD_InitDebugConsole();
     BOARD_InitSpiPins();
 #else
     extern void BOARD_InitHardware(void);
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-#if CONFIG_WIFI_SMOKE_TESTS
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* Pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
-#endif
+    BOARD_InitHardware();
 #endif
 
     status = OSA_TaskCreate((osa_task_handle_t)main_task_Handle, OSA_TASK(main_task), NULL);

@@ -17,28 +17,13 @@
 #include "fsl_gpt.h"
 #include "fsl_lpuart.h"
 #include "specific.h"
-
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "peripherals.h"
+
 #include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CPU_NAME "iMXRT1011"
-
-#define APP_WAKEUP_BUTTON_GPIO        GPIO1
-#define APP_WAKEUP_BUTTON_GPIO_PIN    0
-#define APP_WAKEUP_BUTTON_IRQ         GPIO1_Combined_0_15_IRQn
-#define APP_WAKEUP_BUTTON_IRQ_HANDLER GPIO1_Combined_0_15_IRQHandler
-#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
-
-#define APP_WAKEUP_GPT_BASE         GPT2
-#define APP_WAKEUP_GPT_IRQn         GPT2_IRQn
-#define APP_WAKEUP_GPT_IRQn_HANDLER GPT2_IRQHandler
-
-#define APP_WAKEUP_SNVS_IRQ         SNVS_HP_WRAPPER_IRQn
-#define APP_WAKEUP_SNVS_IRQ_HANDLER SNVS_HP_WRAPPER_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -58,71 +43,6 @@ static const char *s_modeNames[] = {"Over RUN",    "Full Run",       "Low Speed 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void SetLowPowerClockGate(void)
-{
-    CLOCK_ControlGate(kCLOCK_Aips_tz1, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Aips_tz2, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Mqs, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_FlexSpiExsc, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Dcp, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Lpuart3, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Trace, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Gpt2, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Gpt2S, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Lpuart2, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Gpio2, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Lpspi1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Lpspi2, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Pit, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Adc1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Gpt1, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Gpt1S, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Lpuart4, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Gpio1, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Csu, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Gpio5, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_OcramExsc, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_IomuxcSnvs, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Lpi2c1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Lpi2c2, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Ocotp, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Xbar1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Ewm0, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Wdog1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_FlexRam, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_IomuxcSnvsGpr, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Sim_m7_clk_r, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Iomuxc, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_IomuxcGpr, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_SimM7, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_SimM, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_SimEms, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Pwm1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Rom, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Flexio1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Wdog3, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Dma, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Kpp, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Wdog2, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Spdif, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Sai1, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Sai3, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Lpuart1, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_SnvsHp, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_SnvsLp, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_UsbOh3, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_Dcdc, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_FlexSpi, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Trng, kCLOCK_ClockNotNeeded);
-    CLOCK_ControlGate(kCLOCK_SimPer, kCLOCK_ClockNeededRun);
-    CLOCK_ControlGate(kCLOCK_Anadig, kCLOCK_ClockNeededRun);
-}
-
-void PowerDownUSBPHY(void)
-{
-    USBPHY->CTRL = 0xFFFFFFFFU;
-}
-
 void APP_WAKEUP_GPT_IRQn_HANDLER(void)
 {
     GPT_ClearStatusFlags(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare1Flag);
@@ -537,28 +457,7 @@ int main(void)
     BaseType_t xReturn;
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-
-    /* When wakeup from suspend, peripheral's doze & stop requests won't be cleared, need to clear them manually */
-    IOMUXC_GPR->GPR4  = 0;
-    IOMUXC_GPR->GPR7  = 0;
-    IOMUXC_GPR->GPR8  = 0;
-    IOMUXC_GPR->GPR12 = 0;
-
-    /* Configure UART divider to default */
-    CLOCK_SetMux(kCLOCK_UartMux, 1); /* Set UART source to OSC 24M */
-    CLOCK_SetDiv(kCLOCK_UartDiv, 0); /* Set UART divider to 1 */
-
-    BOARD_InitDebugConsole();
-    BOARD_InitBootPeripherals();
-    /* Disable clock gates which are not used in this application. User should modify this function based on application
-     * requirement. */
-    SetLowPowerClockGate();
-    /* USBPHY is not used in this application. */
-    CLOCK_DisableUsbhs0PhyPllClock();
-    PowerDownUSBPHY();
+    BOARD_InitHardware();
 
     PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);
 

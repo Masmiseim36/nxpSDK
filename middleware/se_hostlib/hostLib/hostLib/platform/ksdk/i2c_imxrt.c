@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2018,2020 NXP
+ * Copyright 2018,2020,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "board.h"
 #include "se_board_config.h"
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && FSL_FEATURE_SOC_LPI2C_COUNT > 0
+#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && FSL_FEATURE_SOC_LPI2C_COUNT > 0 && defined(IMX_RT)
 #include "i2c_a7.h"
 #include "fsl_clock.h"
 #include "fsl_debug_console.h"
@@ -24,7 +24,8 @@
 #define I2C_BAUDRATE (400u * 1000u) // 400K
 #elif defined(T1oI2C)
 //#define I2C_BAUDRATE (3400u * 1000u) // 3.4. Not used by default
-#define I2C_BAUDRATE (400u * 1000u) // 400K
+// #define I2C_BAUDRATE (400u * 1000u) // 400K
+#define I2C_BAUDRATE (100u * 1000u)    // 100K
 #else
 #error "Invalid combination"
 #endif
@@ -122,6 +123,8 @@ static i2c_error_t kinetisI2cStatusToAxStatus(
     case kStatus_LPI2C_Nak:
         if(address_nack)
         {
+            /* Workaround to send Master stop if NAK received */
+            LPI2C_MasterStop(AX_I2CM);
             BackOffDelay_Wait();
             retStatus = I2C_NACK_ON_ADDRESS;
             address_nack = 0;
@@ -159,11 +162,11 @@ i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName)
 {
     lpi2c_master_config_t masterConfig;
     LPI2C_MasterGetDefaultConfig(&masterConfig);
-/*    masterConfig.enableDoze = false;
+    masterConfig.enableDoze = false;
     masterConfig.debugEnable = true;
     masterConfig.baudRate_Hz = I2C_BAUDRATE;
-    masterConfig.sdaGlitchFilterWidth_ns = 150;
-    masterConfig.sclGlitchFilterWidth_ns = 150;*/
+    // masterConfig.sdaGlitchFilterWidth_ns = 150;
+    // masterConfig.sclGlitchFilterWidth_ns = 150;
     uint32_t sourceClock = LPI2C_CLOCK_FREQUENCY;//CLOCK_GetFreq(AX_LPI2C_CLK_SRC);
 #if defined(SDK_OS_FREE_RTOS) && (SDK_OS_FREE_RTOS == 1)
     NVIC_SetPriority(AX_I2CM_IRQN, 3);
@@ -309,13 +312,11 @@ unsigned int axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, un
 
     I2CM_TX();
 
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
     uint32_t status = LPI2C_MasterGetStatusFlags(AX_I2CM);
-    status &= kLPI2C_MasterBusyFlag | kLPI2C_MasterBusBusyFlag;
+    status &= kLPI2C_MasterBusyFlag | kLPI2C_MasterBusBusyFlag | kLPI2C_MasterNackDetectFlag;
     if (status) {
         address_nack = 1;
     }
-#endif
 
     DEBUG_PRINT_KINETIS_I2C("RD",result);
     RETURN_ON_BAD_kinetisI2cStatus(result);

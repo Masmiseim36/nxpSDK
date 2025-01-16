@@ -1,54 +1,18 @@
-Overview
-========
+# dcp
+
+## Overview
 The DCP Example project is a demonstration program that uses the KSDK software implement
 several cryptography algorithms using the DCP software driver.
 
 Note: Intput data and output buffer has to be in non-cached memory space.
 
-SDK version
-===========
-- Version: 2.16.000
-
-Toolchain supported
-===================
-- GCC ARM Embedded  13.2.1
-- IAR embedded Workbench  9.60.1
-- Keil MDK  5.39.0
-- MCUXpresso  11.10.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- MIMXRT1040-EVK board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Running the demo
-================
-Example output on terminal:
-
-DCP Driver Example
-
-AES ECB Test pass
-AES CBC Test pass
-SHA-1 Test pass
-SHA-256 Test pass
-CRC Test pass
-
-Note:
-There will be no log printed when downloading by IAR or keil. This issue will be fixed in later release.
+## Supported Boards
+- [EVKB-IMXRT1050](../../_boards/evkbimxrt1050/driver_examples/dcp/example_board_readme.md)
+- [MIMXRT1060-EVKB](../../_boards/evkbmimxrt1060/driver_examples/dcp/example_board_readme.md)
+- [MIMXRT1060-EVKC](../../_boards/evkcmimxrt1060/driver_examples/dcp/example_board_readme.md)
+- [EVK-MIMXRT1010](../../_boards/evkmimxrt1010/driver_examples/dcp/example_board_readme.md)
+- [EVK-MIMXRT1015](../../_boards/evkmimxrt1015/driver_examples/dcp/example_board_readme.md)
+- [EVK-MIMXRT1020](../../_boards/evkmimxrt1020/driver_examples/dcp/example_board_readme.md)
+- [MIMXRT1024-EVK](../../_boards/evkmimxrt1024/driver_examples/dcp/example_board_readme.md)
+- [MIMXRT1040-EVK](../../_boards/evkmimxrt1040/driver_examples/dcp/example_board_readme.md)
+- [EVK-MIMXRT1064](../../_boards/evkmimxrt1064/driver_examples/dcp/example_board_readme.md)

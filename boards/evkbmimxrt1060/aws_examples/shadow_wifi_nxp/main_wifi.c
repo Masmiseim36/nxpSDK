@@ -1,7 +1,7 @@
 /*
  * Lab-Project-coreMQTT-Agent 201215
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2022-2023 NXP
+ * Copyright 2022-2024 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -30,7 +30,6 @@
 
 #include "fsl_debug_console.h"
 #include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 
 #if defined(MBEDTLS_MCUX_ELE_S400_API)
@@ -38,12 +37,16 @@
 #elif defined(MBEDTLS_MCUX_ELS_PKC_API)
 #include "platform_hw_ip.h"
 #include "els_pkc_mbedtls.h"
+#elif defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+#include "psa/crypto.h"
+#include "threading_alt.h"
 #else
 #include "ksdk_mbedtls.h"
 #endif
 
 #include "mflash_file.h"
 #include "kvstore.h"
+#include "app.h"
 
 #include "mqtt_agent_task.h"
 #include "aws_dev_mode_key_provisioning.h"
@@ -52,11 +55,11 @@
 #include "aws_clientcredential.h"
 #include "wpl.h"
 
-#include "fsl_common.h"
+#include "logging.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 /**
  * @brief Stack size and priority for shadow device sync task.
  */
@@ -76,7 +79,9 @@
  * higher than other MQTT application tasks, so that the agent can drain the queue
  * as work is being produced.
  */
+#ifndef appmainMQTT_AGENT_TASK_STACK_SIZE
 #define appmainMQTT_AGENT_TASK_STACK_SIZE (2048)
+#endif
 #define appmainMQTT_AGENT_TASK_PRIORITY   (tskIDLE_PRIORITY + 2)
 
 #define INIT_TASK_STACK_SIZE (1024)
@@ -111,14 +116,16 @@ static const mflash_file_t dir_template[] = {{.path = KVSTORE_FILE_PATH, .max_si
  */
 int main(void)
 {
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    BOARD_InitHardware();
 
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    config_mbedtls_threading_alt();
+    if (psa_crypto_init( ) != PSA_SUCCESS)
+#else
     if (CRYPTO_InitHardware() != 0)
+#endif
     {
-        PRINTF(("\r\nFailed to initialize MBEDTLS crypto.\r\n"));
+        PRINTF("\r\nFailed to initialize MBEDTLS crypto.\r\n");
         while (true)
         {
         }
@@ -181,7 +188,7 @@ void init_task(void *pvParameters)
 
     if (xResult == pdFAIL)
     {
-        configPRINTF(("Failed to initialize key value configuration store.\r\n"));
+        vLoggingPrintf("Failed to initialize key value configuration store.\r\n");
     }
 
     if (xResult == pdPASS)
@@ -268,7 +275,7 @@ void vApplicationMallocFailedHook()
  * used by the Idle task. */
 void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
                                    StackType_t **ppxIdleTaskStackBuffer,
-                                   uint32_t *pulIdleTaskStackSize)
+                                   configSTACK_DEPTH_TYPE *pulIdleTaskStackSize)
 {
     /* If the buffers to be provided to the Idle task are declared inside this
      * function then they must be declared static - otherwise they will be allocated on
@@ -299,7 +306,7 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
  */
 void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
                                     StackType_t **ppxTimerTaskStackBuffer,
-                                    uint32_t *pulTimerTaskStackSize)
+                                    configSTACK_DEPTH_TYPE *pulTimerTaskStackSize)
 {
     /* If the buffers to be provided to the Timer task are declared inside this
      * function then they must be declared static - otherwise they will be allocated on
@@ -343,7 +350,7 @@ int init_network(void)
     uint32_t result;
 
     /* Initialize Wi-Fi */
-    configPRINTF(("Initializing Wi-Fi...\r\n"));
+    vLoggingPrintf("Initializing Wi-Fi...\r\n");
 
     result = WPL_Init();
     if (result != WPLRET_SUCCESS)
@@ -359,7 +366,7 @@ int init_network(void)
         return kStatus_Fail;
     }
 
-    configPRINTF(("Wi-Fi initialized successfully.\r\n"));
+    vLoggingPrintf("Wi-Fi initialized successfully.\r\n");
 
     /* Add Wi-Fi network */
     result = WPL_AddNetwork(clientcredentialWIFI_SSID, clientcredentialWIFI_PASSWORD, WIFI_NETWORK_LABEL);
@@ -369,14 +376,14 @@ int init_network(void)
         return kStatus_Fail;
     }
 
-    configPRINTF(("Connecting to: %s\r\n", clientcredentialWIFI_SSID));
+    vLoggingPrintf("Connecting to: %s\r\n", clientcredentialWIFI_SSID);
     result = WPL_Join(WIFI_NETWORK_LABEL);
     if (result != WPLRET_SUCCESS)
     {
         PRINTF("WPL_Join failed: %d\r\n", result);
         return kStatus_Fail;
     }
-    configPRINTF(("Wi-Fi connected\r\n"));
+    vLoggingPrintf("Wi-Fi connected\r\n");
 
     /* Get IP Address */
     char ip[16] = {0};
@@ -386,7 +393,7 @@ int init_network(void)
         PRINTF("WPL_GetIP failed: %d\r\n", result);
         return kStatus_Fail;
     }
-    configPRINTF(("IP Address acquired: %s\r\n", ip));
+    vLoggingPrintf("IP Address acquired: %s\r\n", ip);
 
     return kStatus_Success;
 }

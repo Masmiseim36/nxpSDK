@@ -14,13 +14,13 @@
 #include <ctype.h>
 
 #include "httpsclient.h"
-#include "pin_mux.h"
 #include "board.h"
 #include "lwip/netifapi.h"
 #include "lwip/opt.h"
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
+#include "app.h"
 #include "mflash_drv.h"
 #include "fsl_debug_console.h"
 #include "ota_config.h"
@@ -35,24 +35,9 @@
 #include "wpl.h"
 #endif
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "fsl_phyksz8081.h"
-#include "ksdk_mbedtls.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* Ethernet configuration. */
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  BOARD_ENET0_PHY_ADDRESS
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
-
 
 /*******************************************************************************
  * Prototypes
@@ -71,7 +56,6 @@ static shell_status_t shellCmd_wifi(shell_handle_t shellHandle, int32_t argc, ch
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 
 static SHELL_COMMAND_DEFINE(ota,
                             "\n\"ota <imageNumber> <filePath> <host> <port>\": Starts download of OTA image\n",
@@ -108,29 +92,6 @@ static shell_handle_t s_shellHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
-
 
 #ifdef WIFI_MODE
 static shell_status_t shellCmd_wifi(shell_handle_t shellHandle, int32_t argc, char **argv)
@@ -510,23 +471,7 @@ failed_init:
  */
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
     CRYPTO_InitHardware();
 
     mflash_drv_init();

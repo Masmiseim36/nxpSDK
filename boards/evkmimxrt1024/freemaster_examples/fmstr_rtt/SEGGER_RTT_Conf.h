@@ -55,6 +55,11 @@ Revision: $Rev: 21386 $
 
 */
 
+/*
+ * Copyright 2024 NXP
+ * FreeMASTER RTT Configuration File
+ */
+
 #ifndef SEGGER_RTT_CONF_H
 #define SEGGER_RTT_CONF_H
 
@@ -77,7 +82,9 @@ Revision: $Rev: 21386 $
 
 // Put RTT control block variable to noncacheable memory section
 #ifdef DATA_SECTION_IS_CACHEABLE
+#ifndef SEGGER_RTT_SECTION
   #define SEGGER_RTT_SECTION "DataQuickAccess"
+#endif
 #endif
 
 //

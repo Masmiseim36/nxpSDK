@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2022, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -224,7 +224,7 @@ uint32_t LPI2C_GetInstance(LPI2C_Type *base)
     uint32_t instance;
     for (instance = 0U; instance < ARRAY_SIZE(kLpi2cBases); ++instance)
     {
-        if (kLpi2cBases[instance] == base)
+        if (MSDK_REG_SECURE_ADDR(kLpi2cBases[instance]) == MSDK_REG_SECURE_ADDR(base))
         {
             break;
         }
@@ -532,7 +532,7 @@ void LPI2C_MasterInit(LPI2C_Type *base, const lpi2c_master_config_t *masterConfi
     }
     if (0U != masterConfig->sclGlitchFilterWidth_ns)
     {
-        /* Calculate SDL filter width. The width is equal to FILTSCL cycles of functional clock.
+        /* Calculate SCL filter width. The width is equal to FILTSCL cycles of functional clock.
            And set FILTSCL to 0 disables the fileter, so the min value is 1. */
         cycles = LPI2C_GetCyclesForWidth(sourceClock_Hz, masterConfig->sclGlitchFilterWidth_ns, 1U,
                                          (LPI2C_MCFGR2_FILTSCL_MASK >> LPI2C_MCFGR2_FILTSCL_SHIFT), 0U);
@@ -1021,7 +1021,6 @@ status_t LPI2C_MasterTransferBlocking(LPI2C_Type *base, lpi2c_master_transfer_t 
     assert(transfer->subaddressSize <= sizeof(transfer->subaddress));
 
     status_t result = kStatus_Success;
-    status_t ret    = kStatus_Success;
     uint16_t commandBuffer[7];
     uint32_t cmdCount = 0U;
 
@@ -1129,11 +1128,7 @@ status_t LPI2C_MasterTransferBlocking(LPI2C_Type *base, lpi2c_master_transfer_t 
         {
             if ((transfer->flags & (uint32_t)kLPI2C_TransferNoStopFlag) == 0U)
             {
-                ret = LPI2C_MasterStop(base);
-                if (kStatus_Success != ret)
-                {
-                    result = ret;
-                }
+                (void)LPI2C_MasterStop(base);
             }
         }
     }
@@ -1828,8 +1823,8 @@ void LPI2C_SlaveGetDefaultConfig(lpi2c_slave_config_t *slaveConfig)
  */
 void LPI2C_SlaveInit(LPI2C_Type *base, const lpi2c_slave_config_t *slaveConfig, uint32_t sourceClock_Hz)
 {
-    uint32_t tmpReg;
-    uint32_t tmpCycle;
+    uint32_t tmpReg = 0U;
+    uint32_t tmpCycle = 0U;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 
@@ -1861,18 +1856,30 @@ void LPI2C_SlaveInit(LPI2C_Type *base, const lpi2c_slave_config_t *slaveConfig, 
         LPI2C_SCFGR1_RXSTALL(slaveConfig->sclStall.enableRx) |
         LPI2C_SCFGR1_ADRSTALL(slaveConfig->sclStall.enableAddress);
 
-    /* Calculate SDA filter width. The width is equal to FILTSDA+3 cycles of functional clock.
-       And set FILTSDA to 0 disables the fileter, so the min value is 4. */
-    tmpReg = LPI2C_SCFGR2_FILTSDA(
-        LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sdaGlitchFilterWidth_ns, 4U,
-                                (LPI2C_SCFGR2_FILTSDA_MASK >> LPI2C_SCFGR2_FILTSDA_SHIFT) + 3U, 0U) -
-        3U);
+    if (slaveConfig->sdaGlitchFilterWidth_ns > 0U)
+    {
+        /* Calculate SDA filter width. The width is equal to FILTSDA+3 cycles of functional clock.
+           And set FILTSDA to 0 disables the fileter, so the min value is 4. */
+        tmpReg = LPI2C_SCFGR2_FILTSDA(
+            LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sdaGlitchFilterWidth_ns, 4U,
+                                    (LPI2C_SCFGR2_FILTSDA_MASK >> LPI2C_SCFGR2_FILTSDA_SHIFT) + 3U, 0U) -
+            3U);
+    }
+    else
+    {
+    }
 
-    /* Calculate SDL filter width. The width is equal to FILTSCL+3 cycles of functional clock.
-       And set FILTSCL to 0 disables the fileter, so the min value is 4. */
-    tmpCycle = LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sclGlitchFilterWidth_ns, 4U,
-                                       (LPI2C_SCFGR2_FILTSCL_MASK >> LPI2C_SCFGR2_FILTSCL_SHIFT) + 3U, 0U);
-    tmpReg |= LPI2C_SCFGR2_FILTSCL(tmpCycle - 3U);
+    if (slaveConfig->sclGlitchFilterWidth_ns > 0U)
+    {
+        /* Calculate SCL filter width. The width is equal to FILTSCL+3 cycles of functional clock.
+           And set FILTSCL to 0 disables the fileter, so the min value is 4. */
+        tmpCycle = LPI2C_GetCyclesForWidth(sourceClock_Hz, slaveConfig->sclGlitchFilterWidth_ns, 4U,
+                                           (LPI2C_SCFGR2_FILTSCL_MASK >> LPI2C_SCFGR2_FILTSCL_SHIFT) + 3U, 0U);
+        tmpReg |= LPI2C_SCFGR2_FILTSCL(tmpCycle - 3U);
+    }
+    else
+    {
+    }
 
     /* Calculate data valid time. The time is equal to FILTSCL+DATAVD+3 cycles of functional clock.
        So the min value is FILTSCL+3. */
@@ -2581,6 +2588,24 @@ void LPI2C6_DriverIRQHandler(void);
 void LPI2C6_DriverIRQHandler(void)
 {
     LPI2C_CommonIRQHandler(LPI2C6, 6U);
+}
+#endif
+
+#if defined(LPI2C7)
+/* Implementation of LPI2C7 handler named in startup code. */
+void LPI2C7_DriverIRQHandler(void);
+void LPI2C7_DriverIRQHandler(void)
+{
+    LPI2C_CommonIRQHandler(LPI2C7, 7U);
+}
+#endif
+
+#if defined(LPI2C8)
+/* Implementation of LPI2C8 handler named in startup code. */
+void LPI2C8_DriverIRQHandler(void);
+void LPI2C8_DriverIRQHandler(void)
+{
+    LPI2C_CommonIRQHandler(LPI2C8, 8U);
 }
 #endif
 

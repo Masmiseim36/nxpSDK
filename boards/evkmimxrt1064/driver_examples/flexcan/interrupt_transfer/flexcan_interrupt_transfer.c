@@ -8,33 +8,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN2
-
-/* Considering that the first valid MB must be used as Reserved TX MB for ERR005829,
- * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
- * the first valid TX MB Number shall be 8;
- * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other values (0x1~0xF),
- * the user should consider to detail the first valid MB number;
- * if RX FIFO disables (RFEN bit in MCE set as 0) , the first valid MB number would be zero.
- */
-#define RX_MESSAGE_BUFFER_NUM (10)
-#define TX_MESSAGE_BUFFER_NUM (9)
-
-/* Select 60M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_DIVIDER (2U)
-/* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
-#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 #if (defined(USE_CANFD) && USE_CANFD)
@@ -77,177 +56,10 @@ uint32_t rxIdentifier;
  * Code
  ******************************************************************************/
 /*!
- * @brief FlexCAN Call Back function
+ * @brief CAN transceiver configuration function
  */
-static FLEXCAN_CALLBACK(flexcan_callback)
+static void FLEXCAN_PHY_Config(void)
 {
-    switch (status)
-    {
-        case kStatus_FLEXCAN_RxIdle:
-            if (RX_MESSAGE_BUFFER_NUM == result)
-            {
-                rxComplete = true;
-            }
-            break;
-
-        case kStatus_FLEXCAN_TxIdle:
-            if (TX_MESSAGE_BUFFER_NUM == result)
-            {
-                txComplete = true;
-            }
-            break;
-
-        case kStatus_FLEXCAN_WakeUp:
-            wakenUp = true;
-            break;
-
-        default:
-            break;
-    }
-}
-
-/*!
- * @brief Main function
- */
-int main(void)
-{
-    flexcan_config_t flexcanConfig;
-    flexcan_rx_mb_config_t mbConfig;
-    uint8_t node_type;
-
-    /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for FLEXCAN*/
-    CLOCK_SetMux(kCLOCK_CanMux, FLEXCAN_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_CanDiv, FLEXCAN_CLOCK_SOURCE_DIVIDER);
-
-    LOG_INFO("********* FLEXCAN Interrupt EXAMPLE *********\r\n");
-    LOG_INFO("    Message format: Standard (11 bit id)\r\n");
-    LOG_INFO("    Message buffer %d used for Rx.\r\n", RX_MESSAGE_BUFFER_NUM);
-    LOG_INFO("    Message buffer %d used for Tx.\r\n", TX_MESSAGE_BUFFER_NUM);
-    LOG_INFO("    Interrupt Mode: Enabled\r\n");
-    LOG_INFO("    Operation Mode: TX and RX --> Normal\r\n");
-    LOG_INFO("*********************************************\r\n\r\n");
-
-    do
-    {
-        LOG_INFO("Please select local node as A or B:\r\n");
-        LOG_INFO("Note: Node B should start first.\r\n");
-        LOG_INFO("Node:");
-        node_type = GETCHAR();
-        LOG_INFO("%c", node_type);
-        LOG_INFO("\r\n");
-    } while ((node_type != 'A') && (node_type != 'B') && (node_type != 'a') && (node_type != 'b'));
-
-    /* Select mailbox ID. */
-    if ((node_type == 'A') || (node_type == 'a'))
-    {
-        txIdentifier = 0x321;
-        rxIdentifier = 0x123;
-    }
-    else
-    {
-        txIdentifier = 0x123;
-        rxIdentifier = 0x321;
-    }
-
-    /* Get FlexCAN module default Configuration. */
-    /*
-     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
-     * flexcanConfig.bitRate               = 1000000U;
-     * flexcanConfig.bitRateFD             = 2000000U;
-     * flexcanConfig.maxMbNum               = 16;
-     * flexcanConfig.enableLoopBack         = false;
-     * flexcanConfig.enableSelfWakeup       = false;
-     * flexcanConfig.enableIndividMask      = false;
-     * flexcanConfig.disableSelfReception   = false;
-     * flexcanConfig.enableListenOnlyMode   = false;
-     * flexcanConfig.enableDoze             = false;
-     */
-    FLEXCAN_GetDefaultConfig(&flexcanConfig);
-
-    flexcanConfig.bitRate = 500000U;
-
-#if defined(EXAMPLE_CAN_CLK_SOURCE)
-    flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
-#endif
-
-#if defined(EXAMPLE_CAN_BIT_RATE)
-    flexcanConfig.bitRate = EXAMPLE_CAN_BIT_RATE;
-#endif
-
-/* If special quantum setting is needed, set the timing parameters. */
-#if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
-    flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
-    flexcanConfig.timingConfig.phaseSeg2 = PSEG2;
-    flexcanConfig.timingConfig.propSeg   = PROPSEG;
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
-    flexcanConfig.timingConfig.fphaseSeg1 = FPSEG1;
-    flexcanConfig.timingConfig.fphaseSeg2 = FPSEG2;
-    flexcanConfig.timingConfig.fpropSeg   = FPROPSEG;
-#endif
-#endif
-
-#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
-    flexcan_timing_config_t timing_config;
-    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
-#if (defined(USE_CANFD) && USE_CANFD)
-    if (FLEXCAN_FDCalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.bitRate, flexcanConfig.bitRateFD,
-                                                EXAMPLE_CAN_CLK_FREQ, &timing_config))
-    {
-        /* Update the improved timing configuration*/
-        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
-    }
-    else
-    {
-        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
-    }
-#else
-    if (FLEXCAN_CalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.bitRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
-    {
-        /* Update the improved timing configuration*/
-        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
-    }
-    else
-    {
-        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
-    }
-#endif
-#endif
-
-#if (defined(USE_CANFD) && USE_CANFD)
-    FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, true);
-#else
-    FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
-#endif
-
-    /* Create FlexCAN handle structure and set call back function. */
-    FLEXCAN_TransferCreateHandle(EXAMPLE_CAN, &flexcanHandle, flexcan_callback, NULL);
-
-    /* Set Rx Masking mechanism. */
-    FLEXCAN_SetRxMbGlobalMask(EXAMPLE_CAN, FLEXCAN_RX_MB_STD_MASK(rxIdentifier, 0, 0));
-
-    /* Setup Rx Message Buffer. */
-    mbConfig.format = kFLEXCAN_FrameFormatStandard;
-    mbConfig.type   = kFLEXCAN_FrameTypeData;
-    mbConfig.id     = FLEXCAN_ID_STD(rxIdentifier);
-#if (defined(USE_CANFD) && USE_CANFD)
-    FLEXCAN_SetFDRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
-#else
-    FLEXCAN_SetRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
-#endif
-
-/* Setup Tx Message Buffer. */
-#if (defined(USE_CANFD) && USE_CANFD)
-    FLEXCAN_SetFDTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
-#else
-    FLEXCAN_SetTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
-#endif
-
 #if (defined(USE_PHY_TJA1152) && USE_PHY_TJA1152)
     /* Initialize TJA1152. */
     /* STB=H, configuration CAN messages are expected from the local host via TXD pin. */
@@ -343,6 +155,175 @@ int main(void)
     RGPIO_PortClear(EXAMPLE_STB_RGPIO, 1u << EXAMPLE_STB_RGPIO_PIN);
     /* Initialize TJA1152 end. */
 #endif
+}
+
+/*!
+ * @brief FlexCAN Call Back function
+ */
+static FLEXCAN_CALLBACK(flexcan_callback)
+{
+    switch (status)
+    {
+        case kStatus_FLEXCAN_RxIdle:
+            if (RX_MESSAGE_BUFFER_NUM == result)
+            {
+                rxComplete = true;
+            }
+            break;
+
+        case kStatus_FLEXCAN_TxIdle:
+            if (TX_MESSAGE_BUFFER_NUM == result)
+            {
+                txComplete = true;
+            }
+            break;
+
+        case kStatus_FLEXCAN_WakeUp:
+            wakenUp = true;
+            break;
+
+        default:
+            break;
+    }
+}
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    flexcan_config_t flexcanConfig;
+    flexcan_rx_mb_config_t mbConfig;
+    uint8_t node_type;
+
+    /* Initialize board hardware. */
+    BOARD_InitHardware(); 
+
+    LOG_INFO("********* FLEXCAN Interrupt EXAMPLE *********\r\n");
+    LOG_INFO("    Message format: Standard (11 bit id)\r\n");
+    LOG_INFO("    Message buffer %d used for Rx.\r\n", RX_MESSAGE_BUFFER_NUM);
+    LOG_INFO("    Message buffer %d used for Tx.\r\n", TX_MESSAGE_BUFFER_NUM);
+    LOG_INFO("    Interrupt Mode: Enabled\r\n");
+    LOG_INFO("    Operation Mode: TX and RX --> Normal\r\n");
+    LOG_INFO("*********************************************\r\n\r\n");
+
+    do
+    {
+        LOG_INFO("Please select local node as A or B:\r\n");
+        LOG_INFO("Note: Node B should start first.\r\n");
+        LOG_INFO("Node:");
+        node_type = GETCHAR();
+        LOG_INFO("%c", node_type);
+        LOG_INFO("\r\n");
+    } while ((node_type != 'A') && (node_type != 'B') && (node_type != 'a') && (node_type != 'b'));
+
+    /* Select mailbox ID. */
+    if ((node_type == 'A') || (node_type == 'a'))
+    {
+        txIdentifier = 0x321;
+        rxIdentifier = 0x123;
+    }
+    else
+    {
+        txIdentifier = 0x123;
+        rxIdentifier = 0x321;
+    }
+
+    /* Get FlexCAN module default Configuration. */
+    /*
+     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
+     * flexcanConfig.bitRate                = 1000000U;
+     * flexcanConfig.bitRateFD              = 2000000U;
+     * flexcanConfig.maxMbNum               = 16;
+     * flexcanConfig.enableLoopBack         = false;
+     * flexcanConfig.enableSelfWakeup       = false;
+     * flexcanConfig.enableIndividMask      = false;
+     * flexcanConfig.disableSelfReception   = false;
+     * flexcanConfig.enableListenOnlyMode   = false;
+     * flexcanConfig.enableDoze             = false;
+     */
+    FLEXCAN_GetDefaultConfig(&flexcanConfig);
+
+    flexcanConfig.bitRate = 500000U;
+
+#if defined(EXAMPLE_CAN_CLK_SOURCE)
+    flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
+#endif
+
+#if defined(EXAMPLE_CAN_BIT_RATE)
+    flexcanConfig.bitRate = EXAMPLE_CAN_BIT_RATE;
+#endif
+
+    /* If special quantum setting is needed, set the timing parameters. */
+#if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
+    flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
+    flexcanConfig.timingConfig.phaseSeg2 = PSEG2;
+    flexcanConfig.timingConfig.propSeg   = PROPSEG;
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+    flexcanConfig.timingConfig.fphaseSeg1 = FPSEG1;
+    flexcanConfig.timingConfig.fphaseSeg2 = FPSEG2;
+    flexcanConfig.timingConfig.fpropSeg   = FPROPSEG;
+#endif
+#endif
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
+#if (defined(USE_CANFD) && USE_CANFD)
+    if (FLEXCAN_FDCalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.bitRate, flexcanConfig.bitRateFD,
+                                                EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#else
+    if (FLEXCAN_CalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.bitRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+#endif
+
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, true);
+#else
+    FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
+#endif
+
+    /* Create FlexCAN handle structure and set call back function. */
+    FLEXCAN_TransferCreateHandle(EXAMPLE_CAN, &flexcanHandle, flexcan_callback, NULL);
+
+    /* Set Rx Masking mechanism. */
+    FLEXCAN_SetRxMbGlobalMask(EXAMPLE_CAN, FLEXCAN_RX_MB_STD_MASK(rxIdentifier, 0, 0));
+
+    /* Setup Rx Message Buffer. */
+    mbConfig.format = kFLEXCAN_FrameFormatStandard;
+    mbConfig.type   = kFLEXCAN_FrameTypeData;
+    mbConfig.id     = FLEXCAN_ID_STD(rxIdentifier);
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_SetFDRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
+#else
+    FLEXCAN_SetRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
+#endif
+
+    /* Setup Tx Message Buffer. */
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_SetFDTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
+#else
+    FLEXCAN_SetTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
+#endif
+
+    /* Configure CAN transceiver */
+    FLEXCAN_PHY_Config();
 
     if ((node_type == 'A') || (node_type == 'a'))
     {

@@ -1,3 +1,3 @@
 #!/bin/sh
-rm -rf sdram_release flexspi_nor_debug flexspi_nor_release CMakeFiles
-rm -rf Makefile cmake_install.cmake CMakeCache.txt
+rm -rf flexspi_nor_debug flexspi_nor_release sdram_release CMakeFiles
+rm -rf Makefile build.ninja cmake_install.cmake CMakeCache.txt

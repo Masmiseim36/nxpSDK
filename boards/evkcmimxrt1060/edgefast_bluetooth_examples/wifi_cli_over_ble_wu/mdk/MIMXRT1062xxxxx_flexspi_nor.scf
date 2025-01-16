@@ -76,13 +76,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x400
+  #define Stack_Size                   0x0400
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    0x400
+  #define Heap_Size                    0x1000
 #endif
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
@@ -109,6 +109,10 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 
   ER_bt_conn_cb +0 { ;
     * (._bt_conn_cb*)
+  }
+
+  ER_bt_ias_cb +0 { ;
+    * (._bt_ias_cb*)
   }
 
   ER_bt_gatt_service_static +0 { ;
@@ -146,8 +150,8 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     mflash_drv.o (+RO +RW +ZI)
   }
   RW_m_usb_data +0 ALIGNALL 32 { ; USB RW data
-    * (*m_usb_dma_init_data)
-    * (*m_usb_dma_noninit_data)
+    * (*CacheLineData.init)
+    * (*CacheLineData)
   }
   ; Other regions shall not be placed between RW_m_usb_data and RW_m_usb_data_aux
   RW_m_usb_data_aux +0 ALIGN 32 EMPTY 0 { ; Empty region added for cache line alignment.
@@ -172,5 +176,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   }
   RW_net_buf_pool +0 { ;
     * (._net_buf_pool*)
+  }
+
+  RW_k_mem_slab +0 { ;
+    * (._k_mem_slab*)
   }
 }

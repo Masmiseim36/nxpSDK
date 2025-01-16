@@ -1,0 +1,78 @@
+/*
+ * Copyright 2021 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+#ifndef _APP_H_
+#define _APP_H_
+
+/*${header:start}*/
+#include "fsl_common.h"
+#include "fsl_cs42448.h"
+/*${header:end}*/
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+/*${macro:start}*/
+/* SAI instance and clock */
+#define DEMO_CODEC_CS42448
+#define DEMO_SAI          SAI1
+#define DEMO_SAI_CHANNEL  (0)
+#define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)
+#define DEMO_SAI_IRQ      SAI1_IRQn
+#define SAI_TxIRQHandler  SAI1_IRQHandler
+
+/* IRQ */
+#define DEMO_SAI_TX_IRQ SAI1_IRQn
+#define DEMO_SAI_RX_IRQ SAI1_IRQn
+
+/* DMA */
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_DMAMUX        DMAMUX
+#define EXAMPLE_TX_CHANNEL    (0U)
+#define EXAMPLE_RX_CHANNEL    (1U)
+#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
+#define EXAMPLE_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
+
+/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
+#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
+/* Clock pre divider for sai1 clock source */
+#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (3U)
+/* Clock divider for sai1 clock source */
+#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (7U)
+/* Get frequency of sai1 clock */
+#define DEMO_SAI_CLK_FREQ                                                        \
+    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
+     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
+
+/* I2C instance and clock */
+#define DEMO_I2C          LPI2C3
+#define DEMO_I2C_INSTANCE 3
+/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
+#define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
+/* Clock divider for master lpi2c clock source */
+#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
+/* Get frequency of lpi2c clock */
+#define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
+
+#define DEMO_CODEC_RESET_GPIO     GPIO1
+#define DEMO_CODEC_RESET_GPIO_PIN 2
+
+#define BOARD_MASTER_CLOCK_CONFIG()
+#define DEMO_CODEC_POWER_GPIO     GPIO1
+#define DEMO_CODEC_POWER_GPIO_PIN 0
+/*${macro:end}*/
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+/*${prototype:start}*/
+void BOARD_InitHardware(void);
+void BORAD_CodecReset(bool state);
+
+/*${prototype:end}*/
+
+#endif /* _APP_H_ */

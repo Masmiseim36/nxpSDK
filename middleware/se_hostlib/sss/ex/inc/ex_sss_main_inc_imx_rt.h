@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2019 NXP
+ * Copyright 2019,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -26,17 +26,17 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
+#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS) && (SSS_HAVE_MBEDTLS_2_X)
 #include "ksdk_mbedtls.h"
 #endif
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
 #include "fsl_dcp.h"
 #include "fsl_trng.h"
 #endif
 #include "fsl_iomuxc.h"
 
-#if defined (CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
 #define TRNG0 TRNG
 /* Clock divider for master lpi2c clock source */
 #define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
@@ -56,7 +56,7 @@ void IOMUXC_SelectENETClock(void)
 
 void BOARD_InitModuleClock(void)
 {
-#if defined(CPU_MIMXRT1062DVL6A)  || defined (CPU_MIMXRT1062DVL6B)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
     const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
 #elif defined(CPU_MIMXRT1176DVMAA_cm7)
@@ -87,7 +87,7 @@ void ex_sss_main_ksdk_bm()
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;
 #endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
@@ -130,7 +130,7 @@ void ex_sss_main_ksdk_bm()
     /* Data cache must be temporarily disabled to be able to use sdram */
     SCB_DisableDCache();
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
 
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
 
@@ -151,7 +151,7 @@ void ex_sss_main_ksdk_bm()
     axReset_HostConfigure();
     axReset_PowerUp();
 
-#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
+#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS) && (SSS_HAVE_MBEDTLS_2_X)
     CRYPTO_InitHardware();
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
     CLOCK_EnableClock(kCLOCK_Sha0);
@@ -163,8 +163,8 @@ void ex_sss_main_ksdk_bm()
 
 void ex_sss_main_ksdk_boot_rtos_task()
 {
-#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
-#if defined(MBEDTLS)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1062DVL6B)
+#if defined(MBEDTLS) && (SSS_HAVE_MBEDTLS_2_X)
     CRYPTO_InitHardware();
 #endif /* defined(MBEDTLS) */
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};

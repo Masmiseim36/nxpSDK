@@ -228,7 +228,12 @@ static sss_status_t nxScp03_GP_ExternalAuthenticate(
     st = DoAPDUTx_s_Case3(se05xSession, &hdr, &txBuf[5], 16);
     if (st != SM_OK) {
         LOG_E("GP_ExternalAuthenticate transmit failed");
-        status = kStatus_SSS_Fail;
+        if (st == SM_ERR_APDU_THROUGHPUT) {
+            status = kStatus_SSS_ApduThroughputError;
+        }
+        else {
+            status = kStatus_SSS_Fail;
+        }
     }
     else {
         status = kStatus_SSS_Success;
@@ -337,7 +342,7 @@ static sss_status_t nxScp03_HostLocal_CalculateSessionKeys(
         ddA, &ddALen, DATA_DERIVATION_SENC, DATA_DERIVATION_L_128BIT, DATA_DERIVATION_KDF_CTR, context, contextLen);
     // Calculate the Session-ENC key
     status = nxScp03_Generate_SessionKey(&pStatic_ctx->Enc, ddA, ddALen, sessionEncKey, &signatureLen);
-    ENSURE_OR_GO_EXIT(status == kStatus_SSS_Success);
+        ENSURE_OR_GO_EXIT(status == kStatus_SSS_Success);
     LOG_MAU8_D(" Output:sessionEncKey", sessionEncKey, AES_KEY_LEN_nBYTE);
 
     // Set the Session-ENC key
@@ -352,7 +357,7 @@ static sss_status_t nxScp03_HostLocal_CalculateSessionKeys(
         ddA, &ddALen, DATA_DERIVATION_SMAC, DATA_DERIVATION_L_128BIT, DATA_DERIVATION_KDF_CTR, context, contextLen);
     // Calculate the Session-MAC key
     status = nxScp03_Generate_SessionKey(&pStatic_ctx->Mac, ddA, ddALen, sessionMacKey, &signatureLen);
-    ENSURE_OR_GO_EXIT(status == kStatus_SSS_Success);
+        ENSURE_OR_GO_EXIT(status == kStatus_SSS_Success);
     LOG_MAU8_D(" Output:sessionMacKey", sessionMacKey, AES_KEY_LEN_nBYTE);
 
     // Set the Session-MAC key
@@ -366,7 +371,7 @@ static sss_status_t nxScp03_HostLocal_CalculateSessionKeys(
         ddA, &ddALen, DATA_DERIVATION_SRMAC, DATA_DERIVATION_L_128BIT, DATA_DERIVATION_KDF_CTR, context, contextLen);
     // Calculate the Session-RMAC key
     status = nxScp03_Generate_SessionKey(&pStatic_ctx->Mac, ddA, ddALen, sessionRmacKey, &signatureLen);
-    ENSURE_OR_GO_EXIT(status == kStatus_SSS_Success);
+        ENSURE_OR_GO_EXIT(status == kStatus_SSS_Success);
     LOG_MAU8_D(" Output:sessionRmacKey", sessionRmacKey, AES_KEY_LEN_nBYTE);
 
     // Set the Session-RMAC key
@@ -460,7 +465,12 @@ static sss_status_t nxScp03_GP_InitializeUpdate(pSe05xSession_t se05xSession,
     st = DoAPDUTxRx_s_Case4(se05xSession, &hdr, cmdBuf, hostChallengeLen, response, &responseLen);
     if (st != SM_OK) {
         LOG_E("GP_InitializeUpdate Failure on communication Link %04X", st);
-        return status;
+        if (st == SM_ERR_APDU_THROUGHPUT) {
+            return kStatus_SSS_ApduThroughputError;
+        }
+        else {
+            return status;
+        }
     }
 
     // Parse Response
@@ -489,6 +499,9 @@ static sss_status_t nxScp03_GP_InitializeUpdate(pSe05xSession_t se05xSession,
         LOG_MAU8_D(" Output: cardChallenge", cardChallenge, *pCardChallengeLen);
         LOG_MAU8_D(" Output: cardCryptoGram", cardCryptoGram, *pCardCryptoGramLen);
         status = kStatus_SSS_Success;
+    }
+    if (sw == SM_ERR_APDU_THROUGHPUT) {
+        status = kStatus_SSS_ApduThroughputError;
     }
 cleanup:
     return status;

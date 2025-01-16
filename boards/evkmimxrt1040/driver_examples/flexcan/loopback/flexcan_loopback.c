@@ -8,35 +8,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN                CAN2
-#define EXAMPLE_FLEXCAN_IRQn       CAN2_IRQn
-#define EXAMPLE_FLEXCAN_IRQHandler CAN2_IRQHandler
-
-/* Considering that the first valid MB must be used as Reserved TX MB for ERR005829,
- * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
- * the first valid TX MB Number shall be 8;
- * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other values (0x1~0xF),
- * the user should consider to detail the first valid MB number;
- * if RX FIFO disables (RFEN bit in MCE set as 0) , the first valid MB number would be zero.
- */
-#define RX_MESSAGE_BUFFER_NUM (10)
-#define TX_MESSAGE_BUFFER_NUM (9)
-
-/* Select 60M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master flexcan clock source */
-#define FLEXCAN_CLOCK_SOURCE_DIVIDER (2U)
-/* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
-#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 
@@ -126,14 +103,7 @@ int main(void)
     flexcan_rx_mb_config_t mbConfig;
 
     /* Initialize board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for FLEXCAN*/
-    CLOCK_SetMux(kCLOCK_CanMux, FLEXCAN_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_CanDiv, FLEXCAN_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     LOG_INFO("\r\n==FlexCAN loopback functional example -- Start.==\r\n\r\n");
 

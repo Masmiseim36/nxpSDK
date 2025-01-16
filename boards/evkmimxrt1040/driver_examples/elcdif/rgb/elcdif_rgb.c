@@ -7,39 +7,13 @@
  */
 
 #include "fsl_common.h"
+#include "app.h"
 #include "fsl_elcdif.h"
 #include "fsl_debug_console.h"
 
-#include "fsl_gpio.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_ELCDIF LCDIF
-
-#define APP_IMG_HEIGHT 272
-#define APP_IMG_WIDTH  480
-#define APP_HSW        41
-#define APP_HFP        4
-#define APP_HBP        8
-#define APP_VSW        10
-#define APP_VFP        4
-#define APP_VBP        2
-#define APP_POL_FLAGS \
-    (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
-
-/* Display. */
-#define LCD_DISP_GPIO     GPIO1
-#define LCD_DISP_GPIO_PIN 2
-/* Back light. */
-#define LCD_BL_GPIO     GPIO2
-#define LCD_BL_GPIO_PIN 31
-
-/* Frame buffer data alignment, for better performance, the LCDIF frame buffer should be 64B align. */
-#define FRAME_BUFFER_ALIGN 64
-
 #ifndef APP_LCDIF_DATA_BUS
 #define APP_LCDIF_DATA_BUS kELCDIF_DataBus24Bit
 #endif
@@ -47,7 +21,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_EnableLcdInterrupt(void);
 
 /*******************************************************************************
  * Variables
@@ -59,71 +32,6 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_frameBuffer[2][APP_IMG_HEIGHT][A
 /*******************************************************************************
  * Code
  ******************************************************************************/
-extern void APP_LCDIF_IRQHandler(void);
-
-void LCDIF_IRQHandler(void)
-{
-    APP_LCDIF_IRQHandler();
-    __DSB();
-}
-
-/* Enable interrupt. */
-void BOARD_EnableLcdInterrupt(void)
-{
-    EnableIRQ(LCDIF_IRQn);
-}
-
-/* Initialize the LCD_DISP. */
-void BOARD_InitLcd(void)
-{
-    gpio_pin_config_t config = {
-        kGPIO_DigitalOutput,
-        0,
-        kGPIO_NoIntmode,
-    };
-
-    /* Backlight. */
-    config.outputLogic = 1;
-    GPIO_PinInit(LCD_BL_GPIO, LCD_BL_GPIO_PIN, &config);
-}
-
-void BOARD_InitLcdifPixelClock(void)
-{
-    /*
-     * The desired output frame rate is 60Hz. So the pixel clock frequency is:
-     * (480 + 41 + 4 + 18) * (272 + 10 + 4 + 2) * 60 = 9.2M.
-     * Here set the LCDIF pixel clock to 9.3M.
-     */
-
-    /*
-     * Initialize the Video PLL.
-     * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
-     */
-    clock_video_pll_config_t config = {
-        .loopDivider = 31,
-        .postDivider = 8,
-        .numerator   = 0,
-        .denominator = 0,
-    };
-
-    CLOCK_InitVideoPll(&config);
-
-    /*
-     * 000 derive clock from PLL2
-     * 001 derive clock from PLL3 PFD3
-     * 010 derive clock from PLL5
-     * 011 derive clock from PLL2 PFD0
-     * 100 derive clock from PLL2 PFD1
-     * 101 derive clock from PLL3 PFD1
-     */
-    CLOCK_SetMux(kCLOCK_LcdifPreMux, 2);
-
-    CLOCK_SetDiv(kCLOCK_LcdifPreDiv, 4);
-
-    CLOCK_SetDiv(kCLOCK_LcdifDiv, 1);
-}
-
-
 void APP_LCDIF_IRQHandler(void)
 {
     uint32_t intStatus;
@@ -252,13 +160,7 @@ int main(void)
 {
     uint32_t frameBufferIndex = 0;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitSemcPins();
-    BOARD_InitBootClocks();
-    BOARD_InitLcdifPixelClock();
-    BOARD_InitDebugConsole();
-    BOARD_InitLcd();
+    BOARD_InitHardware();
 
     PRINTF("LCDIF RGB example start...\r\n");
 

@@ -73,8 +73,13 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                       SetConfiguration() request to select this configuration */
     0x00U,                                         /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
-        (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
-        (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
+#if defined(USB_DEVICE_CONFIG_SELF_POWER) && (USB_DEVICE_CONFIG_SELF_POWER > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
+#endif
+#if defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT) |
+#endif
+     0U,
     /* Configuration characteristics
        D7: Reserved (set to one)
        D6: Self-powered
@@ -254,6 +259,9 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 #if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
     0x02U, /* The number of bytes occupied by one audio subslot. Can be 1, 2, 3 or 4.  */
     0x10U, /* The number of effectively used bits from the available bits in an audio subslot   */
+#elif defined(AUDIO_DATA_SOURCE_PDM) && (AUDIO_DATA_SOURCE_PDM > 0U)
+    0x03U, /* The number of bytes occupied by one audio subslot. Can be 1, 2, 3 or 4.  */
+    0x18U, /* The number of effectively used bits from the available bits in an audio subslot   */
 #else
     0x01U, /* The number of bytes occupied by one audio subslot. Can be 1, 2, 3 or 4.  */
     0x08U, /* The number of effectively used bits from the available bits in an audio subslot   */
@@ -302,8 +310,13 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                                SetConfiguration() request to select this configuration */
     0x00U, /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
-        (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
-        (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
+#if defined(USB_DEVICE_CONFIG_SELF_POWER) && (USB_DEVICE_CONFIG_SELF_POWER > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
+#endif
+#if defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U)
+    (1U << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT) |
+#endif
+     0U,
     /* Configuration characteristics
        D7: Reserved (set to one)
        D6: Self-powered
@@ -427,7 +440,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     /* FORMAT_TYPE descriptor subtype  */
     USB_AUDIO_FORMAT_TYPE_I, /* FORMAT_TYPE_I  */
     0x01U,                   /* Indicates the number of physical channels in the audio data stream.  */
-#if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
+#if (defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)) || \
+    (defined(AUDIO_DATA_SOURCE_PDM) && (AUDIO_DATA_SOURCE_PDM > 0U))
     0x02U,                   /* The number of bytes occupied by one audio subframe. Can be 1, 2, 3 or 4.   */
     0x10,                    /* The number of effectively used bits from the available bits in an audio subframe.*/
     0x01U,                   /* Indicates how the sampling frequency can be programmed:   */

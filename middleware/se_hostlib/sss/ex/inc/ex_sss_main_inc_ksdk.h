@@ -25,3 +25,11 @@
 #ifdef NORDIC_MCU
 #include <ex_sss_main_inc_nrf.h>
 #endif
+
+#ifdef CPU_MCXN947VDF_cm33_core0
+#include <ex_sss_main_inc_mcxn9.h>
+#endif
+
+#ifdef CPU_MCXA153VLH
+#include <ex_sss_main_inc_mcxa153.h>
+#endif

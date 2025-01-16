@@ -6,9 +6,8 @@
  */
 
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_adc.h"
 #include "fsl_adc_etc.h"
 #include "fsl_pit.h"
@@ -18,23 +17,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE           ADC1
-#define DEMO_ADC_USER_CHANNEL   16U
-#define DEMO_ADC_CHANNEL_GROUP0 0U
-#define DEMO_ADC_CHANNEL_GROUP1 1U
-
-#define DEMO_ADC_ETC_BASE             ADC_ETC
-#define DEMO_ADC_ETC_CHAIN_LENGTH     1U /* Chain length is 2. */
-#define DEMO_ADC_ETC_CHANNEL0         10U
-#define DEMO_ADC_ETC_CHANNEL1         11U
-#define EXAMPLE_ADC_ETC_DONE0_Handler ADC_ETC_IRQ0_IRQHandler
-#define EXAMPLE_ADC_ETC_DONE1_Handler ADC_ETC_IRQ1_IRQHandler
-
-#define DEMO_XBARA_BASE           XBARA
-#define DEMO_XBARA_INPUT_PITCH0   kXBARA1_InputPitTrigger0
-#define DEMO_XBARA_OUTPUT_ADC_ETC kXBARA1_OutputAdcEtcTrig00
-
-#define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 #define ADC_ETC_DONE0_FLAG (0x1U)
 #define ADC_ETC_DONE1_FLAG (0x2U)
 
@@ -80,15 +62,7 @@ int main(void)
     adc_etc_trigger_config_t adcEtcTriggerConfig;
     adc_etc_trigger_chain_config_t adcEtcTriggerChainConfig;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /* Set PERCLK_CLK source to OSC_CLK*/
-    CLOCK_SetMux(kCLOCK_PerclkMux, 1U);
-    /* Set PERCLK_CLK divider to 1 */
-    CLOCK_SetDiv(kCLOCK_PerclkDiv, 0U);
+    BOARD_InitHardware();
 
     PRINTF("ADC_ETC_Hardware_Trigger_Conv Example Start!\r\n");
 

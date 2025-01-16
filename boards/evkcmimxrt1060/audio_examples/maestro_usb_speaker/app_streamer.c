@@ -19,7 +19,7 @@
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
 #define STREAMER_TASK_STACK_SIZE         16 * 1024
-#define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
+#define STREAMER_MESSAGE_TASK_STACK_SIZE 2 * 1024
 
 OSA_TASK_HANDLE_DEFINE(msg_thread);
 extern usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker;
@@ -43,21 +43,16 @@ static void STREAMER_MessageTask(void *arg)
 
     handle = (streamer_handle_t *)arg;
 
-    while (!handle->streamer->mq_out)
+    while (handle->streamer->message_channel_out.is_mq_created == false)
     {
         OSA_TimeDelay(1);
-    }
-    if (handle->streamer->mq_out == NULL)
-    {
-        PRINTF("[STREAMER] osa_mq_open failed: %d\r\n");
-        return;
     }
 
     PRINTF("[STREAMER] Message Task started\r\n");
 
     do
     {
-        ret = OSA_MsgQGet(&handle->streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        ret = OSA_MsgQGet(handle->streamer->message_channel_out.mq, (void *)&msg, osaWaitForever_c);
         if (ret != KOSA_StatusSuccess)
         {
             PRINTF("OSA_MsgQGet error: %d\r\n", ret);
@@ -90,8 +85,8 @@ static void STREAMER_MessageTask(void *arg)
         }
     } while (!exit_thread);
 
-    OSA_MsgQDestroy(&handle->streamer->mq_out);
-    handle->streamer->mq_out = NULL;
+    OSA_MsgQDestroy(handle->streamer->message_channel_out.mq);
+    handle->streamer->message_channel_out.is_mq_created = false;
 
     OSA_TaskDestroy(msg_thread);
 }

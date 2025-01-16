@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkcmimxrt1060_flexspi_nor_mcubootable.ini</tIfile>
+        <tIfile>../evkcmimxrt1060_flexspi_nor_mcubootable.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -265,7 +265,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkcmimxrt1060_flexspi_nor_mcubootable.ini</tIfile>
+        <tIfile>../evkcmimxrt1060_flexspi_nor_mcubootable.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

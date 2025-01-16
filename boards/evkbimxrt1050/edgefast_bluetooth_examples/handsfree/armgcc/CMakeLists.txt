@@ -1,0 +1,130 @@
+# CROSS COMPILER SETTING
+set(CMAKE_SYSTEM_NAME Generic)
+cmake_minimum_required(VERSION 3.10.0)
+
+# THE VERSION NUMBER
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
+
+set(CMAKE_STATIC_LIBRARY_PREFIX)
+set(CMAKE_STATIC_LIBRARY_SUFFIX)
+
+set(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+set(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+
+# CURRENT DIRECTORY
+set(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(handsfree)
+
+enable_language(ASM)
+
+set(MCUX_BUILD_TYPES flexspi_nor_release flexspi_nor_debug)
+
+set(MCUX_SDK_PROJECT_NAME handsfree.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../..)
+endif()
+
+include(${ProjDirPath}/flags.cmake)
+
+include(${ProjDirPath}/config.cmake)
+
+add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../edgefast_bluetooth_app.h"
+"${ProjDirPath}/../app_connect.c"
+"${ProjDirPath}/../app_connect.h"
+"${ProjDirPath}/../app_handsfree.c"
+"${ProjDirPath}/../app_handsfree.h"
+"${ProjDirPath}/../app_shell.c"
+"${ProjDirPath}/../app_shell.h"
+"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../ringtone.h"
+"${ProjDirPath}/../sco_audio_pl_ext.c"
+"${ProjDirPath}/../wifi_bt_module_config.h"
+"${ProjDirPath}/../FreeRTOSConfigBoard.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../FreeRTOSConfig.h"
+"${ProjDirPath}/../hardware_init.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../mbedtls_config_client.h"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../edgefast_bluetooth_audio_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_debug_config_Gen.h"
+"${ProjDirPath}/../edgefast_bluetooth_extension_config_Gen.h"
+"${ProjDirPath}/../fsl_debug_console_conf.h"
+"${ProjDirPath}/../fsl_os_abstraction_config.h"
+"${ProjDirPath}/../mcux_config.h"
+"${ProjDirPath}/../usb_host_config.h"
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/..
+)
+
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_wifi_bt_config_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_config")
+set_source_files_properties("${ProjDirPath}/../mbedtls_config_client.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_edgefast_bluetooth_template")
+set_source_files_properties("${ProjDirPath}/../fsl_os_abstraction_config.h" PROPERTIES COMPONENT_CONFIG_FILE "component_osa_template_config")
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="mbedtls_config_client.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:C>:MBEDTLS_CONFIG_FILE="mbedtls_config_client.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE $<$<COMPILE_LANGUAGE:CXX>:MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h">)
+endif()
+
+include(${SdkRootDirPath}/devices/MIMXRT1052/all_lib_device.cmake)
+
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/handsfree.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/handsfree.bin")
+
+# wrap all libraries with -Wl,--start-group -Wl,--end-group to prevent link order issue
+group_link_libraries()
+

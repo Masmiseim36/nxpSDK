@@ -5,7 +5,11 @@
       <name>all</name>
       <member>
         <project>cmsis_enet_txrx_transfer</project>
-        <configuration>release</configuration>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>cmsis_enet_txrx_transfer</project>
+        <configuration>flexspi_nor_release</configuration>
       </member>
       <member>
         <project>cmsis_enet_txrx_transfer</project>
@@ -21,18 +25,21 @@
       </member>
       <member>
         <project>cmsis_enet_txrx_transfer</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-      <member>
-        <project>cmsis_enet_txrx_transfer</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>release</name>
+      <name>flexspi_nor_debug</name>
       <member>
         <project>cmsis_enet_txrx_transfer</project>
-        <configuration>release</configuration>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>cmsis_enet_txrx_transfer</project>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -57,17 +64,10 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_debug</name>
+      <name>release</name>
       <member>
         <project>cmsis_enet_txrx_transfer</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_release</name>
-      <member>
-        <project>cmsis_enet_txrx_transfer</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

@@ -105,7 +105,7 @@ const TCHAR g_DriverNumberBuffer[] = {SDDISK + '0', ':', '/', '\0'};
  * @param classHandle   the class handle.
  * @param expectMaxPacketSize   the expected max packet size
  * @param interfaceAlternate   the pointer to the selected interface alternate setting
- * @param unMultipleIsoPacketSize  the actually used endpoint max packet size
+ * @param videoIsoPacketSize  the actually used endpoint max packet size
  *
  * @retval kStatus_USB_Success        successfully get the proper interface aternate setting
  * @retval kStatus_USB_InvalidHandle  The streamInterface is NULL pointer.
@@ -114,15 +114,17 @@ const TCHAR g_DriverNumberBuffer[] = {SDDISK + '0', ':', '/', '\0'};
 static uint8_t USB_HostGetProperEndpointInterfaceInfo(usb_host_class_handle classHandle,
                                                       uint16_t expectMaxPacketSize,
                                                       uint8_t *interfaceAlternate,
-                                                      uint16_t *unMultipleIsoPacketSize)
+                                                      uint16_t *videoIsoPacketSize)
 {
     usb_host_video_instance_struct_t *videoInstance = (usb_host_video_instance_struct_t *)classHandle;
     usb_host_interface_t *streamInterface;
     streamInterface = (usb_host_interface_t *)videoInstance->streamIntfHandle;
     usb_host_video_descriptor_union_t descriptor;
-    uint8_t epCount   = 0;
-    uint16_t length   = 0;
-    uint8_t alternate = 0;
+    uint16_t epTransactionsPerMicroFrame = 0U;
+    uint16_t epMaxPacketSize             = 0U;
+    uint16_t length                      = 0;
+    uint8_t epCount                      = 0;
+    uint8_t alternate                    = 0;
 
     if (NULL == streamInterface)
     {
@@ -155,13 +157,17 @@ static uint8_t USB_HostGetProperEndpointInterfaceInfo(usb_host_class_handle clas
             {
                 if (descriptor.endpoint->bDescriptorType == USB_DESCRIPTOR_TYPE_ENDPOINT)
                 {
-                    if ((USB_SHORT_FROM_LITTLE_ENDIAN_DATA(descriptor.endpoint->wMaxPacketSize) <=
-                         expectMaxPacketSize) &&
-                        (*unMultipleIsoPacketSize <
-                         USB_SHORT_FROM_LITTLE_ENDIAN_DATA(descriptor.endpoint->wMaxPacketSize)))
+                    epTransactionsPerMicroFrame =
+                        (((USB_SHORT_FROM_LITTLE_ENDIAN_DATA(descriptor.endpoint->wMaxPacketSize)) &
+                          USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK) >>
+                         USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_SHFIT) +
+                        1;
+                    epMaxPacketSize = ((USB_SHORT_FROM_LITTLE_ENDIAN_DATA(descriptor.endpoint->wMaxPacketSize)) &
+                                       USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
+                    if (((epMaxPacketSize * epTransactionsPerMicroFrame) <= expectMaxPacketSize) &&
+                        (*videoIsoPacketSize < (epMaxPacketSize * epTransactionsPerMicroFrame)))
                     {
-                        *unMultipleIsoPacketSize =
-                            USB_SHORT_FROM_LITTLE_ENDIAN_DATA(descriptor.endpoint->wMaxPacketSize);
+                        *videoIsoPacketSize = epMaxPacketSize * epTransactionsPerMicroFrame;
                         /* save interface alternate for the current proper endpoint */
                         *interfaceAlternate = alternate;
                     }
@@ -177,7 +183,7 @@ static uint8_t USB_HostGetProperEndpointInterfaceInfo(usb_host_class_handle clas
             descriptor.bufr += descriptor.common->bLength;
         }
     }
-    if ((0 == *unMultipleIsoPacketSize) || (0 == *interfaceAlternate))
+    if ((0 == *videoIsoPacketSize) || (0 == *interfaceAlternate))
     {
         return kStatus_USB_Error;
     }
@@ -879,7 +885,9 @@ void USB_HostVideoTask(void *param)
                         else if (USB_SPEED_HIGH == speed)
                         {
                             /* if device is high speed, the selected endpoint's maxPacketSize is maximum device supports
-                             * and is not more than 1024B */
+                             * and is not more than 1024B. Users can use the additional transactions (more than one
+                             * transaction) per microframe by using large value instead of
+                             * HIGH_SPEED_ISO_MAX_PACKET_SIZE_ZERO_ADDITION */
                             USB_HostGetProperEndpointInterfaceInfo(videoAppInstance->classHandle,
                                                                    HIGH_SPEED_ISO_MAX_PACKET_SIZE_ZERO_ADDITION,
                                                                    &videoAppInstance->currentStreamInterfaceAlternate,

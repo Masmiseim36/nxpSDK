@@ -9,26 +9,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_lpspi.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 
-#include "fsl_common.h"
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LPSPI_TRANSFER_SIZE          20
-#define BOARD_EEPROM_LPSPI_BASEADDR  (LPSPI1)
-#define BOARD_LPSPI_CLK_FREQ         12000000U
-#define BOARD_LPSPI_PCS_FOR_INIT     kLPSPI_Pcs0
-#define BOARD_LPSPI_PCS_FOR_TRANSFER kLPSPI_MasterPcs0
-
-/* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
-/* Clock divider for master lpspi clock source */
-#define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
 /*******************************************************************************
  * Prototypes
@@ -71,14 +57,7 @@ int main(void)
     uint8_t masterTxData[LPSPI_TRANSFER_SIZE] = {0};
 
     /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-    /*Set clock source for LPSPI*/
-    CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
+    BOARD_InitHardware();
 
     PRINTF("\r\n***LPSPI Loopback Demo***\r\n");
     LPSPI_Init();

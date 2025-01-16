@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020, 2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -251,6 +251,9 @@ status_t OCOTP_ReadFuseShadowRegisterExt(OCOTP_Type *base, uint32_t address, uin
 #if defined(OCOTP_READ_CTRL_READ_NUM_MASK)
     base->READ_CTRL = (base->READ_CTRL & ~(OCOTP_READ_CTRL_READ_NUM_MASK)) |
                       OCOTP_READ_CTRL_READ_NUM((uint32_t)fuseWords - 1U) | OCOTP_READ_CTRL_READ_FUSE_MASK;
+#elif defined(OCOTP_READ_CTRL_READ_FUSE_CNTR_MASK)
+    base->READ_CTRL = (base->READ_CTRL & ~(OCOTP_READ_CTRL_READ_FUSE_CNTR_MASK)) |
+                      OCOTP_READ_CTRL_READ_FUSE_CNTR((uint32_t)fuseWords - 1U) | OCOTP_READ_CTRL_READ_FUSE_MASK;
 #else
     base->READ_CTRL |= OCOTP_READ_CTRL_READ_FUSE_MASK;
 #endif

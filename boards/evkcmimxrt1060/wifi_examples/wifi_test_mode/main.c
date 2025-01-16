@@ -13,8 +13,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "wlan_bt_fw.h"
@@ -22,34 +20,17 @@
 #include "wifi.h"
 #include "wm_net.h"
 #include <osa.h>
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 #include "dhcp-server.h"
+#endif
 #include "cli.h"
 #include "iperf.h"
 
+#include "app.h"
 
-#include "fsl_common.h"
-#if CONFIG_WIFI_SMOKE_TESTS
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#endif
-#if CONFIG_WIFI_SMOKE_TESTS
-#include "fsl_phyksz8081.h"
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* Ethernet configuration. */
-#if CONFIG_WIFI_SMOKE_TESTS
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  BOARD_ENET0_PHY_ADDRESS
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
-#endif
 
 /*******************************************************************************
  * Prototypes
@@ -58,37 +39,11 @@ extern phy_ksz8081_resource_t g_phy_resource;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if CONFIG_WIFI_SMOKE_TESTS
-phy_ksz8081_resource_t g_phy_resource;
-
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-#endif
-
 #define MAIN_TASK_STACK_SIZE 4096
 
 static void main_task(osa_task_param_t arg);
 
-static OSA_TASK_DEFINE(main_task, OSA_PRIORITY_BELOW_NORMAL, 1, MAIN_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(main_task, WLAN_TASK_PRI_LOW, 1, MAIN_TASK_STACK_SIZE, 0);
 
 OSA_TASK_HANDLE_DEFINE(main_task_Handle);
 
@@ -98,7 +53,9 @@ static void printSeparator(void)
 }
 
 static struct wlan_network sta_network;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
 static struct wlan_network uap_network;
+#endif
 
 /* Callback Function passed to WLAN Connection Manager. The callback function
  * gets called when there are WLAN Events that need to be handled by the
@@ -220,6 +177,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_CHAN_SWITCH:
             PRINTF("app_cb: WLAN: channel switch\r\n");
             break;
+#if CONFIG_NXP_WIFI_SOFTAP_SUPPORT
         case WLAN_REASON_UAP_SUCCESS:
             PRINTF("app_cb: WLAN: UAP Started\r\n");
 
@@ -266,6 +224,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
             break;
+#endif /* CONFIG_NXP_WIFI_SOFTAP_SUPPORT */
         case WLAN_REASON_PS_ENTER:
             PRINTF("app_cb: WLAN: PS_ENTER\r\n");
             break;
@@ -317,30 +276,7 @@ int main(void)
 {
     OSA_Init();
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-
-#if CONFIG_WIFI_SMOKE_TESTS
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* Pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
-#endif
+    BOARD_InitHardware();
 
     printSeparator();
     PRINTF("wifi test mode demo\r\n");

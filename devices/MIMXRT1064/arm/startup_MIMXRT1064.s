@@ -4,13 +4,11 @@
 /*            MIMXRT1064                                                     */
 /*  @version: 1.3                                                            */
 /*  @date:    2021-8-10                                                      */
-/*  @build:   b211201                                                        */
+/*  @build:   b240823                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2021 NXP                                                   */
-/* All rights reserved.                                                      */
-/*                                                                           */
+/* Copyright 2016-2024 NXP                                                   */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
@@ -157,8 +155,8 @@ __Vectors:
     .long   USB_OTG1_IRQHandler                             /* USBO2 USB OTG1*/
     .long   ENET_IRQHandler                                 /* ENET interrupt*/
     .long   ENET_1588_Timer_IRQHandler                      /* ENET_1588_Timer interrupt*/
-    .long   XBAR1_IRQ_0_1_IRQHandler                        /* XBAR1 interrupt*/
-    .long   XBAR1_IRQ_2_3_IRQHandler                        /* XBAR1 interrupt*/
+    .long   XBAR1_IRQ_0_1_IRQHandler                        /* XBARA1 output signal 0, 1 interrupt*/
+    .long   XBAR1_IRQ_2_3_IRQHandler                        /* XBARA1 output signal 2, 3 interrupt*/
     .long   ADC_ETC_IRQ0_IRQHandler                         /* ADCETC IRQ0 interrupt*/
     .long   ADC_ETC_IRQ1_IRQHandler                         /* ADCETC IRQ1 interrupt*/
     .long   ADC_ETC_IRQ2_IRQHandler                         /* ADCETC IRQ2 interrupt*/
@@ -301,11 +299,11 @@ Reset_Handler:
     str     r1, [r0]
     ldr     r2, [r1]
     msr     msp, r2
-    ldr   r0,=SystemInit
-    blx   r0
+    ldr     r0,=SystemInit
+    blx     r0
     cpsie   i               /* Unmask interrupts */
-    ldr   r0,=__main
-    bx    r0
+    ldr     r0,=__main
+    bx      r0
 
     .pool
     .size Reset_Handler, . - Reset_Handler

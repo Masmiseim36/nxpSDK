@@ -5,8 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
+#include "app.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
@@ -20,49 +19,9 @@
 #include "fsl_sd_disk.h"
 #include "fsl_codec_common.h"
 #include "sdmmc_config.h"
-#include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_cs42448.h"
-#include "fsl_codec_adapter.h"
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* SAI instance and clock */
-#define DEMO_SAI         SAI1
-#define DEMO_SAI_IRQ     SAI1_IRQn
-#define SAI_TxIRQHandler SAI1_IRQHandler
-
-/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
-/* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (3U)
-/* Clock divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (7U)
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ                                                        \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
-     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
-
-/* I2C instance and clock */
-#define DEMO_I2C LPI2C1
-
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-/* DMA */
-#define DMAMUX0               DMAMUX
-#define EXAMPLE_DMA           DMA0
-#define EXAMPLE_CHANNEL       (0U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
-
-#define DEMO_CODEC_RESET_GPIO     GPIO1
-#define DEMO_CODEC_RESET_GPIO_PIN 18
-#define BOARD_MASTER_CLOCK_CONFIG()
 #ifndef DEMO_DMAMUX
 #define DEMO_DMAMUX DMAMUX0
 #endif
@@ -82,7 +41,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BORAD_CodecReset(bool state);
 static void tx_callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 static status_t DEMO_MountFileSystem(void);
 extern void BORAD_CodecReset(bool state);
@@ -90,31 +48,6 @@ static void DEMO_InitCodec(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
-cs42448_config_t cs42448Config = {
-    .DACMode      = kCS42448_ModeSlave,
-    .ADCMode      = kCS42448_ModeSlave,
-    .reset        = BORAD_CodecReset,
-    .master       = false,
-    .i2cConfig    = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .format       = {.mclk_HZ = 24576000U, .sampleRate = 48000U, .bitWidth = 24U},
-    .bus          = kCS42448_BusTDM,
-    .slaveAddress = CS42448_I2C_ADDR,
-};
-
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42448, .codecDevConfig = &cs42448Config};
-
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
- *                              = 24 * (32 + 768/1000)
- *                              = 786.432 MHz
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,   /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,    /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-    .numerator   = 768,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 1000, /* 30 bit denominator of fractional loop divider */
-};
 #if defined(DEMO_QUICKACCESS_SECTION_CACHEABLE) && DEMO_QUICKACCESS_SECTION_CACHEABLE
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle);
 #else
@@ -159,30 +92,6 @@ sai_transfer_t saiTxPingPongTransfer[4U] = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_EnableSaiMclkOutput(bool enable)
-{
-    if (enable)
-    {
-        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
-    }
-    else
-    {
-        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
-    }
-}
-
-
-void BORAD_CodecReset(bool state)
-{
-    if (state)
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 1U);
-    }
-    else
-    {
-        GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 0U);
-    }
-}
 static void tx_callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     if (kStatus_SAI_RxError == status)
@@ -206,23 +115,7 @@ int main(void)
     FRESULT error;
     uint32_t leftWAVData = 0U;
 
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    CLOCK_InitAudioPll(&audioPllConfig);
-    BOARD_InitDebugConsole();
-
-    /*Clock setting for LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
-
-    /*Clock setting for SAI1*/
-    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
-
-    /*Enable MCLK clock*/
-    BOARD_EnableSaiMclkOutput(true);
+    BOARD_InitHardware();
     BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ, NULL);
 
     PRINTF("\r\nSAI edma TDM example started.\n\r");

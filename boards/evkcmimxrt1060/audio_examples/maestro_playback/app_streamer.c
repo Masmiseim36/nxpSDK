@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 NXP
+ * Copyright 2020-2024 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,11 +25,9 @@
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
 #define STREAMER_TASK_STACK_SIZE         20 * 1024
-#define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
+#define STREAMER_MESSAGE_TASK_STACK_SIZE 2 * 1024
 
 static STREAMER_T *streamer;
-static ringbuf_t *audioBuffer;
-OSA_MUTEX_HANDLE_DEFINE(audioMutex);
 OSA_TASK_HANDLE_DEFINE(msg_thread);
 
 extern codec_handle_t codecHandle;
@@ -61,7 +59,7 @@ static void STREAMER_MessageTask(void *arg)
     {
         OSA_TimeDelay(1);
     }
-    if (streamer->mq_out == NULL)
+    if (streamer->message_channel_out.is_mq_created == false)
     {
         PRINTF("[STREAMER] osa_mq_open failed: %d\r\n");
         return;
@@ -73,7 +71,7 @@ static void STREAMER_MessageTask(void *arg)
 
     do
     {
-        ret = OSA_MsgQGet(&streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        ret = OSA_MsgQGet(streamer->message_channel_out.mq, (void *)&msg, osaWaitForever_c);
         if (ret != KOSA_StatusSuccess)
         {
             PRINTF("[STREAMER] OSA_MsgQGet error: %d\r\n", ret);
@@ -126,46 +124,14 @@ static void STREAMER_MessageTask(void *arg)
 
     } while (!exit_thread);
 
-    OSA_MsgQDestroy(&streamer->mq_out);
-    streamer->mq_out = NULL;
+    OSA_MsgQDestroy(streamer->message_channel_out.mq);
+    streamer->message_channel_out.is_mq_created = false;
 
     /* propagate stop request to main application state machine */
     OSA_SemaphoreWait(streamer_semaphore, osaWaitForever_c);
     stop();
     OSA_SemaphorePost(streamer_semaphore);
     OSA_TaskDestroy(msg_thread);
-}
-
-int STREAMER_Read(uint8_t *data, uint32_t size)
-{
-    uint32_t bytes_read;
-
-    OSA_MutexLock(&audioMutex, osaWaitForever_c);
-    bytes_read = ringbuf_read(audioBuffer, data, size);
-    OSA_MutexUnlock(&audioMutex);
-
-    if (bytes_read != size)
-    {
-        PRINTF("[STREAMER WARN] read underrun: size: %d, read: %d\r\n", size, bytes_read);
-    }
-
-    return bytes_read;
-}
-
-int STREAMER_Write(uint8_t *data, uint32_t size)
-{
-    uint32_t written;
-
-    OSA_MutexLock(&audioMutex, osaWaitForever_c);
-    written = ringbuf_write(audioBuffer, data, size);
-    OSA_MutexUnlock(&audioMutex);
-
-    if (written != size)
-    {
-        PRINTF("[STREAMER ERR] write overflow: size %d, written %d\r\n", size, written);
-    }
-
-    return written;
 }
 
 bool STREAMER_IsPlaying(streamer_handle_t *handle)
@@ -187,12 +153,6 @@ void STREAMER_Stop(streamer_handle_t *handle)
 
     handle->audioPlaying = false;
     streamer_set_state(handle->streamer, 0, STATE_NULL, true);
-
-    /* Empty input ringbuffer. */
-    if (audioBuffer)
-    {
-        ringbuf_clear(audioBuffer);
-    }
 }
 #ifdef MULTICHANNEL_EXAMPLE
 status_t STREAMER_PCM_Create(char *filename, int volume)
@@ -345,7 +305,7 @@ status_t STREAMER_file_Create(char *filename, int volume)
     streamer_set_property(streamer, 0, prop, true);
 
     prop.prop = PROP_SPEAKER_TIME_UPDATE_MS;
-    prop.val = 1000;
+    prop.val  = 1000;
     streamer_set_property(streamer, 0, prop, true);
 
     return kStatus_Success;
@@ -436,22 +396,19 @@ app_error_code_t seek()
         return kAppCodeError;
     }
 
-    if (query1.value32u > 0U)
+    if (((uint32_t)get_app_data()->seek_time > query1.value32u) && (query1.value32u != 0))
     {
-        if ((uint32_t)get_app_data()->seek_time > query1.value32u)
-        {
-            PRINTF(
-                "[SEEK STREAMER] No seek was performed because the seek time is longer than the duration of the audio "
-                "track.\r\n");
-            return kAppCodeOk;
-        }
+        PRINTF(
+            "[SEEK STREAMER] No seek was performed because the seek time is longer than the duration of the audio "
+            "track.\r\n");
+        return kAppCodeOk;
+    }
 
-        if (streamer_seek_pipeline(streamer, 0, get_app_data()->seek_time, true) == 0)
-        {
-            PRINTF("[CMD] The seek audio track to %u milliseconds was performed successfully.\r\n",
-                   get_app_data()->seek_time);
-            return kAppCodeOk;
-        }
+    if (streamer_seek_pipeline(streamer, 0, get_app_data()->seek_time, true) == 0)
+    {
+        PRINTF("[CMD] The seek audio track to %u milliseconds was performed successfully.\r\n",
+            get_app_data()->seek_time);
+        return kAppCodeOk;
     }
 
     return kAppCodeError;
@@ -463,11 +420,6 @@ app_error_code_t stop()
     {
         if (streamer_set_state(streamer, 0, STATE_NULL, true) == 0)
         {
-            /* Empty input ringbuffer. */
-            if (audioBuffer)
-            {
-                ringbuf_clear(audioBuffer);
-            }
             destroy();
 
             get_app_data()->trackCurrent = 0;
@@ -495,12 +447,6 @@ void destroy()
         vTaskSuspend(app.shell_task_handle);
         vTaskDelay(100);
         vTaskResume(app.shell_task_handle);
-
-        if (audioBuffer != NULL)
-        {
-            ringbuf_destroy(audioBuffer);
-            audioBuffer = NULL;
-        }
 
         deinit_logging();
 

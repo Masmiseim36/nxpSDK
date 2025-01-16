@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2019,2024 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -21,6 +21,7 @@
 #include <nxLog_sss.h>
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 #include "mbedtls/ecdh.h"
 #include "mbedtls/version.h"
@@ -228,7 +229,7 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp,
     sss_status_t status;
     sss_object_t otherPartyKeyObject = {0};
     sss_object_t derivedKeyObject    = {0};
-    sss_derive_key_t context;
+    sss_derive_key_t context         = {0};
     uint8_t SharedSecret[128];
     uint16_t SharedSecretlen = sizeof(SharedSecret);
     uint8_t buf[256];
@@ -256,66 +257,105 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp,
             switch (grp->id) {
             case MBEDTLS_ECP_DP_SECP192R1:
                 memcpy(OtherPublicKey, gecc_der_header_nist192, der_ecc_nistp192_header_len);
+                if ((SIZE_MAX - der_ecc_nistp192_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_nistp192_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case MBEDTLS_ECP_DP_SECP224R1:
                 memcpy(OtherPublicKey, gecc_der_header_nist224, der_ecc_nistp224_header_len);
+                if ((SIZE_MAX - der_ecc_nistp224_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_nistp224_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case MBEDTLS_ECP_DP_SECP256R1:
                 memcpy(OtherPublicKey, gecc_der_header_nist256, der_ecc_nistp256_header_len);
+                if ((SIZE_MAX - der_ecc_nistp256_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_nistp256_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case MBEDTLS_ECP_DP_SECP384R1:
                 memcpy(OtherPublicKey, gecc_der_header_nist384, der_ecc_nistp384_header_len);
+                if ((SIZE_MAX - der_ecc_nistp384_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_nistp384_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case MBEDTLS_ECP_DP_SECP521R1:
                 memcpy(OtherPublicKey, gecc_der_header_nist521, der_ecc_nistp521_header_len);
+                if ((SIZE_MAX - der_ecc_nistp521_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_nistp521_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case MBEDTLS_ECP_DP_BP256R1:
                 memcpy(OtherPublicKey, gecc_der_header_bp256, der_ecc_bp256_header_len);
+                if ((SIZE_MAX - der_ecc_bp256_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_bp256_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_BRAINPOOL;
                 break;
             case MBEDTLS_ECP_DP_BP384R1:
                 memcpy(OtherPublicKey, gecc_der_header_bp384, der_ecc_bp384_header_len);
+                if ((SIZE_MAX - der_ecc_bp384_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_bp384_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_BRAINPOOL;
                 break;
             case MBEDTLS_ECP_DP_BP512R1:
                 memcpy(OtherPublicKey, gecc_der_header_bp512, der_ecc_bp512_header_len);
+                if ((SIZE_MAX - der_ecc_bp512_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_bp512_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_BRAINPOOL;
                 break;
             case MBEDTLS_ECP_DP_SECP192K1:
                 memcpy(OtherPublicKey, gecc_der_header_192k, der_ecc_192k_header_len);
+                if ((SIZE_MAX - der_ecc_192k_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_192k_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_K;
                 break;
             case MBEDTLS_ECP_DP_SECP224K1:
                 memcpy(OtherPublicKey, gecc_der_header_224k, der_ecc_224k_header_len);
+                if ((SIZE_MAX - der_ecc_224k_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_224k_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_K;
                 break;
             case MBEDTLS_ECP_DP_SECP256K1:
                 memcpy(OtherPublicKey, gecc_der_header_256k, der_ecc_256k_header_len);
+                if ((SIZE_MAX - der_ecc_256k_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_256k_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_NIST_K;
                 break;
             case MBEDTLS_ECP_DP_CURVE25519:
                 memcpy(OtherPublicKey, gecc_der_header_mont_dh_25519, der_ecc_mont_dh_25519_header_len);
+                if ((SIZE_MAX - der_ecc_mont_dh_25519_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_mont_dh_25519_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_MONTGOMERY;
                 break;
             case MBEDTLS_ECP_DP_CURVE448:
                 memcpy(OtherPublicKey, gecc_der_header_mont_dh_448, der_ecc_mont_dh_448_header_len);
+                if ((SIZE_MAX - der_ecc_mont_dh_448_header_len) < OtherPublickeylen) {
+                    return 1;
+                }
                 OtherPublickeylen        = OtherPublickeylen + der_ecc_mont_dh_448_header_len;
                 OtherPublickeycipherType = kSSS_CipherType_EC_MONTGOMERY;
                 break;
@@ -407,6 +447,7 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp,
                 }
                 ret = mbedtls_mpi_read_binary(z, buf, bufByteLen);
             } while (0);
+            sss_derive_key_context_free(&context);
             sss_key_object_free(&otherPartyKeyObject);
             sss_key_object_free(&derivedKeyObject);  
  

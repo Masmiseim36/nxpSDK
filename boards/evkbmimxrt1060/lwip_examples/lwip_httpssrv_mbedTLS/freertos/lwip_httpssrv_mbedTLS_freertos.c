@@ -20,8 +20,8 @@
 #include <ctype.h>
 
 #include "ethernetif.h"
-#include "pin_mux.h"
 #include "board.h"
+#include "app.h"
 #include "fsl_phy.h"
 
 #include "lwip/netif.h"
@@ -45,66 +45,9 @@
 // dm #include "certs_buff.h"
 #include "mbedtls/certs.h"
 
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* @TEST_ANCHOR */
-
-/* IP address configuration. */
-#ifndef configIP_ADDR0
-#define configIP_ADDR0 192
-#endif
-#ifndef configIP_ADDR1
-#define configIP_ADDR1 168
-#endif
-#ifndef configIP_ADDR2
-#define configIP_ADDR2 0
-#endif
-#ifndef configIP_ADDR3
-#define configIP_ADDR3 102
-#endif
-
-/* Netmask configuration. */
-#ifndef configNET_MASK0
-#define configNET_MASK0 255
-#endif
-#ifndef configNET_MASK1
-#define configNET_MASK1 255
-#endif
-#ifndef configNET_MASK2
-#define configNET_MASK2 255
-#endif
-#ifndef configNET_MASK3
-#define configNET_MASK3 0
-#endif
-
-/* Gateway address configuration. */
-#ifndef configGW_ADDR0
-#define configGW_ADDR0 192
-#endif
-#ifndef configGW_ADDR1
-#define configGW_ADDR1 168
-#endif
-#ifndef configGW_ADDR2
-#define configGW_ADDR2 0
-#endif
-#ifndef configGW_ADDR3
-#define configGW_ADDR3 100
-#endif
-
-/* Ethernet configuration. */
-extern phy_ksz8081_resource_t g_phy_resource;
-#define EXAMPLE_ENET         ENET
-#define EXAMPLE_PHY_ADDRESS  BOARD_ENET0_PHY_ADDRESS
-#define EXAMPLE_PHY_OPS      &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
-#define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
 /* Must be after include of app.h */
 #ifndef configMAC_ADDR
 #include "fsl_silicon_id.h"
@@ -143,7 +86,6 @@ static bool cgi_get_varval(char *var_str, char *var_name, char *var_val, uint32_
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-phy_ksz8081_resource_t g_phy_resource;
 
 static phy_handle_t phyHandle;
 
@@ -180,28 +122,6 @@ const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {{"config", ssi_config}, {0, 0}};
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_InitModuleClock(void)
-{
-    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
-    CLOCK_InitEnetPll(&config);
-}
-
-static void MDIO_Init(void)
-{
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
-    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
-}
-
-static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
-{
-    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
-}
-
-static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
-{
-    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
-}
-
 static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param)
 {
 #define BUFF_SIZE sizeof("00\n00\n00\n")
@@ -680,27 +600,7 @@ static void main_thread(void *arg)
  */
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
+    BOARD_InitHardware();
 
     /* create server thread in RTOS */
     if (sys_thread_new("main", main_thread, NULL, HTTPD_STACKSIZE, HTTPD_PRIORITY) == NULL)
